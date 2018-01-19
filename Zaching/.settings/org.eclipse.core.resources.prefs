@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+encoding//src/main/resources/config/bankCode.properties=UTF-8
+encoding//src/main/resources/config/rentCharge.properties=UTF-8
+encoding//src/main/resources/config/restapi.properties=UTF-8
