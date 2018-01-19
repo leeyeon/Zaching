@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration
+ 		 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+  						
+<!--	mybatis-config.xml :: MyBatis Framework  MetaData -->
+<configuration>
+	
+	<!-- FQCN(Full Qualified Class Name) Alias(별칭관리) -->
+	<typeAliases>
+		<typeAlias alias="user" type="com.zaching.service.domain.User" />
+		<typeAlias alias="livingInfo" type="com.zaching.service.domain.LivingInfo" />
+		<typeAlias alias="kakaoMap" type="com.zaching.service.domain.KakaoMap"/>
+		<typeAlias alias="newsfeed" type="com.zaching.service.domain.Newsfeed"/>
+		<typeAlias alias="notice" type="com.zaching.service.domain.Notice"/>
+		<typeAlias alias="payment" type="com.zaching.service.domain.Payment"/>
+		<typeAlias alias="report" type="com.zaching.service.domain.Report"/>
+		<typeAlias alias="voice" type="com.zaching.service.domain.Voice"/>
+	</typeAliases>
+	
+	 <!-- SQL Definition :: file include -->
+	<mappers>
+		<mapper resource="sql/BobMapper.xml"/>
+		<mapper resource="sql/BroadcastMapper.xml"/>
+		<mapper resource="sql/FriendMapper.xml"/>
+		<mapper resource="sql/LivingInfoMapper.xml"/>
+		<mapper resource="sql/NewsfeedMapper.xml"/>
+		<mapper resource="sql/PaymentMapper.xml"/>
+		<mapper resource="sql/ReportMapper.xml"/>
+		<mapper resource="sql/UserMapper.xml"/>
+		<mapper resource="sql/VoiceMapper.xml"/>
+	</mappers>
+
+</configuration>
