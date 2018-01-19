@@ -7,6 +7,8 @@ CREATE SEQUENCE seq_participant_participant_id	 INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_fee_fee_id  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_comment_comment_id  INCREMENT BY 1 START WITH 1;
 
+CREATE SEQUENCE seq_report_id	 INCREMENT BY 1 START WITH 1;
+
 CREATE TABLE USERS ( 
 	user_id      		number	 NOT NULL,
 	email  	 VARCHAR2(50)	 NOT NULL,
@@ -39,6 +41,20 @@ CREATE TABLE USERS (
 	sns_type char(10),
 	PRIMARY KEY(user_id)
 );
+
+
+CREATE TABLE REPORT (
+ report_id     NUMBER  NOT NULL,
+ description           VARCHAR2(64) NOT NULL,
+ report_date         date NOT NULL,
+ status          char(2) NOT NULL,
+ category_code     VARCHAR2(4) NOT NULL,
+ room_id           NUMBER ,
+ reporter_id            NUMBER ,
+ reported_user_id          NUMBER,
+	PRIMARY KEY (report_id)
+);
+
 
 CREATE TABLE BOB (
 	bob_id numeric not null,
