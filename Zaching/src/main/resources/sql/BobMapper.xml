@@ -4,20 +4,27 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="UserMapper">
+<mapper namespace="BobMapper">
 	
-	<!-- 
-	<resultMap id="cartSelectMap"
-			   type="cart" >
-		<result property="cartNo" column="cart_no" jdbcType="INTEGER" />		
-		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
-		<result property="prodNo" column="prod_no" jdbcType="INTEGER"/>
-		<result property="prodName" column="prod_name" jdbcType="VARCHAR"/>
-		<result property="cartDate" column="cart_date" jdbcType="DATE"/>
-		<result property="price" column="price" jdbcType="INTEGER"/>
+	<resultMap id="bobSelectMap"
+			   type="bob" >
+		<result property="bobId" column="cart_no" jdbcType="INTEGER" />		
+		<result property="writtenUserId" column="user_id" jdbcType="VARCHAR"/>
+		<result property="writtenUserName" column="prod_no" jdbcType="INTEGER"/>
+		<result property="writtenUserProfile" column="prod_name" jdbcType="VARCHAR"/>
+		<result property="category" column="cart_date" jdbcType="DATE"/>
+		<result property="title" column="price" jdbcType="INTEGER"/>
+		<result property="description" column="status" jdbcType="CHAR"/>
+		<result property="image" column="status" jdbcType="CHAR"/>
+		<result property="limitNum" column="status" jdbcType="CHAR"/>
+		<result property="locationName" column="status" jdbcType="CHAR"/>
+		<result property="latitude" column="status" jdbcType="CHAR"/>
+		<result property="longtitude" column="status" jdbcType="CHAR"/>
+		<result property="fee" column="status" jdbcType="CHAR"/>
+		<result property="feeDate" column="status" jdbcType="CHAR"/>
 		<result property="status" column="status" jdbcType="CHAR"/>
+		<result property="createdDate" column="status" jdbcType="CHAR"/>
 	</resultMap>
-	 -->
 	
 
 </mapper>
