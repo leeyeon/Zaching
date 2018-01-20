@@ -38,7 +38,6 @@ public class User {
 	
 	//ÃÑ 29°³ 
 
-	///Constructor
 	public User() {
 		
 	}

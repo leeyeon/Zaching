@@ -4,6 +4,7 @@ public class FriendController {
 
 	public FriendController() {
 		// TODO Auto-generated constructor stub
+		System.out.println("hi");
 	}
 
 }
