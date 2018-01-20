@@ -82,10 +82,12 @@ CREATE TABLE PARTICIPANT (
 	status char(2) not null,
 	bob_id numeric not null,
 	user_id numeric not null,
+	setting_fee char(2) default 'N' not null,
 	PRIMARY KEY(participant_id),
 	FOREIGN KEY(user_id) REFERENCES USERS(user_id),
 	FOREIGN KEY(bob_id) REFERENCES BOB(bob_ID)
 );
+//ALTER TABLE PARTICIPANT ADD setting_fee char(2) default 'N' not null;
 
 CREATE TABLE FEE (
 	fee_id numeric not null,
