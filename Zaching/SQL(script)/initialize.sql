@@ -6,7 +6,8 @@ CREATE SEQUENCE seq_bob_bob_id		 	INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_participant_participant_id	 INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_fee_fee_id  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_comment_comment_id  INCREMENT BY 1 START WITH 1;
-
+CREATE SEQUENCE seq_newsfeed_id  INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_voice_id  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_report_id	 INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE USERS ( 
@@ -119,6 +120,23 @@ CREATE TABLE Voice (
 	status 			  CHAR(2)			  DEFAULT'Y',  
 	user_ID 		  NUMERIC			  NOT NULL  REFERENCES users(user_ID),  
 	PRIMARY KEY(voice_ID)
+);
+
+
+CREATE TABLE Newsfeed ( 
+	newsfeed_ID    NUMERIC      NOT NULL,
+	category_code  VARCHAR2(4)  NOT NULL,
+	content        VARCHAR2(1000)  NOT NULL,
+	location_name  VARCHAR2(30), 
+	longtitude     NUMERIC,
+	latitude       NUMERIC,
+	upload_file           VARCHAR2(100), 
+	created_date   DATE           NOT NULL,  
+	status         CHAR(2)       DEFAULT 'Y',
+    privacy_bound  CHAR(2)       NOT NULL,
+	total_like     NUMERIC       NOT NULL,
+    user_ID        NUMERIC       NOT NULL  REFERENCES users(user_ID),
+	PRIMARY KEY(newsfeed_ID)
 );
 
 
