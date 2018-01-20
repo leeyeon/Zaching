@@ -5,38 +5,36 @@ import java.util.Date;
 public class User {
 	
 	///Field
-	private int userId;
-	private String email;
-	private String password;
-	private String name;
-	private String address;
-	private int longtitude;
-	private int latitude;
-	private String gender;
-	private String phone;
-	private Date birth;
-	private String profileIamge;
-	private String role;
-	private String realName;
-	private int bankCode;
-	private String accountNumber;
-	private int accountCi;
-	private int accountSeqNo;
-	private int totalPoint;
-	private int totalMileage;
-	private int totalRecommend;
-	private Date latestDate;
-	private Date createdDate;
-	private String setRentCharge;
-	private String setNews;
-	private String setNewsFeed;
-	private String setBroadcast;
-	private String setFriend;
-	private String setBob;
-	private String SnsType;
+	private int userId;//유저ID시퀀스
+	private String email;//이메일ID
+	private String password;//패스워드
+	private String name;//이름
+	private String address;//주소
+	private int longtitude;//경도
+	private int latitude;//위도
+	private String gender;//성별
+	private String phone;//연락처
+	private Date birth;//생일
+	private String profileIa1mge;//프로필사진
+	private String role;//회원등급 정회원 준회워 
+	private String realName;//실명
+	private int bankCode;//은행코드
+	private String accountNumber;//계좌번호
+	private int accountCi;//
+	private int accountSeqNo;//
+	private int totalPoint;//포인트합계
+	private int totalMileage;//마일리지합계
+	private int totalRecommend;//추천합계
+	private Date latestDate;//최종접속일
+	private Date createdDate;//가입날짜
+	private String setRentCharge;//월세알림설정
+	private String setNews;//안부알림설정
+	private String setNewsFeed;//뉴스피드알림설정
+	private String setBroadcast;//라이브방송알림설정
+	private String setFriend;//친구알림설정
+	private String setBob;//밥친구 알림설정
+	private String SnsType;//sns계정 연동된 정보
 	
-	
-	//총 29개 
 
 	///Constructor
 	public User() {
