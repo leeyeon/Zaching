@@ -15,7 +15,7 @@ public class User {
 	private String gender;//성별
 	private String phone;//연락처
 	private Date birth;//생일
-	private String profileIa1mge;//프로필사진
+	private String profileIamge;//프로필사진
 	private String role;//회원등급 정회원 준회워 
 	private String realName;//실명
 	private int bankCode;//은행코드
