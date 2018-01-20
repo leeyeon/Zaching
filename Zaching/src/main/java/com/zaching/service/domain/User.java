@@ -34,15 +34,8 @@ public class User {
 	private String setFriend;//친구알림설정
 	private String setBob;//밥친구 알림설정
 	private String SnsType;//sns계정 연동된 정보
-	
-<<<<<<< HEAD
-	
-	//총 29개 
 
-=======
 
-	///Constructor
->>>>>>> refs/heads/new/jeongeun
 	public User() {
 		
 	}
