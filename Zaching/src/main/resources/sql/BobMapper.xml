@@ -4,20 +4,52 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="UserMapper">
+<mapper namespace="BobMapper">
 	
-	<!-- 
-	<resultMap id="cartSelectMap"
-			   type="cart" >
-		<result property="cartNo" column="cart_no" jdbcType="INTEGER" />		
-		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
-		<result property="prodNo" column="prod_no" jdbcType="INTEGER"/>
-		<result property="prodName" column="prod_name" jdbcType="VARCHAR"/>
-		<result property="cartDate" column="cart_date" jdbcType="DATE"/>
-		<result property="price" column="price" jdbcType="INTEGER"/>
+	<resultMap id="bobSelectMap"
+			   type="bob" >
+		<result property="bobId" column="bob_id" jdbcType="INTEGER" />
+		<result property="writtenUserId" column="writer_id" jdbcType="INTEGER"/>
+		<result property="writtenUserName" column="user_name" jdbcType="VARCHAR"/>
+		<result property="writtenUserProfile" column="profile_image" jdbcType="VARCHAR"/>
+		<result property="category" column="category_code" jdbcType="CHAR"/>
+		<result property="title" column="title" jdbcType="VARCHAR"/>
+		<result property="content" column="content" jdbcType="VARCHAR"/>
+		<result property="image" column="background_image" jdbcType="VARCHAR"/>
+		<result property="limitNum" column="limit_num" jdbcType="INTEGER"/>
+		<result property="locationName" column="location_name" jdbcType="VARCHAR"/>
+		<result property="latitude" column="latitude" jdbcType="LONGVARCHAR"/>
+		<result property="longitude" column="longitude" jdbcType="LONGVARCHAR"/>
+		<result property="AppointmentTime" column="time" jdbcType="DATE"/>
+		<result property="fee" column="fee" jdbcType="INTEGER"/>
+		<result property="feeDate" column="fee_date" jdbcType="DATE"/>
 		<result property="status" column="status" jdbcType="CHAR"/>
+		<result property="createdDate" column="created_date" jdbcType="DATE"/>
 	</resultMap>
-	 -->
 	
+	<insert id="addBob" parameterType="bob">
+		INSERT
+		INTO bob(bob_id, category_code, title, content, created_date, status, writer_id,
+				background_image, location_name, latitude, longitude, time, limit_num, fee, fee_date)
+		VALUES (
+			seq_bob_id.nextval, #{category:CHAR}, #{title:VARCHAR}, #{content:VARCHAR}, SYSDATE, 'Y', #{writtenUserId:INTEGER},
+			#{image:VARCHAR}, #{locationName:VARCHAR}, #{latitude:LONGVARCHAR}, #{longitude:LONGVARCHAR},
+			#{AppointmentTime:DATE}, #{limitNum:INTEGER}, #{fee:INTEGER}, #{feeDate:DATE}
+		)
+	</insert>
+	
+	<select id="getBob" parameterType="map" resultMap="bobSelectMap">
+		SELECT
+			bob_id, title, content, bob.created_date AS created_date
+		<if test="category == 'B01'">
+			locationName, latitude, longitude
+		</if>
+		
+		FROM BOB, USERS
+		WHERE bob.writer_id = users.writer_id
+		<where>
+		
+		</where>	
+	</select>
 
 </mapper>

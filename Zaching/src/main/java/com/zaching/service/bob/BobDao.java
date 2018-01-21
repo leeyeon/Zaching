@@ -5,6 +5,7 @@ import java.util.List;
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Bob;
 import com.zaching.service.domain.Fee;
+import com.zaching.service.domain.Participant;
 
 public interface BobDao {
 
@@ -12,7 +13,11 @@ public interface BobDao {
 	
 	public List<Bob> listBob(Search search) throws Exception;
 	
-	public Bob getBob(int bobId) throws Exception;
+	public List<Participant> listParticipant() throws Exception;
+	
+	public List<Fee> listFeeBob(int bobId) throws Exception;
+	
+	public Bob getBob(int bobId, String category) throws Exception;
 	
 	public void updateBob(Bob bob) throws Exception;
 	
@@ -23,8 +28,6 @@ public interface BobDao {
 	public void deleteBob(int bobId) throws Exception;
 	
 	public void setFeeBob(int userId, String setting_fee) throws Exception;
-	
-	public List<Fee> listFeeBob(int bobId) throws Exception;
 	
 	public void payFeeBob(int userId, int bobId) throws Exception;
 	
