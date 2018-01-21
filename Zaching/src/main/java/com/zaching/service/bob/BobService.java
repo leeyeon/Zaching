@@ -12,6 +12,8 @@ public interface BobService {
 	
 	public Map<String, Object> listBob(Search search) throws Exception;
 	
+	//public Map<String, Object> listFeeBob(int bobId) throws Exception;
+	
 	public Bob getBob(int bobId) throws Exception;
 	
 	public void updateBob(Bob bob) throws Exception;
@@ -23,8 +25,6 @@ public interface BobService {
 	public void deleteBob(int bobId) throws Exception;
 	
 	public void setFeeBob(int userId, String setting_fee) throws Exception;
-	
-	public Map<String, Object> listFeeBob(int bobId) throws Exception;
 	
 	public void payFeeBob(int userId, int bobId) throws Exception;
 	

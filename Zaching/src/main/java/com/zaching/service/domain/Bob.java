@@ -6,22 +6,22 @@ import java.util.List;
 public class Bob {
 	
 	private int bobId;
-	private int writtenUserID;
+	private int writtenUserId;
 	private String writtenUserName;
 	private String writtenUserProfile;
 	private String category;
 	private String title;
-	private String description;
+	private String content;
 	private String image;
 	private int limitNum;
 	private String locationName;
 	private String latitude;
-	private String longtitude;
+	private String longitude;
+	private Date AppointmentTime;
 	private Date createdDate;
 	private int fee;
 	private Date feeDate;
 	private String status;
-	private List<Participant> listParticipant;
 
 	public Bob() {
 		// TODO Auto-generated constructor stub
@@ -35,12 +35,12 @@ public class Bob {
 		this.bobId = bobId;
 	}
 
-	public int getWrittenUserID() {
-		return writtenUserID;
+	public int getWrittenUserId() {
+		return writtenUserId;
 	}
 
-	public void setWrittenUserID(int writtenUserID) {
-		this.writtenUserID = writtenUserID;
+	public void setWrittenUserId(int writtenUserId) {
+		this.writtenUserId = writtenUserId;
 	}
 
 	public String getWrittenUserName() {
@@ -75,12 +75,12 @@ public class Bob {
 		this.title = title;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getContent() {
+		return content;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public String getImage() {
@@ -115,12 +115,20 @@ public class Bob {
 		this.latitude = latitude;
 	}
 
-	public String getLongtitude() {
-		return longtitude;
+	public String getLongitude() {
+		return longitude;
 	}
 
-	public void setLongtitude(String longtitude) {
-		this.longtitude = longtitude;
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public Date getAppointmentTime() {
+		return AppointmentTime;
+	}
+
+	public void setAppointmentTime(Date appointmentTime) {
+		AppointmentTime = appointmentTime;
 	}
 
 	public Date getCreatedDate() {
@@ -155,21 +163,15 @@ public class Bob {
 		this.status = status;
 	}
 
-	public List<Participant> getListParticipant() {
-		return listParticipant;
-	}
-
-	public void setListParticipant(List<Participant> listParticipant) {
-		this.listParticipant = listParticipant;
-	}
-
 	@Override
 	public String toString() {
-		return "Bob [bobId=" + bobId + ", writtenUserID=" + writtenUserID + ", writtenUserName=" + writtenUserName
+		return "Bob [bobId=" + bobId + ", writtenUserId=" + writtenUserId + ", writtenUserName=" + writtenUserName
 				+ ", writtenUserProfile=" + writtenUserProfile + ", category=" + category + ", title=" + title
-				+ ", description=" + description + ", image=" + image + ", limitNum=" + limitNum + ", locationName="
-				+ locationName + ", latitude=" + latitude + ", longtitude=" + longtitude + ", createdDate="
-				+ createdDate + ", fee=" + fee + ", feeDate=" + feeDate + ", status=" + status + ", listParticipant="
-				+ listParticipant + "]";
+				+ ", content=" + content + ", image=" + image + ", limitNum=" + limitNum + ", locationName="
+				+ locationName + ", latitude=" + latitude + ", longitude=" + longitude + ", AppointmentTime="
+				+ AppointmentTime + ", createdDate=" + createdDate + ", fee=" + fee + ", feeDate=" + feeDate
+				+ ", status=" + status + "]";
 	}
+
 }
+

@@ -1,11 +1,18 @@
 
 SELECT seq_product_prod_no.currval FROM DUAL;
 
-CREATE SEQUENCE seq_user_user_id		 	INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_bob_bob_id		 	INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_participant_participant_id	 INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_fee_fee_id  INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_comment_comment_id  INCREMENT BY 1 START WITH 1;
+/* ÀüÃ¼ ½ÃÄö½º Á¶È¸ 
+ * ½ÃÄö½º ·ê : seq_(tablename)_id;
+ * */
+SELECT * FROM USER_SEQUENCES;
+
+CREATE SEQUENCE seq_user_id		 	INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_bob_id		 	INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_participant_id	 INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_fee_id  INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_payment_id  INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_report_id	 INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_comment_id  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_newsfeed_id  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_voice_id  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_report_id	 INCREMENT BY 1 START WITH 1;
@@ -30,15 +37,15 @@ CREATE TABLE USERS (
 	account_seq_no number,
 	total_point number  DEFAULT 0 NOT NULL,
 	total_mileage number DEFAULT 0 NOT NULL,
-	total_recommend number NOT NULL,
-	latest_date DATE NOT NULL,
+	total_recommend number DEFAULT 0 NOT NULL,
+	latest_date DATE,
 	created_date DATE NOT NULL,
-	setting_rent_charge char(2) NOT NULL,
-	setting_news char(2) NOT NULL,
-	setting_newsfeed char(2) NOT NULL,
-	setting_broadcast char(2) NOT NULL,
-	setting_friend char(2) NOT NULL,
-	setting_bob char(2) NOT NULL,
+	setting_rent_charge char(2) DEFAULT 'Y' NOT NULL,
+	setting_news char(2) DEFAULT 'Y' NOT NULL,
+	setting_newsfeed char(2) DEFAULT 'Y' NOT NULL,
+	setting_broadcast char(2) DEFAULT 'Y' NOT NULL,
+	setting_friend char(2) DEFAULT 'Y' NOT NULL,
+	setting_bob char(2) DEFAULT 'Y' NOT NULL,
 	sns_type char(10),
 	PRIMARY KEY(user_id)
 );
@@ -59,7 +66,7 @@ CREATE TABLE REPORT (
 
 CREATE TABLE BOB (
 	bob_id numeric not null,
-	category_coe char(4) not null,
+	category_code char(4) not null,
 	title varchar2(50) not null,
 	content varchar2(4000) not null,
 	created_date date not null,
@@ -138,6 +145,52 @@ CREATE TABLE Newsfeed (
     user_ID        NUMERIC       NOT NULL  REFERENCES users(user_ID),
 	PRIMARY KEY(newsfeed_ID)
 );
+
+CREATE TABLE MESSAGE(
+	MESSAGE_ID NUMERIC PRIMARY KEY,
+	USER_ID NUMERIC NOT NULL REFERENCES USERS(USER_ID),
+	FRIEND_ID NUMERIC NOT NULL REFERENCES USERS(USER_ID),
+	CREATED_DATE DATE NOT NULL,
+	CONTENT VARCHAR2(100) NOT NULL
+);
+
+CREATE TABLE FRIEND(
+	ID NUMERIC PRIMARY KEY,
+	USER_ID NUMERIC NOT NULL REFERENCES USERS(USER_ID),
+	FRIEND_ID NUMERIC NOT NULL REFERENCES USERS(USER_ID),
+	STATUS CHAR(2)
+);
+
+CREATE TABLE NOTICE(
+	NOTICE_ID NUMERIC NOT NULL PRIMARY KEY,
+	CATEGORY_CODE CHAR(4) NOT NULL,
+	CREATED_DATE DATE NOT NULL,
+	BOB_ID NUMERIC,
+	SENDER_ID NUMERIC NOT NULL
+);
+
+CREATE TABLE NOTICE_TARGET(
+	NOTICE_TARGET_ID NUMERIC NOT NULL PRIMARY KEY,
+	NOTICE_ID NUMERIC NOT NULL REFERENCES NOTICE(NOTICE_ID),
+	RECEIVER_ID NUMERIC NOT NULL REFERENCES USERS(USER_ID),
+	SENDER_ID NUMERIC NOT NULL,
+	STATUS CHAR(2) NOT NULL
+);
+
+
+CREATE TABLE PAYMENT(
+	PAYMENT_ID NUMERIC NOT NULL PRIMARY KEY,
+	TIME DATE NOT NULL,
+	MONEY NUMERIC NOT NULL,
+	PAYMENT_CODE NUMERIC NOT NULL,
+	USER_ID NUMERIC NOT NULL REFERENCES USERS(USER_ID)
+);
+
+
+INSERT INTO users(user_id, email, password, name, role, created_date)
+VALUES(seq_user_id.nextval, 'zaching@zaching.com', 'zaching', 'ÀÚÃñ',2, sysdate);
+INSERT INTO users(user_id, email, password, name, role, created_date)
+VALUES(seq_user_id.nextval, 'admin@admin.com', 'admin', '°ü¸®ÀÚ',3, sysdate);
 
 
 commit;
