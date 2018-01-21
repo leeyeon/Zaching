@@ -10,8 +10,8 @@ public class User {
 	private String password;//패스워드
 	private String name;//이름
 	private String address;//주소
-	private int longtitude;//경도
-	private int latitude;//위도
+	private String longitude;//경도
+	private String latitude;//위도
 	private String gender;//성별
 	private String phone;//연락처
 	private Date birth;//생일
@@ -91,22 +91,22 @@ public class User {
 	}
 
 
-	public int getLongtitude() {
-		return longtitude;
+	public String getLongitude() {
+		return longitude;
 	}
 
 
-	public void setLongtitude(int longtitude) {
-		this.longtitude = longtitude;
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 
 
-	public int getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 
 
-	public void setLatitude(int latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
 
@@ -334,7 +334,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", email=" + email + ", password=" + password + ", name=" + name
-				+ ", address=" + address + ", longtitude=" + longtitude + ", latitude=" + latitude + ", gender="
+				+ ", address=" + address + ", longitude=" + longitude + ", latitude=" + latitude + ", gender="
 				+ gender + ", phone=" + phone + ", birth=" + birth + ", profileIamge=" + profileIamge + ", role=" + role
 				+ ", realName=" + realName + ", bankCode=" + bankCode + ", accountNumber=" + accountNumber
 				+ ", accountCi=" + accountCi + ", accountSeqNo=" + accountSeqNo + ", totalPoint=" + totalPoint

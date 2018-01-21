@@ -18,5 +18,7 @@ public class UserController {
 		
 		return "redirect:/user/addProduct.jsp";
 	}
+	
+	
 
 }
