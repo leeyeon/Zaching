@@ -33,7 +33,7 @@ public interface UserService {
     public  void updateNotice(User user)throws Exception;
     
     //¾Ë¸²ÇÔ
-    public Map<String , Object>listNotice(Search search, int userId)throws Exception;
+    public Map<String , Object>listNotice(int userId)throws Exception;
     
     
     
