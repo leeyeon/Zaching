@@ -6,9 +6,12 @@ import java.util.List;
 public class Participant {
 	
 	private int participantId;
+	/* User TimeLine으로 이동하기 위함 */
+	private int userId;
 	private String participantName;
 	private String participantProfile;
 	private Date participatedDate;
+	private String isAutoFee;
 	private String status;
 
 	public Participant() {
@@ -55,11 +58,27 @@ public class Participant {
 		this.status = status;
 	}
 
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public String getIsAutoFee() {
+		return isAutoFee;
+	}
+
+	public void setIsAutoFee(String isAutoFee) {
+		this.isAutoFee = isAutoFee;
+	}
+
 	@Override
 	public String toString() {
-		return "Participant [participantId=" + participantId + ", participantName=" + participantName
-				+ ", participantProfile=" + participantProfile + ", participatedDate=" + participatedDate + ", status="
-				+ status + "]";
+		return "Participant [participantId=" + participantId + ", userId=" + userId + ", participantName="
+				+ participantName + ", participantProfile=" + participantProfile + ", participatedDate="
+				+ participatedDate + ", isAutoFee=" + isAutoFee + ", status=" + status + "]";
 	}
 
 }

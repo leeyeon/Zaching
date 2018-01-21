@@ -86,7 +86,7 @@ CREATE TABLE BOB (
 
 CREATE TABLE PARTICIPANT (
 	participant_id numeric not null,
-	participant_date date not null,
+	participated_date date not null,
 	status char(2) not null,
 	bob_id numeric not null,
 	user_id numeric not null,
@@ -191,6 +191,8 @@ INSERT INTO users(user_id, email, password, name, role, created_date)
 VALUES(seq_user_id.nextval, 'zaching@zaching.com', 'zaching', '磊民',2, sysdate);
 INSERT INTO users(user_id, email, password, name, role, created_date)
 VALUES(seq_user_id.nextval, 'admin@admin.com', 'admin', '包府磊',3, sysdate);
+INSERT INTO users(user_id, email, password, name, role, created_date)
+VALUES(seq_user_id.nextval, 'test@test.com', 'test', '磊民',2, sysdate);
 
 
 commit;

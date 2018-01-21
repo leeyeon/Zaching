@@ -4,9 +4,12 @@ import java.util.Date;
 
 public class Fee {
 	
+	private int participantId;
 	private int userId;
 	private Date paidDate;
 	private int paidFee;
+	private String userImage;
+	private String userName;
 	/*
 	 * 회비 냈는지 안냈는지 구분 
 	 */
@@ -14,6 +17,22 @@ public class Fee {
 
 	public Fee() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public int getParticipantId() {
+		return participantId;
+	}
+
+	public void setParticipantId(int participantId) {
+		this.participantId = participantId;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public Date getPaidDate() {
@@ -32,6 +51,22 @@ public class Fee {
 		this.paidFee = paidFee;
 	}
 
+	public String getUserImage() {
+		return userImage;
+	}
+
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -42,7 +77,8 @@ public class Fee {
 
 	@Override
 	public String toString() {
-		return "Fee [paidDate=" + paidDate + ", paidFee=" + paidFee + ", status=" + status + "]";
+		return "Fee [participantId=" + participantId + ", userId=" + userId + ", paidDate=" + paidDate + ", paidFee="
+				+ paidFee + ", userImage=" + userImage + ", userName=" + userName + ", status=" + status + "]";
 	}
 
 }
