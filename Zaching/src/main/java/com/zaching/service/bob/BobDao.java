@@ -17,7 +17,7 @@ public interface BobDao {
 	
 	public List<Fee> listFeeBob(int bobId) throws Exception;
 	
-	public Bob getBob(int bobId) throws Exception;
+	public Bob getBob(int bobId, String category) throws Exception;
 	
 	public void updateBob(Bob bob) throws Exception;
 	

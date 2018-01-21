@@ -11,12 +11,13 @@ public class Bob {
 	private String writtenUserProfile;
 	private String category;
 	private String title;
-	private String description;
+	private String content;
 	private String image;
 	private int limitNum;
 	private String locationName;
 	private String latitude;
-	private String longtitude;
+	private String longitude;
+	private Date AppointmentTime;
 	private Date createdDate;
 	private int fee;
 	private Date feeDate;
@@ -74,12 +75,12 @@ public class Bob {
 		this.title = title;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getContent() {
+		return content;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public String getImage() {
@@ -114,12 +115,20 @@ public class Bob {
 		this.latitude = latitude;
 	}
 
-	public String getLongtitude() {
-		return longtitude;
+	public String getLongitude() {
+		return longitude;
 	}
 
-	public void setLongtitude(String longtitude) {
-		this.longtitude = longtitude;
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public Date getAppointmentTime() {
+		return AppointmentTime;
+	}
+
+	public void setAppointmentTime(Date appointmentTime) {
+		AppointmentTime = appointmentTime;
 	}
 
 	public Date getCreatedDate() {
@@ -158,8 +167,11 @@ public class Bob {
 	public String toString() {
 		return "Bob [bobId=" + bobId + ", writtenUserId=" + writtenUserId + ", writtenUserName=" + writtenUserName
 				+ ", writtenUserProfile=" + writtenUserProfile + ", category=" + category + ", title=" + title
-				+ ", description=" + description + ", image=" + image + ", limitNum=" + limitNum + ", locationName="
-				+ locationName + ", latitude=" + latitude + ", longtitude=" + longtitude + ", createdDate="
-				+ createdDate + ", fee=" + fee + ", feeDate=" + feeDate + ", status=" + status + "]";
+				+ ", content=" + content + ", image=" + image + ", limitNum=" + limitNum + ", locationName="
+				+ locationName + ", latitude=" + latitude + ", longitude=" + longitude + ", AppointmentTime="
+				+ AppointmentTime + ", createdDate=" + createdDate + ", fee=" + fee + ", feeDate=" + feeDate
+				+ ", status=" + status + "]";
 	}
+
 }
+
