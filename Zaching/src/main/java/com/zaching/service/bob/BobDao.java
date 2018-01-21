@@ -9,11 +9,11 @@ import com.zaching.service.domain.Participant;
 
 public interface BobDao {
 
-	public void addBob(Bob bob) throws Exception;
+	public int addBob(Bob bob) throws Exception;
 	
 	public List<Bob> listBob(Search search) throws Exception;
 	
-	public List<Participant> listParticipant() throws Exception;
+	public List<Participant> listParticipant(int bobId) throws Exception;
 	
 	public List<Fee> listFeeBob(int bobId) throws Exception;
 	
@@ -21,15 +21,19 @@ public interface BobDao {
 	
 	public void updateBob(Bob bob) throws Exception;
 	
+	public int getParticipant(int userId, int bobId) throws Exception;
+	
 	public void enterBob(int userId, int bobId) throws Exception;
+	
+	public void cancleBob(int participantId) throws Exception;
 	
 	public void inviteBob(int userId, int bobId) throws Exception;
 	
 	public void deleteBob(int bobId) throws Exception;
 	
-	public void setFeeBob(int userId, String setting_fee) throws Exception;
+	public void setFeeBob(int participantId, boolean isAutoFee) throws Exception;
 	
-	public void payFeeBob(int userId, int bobId) throws Exception;
+	public void payFeeBob(Fee fee) throws Exception;
 	
 	public int getTotalCount(Search search) throws Exception;
 	

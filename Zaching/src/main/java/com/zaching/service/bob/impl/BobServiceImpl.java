@@ -1,5 +1,6 @@
 package com.zaching.service.bob.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,11 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.bob.BobDao;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
+import com.zaching.service.domain.Fee;
+
+/*
+ * 작성자 : 이연희
+ * */
 
 @Service("bobServiceImpl")
 public class BobServiceImpl implements BobService {
@@ -30,30 +36,48 @@ public class BobServiceImpl implements BobService {
 	@Override
 	public void addBob(Bob bob) throws Exception {
 		bobDao.addBob(bob);
+		System.out.println(bob.getBobId());
+		/* 방ID 리턴 값으로 방장도 참여자 테이블에 추가시키기 */
+		bobDao.enterBob(bob.getWrittenUserId(), bob.getBobId());
 	}
 
 	@Override
 	public Map<String, Object> listBob(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Bob> list = bobDao.listBob(search);
+		int totalCount = bobDao.getTotalCount(search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("totalCount", totalCount);
+		
+		return map;
 	}
 
 	@Override
-	public Bob getBob(int bobId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Object> getBob(int bobId, String category) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bob", bobDao.getBob(bobId, category));
+		return map;
 	}
 
 	@Override
 	public void updateBob(Bob bob) throws Exception {
-		// TODO Auto-generated method stub
-
+		bobDao.updateBob(bob);
 	}
 
 	@Override
 	public void enterBob(int userId, int bobId) throws Exception {
-		// TODO Auto-generated method stub
-
+		
+		int participantId = bobDao.getParticipant(userId, bobId);
+		System.out.println("참가 시퀀스 id : "+participantId);
+		
+		/* 참가 중이 아닐때 */
+		if(participantId == 0) {
+			bobDao.enterBob(userId, bobId);
+		} else {
+			bobDao.cancleBob(participantId);
+		}
 	}
 
 	@Override
@@ -64,20 +88,17 @@ public class BobServiceImpl implements BobService {
 
 	@Override
 	public void deleteBob(int bobId) throws Exception {
-		// TODO Auto-generated method stub
-
+		bobDao.deleteBob(bobId);
 	}
 
 	@Override
-	public void setFeeBob(int userId, String setting_fee) throws Exception {
-		// TODO Auto-generated method stub
-
+	public void setFeeBob(int participantId, boolean isAutoFee) throws Exception {
+		bobDao.setFeeBob(participantId, isAutoFee);
 	}
 
 	@Override
-	public void payFeeBob(int userId, int bobId) throws Exception {
-		// TODO Auto-generated method stub
-
+	public void payFeeBob(Fee fee) throws Exception {
+		bobDao.payFeeBob(fee);
 	}
 
 }
