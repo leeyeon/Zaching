@@ -19,11 +19,11 @@ import com.zaching.service.domain.Participant;
  * 작성자 : 이연희
  * */
 
-@Repository("bobDaoImpl")
+//@Repository("bobDaoImpl")
 public class BobDaoImpl implements BobDao {
 
 	@Autowired
-	@Qualifier("sqlSessionTemplate")
+	//@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
 	
 	public void setSqlSession(SqlSession sqlSession) {

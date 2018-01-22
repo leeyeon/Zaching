@@ -27,12 +27,7 @@
 
 <div class="container">
 せせせせせせせせせせせせせせせせせせせせせせせせせせせせせせせせせ
- <a href="#RentCharge" class="active">穿/杉室舛左</a>
-  <a href="#AroundSearch">畷税獣竺伊事</a>
-  <a href="#Travel">厩鎧食楳舛左</a>
-  <a href="#JobInfo">戚腰含因辰含径</a>
-   <a href="#EventInfo">畷税繊楳紫雌念</a>
-   <a href="#NoticeInfo">硝軒耕舛左</a>
+ 
 
 </div>
 

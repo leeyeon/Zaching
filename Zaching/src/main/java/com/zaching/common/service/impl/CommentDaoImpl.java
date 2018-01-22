@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import org.springframework.beans.factory.BeanCreationException;
+
 import com.zaching.common.service.CommentDao;
 import com.zaching.service.domain.Comment;
 
@@ -14,11 +16,11 @@ import com.zaching.service.domain.Comment;
  * 작성자 : 이연희
  * */
 
-@Repository("commentDaoImpl")
+//@Repository("CommentDaoImpl")
 public class CommentDaoImpl implements CommentDao {
 	
 	@Autowired
-	@Qualifier("sqlSessionTemplate")
+	//@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
 	
 	public void setSqlSession(SqlSession sqlSession) {
