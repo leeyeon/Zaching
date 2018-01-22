@@ -36,6 +36,20 @@
 </style>
 </head>
 <body>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
+<script>
+    //load함수를 이용하여 core스크립트의 로딩이 완료된 후, 우편번호 서비스를 실행합니다.
+    daum.postcode.load(function(){
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+                // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+            }
+        }).open();
+    });
+</script>
+
 <p style="margin-top:-12px">
     <em class="link">
         <a href="../../documentation/#CategoryCode" target="_blank">카테고리 코드목록을 보시려면 여기를 클릭하세요!</a>
