@@ -21,7 +21,8 @@
 		<typeAlias alias="participant" type="com.zaching.service.domain.Participant"/>
 		<typeAlias alias="fee" type="com.zaching.service.domain.Fee"/>
 		<typeAlias alias="search" type="com.zaching.common.domain.Search"/>
-		<typeAlias alias="comment" type="com.zaching.service.domain.Comment"/>
+		<typeAlias alias="comment" type="com.zaching.service.domain.Comment"/>	
+
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->

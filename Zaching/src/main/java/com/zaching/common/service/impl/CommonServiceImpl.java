@@ -13,11 +13,11 @@ import com.zaching.common.service.CommentDao;
 import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.Comment;
 
-@Service("commonServiceImpl")
+//@Service("commonServiceImpl")
 public class CommonServiceImpl implements CommonService {
 	
 	@Autowired
-	@Qualifier("commentDaoImpl")
+	//@Qualifier("commentDaoImpl")
 	private CommentDao commentDao;
 	
 	/*

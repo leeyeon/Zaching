@@ -13,7 +13,7 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Payment;
 import com.zaching.service.payment.PaymentDao;
 
-@Repository("paymentDaoImpl")
+//@Repository("paymentDaoImpl")
 public class PaymentDaoImpl implements PaymentDao {
 	
 	@Autowired
