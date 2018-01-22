@@ -12,6 +12,7 @@ public class Participant {
 	private String participantProfile;
 	private Date participatedDate;
 	private String isAutoFee;
+	private boolean isWriter;
 	private String status;
 
 	public Participant() {
@@ -74,11 +75,23 @@ public class Participant {
 		this.isAutoFee = isAutoFee;
 	}
 
+	public boolean getIsWriter() {
+		return isWriter;
+	}
+
+	public void setIsWriter(int writerId) {
+		if(writerId == this.userId) {
+			this.isWriter = true;
+		} else {
+			this.isWriter = false;
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "Participant [participantId=" + participantId + ", userId=" + userId + ", participantName="
 				+ participantName + ", participantProfile=" + participantProfile + ", participatedDate="
-				+ participatedDate + ", isAutoFee=" + isAutoFee + ", status=" + status + "]";
+				+ participatedDate + ", isAutoFee=" + isAutoFee + ", isWriter=" + isWriter + ", status=" + status + "]";
 	}
 
 }

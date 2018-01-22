@@ -15,14 +15,14 @@ public interface BobService {
 	
 	//public Map<String, Object> listFeeBob(int bobId) throws Exception;
 	
-	public Map<String, Object> getBob(int bobId, String category) throws Exception;
+	public Map<String, Object> getBob(int bobId, String category, int monthFee) throws Exception;
 	
 	public void updateBob(Bob bob) throws Exception;
 	
 	// 참석중이면 삭제되고 참석 중이 아니면 추가시킴
 	public void enterBob(int userId, int bobId) throws Exception;
 	
-	public void inviteBob(List<Integer> userId, int bobId) throws Exception;
+	public void inviteBob(List<Integer> listUser, int bobId) throws Exception;
 	
 	public void deleteBob(int bobId) throws Exception;
 	
