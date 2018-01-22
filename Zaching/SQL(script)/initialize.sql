@@ -18,6 +18,8 @@ CREATE SEQUENCE seq_voice_id  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_report_id	 INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_friend_id   INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_message_id   INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_notice_id	 INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_notice_target_id	 INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE USERS ( 
 	user_id      		number	 NOT NULL,
@@ -112,7 +114,7 @@ CREATE TABLE COMMENTS (
 	comment_id numeric not null,
 	content varchar2(1000) not null,
 	created_date date not null,
-	category_code varchar2(4) not null,
+	category_code char(4) not null,
 	status char(2) default 'Y' not null,
 	room_id numeric not null,
 	user_id numeric not null,

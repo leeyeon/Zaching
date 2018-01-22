@@ -41,20 +41,20 @@ public class BobDaoImpl implements BobDao {
 
 	@Override
 	public List<Bob> listBob(Search search) throws Exception {
-		List<Bob> list = sqlSession.selectList("BobMapper.listBob", search);
 		return sqlSession.selectList("BobMapper.listBob", search);
 	}
 
 	@Override
 	public List<Participant> listParticipant(int bobId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList("BobMapper.listParticipant", bobId);
 	}
 
 	@Override
-	public List<Fee> listFeeBob(int bobId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Fee> listFeeBob(int bobId, int month) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bobId", bobId);
+		map.put("month", month);
+		return sqlSession.selectList("BobMapper.listFeeBob", map);
 	}
 
 	@Override
@@ -100,9 +100,18 @@ public class BobDaoImpl implements BobDao {
 	}
 
 	@Override
-	public void inviteBob(int userId, int bobId) throws Exception {
-		// TODO Auto-generated method stub
+	public void inviteBob(List<Integer> listUser, int bobId) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
 		
+		map.put("list", listUser);
+		map.put("bobId", bobId);
+		
+		for (Integer integer : listUser) {
+			System.out.println(integer);
+		}
+
+		
+		sqlSession.insert("BobMapper.inviteBob", map);
 	}
 
 	@Override
