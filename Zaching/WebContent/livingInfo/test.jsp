@@ -121,34 +121,7 @@ $(function() {
 	    });
 	});
 	
-$(function() {	
-	
-	$( "#selectSearch" ).on("click" , function() {
-		alert("gg");
-	var geocoder = new daum.maps.services.Geocoder();
 
-	geocoder.addressSearch('#selectSearch', function(result, status) {
-
-	     if (status === daum.maps.services.Status.OK) {
-
-	        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
-
-	        var marker = new daum.maps.Marker({
-	            map: map,
-	            position: coords
-	        });
-
-	        var infowindow = new daum.maps.InfoWindow({
-	            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
-	        });
-	        infowindow.open(map, marker);
-
-	        map.setCenter(coords);
-	    } 
-	});
-
-});
-});
 });
 </script>
 <body>
@@ -224,6 +197,39 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 
 // 지도를 생성합니다    
 var map = new daum.maps.Map(mapContainer, mapOption); 
+
+
+$(function() {	
+	
+	$( "#selectSearch" ).on("click" , function() {
+
+        console.log($("#selectAddress").text());
+		var map = new daum.maps.Map(mapContainer, mapOption); 
+		
+	var geocoder = new daum.maps.services.Geocoder();
+
+	geocoder.addressSearch('$("#selectAddress").text()', function(result, status) {
+
+	     if (status === daum.maps.services.Status.OK) {
+
+	        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+	        var marker = new daum.maps.Marker({
+	            map: map,
+	            position: coords
+	        });
+
+	        var infowindow = new daum.maps.InfoWindow({
+	            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+	        });
+	        infowindow.open(map, marker);
+
+	        map.setCenter(coords);
+	    } 
+	});
+
+});
+});
 
 // 장소 검색 객체를 생성합니다
 var ps = new daum.maps.services.Places(map); 
@@ -387,7 +393,7 @@ function onClickCategory() {
     }
 }
 
-// 클릭된 카테고리에만 클릭된 스타일을 적용하는 함수입니다
+
 function changeCategoryClass(el) {
     var category = document.getElementById('category'),
         children = category.children,
@@ -401,6 +407,7 @@ function changeCategoryClass(el) {
         el.className = 'on';
     } 
 } 
+
 
 </script>
 </body>
