@@ -18,11 +18,11 @@ import com.zaching.service.domain.Fee;
  * 작성자 : 이연희
  * */
 
-//@Service("bobServiceImpl")
+@Service("bobServiceImpl")
 public class BobServiceImpl implements BobService {
 
 	@Autowired
-	//@Qualifier("bobDaoImpl")
+	@Qualifier("bobDaoImpl")
 	private BobDao bobDao;
 	
 	public void setBobDao(BobDao bobDao) {
