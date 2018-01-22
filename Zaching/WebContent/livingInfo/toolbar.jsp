@@ -10,7 +10,7 @@
 	
 	<div class="container">
 	       
-		<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
+		<a class="navbar-brand" href="/index.jsp"></a>
 		
 		<!-- toolBar Button Start //////////////////////// -->
 		<div class="navbar-header">
@@ -30,125 +30,66 @@
 	         	<!-- Tool Bar 를 다양하게 사용하면.... -->
 	             <ul class="nav navbar-nav">
 	             
-	              <!--  회원관리 DrowDown -->
-	              <li class="dropdown">
-	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                         <span >회원관리</span>
-	                         <span class="caret"></span>
-	                     </a>
-	                     <ul class="dropdown-menu">
-	                         <li><a href="#">개인정보조회</a></li>
-	                         
-	                         <c:if test="${sessionScope.user.role == 'admin'}">
-	                         	<li><a href="#">회원정보조회</a></li>
-	                         </c:if>
-	                         
-	                         <li class="divider"></li>
-	                         <li><a href="#">etc...</a></li>
-	                     </ul>
-	                 </li>
-	                 
-	              <!-- 판매상품관리 DrowDown  -->
-	               <c:if test="${sessionScope.user.role == 'admin'}">
-		              <li class="dropdown">
-		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		                         <span >판매상품관리</span>
-		                         <span class="caret"></span>
-		                     </a>
-		                     <ul class="dropdown-menu">
-		                         <li><a href="#">판매상품등록</a></li>
-		                         <li><a href="#">판매상품관리</a></li>
-		                         <li class="divider"></li>
-		                         <li><a href="#">etc..</a></li>
-		                     </ul>
-		                </li>
-	                 </c:if>
-	                 
-	              <!-- 구매관리 DrowDown -->
-	              <li class="dropdown">
-	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                         <span >상품구매</span>
-	                         <span class="caret"></span>
-	                     </a>
-	                     <ul class="dropdown-menu">
-	                         <li><a href="#">상 품 검 색</a></li>
-	                         
-	                         <c:if test="${sessionScope.user.role == 'user'}">
-	                           <li><a href="#">구매이력조회</a></li>
-	                         </c:if>
-	                         
-	                         <li><a href="#">최근본상품</a></li>
-	                         <li class="divider"></li>
-	                         <li><a href="#">etc..</a></li>
-	                     </ul>
-	                 </li>
-	                 
-	                 <li><a href="#">etc...</a></li>
-	             </ul>
-	             
 	             <ul class="nav navbar-nav navbar-right">
-	                <li><a href="#">로그아웃</a></li>
+	                <li><a href="#">편의점행사상품</a></li>
 	            </ul>
-		</div>
-		<!-- dropdown hover END -->	       
+	            
+	            <ul class="nav navbar-nav navbar-right">
+	                <li><a href="#">이번달공채달력</a></li>
+	            </ul>
+	            
+	            <ul class="nav navbar-nav navbar-right">
+	                <li><a href="#">국내여행정보</a></li>
+	            </ul>
+	            
+	              <ul class="nav navbar-nav navbar-right">
+	                <li><a href="#">주변편의시설검색</a></li>
+	            </ul>
+	  	
+                 <ul class="nav navbar-nav navbar-right">
+	                <li><a href="#">지역별전월세정보</a></li>
+	            </ul>
+	            
+	  
+	             
+		</div>  
 	    
 	</div>
 </div>
-		<!-- ToolBar End /////////////////////////////////////-->
  	
    	
    	
    	<script type="text/javascript">
 	
-		//============= logout Event  처리 =============	
-		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains('로그아웃')").on("click" , function() {
-		 		//FB.logout();					
-				$(self.location).attr("href","/user/logout");
-				//self.location = "/user/logout"
-			}); 
-			
-		 	
-		 });
+   
 		
 		 $(function() {
-			 $("a:contains('판매상품등록')").on("click" , function() {
-					self.location = "/product/addProductView.jsp"
+			 $("a:contains('주변편의시설검색')").on("click" , function() {
+					self.location = "/livingInfo/getAroundSearch.jsp"
 					
 				}); 
 			 
-			 $("a:contains('구매이력조회')").on("click" , function() {
-					self.location = "/purchase/listPurchase"
+			 $("a:contains('지역별전월세정보')").on("click" , function() {
+					self.location = "/livingInfo/getRentCharge.jsp"
 					
 				}); 
 			 
-			 $("a:contains('판매상품관리')").on("click" , function() {
-					self.location = "/product/listProduct?menu=manage"
+			 $("a:contains('편의점행사상품')").on("click" , function() {
+				 self.location = "/livingInfo/getEventInfo.jsp"
+					
+				}); 
+			 
+			 $("a:contains('이번달공채달력')").on("click" , function() {
+				 self.location = "/livingInfo/getJobInfo.jsp"
 	
 				}); 
 			 
-			 $("a:contains('상 품 검 색')").on("click" , function() {
+			 $("a:contains('국내여행정보')").on("click" , function() {
 				 
-					self.location = "/product/listProduct?menu=search"
+				 self.location = "/livingInfo/getTravel.jsp"
 	
 				}); 
 		 });
-		//============= 회원정보조회 Event  처리 =============	
-		 $(function() {
-						 
-			 
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains('회원정보조회')").on("click" , function() {
-				//$(self.location).attr("href","/user/logout");
-				self.location = "/user/listUser"
-			}); 
-		 });
 		
-		//=============  개인정보조회회 Event  처리 =============	
-	 	$( "a:contains('개인정보조회')" ).on("click" , function() {
-	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
-		});
 		
 	</script>  
