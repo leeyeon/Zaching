@@ -4,13 +4,49 @@ public class Voice {
 	
 	private int voiceID ;
 	private String voiceName;
-	private int voiceCategory;
-	private String voiceIyrics;
+	private String voiceCategory;
+	private String voicelyrics;
 	private String regDate;
 	private int userID;
+	private String backgroundImage;
+	private int countReply;
+	private int countUser;
+	private String status;
 	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Voice() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public int getCountReply() {
+		return countReply;
+	}
+
+	public void setCountReply(int countReply) {
+		this.countReply = countReply;
+	}
+
+	public int getCountUser() {
+		return countUser;
+	}
+
+	public void setCountUser(int countUser) {
+		this.countUser = countUser;
+	}
+
+	public String getBackgroundImage() {
+		return backgroundImage;
+	}
+
+	public void setBackgroundImage(String backgroundImage) {
+		this.backgroundImage = backgroundImage;
 	}
 
 	public int getVoiceID() {
@@ -29,20 +65,20 @@ public class Voice {
 		this.voiceName = voiceName;
 	}
 
-	public int getVoiceCategory() {
+	public String getVoiceCategory() {
 		return voiceCategory;
 	}
 
-	public void setVoiceCategory(int voiceCategory) {
+	public void setVoiceCategory(String voiceCategory) {
 		this.voiceCategory = voiceCategory;
 	}
 
-	public String getVoiceIyrics() {
-		return voiceIyrics;
+	public String getVoicelyrics() {
+		return voicelyrics;
 	}
 
-	public void setVoiceIyrics(String voiceIyrics) {
-		this.voiceIyrics = voiceIyrics;
+	public void setVoicelyrics(String voicelyrics) {
+		this.voicelyrics = voicelyrics;
 	}
 
 	public String getRegDate() {
@@ -64,8 +100,12 @@ public class Voice {
 	@Override
 	public String toString() {
 		return "Voice [voiceID=" + voiceID + ", voiceName=" + voiceName + ", voiceCategory=" + voiceCategory
-				+ ", voiceIyrics=" + voiceIyrics + ", regDate=" + regDate + ", userID=" + userID + "]";
+				+ ", voicelyrics=" + voicelyrics + ", regDate=" + regDate + ", userID=" + userID + ", backgroundImage="
+				+ backgroundImage + ", countReply=" + countReply + ", countUser=" + countUser + ", status=" + status
+				+ "]";
 	}
+
+	
 
 
 	
