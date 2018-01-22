@@ -110,7 +110,7 @@ CREATE TABLE COMMENTS (
 	comment_id numeric not null,
 	content varchar2(1000) not null,
 	created_date date not null,
-	category_code varchar2(4) not null,
+	category_code char(4) not null,
 	status char(2) default 'Y' not null,
 	room_id numeric not null,
 	user_id numeric not null,
