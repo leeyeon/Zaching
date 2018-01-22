@@ -26,7 +26,7 @@ CREATE TABLE USERS (
 	role  				 CHAR(2) 		DEFAULT 0  NOT NULL   ,
 	name  				 	 VARCHAR2(10)  	   NOT NULL,
 	address  		 	VARCHAR2(50),
-	longtitude  		 		number,
+	longitude  		 		number,
 	latitude  		 		number,
 	gender  		  char(2),
 	phone 		  varchar2(12),

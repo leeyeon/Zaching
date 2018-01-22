@@ -7,25 +7,25 @@
 <mapper namespace="UserMapper">
 	
 	<resultMap type="user" id="userSelectMap">
-		<result property="userId" 		  column="user_id" 	 		jdbcType="NUMBER"/>
-		<result property="email"  		  column="email"   	 		jdbcType="VARCHAR2"/>
-		<result property="name"   		  column="name"    	 		jdbcType="VARCHAR2"/>
-		<result property="address"		  column="address" 	 		jdbcType="VARCHAR2"/>
-		<result property="longitude" 	  column="longitude" 		jdbcType="VARCHAR2"/>
-		<result property="latitude" 	  column="latitude"  		jdbcType="VARCHAR2"/>
+		<result property="userId" 		  column="user_id" 	 		jdbcType="INTEGER"/>
+		<result property="email"  		  column="email"   	 		jdbcType="VARCHAR"/>
+		<result property="name"   		  column="name"    	 		jdbcType="VARCHAR"/>
+		<result property="address"		  column="address" 	 		jdbcType="VARCHAR"/>
+		<result property="longitude" 	  column="longitude" 		jdbcType="DOUBLE"/>
+		<result property="latitude" 	  column="latitude"  		jdbcType="DOUBLE"/>
 		<result property="gender" 		  column="gender" 	 		jdbcType="CHAR"/>
-		<result property="phone" 		  column="phone" 	 		jdbcType="VARCHAR2"/>
+		<result property="phone" 		  column="phone" 	 		jdbcType="VARCHAR"/>
 		<result property="birth" 		  column="birth" 	 		jdbcType="DATE"/>
-		<result property="profileIamge"   column="profile_image" 	jdbcType="VARCHAR2"/>
+		<result property="profileIamge"   column="profile_image" 	jdbcType="VARCHAR"/>
 		<result property="role" 		  column="role" 	 		jdbcType="CHAR"/>
-		<result property="realName" 	  column="real_name" 		jdbcType="VARCHAR2"/>
-		<result property="bankCode" 	  column="bank_code" 		jdbcType="NUMBER"/>
-		<result property="accountNumber"  column="account_number" 	jdbcType="VARCHAR2"/>
-		<result property="accountCi" 	  column="account_ci" 		jdbcType="NUMBER"/>
-		<result property="accountSeqNo"   column="account_seq_no" 	jdbcType="NUMBER"/>
-		<result property="totalPoint" 	  column="total_point" 		jdbcType="NUMBER"/>
-		<result property="totalMileage"   column="total_mileage" 	jdbcType="NUMBER"/>
-		<result property="totalRecommend" column="total_recommend" 	jdbcType="NUMBER"/>
+		<result property="realName" 	  column="real_name" 		jdbcType="VARCHAR"/>
+		<result property="bankCode" 	  column="bank_code" 		jdbcType="INTEGER"/>
+		<result property="accountINTEGER"  column="account_INTEGER" 	jdbcType="VARCHAR"/>
+		<result property="accountCi" 	  column="account_ci" 		jdbcType="INTEGER"/>
+		<result property="accountSeqNo"   column="account_seq_no" 	jdbcType="INTEGER"/>
+		<result property="totalPoint" 	  column="total_point" 		jdbcType="INTEGER"/>
+		<result property="totalMileage"   column="total_mileage" 	jdbcType="INTEGER"/>
+		<result property="totalRecommend" column="total_recommend" 	jdbcType="INTEGER"/>
 		<result property="latestDate" 	  column="latest_date" 		jdbcType="DATE"/>
 		<result property="createdDate" 	  column="created_date" 	jdbcType="DATE"/>
 		<result property="setRentCharge"  column="setting_rent_charge" jdbcType="CHAR"/>
