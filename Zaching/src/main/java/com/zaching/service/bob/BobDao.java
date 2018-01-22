@@ -15,7 +15,7 @@ public interface BobDao {
 	
 	public List<Participant> listParticipant(int bobId) throws Exception;
 	
-	public List<Fee> listFeeBob(int bobId) throws Exception;
+	public List<Fee> listFeeBob(int bobId, int month) throws Exception;
 	
 	public Bob getBob(int bobId, String category) throws Exception;
 	
@@ -27,7 +27,7 @@ public interface BobDao {
 	
 	public void cancleBob(int participantId) throws Exception;
 	
-	public void inviteBob(int userId, int bobId) throws Exception;
+	public void inviteBob(List<Integer> listUser, int bobId) throws Exception;
 	
 	public void deleteBob(int bobId) throws Exception;
 	

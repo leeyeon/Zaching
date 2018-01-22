@@ -1,6 +1,7 @@
 package com.zaching.service.bob.test;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.zaching.common.domain.Search;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
+import com.zaching.service.domain.Fee;
+import com.zaching.service.domain.Participant;
 
 /*
  * 작성자 : 이연희
@@ -54,22 +57,25 @@ public class BobServiceTest {
 		bobService.addBob(bob);
 	}
 	
-	@Test
+	//@Test
 	public void addBobB03() throws Exception {
-		Bob bob = new Bob();
-		bob.setCategory("B03");
-		bob.setTitle("주기적으로 만나");
-		bob.setContent("우오오오왕");
-		bob.setWrittenUserId(userId);
-		bob.setFee(20000);
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
 		Calendar calendar = Calendar.getInstance();
+		calendar.set(calendar.DATE, 4);
 		Date date = calendar.getTime();
 		
-		System.out.println(date);
-		//bob.setFeeDate("");
-		//bobService.addBob(bob);
+		Bob bob = new Bob();
+		bob.setCategory("B03");
+		bob.setTitle("계모임방입니다");
+		bob.setContent("환영합니당");
+		bob.setWrittenUserId(userId);
+		bob.setFee(20000);
+		bob.setFeeDate(date);
+		
+		System.out.println(bob);
+		
+		bobService.addBob(bob);
 	}
 	
 	//@Test
@@ -91,10 +97,20 @@ public class BobServiceTest {
 		System.out.println("list Size :: "+list.size()+" &totalCount::"+totalCount);
 	}
 	
-	//@Test
+	@Test
 	public void getBob() throws Exception {
-		Map<String, Object> map = bobService.getBob(4, "B01");
+		Map<String, Object> map = bobService.getBob(11, "B03", 0);
 		System.out.println(map.get("bob").toString());
+		
+		List<Participant> list = (List<Participant>)map.get("participant");
+		for (Participant participant : list) {
+			System.out.println(participant);
+		}
+		
+		List<Fee> feeList = (List<Fee>)map.get("fee");
+		for (Fee fee : feeList) {
+			System.out.println(fee);
+		}
 	}
 	
 	//@Test
@@ -115,11 +131,16 @@ public class BobServiceTest {
 	//@Test
 	public void enterBob() throws Exception {
 		//bobService.enterBob(part1, bobId);
-		bobService.enterBob(part2, bobId);
+		bobService.enterBob(part1, 11);
 	}
 
+	//@Test
 	public void inviteBob() throws Exception {
 		
+		List<Integer> listUser = new ArrayList<Integer>();
+		listUser.add(123);
+		
+		bobService.inviteBob(listUser, bobId);
 	}
 	
 	//@Test
@@ -132,7 +153,13 @@ public class BobServiceTest {
 		bobService.setFeeBob(7, true);
 	}
 	
+	//@Test
 	public void payFeeBob() throws Exception {
 		
+		Fee fee = new Fee();
+		fee.setPaidFee(20000);
+		fee.setParticipantId(15);
+		
+		bobService.payFeeBob(fee);
 	}
 }
