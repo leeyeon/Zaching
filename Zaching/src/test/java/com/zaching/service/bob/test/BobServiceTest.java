@@ -1,6 +1,5 @@
 package com.zaching.service.bob.test;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -59,9 +58,9 @@ public class BobServiceTest {
 	
 	//@Test
 	public void addBobB03() throws Exception {
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+
 		Calendar calendar = Calendar.getInstance();
+		Date abc = calendar.getTime();
 		calendar.set(calendar.DATE, 4);
 		Date date = calendar.getTime();
 		

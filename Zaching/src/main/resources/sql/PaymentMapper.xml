@@ -4,20 +4,137 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="UserMapper">
+<mapper namespace="PaymentMapper">
 	
-	<!-- 
-	<resultMap id="cartSelectMap"
-			   type="cart" >
-		<result property="cartNo" column="cart_no" jdbcType="INTEGER" />		
-		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
-		<result property="prodNo" column="prod_no" jdbcType="INTEGER"/>
-		<result property="prodName" column="prod_name" jdbcType="VARCHAR"/>
-		<result property="cartDate" column="cart_date" jdbcType="DATE"/>
-		<result property="price" column="price" jdbcType="INTEGER"/>
-		<result property="status" column="status" jdbcType="CHAR"/>
+	<resultMap id="paymentSelectMap"
+			   type="payment" >
+		<result property="paymentId" column="payment_id" jdbcType="INTEGER"/>
+		<result property="createdDate" column="time" jdbcType="DATE" />		
+		<result property="userId" column="user_id" jdbcType="INTEGER"/>
+		<result property="receiverId" column="receiver_id" jdbcType="INTEGER"/>
+		<result property="point" column="money" jdbcType="INTEGER"/>
+		<result property="realName" column="real_name" jdbcType="VARCHAR"/>
+		<result property="bankCode" column="back_code" jdbcType="INTEGER"/>
+		<result property="accountNumber" column="account_number" jdbcType="VARCHAR"/>
+		<result property="accountCi" column="account_ci" jdbcType="INTEGER"/>
+		<result property="accountSeqNo" column="account_seq_no" jdbcType="INTEGER"/>
 	</resultMap>
-	 -->
 	
+	<insert id="managepayment"
+			parameterType="map">
+		INSERT
+		INTO PAYMENT (payment_id, time, payment_code, money, user_id)
+		VALUES (seq_payment_id.nextval,
+				SYSDATE,
+				#{paymentCode},
+				#{point},
+				#{userId})
+	</insert>
+	
+	<update id="updateUserPayment"
+			parameterType="payment">
+		UPDATE USERS
+		<set>
+			<if test="paymentCode == 'P01' || paymentCode == 'P05'">
+				total_point = total_point + #{point}
+			</if>
+			<if test="paymentCode == 'P02' || paymentCode == 'P03' || paymentCode == 'P06'">
+				total_point = total_point - #{point}
+			</if>
+			<if test="paymentCode == 'M01'">
+				total_mileage = total_mileage + #{point}
+			</if>
+			<if test="paymentCode == 'M02'">
+				total_mileage = total_mileage - #{point}
+			</if>
+		</set>
+		<where>
+			user_id = #{userId}
+		</where>
+	</update>
+	
+	<update id="presentUserPayment">
+		UPDATE USERS
+		<set>
+				total_point = total_point + #{point}
+		</set>
+		<where>
+			user_id = #{receiverId}
+		</where>
+	</update>
+	
+	<update id="exchargePoint"
+			parameterType="payment">
+		UPDATE PAYMENT
+		<set>
+			payment_code = #{paymentCode}
+		</set>
+		<where>
+			payment_id = #{paymentId}
+		</where>
+	</update>
+	
+	<insert id="presentPoint">
+	
+	</insert>
+	
+	<select id="listPoint" 
+			parameterType="map"
+			resultMap="paymentSelectMap">
+
+		SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+				FROM	( 
+					SELECT
+						payment_id, to_char(time,'YYYY-MM-DD HH24:MI:SS') AS time, money, payment_code
+					FROM PAYMENT
+					<where>
+						user_id = #{userId}
+					</where>
+					ORDER BY time DESC
+				 ) inner_table
+				WHERE ROWNUM &lt;= #{search.endRowNum} )
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+			
+	</select>
+	
+	<select id="getPayment"
+			parameterType="map"
+			resultType="int">
+		SELECT
+			<if test="point != null">
+				total_point
+			</if>
+			<if test="point == null">
+				total_mileage
+			</if>
+		FROM USERS
+		<where>
+			user_id = #{userId}
+		</where>
+	</select>
+	
+	<select id="listExchargePoint" 
+			parameterType="search"
+			resultMap="paymentSelectMap">
+
+		SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+				FROM	( 
+					SELECT
+						payment_id, to_char(time,'YYYY-MM-DD HH24:MI:SS') AS time, 
+						money, payment_code, users.bank_code, users.account_number,
+						users.real_name, payment.money AS point
+					FROM PAYMENT, USERS
+					<where>
+						PAYMENT.user_id = USERS.user_id
+						AND payment_code IN ('P03', 'P04')
+					</where>
+					ORDER BY payment_code
+				 ) inner_table
+				WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+			
+	</select>
 
 </mapper>
