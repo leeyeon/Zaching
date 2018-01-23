@@ -1,4 +1,4 @@
-package com.zaching.service.friendimpl;
+package com.zaching.service.friend.impl;
 
 import java.util.List;
 
@@ -36,6 +36,7 @@ public class FriendDaoImpl implements FriendDao {
 	@Override
 	public void acceptFriend(Friend friend) throws Exception {
 		sqlSession.insert("FriendMapper.acceptFriend", friend);
+
 	}
 
 	@Override
@@ -44,33 +45,15 @@ public class FriendDaoImpl implements FriendDao {
 	}
 
 	@Override
-	public void deleteFriend(Friend friend) throws Exception {
-		sqlSession.delete("FriendMapper.deleteFriend", friend);
-	}
-
-	@Override
 	public List<Friend> listFriend(Search search) throws Exception {
 		return sqlSession.selectList("FriendMapper.lisrFriend", search);
 	}
 
 	@Override
-	public void addMessage(Friend friend) throws Exception {
-		sqlSession.insert("FriendMapper.addMessage", friend);
-	}
+	public boolean blockFriend(Friend friendId) throws Exception {
 
-	@Override
-	public boolean blockFriend(Friend friendId) throws Exception{
-		
 		return false;
-		
-		
-		
-	}
 
-	@Override
-	public List<Friend> listMessage(Search search) throws Exception {
-		return sqlSession.selectList("FriendMapper.listMessage", search);
- 
 	}
 
 	@Override
@@ -78,5 +61,9 @@ public class FriendDaoImpl implements FriendDao {
 		return sqlSession.selectOne("FriendMapper.getTotalcount", search);
 	}
 
+	@Override
+	public void deleteFriend(Friend friend) throws Exception {
+		sqlSession.delete("FriendMapper.deleteFriend",friend);
+	}
 
 }

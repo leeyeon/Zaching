@@ -1,4 +1,4 @@
-package com.zaching.service.friendimpl;
+package com.zaching.service.friend.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +20,7 @@ public class FriendServiceImpl implements FriendService {
 	@Qualifier("friendDaoImpl")
 	private FriendDao friendDao;
 	
-	public void setFriendDao(FriendDao FriendDao) {
+	public void setFriendDao(FriendDao friendDao) {
 		this.friendDao=friendDao;
 		
 	}
@@ -55,24 +55,7 @@ public class FriendServiceImpl implements FriendService {
 		return null;
 	}
 
-	@Override
-	public void addMessage(Friend friend) throws Exception {
-		friendDao.addMessage(friend);
-		
-		System.out.println(friend.getContent());
-		
-	}
 
-	@Override
-	public Map<String, Object> listMessage(Search search) throws Exception {
-		return null;
-	}
-
-	@Override
-	public void deleteMessage(Friend friend) throws Exception {
-		friendDao.deleteFriend(friend);
-		
-	}
 	
 
 }
