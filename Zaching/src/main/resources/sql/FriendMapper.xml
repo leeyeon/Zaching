@@ -5,6 +5,7 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UserMapper">
 	
+	<!-- 
 	<resultMap type="friend" id="friendSelectMap">
 	<result property="userId" column="user_id" jdbcType="INTEGER"/>
 	<result property="email" column="email" jdbcType="VARCHAR"/>
@@ -49,6 +50,6 @@
 	</select>
 	
 
-	
+	 -->
 
 </mapper>
