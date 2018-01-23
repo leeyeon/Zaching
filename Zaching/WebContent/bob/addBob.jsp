@@ -10,7 +10,7 @@
         <meta charset="utf-8">
         <title>A Simple Page with CKEditor</title>
         
-        <jsp:include page="../resources/layout/toolbar.jsp"/>
+        <jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 
         <!-- Make sure the path to CKEditor is correct. -->
         <script src="//cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
@@ -41,6 +41,10 @@
         </script>
         
         <style>
+        
+        	body {
+        		padding-top: 50px;
+        	}
         
         	.btn-bob {
         		background: #5F4B8B; 
