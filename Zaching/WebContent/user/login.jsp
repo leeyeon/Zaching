@@ -60,38 +60,70 @@ login{
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h1 class="modal-title">로그인</h1>
         </div>
+        
         <div class="modal-body">
           <div class="container-fluid">
              
-             <div class="row">
+            <div class="row">
               <div class="col-xs-8">
               	<label for="inputlg">이메일(ID)</label>
               </div>
+            </div>
               
-             <div class="row">
-              <div class="col-sm-8">
+            <div class="row">
+              <div class="col-sm-6">
    				 <input class="form-control input-lg" id="inputlg" type="text">
               </div>
+            </div>
               
-              <div class="row">
-              <div class="col-xs-8">
+            <div class="row">
+              <div class="col-sm-6">
               	<label for="inputlg">패스워드(PW)</label>
               </div>
+            </div>
+      
               
-             <div class="row">
-              <div class="col-sm-8">
+              
+            <div class="row">
+              <div class="col-sm-6">
    				 <input class="form-control input-lg" id="inputlg" type="text">
               </div>
-          
-          </div>
+			</div>
+			
+			<div class="row">
+             <h1>     </h1>
+			</div>
+			
+			<div class="row">
+              <div class="col-xs-1">
+   			 	<img src="/resources/images/KakaoTalk_lcon.png"  width="50" height="50">
+              </div>
+              
+              <div class="col-xs-1">
+   			 	<img src="/resources/images/facebook_Icon.png"  width="50" height="50">
+              </div>
+              
+              <div class="col-xs-1">
+   			 	<img src="/resources/images/Naver_Icon.png"  width="50" height="50">
+              </div>
+              
+              <div class="col-xs-1">
+   			 	<img src="/resources/images/KakaoTalk_lcon.png"  width="50" height="50">
+              </div>
             </div>
-          <p>Some text in the modal.</p>
+           	
+			<div class="row">
+             <h1>     </h1>
+			</div>
+            
+         
+         
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
-      </div>
-      
+ 
     </div>
   </div>
   </div>
