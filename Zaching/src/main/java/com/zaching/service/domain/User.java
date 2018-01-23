@@ -12,11 +12,11 @@ public class User {
 	private String address;//주소
 	private String longitude;//경도
 	private String latitude;//위도
-	private String gender;//성별
+	private String gender;//성별 =====>남자'1' 여자'2'
 	private String phone;//연락처
-	private Date birth;//생일
-	private String profileIamge;//프로필사진
-	private String role;//회원등급 정회원 준회워 
+	private String birth;//생일
+	private String profileImage;//프로필사진
+	private String role;//회원등급 정회원 준회원 ========> 계정정지'0' 준회원 '1' 정회원 '2'
 	private String realName;//실명
 	private int bankCode;//은행코드
 	private String accountNumber;//계좌번호
@@ -33,7 +33,7 @@ public class User {
 	private String setBroadcast;//라이브방송알림설정
 	private String setFriend;//친구알림설정
 	private String setBob;//밥친구 알림설정
-	private String SnsType;//sns계정 연동된 정보
+	private String snsType;//sns계정 연동된 정보
 
 
 	public User() {
@@ -122,7 +122,7 @@ public class User {
 
 
 	public String getPhone() {
-		return phone;
+		return phone.replace("-", "");
 	}
 
 
@@ -131,23 +131,23 @@ public class User {
 	}
 
 
-	public Date getBirth() {
-		return birth;
+	public String getBirth() {
+		return birth.replace("-", "").trim();
 	}
 
 
-	public void setBirth(Date birth) {
+	public void setBirth(String birth) {
 		this.birth = birth;
 	}
 
 
-	public String getProfileIamge() {
-		return profileIamge;
+	public String getProfileImage() {
+		return profileImage;
 	}
 
 
-	public void setProfileIamge(String profileIamge) {
-		this.profileIamge = profileIamge;
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
 	}
 
 
@@ -162,7 +162,7 @@ public class User {
 
 
 	public String getRealName() {
-		return realName;
+		return realName.trim();
 	}
 
 
@@ -321,13 +321,14 @@ public class User {
 	}
 
 
+
 	public String getSnsType() {
-		return SnsType;
+		return snsType;
 	}
 
 
 	public void setSnsType(String snsType) {
-		SnsType = snsType;
+		this.snsType = snsType;
 	}
 
 
@@ -335,13 +336,13 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", email=" + email + ", password=" + password + ", name=" + name
 				+ ", address=" + address + ", longitude=" + longitude + ", latitude=" + latitude + ", gender="
-				+ gender + ", phone=" + phone + ", birth=" + birth + ", profileIamge=" + profileIamge + ", role=" + role
+				+ gender + ", phone=" + phone +",\n birth=" + birth + ", profileImage=" + profileImage + ", role=" + role
 				+ ", realName=" + realName + ", bankCode=" + bankCode + ", accountNumber=" + accountNumber
 				+ ", accountCi=" + accountCi + ", accountSeqNo=" + accountSeqNo + ", totalPoint=" + totalPoint
-				+ ", totalMileage=" + totalMileage + ", totalRecommend=" + totalRecommend + ", latestDate=" + latestDate
-				+ ", createdDate=" + createdDate + ", setRentCharge=" + setRentCharge + ", setNews=" + setNews
+				+ ", totalMileage=" + totalMileage + ",\n totalRecommend=" + totalRecommend + ", latestDate=" + latestDate
+				+ ", createdDate=" + createdDate + ",\n setRentCharge=" + setRentCharge + ", setNews=" + setNews
 				+ ", setNewsFeed=" + setNewsFeed + ", setBroadcast=" + setBroadcast + ", setFriend=" + setFriend
-				+ ", setBob=" + setBob + ", SnsType=" + SnsType + "]";
+				+ ", setBob=" + setBob + ", SnsType=" + snsType + "]";
 	}
 
 
