@@ -22,15 +22,13 @@
 		<typeAlias alias="fee" type="com.zaching.service.domain.Fee"/>
 		<typeAlias alias="search" type="com.zaching.common.domain.Search"/>
 		<typeAlias alias="comment" type="com.zaching.service.domain.Comment"/>	
-
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
 	<mappers>
 		<mapper resource="sql/BobMapper.xml"/>
 		<mapper resource="sql/BroadcastMapper.xml"/>
-		<mapper resource="sql/FriendMapper.xml"/>
-		<mapper resource="sql/LivingInfoMapper.xml"/>
+		
 		<mapper resource="sql/NewsfeedMapper.xml"/>
 		<mapper resource="sql/PaymentMapper.xml"/>
 		<mapper resource="sql/ReportMapper.xml"/>
