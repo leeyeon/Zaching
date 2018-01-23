@@ -11,6 +11,9 @@ public interface UserService {
 	//회원가입
 	public void addUser(User user)throws Exception;
 	
+	//타임라인보기
+	public User getTimeLine(int userId)throws Exception;
+	
 	//내정보조회 & 로그인?
 	public User getUser(int userId)throws Exception;
 	

@@ -17,7 +17,8 @@ import com.zaching.service.user.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:config/context-common.xml", "classpath:config/context-aspect.xml",
-		"classpath:config/context-mybatis.xml", "classpath:config/context-transaction.xml" })
+		"classpath:config/context-mybatis.xml", 
+		"classpath:config/context-transaction.xml" })
 public class UserServiceTest {
 
 	@Autowired
@@ -40,8 +41,6 @@ public class UserServiceTest {
 
 		userService.addUser(user);
 
-		
-
 		// ==> console 확인
 		System.out.println("addUser 정보===>" + user);
 
@@ -60,6 +59,84 @@ public class UserServiceTest {
 		System.out.println(user);
 
 	}
+	
+	
+	@Test
+	public void testgetTimeLine() throws Exception {
+
+		User user = new User();
+
+		user = userService.getTimeLine(8);
+
+		System.out.println("getTimeLine===>" + user);
+
+	}
+	
+	//@Test
+		public void testGetUserListAll() throws Exception {
+
+			Search search = new Search();
+			search.setCurrentPage(1);
+			search.setPageSize(3);
+			Map<String, Object> map = userService.listUser(search);
+
+			List<Object> list = (List<Object>) map.get("list");
+			Assert.assertEquals(3, list.size());
+
+			// ==> console 확인
+			// System.out.println(list);
+
+			Integer totalCount = (Integer) map.get("totalCount");
+			System.out.println(totalCount);
+
+			System.out.println("=======================================");
+
+			search.setCurrentPage(1);
+			search.setPageSize(3);
+			search.setSearchCondition("1");
+			search.setSearchKeyword("소현태");
+			map = userService.listUser(search);
+
+			list = (List<Object>) map.get("list");
+			Assert.assertEquals(1, list.size());
+
+
+			totalCount = (Integer) map.get("totalCount");
+			System.out.println(totalCount);
+			
+		}
+		
+		// @Test
+		public void testUpdateUser() throws Exception {
+
+			User user = userService.getUser(124);
+
+			System.out.println("" + user);
+
+			user.setName("김정은");
+			user.setBirth("1996-03-03");
+			user.setPhone("010-8680-7505");
+			user.setAddress("서초구");
+			user.setGender("2");
+			user.setEmail("change@change.com");
+			user.setPassword("a1a2w4d");
+			user.setProfileImage("사진이름.jpg");
+			user.setRealName("이정은");
+			user.setBankCode(013);
+			user.setAccountCi(11111);
+			user.setAccountNumber("02480204255200");
+			user.setAccountSeqNo(1234);
+			user.setTotalMileage(5000);
+			user.setTotalPoint(500);
+
+			userService.updateUser(user);
+
+			user = userService.getUser(124);
+
+			System.out.println("updateUser:: " + user);
+		
+		}
+
 
 	// @Test
 	public void testGetAccountUser() throws Exception {
@@ -82,84 +159,38 @@ public class UserServiceTest {
 		System.out.println("계좌정보등록::==>" + user);
 	}
 
-	// @Test
-	public void testUpdateUser() throws Exception {
+ 
+	//@Test
+	public void testUpdateNotice() throws Exception {
 
-		User user = userService.getUser(124);
+		User user = userService.getUser(6);
 
 		System.out.println("" + user);
 
-		user.setName("김정은");
-		user.setBirth("1996-03-03");
-		user.setPhone("010-8680-7505");
-		user.setAddress("서초구");
-		user.setGender("2");
-		user.setEmail("change@change.com");
-		user.setPassword("a1a2w4d");
-		user.setProfileImage("사진이름.jpg");
-		user.setRealName("이정은");
-		user.setBankCode(013);
-		user.setAccountCi(11111);
-		user.setAccountNumber("02480204255200");
-		user.setAccountSeqNo(1234);
-		user.setTotalMileage(5000);
-		user.setTotalPoint(500);
-
-		userService.updateUser(user);
-
-		user = userService.getUser(124);
-
-		System.out.println("updateUser:: " + user);
-		// ==> console 확인
-		// System.out.println(user);
-
-	}
-
-	@Test
-	public void testGetUserListAll() throws Exception {
-
-		Search search = new Search();
-		search.setCurrentPage(1);
-		search.setPageSize(3);
-		Map<String, Object> map = userService.listUser(search);
-
-		List<Object> list = (List<Object>) map.get("list");
-		Assert.assertEquals(3, list.size());
-
-		// ==> console 확인
-		// System.out.println(list);
-
-		Integer totalCount = (Integer) map.get("totalCount");
-		System.out.println(totalCount);
-
-		System.out.println("=======================================");
-
-		search.setCurrentPage(1);
-		search.setPageSize(3);
-		search.setSearchCondition("1");
-		search.setSearchKeyword("소현태");
-		map = userService.listUser(search);
-
-		list = (List<Object>) map.get("list");
-		Assert.assertEquals(1, list.size());
-
-		// ==> console 확인
-		// System.out.println(list);
-
-		totalCount = (Integer) map.get("totalCount");
-		System.out.println(totalCount);
+	
+		user.setSetRentCharge("N");
+		user.setSetNews("N");
+		user.setSetNewsFeed("N");
+		user.setSetBroadcast("N");
+		user.setSetFriend("Y");
+		user.setSetBob("Y");
 		
+		userService.updateNotice(user);
+		
+		user = userService.getUser(6);
+		
+		System.out.println("updateNotice:: " + user);
+	
 	}
 	
-	 //@Test
-	 public void testGetUserListByUserId() throws Exception{
-		 
-	 	Search search = new Search();
+	public void testmemoryMap() throws Exception{
+		
+		Search search = new Search();
 	 	search.setCurrentPage(1);
 	 	search.setPageSize(3);
 	 	search.setSearchCondition("1");
 	 	search.setSearchKeyword("소현태");
-	 	Map<String,Object> map = userService.listUser(search);
+	 	Map<String,Object> map = userService.memoryMap(search);
 	 	
 	 	List<Object> list = (List<Object>)map.get("list");
 	 	Assert.assertEquals(1, list.size());
@@ -184,35 +215,9 @@ public class UserServiceTest {
 	 	
 	 	totalCount = (Integer)map.get("totalCount");
 	 	System.out.println(""+totalCount);
-	 }
-	 
-	//@Test
-	public void testUpdateNotice() throws Exception {
-
-		User user = userService.getUser(6);
-
-		System.out.println("" + user);
-
-	
-		user.setSetRentCharge("N");
-		user.setSetNews("N");
-		user.setSetNewsFeed("N");
-		user.setSetBroadcast("N");
-		user.setSetFriend("Y");
-		user.setSetBob("Y");
 		
-		userService.updateNotice(user);
 		
-		user = userService.getUser(6);
-		
-		System.out.println("updateNotice:: " + user);
-		
-
-		
-		// ==> console 확인
-		// System.out.println(user);
-
-	}
+	} 
 	
 
 }

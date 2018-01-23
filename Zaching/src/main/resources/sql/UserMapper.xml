@@ -44,10 +44,19 @@
 	<insert id="addUser" parameterType="user" >
 	INSERT
 		INTO users( user_id , name, password, email, role, sns_type,  created_date) 
-		VALUES	 (	seq_user_id.nextval, #{name} , #{password}, #{email}, 
+		VALUES	 (	seq_user_id.nextval, #{name} , #{password},
+					#{email}, #{profileImage:VARCHAR}
 					#{role} ,#{snsType:CHAR}, SYSDATE )
 	
 	</insert>
+	
+	 <select id="getTimeLine"	parameterType="int"	resultMap="userSelectMap">
+		SELECT *
+		FROM( SELECT inner_table.*, ROWNUM AS row_seq
+				FROM( SELECT * FROM newsfeed ) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	 </select>
 	
 	
 	<select id="findPassword"	parameterType="string"	resultMap="userSelectMap">
@@ -65,6 +74,7 @@
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
+	 
 	 
 	 <select id="getAccountUser"	parameterType="int"	resultMap="userSelectMap">
 		SELECT
@@ -97,6 +107,17 @@
 	   	WHERE user_id = #{userId}
 	 </update>
 	 
+	 <select  id="memoryMap"  parameterType="search"	resultMap="userSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM( SELECT us.user_id, ns.newsfeed_id,
+	  										ns.category_code, ns.content 
+											FROM users us , newsfeed ns
+											ORDER BY user_id ) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
 	
 	<select  id="listUser"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
@@ -126,18 +147,8 @@
 
  	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT user_id , name , email, role
-						FROM users
-						<if test="searchCondition != null">
-							<where>
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			user_id = #{searchKeyword}
-								</if>
-								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 			name = #{searchKeyword}
-								</if>
-							</where>
-						</if> ) countTable						
+	  	FROM( SELECT user_id , name , email, role 
+	  			FROM users ) countTable						
 	 </select>
 	 
 	 
