@@ -70,4 +70,12 @@ public class UserDaoImpl implements UserDao{
 		
 	}
 
+	@Override
+	public String findPassword(String email){
+		
+		//inputtext 값가져와서 "@"빼고 문자열 일치하는지 비교하고 메일전송
+		return sqlSession.selectOne("UserMapper.findPassword", email);
+		
+	}
+
 }
