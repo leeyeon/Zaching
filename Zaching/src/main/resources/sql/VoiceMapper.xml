@@ -4,20 +4,101 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="UserMapper">
+<mapper namespace="VoiceMapper">
 	
-	<!-- 
-	<resultMap id="cartSelectMap"
-			   type="cart" >
-		<result property="cartNo" column="cart_no" jdbcType="INTEGER" />		
-		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
-		<result property="prodNo" column="prod_no" jdbcType="INTEGER"/>
-		<result property="prodName" column="prod_name" jdbcType="VARCHAR"/>
-		<result property="cartDate" column="cart_date" jdbcType="DATE"/>
-		<result property="price" column="price" jdbcType="INTEGER"/>
+	<resultMap id="voiceSelectMap" type="voice">
+		<result property="voiceID" column="voice_id" jdbcType="INTEGER" />		
+		<result property="voiceName" column="title" jdbcType="VARCHAR"/>
+		<result property="voiceCategory" column="category_code" jdbcType="VARCHAR"/>
+		<result property="voicelyrics" column="song" jdbcType="VARCHAR"/>
+		<result property="regDate" column="created_date" jdbcType="DATE"/>
+		<result property="userID" column="user_id" jdbcType="INTEGER"/>
+		<result property="backgroundImage" column="background_image" jdbcType="VARCHAR"/>
+		<result property="countReply" column="count_reply" jdbcType="INTEGER"/>
+		<result property="countUser" column="count_user" jdbcType="INTEGER"/>
 		<result property="status" column="status" jdbcType="CHAR"/>
+		
 	</resultMap>
-	 -->
 	
+	<insert id="addVoice" parameterType="voice">
+		INSERT
+		INTO voice( voice_id, category_code, title, background_image, created_date, song, status, user_id, count_reply, count_user)
+		VALUES(seq_voice_id.nextval, #{voiceCategory}, #{voiceName}, #{backgroundImage}, SYSDATE, #{voicelyrics}, '0', #{userID}, #{countReply}, #{countUser})
+	</insert>
+	
+	<select id="getVoice" parameterType="int" resultMap="voiceSelectMap">
+		SELECT voice_id, category_code, title, background_image, created_date, song, status, user_id, count_reply, count_user
+		FROM voice
+		WHERE voice_id=#{value}
+	</select>
+	
+	<delete id="deleteVoice" parameterType="int">
+		DELETE
+		FROM voice
+		WHERE voice_id=#{value}
+	</delete>
+	
+	<select id="getVoiceList" parameterType="search" resultMap="voiceSelectMap">
+		SELECT *
+		FROM( SELECT inner_table.*, ROWNUM AS row_seq
+					FROM( SELECT * FROM voice
+					<where>
+						<if test="searchCondition != null">
+							<if test="searchCondition == 1 and searchKeyword != '' ">
+								category_code = 'V01' AND title LIKE '%#{searchKeyword}%'
+							</if>
+							<if test="searchCondition == 2 and searchKeyword != '' ">
+								category_code = 'V02' AND title LIKE '%'||#{searchKeyword}||'%'
+							</if>
+							<if test="searchCondition == 3 and searchKeyword != '' ">
+								category_code = 'V03' ANd title = #{searchKeyword}
+							</if>
+							<if test="searchCondition == 4 and searchKeyword != '' ">
+								category_code = 'V04' ANd title = #{searchKeyword}
+							</if>
+							<if test="searchCondition == 5 and searchKeyword != '' ">
+								category_code = 'V05' ANd title = #{searchKeyword}
+							</if>
+						</if>
+					</where>) inner_table
+					WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+	
+	<select id="getTotalCount" parameterType="search" resultType="int">
+		SELECT COUNT(*)
+		FROM( SELECT * FROM voice
+				<if test="searchCondition != null">
+					<where>
+						<if test="searchCondition == 1 and searchKeyword != '' ">
+							category_code = 'V01' AND title = #{searchKeyword}
+						</if>
+						<if test="searchCondition == 2 and searchKeyword != '' ">
+							category_code = 'V02' AND title like '%'||#{searchKeyword}||'%'
+						</if>
+						<if test="searchCondition == 3 and searchKeyword != '' ">
+							category_code = V03 ANd title = #{searchKeyword}
+						</if>
+						<if test="searchCondition == 4 and searchKeyword != '' ">
+							category_code = V04 ANd title = #{searchKeyword}
+						</if>
+						<if test="searchCondition == 5 and searchKeyword != '' ">
+							category_code = V05 ANd title = #{searchKeyword}
+						</if>
+					</where>
+				</if>) countTable
+	</select>
+	
+	<update id="updateCountUser" parameterType="int">
+		UPDATE voice
+		SET count_user = count_user+1
+		WHERE voice_id = #{value}
+	</update>
+	
+	<update id="updateCountReply" parameterType="int">
+		UPDATE voice
+		SET count_reply = count_reply+1
+		WHERE voice_id = #{value}
+	</update>
 
 </mapper>

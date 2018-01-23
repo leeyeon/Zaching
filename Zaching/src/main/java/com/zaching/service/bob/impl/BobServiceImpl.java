@@ -31,7 +31,7 @@ public class BobServiceImpl implements BobService {
 	}
 	
 	public BobServiceImpl() {
-		// TODO Auto-generated constructor stub
+		System.out.println(this.getClass());
 	}
 
 	@Override

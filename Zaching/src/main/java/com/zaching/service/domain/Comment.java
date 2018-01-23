@@ -14,7 +14,7 @@ public class Comment {
 	/* 조회 가능/ 조회 불가능 (삭제 유무) */
 	private String status;
 	private String userName;
-	private String userProfile;
+	private String userImage;
 
 	public Comment() {
 		// TODO Auto-generated constructor stub
@@ -85,18 +85,18 @@ public class Comment {
 	}
 
 	public String getUserProfile() {
-		return userProfile;
+		return userImage;
 	}
 
 	public void setUserProfile(String userProfile) {
-		this.userProfile = userProfile;
+		this.userImage = userProfile;
 	}
 
 	@Override
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", roomId=" + roomId + ", category=" + category + ", userId="
 				+ userId + ", content=" + content + ", createdDate=" + createdDate + ", status=" + status
-				+ ", userName=" + userName + ", userProfile=" + userProfile + "]";
+				+ ", userName=" + userName + ", userProfile=" + userImage + "]";
 	}
 
 	

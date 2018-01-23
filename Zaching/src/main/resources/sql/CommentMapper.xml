@@ -15,6 +15,8 @@
 		<result property="content" column="content" jdbcType="VARCHAR"/>
 		<result property="createdDate" column="created_date" jdbcType="DATE"/>
 		<result property="status" column="status" jdbcType="CHAR"/>
+		<result property="userName" column="user_name" jdbcType="VARCHAR"/>
+		<result property="userImage" column="profile_image" jdbcType="VARCHAR"/>
 	</resultMap>	
 
 	<insert id="addComment">
@@ -49,21 +51,21 @@
 			
 		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-				FROM	( <include refid="selectCommentSql" /> ) inner_table
+				FROM	( 
+				
+				SELECT comments.comment_id, comments.content, comments.created_date,
+					comments.user_id, users.name AS user_name, users.profile_image AS profile_image
+				FROM COMMENTS, USERS 
+				<where>
+					COMMENTS.user_id = USERS.user_id
+					AND comments.category_code = '${categoryCode}'
+					AND comments.room_id = #{roomId}
+					AND comments.status = 'Y'
+				</where>
+				) inner_table
 				WHERE ROWNUM &lt;= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 			
 	</select>
-	
-	<sql id="selectCommentSql">
-		SELECT comments.comment_id, comments.content, comments.created_date,
-			comments.user_id, users.name AS user_name, users.profile_image AS profile_image
-			FROM COMMENTS, USERS 
-		<where>
-			COMMENTS.user_id = USERS.user_id
-			AND comments.category_code = #{categoryCode}
-			AND comments.room_id = #{roomId}
-		</where>
-	</sql>
 	
 </mapper>

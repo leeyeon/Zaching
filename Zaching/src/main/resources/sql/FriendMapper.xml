@@ -3,21 +3,53 @@
 <!DOCTYPE mapper
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="UserMapper">
 	
 	<!-- 
-	<resultMap id="cartSelectMap"
-			   type="cart" >
-		<result property="cartNo" column="cart_no" jdbcType="INTEGER" />		
-		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
-		<result property="prodNo" column="prod_no" jdbcType="INTEGER"/>
-		<result property="prodName" column="prod_name" jdbcType="VARCHAR"/>
-		<result property="cartDate" column="cart_date" jdbcType="DATE"/>
-		<result property="price" column="price" jdbcType="INTEGER"/>
-		<result property="status" column="status" jdbcType="CHAR"/>
+	<resultMap type="friend" id="friendSelectMap">
+	<result property="userId" column="user_id" jdbcType="INTEGER"/>
+	<result property="email" column="email" jdbcType="VARCHAR"/>
+	<result property="name" column="name" jdbcType="VARCHAR"/>
+	<result property="gender" column="gender" jdbcType="CHAR"/>
+	<result property="birth" column="birth" jdbcType="DATE"/>
+	<result property="friendId" column="friend_id" jdbcType="INTEGER"/>
+	<result property="profileImage" column="profileImage" jdbcType="VARCHAR"/>
+	<result property="status" column="status" jdbcType="CHAR"/>
 	</resultMap>
-	 -->
 	
+	<resultMap type="message" id="messageSelectMap">
+	<result property="friendId" column="friend_id" jdbcType="INTEGER"/>
+	<result property="name" column="name" jdbcType="VARCHAR"/>
+	<result property="content" column="content" jdbcType="VARCHAR"/>
+	<result property="messageId" column="message_id" jdbcType="INTEGER"/>
+	<result property="sendMessageDate" column="sendMessage_date" jdbcType="DATE"/>
+	<result property="getMessageDate" column="getMessage_date" jdbcType="DATE"/>
+	<result property="senderUserName" column="sendUser_name" jdbcType="VARCHAR"/>
+	<result property="getUserName" column="getUser_name" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="addFriend" parameterType="friend">
+	INSERT
+	INTO friend(user_id,email,name,gender,birth,friend_id,profileImage,status)
+	VALUES(seq_friend_id.nextval,
+	#{userId:INTEGER},
+	#{email:VARCHAR},
+	#{name:VARCHAR},
+	#{gender:CHAR},
+	#{birth:DATE},
+	#{friendId:INTEGER},
+	#{profileImage:VARCHAR},
+	#{status:CHAR}
+	)
+	</insert>
+	
+	<select id="getFriend" parameterType="String" resultMap="friendSelectMap">
+	SELECT 
+	
+	
+	</select>
+	
+
+	 -->
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.zaching.common.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class CommonServiceImpl implements CommonService {
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put("list", commentDao.listComment(search, categoryCode, roomId));
 		
+		List<Comment> list = (List<Comment>)map.get("list");
+
 		return map;
 	}
 
