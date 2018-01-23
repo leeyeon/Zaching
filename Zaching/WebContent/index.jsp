@@ -9,8 +9,14 @@
 	<style>
 	
 		body{ 
-		    padding-top:50px;
+		    margin-top: 150px;
+		    padding-top: 50px;
 		}
+		
+		@media (max-width: 1217px) {
+		  body {
+		    margin-top: 0px;
+		  }
 	
 	</style>
 
@@ -18,7 +24,13 @@
 <body>
 
 	<div class="container" style="background:#ccc; height:2000px; color:#000">
-		요기에 만든거 집어 넣을거임
+		요기에 만든거 집어 넣을거임<br/>
+		요기에 만든거 집어 넣을거임<br/>
+		요기에 만든거 집어 넣을거임<br/>
+		요기에 만든거 집어 넣을거임<br/>
+		요기에 만든거 집어 넣을거임<br/>
+		요기에 만든거 집어 넣을거임<br/>
+		요기에 만든거 집어 넣을거임<br/>
 	</div>
 
 </body>

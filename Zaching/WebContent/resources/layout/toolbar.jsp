@@ -4,17 +4,37 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
 	<!--   jQuery , Bootstrap CDN  -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
+	  <!-- CSS -->
+	  <%-- 
+	  <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	  <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	  <link href="../css/nivo-lightbox.css" rel="stylesheet" />
+	  <link href="../css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
+	  <link href="../css/owl.carousel.css" rel="stylesheet" media="screen" />
+	  <link href="../css/owl.theme.css" rel="stylesheet" media="screen" />
+	  <link href="../css/animate.css" rel="stylesheet" />
+	  <link href="../css/style.css" rel="stylesheet">
+	  <link href="../color/default.css" rel="stylesheet">
+	  --%>
 
 	<style>
 		
-		 .navbar-fixed-top {
+		.navbar-fixed-top {
 		    background: #ffffff;
 		    border-color: #ffffff;
+		}
+		
+		#navbar > ul> li> a {
+			color:#FFFFFF;
 		}
 		
 		.navbar-inverse .navbar-brand {
@@ -67,7 +87,21 @@
 				 $('.active').removeClass('active');
 				 $(this).addClass('active');
 			})
-	
+			
+			/*
+			var filter = "win16|win32|win64|mac|macintel"; 
+			
+			if ( navigator.platform ) { 
+				if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) { 
+					//mobile
+					alert('mobile 접속'); 
+				} else { 
+					//pc 
+					alert('pc 접속');
+				}
+			}
+			*/
+
 			$(window).resize(function(){
 			     if($( window ).width() > 1200) {
 			    	 $('.mainbar').show();
@@ -86,22 +120,25 @@
 				$(function () {
 					$(window).scroll(function () {
 			            // set distance user needs to scroll before we fadeIn navbar
-						if ($(this).scrollTop() > 200) {
-							$('.mainbar').fadeOut();
-							$('.navbar-brand').css('visibility','visible');
-							$('.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form')
-								.css('visibility','visible');
-						} else {
-							$('.mainbar').fadeIn();
-							 $('.navbar-brand').css('visibility','hidden');
-							$('.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form')
-							.css('visibility','hidden');
-						}
+			            if($( window ).width() >= 768) {
+							if ($(this).scrollTop() > 200) {
+								$('.mainbar').slideUp();
+								$('.navbar-brand').css('visibility','visible');
+								$('.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form')
+									.css('visibility','visible');
+							} else {
+								$('.mainbar').slideDown();
+								 $('.navbar-brand').css('visibility','hidden');
+								$('.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form')
+								.css('visibility','hidden');
+							}
+			            }
 					});
 	
 				});
 	
 			});
+
 		});
 	
 	</script>
@@ -111,7 +148,7 @@
 <body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid" style="background: #5F4B8B; height:50px; ">
+      <div class="container-fluid" style="background: #5F4B8B; height:50px;">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -124,12 +161,16 @@
           		style="margin-top: -10px;"/>
           </a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse" >
+        <div id="navbar" class="collapse navbar-collapse" style="visibility: hidden;">
           <ul class="nav navbar-nav">
             <li><a href="#">밥친구</a></li>
             <li><a href="#">라이브방송</a></li>
             <li><a href="#">보이스리플</a></li>
             <li><a href="#">생활정보</a></li>
+          </ul>
+          <ul class="nav navbar-nav" style="float:right;">
+            <li><a href="#">로그인</a></li>
+            <li><a href="#">회원가입</a></li>
           </ul>
         </div><!--/.nav-collapse -->
 	  </div>
