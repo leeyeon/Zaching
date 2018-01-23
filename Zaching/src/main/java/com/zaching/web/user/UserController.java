@@ -46,7 +46,13 @@ public class UserController {
 		@Value("#{commonProperties['pageSize']}")
 		int pageSize;
 		
+		@RequestMapping( value="findPassword", method=RequestMethod.GET )
+		public String findPassword() throws Exception{
 		
+			System.out.println("/user/findPassword : GET");
+			
+			return "redirect:/user/findPassword.jsp";
+		}
 		
 		
 		@RequestMapping( value="addUser", method=RequestMethod.GET )

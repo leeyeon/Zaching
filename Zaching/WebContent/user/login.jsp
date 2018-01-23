@@ -137,8 +137,18 @@
 		$("#kakaologin").on("click", function() {
 			self.location = "https://kauth.kakao.com/oauth/authorize?client_id=dfe2041581c23da0c4e9c8aefb3c28a1&redirect_uri=http://127.0.0.1:8080/kakaologin&response_type=code";
 		});
+		
+		//패스워드 찾기
+		$("buttond.btn.btn-password").on("click" , function() {
+			popWin 
+			= window.open("/user/findPassword.jsp",
+										"popWin", 
+										"left=300,top=200,width=780,height=130,marginwidth=0,marginheight=0,"+
+										"scrollbars=no,scrolling=no,menubar=no,resizable=no");
+		});
+		
 	});
-	
+
   
 	</script>		
 	
@@ -187,10 +197,13 @@
 					      <button type="button" class="btn btn-login">로 &nbsp;그 &nbsp;인</button>
 					      <a class="btn btn-login" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
 						    </div>
+						     <div class="col-sm-offset-7 col-sm-6 text-center">
+						     <button type="button" class="btn btn-password">패스워드찾기</button>
+							</div>     
 					  </div>
 						
 					<div class="col-sm-offset-3 col-sm-7 text-center">
-						<img id="kakaologin" src="/user/kakao_login_btn_small.png" class="img">
+						<img id="kakaologin" src="../user/kakao_login_btn_medium.png" class="img">
 					  </div>
 						
 					</form>

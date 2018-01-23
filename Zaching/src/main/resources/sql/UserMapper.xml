@@ -36,6 +36,7 @@
 		<result property="setFriend" 	  column="setting_friend" 	   jdbcType="CHAR"/>
 		<result property="setBob" 		  column="setting_bob" 		   jdbcType="CHAR"/>
 		<result property="snsType" 		  column="sns_type" 		   jdbcType="CHAR"/>
+		
 	
 	
 	</resultMap>
@@ -48,6 +49,13 @@
 	
 	</insert>
 	
+	
+	<select id="findPassword"	parameterType="string"	resultMap="userSelectMap">
+		SELECT
+		email
+		FROM users 
+		WHERE user_id = #{value}
+	 </select>
 	
 	
 	<select id="getUser"	parameterType="int"	resultMap="userSelectMap">

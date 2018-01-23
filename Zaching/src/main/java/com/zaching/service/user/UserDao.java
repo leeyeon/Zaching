@@ -27,6 +27,9 @@ public interface UserDao {
 	
 	//알림설정
 	public void updateNotice(User user)throws Exception;
+
+	//패스워드찾기
+	public String findPassword(String email);
 	
 	
 
