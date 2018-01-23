@@ -9,43 +9,167 @@
 	<resultMap type="user" id="userSelectMap">
 		<result property="userId" 		  column="user_id" 	 		jdbcType="INTEGER"/>
 		<result property="email"  		  column="email"   	 		jdbcType="VARCHAR"/>
+		<result property="password"   	  column="password"    	 	jdbcType="VARCHAR"/>
+		<result property="role" 		  column="role" 	 		jdbcType="CHAR"/>
 		<result property="name"   		  column="name"    	 		jdbcType="VARCHAR"/>
 		<result property="address"		  column="address" 	 		jdbcType="VARCHAR"/>
 		<result property="longitude" 	  column="longitude" 		jdbcType="DOUBLE"/>
 		<result property="latitude" 	  column="latitude"  		jdbcType="DOUBLE"/>
 		<result property="gender" 		  column="gender" 	 		jdbcType="CHAR"/>
 		<result property="phone" 		  column="phone" 	 		jdbcType="VARCHAR"/>
-		<result property="birth" 		  column="birth" 	 		jdbcType="DATE"/>
-		<result property="profileIamge"   column="profile_image" 	jdbcType="VARCHAR"/>
-		<result property="role" 		  column="role" 	 		jdbcType="CHAR"/>
+		<result property="birth" 		  column="birth" 	 		jdbcType="VARCHAR"/>
+		<result property="profileImage"   column="profile_image" 	jdbcType="VARCHAR"/>
 		<result property="realName" 	  column="real_name" 		jdbcType="VARCHAR"/>
 		<result property="bankCode" 	  column="bank_code" 		jdbcType="INTEGER"/>
-		<result property="accountINTEGER"  column="account_INTEGER" 	jdbcType="VARCHAR"/>
+		<result property="accountNumber"  column="account_number" 	jdbcType="VARCHAR"/>
 		<result property="accountCi" 	  column="account_ci" 		jdbcType="INTEGER"/>
 		<result property="accountSeqNo"   column="account_seq_no" 	jdbcType="INTEGER"/>
 		<result property="totalPoint" 	  column="total_point" 		jdbcType="INTEGER"/>
 		<result property="totalMileage"   column="total_mileage" 	jdbcType="INTEGER"/>
 		<result property="totalRecommend" column="total_recommend" 	jdbcType="INTEGER"/>
-		<result property="latestDate" 	  column="latest_date" 		jdbcType="DATE"/>
-		<result property="createdDate" 	  column="created_date" 	jdbcType="DATE"/>
+		<result property="latestDate" 	  column="latest_date" 			jdbcType="DATE"/>
+		<result property="createdDate" 	  column="created_date" 		jdbcType="DATE"/>
 		<result property="setRentCharge"  column="setting_rent_charge" jdbcType="CHAR"/>
 		<result property="setNews" 		  column="setting_news" 	   jdbcType="CHAR"/>
 		<result property="setNewsFeed" 	  column="setting_newsfeed"    jdbcType="CHAR"/>
 		<result property="setBroadcast"   column="setting_broadcast"   jdbcType="CHAR"/>
 		<result property="setFriend" 	  column="setting_friend" 	   jdbcType="CHAR"/>
 		<result property="setBob" 		  column="setting_bob" 		   jdbcType="CHAR"/>
-		<result property="SnsType" 		  column="sns_type" 		   jdbcType="CHAR"/>
+		<result property="snsType" 		  column="sns_type" 		   jdbcType="CHAR"/>
+		
 	
 	
 	</resultMap>
 	
+	<insert id="addUser" parameterType="user" >
+	INSERT
+		INTO users( user_id , name, password, email, role, sns_type,  created_date) 
+		VALUES	 (	seq_user_id.nextval, #{name} , #{password},
+					#{email}, #{profileImage:VARCHAR}
+					#{role} ,#{snsType:CHAR}, SYSDATE )
 	
-	<select id="getUser"	parameterType="string"	resultMap="userSelectMap">
+	</insert>
+	
+	 <select id="getTimeLine"	parameterType="int"	resultMap="userSelectMap">
+		SELECT *
+		FROM( SELECT inner_table.*, ROWNUM AS row_seq
+				FROM( SELECT * FROM newsfeed ) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	 </select>
+	
+	
+	<select id="findPassword"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
-		user_id , name , email , password , role ,  phone ,  address ,  		
+		email
+		FROM users 
+		WHERE user_id = #{value}
+	 </select>
+	
+	
+	<select id="getUser"	parameterType="int"	resultMap="userSelectMap">
+		SELECT
+		user_id , name , email , role, password, address, gender, phone,
+		birth, profile_image, real_name, account_number, created_date 		
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
 	 
+	 
+	 <select id="getAccountUser"	parameterType="int"	resultMap="userSelectMap">
+		SELECT
+		user_id, name, email, role, password,  gender, phone,
+		birth,  real_name, bank_code, account_number,  account_ci, account_seq_no,
+		total_point, total_mileage		
+		FROM users 
+		WHERE user_id = #{value}
+	 </select>
+	 
+	 
+	<update	id="updateUser"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+	   		name =  #{name},
+	   		birth 	= #{birth},
+			phone	= #{phone:VARCHAR},
+			address	= #{address:VARCHAR},
+			gender	= #{gender:CHAR},
+			email	= #{email},
+			role = 	#{role:CHAR},
+			password = #{password},
+			profile_image = #{profileImage:VARCHAR},
+			<!-- real_name = #{realName:VARCHAR},
+			bank_code = #{bankCode:INTEGER},
+			account_number = #{accountNumber:VARCHAR},
+			account_ci = #{accountCi:INTEGER}
+			 -->	
+	   	</set>
+	   	WHERE user_id = #{userId}
+	 </update>
+	 
+	 <select  id="memoryMap"  parameterType="search"	resultMap="userSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM( SELECT us.user_id, ns.newsfeed_id,
+	  										ns.category_code, ns.content 
+											FROM users us , newsfeed ns
+											ORDER BY user_id ) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
+	
+	<select  id="listUser"  parameterType="search"	resultMap="userSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT user_id, email, name, phone, address
+	  										total_point, total_mileage, real_name, bank_code,
+	  										account_number, role
+											FROM users
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				user_id = #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				name = #{searchKeyword}
+													</if>
+												</where>
+											</if>
+											ORDER BY user_id ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
 
+
+
+
+ 	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM( SELECT user_id , name , email, role 
+	  			FROM users ) countTable						
+	 </select>
+	 
+	 
+	 
+	 <update	id="updateNotice"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+	   	setting_rent_charge = #{setRentCharge},
+	   	setting_news = #{setNews},
+	   	setting_newsfeed = #{setNewsFeed},
+	   	setting_broadcast = #{setBroadcast},
+	   	setting_friend = #{setFriend},
+	   	setting_bob = #{setBob}
+	   	
+	   	</set>
+	   	WHERE user_id = #{userId}
+	 </update>
+	 
 </mapper>
+
+	
+
+	
+	 

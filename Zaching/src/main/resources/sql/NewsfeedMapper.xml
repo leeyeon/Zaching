@@ -4,20 +4,86 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="UserMapper">
+<mapper namespace="NewsfeedMapper">
 	
-	<!-- 
-	<resultMap id="cartSelectMap"
-			   type="cart" >
-		<result property="cartNo" column="cart_no" jdbcType="INTEGER" />		
-		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
-		<result property="prodNo" column="prod_no" jdbcType="INTEGER"/>
-		<result property="prodName" column="prod_name" jdbcType="VARCHAR"/>
-		<result property="cartDate" column="cart_date" jdbcType="DATE"/>
-		<result property="price" column="price" jdbcType="INTEGER"/>
+	
+	<resultMap id="NewsfeedSelectMap" type="Newsfeed">
+		<result property="newsfeedID" column="newsfeed_id" jdbcType="INTEGER" />
+		<result property="categoryCode" column="category_code" jdbcType="CHAR"/>
+		<result property="content" column="content" jdbcType="VARCHAR"/>
+		<result property="locationName" column="location_name" jdbcType="VARCHAR"/>	
+		<result property="fileName" column="upload_file" jdbcType="VARCHAR"/>		
+		<result property="locationY" column="latitude" jdbcType="INTEGER"/>
+		<result property="locationX" column="longitude" jdbcType="INTEGER"/>
+		<result property="regDate" column="created_date" jdbcType="DATE"/>
+		<result property="userID" column="user_id" jdbcType="INTEGER"/>
+		<result property="countLikey" column="total_like" jdbcType="INTEGER"/>
+		<result property="countReply" column="total_reply" jdbcType="INTEGER"/>
+		<result property="privacyBound" column="privacy_bound" jdbcType="CHAR"/>
 		<result property="status" column="status" jdbcType="CHAR"/>
 	</resultMap>
-	 -->
 	
+	<insert id="addNewsfeed" parameterType="newsfeed">
+		INSERT 
+		INTO newsfeed(newsfeed_id, category_code, content, location_name, longitude, latitude, upload_file, created_date, status, privacy_bound, total_like, user_id, total_reply)
+		VALUES (seq_newsfeed_id.nextval, #{categoryCode}, #{content}, #{locationName:VARCHAR}, #{locationX:INTEGER}, #{locationY:VARCHAR}, #{fileName:VARCHAR}, #{regDate},
+				#{status:CHAR}, #{privacyBound}, #{countLikey}, #{userID}, #{countReply:INTEGER})
+	</insert>
+	
+	<delete id="deleteNewsfeed" parameterType="int">
+		DELETE
+		FROM newsfeed
+		WHERE newsfeed_id = #{value}
+	</delete>
+	
+	<update id="updateNewsfeed" parameterType="newsfeed">
+		UPDATE newsfeed
+		SET category_code=#{categoryCode}, content=#{content}, location_name=#{locationName}, longitude=#{locationX}, latitude=#{locationY}, upload_file=#{fileName},
+				privacy_bound=#{privacyBound}
+		WHERE newsfeed_id = #{newsfeed_id}
+	</update>
+	
+	<select id="getNewsfeed" parameterType="int" resultMap="NewsfeedSelectMap">
+		SELECT newsfeed_id, category_code, content, location_name, longitude, latitude, upload_file, created_date, status, privacy_bound, total_like, user_id, total_reply
+		FROM newsfeed
+		WHERE newsfeed_id=#{value}
+	</select>
+	
+	<select id="getNewsfeedList" parameterType="search" resultMap="NewsfeedSelectMap">
+		SELECT *
+		FROM( SELECT inner_table.*, ROWNUM AS row_seq
+				FROM( SELECT * FROM newsfeed ) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+	
+	<select id="getTotalCount" parameterType="search" resultType="int">
+		SELECT COUNT(*)
+		FROM( SELECT * FROM newsfeed WHERE status='0') countTable
+	</select>
+	
+	<select id="getCountLike" parameterType="int" resultType="int">
+		SELECT total_like
+		FROM newsfeed
+		WHERE newsfeed_id=#{value}
+	</select>
+	
+	<select id="getCountReply" parameterType="int" resultType="int">
+		SELECT total_reply
+		FROM newsfeed
+		WHERE newsfeed_id=#{value}
+	</select>
+	
+	<update id="updateCountLike" parameterType="int">
+		UPDATE newsfeed
+		SET total_like = total_like+1
+		WHERE newsfeed_id=#{value}
+	</update>
+	
+	<update id="updateCountReply" parameterType="int">
+		UPDATE newsfeed
+		SET total_reply = total_reply+1
+		WHERE newsfeed_id=#{value}
+	</update>
 
 </mapper>

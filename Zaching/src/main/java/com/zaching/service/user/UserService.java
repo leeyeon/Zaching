@@ -11,8 +11,14 @@ public interface UserService {
 	//회원가입
 	public void addUser(User user)throws Exception;
 	
+	//타임라인보기
+	public User getTimeLine(int userId)throws Exception;
+	
 	//내정보조회 & 로그인?
 	public User getUser(int userId)throws Exception;
+	
+	//user계좌정보 조회
+    public User getAccountUser(int userId)throws Exception;
 	
 	//회원정보리스트(사이트관리에서 사용)
 	public Map<String,Object>listUser(Search search)throws Exception;
@@ -32,9 +38,10 @@ public interface UserService {
     //알림수신설정
     public  void updateNotice(User user)throws Exception;
     
-    //알림함
-    public Map<String , Object>listNotice(int userId)throws Exception;
+    //이메일발송
+    public boolean sendMail(String subject, String text, String from, String to, String filePath);
     
+       
     
     
 

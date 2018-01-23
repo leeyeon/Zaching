@@ -10,15 +10,8 @@
         <meta charset="utf-8">
         <title>A Simple Page with CKEditor</title>
         
-        	
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		
-		<!--   jQuery , Bootstrap CDN  -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-		
+        <jsp:include page="../resources/layout/sub_toolbar.jsp"/>
+
         <!-- Make sure the path to CKEditor is correct. -->
         <script src="//cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
         
@@ -31,7 +24,7 @@
 		<!-- (Optional) Latest compiled and minified JavaScript translation files -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>
 		        
-        <jsp:include page="../common/fileUploadCDN.jsp"/>
+        <jsp:include page="../resources/javascript/fileUploadCDN.jsp"/>
         <script type='text/javascript'>
 
         	$(function() {
@@ -48,6 +41,10 @@
         </script>
         
         <style>
+        
+        	body {
+        		padding-top: 50px;
+        	}
         
         	.btn-bob {
         		background: #5F4B8B; 

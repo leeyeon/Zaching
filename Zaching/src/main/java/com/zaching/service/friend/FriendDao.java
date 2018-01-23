@@ -22,14 +22,8 @@ public interface FriendDao {
 	//模备格废
 	public List<Friend> listFriend(Search search) throws Exception;
 	
-	//皋技瘤 累己
-	public void addMessage(Friend friend) throws Exception;
-	
 	//模备瞒窜
 	public boolean blockFriend(Friend friendId) throws Exception;
-
-	//皋技瘤 格废
-	public List<Friend> listMessage(Search search) throws Exception;
 	
 	//totalCount
 	public int getTotalCount(Search search) throws Exception;

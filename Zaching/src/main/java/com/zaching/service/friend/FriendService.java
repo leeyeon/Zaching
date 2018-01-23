@@ -20,14 +20,5 @@ public interface FriendService {
 	//친구추천(알수도있는친구)
 	public Map<String, Object> recommendFriend(Search search ) throws Exception;
 	
-	//메세지 작성
-	public void addMessage(Friend friend) throws Exception;
-
-	//메세지 목록
-	public Map<String,Object> listMessage(Search search) throws Exception;
-	
-	//메세지 삭제
-	public void deleteMessage(Friend friend) throws Exception;
-	
 
 }
