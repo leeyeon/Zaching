@@ -13,7 +13,7 @@ import com.zaching.service.domain.User;
 import com.zaching.service.payment.PaymentDao;
 import com.zaching.service.payment.PaymentService;
 
-@Service("paymentServiceImpl")
+//@Service("paymentServiceImpl")
 public class paymentServiceImpl implements PaymentService {
 	
 	@Autowired

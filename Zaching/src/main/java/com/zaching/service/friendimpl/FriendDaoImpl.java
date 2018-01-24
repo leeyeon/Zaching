@@ -11,7 +11,7 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Friend;
 import com.zaching.service.friend.FriendDao;
 
-@Repository("friendDaoImpl")
+//@Repository("friendDaoImpl")
 public class FriendDaoImpl implements FriendDao {
 
 	@Autowired

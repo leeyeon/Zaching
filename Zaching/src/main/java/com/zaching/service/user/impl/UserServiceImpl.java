@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.domain.User;
-
+import com.zaching.service.newsfeed.NewsfeedDao;
 import com.zaching.service.user.UserDao;
 import com.zaching.service.user.UserService;
 
@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	@Qualifier("userDaoImpl")
 	private UserDao userDao;
+	private NewsfeedDao newsfeedDao;
 	// org.springframework.mail.javamail.JavaMailSender
     private JavaMailSender javaMailSender;
  
@@ -45,10 +46,20 @@ public class UserServiceImpl implements UserService {
 		System.out.println(this.getClass());
 	}
 
+
 	@Override
 	public void addUser(User user) throws Exception {
 			userDao.addUser(user);
 	}
+	
+	
+
+	@Override
+	public User getTimeLine(int userId) throws Exception {
+		
+		return userDao.getTimeLine(userId);
+	}
+
 
 	@Override
 	public User getUser(int userId) throws Exception {
@@ -78,16 +89,26 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Map<String, Object> memoryMap(Search search) throws Exception {
 		//List<Newsfeed> list =news 뉴스피드에서 카테고리구분으로 받아오기
-		return null;
+		List<User> list = userDao.memoryMap(search);
+		int totalCount =userDao.getTotalCount(search);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		map.put("totalCount", new Integer(totalCount));
+		
+		return map;
 	}
 
 	@Override
 	public void updateUser(User user) throws Exception {
+		
+		
 		userDao.updateUser(user);
 	}
 
 	@Override
 	public void findPassword(String password) throws Exception {
+		
+		
 		userDao.findPassword(password);
 	}
 

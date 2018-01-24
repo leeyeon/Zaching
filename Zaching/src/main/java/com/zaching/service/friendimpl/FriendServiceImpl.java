@@ -13,7 +13,7 @@ import com.zaching.service.domain.Friend;
 import com.zaching.service.friend.FriendDao;
 import com.zaching.service.friend.FriendService;
 
-@Service("friendServiceImpl")
+//@Service("friendServiceImpl")
 public class FriendServiceImpl implements FriendService {
 	
 	@Autowired
