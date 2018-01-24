@@ -52,12 +52,12 @@ public class FriendDaoImpl implements FriendDao {
 	public List<Friend> listFriend(Search search) throws Exception {
 		return sqlSession.selectList("FriendMapper.lisrFriend", search);
 	}
-
+/*
 	@Override
 	public void addMessage(Friend friend) throws Exception {
 		sqlSession.insert("FriendMapper.addMessage", friend);
 	}
-
+*/
 	@Override
 	public boolean blockFriend(Friend friendId) throws Exception{
 		
@@ -66,13 +66,13 @@ public class FriendDaoImpl implements FriendDao {
 		
 		
 	}
-
+/*
 	@Override
 	public List<Friend> listMessage(Search search) throws Exception {
 		return sqlSession.selectList("FriendMapper.listMessage", search);
  
 	}
-
+*/
 	@Override
 	public int getTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("FriendMapper.getTotalcount", search);

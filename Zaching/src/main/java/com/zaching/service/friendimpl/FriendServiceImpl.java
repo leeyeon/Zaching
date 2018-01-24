@@ -55,7 +55,7 @@ public class FriendServiceImpl implements FriendService {
 		return null;
 	}
 
-	@Override
+	/*@Override
 	public void addMessage(Friend friend) throws Exception {
 		friendDao.addMessage(friend);
 		
@@ -72,7 +72,7 @@ public class FriendServiceImpl implements FriendService {
 	public void deleteMessage(Friend friend) throws Exception {
 		friendDao.deleteFriend(friend);
 		
-	}
+	}*/
 	
 
 }
