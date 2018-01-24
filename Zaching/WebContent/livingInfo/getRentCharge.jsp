@@ -5,24 +5,49 @@
 
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	
-    <meta charset="utf-8">
-    <title>좌표로 주소를 얻어내기</title>
+ <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link href="/css/animate.min.css" rel="stylesheet">
+<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+
+<!-- Bootstrap Dropdown Hover JS -->
+<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
+
+
  <link rel="stylesheet" type="text/css" href="/resources/livingInfo/rentcharge.css"/>
   
 
 </head>
+<script type="text/javascript">
+$( document ).ready(function() {
+    
+    showPopup();
+    function showPopup() { window.open("/livingInfo/getChatbot.jsp", "a", "width=350px, height=450px, left=1000, top=50"); }
+});
+
+</script>
 <body>
+
+<jsp:include page="/livingInfo/toolbar.jsp" />
+<br/>
+<br/>
+<br/>
 <input type="hidden" id="money" name="money" value="" />
 <div class="map_wrap">
-    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+    <div id="map" style="width:100%;height:600px;position:relative;overflow:hidden;"></div>
  
 </div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
 <script src="/resources/livingInfo/rentcharge.js"></script>
 <script>
+
 
 daum.maps.event.addListener(map, 'click', function(mouseEvent) {
 	
@@ -48,24 +73,27 @@ daum.maps.event.addListener(map, 'click', function(mouseEvent) {
         	 var money = $("input:hidden[name='money']").val();
         	var mm = money.split(" ");
         	
-        	if(money == 0){
-        		mm[0] = "현재 데이터를 불러오는 중입니다...";
-        		mm[1] = "현재 데이터를 불러오는 중입니다...";
-        		mm[2] = "현재 데이터를 불러오는 중입니다...";
-        	}
-          	
+        	
             var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
             detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
             
-            
-           
-            
-            
-            var content = '<div class="bAddr">' +
-                            '<span class="title">주소정보</span>' + 
-                            detailAddr + '<span class="title">월세 : </span>'+ mm[0]+ '<span class="title">보증금 : </span>' + mm[1] +
-                            '<span class="title">전세 : </span>' + mm[2] +
-                        '</div>';
+        	if(money == 0){
+        		 var content = '<div class="bAddr">' +
+                 '<span class="title">주소정보</span>' + 
+                 detailAddr + '<span class="title">전월세 정보를 불러오는 중입니다..</span>'+
+             '</div>';
+        	}
+        	else{
+        		
+        		 var content = '<div class="bAddr">' +
+                 '<span class="title">주소정보</span>' + 
+                 detailAddr + '<span class="title">월세 : </span>'+ mm[0]+"만원 "+'<span class="title">보증금 : </span>' + mm[1] +"만원"+
+                 '<span class="title">전세 : </span>' + mm[2] +"만원"+
+             '</div>';
+        		
+        	}
+          
+       
 
             // 마커를 클릭한 위치에 표시합니다 
             marker.setPosition(mouseEvent.latLng);
@@ -87,5 +115,6 @@ daum.maps.event.addListener(map, 'click', function(mouseEvent) {
 
 
 </script>
+전월세 정보는 구 또는 시 단위 평균입니다.
 </body>
 </html>
