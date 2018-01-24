@@ -33,6 +33,13 @@ public class UserDaoImpl implements UserDao{
 		sqlSession.insert("UserMapper.addUser", user);
 		
 	}
+	
+
+	@Override
+	public User getTimeLine(int userId) throws Exception {
+		
+		return sqlSession.selectOne("UserMapper.getTimeLine", userId);
+	}
 
 	@Override
 	public User getUser(int userId) throws Exception {
@@ -77,5 +84,14 @@ public class UserDaoImpl implements UserDao{
 		return sqlSession.selectOne("UserMapper.findPassword", email);
 		
 	}
+
+	@Override
+	public List<User> memoryMap(Search search) throws Exception {
+		
+		return sqlSession.selectList("UserMapper.memoryMap", search);
+	}
+	
+	
+
 
 }

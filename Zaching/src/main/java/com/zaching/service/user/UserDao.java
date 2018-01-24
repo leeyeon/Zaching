@@ -7,11 +7,14 @@ import com.zaching.service.domain.User;
 
 public interface UserDao {
 	
-	//회원가입
+	//회원가입 ok
 	public void addUser(User user)throws Exception;
 	
-	//내정보조회  & 로그인 SELECT 
+	//내정보조회  & 로그인 SELECT ok
 	public User getUser(int userId)throws Exception;
+	
+	//타임라인 보기
+	public User getTimeLine(int userId)throws Exception;
 	
 	//회원리스트조회
 	public List<User> listUser(Search search)throws Exception;
@@ -31,6 +34,7 @@ public interface UserDao {
 	//패스워드찾기
 	public String findPassword(String email);
 	
-	
+	//추억지도 보기
+	public List<User> memoryMap(Search search)throws Exception;
 
 }
