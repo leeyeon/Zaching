@@ -118,7 +118,30 @@
 			 cursor: pointer;
        	}
        	
-       	
+       	.modal {
+		     text-align: center;
+		}
+		 
+		@media screen and (min-width: 768px) { 
+		        .modal:before {
+		                display: inline-block;
+		                vertical-align: middle;
+		                content: " ";
+		                height: 100%;
+		        }
+		}
+		 
+		.modal-dialog {
+	        display: inline-block;
+	        text-align: left;
+	        vertical-align: middle;
+	        overflow-y: initial !important
+		}
+
+		.modal-body{
+		    height: 250px;
+		    overflow-x: auto;
+		}
        	
     </style>
     
@@ -151,7 +174,7 @@
 	<div class="bg"></div>
 	<div class="jumbotron">
 		
-		<div class="container" align="center">
+	<div class="container" align="center">
 		<div class="row" >
 			<div class="col-xs-1">신고</div>
 			<div class="col-xs-1">삭제</div>
@@ -168,7 +191,7 @@
 	
 	<div class="container" style="font-size: 17px;">
 
-      <div class="row ">
+      <div class="row">
 
         <div class="col-sm-8 blog-main custumRow">
 
@@ -190,6 +213,7 @@
 					<div class="col-xs-4 textBold" align="right" style="font-size: 25px;">
 						4 / 10
 					</div>
+					<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#myModal">친구초대</button>
 				</div>
 				<div class="row" style="padding: 10px; top:-30px;  padding-top:-50px;">
 					<div class="col-xs-12" align="left" style="margin-top:20px;">
@@ -313,6 +337,34 @@
       <!-- /회비 div 끝 -->
 
     </div><!-- /.container -->
+
+	<!-- Modal --> 
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+        <div class="modal-dialog"> 
+               <div class="modal-content"> 
+                    <div class="modal-header"> 
+                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+                             <h4 class="modal-title" style="text-align: center;" id="myModalLabel">내 친구 초대</h4> 
+                     </div> 
+                     <div class="modal-body" align="center">
+	                    <c:forEach var="i" begin="0" end="6" step="1">
+	                        <div class="row" style="padding: 5px 10px 5px 10px;">
+	                            <div class="input-group">
+							      <span class="input-group-addon">
+							        <input type="checkbox" aria-label="...">
+							      </span>
+							      <input type="text" class="form-control" style="width:400px;" value="친구이름">
+							      <br>
+							    </div>
+					    	</div>
+					    </c:forEach>
+                    </div>
+                    <div align="center" class="modal-footer" style="text-align: center;">
+                    	<button class="btn btn-default btn-ico" >초대하기</button>
+                    </div>
+               </div> 
+        </div> 
+	</div>
 
 </body>
 </html>

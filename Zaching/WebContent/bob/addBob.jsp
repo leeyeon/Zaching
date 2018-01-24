@@ -8,7 +8,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>A Simple Page with CKEditor</title>
+        <title>addBob</title>
         
         <jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 
