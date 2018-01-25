@@ -21,8 +21,8 @@ public class VoiceDaoImpl implements VoiceDao{
 	}
 
 	@Override
-	public Voice getVoice(int voiceID) throws Exception {
-		return (Voice)sqlsession.selectOne("VoiceMapper.getVoice", voiceID);
+	public Voice getVoice(int voiceId) throws Exception {
+		return (Voice)sqlsession.selectOne("VoiceMapper.getVoice", voiceId);
 	}
 
 	@Override
@@ -37,8 +37,8 @@ public class VoiceDaoImpl implements VoiceDao{
 	}
 
 	@Override
-	public void deleteVoice(int voiceID) throws Exception {
-		sqlsession.delete("VoiceMapper.deleteVoice", voiceID);
+	public void deleteVoice(int voiceId) throws Exception {
+		sqlsession.delete("VoiceMapper.deleteVoice", voiceId);
 		
 	}
 
@@ -48,13 +48,13 @@ public class VoiceDaoImpl implements VoiceDao{
 	}
 
 	@Override
-	public void updateCountUser(int voiceID) throws Exception {
-		sqlsession.update("VoiceMapper.updateCountUser", voiceID);
+	public void updateCountUser(int voiceId) throws Exception {
+		sqlsession.update("VoiceMapper.updateCountUser", voiceId);
 	}
 
 	@Override
-	public void updateCountReply(int voiceID) throws Exception {
-		sqlsession.update("VoiceMapper.updateCountReply", voiceID);
+	public void updateCountReply(int voiceId) throws Exception {
+		sqlsession.update("VoiceMapper.updateCountReply", voiceId);
 	}
 	
 	

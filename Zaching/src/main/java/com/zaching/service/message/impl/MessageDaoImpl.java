@@ -35,13 +35,13 @@ public class MessageDaoImpl implements MessageDao{
 	}
 
 	@Override
-	public void deleteMessage(Message message) throws Exception {
-		sqlSession.delete("MessageMapper.deleteMassage",message);
+	public void deleteMessage(int messageId) throws Exception {
+		sqlSession.delete("MessageMapper.deleteMessage",messageId);
 	}
 
 	@Override
 	public List<Message> listMessage(Search search) throws Exception {
-		return sqlSession.selectList("MessageMapper.listMassage",search);
+		return sqlSession.selectList("MessageMapper.listMessage",search);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class MessageDaoImpl implements MessageDao{
 	}
 
 	@Override
-	public Message getMessage(String messageId) throws Exception {
+	public Message getMessage(int messageId) throws Exception {
 		return sqlSession.selectOne("MessageMapper.getMessage",messageId);
 	}
 	

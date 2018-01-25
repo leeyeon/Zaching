@@ -36,7 +36,7 @@ public class CommonServiceTest {
 		comment.setCategory("B00");
 		comment.setRoomId(11);
 		comment.setUserId(6);
-		comment.setContent("Å×½ºÆ®´ñ±Û2");
+		comment.setContent("Å×½ºÆ®´ñ±Û3");
 		
 		comment = commonService.addComment(comment);
 		System.out.println(comment);

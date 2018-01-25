@@ -20,11 +20,11 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.newsfeed.NewsfeedService;
 
-@Controller
-@RequestMapping("/newsfeed/*")
+//@Controller
+//@RequestMapping("/newsfeed/*")
 public class NewsfeedController {
-	@Autowired
-	@Qualifier("newsfeedServiceImpl")
+	//@Autowired
+	//@Qualifier("newsfeedServiceImpl")
 	private NewsfeedService newsfeedService;
 
 	public NewsfeedController() {
@@ -42,7 +42,7 @@ public class NewsfeedController {
 		System.out.println("addNewsfeed()");
 		if(newsfeed.getFile() != null) {
 			String fileName = newsfeed.getFile().getOriginalFilename();
-			newsfeed.setImgFile(fileName);
+			newsfeed.setFileName(fileName);
 			
 			File file = new File("C:/workspace/Zaching/WebContent/resources/upload_files/images/"+fileName);
 			

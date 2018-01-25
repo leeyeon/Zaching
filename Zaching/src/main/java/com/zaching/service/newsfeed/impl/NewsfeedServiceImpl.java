@@ -13,10 +13,10 @@ import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.newsfeed.NewsfeedDao;
 import com.zaching.service.newsfeed.NewsfeedService;
 
-@Repository("newsfeedServiceImpl")
+//@Repository("newsfeedServiceImpl")
 public class NewsfeedServiceImpl implements NewsfeedService{
-	@Autowired
-	@Qualifier("newsfeedDaoImpl")
+	//@Autowired
+	//@Qualifier("newsfeedDaoImpl")
 	NewsfeedDao newsfeedDao;
 	public void setNewsfeedDao(NewsfeedDao newsfeedDao) {
 		this.newsfeedDao = newsfeedDao;
@@ -29,8 +29,8 @@ public class NewsfeedServiceImpl implements NewsfeedService{
 	}
 
 	@Override
-	public void deleteNewsfeed(int newsfeedID) throws Exception {
-		newsfeedDao.deleteNewsfeed(newsfeedID);
+	public void deleteNewsfeed(int newsfeedId) throws Exception {
+		newsfeedDao.deleteNewsfeed(newsfeedId);
 		
 	}
 
@@ -41,8 +41,8 @@ public class NewsfeedServiceImpl implements NewsfeedService{
 	}
 
 	@Override
-	public void getNewsfeed(int newsfeedID) throws Exception {
-		newsfeedDao.getNewsfeed(newsfeedID);
+	public void getNewsfeed(int newsfeedId) throws Exception {
+		newsfeedDao.getNewsfeed(newsfeedId);
 		
 	}
 
@@ -58,27 +58,39 @@ public class NewsfeedServiceImpl implements NewsfeedService{
 	}
 
 	@Override
-	public int getCountLike(int newsfeedID) throws Exception {
-		return newsfeedDao.getCountLike(newsfeedID);
+	public int getCountLike(int newsfeedId) throws Exception {
+		return newsfeedDao.getCountLike(newsfeedId);
 	}
 
 	@Override
-	public int getCountReply(int newsfeedID) throws Exception {
-		return newsfeedDao.getCountReply(newsfeedID);
+	public int getCountReply(int newsfeedId) throws Exception {
+		return newsfeedDao.getCountReply(newsfeedId);
 	}
 
 	@Override
-	public void updateCountLike(int newsfeedID) throws Exception {
-		newsfeedDao.updateCountLike(newsfeedID);
+	public void updateCountLike(int newsfeedId) throws Exception {
+		newsfeedDao.updateCountLike(newsfeedId);
 	}
 
 	@Override
-	public void updateCountReply(int newsfeedID) throws Exception {
-		newsfeedDao.updateCountReply(newsfeedID);
+	public void updateCountReply(int newsfeedId) throws Exception {
+		newsfeedDao.updateCountReply(newsfeedId);
 	}
 	
 	public Map<String, Object> listTimeLine(Search search) throws Exception{
 		return null;
+	}
+
+	@Override
+	public List<Newsfeed> listNewsfeeds(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return newsfeedDao.listNewsfeeds(search);
+	}
+
+	@Override
+	public void addLikeBlind(int newsfeedId, int userId) throws Exception {
+		newsfeedDao.addLikeBlind(newsfeedId, userId);
+		
 	}
 	
 	
