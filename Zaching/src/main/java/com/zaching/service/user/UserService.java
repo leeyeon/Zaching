@@ -38,11 +38,6 @@ public interface UserService {
     //알림수신설정
     public  void updateNotice(User user)throws Exception;
     
-    //이메일발송
-    public boolean sendMail(String subject, String text, String from, String to, String filePath);
-    
-       
-    
     
 
 }

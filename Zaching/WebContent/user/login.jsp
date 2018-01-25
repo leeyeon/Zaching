@@ -34,100 +34,150 @@ login{
 
 }
 
+.social-login{
+margin-left: 20px;
+
+}
+
+
+.modal-dialog.modal{
+  width: 50%;
+  height: 50%;
+  margin: 0;
+  padding: 0;
+
+}
+
+img.img-logo{
+
+margin-left: 250px;
+
+}
+
+img.img-rounded{
+margin-top: 10px;
+margin-left: 10px;
+margin-right: 10px;
+margin-bottom: 10px;
+
+}
+
+
+
+
 </style>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 
+
+//로그인
+
+
+//회원가입하기 
+
+
+//패스워드 찾기
+
+
+
+//===========sns계정로그인============
+	
+	
+//카카오톡
+
+//페이스북
+
+//네이버
+
+//구글
+
+
+
 </script>
 
 </head>
 
+
+
+
 <body>
 
-	<div class="container">
-  <h2>로그인</h2>
+<div class="container">
+  
   <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-login btn-lg" data-toggle="modal" data-target="#myModal">로그인</button>
+  <button type="button" class="btn btn-login btn-lg" 
+    data-toggle="modal" data-target="#myModal">로그인</button>
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-lg">
+  
+  <div class="modal-dialog modal-center">
     
-      <!-- Modal content-->
+  <!-- Modal content-->
       <div class="modal-content">
-        <div class="modal-header">
+      
+      <!-- Modal Header start-->
+       <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h1 class="modal-title">로그인</h1>
+          <div class="modal-title"><!-- 자췽로고 -->
+          <img src="/resources/images/temp_logo.png" class="img-logo" width="50" height="50" ></div> 
+       </div> <!-- Modal Header end --> 
+       
+       <div class="modal-body">
+       	
+       	<div class="row email">
+          <div class="col-xs-4">
+           	<label for="inputlg" style="margin-left: 5px">이메일(ID)</label>
+           	
+          </div>
         </div>
         
-        <div class="modal-body">
-          <div class="container-fluid">
-             
-            <div class="row">
-              <div class="col-xs-8">
-              	<label for="inputlg">이메일(ID)</label>
-              </div>
-            </div>
-              
-            <div class="row">
-              <div class="col-sm-6">
-   				 <input class="form-control input-lg" id="inputlg" type="text">
-              </div>
-            </div>
-              
-            <div class="row">
-              <div class="col-sm-6">
-              	<label for="inputlg">패스워드(PW)</label>
-              </div>
-            </div>
-      
-              
-              
-            <div class="row">
-              <div class="col-sm-6">
-   				 <input class="form-control input-lg" id="inputlg" type="text">
-              </div>
-			</div>
-			
-			<div class="row">
-             <h1>     </h1>
-			</div>
-			
-			<div class="row">
-              <div class="col-xs-1">
-   			 	<img src="/resources/images/KakaoTalk_lcon.png"  width="50" height="50">
-              </div>
-              
-              <div class="col-xs-1">
-   			 	<img src="/resources/images/facebook_Icon.png"  width="50" height="50">
-              </div>
-              
-              <div class="col-xs-1">
-   			 	<img src="/resources/images/Naver_Icon.png"  width="50" height="50">
-              </div>
-              
-              <div class="col-xs-1">
-   			 	<img src="/resources/images/KakaoTalk_lcon.png"  width="50" height="50">
-              </div>
-            </div>
-           	
-			<div class="row">
-             <h1>     </h1>
-			</div>
-            
+        
+         <div class="row login">
+           <div class="col-sm-6">
+   			<input class="form-control input-lg" id="inputlg" type="text"
+   			style="margin-left: 5px">
+   			
+           </div>
+         </div>
          
-         
+         <div class="row">
+           <div class="col-sm-6">
+           	<label for="inputlg" style="margin-left: 5px" 
+           	style="margin-top: 5px">패스워드(PW)</label>
+           </div>
+         </div>
+       
+       
+         <div class="row">
+           <div class="col-sm-6">
+   			 <input class="form-control input-lg" id="inputlg" type="text"
+   			 style="margin-left: 5px">
+           </div>
+		</div>
+		
+		
+		<div class="row">
+              <div class="social-login">
+   			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" >
+   			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50" >
+   			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50" />
+   			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" >
+              </div>
+        </div>
+       
+       </div><!--Modal Body  -->
           
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
- 
-    </div>
-  </div>
-  </div>
-</div>
+        
+      </div><!-- Modal content-->
+    
+    </div> <!-- Modal dialog -->  
+    
+    </div> <!-- Modal Fade  --> 
+
+</div><!-- Container -->
+
 </body>
 
 </html>

@@ -55,6 +55,7 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public void updateUser(User user) throws Exception {
+		
 		sqlSession.update("UserMapper.updateUser", user);
 		
 	}
@@ -90,8 +91,9 @@ public class UserDaoImpl implements UserDao{
 		
 		return sqlSession.selectList("UserMapper.memoryMap", search);
 	}
-	
-	
 
+	
+	
+	
 
 }
