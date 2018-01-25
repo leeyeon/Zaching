@@ -77,6 +77,10 @@ public class NewsfeedServiceImpl implements NewsfeedService{
 		newsfeedDao.updateCountReply(newsfeedID);
 	}
 	
+	public Map<String, Object> listTimeLine(Search search) throws Exception{
+		return null;
+	}
+	
 	
 	
 }
