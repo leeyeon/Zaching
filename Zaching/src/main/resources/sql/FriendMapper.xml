@@ -3,21 +3,38 @@
 <!DOCTYPE mapper
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="UserMapper">
+<mapper namespace="FriendMapper">
 	
 	<!-- 
-	<resultMap id="cartSelectMap"
-			   type="cart" >
-		<result property="cartNo" column="cart_no" jdbcType="INTEGER" />		
-		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
-		<result property="prodNo" column="prod_no" jdbcType="INTEGER"/>
-		<result property="prodName" column="prod_name" jdbcType="VARCHAR"/>
-		<result property="cartDate" column="cart_date" jdbcType="DATE"/>
-		<result property="price" column="price" jdbcType="INTEGER"/>
-		<result property="status" column="status" jdbcType="CHAR"/>
+	<resultMap type="friend" id="friendSelectMap">
+	<result property="userId" column="user_id" jdbcType="INTEGER"/>
+	<result property="email" column="email" jdbcType="VARCHAR"/>
+	<result property="name" column="name" jdbcType="VARCHAR"/>
+	<result property="gender" column="gender" jdbcType="CHAR"/>
+	<result property="birth" column="birth" jdbcType="DATE"/>
+	<result property="friendId" column="friend_id" jdbcType="INTEGER"/>
+	<result property="profileImage" column="profileImage" jdbcType="VARCHAR"/>
+	<result property="status" column="status" jdbcType="CHAR"/>
 	</resultMap>
-	 -->
+
+
 	
+	<insert id="addFriend" parameterType="friend">
+	INSERT
+	INTO friend(user_id,email,name,gender,birth,friend_id,profileImage,status)
+	VALUES(seq_friend_id.nextval,
+	#{userId:INTEGER},
+	#{email:VARCHAR},
+	#{name:VARCHAR},
+	#{gender:CHAR},
+	#{birth:DATE},
+	#{friendId:INTEGER},
+	#{profileImage:VARCHAR},
+	#{status:CHAR}
+	)
+	</insert>
+	
+
+	 -->
 
 </mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MessageMapper">
+
+	<resultMap type="message" id="messageSelectMap">
+	<result property="messageId" column="message_id" jdbcType="INTEGER"/>
+	 <result property="userId" column="user_id" jdbcType="INTEGER"/>
+	 <result property="friendId" column="friend_id" jdbcType="INTEGER"/>
+	<result property="content" column="content" jdbcType="VARCHAR"/>
+	<result property="createdDate" column="created_date" jdbcType="DATE"/>
+	
+	
+	</resultMap>
+	
+	<insert id="addMessage" parameterType="message">
+	INSERT
+	INTO message(message_id  , content , created_date )
+	VALUES(seq_message_id.nextval,  #{content:VARCHAR} , SYSDATE )
+	
+	
+	</insert>
+	
+	
+	</mapper>

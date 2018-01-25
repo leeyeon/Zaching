@@ -11,17 +11,26 @@ public class LivingInfo {
 	private String categoryGroupName;
 	private String addressName;
 	private String categoryname;
-	private String placeName;
+	private String location;
 	private String MapX;
 	private String MapY;
+	private String rentPrice;
+	
 
-	@Override
-	public String toString() {
-		return "LivingInfo [address=" + address + ", eventInfoImage=" + eventInfoImage + ", eventInfoName="
-				+ eventInfoName + ", evnetInfoPrice=" + evnetInfoPrice + ", categoryGroupName=" + categoryGroupName
-				+ ", addressName=" + addressName + ", categoryname=" + categoryname + ", placeName=" + placeName
-				+ ", MapX=" + MapX + ", MapY=" + MapY + "]";
+
+	
+
+	public String getRentPrice() {
+		return rentPrice;
 	}
+
+
+
+	public void setRentPrice(String rentPrice) {
+		this.rentPrice = rentPrice;
+	}
+
+
 
 	public String getAddress() {
 		return address;
@@ -79,12 +88,12 @@ public class LivingInfo {
 		this.categoryname = categoryname;
 	}
 
-	public String getPlaceName() {
-		return placeName;
+	public String getLocation() {
+		return location;
 	}
 
-	public void setPlaceName(String placeName) {
-		this.placeName = placeName;
+	public void setLocation(String placeName) {
+		this.location = placeName;
 	}
 
 	public String getMapX() {
@@ -106,4 +115,17 @@ public class LivingInfo {
 	public LivingInfo() {
 		
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "LivingInfo [address=" + address + ", eventInfoImage=" + eventInfoImage + ", eventInfoName="
+				+ eventInfoName + ", evnetInfoPrice=" + evnetInfoPrice + ", categoryGroupName=" + categoryGroupName
+				+ ", addressName=" + addressName + ", categoryname=" + categoryname + ", location=" + location
+				+ ", MapX=" + MapX + ", MapY=" + MapY + ", rentPrice=" + rentPrice + "]";
+	}
+	
+	
+	
 }

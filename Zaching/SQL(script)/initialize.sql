@@ -16,7 +16,14 @@ CREATE SEQUENCE seq_comment_id  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_newsfeed_id  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_voice_id  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_report_id	 INCREMENT BY 1 START WITH 1;
+<<<<<<< HEAD
 CREATE SEQUENCE er_ID		 	INCREMENT BY 1 START WITH 1;
+=======
+CREATE SEQUENCE seq_friend_id   INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_message_id   INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_notice_id	 INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_notice_target_id	 INCREMENT BY 1 START WITH 1;
+>>>>>>> refs/remotes/origin/master
 
 CREATE TABLE USERS ( 
 	user_id      		number	 NOT NULL,
@@ -25,13 +32,13 @@ CREATE TABLE USERS (
 	role  				 CHAR(2) 		DEFAULT 0  NOT NULL   ,
 	name  				 	 VARCHAR2(10)  	   NOT NULL,
 	address  		 	VARCHAR2(50),
-	longtitude  		 		number,
-	latitude  		 		number,
+	longitude  		 		number(15,10),
+	latitude  		 		number(15,10),
 	gender  		  char(2),
 	phone 		  varchar2(12),
-	birth 		  DATE,
+	birth 		  varchar2(8),
 	profile_image varchar2(100),
-	real_name varchar2(8),
+	real_name varchar2(10),
 	bank_code number,
 	account_number varchar2(20),
 	account_ci number,
@@ -87,7 +94,7 @@ CREATE TABLE BOB (
 
 CREATE TABLE PARTICIPANT (
 	participant_id numeric not null,
-	participant_date date not null,
+	participated_date date not null,
 	status char(2) not null,
 	bob_id numeric not null,
 	user_id numeric not null,
@@ -111,7 +118,7 @@ CREATE TABLE COMMENTS (
 	comment_id numeric not null,
 	content varchar2(1000) not null,
 	created_date date not null,
-	category_code varchar2(4) not null,
+	category_code char(4) not null,
 	status char(2) default 'Y' not null,
 	room_id numeric not null,
 	user_id numeric not null,
@@ -201,6 +208,8 @@ INSERT INTO users(user_id, email, password, name, role, created_date)
 VALUES(seq_user_id.nextval, 'zaching@zaching.com', 'zaching', '磊民',2, sysdate);
 INSERT INTO users(user_id, email, password, name, role, created_date)
 VALUES(seq_user_id.nextval, 'admin@admin.com', 'admin', '包府磊',3, sysdate);
+INSERT INTO users(user_id, email, password, name, role, created_date)
+VALUES(seq_user_id.nextval, 'test@test.com', 'test', '磊民',2, sysdate);
 
 
 commit;

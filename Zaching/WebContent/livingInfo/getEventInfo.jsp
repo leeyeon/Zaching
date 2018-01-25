@@ -5,8 +5,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css" href="left.css">
 </head>
 <body>
+
+
+
+
+     <div id="wrap">
+        이곳은 아이디 입니다.
+    </div>
+
+ 
+
+    <div class="fontcolor">
+        이곳은 클래스 입니다.
+    </div>
+
+
+
+
 
 </body>
 </html>
