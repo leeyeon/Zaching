@@ -11,10 +11,10 @@ public interface MessageDao {
 	public void addMessage(Message message) throws Exception;
 	
 	//메세지 확인
-	public Message getMessage(String messageId) throws Exception;
+	public Message getMessage(int messageId) throws Exception;
 	
 	//메세지 삭제
-	public void deleteMessage(Message message) throws Exception;
+	public void deleteMessage(int messageId) throws Exception;
 	
 	//메세지 목록
 	public List<Message> listMessage(Search search) throws Exception;

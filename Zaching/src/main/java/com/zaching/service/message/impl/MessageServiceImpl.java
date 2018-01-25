@@ -42,17 +42,18 @@ public class MessageServiceImpl implements MessageService{
 		Map<String, Object> map=new HashMap<String,Object>();
 		map.put("list", list);
 		map.put("totalCount", totalCount);
+		
 		return map;
 	}
 
 	@Override
-	public void deleteMessage(Message message) throws Exception {
-		messageDao.deleteMessage(message);
+	public void deleteMessage(int messageId) throws Exception {
+		messageDao.deleteMessage(messageId);
 		
 	}
 
 	@Override
-	public Message getMessage(String messageId) throws Exception {
+	public Message getMessage(int messageId) throws Exception {
 		return messageDao.getMessage(messageId);
 	}
 	
