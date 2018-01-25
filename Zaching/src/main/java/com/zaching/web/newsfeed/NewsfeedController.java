@@ -42,7 +42,7 @@ public class NewsfeedController {
 		System.out.println("addNewsfeed()");
 		if(newsfeed.getFile() != null) {
 			String fileName = newsfeed.getFile().getOriginalFilename();
-			newsfeed.setImgFile(fileName);
+			newsfeed.setFileName(fileName);
 			
 			File file = new File("C:/workspace/Zaching/WebContent/resources/upload_files/images/"+fileName);
 			
