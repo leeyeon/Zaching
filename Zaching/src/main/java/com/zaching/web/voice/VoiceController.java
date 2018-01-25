@@ -18,11 +18,11 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Voice;
 import com.zaching.service.voice.VoiceService;
 
-@Controller
-@RequestMapping("/voice/*")
+//@Controller
+//@RequestMapping("/voice/*")
 public class VoiceController {
-	@Autowired
-	@Qualifier
+	//@Autowired
+	//@Qualifier
 	private VoiceService voiceService;
 	
 	@Value("#{commonProperties['pageUnit']}")

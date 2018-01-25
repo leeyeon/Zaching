@@ -12,15 +12,15 @@ import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.Comment;
 import com.zaching.service.newsfeed.NewsfeedService;
 
-@RestController
-@RequestMapping("/newsfeed/*")
+//@RestController
+//@RequestMapping("/newsfeed/*")
 public class NewsfeedRestController {
-	@Autowired
-	@Qualifier("newsfeedServiceImpl")
+	//@Autowired
+	//@Qualifier("newsfeedServiceImpl")
 	private NewsfeedService newsfeedService;
 	
-	@Autowired
-	@Qualifier("commonServiceImpl")
+	//@Autowired
+	//@Qualifier("commonServiceImpl")
 	private CommonService commonService;
 	
 	public NewsfeedRestController() {

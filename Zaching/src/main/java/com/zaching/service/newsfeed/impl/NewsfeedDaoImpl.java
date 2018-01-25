@@ -13,10 +13,10 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.newsfeed.NewsfeedDao;
 
-@Repository("newsfeedDaoImpl")
+//@Repository("newsfeedDaoImpl")
 public class NewsfeedDaoImpl implements NewsfeedDao{
-	@Autowired
-	@Qualifier("sqlSessionTemplate")
+	//@Autowired
+	//@Qualifier("sqlSessionTemplate")
 	SqlSession sqlSession;
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
