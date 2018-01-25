@@ -7,7 +7,7 @@ import com.zaching.service.domain.Comment;
 
 public interface CommentDao {
 
-	public void addComment(Comment comment) throws Exception;
+	public Comment addComment(Comment comment) throws Exception;
 	
 	public void deleteComment(int commentId) throws Exception;
 	

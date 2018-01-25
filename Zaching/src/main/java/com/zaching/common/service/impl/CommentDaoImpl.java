@@ -18,11 +18,11 @@ import com.zaching.service.domain.Comment;
  * 작성자 : 이연희
  * */
 
-//@Repository("commentDaoImpl")
+@Repository("commentDaoImpl")
 public class CommentDaoImpl implements CommentDao {
 	
 	@Autowired
-	//@Qualifier("sqlSessionTemplate")
+	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
 	
 	public void setSqlSession(SqlSession sqlSession) {
@@ -34,8 +34,10 @@ public class CommentDaoImpl implements CommentDao {
 	}
 
 	@Override
-	public void addComment(Comment comment) throws Exception {
+	public Comment addComment(Comment comment) throws Exception {
 		sqlSession.insert("CommentMapper.addComment", comment);
+		
+		return comment;
 	}
 
 	@Override

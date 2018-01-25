@@ -85,6 +85,10 @@
 				 $('.active').removeClass('active');
 				 $(this).addClass('active');
 			})
+			
+		 	$( "a:contains('¹äÄ£±¸')" ).on("click" , function() {
+				$(self.location).attr("href","/bob/listBob");
+			});
 
 		});
 	

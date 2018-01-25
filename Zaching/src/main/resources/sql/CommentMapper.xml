@@ -19,7 +19,8 @@
 		<result property="userImage" column="profile_image" jdbcType="VARCHAR"/>
 	</resultMap>	
 
-	<insert id="addComment">
+	<insert id="addComment"
+			parameterType="comment">
 		INSERT
 		INTO COMMENTS (comment_id, created_date, status, category_code, content,
 						room_id, user_id)
@@ -32,6 +33,11 @@
 			#{roomId},
 			#{userId}
 		)
+		
+		<selectKey keyProperty="commentId" resultType="Integer" order="AFTER"> 
+			SELECT seq_comment_id.currval FROM dual
+		</selectKey>
+		
 	</insert>
 	
 	<update id="deleteComment"
