@@ -30,7 +30,7 @@ public class CommonServiceTest {
 	@Qualifier("commonServiceImpl")
 	CommonService commonService;
 	
-	@Test
+	//@Test
 	public void addComment() throws Exception {
 		Comment comment = new Comment();
 		comment.setCategory("B00");
@@ -62,5 +62,14 @@ public class CommonServiceTest {
 		for (Comment comment : list) {
 			System.out.println(comment);
 		}
+	}
+	
+	@Test
+	public void updateCommnet() throws Exception {
+		Comment comment = new Comment();
+		comment.setCommentId(5);
+		comment.setContent("업데이트테스트");
+		
+		commonService.updateComment(comment);
 	}
 }
