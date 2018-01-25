@@ -21,6 +21,7 @@
        		display: inline-block;
        		color: rgb(255, 255, 255); 
        		font-size: 20px; 
+       		font-weight: bold;
        		text-align: center;
        		height: 50px;
 			line-height: 50px;
@@ -34,9 +35,9 @@
     <script type="text/javascript">
     
   		$(function() {
-			$('.btn-bob:contains("충전")').on('click', function() {
-				$(self.location).attr("href","/payment/chargePoint");
-			})
+  			$('button:contains("충전")').on('click', function(){
+  				$("form").attr("method", "POST").attr("action", "/payment/kakaoPay").submit();
+  			});
   		});
 
     </script>
@@ -44,30 +45,21 @@
 </head>
 <body>
 
-		
 	<div class="container" align="center">
 		
-		<div class="page-header" style="padding-top: 20px;">
-		  <h1 style="font-weight: bold;">내 포인트 조회</h1>
+		<div class="page-header" style="padding: 100px;">
+		  <h1>${user.name}님 포인트 충전이 완료되었습니다.</h1>
 		</div>
 		
-		<div class="row text-center" style="padding-top:50px;">
-			<h3>OOO님의 잔여 포인트 : 10,000 Point</h3><br>
-			<h4>( 마일리지 : 1,000점 )</h4>
-		</div>
-		
-		<div class="row" style="padding-top:50px;">
-			
-            <button class="btn-bob" style="margin: 10px;">마일리지 전환</button>
-            <button class="btn-bob" style="margin: 10px;">충전</button>
-            <button class="btn-bob" style="margin: 10px;">반환신청</button>
-            
-        </div>
-        
-        <div class="row" style="border: 1px solid #000">
-        
-        </div>
-
+		<form class="form-horizontal" >
+			<input type="hidden" name="userId" value="9" />
+			<div class="row" style="padding-top:50px;">
+				<div class="col-xs-5"><h3>충전하신 금액</h3></div>
+				<div class="col-xs-7">
+					${approvedDate} 에 ${point} Point 충전되셨습니다.
+				</div>
+			</div>
+		</form>
     </div><!-- /.container -->
 </body>
 </html>

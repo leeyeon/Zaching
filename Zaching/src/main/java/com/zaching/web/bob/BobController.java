@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,7 +26,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
+import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
 
 @Controller
@@ -47,13 +50,16 @@ public class BobController {
 	@Qualifier("commonServiceImpl")
 	private CommonService commonService;
 	
+	@Autowired
+	@Qualifier("bobServiceImpl")
+	private BobService bobService;
+	
 	public BobController() {
 		System.out.println(this.getClass());
 	}
 	
 	@InitBinder
-	public void initBinder(WebDataBinder binder) { 
-		System.out.println("ㅇㅅㅇ");
+	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true)); 
 	}
@@ -64,16 +70,8 @@ public class BobController {
 		
 		//System.out.println(category);
 		
-		String categoryName = B01;
-		
-		if(category.equals("B02")) {
-			categoryName = B02;
-		} else if(category.equals("B03")) {
-			categoryName = B03;
-		}
-		
 		model.addAttribute("category", category);
-		model.addAttribute("categoryName", categoryName);
+		model.addAttribute("categoryName", this.getCategoryName(category));
 		
 		return "forward:/bob/addBob.jsp";
 	}
@@ -91,43 +89,75 @@ public class BobController {
 		
 		System.out.println(this.getClass()+"/addBob_ POST");
 		
-		String fileName;
 		try {
-			fileName = commonService.addFile(fileDirectory, bob.getUploadFile());
+			bob.setImage(commonService.addFile(fileDirectory, bob.getUploadFile()));
+			bobService.addBob(bob);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		// limitNum 을 꼭 넣어야 에러가 안남. (필수 입력)
-		System.out.println(bob.toString());
+		System.out.println(bob);
+		
+		return "redirect:/bob/getBob?bobId="+bob.getBobId()+"&category="+bob.getCategory();
+	}
+	
+	@RequestMapping(value= "/getBob", method=RequestMethod.GET)
+	public String getBob(@RequestParam int bobId, 
+						@RequestParam String category,
+						Model model) throws Exception {
+		System.out.println(this.getClass()+"/getBob");
+		
+		System.out.println("방 ID :: "+bobId);
+		System.out.println(category+"나왔따");
+		
+		Map<String, Object> bob;
+		
+		if(category.equals("B03")) {
+			bob = bobService.getBob(bobId, category, 0);
+			//System.out.println("B03");
+		} else {
+			bob = bobService.getBob(bobId, category);
+			//System.out.println("B01 B02");
+		}
+		
+		System.out.println(bob);
+
+		model.addAttribute("category", category);
+		model.addAllAttributes(bob);
 		
 		return "forward:/bob/getBob.jsp";
 	}
-	
-	@RequestMapping("/getBob")
-	public String getBob(Model model) {
-		System.out.println(this.getClass()+"/getBob");
-
-		// 우리지금만나
-		String category = "B01";
-		
-		model.addAttribute("category", category);
-		
-		return "redirect:/bob/getBob.jsp";
-	}
 
 	@RequestMapping("/listBob")
-	public String listBob() {
+	public String listBob(Search search, Model model) {
 		System.out.println(this.getClass()+"/listBob");
 		
 		return "forward:/bob/listBob.jsp";
 	}
 
-	@RequestMapping("/updateBob")
-	public String updateBob() {
-		System.out.println(this.getClass()+"/updateBob");
+	@RequestMapping(value="/updateBob", method=RequestMethod.GET)
+	public String updateBobView(@RequestParam String category,
+								@RequestParam int bobId,
+								Model model) throws Exception {
+		System.out.println(this.getClass()+"/updateBob_GET");
+		
+		Bob bob = bobService.getBobInfo(bobId, category);
+		
+		System.out.println(bob);
+
+		model.addAttribute("category", category);
+		model.addAttribute("categoryName", this.getCategoryName(category));
 		
 		return "forward:/bob/updateBob.jsp";
+	}
+	
+	@RequestMapping(value="/updateBob", method=RequestMethod.POST)
+	public String updateBob(@ModelAttribute Bob bob,
+							Model model) {
+		System.out.println(this.getClass()+"/updateBob_POST");
+		
+		
+		return "forward:/bob/getBob.jsp?bobId="+bob.getBobId()+"&category="+bob.getCategory();
 	}
 	
     /**
@@ -146,5 +176,16 @@ public class BobController {
         }
 
         return tempValue;
-    };
+    }
+    
+    public String getCategoryName(String category) {
+		String categoryName = B01;
+		
+		if(category.equals("B02")) {
+			categoryName = B02;
+		} else if(category.equals("B03")) {
+			categoryName = B03;
+		}
+		return categoryName;
+    }
 }

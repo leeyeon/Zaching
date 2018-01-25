@@ -100,63 +100,77 @@
         </style>
         
     </head>
-    <body>
+    
+<body>
     
     <div class="container">
 
     	<div class="page-header text-center">
-			<h3 class="text-info" style="color: #4d4d4d; font-weight: bold;">[우리지금만나] 방수정하기</h3>
+			<h3 class="text-info" style="color: #4d4d4d; font-weight: bold;">[${categoryName}] 방만들기</h3>
 		</div>
     
-		<form class="form-horizontal" id="addBob" enctype="multipart/form-data">
+		<form class="form-horizontal" enctype="multipart/form-data">
 		    <div class="form-group">
+		    	<input type="hidden" name="writtenUserId" value="9" />
+		    	<input type="hidden" name="category" value="${param.category}" />
 		    
 		    	<div class="row">
-		    		<div class="col-xs-2 btn-bob">제목</div>
+		    		<div class="col-xs-2 btn-bob" >제목</div>
 	            	<div class="col-xs-10" align="center">
-	            		<input type="text" class="form-style-1" placeholder="제목" style="font-size: 16px;"/>
+	            		<input type="text" name="title" class="form-control" placeholder="제목" style="font-size: 16px;"/>
 	            	</div>
 		    	</div>
+		    	<div class="row text-center" style="padding:5px;">
+		    		<span class="col-sm-12" style="color: red;" >글자수는 20자로 제한됩니다.</span>
+		    	</div>
+		    	
+		    	<c:if test="${categoryName eq '우리지금만나'}">
+			    	<div class="row">
+			    		<div class="col-xs-2 btn-bob" align="center">
+			    			제한인원수
+			    		</div>
+		            	<div class="col-xs-10" align="center" >
+					    	<select name="limitNum" class="selectpicker show-tick" title="제한 인원수">
+					    	  <c:forEach var="i" begin="2" end="20" step="1">
+					    	  	<option >${i}</option>
+					    	  </c:forEach>
+							</select>
+		            	</div>
+			    	</div>
+			    	<div class="row text-right">
+			    		<span class="col-sm-12" style="color: red; text-align: right;" >* 인원수는 20명 제한입니다.</span>
+			    	</div>
+		    	</c:if>
 		    	
 	            <div class="row">
 	            	<div class="col-xs-12">
-	                	<textarea name="ckeditor" id="ckeditor"></textarea> 
+	                	<textarea name="content" id="ckeditor"></textarea> 
 	                </div>
 	            </div>
 	            
 	            <div class="row">
-	            	<div class="col-xs-10" align="center">
-	            		<input id="input-b1" name="input-b1" type="file" class="file">
+	            	<div class="col-xs-2 btn-bob">대표사진 설정</div>
+	            	<div class="col-xs-10" align="center" style="padding-top: 7px;">
+	            		<input id="input-b1" name="uploadFile" type="file" class="file">
 	            	</div>
 		    	</div>
 	            		    	
 		    	<div class="row" style="margin-top: 5px;">
 		    		<div class="col-xs-2 btn-bob">위치</div>
 	            	<div class="col-xs-10" align="center">
-	            		<input type="text" class="form-style-1" placeholder="위치" style="font-size: 16px;"/>
+	            		<input type="text" name="locationName" class="form-control" placeholder="위치" style="font-size: 16px;"/>
 	            	</div>
 		    	</div>
 		    	
 		    	<div class="row">
 		    		<div class="col-xs-2 btn-bob">날짜</div>
 	            	<div class="col-xs-10" align="center">
-	            		<input type="text" class="form-style-1" placeholder="날짜" style="font-size: 16px;"/>
-	            	</div>
-		    	</div>
-		    	
-		    	<div class="row">
-		    		<div class="col-xs-2 btn-bob">회비</div>
-	            	<div class="col-xs-4" align="center">
-	            		<input type="text" class="form-style-1" placeholder="회비" style="font-size: 16px;"/>
-	            	</div>
-	            	<div class="col-xs-2 btn-bob">회비날짜</div>
-	            	<div class="col-xs-4" align="center">
-	            		<input type="text" class="form-style-1" placeholder="회비날짜" style="font-size: 16px;"/>
+	            		<input type="date" name="appointmentTime" class="form-control" placeholder="날짜" style="font-size: 16px;"/>
 	            	</div>
 		    	</div>
 				
 	            <div class="row" align="center">
-	                <button type="submit" class="btn-bob" style="margin: 10px;">방 수정하기</button>
+	                <button type="submit" class="btn-bob" style="margin: 10px;" >방 만들기</button>
 	                <button type="reset" class="btn-bob" style="background: #ededed; color: #4d4d4d; margin: 10px;">취소</button>
 	            </div>
 		    </div>

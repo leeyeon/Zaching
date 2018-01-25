@@ -71,7 +71,7 @@ CREATE TABLE REPORT (
 CREATE TABLE BOB (
 	bob_id numeric not null,
 	category_code char(4) not null,
-	title varchar2(50) not null,
+	title varchar2(100) not null,
 	content varchar2(4000) not null,
 	created_date date not null,
 	background_image varchar2(100),

@@ -179,6 +179,7 @@ body {
     
 		<form class="form-horizontal" enctype="multipart/form-data">
 		    <div class="form-group">
+		    	<input type="hidden" name="writtenUserId" value="9" />
 		    	<input type="hidden" name="category" value="${param.category}" />
 		    
 		    	<div class="row">

@@ -2,6 +2,7 @@ package com.zaching.common.service;
 
 import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.zaching.common.domain.Search;
@@ -24,5 +25,17 @@ public interface CommonService {
 	 * (ex) C:\\Users\\301-6\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\
 	 * */
 	public String addFile(String fileDirectory, MultipartFile uploadFile);
+	
+	/* KakaoDao »ç¿ë
+	 * getAuto / getToken / kakaoPay
+	 * */
+	
+	public String getAuthorizationUrl();
+	
+	public Map<String, Object> getAceessToken(String code) throws Exception;
+	
+	public String getPaymentReady(String token, int point) throws Exception;
+	
+	public Map<String, Object> getPaymentApprove(String token, String pgToken) throws Exception;
 
 }

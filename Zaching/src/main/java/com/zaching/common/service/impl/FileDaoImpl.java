@@ -65,7 +65,7 @@ public class FileDaoImpl implements FileDao {
 					//bob.setImage(realFileName);
 					uploadFile.transferTo(file);
 					
-					return realFileName;
+					return year+monthStr+"\\"+realFileName;
 				}
 			}	
 		} catch(Exception e) {

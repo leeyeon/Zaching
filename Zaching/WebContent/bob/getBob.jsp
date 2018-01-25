@@ -2,6 +2,7 @@
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
@@ -148,29 +149,41 @@
     
     <script type="text/javascript">
     
-  		$(function() {
-  			
-  		    var jumboHeight = $('.jumbotron').outerHeight();
-  		    function parallax(){
-  		        var scrolled = $(window).scrollTop();
-  		        $('.bg').css('height', (jumboHeight-scrolled) + 'px');
-  		    }
-  		
-  		    $(window).scroll(function(e){
-  		        parallax();
-  		    });
-  		    
-  		  	$('.select-bob').on('click', function(){
-				 $('.active').removeClass('active');
-				 $(this).addClass('active');
-			});
-  		  	
-  		  	$('.comment').on('click', function(){
-  		  		
-  		  	});
-			
-
-  		});
+	$(function() {
+		
+		var jumboHeight = $('.jumbotron').outerHeight();
+		function parallax(){
+		    var scrolled = $(window).scrollTop();
+		    $('.bg').css('height', (jumboHeight-scrolled) + 'px');
+		}
+	
+		$(window).scroll(function(e){
+		    parallax();
+		});
+	   
+		$('.select-bob').on('click', function(){
+			$('.active').removeClass('active');
+			$(this).addClass('active');
+		});
+	 	
+	 	$('.comment').on('click', function(){
+	 		
+	 	});
+	 	
+	 	$('.col-xs-1:contains("신고")').on('click', function() {
+	 		alert('신고');
+	 	});
+	 	
+	 	$('.col-xs-1:contains("수정")').on('click', function() {
+			//alert('수정');
+			$(self.location).attr("href","/bob/updateBob?category=${category}&bobId=${bob.bobId}");
+		});
+	 	
+	 	$('.btn-ico:contains("초대하기")').on('click', function() {
+			alert('초대하기');
+		});
+	
+	});
 
     </script>
     
@@ -187,11 +200,13 @@
 		</div>
 		
 		  <div class="textStyle" style="padding-top: 150px;">
-		  	<div class="overlay"><h2>방 제목</h2></div>
+		  	<div class="overlay"><h2>${bob.title}</h2></div>
 		  </div>
-		  <div class="textStyle">
-		  	<div class="overlay"><h3>위치, 날짜</h3></div>
-		  </div>
+		  <c:if test="${category ne 'B03'}">
+			  <div class="textStyle">
+			  	<div class="overlay"><h3>${bob.locationName}</h3></div>
+			  </div>
+		  </c:if>
 		</div>
 	</div>
 	
@@ -202,10 +217,7 @@
         <div class="col-sm-8 blog-main custumRow">
 
           <div class="blog-post">
-            내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>
-            내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>
-            내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>내용<br/>
-
+            ${bob.content}
           </div><!-- /.blog-post -->
 
         </div><!-- /.blog-main -->
@@ -214,12 +226,22 @@
         	<div style="padding:8px;">
 				<div class="row">
 					<div class="col-xs-8 textBold" align="left" style="padding-right: 0px; padding-top:3px;">
-						현재 참여한 자췽러
+						<c:if test="${category ne 'B03'}">
+							현재 참여한 자췽러
+						</c:if>
+						<c:if test="${category eq 'B03'}">
+							참여한 친구들
+						</c:if>
 					</div>
 					<div class="col-xs-4 textBold" align="right" style="font-size: 25px;">
-						4 / 10
+						<c:if test="${category ne 'B03'}">
+							${fn:length(participant)} / ${bob.limitNum}
+						</c:if>
+						<c:if test="${category eq 'B03'}">
+							<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#myModal">친구초대</button>
+						</c:if>
 					</div>
-					<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#myModal">친구초대</button>
+					
 				</div>
 				<div class="row" style="padding: 10px; top:-30px;  padding-top:-50px;">
 					<div class="col-xs-12" align="left" style="margin-top:20px;">
@@ -235,9 +257,8 @@
 									-khtml-border-radius: 40px;
 									-webkit-border-radius: 40px;
 									 box-shadow: 3px 3px 3px rgba(237,237,237,1)"
-							src="/resources/upload_files/images/sample_profile.png" />&nbsp;&nbsp;&nbsp;방장
+							src="/resources/upload_files/images/sample_profile.png" />&nbsp;&nbsp;&nbsp;${bob.writtenUserName}
 						</div>
-						
 					</div>
 					
 					<c:forEach var="i" begin="0" end="4" step="1">
@@ -255,25 +276,31 @@
 						
 					</c:forEach>
 				</div>
-									
 				<hr>
-				<div class="row" style="padding: 5px; display: none;">
-					<button type="submit" class="btn-bob">약속비 1000원으로 참여하기</button>
-				</div>
 				
-				<div class="row" style="padding: 5px; display: none;">
-					<button type="submit" class="btn-bob">참여하기</button>
-				</div>
+				<c:if test="${category eq 'B01'}">
+					<div class="row" style="padding: 5px;">
+						<button type="submit" class="btn-bob">약속비 1000원으로 참여하기</button>
+					</div>
+				</c:if>
 				
-				<div class="row" style="padding: 5px;">
-					<div class="col-xs-9" style="padding: 5px;">
-						<button type="submit" class="btn-bob" >회비 내기</button>
+				<c:if test="${category eq 'B02'}">
+					<div class="row" style="padding: 5px;">
+						<button type="submit" class="btn-bob">참여하기</button>
 					</div>
-					<div class="col-xs-3" style="padding: 5px;">
-						<button type="submit" class="btn-bob" >설정</button>
+				</c:if>
+				
+				<c:if test="${category eq 'B03'}">
+					<div class="row" style="padding: 5px;">
+						<div class="col-xs-9" style="padding: 5px;">
+							<button type="submit" class="btn-bob" >회비 내기</button>
+						</div>
+						<div class="col-xs-3" style="padding: 5px;">
+							<button type="submit" class="btn-bob" >설정</button>
+						</div>
 					</div>
-
-				</div>
+				</c:if>
+				
 			</div>
         </div><!-- /.blog-sidebar -->
 
@@ -327,51 +354,53 @@
       </div>
 
 
-      	<!-- 회비 div 시작 -->
+      <!-- 회비 div 시작 -->
 
-      <div class="row custumRow" style="margin-top:20px; padding-top: 30px;">
-	    <div class="text-center textBold" style="font-size: 35px;">회비 장부</div>
-      	<hr>
-      	
-      	<div class="row" style="padding: 10px;">
-      		<div class="col-xs-4 select-bob">두달전</div>
-      		<div class="col-xs-4 select-bob">저번달</div>
-      		<div class="col-xs-4 select-bob active">이번달</div>
-      	</div>
-      	
-      	<div class="row text-center textBold" style="padding-top:25px; padding-botton:30px;">
-      		이 달의 회비는 20,000원입니다.
-      	</div>
-      	
-      	<hr>
-
-      	<div class="row" style="padding: 0 20px 0 20px;">
-   			<c:forEach var="i" begin="0" end="4" step="1">
-   				
-				<div class="col-xs-4" align="left" style="margin-top:20px; padding-right:15px;">
-					<img width="55px" height="55px"
-					style=" border: 2px solid #5F4B8B;
-							border-radius: 40px;
-							-moz-border-radius: 40px;
-							-khtml-border-radius: 40px;
-							-webkit-border-radius: 40px;
-							 box-shadow: 3px 3px 3px rgba(237,237,237,1)"
-					src="/resources/upload_files/images/sample_profile.png" />
-					&nbsp;&nbsp;&nbsp;이름&nbsp;&nbsp;&nbsp;
-					<c:if test="${i%3 == 0}">
-						<img width="55px" height="55px" src="/resources/images/checkmark.png" />
-					</c:if>
-				</div>
-			</c:forEach>
-		</div>
-      	
-      	<hr>
-      	
-      	<div class="row" align="right" style="margin-right:5px;">
-      		<button type="submit" class="btn-bob" style="width: 210px; height: 60px; line-height:60px;">엑셀 다운로드</button>
-      	</div>
-      </div>
+	  <c:if test="${category eq 'B03'}">
+	      <div class="row custumRow" style="margin-top:20px; padding-top: 30px;">
+		    <div class="text-center textBold" style="font-size: 35px;">회비 장부</div>
+	      	<hr>
+	      	
+	      	<div class="row" style="padding: 10px;">
+	      		<div class="col-xs-4 select-bob">두달전</div>
+	      		<div class="col-xs-4 select-bob">저번달</div>
+	      		<div class="col-xs-4 select-bob active">이번달</div>
+	      	</div>
+	      	
+	      	<div class="row text-center textBold" style="padding-top:25px; padding-botton:30px;">
+	      		이 달의 회비는 20,000원입니다.
+	      	</div>
+	      	
+	      	<hr>
+	
+	      	<div class="row" style="padding: 0 20px 0 20px;">
+	   			<c:forEach var="i" begin="0" end="4" step="1">
+	   				
+					<div class="col-xs-4" align="left" style="margin-top:20px; padding-right:15px;">
+						<img width="55px" height="55px"
+						style=" border: 2px solid #5F4B8B;
+								border-radius: 40px;
+								-moz-border-radius: 40px;
+								-khtml-border-radius: 40px;
+								-webkit-border-radius: 40px;
+								 box-shadow: 3px 3px 3px rgba(237,237,237,1)"
+						src="/resources/upload_files/images/sample_profile.png" />
+						&nbsp;&nbsp;&nbsp;이름&nbsp;&nbsp;&nbsp;
+						<c:if test="${i%3 == 0}">
+							<img width="55px" height="55px" src="/resources/images/checkmark.png" />
+						</c:if>
+					</div>
+				</c:forEach>
+			</div>
+	      	
+	      	<hr>
+	      	
+	      	<div class="row" align="right" style="margin-right:5px;">
+	      		<button type="submit" class="btn-bob" style="width: 210px; height: 60px; line-height:60px;">엑셀 다운로드</button>
+	      	</div>
+	      </div>
       
+      </c:if>
       <!-- /회비 div 끝 -->
 
     </div><!-- /.container -->

@@ -35,7 +35,9 @@
     <script type="text/javascript">
     
   		$(function() {
-
+  			$('button:contains("충전")').on('click', function(){
+  				$("form").attr("method", "POST").attr("action", "/payment/kakaoPay").submit();
+  			});
   		});
 
     </script>
@@ -50,19 +52,20 @@
 		  <h1>포인트 충전</h1>
 		</div>
 		
-		
-		<div class="row" style="padding-top:50px;">
-			<div class="col-xs-5"><h3>충전할 금액</h3></div>
-			<div class="col-xs-7">
-				<input type="text" class="form-control" />
+		<form class="form-horizontal" >
+			<input type="hidden" name="userId" value="9" />
+			<div class="row" style="padding-top:50px;">
+				<div class="col-xs-5"><h3>충전할 금액</h3></div>
+				<div class="col-xs-7">
+					<input type="text" name="point" class="form-control" />
+				</div>
 			</div>
-		</div>
-		
-        <div class="row" align="center" style="padding-top:50px;">
-            <button type="submit" class="btn-bob" style="margin: 10px;">충전</button>
-            <button type="reset" class="btn-bob" style="background: #ededed; color: #4d4d4d; margin: 10px;">취소</button>
-        </div>
-
+			
+	        <div class="row" align="center" style="padding-top:50px;">
+	            <button type="submit" class="btn-bob" style="margin: 10px;">충전</button>
+	            <button type="reset" class="btn-bob" style="background: #ededed; color: #4d4d4d; margin: 10px;">취소</button>
+	        </div>
+		</form>
     </div><!-- /.container -->
 </body>
 </html>

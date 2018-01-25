@@ -13,7 +13,7 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Payment;
 import com.zaching.service.payment.PaymentDao;
 
-//@Repository("paymentDaoImpl")
+@Repository("paymentDaoImpl")
 public class PaymentDaoImpl implements PaymentDao {
 	
 	@Autowired
@@ -46,7 +46,7 @@ public class PaymentDaoImpl implements PaymentDao {
 	}
 
 	@Override
-	public void managepayment(Payment payment) throws Exception {
+	public void managePayment(Payment payment) throws Exception {
 		sqlSession.insert("PaymentMapper.managepayment", payment);
 	}
 
