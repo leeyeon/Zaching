@@ -74,4 +74,18 @@
 			
 	</select>
 	
+	<update id="updateComment"
+			parameterType="comment">
+			
+		UPDATE COMMENTS
+		<set>
+			content = #{content:VARCHAR}
+		</set>
+		
+		<where>
+			comment_id = #{commentId}
+		</where>
+	
+	</update>
+	
 </mapper>

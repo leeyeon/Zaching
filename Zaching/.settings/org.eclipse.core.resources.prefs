@@ -2,5 +2,6 @@ eclipse.preferences.version=1
 encoding//WebContent/newsfeed/checkBlindNewfeed.jsp=ISO-8859-1
 encoding//WebContent/newsfeed/newsfeed.jsp=UTF-8
 encoding//src/main/resources/config/bankCode.properties=UTF-8
+encoding//src/main/resources/config/category.properties=ISO-8859-1
 encoding//src/main/resources/config/rentCharge.properties=UTF-8
 encoding//src/main/resources/config/restapi.properties=UTF-8

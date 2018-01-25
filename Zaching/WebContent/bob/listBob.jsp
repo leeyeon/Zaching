@@ -149,15 +149,15 @@
 			});
 			
 			$('.list-group-item:contains("우리지금만나")').on("click", function() {
-				$(self.location).attr("href","/bob/addBob?category='B01'");
+				$(self.location).attr("href","/bob/addBob?category=B01");
 			});
 			
 			$('.list-group-item:contains("당장만나")').on("click", function() {
-				$(self.location).attr("href","/bob/addBob?category='B02'");
+				$(self.location).attr("href","/bob/addBob?category=B02");
 			});
 			
 			$('.list-group-item:contains("주기적으로만나")').on("click", function() {
-				$(self.location).attr("href","/bob/addBob?category='B03'");
+				$(self.location).attr("href","/bob/addBob?category=B03");
 			});
 			
 		});		
