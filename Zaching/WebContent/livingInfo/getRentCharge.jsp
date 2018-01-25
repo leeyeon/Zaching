@@ -18,7 +18,7 @@
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-
+<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 
  <link rel="stylesheet" type="text/css" href="/resources/livingInfo/rentcharge.css"/>
   
@@ -34,10 +34,6 @@ $( document ).ready(function() {
 </script>
 <body>
 
-<jsp:include page="/livingInfo/toolbar.jsp" />
-<br/>
-<br/>
-<br/>
 <input type="hidden" id="money" name="money" value="" />
 <div class="map_wrap">
     <div id="map" style="width:100%;height:600px;position:relative;overflow:hidden;"></div>

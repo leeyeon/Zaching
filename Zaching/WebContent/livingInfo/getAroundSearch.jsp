@@ -23,8 +23,7 @@
 
 
 <link rel="stylesheet" type="text/css" href="/resources/livingInfo/aroundsearch.css"/>
-
-
+<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 </head>
 
 <script type="text/javascript">
@@ -37,7 +36,6 @@ $( document ).ready(function() {
 </script>
 <body>
 
-<jsp:include page="/livingInfo/toolbar.jsp" />
 <br/>
 <br/>
 <br/>

@@ -18,7 +18,7 @@
 <!-- Bootstrap Dropdown Hover CSS -->
 <link href="/css/animate.min.css" rel="stylesheet">
 <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-
+<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 
@@ -27,7 +27,6 @@
 </head>
 <body>
 
-<jsp:include page="/livingInfo/toolbar.jsp" />
 
 
 
