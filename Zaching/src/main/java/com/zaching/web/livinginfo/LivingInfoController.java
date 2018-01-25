@@ -13,6 +13,15 @@ public class LivingInfoController {
 	public LivingInfoController() {
 		System.out.println("/livingInfo");
 	}
+
+	
+	@RequestMapping(value = "getRentCharge", method = RequestMethod.GET)
+	public String getRentCharge(Model model) throws Exception {
+
+		System.out.println("/getRentCharge");
+	
+		return "forward:/livingInfo/getRentCharge.jsp";
+	}
 	
 	@RequestMapping(value = "getAroundSearch", method = RequestMethod.GET)
 	public String getAroundSearch(Model model) throws Exception {
@@ -22,12 +31,12 @@ public class LivingInfoController {
 		return "forward:/livingInfo/getAroundSearch.jsp";
 	}
 	
-	@RequestMapping(value = "getRentCharge", method = RequestMethod.GET)
-	public String getRentCharge(Model model) throws Exception {
+	@RequestMapping(value = "mainLivingInfo", method = RequestMethod.GET)
+	public String mainLivingInfo(Model model) throws Exception {
 
-		System.out.println("/getRentCharge");
+		System.out.println("/mainLivingInfo");
 	
-		return "forward:/livingInfo/getRentCharge.jsp";
+		return "forward:/livingInfo/mainLivingInfo.jsp";
 	}
 	
 	@RequestMapping(value = "getEventInfo", method = RequestMethod.GET)

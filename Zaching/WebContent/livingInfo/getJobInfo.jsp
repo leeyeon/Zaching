@@ -23,16 +23,22 @@
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 
     <title></title>
-    
+ <script src="/resources/javascript/chatbot.js"></script>   
 </head>
+<style>
+#fixedbtn{position:fixed;
+			right:50px;
+			bottom:50px;
+			z-index:1000}
+</style>
 <body>
 
 
-
+<div class="container" align="center">
 
 <iframe id="pageFrame" name="pageFrame" src="http://www.jobkorea.co.kr/Starter/calendar/sub/month" frameborder="0"
-width="80%" height="1000px" scrolling="auto"></iframe>
-
+width="80%" height="1200px" scrolling="auto"></iframe>
+</div>
 
 </body>
 </html>

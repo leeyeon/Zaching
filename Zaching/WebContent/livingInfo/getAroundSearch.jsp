@@ -24,16 +24,14 @@
 
 <link rel="stylesheet" type="text/css" href="/resources/livingInfo/aroundsearch.css"/>
 <jsp:include page="../resources/layout/sub_toolbar.jsp"/>
+<script src="/resources/javascript/chatbot.js"></script>
 </head>
-
-<script type="text/javascript">
-$( document ).ready(function() {
-    
-    showPopup();
-    function showPopup() { window.open("/livingInfo/getChatbot.jsp", "a", "width=350px, height=450px, left=1000, top=50"); }
-});
-
-</script>
+<style>
+#fixedbtn{position:fixed;
+			right:50px;
+			bottom:50px;
+			z-index:1000}
+</style>
 <body>
 
 <br/>
@@ -49,7 +47,8 @@ $( document ).ready(function() {
       <button type="submit" id="selectSearch"><i class="fa fa-search"></i></button>
   </div>
 </div>
-<button type="button" class="btn btn-primary" id="내주소로검색">내주소로검색</button>
+<!-- <button type="button" class="btn btn-primary" id="내주소로검색">내주소로검색</button> -->
+
 
 	    </div>
 	    
@@ -92,6 +91,8 @@ $( document ).ready(function() {
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
 <script src="/resources/livingInfo/aroundsearchmap.js"></script>
+
+<img src="../resources/images/chat.png" id="fixedbtn">
 
 </body>
 </html>

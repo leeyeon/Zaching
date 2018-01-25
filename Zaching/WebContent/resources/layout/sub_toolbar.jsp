@@ -85,6 +85,10 @@
 				 $('.active').removeClass('active');
 				 $(this).addClass('active');
 			})
+			
+			$("a[href='#' ]:contains('생활정보')").on("click", function() {
+				self.location = "/livingInfo/mainLivingInfo.jsp";
+			});
 
 		});
 	

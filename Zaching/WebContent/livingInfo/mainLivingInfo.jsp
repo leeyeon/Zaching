@@ -20,6 +20,7 @@
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 <jsp:include page="../resources/layout/sub_toolbar.jsp"/>
+<script src="/resources/javascript/chatbot.js"></script>
 </head>
 <style>
  	 	body {
@@ -53,24 +54,21 @@
        		cursor: pointer;
        	}
        	
-       	.row .col-xs-1 {
-       		border: 1px solid #FFFFFF;
-			border-radius: 40px;
-			-moz-border-radius: 40px;
-			-khtml-border-radius: 40px;
-			-webkit-border-radius: 40px;
-			 background: #FFFFFF;
-			 width: 70px;
-			 height: 70px;
-			 line-height: 70px;
-			 font-size: 17px;
-			 font-weight: bold;
-			 float:right;
-			 margin-right: 10px;
-			 cursor: pointer;
-       	}
+       
+       	
+#fixedbtn{position:fixed;
+			right:50px;
+			bottom:50px;
+			z-index:1000}
 </style>
+
+
+</style>
+
+
 <script type="text/javascript">
+
+
 
 $(function() {
 	
@@ -79,7 +77,7 @@ $(function() {
 		 self.location = "/livingInfo/getRentCharge";
 		});
 	 
-	 $( ".col-xs-4:contains('주변위치검색')" ).on("click" , function() {
+	 $( ".col-xs-4:contains('주변편의시설')" ).on("click" , function() {
 		 self.location = "/livingInfo/getAroundSearch";
 		});
 	 
@@ -101,7 +99,7 @@ $(function() {
 <div class="container" align="center">
 <div class="row" style="padding: 300px;">
       		<div class="col-xs-4 select-bob">전월세정보</div>
-      		<div class="col-xs-4 select-bob">주변위치검색</div>
+      		<div class="col-xs-4 select-bob">주변편의시설</div>
       		<div class="col-xs-4 select-bob">편의점행사정보</div>
       		<div class="col-xs-4 select-bob">국내여행정보</div>
       		<div class="col-xs-4 select-bob">알리미정보</div>
@@ -109,4 +107,6 @@ $(function() {
 		</div>
 
 </body>
+<img src="../resources/images/chat.png" id="fixedbtn">
+
 </html>
