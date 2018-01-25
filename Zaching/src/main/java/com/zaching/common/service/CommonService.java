@@ -11,7 +11,7 @@ public interface CommonService {
 	
 	public Map<String, Object> listComment(Search search, String categoryCode, int roomId) throws Exception;
 	
-	public void addComment(Comment comment) throws Exception;
+	public Comment addComment(Comment comment) throws Exception;
 	
 	public void deleteComment(int commentId) throws Exception;
 

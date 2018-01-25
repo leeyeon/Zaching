@@ -30,15 +30,16 @@ public class CommonServiceTest {
 	@Qualifier("commonServiceImpl")
 	CommonService commonService;
 	
-	//@Test
+	@Test
 	public void addComment() throws Exception {
 		Comment comment = new Comment();
 		comment.setCategory("B00");
 		comment.setRoomId(11);
 		comment.setUserId(6);
-		comment.setContent("¼¼¹øÂ°´ñ±Û");
+		comment.setContent("Å×½ºÆ®´ñ±Û2");
 		
-		commonService.addComment(comment);
+		comment = commonService.addComment(comment);
+		System.out.println(comment);
 	}
 	
 	//@Test
@@ -46,7 +47,7 @@ public class CommonServiceTest {
 		commonService.deleteComment(1);
 	}
 	
-	@Test
+	//@Test
 	public void listComment() throws Exception {
 		Search search = new Search();
 		search.setCurrentPage(1);

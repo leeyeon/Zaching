@@ -101,7 +101,8 @@
        		cursor: pointer;
        	}
        	
-       	.row .col-xs-1 {
+       	
+       	body > div.jumbotron > div > div.row > .col-xs-1 {
        		border: 1px solid #FFFFFF;
 			border-radius: 40px;
 			-moz-border-radius: 40px;
@@ -159,10 +160,15 @@
   		        parallax();
   		    });
   		    
-  		  $('.select-bob').on('click', function(){
+  		  	$('.select-bob').on('click', function(){
 				 $('.active').removeClass('active');
 				 $(this).addClass('active');
-			})
+			});
+  		  	
+  		  	$('.comment').on('click', function(){
+  		  		
+  		  	});
+			
 
   		});
 
@@ -177,7 +183,7 @@
 	<div class="container" align="center">
 		<div class="row" >
 			<div class="col-xs-1">신고</div>
-			<div class="col-xs-1">삭제</div>
+			<div class="col-xs-1">수정</div>
 		</div>
 		
 		  <div class="textStyle" style="padding-top: 150px;">
@@ -274,10 +280,42 @@
       </div><!-- /.row -->
       
       
-      <div class="row custumRow" style="margin-top:20px;">
+      <div class="row custumRow" style="margin-top:20px; padding-top:30px;">
+      	<div class="text-center textBold" style="font-size: 35px;">친구들과 대화를 나누세요 :)</div>
+        <hr>
+
+      	<c:forEach var="i" begin="0" end="3" step="1">
+      		<div class="row comment" style="margin: 5px;">
+	      		<div class="col-sm-2">
+					이름
+				</div>
+				<div class="col-sm-7">
+					댓글 내용
+				</div>
+				<div class="col-sm-3" style="font-size: 13px; text-align: end;">
+					<div style="padding-right: 50px;">
+						2018.01.09 PM 3:12
+					</div>
+					<div class="deleteComment" style="position: relative; right: 10px; top:-10px; text-align: end;">
+						X
+					</div>
+				</div>
+			</div>
+			
+			<c:if test="${i!=3}">
+				<hr>
+			</c:if>
+      	</c:forEach>
       
-      	여기는 댓글<br/>여기는 댓글<br/>여기는 댓글<br/>여기는 댓글<br/>여기는 댓글<br/>여기는 댓글<br/>여기는 댓글<br/>여기는 댓글<br/>여기는 댓글<br/>
-      	여기는 댓글<br/>여기는 댓글<br/>여기는 댓글<br/>여기는 댓글<br/>여기는 댓글<br/>여기는 댓글<br/>여기는 댓글<br/>여기는 댓글<br/>여기는 댓글<br/>
+      	<div class="row" style="padding:15px 5px 5px 5px;">
+      		<div class="col-xs-9">
+      			<input type="text" class="form-control" value="댓글을 입력해주세요."/>       		
+      		</div>
+      		<div class="col-xs-3">
+				<button type="submit" class="form-control">등록</button>
+			</div>
+      	</div>
+
       
       </div>
       
