@@ -1,5 +1,7 @@
 package com.zaching.service.domain;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Newsfeed {
 	
 	private int newsfeedID;
@@ -11,6 +13,16 @@ public class Newsfeed {
 	private String locationName;
 	private int countLikey;
 	private int countReply;
+	private MultipartFile file;
+
+	
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 
 	public Newsfeed() {
 		// TODO Auto-generated constructor stub
