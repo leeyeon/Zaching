@@ -18,6 +18,7 @@ public class VoiceServiceImpl implements VoiceService{
 	@Autowired
 	@Qualifier("voiceDaoImpl")
 	VoiceDao voiceDao;
+	
 	public void setVoiceDao(VoiceDao voiceDao) {
 		this.voiceDao = voiceDao;
 	}

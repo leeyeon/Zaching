@@ -28,5 +28,5 @@ public void addNewsfeed(Newsfeed newsfeed) throws Exception;
 	
 	public List<Newsfeed> listNewsfeeds(Search search) throws Exception;
 	
-	public void addLikeBlind(int newsfeedId, int userId) throws Exception;
+	public void addLikeBlind(int newsfeedId, int userId, String status) throws Exception;
 }

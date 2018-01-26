@@ -13,10 +13,10 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.newsfeed.NewsfeedDao;
 
-//@Repository("newsfeedDaoImpl")
+@Repository("newsfeedDaoImpl")
 public class NewsfeedDaoImpl implements NewsfeedDao{
-	//@Autowired
-	//@Qualifier("sqlSessionTemplate")
+	@Autowired
+	@Qualifier("sqlSessionTemplate")
 	SqlSession sqlSession;
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
@@ -82,10 +82,11 @@ public class NewsfeedDaoImpl implements NewsfeedDao{
 	}
 
 	@Override
-	public void addLikeBlind(int newsfeedId, int userId) throws Exception {
+	public void addLikeBlind(int newsfeedId, int userId, String status) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("newsfeedId", newsfeedId);
 		map.put("userId", userId);
+		map.put("status", status);
 		sqlSession.insert("NewsfeedMapper.addLikeBlind", map);
 	}
 

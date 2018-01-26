@@ -1,10 +1,11 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=refs/remotes/origin/master
 eclipse.preferences.version=1
-<<<<<<< HEAD
-encoding//src/main/java/com/zaching/common/service/impl/KakaoRestDaoImpl.java=UTF-8
-=======
 encoding//WebContent/newsfeed/checkBlindNewfeed.jsp=ISO-8859-1
-encoding//WebContent/newsfeed/newsfeed.jsp=UTF-8
->>>>>>> refs/remotes/origin/master
+encoding//WebContent/newsfeed/checkDeleteNewfeed.jsp=UTF-8
+encoding//WebContent/newsfeed/newsfeed.jsp=EUC_KR
+encoding//src/main/java/com/zaching/common/service/impl/KakaoRestDaoImpl.java=UTF-8
 encoding//src/main/resources/config/bankCode.properties=UTF-8
 encoding//src/main/resources/config/category.properties=ISO-8859-1
 encoding//src/main/resources/config/rentCharge.properties=UTF-8

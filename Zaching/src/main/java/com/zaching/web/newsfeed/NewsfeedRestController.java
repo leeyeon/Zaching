@@ -42,17 +42,14 @@ public class NewsfeedRestController {
 	}
 	
 	@RequestMapping(value="json/updateLikey/{newsfeedId}/{userId}", method=RequestMethod.GET)
-	public int updateLikey(@RequestParam int newsfeedId, @RequestParam int userId, @RequestParam int countLikey) throws Exception{
+	public int updateLikey(@RequestParam int newsfeedId, @RequestParam int userId, @RequestParam int countLikey, @RequestParam String status) throws Exception{
 		System.out.println("newsfeed/json/updateLikey");
+		
 		newsfeedService.updateCountLike(newsfeedId);
-		newsfeedService.addLikeBlind(newsfeedId, userId);
+		newsfeedService.addLikeBlind(newsfeedId, userId, status);
+		newsfeedService.getCountLike(newsfeedId);
 		
 		return countLikey+1;
 	}
 	
-	
-	
-	
-	
-
 }

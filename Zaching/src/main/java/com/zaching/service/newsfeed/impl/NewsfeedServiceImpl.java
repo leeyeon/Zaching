@@ -13,10 +13,10 @@ import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.newsfeed.NewsfeedDao;
 import com.zaching.service.newsfeed.NewsfeedService;
 
-//@Repository("newsfeedServiceImpl")
+@Repository("newsfeedServiceImpl")
 public class NewsfeedServiceImpl implements NewsfeedService{
-	//@Autowired
-	//@Qualifier("newsfeedDaoImpl")
+	@Autowired
+	@Qualifier("newsfeedDaoImpl")
 	NewsfeedDao newsfeedDao;
 	public void setNewsfeedDao(NewsfeedDao newsfeedDao) {
 		this.newsfeedDao = newsfeedDao;
@@ -88,8 +88,8 @@ public class NewsfeedServiceImpl implements NewsfeedService{
 	}
 
 	@Override
-	public void addLikeBlind(int newsfeedId, int userId) throws Exception {
-		newsfeedDao.addLikeBlind(newsfeedId, userId);
+	public void addLikeBlind(int newsfeedId, int userId, String status) throws Exception {
+		newsfeedDao.addLikeBlind(newsfeedId, userId, status);
 		
 	}
 	

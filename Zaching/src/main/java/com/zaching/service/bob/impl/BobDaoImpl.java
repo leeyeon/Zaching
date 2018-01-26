@@ -108,7 +108,6 @@ public class BobDaoImpl implements BobDao {
 		map.put("bobId", bobId);
 		
 		for (Integer integer : listUser) {
-			System.out.println(integer);
 		}
 
 		
