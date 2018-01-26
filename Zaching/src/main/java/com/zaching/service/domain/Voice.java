@@ -2,23 +2,67 @@ package com.zaching.service.domain;
 
 public class Voice {
 	
-	private int voiceID ;
+	private int voiceId ;
 	private String voiceName;
-	private int voiceCategory;
+	private int categoryCode;
 	private String voiceIyrics;
 	private String regDate;
 	private int userID;
+	private String backgroundImage;
+	private String countReply;
+	private String countUser;
+	private String status;
 	
 	public Voice() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getVoiceID() {
-		return voiceID;
+	public int getVoiceId() {
+		return voiceId;
 	}
 
-	public void setVoiceID(int voiceID) {
-		this.voiceID = voiceID;
+	public void setVoiceId(int voiceId) {
+		this.voiceId = voiceId;
+	}
+
+	public String getBackgroundImage() {
+		return backgroundImage;
+	}
+
+	public void setBackgroundImage(String backgroundImage) {
+		this.backgroundImage = backgroundImage;
+	}
+
+	public String getCountReply() {
+		return countReply;
+	}
+
+	public void setCountReply(String countReply) {
+		this.countReply = countReply;
+	}
+
+	public String getCountUser() {
+		return countUser;
+	}
+
+	public void setCountUser(String countUser) {
+		this.countUser = countUser;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public int getvoiceId() {
+		return voiceId;
+	}
+
+	public void setvoiceId(int voiceId) {
+		this.voiceId = voiceId;
 	}
 
 	public String getVoiceName() {
@@ -29,12 +73,12 @@ public class Voice {
 		this.voiceName = voiceName;
 	}
 
-	public int getVoiceCategory() {
-		return voiceCategory;
+	public int getcategoryCode() {
+		return categoryCode;
 	}
 
-	public void setVoiceCategory(int voiceCategory) {
-		this.voiceCategory = voiceCategory;
+	public void setcategoryCode(int categoryCode) {
+		this.categoryCode = categoryCode;
 	}
 
 	public String getVoiceIyrics() {
@@ -63,7 +107,7 @@ public class Voice {
 
 	@Override
 	public String toString() {
-		return "Voice [voiceID=" + voiceID + ", voiceName=" + voiceName + ", voiceCategory=" + voiceCategory
+		return "Voice [voiceId=" + voiceId + ", voiceName=" + voiceName + ", categoryCode=" + categoryCode
 				+ ", voiceIyrics=" + voiceIyrics + ", regDate=" + regDate + ", userID=" + userID + "]";
 	}
 

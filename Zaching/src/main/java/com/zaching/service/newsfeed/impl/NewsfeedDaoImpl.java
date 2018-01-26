@@ -1,6 +1,8 @@
 package com.zaching.service.newsfeed.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +61,7 @@ public class NewsfeedDaoImpl implements NewsfeedDao{
 	}
 
 	@Override
-	public void updateCountLike(int newsfeedID) throws Exception {
+	public  void updateCountLike(int newsfeedID) throws Exception {
 		sqlSession.update("NewsfeedMapper.updateCountLike", newsfeedID);
 	}
 
@@ -71,6 +73,20 @@ public class NewsfeedDaoImpl implements NewsfeedDao{
 	@Override
 	public int getTotalCount(Search search) throws Exception{
 		return sqlSession.selectOne("NewsfeedMapper.getTotalCount", search);
+	}
+
+	@Override
+	public List<Newsfeed> listNewsfeeds(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("NewsfeedMapper.getNewsfeedLists", search);
+	}
+
+	@Override
+	public void addLikeBlind(int newsfeedId, int userId) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("newsfeedId", newsfeedId);
+		map.put("userId", userId);
+		sqlSession.insert("NewsfeedMapper.addLikeBlind", map);
 	}
 
 }
