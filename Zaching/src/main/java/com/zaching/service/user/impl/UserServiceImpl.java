@@ -28,14 +28,11 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	@Qualifier("userDaoImpl")
 	private UserDao userDao;
-	private NewsfeedDao newsfeedDao;
+	private JavaMailSender mailSender;
+	
 	// org.springframework.mail.javamail.JavaMailSender
-    private JavaMailSender javaMailSender;
- 
-    public void setJavaMailSender(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
-    } 
 
+ 
 
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
@@ -100,8 +97,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateUser(User user) throws Exception {
-		
-		
+	
 		userDao.updateUser(user);
 	}
 
@@ -114,6 +110,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteUser(User user) throws Exception {
+		
+		
+		
 		userDao.updateUser(user);
 
 	}
@@ -124,37 +123,10 @@ public class UserServiceImpl implements UserService {
 		userDao.updateNotice(user);
 	}
 
-	@Override
-	public boolean sendMail(String subject, String text, String from, String to, String filePath) {
-
-			
-		// javax.mail.internet.MimeMessage
-        MimeMessage message = javaMailSender.createMimeMessage();
- 
-        try {
-            // org.springframework.mail.javamail.MimeMessageHelper
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setSubject(subject);
-            helper.setText(text, true);
-            helper.setFrom(from);
-            helper.setTo(to);
- 
-            // 梅何 颇老 贸府
-            if (filePath != null) {
-                File file = new File(filePath);
-                if (file.exists()) {
-                    helper.addAttachment(file.getName(), new File(filePath));
-                }
-            }
- 
-            javaMailSender.send(message);
-            return true;
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-	
+//	@Override
+//	public boolean sendMail(String subject, String text, String from, String to, String filePath) {
+//
+//	}
 
 
 
