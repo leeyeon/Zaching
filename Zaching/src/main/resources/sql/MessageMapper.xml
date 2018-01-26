@@ -17,11 +17,63 @@
 	
 	<insert id="addMessage" parameterType="message">
 	INSERT
-	INTO message(message_id  , content , created_date )
-	VALUES(seq_message_id.nextval,  #{content:VARCHAR} , SYSDATE )
-	
+	INTO MESSAGE(message_id , content , created_date,user_id,friend_id  )
+	VALUES(
+	seq_message_id.nextval, 
+	#{content:VARCHAR} , 
+	SYSDATE ,
+	#{userId:INTEGER},
+	#{friendId:INTEGER}
+	)
 	
 	</insert>
+	
+	<delete id="deleteMessage" parameterType="message">
+	DELETE
+	FROM message WHERE message_id=#{messageId}
+	
+	
+	</delete>
+	
+	<select id="getMessage" parameterType="int" resultMap="messageSelectMap">
+	SELECT
+	message_id,user_id,friend_id,content,created_date
+	FROM message
+	WHERE message_id=#{messageId}
+	
+	</select>	
+	
+	<select id="listMessage" parameterType="search" resultMap="messageSelectMap">
+	SELECT *
+	FROM 	(SELECT inner_table.*,ROWNUM AS row_seq
+				FROM (SELECT message_id,user_id,friend_id,content,created_date
+						FROM message
+						<if test="searchCondition !=null">
+						<where>
+						<if test="searchCondition == 0 and searchKeyword !='' ">
+							message_id=#{searchKeyword}
+						</if>
+						<if test="searchCondition == 1 and searchKeyword !='' ">
+						friend_id=#{searchKeyword}
+						</if>
+						</where>
+						</if>
+						ORDER BY message_id DESC) inner_table
+						WHERE ROWNUM &lt;=#{endRowNum})
+							WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	
+	</select>
+	
+	 	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM( SELECT message_id ,user_id,friend_id, created_date 
+	  			FROM message ) countTable						
+	 </select>
+	
+	
+	
+	
+	
 	
 	
 	</mapper>

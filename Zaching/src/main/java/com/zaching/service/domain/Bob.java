@@ -3,6 +3,8 @@ package com.zaching.service.domain;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Bob {
 	
 	private int bobId;
@@ -12,12 +14,13 @@ public class Bob {
 	private String category;
 	private String title;
 	private String content;
+	private MultipartFile uploadFile;
 	private String image;
 	private int limitNum;
 	private String locationName;
 	private String latitude;
 	private String longitude;
-	private Date AppointmentTime;
+	private Date appointmentTime;
 	private Date createdDate;
 	private int fee;
 	private Date feeDate;
@@ -124,11 +127,11 @@ public class Bob {
 	}
 
 	public Date getAppointmentTime() {
-		return AppointmentTime;
+		return appointmentTime;
 	}
 
 	public void setAppointmentTime(Date appointmentTime) {
-		AppointmentTime = appointmentTime;
+		this.appointmentTime = appointmentTime;
 	}
 
 	public Date getCreatedDate() {
@@ -163,14 +166,22 @@ public class Bob {
 		this.status = status;
 	}
 
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
 	@Override
 	public String toString() {
 		return "Bob [bobId=" + bobId + ", writtenUserId=" + writtenUserId + ", writtenUserName=" + writtenUserName
 				+ ", writtenUserProfile=" + writtenUserProfile + ", category=" + category + ", title=" + title
-				+ ", content=" + content + ", image=" + image + ", limitNum=" + limitNum + ", locationName="
-				+ locationName + ", latitude=" + latitude + ", longitude=" + longitude + ", AppointmentTime="
-				+ AppointmentTime + ", createdDate=" + createdDate + ", fee=" + fee + ", feeDate=" + feeDate
-				+ ", status=" + status + "]";
+				+ ", content=" + content + ", uploadFile=" + uploadFile + ", image=" + image + ", limitNum=" + limitNum
+				+ ", locationName=" + locationName + ", latitude=" + latitude + ", longitude=" + longitude
+				+ ", appointmentTime=" + appointmentTime + ", createdDate=" + createdDate + ", fee=" + fee
+				+ ", feeDate=" + feeDate + ", status=" + status + "]";
 	}
 
 }

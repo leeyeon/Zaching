@@ -70,6 +70,7 @@ public class VoiceController {
 		// Model °ú View ¿¬°á
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
+
 		model.addAttribute("search", search);
 		
 		return "forward:/voice/listVoice.jsp";

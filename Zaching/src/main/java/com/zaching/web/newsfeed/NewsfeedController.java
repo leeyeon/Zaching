@@ -20,9 +20,12 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.newsfeed.NewsfeedService;
 
+
 @Controller
 @RequestMapping("/newsfeed/*")
+
 public class NewsfeedController {
+
 	@Autowired
 	@Qualifier("newsfeedServiceImpl")
 	private NewsfeedService newsfeedService;

@@ -35,7 +35,6 @@
 		FROM newsfeed
 		WHERE newsfeed_id = #{value}
 	</delete>
-	
 	<update id="updateNewsfeed" parameterType="newsfeed">
 		UPDATE newsfeed
 		SET category_code=#{categoryCode}, content=#{content}, location_name=#{locationName}, longitude=#{locationX}, latitude=#{locationY}, upload_file=#{fileName},
@@ -83,6 +82,9 @@
 		UPDATE newsfeed
 		SET total_like = total_like+1
 		WHERE newsfeed_id=#{value}
+		<selectKey keyProperty="countLikey" resultType="Integer" order="AFTER"> 
+			SELECT total_like FROM newsfeed
+		</selectKey>
 	</update>
 	
 	<update id="updateCountReply" parameterType="int">

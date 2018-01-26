@@ -30,7 +30,7 @@ public class NewsfeedRestController {
 	@RequestMapping(value="json/addComment", method=RequestMethod.GET)
 	public Comment addComment(@RequestBody Comment comment) throws Exception{
 		System.out.println("newsfeed/json/addComment");
-		
+
 		return null;
 	}
 	
@@ -38,8 +38,7 @@ public class NewsfeedRestController {
 	public Comment updateComment(@RequestBody Comment comment) throws Exception{
 		System.out.println("newsfeed/json/updateComment");
 		
-		return null;
-		//return commonService.addComment(comment);
+		return commonService.addComment(comment);
 	}
 	
 	@RequestMapping(value="json/updateLikey/{newsfeedId}/{userId}", method=RequestMethod.GET)

@@ -19,7 +19,7 @@ import com.zaching.service.domain.Participant;
  * 작성자 : 이연희
  * */
 
-//@Repository("bobDaoImpl")
+@Repository("bobDaoImpl")
 public class BobDaoImpl implements BobDao {
 
 	@Autowired
@@ -62,6 +62,7 @@ public class BobDaoImpl implements BobDao {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bobId", bobId);
 		map.put("category", category);
+		//System.out.println(bobId+"?????"+category);
 		return sqlSession.selectOne("BobMapper.getBob", map);
 	}
 

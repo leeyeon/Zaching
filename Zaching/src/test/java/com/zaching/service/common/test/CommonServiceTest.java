@@ -36,9 +36,10 @@ public class CommonServiceTest {
 		comment.setCategory("B00");
 		comment.setRoomId(11);
 		comment.setUserId(6);
-		comment.setContent("세번째댓글");
+		comment.setContent("테스트댓글3");
 		
-		commonService.addComment(comment);
+		comment = commonService.addComment(comment);
+		System.out.println(comment);
 	}
 	
 	//@Test
@@ -46,7 +47,7 @@ public class CommonServiceTest {
 		commonService.deleteComment(1);
 	}
 	
-	@Test
+	//@Test
 	public void listComment() throws Exception {
 		Search search = new Search();
 		search.setCurrentPage(1);
@@ -61,5 +62,14 @@ public class CommonServiceTest {
 		for (Comment comment : list) {
 			System.out.println(comment);
 		}
+	}
+	
+	@Test
+	public void updateCommnet() throws Exception {
+		Comment comment = new Comment();
+		comment.setCommentId(5);
+		comment.setContent("업데이트테스트");
+		
+		commonService.updateComment(comment);
 	}
 }
