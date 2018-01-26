@@ -18,32 +18,30 @@
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-
+<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 
  <link rel="stylesheet" type="text/css" href="/resources/livingInfo/rentcharge.css"/>
   
 
 </head>
-<script type="text/javascript">
-$( document ).ready(function() {
-    
-    showPopup();
-    function showPopup() { window.open("/livingInfo/getChatbot.jsp", "a", "width=350px, height=450px, left=1000, top=50"); }
-});
-
-</script>
+<script src="/resources/javascript/chatbot.js"></script>
+<style>
+#fixedbtn{position:fixed;
+			right:50px;
+			bottom:50px;
+			z-index:1000}
+</style>
+</style>
 <body>
-
-<jsp:include page="/livingInfo/toolbar.jsp" />
-<br/>
-<br/>
-<br/>
 <input type="hidden" id="money" name="money" value="" />
+	<div class="container">
+	<div class="page-header text-info">
 <div class="map_wrap">
     <div id="map" style="width:100%;height:600px;position:relative;overflow:hidden;"></div>
  
 </div>
-
+</div>
+</div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
 <script src="/resources/livingInfo/rentcharge.js"></script>
 <script>
@@ -115,6 +113,7 @@ daum.maps.event.addListener(map, 'click', function(mouseEvent) {
 
 
 </script>
-전월세 정보는 구 또는 시 단위 평균입니다.
+
+<img src="../resources/images/chat.png" id="fixedbtn">
 </body>
 </html>

@@ -88,6 +88,10 @@
 			
 		 	$( "a:contains('밥친구')" ).on("click" , function() {
 				$(self.location).attr("href","/bob/listBob");
+
+			$("a[href='#' ]:contains('생활정보')").on("click", function() {
+				self.location = "/livingInfo/mainLivingInfo.jsp";
+
 			});
 
 		});

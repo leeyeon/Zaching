@@ -36,5 +36,5 @@ public interface UserDao {
 	
 	//추억지도 보기
 	public List<User> memoryMap(Search search)throws Exception;
-
+	
 }

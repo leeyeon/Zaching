@@ -18,22 +18,27 @@
 <!-- Bootstrap Dropdown Hover CSS -->
 <link href="/css/animate.min.css" rel="stylesheet">
 <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-
+<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 
     <title></title>
-    
+ <script src="/resources/javascript/chatbot.js"></script>   
 </head>
+<style>
+#fixedbtn{position:fixed;
+			right:50px;
+			bottom:50px;
+			z-index:1000}
+</style>
 <body>
 
-<jsp:include page="/livingInfo/toolbar.jsp" />
 
-
+<div class="container" align="center">
 
 <iframe id="pageFrame" name="pageFrame" src="http://www.jobkorea.co.kr/Starter/calendar/sub/month" frameborder="0"
-width="80%" height="1000px" scrolling="auto"></iframe>
-
+width="80%" height="1200px" scrolling="auto"></iframe>
+</div>
 
 </body>
 </html>

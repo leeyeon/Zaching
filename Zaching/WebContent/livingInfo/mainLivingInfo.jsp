@@ -19,14 +19,94 @@
 
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-
+<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
+<script src="/resources/javascript/chatbot.js"></script>
 </head>
+<style>
+ 	 	body {
+       		padding-top: 50px;
+       		padding-bottom: 50px;
+       		background: #f5f5f5;
+       	}
+
+       	
+       	.select-bob {
+       		background: rgba(237,237,237,1); 
+       		border: none; 
+       		display: inline-block;
+       		color: #000000;
+       		font-size: 18px; 
+       		font-weight: bold;
+       		text-align: center;
+       		height: 70px;
+			line-height: 70px;
+       		text-decoration: none;
+       		border: 2px solid #FFFFFF;
+       		cursor: pointer;
+       	}
+       	
+        .select-bob:hover, .select-bob.active{
+		    background: #5F4B8B;
+		    color: #FFFFFF;
+		}
+       	
+       	.col-sm-3.col-sm-offset-1.blog-sidebar img {
+       		cursor: pointer;
+       	}
+       	
+       
+       	
+#fixedbtn{position:fixed;
+			right:50px;
+			bottom:50px;
+			z-index:1000}
+</style>
 
 
+</style>
+
+
+<script type="text/javascript">
+
+
+
+$(function() {
+	
+	 
+	 $( ".col-xs-4:contains('전월세정보')" ).on("click" , function() {
+		 self.location = "/livingInfo/getRentCharge";
+		});
+	 
+	 $( ".col-xs-4:contains('주변편의시설')" ).on("click" , function() {
+		 self.location = "/livingInfo/getAroundSearch";
+		});
+	 
+	 $( ".col-xs-4:contains('편의점행사정보')" ).on("click" , function() {
+		 self.location = "/livingInfo/getEventInfo";
+		});
+	 
+	 $( ".col-xs-4:contains('국내여행정보')" ).on("click" , function() {
+		 self.location = "/livingInfo/getTravel";
+		});
+	 
+	 $( ".col-xs-4:contains('알리미정보')" ).on("click" , function() {
+		 self.location = "/livingInfo/getNoticeInfo";
+		});
+	 
+});
+</script>
 <body>
-
-  	 
-   	
+<div class="container" align="center">
+<div class="row" style="padding: 300px;">
+      		<div class="col-xs-4 select-bob">전월세정보</div>
+      		<div class="col-xs-4 select-bob">주변편의시설</div>
+      		<div class="col-xs-4 select-bob">편의점행사정보</div>
+      		<div class="col-xs-4 select-bob">국내여행정보</div>
+      		<div class="col-xs-4 select-bob">알리미정보</div>
+      		</div>
+		</div>
 
 </body>
+<img src="../resources/images/chat.png" id="fixedbtn">
+
 </html>
