@@ -79,6 +79,10 @@
 	<script type="text/javascript">
 		$(function() {
 			
+			$(".mainbar-menu").on("click", function() {
+				self.location = "/livingInfo/mainLivingInfo.jsp";
+			});
+			
 			$('.collapse .navbar-collapse').css('visibility','hidden');
 			
 			$('body > nav > div.container > div > div:nth-child(3)').addClass('active');

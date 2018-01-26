@@ -19,7 +19,7 @@ import com.zaching.service.domain.Participant;
  * 작성자 : 이연희
  * */
 
-@Service("bobServiceImpl")
+//@Service("bobServiceImpl")
 public class BobServiceImpl implements BobService {
 
 	@Autowired

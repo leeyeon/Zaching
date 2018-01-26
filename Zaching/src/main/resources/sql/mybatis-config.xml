@@ -24,6 +24,7 @@
 		<typeAlias alias="comment" type="com.zaching.service.domain.Comment"/>
 		<typeAlias alias="friend" type="com.zaching.service.domain.Friend"/>
 		<typeAlias alias="message" type="com.zaching.service.domain.Message"/>
+
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
