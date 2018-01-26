@@ -40,9 +40,9 @@ public class LivingInfoRestController {
 
 	}
 	
-	@RequestMapping( value="rest/movieInfo", method=RequestMethod.POST )
-	public void movieInfo(@PathVariable String location, HttpSession session ) throws Exception{
-		
+	@RequestMapping( value="rest/movieInfo", method=RequestMethod.GET )
+	public StringBuffer movieInfo(HttpSession session ) throws Exception{
+		System.out.println("²ó²ó²¥²¥");
 		String addr = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json"+"?key=";
 		String serviceKey = "d588b030d0e9864bc913e7e8deabaa3d";
 		String parameter = "";
@@ -66,7 +66,7 @@ public class LivingInfoRestController {
 			sb.append((char) c);
 		}
 		
-		System.out.println(sb.append((char) c));
+		return sb.append((char) c);
 		
 	}
 	

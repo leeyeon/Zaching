@@ -34,13 +34,9 @@
 <script>
 $(function() {
 	 $( "#fixedbtn" ).on("click" , function() {
-		alert("gg");
-	 
-			 
-				
 			 $.ajax( 
 				{
-					url : "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=d588b030d0e9864bc913e7e8deabaa3d&targetDt=20120101",
+					url : "/livingInfo/rest/movieInfo",
 					method : "GET" ,
 					dataType : "json" ,
 					headers : {
@@ -48,6 +44,7 @@ $(function() {
 						"Content-Type" : "application/json"
 					},
 					success : function(JSONData , status) {
+						console.log(status);
 							console.log(JSONData);
 					
 					}
