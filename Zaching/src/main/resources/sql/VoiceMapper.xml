@@ -7,7 +7,7 @@
 <mapper namespace="VoiceMapper">
 	
 	<resultMap id="voiceSelectMap" type="voice">
-		<result property="voiceID" column="voice_id" jdbcType="INTEGER" />		
+		<result property="voiceId" column="voice_id" jdbcType="INTEGER" />		
 		<result property="voiceName" column="title" jdbcType="VARCHAR"/>
 		<result property="voiceCategory" column="category_code" jdbcType="VARCHAR"/>
 		<result property="voicelyrics" column="song" jdbcType="VARCHAR"/>

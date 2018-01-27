@@ -16,10 +16,14 @@ CREATE SEQUENCE seq_comment_id  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_newsfeed_id  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_voice_id  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_report_id	 INCREMENT BY 1 START WITH 1;
+<<<<<<< HEAD
+CREATE SEQUENCE er_ID		 	INCREMENT BY 1 START WITH 1;
+=======
 CREATE SEQUENCE seq_friend_id   INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_message_id   INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_notice_id	 INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_notice_target_id	 INCREMENT BY 1 START WITH 1;
+>>>>>>> refs/remotes/origin/master
 
 CREATE TABLE USERS ( 
 	user_id      		number	 NOT NULL,
@@ -71,7 +75,7 @@ CREATE TABLE REPORT (
 CREATE TABLE BOB (
 	bob_id numeric not null,
 	category_code char(4) not null,
-	title varchar2(50) not null,
+	title varchar2(100) not null,
 	content varchar2(4000) not null,
 	created_date date not null,
 	background_image varchar2(100),
@@ -188,6 +192,15 @@ CREATE TABLE PAYMENT(
 	MONEY NUMERIC NOT NULL,
 	PAYMENT_CODE NUMERIC NOT NULL,
 	USER_ID NUMERIC NOT NULL REFERENCES USERS(USER_ID)
+);
+
+CREATE TABLE Exile_Recommend (
+	er_ID		NUMERIC		NOT NULL,
+	created		DATE		NOT NULL,
+	broadcast_ID	NUMERIC		NOT NULL,
+	status		CHAR(2)		DEFAULT'Y',
+	user_ID		NUMERIC		NOT NULL REFERENCES users(user_ID),
+	PRIMARY KEY(er_ID)
 );
 
 

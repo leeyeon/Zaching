@@ -11,7 +11,7 @@ public interface PaymentDao {
 	
 	public List<Payment> listExchargePoint(Search search) throws Exception;
 	
-	public void managepayment(Payment payment) throws Exception;
+	public void managePayment(Payment payment) throws Exception;
 	
 	public void presentUserPayment(Payment payment) throws Exception;
 	

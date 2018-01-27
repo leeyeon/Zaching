@@ -17,6 +17,10 @@ public interface BobService {
 	
 	public Map<String, Object> getBob(int bobId, String category, int monthFee) throws Exception;
 	
+	public Map<String, Object> getBob(int bobId, String category) throws Exception;
+	
+	public Bob getBobInfo(int bobId, String category) throws Exception;
+	
 	public void updateBob(Bob bob) throws Exception;
 	
 	// 참석중이면 삭제되고 참석 중이 아니면 추가시킴

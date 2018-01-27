@@ -42,7 +42,7 @@ public class paymentServiceImpl implements PaymentService {
 		String code = payment.getPaymentCode();
 		
 		if("P01".equals(code) || "P02".equals(code) || "P03".equals(code)) {
-			paymentDao.managepayment(payment);
+			paymentDao.managePayment(payment);
 			paymentDao.updateUserPayment(payment);
 		} else if("P04".equals(code)) {
 			paymentDao.exchargePoint(payment);
@@ -60,7 +60,7 @@ public class paymentServiceImpl implements PaymentService {
 		String code = payment.getPaymentCode();
 		
 		if("M01".equals(code) || "M02".equals(code)) {
-			paymentDao.managepayment(payment);
+			paymentDao.managePayment(payment);
 			paymentDao.updateUserPayment(payment);
 		}
 		
@@ -69,7 +69,7 @@ public class paymentServiceImpl implements PaymentService {
 	@Override
 	public void presentPoint(Payment payment) throws Exception {
 		// point column insert
-		paymentDao.managepayment(payment);
+		paymentDao.managePayment(payment);
 		// 보내는 사람 포인트 차감
 		paymentDao.updateUserPayment(payment);
 		// 받는 사람 포인트 증가

@@ -28,8 +28,6 @@ public class FriendServiceTest {
 	public void testAddFriend()throws Exception{
 		Friend friend=new Friend();
 		friend.setName("testName");
-		friend.setSenderUserName("senderUserName");
-		friend.setGetUserName("getUserName");
 		
 		
 		friendService.addFriend(friend);
@@ -37,8 +35,6 @@ public class FriendServiceTest {
 		
 		
 		Assert.assertEquals("testName",friend.getName());
-		Assert.assertEquals("senderUserName",friend.getSenderUserName());
-		Assert.assertEquals("getUserName",friend.getGetUserName());
 		
 	}
 	

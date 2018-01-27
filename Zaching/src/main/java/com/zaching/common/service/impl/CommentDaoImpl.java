@@ -34,8 +34,10 @@ public class CommentDaoImpl implements CommentDao {
 	}
 
 	@Override
-	public void addComment(Comment comment) throws Exception {
+	public Comment addComment(Comment comment) throws Exception {
 		sqlSession.insert("CommentMapper.addComment", comment);
+		
+		return comment;
 	}
 
 	@Override
@@ -53,4 +55,8 @@ public class CommentDaoImpl implements CommentDao {
 		return sqlSession.selectList("CommentMapper.listComment", map);
 	}
 
+	@Override
+	public void updateComment(Comment comment) throws Exception {
+		sqlSession.update("CommentMapper.updateComment", comment);
+	}
 }

@@ -62,6 +62,7 @@ public class BobDaoImpl implements BobDao {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bobId", bobId);
 		map.put("category", category);
+		//System.out.println(bobId+"?????"+category);
 		return sqlSession.selectOne("BobMapper.getBob", map);
 	}
 
@@ -107,7 +108,6 @@ public class BobDaoImpl implements BobDao {
 		map.put("bobId", bobId);
 		
 		for (Integer integer : listUser) {
-			System.out.println(integer);
 		}
 
 		

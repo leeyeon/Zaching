@@ -8,7 +8,7 @@
 	
 	
 	<resultMap id="NewsfeedSelectMap" type="Newsfeed">
-		<result property="newsfeedID" column="newsfeed_id" jdbcType="INTEGER" />
+		<result property="newsfeedId" column="newsfeed_id" jdbcType="INTEGER" />
 		<result property="categoryCode" column="category_code" jdbcType="CHAR"/>
 		<result property="content" column="content" jdbcType="VARCHAR"/>
 		<result property="locationName" column="location_name" jdbcType="VARCHAR"/>	
@@ -35,7 +35,6 @@
 		FROM newsfeed
 		WHERE newsfeed_id = #{value}
 	</delete>
-	
 	<update id="updateNewsfeed" parameterType="newsfeed">
 		UPDATE newsfeed
 		SET category_code=#{categoryCode}, content=#{content}, location_name=#{locationName}, longitude=#{locationX}, latitude=#{locationY}, upload_file=#{fileName},
@@ -57,6 +56,10 @@
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
 	
+	<select id="getNewsfeedLists" parameterType="search" resultMap="NewsfeedSelectMap">
+		 SELECT * FROM newsfeed where category_code = #{category}
+	</select>
+	
 	<select id="getTotalCount" parameterType="search" resultType="int">
 		SELECT COUNT(*)
 		FROM( SELECT * FROM newsfeed WHERE status='0') countTable
@@ -75,9 +78,12 @@
 	</select>
 	
 	<update id="updateCountLike" parameterType="int">
+		
 		UPDATE newsfeed
 		SET total_like = total_like+1
 		WHERE newsfeed_id=#{value}
+		
+		
 	</update>
 	
 	<update id="updateCountReply" parameterType="int">
@@ -85,5 +91,11 @@
 		SET total_reply = total_reply+1
 		WHERE newsfeed_id=#{value}
 	</update>
+	
+	<insert id="addLikeBlind" parameterType="java.util.Map">
+		INSERT 
+		INTO like_blind(like_blind_id, newsfeed_id, user_id, status)
+		VALUES(seq_like_blind_id.nextval, #{newsfeedId}, #{userId}, #{status}) 
+	</insert>
 
 </mapper>

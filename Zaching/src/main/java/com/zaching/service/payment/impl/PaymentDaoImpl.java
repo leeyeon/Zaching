@@ -46,7 +46,7 @@ public class PaymentDaoImpl implements PaymentDao {
 	}
 
 	@Override
-	public void managepayment(Payment payment) throws Exception {
+	public void managePayment(Payment payment) throws Exception {
 		sqlSession.insert("PaymentMapper.managepayment", payment);
 	}
 

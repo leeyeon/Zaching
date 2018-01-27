@@ -70,6 +70,21 @@ public class BobServiceImpl implements BobService {
 		map.put("fee", feeList);
 		return map;
 	}
+	
+	@Override
+	public Map<String, Object> getBob(int bobId, String category) throws Exception {
+		
+		List<Participant> list = bobDao.listParticipant(bobId);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bob", bobDao.getBob(bobId, category));
+		map.put("participant", list);
+		return map;
+	}
+	
+	@Override
+	public Bob getBobInfo(int bobId, String category) throws Exception {
+		return bobDao.getBob(bobId, category);
+	}
 
 	@Override
 	public void updateBob(Bob bob) throws Exception {

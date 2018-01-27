@@ -18,6 +18,7 @@ public class VoiceServiceImpl implements VoiceService{
 	@Autowired
 	@Qualifier("voiceDaoImpl")
 	VoiceDao voiceDao;
+	
 	public void setVoiceDao(VoiceDao voiceDao) {
 		this.voiceDao = voiceDao;
 	}
@@ -29,8 +30,8 @@ public class VoiceServiceImpl implements VoiceService{
 	}
 
 	@Override
-	public Voice getVoice(int voiceID) throws Exception {
-		return voiceDao.getVoice(voiceID);
+	public Voice getVoice(int voiceId) throws Exception {
+		return voiceDao.getVoice(voiceId);
 	}
 
 	@Override
@@ -50,19 +51,19 @@ public class VoiceServiceImpl implements VoiceService{
 	}
 
 	@Override
-	public void deleteVoice(int voiceID) throws Exception {
-		voiceDao.deleteVoice(voiceID);
+	public void deleteVoice(int voiceId) throws Exception {
+		voiceDao.deleteVoice(voiceId);
 		
 	}
 
 	@Override
-	public void updateCountUser(int voiceID) throws Exception {
-		voiceDao.updateCountUser(voiceID);	
+	public void updateCountUser(int voiceId) throws Exception {
+		voiceDao.updateCountUser(voiceId);	
 	}
 
 	@Override
-	public void updateCountReply(int voiceID) throws Exception {
-		voiceDao.updateCountReply(voiceID);
+	public void updateCountReply(int voiceId) throws Exception {
+		voiceDao.updateCountReply(voiceId);
 	}
 
 }
