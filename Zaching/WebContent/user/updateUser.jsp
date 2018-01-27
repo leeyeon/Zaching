@@ -157,7 +157,7 @@
 		      </span>
 		    </div>
 		    <div class="col-sm-3">
-		    <button type="button" class="btn btn-emailAuth">이메일 인증</button>
+		    <button type="button" class="btn btn-emailAuth" id="emailAuth">이메일 인증</button>
 		    </div>
 		  </div>
 		
@@ -178,12 +178,12 @@
 		  <div class="form-group">
 		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userName" name="userName" value="${user.userName}" readonly="readonly">
+		      <input type="text" class="form-control" id="name" name="name" value="${user.name}" readonly="readonly">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
+		    <label for="address" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="address" name="address"  value="${user.address}" placeholder="변경주소">
 		    </div>
@@ -209,12 +209,7 @@
 		    <input type="hidden" name="phone"  />
 		  </div>
 		  
-		   <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="email" name="email" value="${user.email}" placeholder="변경이메일">
-		    </div>
-		  </div>
+		  
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">

@@ -74,13 +74,50 @@
 		.mainbar-menu:hover, .mainbar-menu.active{
 		    border-bottom: 4px solid RGB(237,125,49);
 		}
+	/* ////////////////////로그인 모달 창 style/////////////////////// */
+		.modal-dialog.modal{
+ 		 width: 50%;
+ 		 height: 50%;
+ 		 margin: 0;
+ 		 padding: 0;
+
+		}
+		img.img-logo{
+
+		margin-left: 250px;
+
+		}
+
+		img.img-rounded{
+		margin-top: 10px;
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-bottom: 10px;
+
+		}
+		
 	</style>
 	
 	<script type="text/javascript">
+	
+	
+	
 		$(function() {
 			
 			$(".mainbar-menu").on("click", function() {
 				self.location = "/livingInfo/mainLivingInfo.jsp";
+			});
+			
+			$("#login").on("click", function() {
+				self.location = "/user/login.jsp";
+			});
+			
+			$("#join").on("click", function() {
+				self.location = "/user/addUser.jsp";
+			});
+			
+			$("#logo").on("click", function() {
+				self.location = "/index.jsp";
 			});
 			
 			$('.collapse .navbar-collapse').css('visibility','hidden');
@@ -142,8 +179,12 @@
 				});
 	
 			});
+			  
+			  
 
 		});
+		
+		
 	
 	</script>
 
@@ -162,7 +203,7 @@
           </button>
           <a class="navbar-brand" href="#" style="visibility: hidden;">
           	<img alt="뉴스피드로 이동" src="/resources/images/temp_logo.png"  height="40px" 
-          		style="margin-top: -10px;"/>
+          		style="margin-top: -10px;" id="logo"/>
           </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse" style="visibility: hidden;">
@@ -171,11 +212,11 @@
             <li><a href="#">라이브방송</a></li>
             <li><a href="#">보이스리플</a></li>
             <li><a href="#">생활정보</a></li>
-            <li><a href="#">로그인</a></li>
+            
           </ul>
           <ul class="nav navbar-nav" style="float:right;">
-            <li><a href="#">로그인</a></li>
-            <li><a href="#">회원가입</a></li>
+            <li><a href="#" id="login">로그인</a></li>
+            <li><a href="#" id="join">회원가입</a></li>
           </ul>
         </div><!--/.nav-collapse -->
 	  </div>
@@ -198,7 +239,16 @@
 			  	생활정보
 			  </div>
 		  </div>
+		  
+
      	</div>
+     	
+  
+  
+
+ 
+
+     	
     </nav>
 
 </body>
