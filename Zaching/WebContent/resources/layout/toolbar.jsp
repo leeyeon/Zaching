@@ -130,6 +130,7 @@
             <li><a href="#">라이브방송</a></li>
             <li><a href="#">보이스리플</a></li>
             <li><a href="#">생활정보</a></li>
+            <li><a href="#">로그인</a></li>
           </ul>
         </div><!--/.nav-collapse -->
 	  </div>
