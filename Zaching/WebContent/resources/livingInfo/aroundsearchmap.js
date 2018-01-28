@@ -8,8 +8,25 @@ $(function() {
 	            	
 	                    jQuery('#selectAddress').val(data.address);
 	
-	                    console.log(data);
-	                    console.log($("#selectAddress").val());
+	            		
+	                	var geocoder = new daum.maps.services.Geocoder();
+
+	                	geocoder.addressSearch($("#selectAddress").val(), function(result, status) {
+
+	                	     if (status === daum.maps.services.Status.OK) {
+
+	                	        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+	                	        var marker = new daum.maps.Marker({
+	                	            map: map,
+	                	            position: coords
+	                	        });
+
+	                	      
+
+	                	        map.setCenter(coords);
+	                	    } 
+	                	});
 	            }
 
 	        }).open();
@@ -33,34 +50,6 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 // 지도를 생성합니다    
 var map = new daum.maps.Map(mapContainer, mapOption); 
 
-
-$(function() {	
-	
-	$( "#selectSearch" ).on("click" , function() {
-		
-		
-		
-	var geocoder = new daum.maps.services.Geocoder();
-
-	geocoder.addressSearch($("#selectAddress").val(), function(result, status) {
-
-	     if (status === daum.maps.services.Status.OK) {
-
-	        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
-
-	        var marker = new daum.maps.Marker({
-	            map: map,
-	            position: coords
-	        });
-
-	      
-
-	        map.setCenter(coords);
-	    } 
-	});
-
-});
-});
 
 // 장소 검색 객체를 생성합니다
 var ps = new daum.maps.services.Places(map); 

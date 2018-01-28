@@ -15,7 +15,8 @@ import com.zaching.service.voice.VoiceDao;
 public class VoiceDaoImpl implements VoiceDao{
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
-	SqlSession sqlsession;
+	private SqlSession sqlsession;
+	
 	public void setSqlsession(SqlSession sqlsession) {
 		this.sqlsession = sqlsession;
 	}

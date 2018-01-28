@@ -2,6 +2,7 @@ package com.zaching.service.newsfeed.test;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,20 @@ public class NewsfeedServiceTest {
 	private NewsfeedService newsfeedService;
 	
 	
-	@Test
+	//@Test
 	public void testListNewsfeed() throws Exception{
 		Search search = new Search();
 		search.setCategory("V01");
 		List<Newsfeed> list = newsfeedService.listNewsfeeds(search);
 		System.out.println(list);
+	}
+	
+	@Test
+	public void testUpdateNewsfeed() throws Exception{
+		newsfeedService.updateCountLike(4);
+		
+		//newsfeedService.addLikeBlind(4, 6, "0");
+		Assert.assertEquals(20, newsfeedService.getCountLike(4));
 	}
 	
 }

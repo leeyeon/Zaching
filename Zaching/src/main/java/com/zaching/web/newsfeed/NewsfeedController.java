@@ -20,22 +20,26 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.newsfeed.NewsfeedService;
 
-//@Controller
-//@RequestMapping("/newsfeed/*")
+
+@Controller
+@RequestMapping("/newsfeed/*")
 public class NewsfeedController {
-	//@Autowired
-	//@Qualifier("newsfeedServiceImpl")
+
+	@Autowired
+	@Qualifier("newsfeedServiceImpl")
 	private NewsfeedService newsfeedService;
 
-	public NewsfeedController() {
-		System.out.println(this.getClass());
-	}
-	
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
 	
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
+	
+	public NewsfeedController() {
+		System.out.println(this.getClass());
+	}
+	
+	
 	
 	@RequestMapping(value="addNewsfeed", method=RequestMethod.POST)
 	public String addNewsfeed(@ModelAttribute("newsfeed") Newsfeed newsfeed, Model model) throws Exception{

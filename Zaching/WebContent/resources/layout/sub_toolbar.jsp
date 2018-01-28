@@ -87,7 +87,7 @@
 			})
 			
 			$( ".navbar-brand img" ).on("click" , function() {
-				$(self.location).attr("href","/index.jsp");
+				$(self.location).attr("href","/");
 				
 		 	});
 			

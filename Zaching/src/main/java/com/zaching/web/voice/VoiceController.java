@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,11 +17,11 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Voice;
 import com.zaching.service.voice.VoiceService;
 
-//@Controller
-//@RequestMapping("/voice/*")
+@Controller
+@RequestMapping("/voice/*")
 public class VoiceController {
-	//@Autowired
-	//@Qualifier
+	@Autowired
+	@Qualifier("voiceServiceImpl")
 	private VoiceService voiceService;
 	
 	@Value("#{commonProperties['pageUnit']}")
@@ -34,8 +33,6 @@ public class VoiceController {
 	public VoiceController() {
 		System.out.println(this.getClass());
 	}
-	
-	
 	
 	@RequestMapping(value="addVoice", method=RequestMethod.POST)
 	public String addVoice(@ModelAttribute("voice") Voice voice, Model model) throws Exception{
@@ -72,7 +69,7 @@ public class VoiceController {
 		// Model °ú View ¿¬°á
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("sorting", sorting);
+
 		model.addAttribute("search", search);
 		
 		return "forward:/voice/listVoice.jsp";

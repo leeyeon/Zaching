@@ -78,12 +78,12 @@
 	</select>
 	
 	<update id="updateCountLike" parameterType="int">
+		
 		UPDATE newsfeed
 		SET total_like = total_like+1
 		WHERE newsfeed_id=#{value}
-		<selectKey keyProperty="countLikey" resultType="Integer" order="AFTER"> 
-			SELECT total_like FROM newsfeed
-		</selectKey>
+		
+		
 	</update>
 	
 	<update id="updateCountReply" parameterType="int">
@@ -92,10 +92,10 @@
 		WHERE newsfeed_id=#{value}
 	</update>
 	
-	<insert id="addLikeBlind">
+	<insert id="addLikeBlind" parameterType="java.util.Map">
 		INSERT 
-		INTO like_blind(like_blind_id, newsfeed_id, user_id)
-		VALUES(seq_like_blind_id, #{newsfeedId}, #{userId}) 
+		INTO like_blind(like_blind_id, newsfeed_id, user_id, status)
+		VALUES(seq_like_blind_id.nextval, #{newsfeedId}, #{userId}, #{status}) 
 	</insert>
 
 </mapper>

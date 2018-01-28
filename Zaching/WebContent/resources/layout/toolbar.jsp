@@ -14,10 +14,104 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	<jsp:include page="sub_toolbar.jsp"/>
 	
+	  <!-- CSS -->
+	  <%-- 
+	  <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	  <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	  <link href="../css/nivo-lightbox.css" rel="stylesheet" />
+	  <link href="../css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
+	  <link href="../css/owl.carousel.css" rel="stylesheet" media="screen" />
+	  <link href="../css/owl.theme.css" rel="stylesheet" media="screen" />
+	  <link href="../css/animate.css" rel="stylesheet" />
+	  <link href="../css/style.css" rel="stylesheet">
+	  <link href="../color/default.css" rel="stylesheet">
+	  --%>
+
+	<style>
+	
+		/* sub toolbar 처음에 시작할 때 hidden */
+		
+		.navbar-brand {
+			visibility: hidden;
+		}
+		
+		#navbar > ul:nth-child(1) {
+			visibility: hidden;
+		}
+		
+		.navbar-fixed-top {
+		    background: #ffffff;
+		    border-color: #ffffff;
+		}
+		
+		#navbar > ul> li> a {
+			color:#FFFFFF;
+		}
+		
+		.navbar-inverse .navbar-brand {
+		    color: #FFFFFF;
+		}
+		
+		.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.open>a {
+		    background-image: linear-gradient(to bottom,#cccccc 0,#cccccc 100%);
+		}
+		
+		.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+		    background: #5F4B8B;
+		}
+		
+		.mainbar {
+			padding: 0px;
+			height: 150px;
+			width: 100%;
+					text-align: center;			
+		}
+		
+		.mainbar-menu {
+			display: inline-block;
+			cursor: pointer;
+			width: 20%;
+			height: 130px;
+			line-height: 140px;
+			padding: 10px;
+			font-size: 20px;
+			background: none;
+			color: #000000;
+			font-weight: bold;
+			float: left;
+			padding: 5px;
+		}
+		
+		.mainbar-menu:hover, .mainbar-menu.active{
+		    border-bottom: 4px solid RGB(237,125,49);
+		}
+	/* ////////////////////로그인 모달 창 style/////////////////////// */
+		.modal-dialog.modal{
+ 		 width: 50%;
+ 		 height: 50%;
+ 		 margin: 0;
+ 		 padding: 0;
+
+		}
+		img.img-logo{
+
+		margin-left: 250px;
+
+		}
+
+		img.img-rounded{
+		margin-top: 10px;
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-bottom: 10px;
+
+		}
+		
+	</style>
+	
 	<script type="text/javascript">
+	
 		$(function() {
-			
-			$('.collapse .navbar-collapse').css('visibility','hidden');
 			
 			/*
 			var filter = "win16|win32|win64|mac|macintel"; 
@@ -37,31 +131,29 @@
 			     if($( window ).width() > 1200) {
 			    	 $('.mainbar').show();
 			    	 $('.navbar-brand').css('visibility','hidden');
-			    	 $('.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form')
-						.css('visibility','hidden');
+			    	 $('#navbar > ul:nth-child(1)').css('visibility','hidden');
 			     } else {
 			    	 $('.mainbar').hide();
 			    	 $('.navbar-brand').css('visibility','visible');
-			    	 $('.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form')
-						.css('visibility','visible');
+			    	 $('#navbar > ul:nth-child(1)').css('visibility','visible');
 			     }
 			}).resize();
-	
+			
+			var loadFlag = 0;
+			
 			  $(document).ready(function(){
 				$(function () {
 					$(window).scroll(function () {
-			            // set distance user needs to scroll before we fadeIn navbar
+						
 			            if($( window ).width() >= 768) {
-							if ($(this).scrollTop() > 200) {
+							if ($(this).scrollTop() > 0) {
 								$('.mainbar').slideUp();
 								$('.navbar-brand').css('visibility','visible');
-								$('.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form')
-									.css('visibility','visible');
+								$('#navbar > ul:nth-child(1)').css('visibility','visible');
 							} else {
 								$('.mainbar').slideDown();
 								 $('.navbar-brand').css('visibility','hidden');
-								$('.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form')
-								.css('visibility','hidden');
+								$('#navbar > ul:nth-child(1)').css('visibility','hidden');
 							}
 			            }
 					});
@@ -72,21 +164,23 @@
 			  
 		    $(".mainbar-menu:contains('밥친구')").on("click" , function() {
 				$(self.location).attr("href","/bob/listBob");
-				
 		 	});
 
 			$(".mainbar-menu:contains('생활정보')").on("click", function() {
 				$(self.location).attr("href","/livingInfo/mainLivingInfo");
-
 			});
 			
 			$(".mainbar-menu:contains('라이브방송')").on("click", function() {
 				$(self.location).attr("href","http://192.168.0.31:9001");
-
+			});
+			
+			$(".mainbar-menu img").on("click", function() {
+				$(self.location).attr("href","/");
 			});
 
-
 		});
+		
+		
 	
 	</script>
 
@@ -112,8 +206,7 @@
 			  	생활정보
 			  </div>
 		  </div>
-     	</div>
-    </nav>
+     </div>
 
 </body>
 </html>
