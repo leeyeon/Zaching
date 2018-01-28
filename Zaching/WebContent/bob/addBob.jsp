@@ -1,9 +1,17 @@
+<%@page import="com.zaching.service.domain.User"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page pageEncoding="EUC-KR"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%
+
+	User user = new User();
+	user.setUserId(9);
+
+%>
 
 <!DOCTYPE html>
 <html>
@@ -12,6 +20,10 @@
     <title>addBob</title>
     
     <jsp:include page="../resources/layout/sub_toolbar.jsp"/>
+    
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- Make sure the path to CKEditor is correct. -->
     <script src="//cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
@@ -195,68 +207,75 @@
 	    	}
 	    });
 	    
-	    $("input[name='locationName']").on("keyup", function() {
-	    	if(!$(this).val()) {
-	    		$('#locationDuplicateCheck').show();
-	    	} else {
-	    		$('#locationDuplicateCheck').hide();
-	    	}
-	    });
+	    <c:if test="${category ne 'B03'}">
 	    
-	    $(document).on()
-	    
-	    $(function() {
-	    	
-	    	$( "input[name='locationName']" ).on("click" , function() {
-	    		daum.postcode.load(function(){
-	    	        new daum.Postcode({
-	    	            oncomplete: function(data) {
-	    	            	
-    	                    jQuery("input[name='locationName']").val(data.address);
-    	                    var geocoder = new daum.maps.services.Geocoder();
-    	                	geocoder.addressSearch($("input[name='locationName']").val(), function(result, status) {
-    	                	     if (status === daum.maps.services.Status.OK) {
-    	                	        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
-    	                	        var marker = new daum.maps.Marker({
-    	                	            map: map,
-    	                	            position: coords
-    	                	        });
-    	                	        map.setCenter(coords);
-    	                	        
-    	                	        var obj = JSON.stringify(coords);
-    	                	        
-    	                	        console.log(obj);
-    	                	        
-    	                	        var obj = JSON.parse(obj);
-    	                	        console.log(obj);
-    	                	        console.log(obj.ib);
-    	                	    } 
-    	                	});
-	    	            }
-	    	        }).open();
-	    	    });
-	    	});
-	    	
-	    });
+		    $("input[name='locationName']").on("keyup", function() {
+		    	if(!$(this).val()) {
+		    		$('#locationDuplicateCheck').show();
+		    	} else {
+		    		$('#locationDuplicateCheck').hide();
+		    	}
+		    });
+		    
+		    $(function() {
+		    	
+		    	$( "input[name='locationName']" ).on("click" , function() {
+		    		daum.postcode.load(function(){
+		    	        new daum.Postcode({
+		    	            oncomplete: function(data) {
+		    	            	
+	    	                    jQuery("input[name='locationName']").val(data.address);
+	    	                    var geocoder = new daum.maps.services.Geocoder();
+	    	                	geocoder.addressSearch($("input[name='locationName']").val(), function(result, status) {
+	    	                	     if (status === daum.maps.services.Status.OK) {
+	    	                	        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+	    	                	        var marker = new daum.maps.Marker({
+	    	                	            map: map,
+	    	                	            position: coords
+	    	                	        });
+	    	                	        map.setCenter(coords);
+	    	                	        
+	    	                	        var obj = JSON.stringify(coords);
+	    	                	        
+	    	                	        console.log(obj);
+	    	                	        
+	    	                	        var obj = JSON.parse(obj);
+	    	                	        console.log(obj);
+	    	                	        console.log(obj.ib);
+	    	                	    } 
+	    	                	});
+		    	            }
+		    	        }).open();
+		    	    });
+		    	});
+		    	
+		    });
+	
+		    var placeOverlay = new daum.maps.CustomOverlay({zIndex:1}), 
+		        contentNode = document.createElement('div');
+		     
+		    var mapContainer = document.getElementById('map'), 
+		        mapOption = {
+		            center: new daum.maps.LatLng(37.566826, 126.9786567), 
+		            level: 5 
+		        };  
+		    var map = new daum.maps.Map(mapContainer, mapOption); 
+	
+	    </c:if>
 
-	    var placeOverlay = new daum.maps.CustomOverlay({zIndex:1}), 
-	        contentNode = document.createElement('div');
-	     
-	    var mapContainer = document.getElementById('map'), 
-	        mapOption = {
-	            center: new daum.maps.LatLng(37.566826, 126.9786567), 
-	            level: 5 
-	        };  
-	    var map = new daum.maps.Map(mapContainer, mapOption); 
 
-
-	    $(function(){
-			$('*[name=appointmentTime]').appendDtpicker({
-				"inline": true,
-				"minuteInterval": 15
-			});
+		$( "ul.droptrue" ).sortable({
+		    connectWith: "ul"
 		});
-	});
+		
+		$( "ul.dropfalse" ).sortable({
+		    connectWith: "ul",
+		    dropOnEmpty: false
+		});
+		
+		$( "#sortable1, #sortable2" ).disableSelection();
+			    
+		});
 
 </script>
  
@@ -273,7 +292,7 @@
     
 		<form class="form-horizontal" enctype="multipart/form-data">
 		    <div class="form-group">
-		    	<input type="hidden" name="writtenUserId" value="9" />
+		    	<input type="hidden" name="writtenUserId" value="${user.userId}" />
 		    	<input type="hidden" name="category" value="${param.category}" />
 		    
 		    	<div class="row">
@@ -386,27 +405,43 @@
 		            	</div>
 			    	</div>
 		    	</c:if>
-	            
-	            <div class="row" style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px; border: 1px solid #5F4B8B;">
-	            	<div class="col-xs-12 btn-bob" style="width: 100%; ">초대할 친구</div>
-					
-					<div class="row" style="padding: 20px;">
-					
-		            	<div class="col-sm-5" align="center" style="border: 1px solid #5F4B8B; height: 350px;">
-		            		선택된 친구
+		    	
+		    	<c:if test="${categoryName eq '주기적으로만나'}">
+		            <div class="row" style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px; border: 1px solid #5F4B8B;">
+		            	<div class="col-xs-12 btn-bob" style="width: 100%; ">초대할 친구</div>
+						
+						<div class="row" style="padding: 20px;">
+						
+			            	<div class="col-sm-5" align="center" style="border: 1px solid #5F4B8B; height: 350px;">
+			            		<ul id="sortable1" class="droptrue">
+			            		 <li class="ui-state-default">Item 3</li>
+								  <li class="ui-state-default">Item 4</li>
+								  <li class="ui-state-default">Item 5</li>
+								</ul>
+			            	</div>
+			            	
+			            	<div class="col-sm-2" align="center">
+			            		ㅇㅅㅇ
+			            	</div>
+			            	
+			            	<div class="col-sm-5" align="center" style="border: 1px solid #5F4B8B; height: 350px;">
+				            	
+								 
+								<ul id="sortable2" class="droptrue">
+								  <li class="ui-state-default">Can be dropped..</li>
+								  <li class="ui-state-default">..on an empty list</li>
+								  <li class="ui-state-default">Item 3</li>
+								  <li class="ui-state-default">Item 4</li>
+								  <li class="ui-state-default">Item 5</li>
+								</ul>
+			            	</div>
+			            	
+			            	http://jqueryui.com/sortable/#empty-lists
+		            	
 		            	</div>
 		            	
-		            	<div class="col-sm-2" align="center">
-		            		ㅇㅅㅇ
-		            	</div>
-		            	
-		            	<div class="col-sm-5" align="center" style="border: 1px solid #5F4B8B; height: 350px;">
-		            		내 친구 목록
-		            	</div>
-	            	
-	            	</div>
-	            	
-		    	</div>
+			    	</div>
+		    	</c:if>
 				
 	            <div class="row" align="center">
 	                <button type="submit" class="btn-bob" style="margin: 10px; width:250px;" >방 만들기</button>

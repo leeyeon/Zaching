@@ -138,8 +138,9 @@ public class BobController {
 	}
 
 	@RequestMapping("/listBob")
-	public String listBob(Search search, Model model) throws Exception {
-		System.out.println(this.getClass()+"/listBob");
+	public String listBob(@ModelAttribute Search search,
+						  Model model) throws Exception {
+		System.out.println(this.getClass()+"/listBob?category="+search.getCategory());
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -149,6 +150,8 @@ public class BobController {
 		}
 		search.setPageSize(pageSize);
 		
+		//System.out.println(search);
+		
 		Map<String, Object> map = bobService.listBob(search);
 		
 		Page resultPage	= 
@@ -156,9 +159,17 @@ public class BobController {
 				pageUnit, pageSize);
 		
 		model.addAllAttributes(map)
-			  .addAttribute("resultPage", resultPage);
+			 .addAttribute("resultPage", resultPage);
 		
 		return "forward:/bob/listBob.jsp";
+	}
+	
+	@RequestMapping("/mainBob")
+	public String mainBob() throws Exception {
+		System.out.println(this.getClass()+"/mainBob");
+		
+		// 단순 네비게이션		
+		return "forward:/bob/mainBob.jsp";
 	}
 
 	@RequestMapping(value="/updateBob", method=RequestMethod.GET)

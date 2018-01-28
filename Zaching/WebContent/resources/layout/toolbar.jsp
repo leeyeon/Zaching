@@ -163,7 +163,7 @@
 			});
 			  
 		    $(".mainbar-menu:contains('밥친구')").on("click" , function() {
-				$(self.location).attr("href","/bob/listBob");
+				$(self.location).attr("href","/bob/mainBob");
 		 	});
 
 			$(".mainbar-menu:contains('생활정보')").on("click", function() {

@@ -92,7 +92,7 @@
 		 	});
 			
 		 	$( "a:contains('¹äÄ£±¸')" ).on("click" , function() {
-				$(self.location).attr("href","/bob/listBob");
+				$(self.location).attr("href","/bob/mainBob");
 				
 		 	});
 
