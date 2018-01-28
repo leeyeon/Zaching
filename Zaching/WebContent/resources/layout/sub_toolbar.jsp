@@ -71,7 +71,7 @@
 			padding: 5px;
 		}
 		
-		.mainbar-menu:hover, .mainbar-menu.active{
+		.mainbar-menu:hover, .mainbar-menu .active{
 		    border-bottom: 4px solid RGB(237,125,49);
 		}
 	</style>
@@ -86,11 +86,28 @@
 				 $(this).addClass('active');
 			})
 			
+			$( ".navbar-brand img" ).on("click" , function() {
+				$(self.location).attr("href","/index.jsp");
+				
+		 	});
+			
 		 	$( "a:contains('밥친구')" ).on("click" , function() {
 				$(self.location).attr("href","/bob/listBob");
+				
+		 	});
 
-			$("a[href='#' ]:contains('생활정보')").on("click", function() {
-				self.location = "/livingInfo/mainLivingInfo.jsp";
+			$("a:contains('생활정보')").on("click", function() {
+				self.location = "/livingInfo/mainLivingInfo";
+
+			});
+			
+			$("a:contains('로그인')").on("click", function() {
+				self.location = "/user/login.jsp";
+
+			});
+			
+			$("a:contains('회원가입')").on("click", function() {
+				self.location = "/user/addUser.jsp";
 
 			});
 

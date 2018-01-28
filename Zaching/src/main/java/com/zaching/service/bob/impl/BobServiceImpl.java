@@ -48,6 +48,10 @@ public class BobServiceImpl implements BobService {
 		List<Bob> list = bobDao.listBob(search);
 		int totalCount = bobDao.getTotalCount(search);
 		
+		for (Bob bob : list) {
+			System.out.println(bob);
+		}
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("totalCount", totalCount);

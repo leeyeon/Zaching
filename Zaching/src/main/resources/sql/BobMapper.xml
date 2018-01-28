@@ -153,11 +153,11 @@
 	<sql id="selectBobSql">
 		SELECT
 			bob.bob_id AS bob_id, title, content, background_image,
-			users.profile_image AS profile_image, writer_id, users.name AS user_name,
+			users.profile_image AS profile_image, writer_id, users.name AS user_name
 					
 		<if test='category == "B01" || category == "B02"'>
-			limit_num, bob.location_name AS location_name, bob.longitude AS longitude, 
-			bob.latitude AS latitude, bob.time AS time
+			,limit_num, bob.location_name AS location_name, bob.longitude AS longitude, 
+			bob.latitude AS latitude, to_date(bob.time,'yyyy-mm-dd hh24 mi') AS time
 		</if>
 		
 		FROM BOB, PARTICIPANT, USERS

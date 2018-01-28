@@ -8,8 +8,7 @@
 	
 	<style>
 	
-		body{ 
-		    margin-top: 150px;
+		body{
 		    padding-top: 50px;
 		}
 		

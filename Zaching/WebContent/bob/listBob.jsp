@@ -199,7 +199,8 @@
 			<div class="tab-content" style="padding:20px; background: #f5f5f5;">
 				<div class="tab-pane active" id="1">
 					<div class="row">
-						<c:forEach var="i" begin="0" end="6" step="1">
+						<c:forEach var="bob" items="${list}">
+							
 						  <div class="col-sm-6 col-md-4 text-center">
 						    <div class="thumbnail">
 						      <div style="position:absolute; font-weight: bold; font-size: 22px; top:20px; right: 40px;">1/5 명</div>
@@ -207,10 +208,10 @@
 						      <img src="../resources/images/sample_bob_background.jpg" style="cursor: pointer;">
 						      
 						      <div class="user_thumnail" style="background: url(../resources/images/sample_bob_background.jpg) center center no-repeat;">
-						      	<div style="position:relative; top:-60px; font-size:25px;">제목</div>				      	
+						      	<div style="position:relative; top:-60px; font-size:25px;">${bob.title}</div>				      	
 						      </div>
 						      <div class="caption" style="position:relative; top:-20px; font-size: 20px;">
-						        <p>위치, 날짜</p>
+						        <p>${bob.locationName}, ${bob.appointmentTime}</p>
 						      </div>
 						    </div>
 						  </div>
