@@ -15,6 +15,7 @@ public class Bob {
 	private String category;
 	private String title;
 	private String content;
+	private String filename;
 	private MultipartFile uploadFile;
 	private String image;
 	private int limitNum;
@@ -27,6 +28,15 @@ public class Bob {
 	private String feeDate;
 	private String status;
 	private List<Participant> participantList;
+
+	
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
 
 	public Bob() {
 		// TODO Auto-generated constructor stub

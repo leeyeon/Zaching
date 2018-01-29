@@ -336,7 +336,53 @@
 		    	
 	            <div class="row">
 	            	<div class="col-xs-12" style="margin-bottom:20px;">
+					<input type="hidden" id="uploadFile" name="uploadFile" value="" />
 	                	<textarea name="content" id="ckeditor"></textarea>
+	                	<div id="summernote"><p>Hello Summernote</p></div>
+						  <script>
+							$(document).ready(function() { 
+								$('#summernote').summernote({ 
+									placeholder: 'Hello bootstrap 4',
+									callbacks: { // 콜백을 사용
+				                        // 이미지를 업로드할 경우 이벤트를 발생
+									    onImageUpload: function(files, editor, welEditable) {
+									    	console.log("editor: "+editor);
+										    sendFile(files[0], this);
+										}
+									},
+							        tabsize: 2,
+							        height: 500,
+									lang: 'ko-KR'
+								}); 
+							});
+							
+							function sendFile(file, editor) {
+					            // 파일 전송을 위한 폼생성
+					            $("input:hidden[name='uploadFile']").val(JSON.stringify(file.name));
+						 		
+									var form = new FormData();
+									form.append("uploadFile", file);
+									$.ajax({ 
+									url: "/bob/rest/addSummernoteImage", 
+									data: form, 
+									dataType: 'json', 
+									processData: false, 
+									contentType: false, 
+									type: 'POST',
+						 	        success : function(data, status) { // 처리가 성공할 경우
+					                    // 에디터에 이미지 출력
+					                    console.log(status);
+					                    console.log(data);
+					                    console.log(data.url);
+					                    
+						 	        	$('#summernote').summernote('editor.insertImage', data.url);
+						 	        	 var image = $('<img>').attr('src', '' + data.url); // 에디터에 img 태그로 저장
+						 	            $('#summernote').summernote("insertNode", image[0]); // 
+						 	           
+						 	        }
+						 	    });
+						 	}
+						  </script>
 	                </div>
 	            </div>
 	            
