@@ -33,6 +33,7 @@ import com.zaching.common.service.CommonService;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
 import com.zaching.service.domain.Comment;
+import com.zaching.service.user.UserService;
 
 @Controller
 @RequestMapping("/bob/*")
@@ -65,6 +66,10 @@ public class BobController {
 	@Qualifier("bobServiceImpl")
 	private BobService bobService;
 	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+	
 	
 	public BobController() {
 		System.out.println(this.getClass());
@@ -74,6 +79,17 @@ public class BobController {
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true)); 
+	}
+
+	@RequestMapping("/mainBob")
+	public String mainBob(HttpServletRequest request) throws Exception {
+		System.out.println(this.getClass()+"/mainBob");
+		
+		/* session처리! */
+		request.getSession().setAttribute("user", userService.getUser(8));
+		
+		// 단순 네비게이션		
+		return "forward:/bob/mainBob.jsp";
 	}
 	
 	@RequestMapping(value="/addBob", method=RequestMethod.GET)
@@ -90,8 +106,7 @@ public class BobController {
 	
 	@RequestMapping(value="/addBob", method=RequestMethod.POST)
 	public String addBob(@ModelAttribute Bob bob, 
-						BindingResult result, 
-						Model model) {
+						BindingResult result) throws Exception {
 		
 		// binding Test
 		if (result.hasErrors()) {
@@ -100,14 +115,17 @@ public class BobController {
         }
 		
 		System.out.println(this.getClass()+"/addBob_ POST");
+		//System.out.println(bob);
 		
-		try {
-			bob.setImage(commonService.addFile(fileDirectory, bob.getUploadFile()));
-			bobService.addBob(bob);
-		} catch(Exception e) {
-			e.printStackTrace();
+		if(bob.getUploadFile() != null) {
+			try {
+				bob.setImage(commonService.addFile(fileDirectory, bob.getUploadFile()));
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
+		bobService.addBob(bob);		
 		System.out.println(bob);
 		
 		return "redirect:/bob/getBob?bobId="+bob.getBobId()+"&category="+bob.getCategory();
@@ -140,10 +158,9 @@ public class BobController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
+
 		
-		
-		
-		model.addAttribute("comments", (List<Comment>)(commonService.listComment(search, "B00", bobId).get("list")));
+		model.addAttribute("comments", commonService.listComment(search, "B00", bobId).get("list"));
 		model.addAttribute("category", category);
 		model.addAllAttributes(bob);
 		
@@ -176,14 +193,7 @@ public class BobController {
 		
 		return "forward:/bob/listBob.jsp";
 	}
-	
-	@RequestMapping("/mainBob")
-	public String mainBob() throws Exception {
-		System.out.println(this.getClass()+"/mainBob");
-		
-		// 단순 네비게이션		
-		return "forward:/bob/mainBob.jsp";
-	}
+
 
 	@RequestMapping(value="/updateBob", method=RequestMethod.GET)
 	public String updateBobView(@RequestParam String category,

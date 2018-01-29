@@ -214,7 +214,7 @@
 					<input type="text" name="searchKeyword" class="form-control" placeholder="검색 내용을 입력하세요." 
       					style="width: 360px; height:45px;"/>
 	      		</li>
-	      		<li class="pull-right"><a href="#" style="select-bob">내 주소로 검색하기</a></li>
+	      		<li class="pull-right"><a href="/bob/listBob?category=B04" data-target="#B04"  data-toggle="tabajax" style="select-bob">내 주소로 검색하기</a></li>
 			</ul>
 			
 			<!-- Tab 끝 -->
@@ -224,7 +224,7 @@
 				<div class="tab-pane active" id="B01"> </div>
 				<div class="tab-pane" id="B02"> </div>
 				<div class="tab-pane" id="B03"> </div>
-
+				<div class="tab-pane" id="B04"> </div>
 				<!-- 데이터 끝... -->	
 				</div>
 			</div>

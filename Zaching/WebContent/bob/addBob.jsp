@@ -6,15 +6,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%
-
-	User user = new User();
-	user.setUserId(9);
-	
-	request.setAttribute("user", user);
-
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -227,16 +218,11 @@
 	    	                	        });
 	    	                	        map.setCenter(coords);
 	    	                	        
-	    	                	        var obj = JSON.stringify(coords);
+	    	                	        console.log(coords.getLat());
+	    	                	        console.log(coords.getLng());
 	    	                	        
-	    	                	        console.log(obj);
-	    	                	        
-	    	                	        var obj = JSON.parse(obj);
-	    	                	        console.log(obj);
-	    	                	        console.log(obj.ib);
-	    	                	        
-	    	                	        $("longitude").val(obj.ib);
-	    	                	        $("latitude").val(obj.jb);
+	    	                	        $("input[name=latitude]").val(coords.getLat());
+	    	                	        $("input[name=longitude]").val(coords.getLng());
 	    	                	    } 
 	    	                	});
 		    	            }
@@ -280,8 +266,6 @@
 	    		$("div.file-caption.form-control.kv-fileinput-caption").css('background','#ccc');
 	    	}
 	    });
-	    
-	    
 		
 	});
 

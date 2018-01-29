@@ -51,11 +51,8 @@ public class BobServiceImpl implements BobService {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		if(search.getCategory().equals("B03")) {
-			for (Bob bob : list) {
-				bob.setParticipantList(bobDao.listParticipant(bob.getBobId()));
-			}
-			
+		for (Bob bob : list) {
+			bob.setParticipantList(bobDao.listParticipant(bob.getBobId()));
 		}
 		
 		map.put("list", list);

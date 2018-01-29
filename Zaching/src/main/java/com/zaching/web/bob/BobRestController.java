@@ -3,11 +3,13 @@ package com.zaching.web.bob;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,8 @@ import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
+import com.zaching.service.domain.Payment;
+import com.zaching.service.payment.PaymentService;
 
 @RestController("/bob/rest/*")
 public class BobRestController {
@@ -33,6 +37,10 @@ public class BobRestController {
 	@Qualifier("bobServiceImpl")
 	private BobService bobService;
 	
+	@Autowired
+	@Qualifier("paymentServiceImpl")
+	private PaymentService paymentService;
+	
 	@Value("#{commonProperties['pageUnit']}")
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
@@ -40,6 +48,8 @@ public class BobRestController {
 	//@Value("#{commonProperties['pageSize']}")
 	// @Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize = 9;
+	
+	private Logger logger;
 	
 	public BobRestController() {
 		// TODO Auto-generated constructor stub
@@ -88,5 +98,37 @@ public class BobRestController {
 		}
 		
 		return obj;
+		
+	}
+	
+	@RequestMapping(value="/enterBob", method=RequestMethod.POST)
+	public JSONObject enterBob(@RequestBody Map<String, Object> obj) throws Exception {
+		
+		System.out.println("µ·³ª°©´Ï´Ù?");
+		String category = (String)obj.get("category");
+		int userId = (int)obj.get("userId");
+		int bobId = (int)obj.get("bobId");
+		
+		System.out.println(category+"//"+userId+"//"+bobId);
+		
+		if(category.equals("B01")) {
+			int userPoint = paymentService.getPoint((int)obj.get("userId"));
+			
+			/* ¾à¼Óºñ 1000¿ø Â÷°¨ */
+			if(userPoint > 1000) {
+				System.out.println("µ· ÁøÂ¥ ³ª°©´Ï´Ù 2");
+				Payment payment = new Payment();
+				payment.setUserId(userId);
+				payment.setPoint(1000);
+				payment.setPaymentCode("P02");
+				paymentService.managePoint(payment);
+			} else {
+				
+			}
+		}
+		
+		bobService.enterBob(userId, bobId);
+	
+		return null;
 	}
 }
