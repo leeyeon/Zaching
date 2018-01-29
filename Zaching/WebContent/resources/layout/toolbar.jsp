@@ -80,7 +80,7 @@
 		$(function() {
 			
 			$(".mainbar-menu").on("click", function() {
-				self.location = "/livingInfo/mainLivingInfo.jsp";
+				self.location = "/newsfeed/listNewsfeed";
 			});
 			
 			$('.collapse .navbar-collapse').css('visibility','hidden');

@@ -16,7 +16,7 @@
 		<result property="locationY" column="latitude" jdbcType="INTEGER"/>
 		<result property="locationX" column="longitude" jdbcType="INTEGER"/>
 		<result property="regDate" column="created_date" jdbcType="DATE"/>
-		<result property="userID" column="user_id" jdbcType="INTEGER"/>
+		<result property="userId" column="user_id" jdbcType="INTEGER"/>
 		<result property="countLikey" column="total_like" jdbcType="INTEGER"/>
 		<result property="countReply" column="total_reply" jdbcType="INTEGER"/>
 		<result property="privacyBound" column="privacy_bound" jdbcType="CHAR"/>
@@ -27,7 +27,7 @@
 		INSERT 
 		INTO newsfeed(newsfeed_id, category_code, content, location_name, longitude, latitude, upload_file, created_date, status, privacy_bound, total_like, user_id, total_reply)
 		VALUES (seq_newsfeed_id.nextval, #{categoryCode}, #{content}, #{locationName:VARCHAR}, #{locationX:INTEGER}, #{locationY:VARCHAR}, #{fileName:VARCHAR}, #{regDate},
-				#{status:CHAR}, #{privacyBound}, #{countLikey}, #{userID}, #{countReply:INTEGER})
+				#{status:CHAR}, #{privacyBound}, #{countLikey}, #{userId}, #{countReply:INTEGER})
 	</insert>
 	
 	<delete id="deleteNewsfeed" parameterType="int">
@@ -57,7 +57,7 @@
 	</select>
 	
 	<select id="getNewsfeedLists" parameterType="search" resultMap="NewsfeedSelectMap">
-		 SELECT * FROM newsfeed where category_code = #{category}
+		 SELECT * FROM newsfeed
 	</select>
 	
 	<select id="getTotalCount" parameterType="search" resultType="int">

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html lang="en" class="no-js">
 	<head>
 		<meta charset="UTF-8" />
@@ -57,6 +57,23 @@
 			background: none !important;
 			padding: 0 !important;
 		}
+		
+		li {
+		  overflow: hidden; 
+		  text-overflow: ellipsis;
+		  white-space: nowrap;
+		}
+		
+		.post-content {
+	min-width: 120px;
+	padding: 0.925em;
+}
+a.themify_lightbox_post{
+	cursor: not-allowed;
+}
+.themify_lightbox_loaded a.themify_lightbox_post{
+	cursor:auto;
+}
 		</style>
 
 	</head>
@@ -67,21 +84,43 @@
 			<header>
 				<h1>자췽 뉴스피드 <span>카테고리를 선택하세요</span></h1>	
 				<nav class="codrops-demos">
-					<a href="index.html">Demo 1</a>
-					<a class="current-demo" href="index2.html">Demo 2</a>
-					<a href="index3.html">Demo 3</a>
-					<a href="index4.html">Demo 4</a>
-					<a href="index5.html">Demo 5</a>
-					<a href="index6.html">Demo 6</a>
-					<a href="index7.html">Demo 7</a>
-					<a href="index8.html">Demo 8</a>
+					<a href="index.html">자취지식인</a>
+					<a class="current-demo" href="index2.html">전체보기</a>
+					<a href="index3.html">밥친구 후기</a>
+					<a href="index4.html">꿀팁</a>
+					<a href="index5.html">중고거래</a>
+					<a href="index6.html">친구글만</a>
+					<a href="index7.html">팔로워글만</a>
 				</nav>
 			</header>
 			<ul class="grid effect-2" id="grid">
+			
+			<c:set var="i" value="0" />
+				<c:forEach var="newsfeed" items="${list}">
+					<c:set var="i" value="${ i+1 }" />
+					<li><div class="post-content">
+					<p class="author-pic">
+					<img alt='' src='../resources/images/profile_test.png' srcset='https://secure.gravatar.com/avatar/cb2e9e4d63e271d04ee4e5753d24586f?s=80&#038;d=mm&#038;r=g 2x' itemprop='image' class='avatar avatar-40 photo' height='40' width='40'/>
+					<span class="post-author">
+						<span class="author vcard"><a class="url fn n" href="../resources/images/profile_test.png" rel="author">소현태</a></span> 
+						<em>&sdot;</em>
+					</span>
+					<time datetime="2012-03-20" class="post-date entry-date updated">${newsfeed.regDate}</time></p>
+					</div>
+					
+					<c:if test="${!empty newsfeed.fileName}"><a href="http://drbl.in/fWMM"><img src="../resources/images/${newsfeed.fileName }"></a></c:if>
+					<h3 class="post-title entry-title"><a href="https://themify.me/demo/themes/pinboard/baking-cake/?post_in_lightbox=1" class="themify_lightbox_post">${newsfeed.content} </a> </h3><hr style="border:solid 0.5px gray">
+					<p class="post-meta entry-meta">
+					<span class="post-category">
+					<a href="https://themify.me/demo/themes/pinboard/category/life/" rel="category tag"><i class="glyphicon glyphicon-thumbs-up"></i>${newsfeed.countLikey}</a><i class="glyphicon glyphicon-pencil"></i>${newsfeed.countReply }</span></p>
+					
+					</li>
+				</c:forEach>
 				<li><div class="post-content">
 				<p class="author-pic">
 				<img alt='' src='../resources/images/profile_test.png' srcset='https://secure.gravatar.com/avatar/cb2e9e4d63e271d04ee4e5753d24586f?s=80&#038;d=mm&#038;r=g 2x' itemprop='image' class='avatar avatar-40 photo' height='40' width='40'/>
 				<span class="post-author">
+				
 					<span class="author vcard"><a class="url fn n" href="../resources/images/profile_test.png" rel="author">소현태</a></span> 
 					<em>&sdot;</em>
 				</span>
@@ -93,9 +132,6 @@
 				<p class="post-meta entry-meta">
 				<span class="post-category">
 				<a href="https://themify.me/demo/themes/pinboard/category/life/" rel="category tag"><i class="glyphicon glyphicon-thumbs-up"></i>좋아요</a></span></p>
-
-	
-			 
 				
 				</li>
 				<li><a href="http://drbl.in/fWPV"><img src="../resources/images/test_3.jpg"></a></li>
