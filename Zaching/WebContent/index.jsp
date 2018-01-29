@@ -8,8 +8,7 @@
 	
 	<style>
 	
-		body{ 
-		    margin-top: 150px;
+		body{
 		    padding-top: 50px;
 		}
 		
@@ -23,7 +22,7 @@
 </head>
 <body>
 
-	<div class="container" style="background:#ccc; height:2000px; color:#000">
+	<div class="container">
 		<jsp:include page="/newsfeed/newsfeed.jsp" />
 	</div>
 

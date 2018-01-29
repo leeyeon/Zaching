@@ -43,11 +43,12 @@
 	
 	<insert id="addUser" parameterType="user" >
 	INSERT
-		INTO users( user_id , name, password, email, role, sns_type,  created_date) 
-		VALUES	 (	seq_user_id.nextval, #{name} , #{password},
-					#{email}, #{profileImage:VARCHAR}
+		INTO users(user_id , name, password, email,
+		profile_image, role, sns_type,  created_date) 
+		VALUES(	seq_user_id.nextval, #{name} , #{password},
+					#{email}, #{profileImage:VARCHAR},
 					#{role} ,#{snsType:CHAR}, SYSDATE )
-	
+	<!-- 한글이 안들어가 ㅠㅠ -->
 	</insert>
 	
 	 <select id="getTimeLine"	parameterType="int"	resultMap="userSelectMap">

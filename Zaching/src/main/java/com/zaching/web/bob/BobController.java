@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,10 +27,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
+import com.zaching.service.domain.Comment;
 
 @Controller
 @RequestMapping("/bob/*")
@@ -46,6 +49,14 @@ public class BobController {
 	//@Value("#{categoryProperties['B03']}")
 	private String B03 = "주기적으로만나";
 	
+	@Value("#{commonProperties['pageUnit']}")
+	// @Value("#{commonProperties['pageUnit'] ?: 3}")
+	int pageUnit;
+
+	//@Value("#{commonProperties['pageSize']}")
+	// @Value("#{commonProperties['pageSize'] ?: 2}")
+	int pageSize = 9;
+	
 	@Autowired
 	@Qualifier("commonServiceImpl")
 	private CommonService commonService;
@@ -54,13 +65,14 @@ public class BobController {
 	@Qualifier("bobServiceImpl")
 	private BobService bobService;
 	
+	
 	public BobController() {
 		System.out.println(this.getClass());
 	}
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true)); 
 	}
 	
@@ -108,7 +120,7 @@ public class BobController {
 		System.out.println(this.getClass()+"/getBob");
 		
 		System.out.println("방 ID :: "+bobId);
-		System.out.println(category+"나왔따");
+		//System.out.println(category+"나왔따");
 		
 		Map<String, Object> bob;
 		
@@ -121,7 +133,17 @@ public class BobController {
 		}
 		
 		System.out.println(bob);
-
+		
+		Search search = new Search();
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		
+		
+		model.addAttribute("comments", (List<Comment>)(commonService.listComment(search, "B00", bobId).get("list")));
 		model.addAttribute("category", category);
 		model.addAllAttributes(bob);
 		
@@ -129,10 +151,38 @@ public class BobController {
 	}
 
 	@RequestMapping("/listBob")
-	public String listBob(Search search, Model model) {
-		System.out.println(this.getClass()+"/listBob");
+	public String listBob(@ModelAttribute Search search,
+						  Model model) throws Exception {
+		System.out.println(this.getClass()+"/listBob?category="+search.getCategory());
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		if(search.getCategory() == null) {
+			search.setCategory("B01");
+		}
+		search.setPageSize(pageSize);
+		
+		//System.out.println(search);
+		
+		Map<String, Object> map = bobService.listBob(search);
+		
+		Page resultPage	= 
+				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), 
+				pageUnit, pageSize);
+		
+		model.addAllAttributes(map)
+			 .addAttribute("resultPage", resultPage);
 		
 		return "forward:/bob/listBob.jsp";
+	}
+	
+	@RequestMapping("/mainBob")
+	public String mainBob() throws Exception {
+		System.out.println(this.getClass()+"/mainBob");
+		
+		// 단순 네비게이션		
+		return "forward:/bob/mainBob.jsp";
 	}
 
 	@RequestMapping(value="/updateBob", method=RequestMethod.GET)

@@ -1,5 +1,6 @@
 package com.zaching.service.bob.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,14 @@ public class BobServiceImpl implements BobService {
 		int totalCount = bobDao.getTotalCount(search);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(search.getCategory().equals("B03")) {
+			for (Bob bob : list) {
+				bob.setParticipantList(bobDao.listParticipant(bob.getBobId()));
+			}
+			
+		}
+		
 		map.put("list", list);
 		map.put("totalCount", totalCount);
 		

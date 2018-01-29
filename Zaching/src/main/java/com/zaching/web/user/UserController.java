@@ -78,6 +78,7 @@ public class UserController {
 
 		System.out.println("/user/addUser : POST");
 		// Business Logic
+		user.setRole("1");
 		userService.addUser(user);
 
 		return "redirect:/user/login.jsp";

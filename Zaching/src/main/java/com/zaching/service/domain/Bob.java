@@ -1,5 +1,6 @@
 package com.zaching.service.domain;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,17 +15,28 @@ public class Bob {
 	private String category;
 	private String title;
 	private String content;
+	private String filename;
 	private MultipartFile uploadFile;
 	private String image;
 	private int limitNum;
 	private String locationName;
 	private String latitude;
 	private String longitude;
-	private Date appointmentTime;
+	private String appointmentTime;
 	private Date createdDate;
 	private int fee;
-	private Date feeDate;
+	private String feeDate;
 	private String status;
+	private List<Participant> participantList;
+
+	
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
 
 	public Bob() {
 		// TODO Auto-generated constructor stub
@@ -86,6 +98,14 @@ public class Bob {
 		this.content = content;
 	}
 
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
 	public String getImage() {
 		return image;
 	}
@@ -126,11 +146,11 @@ public class Bob {
 		this.longitude = longitude;
 	}
 
-	public Date getAppointmentTime() {
+	public String getAppointmentTime() {
 		return appointmentTime;
 	}
 
-	public void setAppointmentTime(Date appointmentTime) {
+	public void setAppointmentTime(String appointmentTime) {
 		this.appointmentTime = appointmentTime;
 	}
 
@@ -150,11 +170,11 @@ public class Bob {
 		this.fee = fee;
 	}
 
-	public Date getFeeDate() {
+	public String getFeeDate() {
 		return feeDate;
 	}
 
-	public void setFeeDate(Date feeDate) {
+	public void setFeeDate(String feeDate) {
 		this.feeDate = feeDate;
 	}
 
@@ -166,12 +186,12 @@ public class Bob {
 		this.status = status;
 	}
 
-	public MultipartFile getUploadFile() {
-		return uploadFile;
+	public List<Participant> getParticipantList() {
+		return participantList;
 	}
 
-	public void setUploadFile(MultipartFile uploadFile) {
-		this.uploadFile = uploadFile;
+	public void setParticipantList(List<Participant> participantList) {
+		this.participantList = participantList;
 	}
 
 	@Override
@@ -181,7 +201,7 @@ public class Bob {
 				+ ", content=" + content + ", uploadFile=" + uploadFile + ", image=" + image + ", limitNum=" + limitNum
 				+ ", locationName=" + locationName + ", latitude=" + latitude + ", longitude=" + longitude
 				+ ", appointmentTime=" + appointmentTime + ", createdDate=" + createdDate + ", fee=" + fee
-				+ ", feeDate=" + feeDate + ", status=" + status + "]";
+				+ ", feeDate=" + feeDate + ", status=" + status + ", participantList=" + participantList + "]";
 	}
 
 }

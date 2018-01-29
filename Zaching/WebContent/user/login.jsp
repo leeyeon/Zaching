@@ -72,11 +72,77 @@ margin-bottom: 10px;
 
 
 //로그인
+	$( function() {
+		
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("#login").focus();
+		
+		//==>"Login"  Event 연결
+		$("#login").on("click" , function() {
 
+			var email=$("#email").val();
+			var password=$("#password").val();
+			
+			if(email == null || email.length <1) {
+				alert('ID 를 입력하지 않으셨습니다.');
+				$("#email").focus();
+				return;
+			}
+			
+			if(password == null || password.length <1) {
+				alert('패스워드를 입력하지 않으셨습니다.');
+				$("#password").focus();
+				return;
+			}
+			
+			////////////////////////////////////////////////// 추가 , 변경된 부분 ////////////////////////////////////////////////////////////
+			//$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
+			
+			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			$.ajax( 
+					{
+						url : "/user/json/login",
+						method : "POST" ,
+						dataType : "json" ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						data : JSON.stringify({
+							email : email,
+							password : password
+						}),
+						success : function(JSONData , status) {
+
+							//Debug...
+							console.log("JSONData : \n "+JSONData);
+							console.log(status);
+							console.log( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+							console.log(JSONData != null);
+							
+							//alert(status);
+							//alert("JSONData : \n"+JSONData);
+							//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+							//alert( JSONData != null );
+							
+							if( JSONData != null ){
+								
+								$(window.parent.frames["rightFrame"].document.location).attr("href","/user/getUser?email="+JSONData.email);
+								
+								//==> 방법 1 , 2 , 3 결과 학인
+							}
+						}
+				});  			
+		});
+	});
 
 //회원가입하기 
-
-
+	$( function() {
+		//==> 추가된부분 : "addUser"  Event 연결
+		$("a[href='#']").on("click" , function() {
+			self.location = "/user/addUser"
+		});
+	});
 //패스워드 찾기
 
 
@@ -136,7 +202,7 @@ margin-bottom: 10px;
         
          <div class="row login">
            <div class="col-sm-6">
-   			<input class="form-control input-lg" id="inputlg" type="text"
+   			<input class="form-control input-lg" id="email" type="text" name="email"
    			style="margin-left: 5px">
    			
            </div>
@@ -152,7 +218,7 @@ margin-bottom: 10px;
        
          <div class="row">
            <div class="col-sm-6">
-   			 <input class="form-control input-lg" id="inputlg" type="text"
+   			 <input class="form-control input-lg" id="password" type="text" name="password"
    			 style="margin-left: 5px">
            </div>
 		</div>
@@ -166,6 +232,12 @@ margin-bottom: 10px;
    			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" >
               </div>
         </div>
+       	<div class="row">
+			 <div class="col-sm-offset-4 col-sm-6 text-center">
+		     <button type="button" class="btn btn-primary" id="login"  >로 &nbsp;그 &nbsp;인</button>
+			 <a class="btn btn-primary btn" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
+		     </div>
+	   </div>
        
        </div><!--Modal Body  -->
           
