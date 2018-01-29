@@ -48,9 +48,6 @@ public class CommonServiceImpl implements CommonService {
 	public Map<String, Object> listComment(Search search, String categoryCode, int roomId) throws Exception {
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put("list", commentDao.listComment(search, categoryCode, roomId));
-		
-		List<Comment> list = (List<Comment>)map.get("list");
-
 		return map;
 	}
 

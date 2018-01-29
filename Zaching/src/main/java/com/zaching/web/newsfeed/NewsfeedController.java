@@ -1,7 +1,7 @@
 package com.zaching.web.newsfeed;
 
 import java.io.File;
-import java.util.Map;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,19 +15,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Newsfeed;
+import com.zaching.service.domain.User;
 import com.zaching.service.newsfeed.NewsfeedService;
+import com.zaching.service.user.UserService;
 
 
 @Controller
 @RequestMapping("/newsfeed/*")
 public class NewsfeedController {
-
 	@Autowired
 	@Qualifier("newsfeedServiceImpl")
 	private NewsfeedService newsfeedService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
@@ -73,7 +77,7 @@ public class NewsfeedController {
 	}
 	
 	@RequestMapping(value="listNewsfeed")
-	public String listNewsfeed( @ModelAttribute("search") Search search,  @RequestParam("menu") String menu, Model model, HttpServletRequest request) throws Exception{
+	public String listNewsfeed( @ModelAttribute("search") Search search,  Model model, HttpServletRequest request) throws Exception{
 		System.out.println("listNewsfeed");
 		String sorting = null;
 		if(search.getCurrentPage() ==0 ){
@@ -81,18 +85,21 @@ public class NewsfeedController {
 		}
 		search.setPageSize(pageSize);
 		
-		Map<String, Object> map = newsfeedService.listNewsfeed(search);
+		List<Newsfeed> list = newsfeedService.listNewsfeeds(search);
+		//User user = userService.getUser(userId);
 		// Business logic 수행
 		
-		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
+		//Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		//System.out.println(resultPage);
 		
 		// Model 과 View 연결
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
+		//model.addAttribute("list", map.get("list"));
+		//model.addAttribute("resultPage", resultPage);
+		System.out.println(list);
 		model.addAttribute("sorting", sorting);
 		model.addAttribute("search", search);
-		model.addAttribute("menu", menu);
+		
+		model.addAttribute("list",list);
 		
 		return "forward:/newsfeed/newsfeed.jsp";
 	}
