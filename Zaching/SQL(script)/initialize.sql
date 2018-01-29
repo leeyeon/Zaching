@@ -30,7 +30,7 @@ CREATE TABLE USERS (
 	email  	 VARCHAR2(50)	 NOT NULL,
 	password  		 VARCHAR2(16)	  NOT NULL,
 	role  				 CHAR(2) 		DEFAULT 0  NOT NULL   ,
-	name  				 	 VARCHAR2(10)  	   NOT NULL,
+	name  				 	 VARCHAR2(20)  	   NOT NULL,
 	address  		 	VARCHAR2(50),
 	longitude  		 		number(15,10),
 	latitude  		 		number(15,10),
