@@ -26,10 +26,36 @@
 
 </head>
 <style>
-#fixedbtn{position:fixed;
+#fixedbtn{
+position:fixed;
 			right:50px;
 			bottom:50px;
 			z-index:1000}
+
+.wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');
+
+}
+
+    .wrap-loading div{ /*로딩 이미지*/
+        position: fixed;
+        top:50%;
+        left:50%;
+        margin-left: -21px;
+        margin-top: -21px;
+    }
+
+    .display-none{ /*감추기*/
+        display:none;
+    }
+
+
 </style>
 <script>
 $(function() {
@@ -112,7 +138,21 @@ $(function() {
 							
 						$(".container").html(displayValue);
 						 
-					}
+					},beforeSend:function(){
+
+
+				        $('.wrap-loading').removeClass('display-none');
+
+				    }
+				    ,complete:function(){
+
+
+				        $('.wrap-loading').addClass('display-none');
+
+				 
+
+				    }
+
 		});
 			 
 			
@@ -152,6 +192,12 @@ $(function() {
 <div class="container" >
 
 </div>
+
+<div class="wrap-loading display-none">
+
+    <div><img src="/resources/images/134.gif" /></div>
+
+</div>   
 
 
 </body>

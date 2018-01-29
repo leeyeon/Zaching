@@ -73,8 +73,6 @@ public class LivingInfoRestController {
 			sb.append((char) c);
 		}
 		
-		System.out.println(sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString());
-		
 		return sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString();
 	}
 	
@@ -108,6 +106,40 @@ public class LivingInfoRestController {
 		
 				return sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString();
 
+		
+	}
+	
+	@RequestMapping( value="rest/getMusicChart", method=RequestMethod.GET )
+	public String music(HttpSession session ) throws Exception{
+		
+		String addr = "http://apis.skplanetx.com/melon/charts/realtime"+"?appKey=";
+		String serviceKey = "f28a60d4-8447-3157-b8af-12487d8b8a1a";
+		String parameter = "";
+		//http://apis.skplanetx.com/melon/charts/realtime?appKey=f28a60d4-8447-3157-b8af-12487d8b8a1a&count=10&page=5&version=1&format=json
+			
+		parameter = parameter + "&" + "count=10";
+		parameter = parameter + "&" + "page=1";
+		 parameter = parameter + "&" + "version=1";
+	
+		 addr = addr + serviceKey + parameter;
+	
+		URL url = new URL(addr);
+		
+		InputStream is = null;
+		InputStreamReader isr = null; 
+		
+		is = new URL(addr).openStream();
+		isr = new InputStreamReader(is, "utf-8");
+		
+		StringBuffer sb = new StringBuffer();
+		int c;
+
+		while ((c = isr.read()) != -1) {
+			sb.append((char) c);
+		}
+		
+		
+		return sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString();
 		
 	}
 	

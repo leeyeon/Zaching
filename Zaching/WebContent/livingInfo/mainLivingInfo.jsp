@@ -100,6 +100,11 @@ $(function() {
 		 self.location = "/livingInfo/getBestBook";
 		});
 	 
+	 $( ".col-xs-4:contains('À½¾Ç¼øÀ§')" ).on("click" , function() {
+		 self.location = "/livingInfo/getMusicChart";
+		});
+	 
+	
 });
 </script>
 <body>

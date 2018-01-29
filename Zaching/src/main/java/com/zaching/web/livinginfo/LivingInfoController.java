@@ -29,6 +29,17 @@ public class LivingInfoController {
 	
 	
 	
+	@RequestMapping(value = "getMusicChart", method = RequestMethod.GET)
+	public String getMusicChart(Model model) throws Exception {
+
+		System.out.println("/getMusicChart");
+		
+	
+		
+
+		return "forward:/livingInfo/getMusicChart.jsp";
+	}
+	
 	@RequestMapping(value = "getMovieInfo", method = RequestMethod.GET)
 	public String getMovieInfo(@ModelAttribute("livingInfo") LivingInfo livingInfo, Model model) throws Exception {
 
