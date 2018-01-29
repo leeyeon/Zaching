@@ -111,7 +111,7 @@
 
   
 
-    <script >
+    <script>
       var template = Handlebars.compile($("#items-template").html());
 		var data = {
 			getItems: function(groupNo) {
@@ -125,7 +125,7 @@
 				items = $.map(items, function(v) {
 					return {
 						offset: v,
-						imgSrc: "https://naver.github.io/egjs-experiment/infiniteGridService/demo/img/" + ( ( (v + 1) % 60) + 1 ) + ".jpg",
+						imgSrc: "../resources/images/sample_bob_background.jpg",
 						href: "https://naver.com/",
 						desc: "Cras justo odio..."
 					};

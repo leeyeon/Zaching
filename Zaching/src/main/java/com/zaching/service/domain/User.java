@@ -72,7 +72,7 @@ public class User {
 
 
 	public String getName() {
-		return name;
+		return name.trim();
 	}
 
 
@@ -152,7 +152,7 @@ public class User {
 
 
 	public String getRole() {
-		return role;
+		return role.trim();
 	}
 
 

@@ -8,8 +8,7 @@
 	
 	<style>
 	
-		body{ 
-		    margin-top: 150px;
+		body{
 		    padding-top: 50px;
 		}
 		
@@ -23,14 +22,8 @@
 </head>
 <body>
 
-	<div class="container" style="background:#ccc; height:2000px; color:#000">
-		요기에 만든거 집어 넣을거임<br/>
-		요기에 만든거 집어 넣을거임<br/>
-		요기에 만든거 집어 넣을거임<br/>
-		요기에 만든거 집어 넣을거임<br/>
-		요기에 만든거 집어 넣을거임<br/>
-		요기에 만든거 집어 넣을거임<br/>
-		요기에 만든거 집어 넣을거임<br/>
+	<div class="container">
+		<jsp:include page="/newsfeed/newsfeed.jsp" />
 	</div>
 
 </body>

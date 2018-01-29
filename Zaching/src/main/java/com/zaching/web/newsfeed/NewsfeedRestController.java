@@ -12,15 +12,15 @@ import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.Comment;
 import com.zaching.service.newsfeed.NewsfeedService;
 
-//@RestController
-//@RequestMapping("/newsfeed/*")
+@RestController
+@RequestMapping("/newsfeed/*")
 public class NewsfeedRestController {
-	//@Autowired
-	//@Qualifier("newsfeedServiceImpl")
+	@Autowired
+	@Qualifier("newsfeedServiceImpl")
 	private NewsfeedService newsfeedService;
 	
-	//@Autowired
-	//@Qualifier("commonServiceImpl")
+	@Autowired
+	@Qualifier("commonServiceImpl")
 	private CommonService commonService;
 	
 	public NewsfeedRestController() {
@@ -30,8 +30,8 @@ public class NewsfeedRestController {
 	@RequestMapping(value="json/addComment", method=RequestMethod.GET)
 	public Comment addComment(@RequestBody Comment comment) throws Exception{
 		System.out.println("newsfeed/json/addComment");
-		
-		return commonService.addComment(comment);
+
+		return null;
 	}
 	
 	@RequestMapping(value="json/updateComment", method=RequestMethod.GET)
@@ -42,17 +42,14 @@ public class NewsfeedRestController {
 	}
 	
 	@RequestMapping(value="json/updateLikey/{newsfeedId}/{userId}", method=RequestMethod.GET)
-	public int updateLikey(@RequestParam int newsfeedId, @RequestParam int userId, @RequestParam int countLikey) throws Exception{
+	public int updateLikey(@RequestParam int newsfeedId, @RequestParam int userId, @RequestParam int countLikey, @RequestParam String status) throws Exception{
 		System.out.println("newsfeed/json/updateLikey");
+		
 		newsfeedService.updateCountLike(newsfeedId);
-		newsfeedService.addLikeBlind(newsfeedId, userId);
+		newsfeedService.addLikeBlind(newsfeedId, userId, status);
+		newsfeedService.getCountLike(newsfeedId);
 		
 		return countLikey+1;
 	}
 	
-	
-	
-	
-	
-
 }
