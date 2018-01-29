@@ -70,7 +70,7 @@ public class BobServiceTest {
 		bob.setContent("환영합니당");
 		bob.setWrittenUserId(userId);
 		bob.setFee(20000);
-		bob.setFeeDate(date);
+		//bob.setFeeDate(date);
 		
 		System.out.println(bob);
 		
@@ -96,7 +96,7 @@ public class BobServiceTest {
 		System.out.println("list Size :: "+list.size()+" &totalCount::"+totalCount);
 	}
 	
-	@Test
+	//@Test
 	public void getBob() throws Exception {
 		Map<String, Object> map = bobService.getBob(11, "B03", 0);
 		System.out.println(map.get("bob").toString());
@@ -160,5 +160,25 @@ public class BobServiceTest {
 		fee.setParticipantId(15);
 		
 		bobService.payFeeBob(fee);
+	}
+	
+	//@Test
+	public void test() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH);
+		String monthStr = "";
+		
+		System.out.println(calendar.get(Calendar.MONTH));
+		
+		if(month < 10) {
+			monthStr = "0"+month;
+		} else {
+			monthStr = ""+month;
+		}
+		
+		System.out.println(monthStr);
+		
 	}
 }
