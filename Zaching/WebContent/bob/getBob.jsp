@@ -2,7 +2,9 @@
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
@@ -182,6 +184,10 @@
 	 	$('.btn-ico:contains("초대하기")').on('click', function() {
 			alert('초대하기');
 		});
+	 	
+	 	$('.deleteComment').on('click', function() {
+	 		alert();
+	 	});
 	
 	});
 
@@ -261,19 +267,20 @@
 						</div>
 					</div>
 					
-					<c:forEach var="i" begin="0" end="4" step="1">
-
-						<div class="col-xs-4" align="left" style="margin-top:20px; padding-right:15px;">
-							<img width="55px" height="55px"
-							style=" border: 2px solid #5F4B8B;
-									border-radius: 40px;
-									-moz-border-radius: 40px;
-									-khtml-border-radius: 40px;
-									-webkit-border-radius: 40px;
-									 box-shadow: 3px 3px 3px rgba(237,237,237,1)"
-							src="/resources/upload_files/images/sample_profile.png" />
-						</div>
-						
+					<c:forEach var="participant" items="${participant}">
+						<c:if test="${participant.userId ne bob.writtenUserId}">
+							<div class="col-xs-4" align="left" style="margin-top:20px; padding-right:15px;">
+								<img width="55px" height="55px"
+								style=" border: 2px solid #5F4B8B;
+										border-radius: 40px;
+										-moz-border-radius: 40px;
+										-khtml-border-radius: 40px;
+										-webkit-border-radius: 40px;
+										 box-shadow: 3px 3px 3px rgba(237,237,237,1)"
+								src = "../resources/upload_files/images/${participant.participantProfile}"
+				      			onerror="this.src='../resources/upload_files/images/sample_profile.png'" />
+							</div>
+						</c:if>						
 					</c:forEach>
 				</div>
 				<hr>
@@ -310,17 +317,18 @@
       <div class="row custumRow" style="margin-top:20px; padding-top:30px;">
       	<div class="text-center textBold" style="font-size: 35px;">친구들과 대화를 나누세요 :)</div>
         <hr>
-
-      	<c:forEach var="i" begin="0" end="3" step="1">
+      	<c:forEach var="comment" items="${comments}">
+      		<input type="hidden" name="commentId" value="${comment.commentId}" />
       		<div class="row comment" style="margin: 5px;">
 	      		<div class="col-sm-2">
-					이름
+					${comment.userName}
 				</div>
 				<div class="col-sm-7">
-					댓글 내용
+					${comment.content}
 				</div>
 				<div class="col-sm-3" style="font-size: 13px; text-align: end;">
 					<div style="padding-right: 50px;">
+						${comment.createdDate}
 						2018.01.09 PM 3:12
 					</div>
 					<div class="deleteComment" style="position: relative; right: 10px; top:-10px; text-align: end;">

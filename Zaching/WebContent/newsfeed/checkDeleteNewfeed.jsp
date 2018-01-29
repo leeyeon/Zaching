@@ -21,7 +21,7 @@
 <meta name="twitter:image" content="https://ssl.pstatic.net/static.checkout/stylewindow/m/img/icon/department/snippet_image.png" >
 
 
-		<link class="favicon" rel="shortcut icon" href="https://ssl.pstatic.net/static.checkout/stylewindow/p/min_20180125015746/img/icon/favicon_department.ico" type="image/x-icon"/>
+		<link class="favicon" rel="shortcut icon" href="WebContent/resources/images/bird-of-cute-rounded-rectangular-shape.ico" type="image/x-icon"/>
 
         <title></title>
 
@@ -41,187 +41,7 @@
 
 
 	<!-- header -->
-	<div id="u_skip">
-    	<a href="#lnb" onclick="document.getElementById('lnb').tabIndex=-1;document.getElementById('lnb').focus();return false;"><span>메인 메뉴로 바로가기</span></a>
-    	<a href="#content" onclick="document.getElementById('content').tabIndex=-1;document.getElementById('content').focus();return false;"><span>본문으로 바로가기</span></a>
-	</div>
-	<div id="header" class="g_header"><!-- [D] 상단고정 형태일 경우 class="on" 추가 -->
-		<iframe width="100%" src="about:blank" frameborder="0" title="버그픽스용" class="bug_fix"></iframe>
-		<div class="co_header_fix">
-			<div class="co_header co_header_gnb">
-				<div class="co_header_inner">
-					<div class="co_site">
-						<a href="http://www.naver.com" class="co_naver N=a:GNB.naver" title="나의 경쟁력, 네이버">네이버</a><!--N=a:GNB.naver-->
-						<a href="https://order.pay.naver.com/home?frm=s_logo" class="co_npay _naver_pay N=a:GNB.naverpay" title="네이버 아이디로 간편구매, 네이버페이">네이버페이</a><!--N=a:GNB.naverpay-->
-					</div>
-
-					<!-- GNB 템플릿 적용부 -->
-					<div class="shopping_gnb_wrap">
-						<div id="gnb" class="gnb_dark_type2">
-							<!-- <script src="http://gn.naver.com/template/gnb_utf8.nhn"></script> -->
-						</div>
-					</div>
-					<!--//GNB 템플릿 적용부 -->
-				</div>
-				<span class="g_mask_black"></span>
-			</div>
-
-			<div class="co_header co_header_shop">
-				<div class="co_header_inner">
-					<h1 class="co_tit">
-						<a href="http://pc.shopping2.naver.com/home/p/index.nhn" class="g_logo_window N=a:SNB.home">네이버 쇼핑</a><!--N=a:SNB.home-->
-					</h1>
-					<div class="co_srh co_srh_inner">
-						<h2 class="blind">검색영역</h2>
-						
-						<form class="_search_form" name="search" method="get" action="" onsubmit="return false;">
-						<fieldset>
-						<legend>네이버쇼핑 검색</legend>
-						<div id="autocompleteWrapper" class="co_srh_area">
-							<input type="text" name="query" class="co_srh_input _input N=a:SNB.search" accesskey="s" title="검색어 입력" maxlength="255" autocomplete="off" value="">
-							<!-- N=a:SNB.search -->
-							<input type="hidden" name="cat_id" >
-							<input type="hidden" name="frm" id="frm" value="NVSHSRC">
-							
-							<a href="#" class="co_srh_auto _toggle">
-								<span class="co_more _toggleIcon">자동완성 펼치기</span><!-- [D] 활성화 시 <span class="co_more on">자동완성 접기</span> 변경 , 자동완성 끄기일경우 <span class="co_more none">자동완성 기능끄기</span> 변경 -->
-							</a>
-							<!-- 자동완성 툴팁 레이어 -->
-							<div class="co_ly_tooltip">
-								<iframe width="100%" src="about:blank" frameborder="0" title="버그픽스용" class="bug_fix"></iframe>
-								<span class="co_tooltip_inner _toggleTooltip">자동완성 펼치기</span>
-							</div><!-- [D] 자동완성 접기일 경우 //자동완성 접기//로 텍스트 변경 -->
-							<!-- //자동완성 툴팁 레이어 -->
-							<a href="#" class="co_srh_btn _search N=a:SNB.search" _normal="SNB" _lite="GNL" _clickCode="search">네이버쇼핑 검색</a><!-- N=a:SNB.search -->
-							<!-- 자동완성 레이어 -->
-							<div class="co_ly_auto _suggestView"><!-- [D] 활성화 시 class="on" 추가, co_expand를 활성화하려면 class="selected" 추가 -->
-								<iframe width="100%" src="about:blank" frameborder="0" title="버그픽스용" class="bug_fix"></iframe>
-								<div class="co_auto_fix">
-									<div class="co_basis _noticeArea"><!-- [D] 활성화 시 class="on" 추가 -->
-										<p class="co_basis_txt">현재 자동완성 기능을 사용하고 계십니다.</p>
-									</div>
-									<div class="co_basis _resultArea" style="display: none">
-										<ul class="_resultBox">
-								            <!-- <li><a href="#" intxt="@in_txt@">@txt@@preview_txt@</a>@txt_nclick@</li> -->
-								        </ul>
-								        <ul class="_resultBox">
-								            <!-- <li><a href="#" intxt="@in_txt@" catid="@cat_id@">@txt@</a>@cat_nclick@</li> -->
-								        </ul>
-									</div>
-									<div class="co_help">
-										<a href="https://help.naver.com/support/contents/contents.nhn?serviceNo=606&categoryNo=1994" target="_blank" class="N=a:SNB.sch.achelp">도움말</a><!--N=a:sch.achelp-->
-										<span class="co_bar">|</span>
-										<a href="#" class="_off N=a:sch.acoff">기능끄기</a><!--N=a:sch.acoff-->
-										<!-- 도움말 레이어 -->
-										<div class="co_ly_help">기능을 다시 켤 때는 <span class="co_ico_srh">검색창</span>을 클릭하세요</div>
-										<!-- //도움말 레이어 -->
-									</div>
-									<div class="co_expand _previewArea"><!-- [D] 활성화 시 class="on" 추가 -->
-									</div>
-								</div>
-							</div><!--code@-->
-							<!-- //자동완성 레이어 -->
-						</div>
-						<a href="#" class="co_srh_detail N=a:SNB.detailsearch" id="_detailSearchButton">
-							<span class="co_detail_txt">상세검색</span>
-							<span class="co_detail_more">펼치기</span><!-- [D] 활성화 시 <span class="co_detail_more on">접기</span> 변경 -->
-						</a><!--N=a:SNB.detailsearch-->
-						<div class="co_ly_detail" id="_detailSearchDiv"><!-- [D] 활성화 시 class="on" 추가 -->
-							<iframe width="100%" src="about:blank" frameborder="0" title="버그픽스용" class="bug_fix"></iframe>
-						 	<div class="co_detail_fix">
-								<strong class="co_detail_tit">상세검색</strong>
-								<div class="co_detail">
-									<p class="co_preview _preview"></p><table border="1" class="co_tbl_detail">
-									<caption>상세검색 입력 테이블</caption>
-									<colgroup><col style="width:171px"><col></colgroup>
-										<tbody>
-											<tr class="co_top">
-												<th scope="row"><label class="stit" for="lb_srh_basis"><strong>기본검색</strong></label></th>
-												<td><input type="text" name="" id="lb_srh_basis" class="co_srh_input _base" maxlength=50></td>
-											</tr>
-											<tr class="co_top">
-												<th scope="row"><strong>상세검색</strong></th>
-												<td><p class="co_dsc"><strong class="co_bright">*</strong>기본 검색의 결과 범위를 줄이고자 할 때 사용합니다.<br>여러개의 단어를 입력할 때는<span class="co_bright">쉼표 (,)</span>로 구분해서 입력하세요.</p></td>
-											</tr>
-											<tr>
-												<th scope="row" class="co_result"><label for="lb_srh_include">결과내 재검색 단어 (+)</label></th>
-												<td><input type="text" name="" id="lb_srh_include" class="co_srh_input _include" maxlength="50"></td>
-											</tr>
-											<tr>
-												<th scope="row"><label for="lb_srh_exact">정확히 일치하는 문장 (“”)</label></th>
-												<td><input type="text" name="" id="lb_srh_exact" class="co_srh_input _exact" maxlength="50"></td>
-											</tr>
-											<tr>
-												<th scope="row"><label for="lb_srh_exclude">제외하는 단어 (-)</label></th>
-												<td>
-													<input type="text" name="" id="lb_srh_exclude" class="co_srh_input _exclude" maxlength="50">
-													<ul class="co_srh_exclude">
-													<li class="N=a:sch*d.exabroad"><input type="checkbox" name="" id="lb_exclude1" class="_exclude_overseas"><label for="lb_exclude1">해외상품 제외</label></li><!--N=a:sch*d.exabroad-->
-													<li class="N=a:sch*d.exused"><input type="checkbox" name="" id="lb_exclude2" class="_exclude_used"><label for="lb_exclude2">중고상품 제외</label></li><!--N=a:sch*d.exused-->
-													</ul>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<p class="co_or_none"><strong class="co_bright">*</strong> 네이버쇼핑내에선 OR 검색어는 제공하지 않습니다.</p>
-								<div class="co_btn">
-									<a href="https://help.naver.com/support/contents/contents.nhn?serviceNo=606&categoryNo=1911" target="_blank" class="co_advise N=a:sch*d.help">도움말<span></span></a><!--N=a:sch*d.help-->
-									<a href="#" class="co_refresh N=a:sch*d.reset"><span></span>초기화</a><!--N=a:sch*d.reset-->
-									<a href="#" class="co_confirm N=a:sch*d.search">검색</a><!--N=a:sch*d.search-->
-									<a href="#" class="co_cancel N=a:sch*d.close">닫기</a><!--N=a:sch*d.close-->
-								</div>
-								<a href="#" class="co_close N=a:sch*d.x">상세검색 닫기</a><!--N=a:sch*d.x-->
-							</div>
-						</div>
-						</fieldset>
-						</form>
-					</div>
-
-					<!-- 카테고리 -->
-					<a href="#" class="co_digital_btn N=a:SNB.digicate">디지털/가전</a><!--N=a:SNB.digicate-->
-					<a href="#" class="co_birth_btn N=a:SNB.babycate">출산/육아</a><!--N=a:SNB.babycate-->
-					<a href="#" class="co_category_btn N=a:SNB.category">카테고리</a><!--N=a:SNB.category-->
-					<div class="co_ly_category"><!-- [D] 선택시 class="on" 추가 -->
-						<iframe width="100%" src="about:blank" frameborder="0" title="버그픽스용" class="bug_fix"></iframe>
-						<h2 class="blind">카테고리 메뉴</h2>
-						<div class="co_category_menu">
-						</div>
-					</div>					
-					<!-- //카테고리 -->
-
-					<div class="co_shop_site" id="co_shop_layer">
-						<a href="https://search.shopping.naver.com/best100v2/main.nhn" class="co_best N=a:SNB.best100">베스트 100</a><!--N=a:SNB.best100-->
-						<span class="co_bar">|</span>
-						<a href="https://search.shopping.naver.com/mall/mall.nhn" class="co_mall N=a:SNB.mall">몰전체보기</a><!--N=a:SNB.mall-->
-					</div>
-					
-					<div class="co_my" id="_myPageWrapper">
-						<a href="#" class="co_my_btn N=a:SNB.shoppingmy" _normal="SNB" _lite="GNL" _clickcode="shoppingmy">쇼핑MY</a>
-						<div class="co_ly_mypage">
-							<iframe width="100%" src="about:blank" frameborder="0" title="버그픽스용" class="bug_fix"></iframe>
-							<div class="co_bg_top"></div>
-							<div class="co_bg_bottom"></div>
-							<div class="co_bg_cont">
-								<ul class="co_cont_list">
-								<li><a href="#" class="N=a:SNB*m.home">MY 홈</a><!--N=a:SNB*m.home--></li>
-								<li><a href="#" class="N=a:SNB*m.my">찜한 상품</a><!--N=a:SNB*m.my--></li>
-								<li><a href="#" class="N=a:SNB*m.shop">관심 스토어</a><!--N=a:SNB*m.shop--></li>
-								</ul>
-								<ul class="co_cont_list">
-								<li><a href="#" class="N=a:SNB*m.cart">장바구니</a><!--N=a:SNB*m.cart--></li>
-								<li><a href="#" class="N=a:SNB*m.order">주문확인/배송조회</a><!--N=a:SNB*m.order--></li>
-								<li><a href="#" class="N=a:SNB*m.coupon">쿠폰</a><!--N=a:SNB*m.coupon--></li>
-								</ul>
-							</div>
-						</div><!--N=a:SNB.shoppingmy-->
-					</div>
-				</div>
-				<span class="g_mask_white"></span>
-				<span class="g_mask_black"></span>
-			</div>
-			<!-- lnb -->
-			<div id="lnb" class="g_lnb">
+	
 			<div id="lnb_bar" class="co_lnb">
 				<h2 class="blind">메인 메뉴</h2>
 				<!-- [D] 좌우버튼 노출시 class="g_rolling" 추가 -->
@@ -307,11 +127,7 @@
 				</div>
 			</div>
 			<span class="g_lnb_mask"></span>
-		</div>
-			<!-- //lnb -->
-		</div>
-	</div>	
-	<!-- //header -->
+		
 		<div id="content" class="department department">
 
 
@@ -339,7 +155,7 @@
         <div class="location_img_mask " id="eg-flick-container">
             <div class="location_img eg-flick-container" >
                 <a class="link N=a:hom.tab" href="/department/site/11007005" data-categoryid="11007005">
-                    <img  src="https://ssl.pstatic.net/static.checkout/stylewindow/p/min_20180125015746/img/spot/department_galleria.jpg" width="652" height="326" alt="갤러리아">
+                    <img  src="../resources/images/sample_bob_background.jpg" width="652" height="326" alt="갤러리아">
                 </a>
                 <a class="link N=a:hom.tab" href="/department/site/11007006" data-categoryid="11007006">
                     <img  src="https://ssl.pstatic.net/static.checkout/stylewindow/p/min_20180125015746/img/spot/department_shinsegae.jpg" width="652" height="326" alt="신세계백화점">
@@ -360,22 +176,22 @@
         </div>
 <ul class="location_tag clearfix _11007005 _categoryContents" style="display: none">
                 <li class="list ">
-                    <a class="link N=a:hom.comt,i:BN_13461" href="/department/list?query=11007005,BN_13461"><i class="bg brand"></i>온앤온</a>
+                    <a class="link N=a:hom.comt,i:BN_13461" href="/department/list?query=11007005,BN_13461"><i class="bg brand"></i>Zaching</a>
                 </li>
                 <li class="list ">
-                    <a class="link N=a:hom.comt,i:BN_15741" href="/department/list?query=11007005,BN_15741"><i class="bg brand"></i>올리브데올리브</a>
+                    <a class="link N=a:hom.comt,i:BN_15741" href="/department/list?query=11007005,BN_15741"><i class="bg brand"></i>밥친구</a>
                 </li>
                 <li class="list ">
-                    <a class="link N=a:hom.comt,i:BN_513" href="/department/list?query=11007005,BN_513"><i class="bg brand"></i>오클리</a>
+                    <a class="link N=a:hom.comt,i:BN_513" href="/department/list?query=11007005,BN_513"><i class="bg brand"></i>우리지금만나</a>
                 </li>
                 <li class="list ">
-                    <a class="link N=a:hom.comt,i:BN_37412" href="/department/list?query=11007005,BN_37412"><i class="bg brand"></i>샤트렌</a>
+                    <a class="link N=a:hom.comt,i:BN_37412" href="/department/list?query=11007005,BN_37412"><i class="bg brand"></i>당장만나</a>
                 </li>
                 <li class="list ">
-                    <a class="link N=a:hom.comt,i:BN_222775" href="/department/list?query=11007005,BN_222775"><i class="bg brand"></i>러브앤쇼</a>
+                    <a class="link N=a:hom.comt,i:BN_222775" href="/department/list?query=11007005,BN_222775"><i class="bg brand"></i>보이스리플</a>
                 </li>
                 <li class="list ">
-                    <a class="link N=a:hom.comt,i:11001003" href="/department/list?query=11007005,11001003"><i class="bg category"></i>원피스·세트</a>
+                    <a class="link N=a:hom.comt,i:11001003" href="/department/list?query=11007005,11001003"><i class="bg category"></i>뉴스피드</a>
                 </li>
 </ul>
     <div class="location_news _11007005 _categoryContents" style="z-index: 2100;display: none;">
@@ -383,15 +199,15 @@
         <ul>
             <li class="news">
                 <a class="link clearfix N=a:hom.news" href="/department/site/11007005/news?first=3788">
-                    <img class="img" src="https://shop-phinf.pstatic.net/20180124_230/showindowCommon_1516780221855c2hxv_JPEG/53385152207696547_701641975.jpg?type=f72_72" width="42" height="42" alt="NEWS 이미지">
-                    <p class="desc">주방식기 브랜드 창고 대개방전</p><span class="store">갤러리아 타임월드점</span>
+                    <img class="img" src="../resources/images/temp_logo.png" width="42" height="42" alt="NEWS 이미지">
+                    <p class="desc">자췽자췽</p><span class="store">자췽자췽</span>
                 </a>
             </li>
             
             <li class="news">
                 <a class="link clearfix N=a:hom.news" href="/department/site/11007005/news?first=3787">
-                    <img class="img" src="https://shop-phinf.pstatic.net/20180124_89/showindowCommon_1516780182078NowAy_JPEG/53385112428907372_-678204031.jpg?type=f72_72" width="42" height="42" alt="NEWS 이미지">
-                    <p class="desc">2018 PREMIUM GIFT 식품관 설 선물세트</p><span class="store">갤러리아 타임월드점</span>
+                    <img class="img" src="../resources/images/temp_logo.png" width="42" height="42" alt="NEWS 이미지">
+                    <p class="desc">지원 - 밥친구 구해요</p><span class="store">낙성대역</span>
                 </a>
             </li>
                      </ul>
@@ -543,19 +359,19 @@
 
     <a class="home_banner_top N=a:hom.event" href="/department/specialEvent/detail/13063">
             <h4 class="title eventhall text_indent">EVENT HALL</h4>
-        <p class="desc">이쁜 라인이 살아나는 스커트</p>
-        <img class="common_img_center" src="https://shop-phinf.pstatic.net/20180119_261/showindowCommon_1516336539440gWQiS_JPEG/21658563664291426_-2053990582.jpg?type=w640" height='161' alt="이쁜 라인이 살아나는 스커트 이미지">
-        <div class="bg"></div>
+        <p class="desc">편의점 행사 정보</p>
+        <img class="common_img_center" src="../resources/images/convenience.jpg" height='161' alt="이쁜 라인이 살아나는 스커트 이미지">
+        <div class="bg"></div><!-- ../resources/images/convenience.jpg-->
         <div class="common_border"></div>
     </a>
 
 
 
-    <a class="home_banner_bottom N=a:hom.today" href="https://swindow.naver.com/department/list?query=11001016&amp;prodSex=F&amp;first=2267770747&amp;sort=REL_DES">
+    <a class="home_banner_bottom N=a:hom.today" href="javascript:void(window.open('../livingInfo/getChatbot.jsp','_blank','width=360,height=450'))">
             <h4 class="title todaysitem text_indent">EVENT HALL</h4>
-        <p class="desc">매일 사용할 토리버치 토트백</p>
-            <span class="store">토리버치</span>
-        <img class="img" src="https://shop-phinf.pstatic.net/20180123_289/showindowCommon_1516689567375Lsejd_JPEG/22011591602120362_1851590487.jpg?type=m236" width='120' height='120' alt="매일 사용할 토리버치 토트백 이미지">
+        <p class="desc">자췽요정에게 물어봐</p>
+            <span class="store">챗봇</span>
+        <img class="img" src="../resources/images/chat.png" width='120' height='120' alt="매일 사용할 토리버치 토트백 이미지">
         
         <div class="common_border"></div>
     </a>
@@ -563,11 +379,10 @@
 
     <a class="home_banner_side N=a:hom.snews" href="https://swindow.naver.com/department/site/11007006004">
             <h4 class="title brandnews text_indent">EVENT HALL</h4>
-        <p class="desc">백화점 상품 한눈에 확인하기
+        <p class="desc">내 주위 편의시설 보기
 </p>
-            <span class="store">신세계백화점 본점</span>
-        <img class="img" src="https://shop-phinf.pstatic.net/20180117_103/showindowCommon_1516170854523YOsD8_JPEG/52775784876151275_-975054273.jpg?type=m320" width='164' height='165' alt="백화점 상품 한눈에 확인하기
- 이미지">
+            <span class="store">영화관/주유소/은행/마트/카페/약국/공공기관</span>
+        <img class="img" src="../resources/images/CGV.jpg" width='164' height='165' alt="주위편의시설">
         
         <div class="common_border"></div>
     </a>

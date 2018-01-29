@@ -112,7 +112,6 @@
 	<script type="text/javascript">
 	
 		$(function() {
-			
 			/*
 			var filter = "win16|win32|win64|mac|macintel"; 
 			
