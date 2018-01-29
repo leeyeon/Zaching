@@ -25,8 +25,8 @@
 			width: 100%;
 			height: 100%;
 			background-size: cover;
-			top:0;
-			left:0;
+			top: 0;
+			left: 0;
 			z-index: -1;
 		}
 		
@@ -150,20 +150,20 @@
 			
 			/* 리스트 불러오기 */
 			
-			$('a:contains("우리지금만나")').on("click", function() {
+			$('.list-group-item:contains("우리지금만나")').on("click", function() {
 				$(self.location).attr("href","/bob/addBob?category=B01");
 			});
 			
-			$('a:contains("당장만나")').on("click", function() {
+			$('.list-group-item:contains("당장만나")').on("click", function() {
 				$(self.location).attr("href","/bob/addBob?category=B02");
 			});
 			
-			$('a:contains("주기적으로만나")').on("click", function() {
+			$('.list-group-item:contains("주기적으로만나")').on("click", function() {
 				$(self.location).attr("href","/bob/addBob?category=B03");
 			});
 
 			
-			/* tabl Event Start */
+			/* tab Event Start */
 		    $.get($($('[data-toggle="tabajax"]')[0]).attr('href'), function(data) {
 		        $($($('[data-toggle="tabajax"]')[0]).attr('data-target')).html(data);
 		    });
@@ -203,17 +203,18 @@
 		<div class="form-group">
 			<!-- Tab 시작 -->
 		<div id="exTab2" style="padding:0;">
-			<ul class="nav nav-tabs tabs-up" style="padding: 5px 5px 0 5px;">
+			<ul class="nav nav-tabs tabs-up">
 				<li class="active" ><a href="/bob/listBob?category=B01" data-target="#B01" data-toggle="tabajax">우리지금만나</a></li>
 				<li><a href="/bob/listBob?category=B02" data-target="#B02" data-toggle="tabajax">당장만나</a>
 				</li>
 				<li><a href="/bob/listBob?category=B03" data-target="#B03"  data-toggle="tabajax">주기적으로만나</a>
 				</li>
 
-				<li class="pull-right" style="padding-top:2px;">
-						<input type="text" name="searchKeyword" class="form-control" placeholder="검색 내용을 입력하세요." 
-	      					style="width: 360px; height:45px;"/></li>
-	      		<li class="pull-right" style="padding-top:5px;"><a href="#" style="select-bob">내 주소로 검색하기</a></li>
+				<li class="pull-right">
+					<input type="text" name="searchKeyword" class="form-control" placeholder="검색 내용을 입력하세요." 
+      					style="width: 360px; height:45px;"/>
+	      		</li>
+	      		<li class="pull-right"><a href="#" style="select-bob">내 주소로 검색하기</a></li>
 			</ul>
 			
 			<!-- Tab 끝 -->

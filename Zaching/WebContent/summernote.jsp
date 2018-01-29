@@ -71,3 +71,47 @@
   </script>
 </body>
 </html>
+
+	            <div class="row">
+	            	<div class="col-xs-12" style="margin-bottom:20px;">
+	                	<textarea name="content" id="ckeditor"></textarea>
+	                	<div id="summernote"><p>Hello Summernote</p></div>
+						  <script>
+							$(document).ready(function() { 
+								$('#summernote').summernote({ 
+									placeholder: 'Hello bootstrap 4',
+									callbacks: { // 콜백을 사용
+				                        // 이미지를 업로드할 경우 이벤트를 발생
+									    onImageUpload: function(files, editor, welEditable) {
+										    sendFile(files[0], this);
+										}
+									},
+							        tabsize: 2,
+							        height: 500,
+									lang: 'ko-KR'
+								}); 
+							});
+							
+							function sendFile(file, editor) {
+					            // 파일 전송을 위한 폼생성
+						 		//data = new FormData();
+						 	    //data.append("uploadFile", file);
+						 	    $.ajax({ // ajax를 통해 파일 업로드 처리
+						 	    	url : "/bob/rest/addSummernoteImage",
+						 	    	method : "POST",
+						 	    	contentType : "application/json; charset=UTF-8",
+						 	    	data : JSON.stringify({
+						 	    		uploadFile : file
+									}),
+									dataType : "json",
+						 	        cache : false,
+						 	        processData : false,
+						 	        success : function(data) { // 처리가 성공할 경우
+					                    // 에디터에 이미지 출력
+						 	        	$(editor).summernote('editor.insertImage', data.url);
+						 	        }
+						 	    });
+						 	}
+						  </script>
+	                </div>
+	            </div>
