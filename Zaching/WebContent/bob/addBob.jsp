@@ -10,6 +10,8 @@
 
 	User user = new User();
 	user.setUserId(9);
+	
+	request.setAttribute("user", user);
 
 %>
 
@@ -35,7 +37,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 	
 	<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-ko_KR.min.js"></script>
 	        
 	<jsp:include page="../resources/javascript/fileUploadCDN.jsp"/>
 	
@@ -127,6 +129,23 @@
 	body > div.container > form > div > div:nth-child(10) > div > div.datepicker_inner_container > div.datepicker_timelist {
 		width: 50%;
 	}
+	
+	/* 친구목록 */
+	
+	#sortable1, #sortable2 { 
+		list-style-type: none; 
+		margin: 0; 
+		padding: 0; 
+		margin-bottom: 10px;
+		overflow-y: auto;
+    	overflow-x: hidden;
+	}
+	
+  	.ui-state-default { 
+  		margin: 5px; 
+  		padding: 10px;
+  		z-index: 100;
+  	}
 }
      
 </style>
@@ -135,33 +154,6 @@
 	
 	function fcnAddBob() {
 
-		var title = $("input[name='title']").val();
-		var detail = $("input[name='prodDetail']").val();
-		var amount = $("input[name='amount']").val();
-		var manuDate = $("input[name='manuDate']").val();
-		var price = $("input[name='price']").val();
-
-		if (title == null || name.length < 1) {
-			alert("제목은 반드시 입력하여야 합니다.");
-			return;
-		}
-		if (detail == null || detail.length < 1) {
-			alert("상품상세정보는 반드시 입력하여야 합니다.");
-			return;
-		}
-		if (amount == null || amount.length < 1) {
-			alert("상품개수는 반드시 입력하셔야 합니다.");
-			return;
-		}
-
-		if (manuDate == null || manuDate.length < 1) {
-			alert("제조일자는 반드시 입력하셔야 합니다.");
-			return;
-		}
-		if (price == null || price.length < 1) {
-			alert("가격은 반드시 입력하셔야 합니다.");
-			return;
-		}
 
 		$("form").attr("method", "POST").attr("action", "/bob/addBob").submit();
 	}
@@ -242,6 +234,9 @@
 	    	                	        var obj = JSON.parse(obj);
 	    	                	        console.log(obj);
 	    	                	        console.log(obj.ib);
+	    	                	        
+	    	                	        $("longitude").val(obj.ib);
+	    	                	        $("latitude").val(obj.jb);
 	    	                	    } 
 	    	                	});
 		    	            }
@@ -263,19 +258,33 @@
 	
 	    </c:if>
 
-
-		$( "ul.droptrue" ).sortable({
-		    connectWith: "ul"
-		});
-		
-		$( "ul.dropfalse" ).sortable({
+		$( "#sortable1, #sortable2" ).sortable({
+			cursor: "move",
 		    connectWith: "ul",
-		    dropOnEmpty: false
-		});
+		    dropOnEmpty: true
+		}).disableSelection();
+	    
+	    $("div.file-caption.form-control.kv-fileinput-caption > input").attr("placeholder", "파일을 선택해주세요.");
+
+	    $("input[name=imageCheck]").on('click', function() {
+	    	//alert("1");
+	    	if($("#input-b1").is(":disabled")) {
+	    		//alert("2");
+	    		$("#input-b1").prop('disabled', false);
+	    		$("div.file-caption.form-control.kv-fileinput-caption > input").attr("placeholder", "파일을 선택해주세요.");
+	    		$("div.file-caption.form-control.kv-fileinput-caption").css('background','');
+	    	} else {
+	    		//alert("3");
+	    		$("#input-b1").prop('disabled', true);
+	    		$("div.file-caption.form-control.kv-fileinput-caption > input").attr("placeholder", "기본 배경화면을 선택하셨습니다.");
+	    		$("div.file-caption.form-control.kv-fileinput-caption").css('background','#ccc');
+	    	}
+	    });
+	    
+	    
 		
-		$( "#sortable1, #sortable2" ).disableSelection();
-			    
-		});
+	});
+
 
 </script>
  
@@ -294,7 +303,8 @@
 		    <div class="form-group">
 		    	<input type="hidden" name="writtenUserId" value="${user.userId}" />
 		    	<input type="hidden" name="category" value="${param.category}" />
-		    
+		    	<input type="hidden" name="latitude" />
+		    	<input type="hidden" name="longitude" />
 		    	<div class="row">
 		    		<div class="col-sm-2 btn-bob" >제목</div>
 	            	<div class="col-sm-10" align="center">
@@ -310,7 +320,7 @@
 			    		<div class="col-sm-6 btn-bob" align="center">
 			    			제한인원수
 			    		</div>
-		            	<div class="col-sm-6" align="left" >
+		            	<div class="col-sm-6" align="left" style="padding-top: 8px;">
 					    	<select name="limitNum" class="selectpicker show-tick" title="제한 인원수">
 					    	  <c:forEach var="i" begin="2" end="20" step="1">
 					    	  	<option >${i}</option>
@@ -319,50 +329,14 @@
 							<span style="color: red;" > * 인원수는 20명 제한입니다.</span>
 		            	</div>
 			    	</div>
+			    	
+			    	<hr/>
 
 		    	</c:if>
 		    	
 	            <div class="row">
 	            	<div class="col-xs-12" style="margin-bottom:20px;">
 	                	<textarea name="content" id="ckeditor"></textarea>
-	                	<div id="summernote"><p>Hello Summernote</p></div>
-						  <script>
-							$(document).ready(function() { 
-								$('#summernote').summernote({ 
-									placeholder: 'Hello bootstrap 4',
-									callbacks: { // 콜백을 사용
-				                        // 이미지를 업로드할 경우 이벤트를 발생
-									    onImageUpload: function(files, editor, welEditable) {
-										    sendFile(files[0], this);
-										}
-									},
-							        tabsize: 2,
-							        height: 500,
-									lang: 'ko-KR'
-								}); 
-							});
-							
-							function sendFile(file, editor) {
-					            // 파일 전송을 위한 폼생성
-						 		//data = new FormData();
-						 	    //data.append("uploadFile", file);
-						 	    $.ajax({ // ajax를 통해 파일 업로드 처리
-						 	    	url : "/bob/rest/addSummernoteImage",
-						 	    	method : "POST",
-						 	    	contentType : "application/json; charset=UTF-8",
-						 	    	data : JSON.stringify({
-						 	    		uploadFile : file
-									}),
-									dataType : "json",
-						 	        cache : false,
-						 	        processData : false,
-						 	        success : function(data) { // 처리가 성공할 경우
-					                    // 에디터에 이미지 출력
-						 	        	$(editor).summernote('editor.insertImage', data.url);
-						 	        }
-						 	    });
-						 	}
-						  </script>
 	                </div>
 	            </div>
 	            
@@ -376,7 +350,7 @@
 	            		</div>
 	            	</div>
 	            	<div class="col-sm-8" align="center" style="padding-top: 7px;">
-	            		<input id="input-b1" name="uploadFile" type="file" class="file" style="width:80%;"/>	            		
+	            		<input id="input-b1" name="uploadFile" type="file" class="file" style="width:80%;"/>
 	            	</div>
 		    	</div>
 		    	
@@ -385,10 +359,12 @@
 		    	<c:if test="${categoryName ne '주기적으로만나'}">
 			    	<div class="row">
 			    		<div class="col-sm-6 btn-bob">날짜</div>
-		            	<div class="col-sm-6" align="center">
+		            	<div class="col-sm-6" align="center" style="padding-top: 8px;">
 		            		<input type="date" name="appointmentTime" class="form-control" placeholder="날짜" style="font-size: 16px;"/>
 		            	</div>
 			    	</div>
+			    	
+			    	<hr>
 		            
 		            <div class="row" style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px; border: 1px solid #5F4B8B;">
 		            	<div class="col-xs-12 btn-bob" style="width: 100%; ">위치</div>
@@ -407,42 +383,65 @@
 		    	</c:if>
 		    	
 		    	<c:if test="${categoryName eq '주기적으로만나'}">
-		            <div class="row" style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px; border: 1px solid #5F4B8B;">
-		            	<div class="col-xs-12 btn-bob" style="width: 100%; ">초대할 친구</div>
-						
-						<div class="row" style="padding: 20px;">
-						
-			            	<div class="col-sm-5" align="center" style="border: 1px solid #5F4B8B; height: 350px;">
-			            		<ul id="sortable1" class="droptrue">
-			            		 <li class="ui-state-default">Item 3</li>
-								  <li class="ui-state-default">Item 4</li>
-								  <li class="ui-state-default">Item 5</li>
-								</ul>
-			            	</div>
-			            	
-			            	<div class="col-sm-2" align="center">
-			            		ㅇㅅㅇ
-			            	</div>
-			            	
-			            	<div class="col-sm-5" align="center" style="border: 1px solid #5F4B8B; height: 350px;">
-				            	
-								 
-								<ul id="sortable2" class="droptrue">
-								  <li class="ui-state-default">Can be dropped..</li>
-								  <li class="ui-state-default">..on an empty list</li>
-								  <li class="ui-state-default">Item 3</li>
-								  <li class="ui-state-default">Item 4</li>
-								  <li class="ui-state-default">Item 5</li>
-								</ul>
-			            	</div>
-			            	
-			            	http://jqueryui.com/sortable/#empty-lists
-		            	
+		    	
+		    		<div class="row">
+		            	<div class="col-sm-3 btn-bob">회비 (원)</div>
+		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
+		            		<input type="text" class="form-control" name="imageCheck" value="" placeholder="(ex) 20000">
 		            	</div>
-		            	
+		            	<div class="col-sm-3 btn-bob">회비날짜</div>
+		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
+		            		<input type="date" name="appointmentTime" class="form-control"style="font-size: 16px;"/>
+		            	</div>
 			    	</div>
+		    		
+		    		<hr>
+		    			    	
+		            <div class="row" style="margin-top: 10px;">
+		            	<div class="col-xs-12 btn-bob" style="width: 100%; ">초대할 친구</div>
+					</div>	
+					
+					<div class="row" style="padding: 10px;">
+
+	            		<ul id="sortable1" class="col-sm-5 droptrue" align="center" style="background: #ccc; height: 200px; padding:5px;">
+
+						</ul>
+
+		            	<div class="col-sm-2" align="center">
+		            		<button>왼쪽</button><br/>
+		            		<button>오른쪽</button>
+		            	</div>
+
+						<ul id="sortable2" class="col-sm-5 droptrue" align="center" style="background: #ccc; height: 200px; padding: 5px;">
+						  <li class="ui-state-default">
+						  	<div class="draggable_area">
+						  		이연희
+						  	</div></li>
+						  <li class="ui-state-default">
+						  	<div class="draggable_area">
+						  		이정은
+						  	</div></li>
+						  <li class="ui-state-default">
+						  	<div class="draggable_area">
+						  		박진수
+						  	</div></li>
+						  <li class="ui-state-default">
+						  	<div class="draggable_area">
+						  		김지원
+						  	</div></li>
+						  <li class="ui-state-default">
+						  	<div class="draggable_area">
+						  		소현태
+						  	</div></li>
+						 <li class="ui-state-default">
+						  	<div class="draggable_area">
+						  		김상민
+						  	</div></li>
+						</ul>		            	
+	            	</div>		            	
+			    	
 		    	</c:if>
-				
+	
 	            <div class="row" align="center">
 	                <button type="submit" class="btn-bob" style="margin: 10px; width:250px;" >방 만들기</button>
 	                <button type="reset" class="btn-bob" style="background: #ededed; color: #4d4d4d; margin: 10px; width:250px;">취소</button>
