@@ -38,7 +38,6 @@ public class FileDaoImpl implements FileDao {
 		
 		// 파일경로+현재날짜
 		String url = fileDirectory+year+monthStr;
-		// 
 		String realFileName;
 		
 		try {
@@ -64,6 +63,8 @@ public class FileDaoImpl implements FileDao {
 					
 					//bob.setImage(realFileName);
 					uploadFile.transferTo(file);
+					
+					//System.out.println("DB 저장할 파일 이름 ? ::"+year+monthStr+"\\"+realFileName);
 					
 					return year+monthStr+"\\"+realFileName;
 				}

@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
+import com.zaching.service.domain.Comment;
 
 @Controller
 @RequestMapping("/bob/*")
@@ -62,6 +64,7 @@ public class BobController {
 	@Autowired
 	@Qualifier("bobServiceImpl")
 	private BobService bobService;
+	
 	
 	public BobController() {
 		System.out.println(this.getClass());
@@ -117,7 +120,7 @@ public class BobController {
 		System.out.println(this.getClass()+"/getBob");
 		
 		System.out.println("방 ID :: "+bobId);
-		System.out.println(category+"나왔따");
+		//System.out.println(category+"나왔따");
 		
 		Map<String, Object> bob;
 		
@@ -130,7 +133,17 @@ public class BobController {
 		}
 		
 		System.out.println(bob);
-
+		
+		Search search = new Search();
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		
+		
+		model.addAttribute("comments", (List<Comment>)(commonService.listComment(search, "B00", bobId).get("list")));
 		model.addAttribute("category", category);
 		model.addAllAttributes(bob);
 		

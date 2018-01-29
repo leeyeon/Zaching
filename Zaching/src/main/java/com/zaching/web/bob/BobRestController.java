@@ -1,18 +1,25 @@
 package com.zaching.web.bob;
 
+import java.io.IOException;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
@@ -23,7 +30,7 @@ import com.zaching.service.domain.Bob;
 @RestController("/bob/rest/*")
 public class BobRestController {
 	
-	private String fileDirectory = "C:\\Users\\301-6\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
+	private String fileDirectory = "C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\images\\";
 
 	@Autowired
 	@Qualifier("commonServiceImpl")
@@ -46,11 +53,18 @@ public class BobRestController {
 	}
 
 	@RequestMapping("/addSummernoteImage")
-	public JSONObject addSummernoteImage(@RequestParam MultipartFile uploadFile) {
+	public JSONObject addSummernoteImage(MultipartHttpServletRequest req) throws Exception{
 		
-		System.out.println("addImage...1");
+		//MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
 		
-		String fileName = commonService.addFile(fileDirectory, uploadFile);
+		MultipartFile file = req.getFile("uploadFile");
+		//System.out.println("addImage...1"+req.getFileMap());
+		System.out.println(req+","+file.getOriginalFilename());
+		//System.out.println(file.getOriginalFilename());
+		String fileName = commonService.addFile(fileDirectory, file);
+		
+		//File serverFile = new File(fileDirectory+ file.getOriginalFilename());
+		//file.transferTo(serverFile);
 		
 		System.out.println("addImage...2");
 		

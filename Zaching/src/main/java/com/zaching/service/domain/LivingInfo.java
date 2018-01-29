@@ -14,11 +14,130 @@ public class LivingInfo {
 	private String location;
 	private String MapX;
 	private String MapY;
+	
 	private String rentPrice;
 	
-
-
+	private String movieinfo;
+	private String movieImg;
+	private String movieName;
+	private String movieCode;
 	
+	private String title;
+	private String author;
+	private String priceSales;
+	private String cover;
+	private String description;
+	
+	
+	
+	public String getTitle() {
+		return title;
+	}
+
+
+
+	public String getAuthor() {
+		return author;
+	}
+
+
+
+	public String getPriceSales() {
+		return priceSales;
+	}
+
+
+
+	public String getCover() {
+		return cover;
+	}
+
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+
+
+	public void setPriceSales(String priceSales) {
+		this.priceSales = priceSales;
+	}
+
+
+
+	public void setCover(String cover) {
+		this.cover = cover;
+	}
+
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+
+	public String getMovieCode() {
+		return movieCode;
+	}
+
+
+
+	public void setMovieCode(String movieCode) {
+		this.movieCode = movieCode;
+	}
+
+
+
+	public String getMovieName() {
+		
+		return movieName;
+	}
+
+
+
+	public void setMovieName(String movieName) {
+		this.movieName = movieName;
+	}
+
+
+
+	public String getMovieImg() {
+		return movieImg;
+	}
+
+
+
+	public void setMovieImg(String movieImg) {
+		this.movieImg = movieImg;
+	}
+
+
+
+	public String getMovieinfo() {
+		return movieinfo;
+	}
+
+
+
+	public void setMovieinfo(String movieinfo) {
+		this.movieinfo = movieinfo;
+	}
+
+
 
 	public String getRentPrice() {
 		return rentPrice;

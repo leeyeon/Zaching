@@ -6,16 +6,20 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Calendar;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -26,6 +30,7 @@ import org.apache.cxf.io.CachedOutputStream;
 import org.apache.cxf.io.CachedOutputStreamCallback;
 import org.apache.cxf.message.Message;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 
 @RestController
@@ -40,14 +45,47 @@ public class LivingInfoRestController {
 
 	}
 	
-	@RequestMapping( value="rest/movieInfo", method=RequestMethod.GET )
-	public StringBuffer movieInfo(HttpSession session ) throws Exception{
+	@RequestMapping(value = "rest/getBestBook", method = RequestMethod.GET)
+	public String getBestBook(Model model) throws Exception {
+
+		System.out.println("/getBestBook");
 		
-		String addr = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json"+"?key=";
+		String addr = "http://www.aladin.co.kr/ttb/api/ItemList.aspx"+"?ttbkey=";
+		String serviceKey = "ttbdeabang4211057001";
+		String parameter = "";
+
+
+		addr = addr + serviceKey + "&QueryType=Bestseller&MaxResults=50&start=1&SearchTarget=Book&output=js&Version=20131101";
+		
+			
+		URL url = new URL(addr);
+		
+		InputStream is = null;
+		InputStreamReader isr = null; 
+		
+		is = new URL(addr).openStream();
+		isr = new InputStreamReader(is, "utf-8");
+		
+		StringBuffer sb = new StringBuffer();
+		int c;
+
+		while ((c = isr.read()) != -1) {
+			sb.append((char) c);
+		}
+		
+		return sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString();
+	}
+	
+	
+	@RequestMapping( value="rest/movieInfo/{movieinfo}", method=RequestMethod.GET )
+	public String moviecode(@PathVariable String movieinfo, HttpSession session ) throws Exception{
+		
+		String addr = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json"+"?key=";
 		String serviceKey = "d588b030d0e9864bc913e7e8deabaa3d";
 		String parameter = "";
 		
-		 parameter = parameter + "&" + "targetDt="+20180124;
+			
+		 parameter = parameter + "&" + "movieCd="+movieinfo;
 			 
 		addr = addr + serviceKey + parameter;
 	
@@ -66,7 +104,121 @@ public class LivingInfoRestController {
 			sb.append((char) c);
 		}
 		
-		return sb.append((char) c);
+				return sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString();
+
+		
+	}
+	
+	@RequestMapping( value="rest/getMusicChart", method=RequestMethod.GET )
+	public String music(HttpSession session ) throws Exception{
+		
+		String addr = "http://apis.skplanetx.com/melon/charts/realtime"+"?appKey=";
+		String serviceKey = "f28a60d4-8447-3157-b8af-12487d8b8a1a";
+		String parameter = "";
+		//http://apis.skplanetx.com/melon/charts/realtime?appKey=f28a60d4-8447-3157-b8af-12487d8b8a1a&count=10&page=5&version=1&format=json
+			
+		parameter = parameter + "&" + "count=10";
+		parameter = parameter + "&" + "page=1";
+		 parameter = parameter + "&" + "version=1";
+	
+		 addr = addr + serviceKey + parameter;
+	
+		URL url = new URL(addr);
+		
+		InputStream is = null;
+		InputStreamReader isr = null; 
+		
+		is = new URL(addr).openStream();
+		isr = new InputStreamReader(is, "utf-8");
+		
+		StringBuffer sb = new StringBuffer();
+		int c;
+
+		while ((c = isr.read()) != -1) {
+			sb.append((char) c);
+		}
+		
+		
+		return sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString();
+		
+	}
+	
+	
+	@RequestMapping( value="rest/movieImg/{movieImg}", method=RequestMethod.GET )
+	public String movieImg(@PathVariable String movieImg, HttpSession session ) throws Exception{
+		
+		String clientId = "gVDmQkx91BgYSzY0iCZw";//애플리케이션 클라이언트 아이디값";
+        String clientSecret = "ZYh3yjIlSQ";//애플리케이션 클라이언트 시크릿값";
+       
+            String text = URLEncoder.encode(movieImg+" 영화 포스터", "UTF-8");
+            String apiURL = "https://openapi.naver.com/v1/search/image?query="+ text; // json 결과
+            //String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("X-Naver-Client-Id", clientId);
+            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+            
+            
+            return response.toString();
+  
+		
+	}
+	
+	@RequestMapping( value="rest/movieInfo", method=RequestMethod.GET )
+	public String movieInfo(HttpSession session ) throws Exception{
+		
+		String addr = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json"+"?key=";
+		String serviceKey = "d588b030d0e9864bc913e7e8deabaa3d";
+		String parameter = "";
+		
+		 Calendar cal = Calendar.getInstance();
+	        
+	        // value 취득    get
+	        String year = Integer.toString(cal.get(Calendar.YEAR));
+	        String month = Integer.toString(cal.get(Calendar.MONTH) + 1);
+	        int day = cal.get(Calendar.DATE) - 1;
+	        if(Integer.parseInt(month) < 10) {
+	        	month = "0" + month;
+	        }
+	        
+	        String ymd = year+month+Integer.toString(day);
+	        
+	       
+		 parameter = parameter + "&" + "targetDt="+ymd;
+			 
+		addr = addr + serviceKey + parameter;
+	
+		URL url = new URL(addr);
+		
+		InputStream is = null;
+		InputStreamReader isr = null; 
+		
+		is = new URL(addr).openStream();
+		isr = new InputStreamReader(is, "utf-8");
+		
+		StringBuffer sb = new StringBuffer();
+		int c;
+
+		while ((c = isr.read()) != -1) {
+			sb.append((char) c);
+		}
+		
+		
+		return sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString();
 		
 	}
 	
