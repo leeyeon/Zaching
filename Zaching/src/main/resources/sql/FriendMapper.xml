@@ -4,7 +4,78 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="FriendMapper">
+
+	<resultMap type="friend" id="friendSelectMap">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="friendId" column="friend_id" jdbcType="INTEGER" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<!-- <result property="name" column="name" jdbcType="VARCHAR" />
+		<result property="profileImage"   column="profile_image" 	jdbcType="VARCHAR"/> -->
+		<result property="status" column="status" jdbcType="CHAR" />
+
+
+	</resultMap>
+
+	<insert id="addFriend" parameterType="friend">
+		INSERT
+		INTO friend(id ,friend_id ,user_id ,status )
+		VALUES(
+		seq_id.nextval,
+		#{friendId:VARCHAR},
+		#{userId:VARCHAR},
+		'0'
+		)
+	</insert>
 	
+	<select id="getFriend" parameterType="int" resultMap="friendSelectMap">
+	SELECT
+	id,friend_id,user_id,status
+	FROM friend
+	WHERE id=#{id}
+	</select>
+	
+	<update id="updateFriend" parameterType="friend">
+	UPDATE friend
+	<set>
+	status=#{status}
+	</set>
+	WHERE id=#{id}
+	</update>
+	
+	<delete id="deleteFriend" parameterType="friend">
+	DELETE 
+	FROM friend WHERE id=#{id}
+	</delete>
+	
+	<select id="listFriend" parameterType="search" resultMap="friendSelectMap">
+	SELECT * 
+	FROM(SELECT inner_table.*,ROWNUM AS row_seq
+				FROM(SELECT id,friend_id,user_id,status
+					FROM friend
+					<if test="searchCondition !=null">
+					<where>
+					<if test="searchCondition == 0 and searchKeyword !='' ">
+					id=#{searchKeyword}
+					</if>
+					<if test="searchCondition == 1 and searchKeyword !='' ">
+					friend_id=#{searchKeyword}
+					</if>
+					<if test="searchCondition == 2 and searchKeyword !='' ">
+					user_id=#{searchKeyword}
+					</if>
+					</where>
+					</if>
+					ORDER BY id DESC) inner_table
+						WHERE ROWNUM &lt;=#{endRowNum})
+							WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+	
+	 	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM( SELECT id,friend_id ,user_id, status 
+	  			FROM friend ) countTable						
+	 </select>
+
 
 
 </mapper>

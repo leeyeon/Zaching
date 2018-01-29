@@ -30,13 +30,13 @@ public class MessageServiceTest {
 	private int friendId = 5;
 	private int messageId = 28;
 
-//	 @Test
+	 @Test
 	public void testAddMessage() throws Exception {
 
 //		System.out.println("여기까지 왔어요");
 
 		Message message = new Message();
-		message.setUserId(6);
+		message.setUserId(7);
 		message.setFriendId(friendId);
 		message.setContent("HI");
 
@@ -75,7 +75,7 @@ public class MessageServiceTest {
 
 	}
 	
-	@Test
+//	@Test
 	public void testlistMessage() throws Exception{
 		
 		Search search=new Search();
