@@ -148,7 +148,7 @@
 		}
        	
     </style>
-    
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
     <script type="text/javascript">
     
 	$(function() {
@@ -169,7 +169,7 @@
 		});
 	 	
 	 	$('.comment').on('click', function(){
-	 		
+	 		alert('댓글달기');
 	 	});
 	 	
 	 	$('.col-xs-1:contains("신고")').on('click', function() {
@@ -188,6 +188,66 @@
 	 	$('.deleteComment').on('click', function() {
 	 		alert();
 	 	});
+	 	
+	 	/* 결제 */
+	 	
+	 	$('button:contains("마감하기")').on('click', function() {
+	 		alert("참여제한 status E 로 update");
+	 	});
+	 	
+	 	$('button:contains("회비")').on('click', function() {
+	 		alert("회비 냅니다아아앙");
+	 	});
+	 	
+	 	$('.btn-ico:contains("참여하기")').on('click', function() {
+
+			$.ajax({
+				url : "/bob/rest/enterBob",
+				method : "POST",
+				contentType : "application/json; charset=UTF-8",
+				data : JSON.stringify({
+					"userId" : ${user.userId},
+					"bobId" : ${bob.bobId},
+					"category" : '${param.category}'
+				}),
+				async : false,
+				dataType : "json",
+				success : function(serverData) {
+					console.log(serverData);
+				},
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+			
+			$('#enterBob').modal('hide');
+
+	 	});
+	 	
+	 	/* 맵!!! */
+	 	
+	 	<c:if test="${!empty bob.longitude}">
+	 	
+			 // 이미지 지도에 표시할 마커입니다
+			 // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
+			 var markers = 
+			    
+			     {
+			         position: new daum.maps.LatLng(${bob.latitude}, ${bob.longitude}), 
+			         text: '${bob.locationName}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
+			     };
+		
+			 var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
+			     staticMapOption = { 
+			         center: new daum.maps.LatLng(${bob.latitude}, ${bob.longitude}), // 이미지 지도의 중심좌표
+			         level: 3, // 이미지 지도의 확대 레벨
+			         marker: markers // 이미지 지도에 표시할 마커 
+			     };    
+		
+			 // 이미지 지도를 생성합니다
+			 var staticMap = new daum.maps.StaticMap(staticMapContainer, staticMapOption);
+	 	
+		</c:if>
 	
 	});
 
@@ -202,7 +262,9 @@
 	<div class="container" align="center">
 		<div class="row" >
 			<div class="col-xs-1">신고</div>
-			<div class="col-xs-1">수정</div>
+			<c:if test="${user.userId eq bob.writtenUserId}">
+				<div class="col-xs-1">수정</div>
+			</c:if>
 		</div>
 		
 		  <div class="textStyle" style="padding-top: 150px;">
@@ -222,8 +284,14 @@
 
         <div class="col-sm-8 blog-main custumRow">
 
-          <div class="blog-post">
+          <div class="blog-post" style="min-height:350px">
             ${bob.content}
+            
+            <c:if test="${!empty bob.longitude}">
+            	<hr>
+	            <div class="text-center textBold" style="font-size: 35px;">약속장소<br/></div>            
+	            <div id="staticMap" style="height:350px;"></div>
+            </c:if>          
           </div><!-- /.blog-post -->
 
         </div><!-- /.blog-main -->
@@ -271,29 +339,30 @@
 						<c:if test="${participant.userId ne bob.writtenUserId}">
 							<div class="col-xs-4" align="left" style="margin-top:20px; padding-right:15px;">
 								<img width="55px" height="55px"
-								style=" border: 2px solid #5F4B8B;
-										border-radius: 40px;
-										-moz-border-radius: 40px;
-										-khtml-border-radius: 40px;
-										-webkit-border-radius: 40px;
-										 box-shadow: 3px 3px 3px rgba(237,237,237,1)"
-								src = "../resources/upload_files/images/${participant.participantProfile}"
-				      			onerror="this.src='../resources/upload_files/images/sample_profile.png'" />
+									style=" border: 2px solid #5F4B8B;
+											border-radius: 40px;
+											-moz-border-radius: 40px;
+											-khtml-border-radius: 40px;
+											-webkit-border-radius: 40px;
+											 box-shadow: 3px 3px 3px rgba(237,237,237,1)"
+									src = "../resources/upload_files/images/${participant.participantProfile}"
+					      			onerror="this.src='../resources/upload_files/images/sample_profile.png'" />
+					      			${participant.participantName}
 							</div>
 						</c:if>						
 					</c:forEach>
 				</div>
 				<hr>
 				
-				<c:if test="${category eq 'B01'}">
+				<c:if test="${category ne 'B03'}">
 					<div class="row" style="padding: 5px;">
-						<button type="submit" class="btn-bob">약속비 1000원으로 참여하기</button>
-					</div>
-				</c:if>
-				
-				<c:if test="${category eq 'B02'}">
-					<div class="row" style="padding: 5px;">
-						<button type="submit" class="btn-bob">참여하기</button>
+						<button class="btn-bob" data-toggle="modal" data-target="#enterBob">
+							<c:if test="${user.userId ne bob.writtenUserId}">
+								<c:if test="${category eq 'B01'}">약속비 1000원으로 참여하기</c:if>
+								<c:if test="${category eq 'B02'}">번개 참여하기</c:if>
+							</c:if>
+							<c:if test="${user.userId eq bob.writtenUserId}">마감하기</c:if>
+						</button>
 					</div>
 				</c:if>
 				
@@ -317,6 +386,11 @@
       <div class="row custumRow" style="margin-top:20px; padding-top:30px;">
       	<div class="text-center textBold" style="font-size: 35px;">친구들과 대화를 나누세요 :)</div>
         <hr>
+        <c:if test="${empty comments}">
+        	<div class="text-center" style="padding: 10px;">
+        		등록된 댓글이 없습니다 T.T <br>첫번째 댓글을 달아보세요!
+        	</div>
+        </c:if>
       	<c:forEach var="comment" items="${comments}">
       		<input type="hidden" name="commentId" value="${comment.commentId}" />
       		<div class="row comment" style="margin: 5px;">
@@ -328,8 +402,8 @@
 				</div>
 				<div class="col-sm-3" style="font-size: 13px; text-align: end;">
 					<div style="padding-right: 50px;">
-						${comment.createdDate}
-						2018.01.09 PM 3:12
+						<fmt:parseDate value="${comment.createdDate}" var="Date" pattern="yyyy-MM-dd hh:mm"/>
+						<fmt:formatDate value="${Date}" pattern="yyyy-MM-dd일 a hh:mm"/>
 					</div>
 					<div class="deleteComment" style="position: relative; right: 10px; top:-10px; text-align: end;">
 						X
@@ -344,7 +418,7 @@
       
       	<div class="row" style="padding:15px 5px 5px 5px;">
       		<div class="col-xs-9">
-      			<input type="text" class="form-control" value="댓글을 입력해주세요."/>       		
+      			<input type="text" class="form-control" placeholder="댓글을 입력해주세요."/>       		
       		</div>
       		<div class="col-xs-3">
 				<button type="submit" class="form-control">등록</button>
@@ -376,7 +450,7 @@
 	      	</div>
 	      	
 	      	<div class="row text-center textBold" style="padding-top:25px; padding-botton:30px;">
-	      		이 달의 회비는 20,000원입니다.
+	      		이 달의 회비는 <fmt:formatNumber type="currency" value="${bob.fee}" pattern="###,###" />원입니다.
 	      	</div>
 	      	
 	      	<hr>
@@ -436,6 +510,25 @@
                     </div>
                     <div align="center" class="modal-footer" style="text-align: center;">
                     	<button class="btn btn-default btn-ico" >초대하기</button>
+                    </div>
+               </div> 
+        </div> 
+	</div>
+	
+	<!-- Modal --> 
+	<div class="modal fade" id="enterBob" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+        <div class="modal-dialog"> 
+               <div class="modal-content"> 
+                    <div class="modal-header"> 
+                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+                             <h4 class="modal-title" style="text-align: center;" id="myModalLabel">참여하기</h4> 
+                     </div> 
+                     <div class="modal-body" align="center">
+	                    약속일 일주일 이내에는 약속 취소를 할 수 없습니다.<br>
+	                    정말로 참여하시겠어요?
+                    </div>
+                    <div align="center" class="modal-footer" style="text-align: center;">
+                    	<button class="btn btn-default btn-ico" >참여하기</button>
                     </div>
                </div> 
         </div> 

@@ -10,7 +10,7 @@ public class Comment {
 	private String category;
 	private int userId;
 	private String content;
-	private Date createdDate;
+	private String createdDate;
 	/* 조회 가능/ 조회 불가능 (삭제 유무) */
 	private String status;
 	private String userName;
@@ -60,11 +60,11 @@ public class Comment {
 		this.content = content;
 	}
 
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
 
