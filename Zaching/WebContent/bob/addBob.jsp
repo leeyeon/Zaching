@@ -319,9 +319,8 @@
 		    	</c:if>
 		    	
 	            <div class="row">
-	            	<div class="col-xs-12" style="margin-bottom:20px;">
+	            	<div class="col-xs-12">
 					<input type="hidden" id="uploadFile" name="uploadFile" value="" />
-	                	<textarea name="content" id="ckeditor"></textarea>
 	                	<div id="summernote"><p>Hello Summernote</p></div>
 						  <script>
 							$(document).ready(function() { 
@@ -481,30 +480,5 @@
 	 </div>
 	        
     </body>
-    
-    
-    <script>
-         // Replace the <textarea id="editor1"> with a CKEditor
-         // instance, using default configuration.
-         CKEDITOR.replace('ckeditor',{
-		      height: 300,
-		      filebrowserUploadUrl: '${pageContext.request.contextPath}/test/ckeditorImageUpload'
-		  } );
-		         
-         CKEDITOR.on('dialogDefinition', function( ev ){
-             var dialogName = ev.data.name;
-             var dialogDefinition = ev.data.definition;
-           
-             switch (dialogName) {
-                 case 'image': //Image Properties dialog
-                     //dialogDefinition.removeContents('info');
-                     dialogDefinition.removeContents('Link');
-                     dialogDefinition.removeContents('advanced');
-                     break;
-             }
-         });
-     </script>
-
 	
 </html>
-
