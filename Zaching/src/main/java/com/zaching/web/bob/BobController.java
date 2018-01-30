@@ -86,7 +86,7 @@ public class BobController {
 		System.out.println(this.getClass()+"/mainBob");
 		
 		/* session처리! */
-		request.getSession().setAttribute("user", userService.getUser(8));
+		request.getSession().setAttribute("user", userService.getUser(24));
 		
 		// 단순 네비게이션		
 		return "forward:/bob/mainBob.jsp";
@@ -159,9 +159,11 @@ public class BobController {
 		}
 		search.setPageSize(pageSize);
 
-		
+		Calendar cal = Calendar.getInstance();
+
 		model.addAttribute("comments", commonService.listComment(search, "B00", bobId).get("list"));
 		model.addAttribute("category", category);
+		model.addAttribute("currentTime", cal.getTime());
 		model.addAllAttributes(bob);
 		
 		return "forward:/bob/getBob.jsp";
@@ -199,6 +201,7 @@ public class BobController {
 	public String updateBobView(@RequestParam String category,
 								@RequestParam int bobId,
 								Model model) throws Exception {
+		
 		System.out.println(this.getClass()+"/updateBob_GET");
 		
 		Bob bob = bobService.getBobInfo(bobId, category);
@@ -207,17 +210,28 @@ public class BobController {
 
 		model.addAttribute("category", category);
 		model.addAttribute("categoryName", this.getCategoryName(category));
+		model.addAttribute("bob", bob);
 		
 		return "forward:/bob/updateBob.jsp";
 	}
 	
 	@RequestMapping(value="/updateBob", method=RequestMethod.POST)
-	public String updateBob(@ModelAttribute Bob bob,
-							Model model) {
+	public String updateBob(@ModelAttribute Bob bob) throws Exception{
+
 		System.out.println(this.getClass()+"/updateBob_POST");
 		
+		if(bob.getUploadFile() != null) {
+			try {
+				bob.setImage(commonService.addFile(fileDirectory, bob.getUploadFile()));
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
-		return "forward:/bob/getBob.jsp?bobId="+bob.getBobId()+"&category="+bob.getCategory();
+		bobService.updateBob(bob);
+		System.out.println("1:: "+bob);
+		
+		return "redirect:/bob/getBob?bobId="+bob.getBobId()+"&category="+bob.getCategory();
 	}
 	
     /**
