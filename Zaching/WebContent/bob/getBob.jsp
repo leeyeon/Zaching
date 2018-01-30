@@ -148,6 +148,7 @@
 		}
        	
     </style>
+    
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
     <script type="text/javascript">
     
@@ -189,7 +190,84 @@
 	 		alert();
 	 	});
 	 	
-	 	/* 결제 */
+	 	/* 댓글 */
+
+	 	$(":text[name='inputComment']").on("keydown", function(e) {
+			
+			if(e.keyCode == 13) {
+				alert($(this).val());
+				$.ajax({
+					url : "/bob/rest/addComment",
+					method : "POST",
+					contentType : "application/json; charset=UTF-8",
+					data : JSON.stringify({
+						"userId" : ${user.userId},
+						"roomId" : ${bob.bobId},
+						"category" : '${param.category}',
+						"content" : $(this).val()
+					}),
+					async : false,
+					dataType : "json",
+					success : function(serverData) {
+						console.log(serverData.comment);
+						
+					},
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+					
+				});
+			} else {
+				
+			}
+		});
+		$('body > div.container > div:nth-child(2) > div.row > div.col-xs-3 > button').on("click", function() {
+			//alert($(this).attr('href'));
+		});
+	 	
+	 	/* 결제 modal toggle */
+	 	$('button:contains("참여하기")').on('click',function() {
+	 		$('#enterBob').modal('toggle');
+	 	});
+	 	
+	 	$('button:contains("취소하기")').on('click',function() {
+	 		$('#cancleBob').modal('toggle');
+	 	});
+	 	
+	 	/* 결제 ajax 처리*/
+	 	
+	 	$('.btn-bob:contains("취소하기")').on('click',function() {
+	 		$('#cancleBob').modal('show');
+	 	});
+	 	
+	 	$('.btn-ico:contains("취소하기")').on('click',function() {
+	 		
+	 		$.ajax({
+				url : "/bob/rest/cancleBob",
+				method : "POST",
+				contentType : "application/json; charset=UTF-8",
+				data : JSON.stringify({
+					"userId" : ${user.userId},
+					"bobId" : ${bob.bobId},
+					"category" : '${param.category}'
+				}),
+				async : false,
+				dataType : "json",
+				success : function(serverData) {
+					console.log(serverData.response);
+					if(serverData.response == 'success') {
+						location.reload();
+					} else {
+						alert("우엥");
+					}
+				},
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+	 		
+	 		$('#cancleBob').modal('hide');
+	 	});
 	 	
 	 	$('button:contains("마감하기")').on('click', function() {
 	 		alert("참여제한 status E 로 update");
@@ -208,16 +286,23 @@
 				data : JSON.stringify({
 					"userId" : ${user.userId},
 					"bobId" : ${bob.bobId},
-					"category" : '${param.category}'
+					"category" : 'B00'
 				}),
 				async : false,
 				dataType : "json",
 				success : function(serverData) {
-					console.log(serverData);
+					console.log(serverData.response);
+					if(serverData.response == 'success') {
+						location.reload();
+					} else {
+						alert("포인트 충전하세요~~");
+						alert("페이지 이동");
+					}
 				},
 				error:function(request,status,error){
 				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
+				
 			});
 			
 			$('#enterBob').modal('hide');
@@ -240,7 +325,7 @@
 			 var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
 			     staticMapOption = { 
 			         center: new daum.maps.LatLng(${bob.latitude}, ${bob.longitude}), // 이미지 지도의 중심좌표
-			         level: 3, // 이미지 지도의 확대 레벨
+			         level: 2, // 이미지 지도의 확대 레벨
 			         marker: markers // 이미지 지도에 표시할 마커 
 			     };    
 		
@@ -272,7 +357,13 @@
 		  </div>
 		  <c:if test="${category ne 'B03'}">
 			  <div class="textStyle">
-			  	<div class="overlay"><h3>${bob.locationName}</h3></div>
+			  	<div class="overlay"><h3>
+			  	<c:if test="${category eq 'B01'}">
+			  		<fmt:parseDate value="${bob.appointmentTime}" var="dateFmt" pattern="yyyy-MM-dd hh:mm"/>
+					<fmt:formatDate value="${dateFmt}" pattern="yyyy년 MM월 dd일 HH시 mm분"/>
+			  	</c:if>
+			  	<c:if test="${category eq 'B02'}">오늘</c:if>
+			  	/ ${bob.locationName}</h3></div>
 			  </div>
 		  </c:if>
 		</div>
@@ -300,18 +391,18 @@
         	<div style="padding:8px;">
 				<div class="row">
 					<div class="col-xs-8 textBold" align="left" style="padding-right: 0px; padding-top:3px;">
-						<c:if test="${category ne 'B03'}">
+						<c:if test="${param.category ne 'B03'}">
 							현재 참여한 자췽러
 						</c:if>
-						<c:if test="${category eq 'B03'}">
+						<c:if test="${param.category eq 'B03'}">
 							참여한 친구들
 						</c:if>
 					</div>
 					<div class="col-xs-4 textBold" align="right" style="font-size: 25px;">
-						<c:if test="${category ne 'B03'}">
+						<c:if test="${param.category ne 'B03'}">
 							${fn:length(participant)} / ${bob.limitNum}
 						</c:if>
-						<c:if test="${category eq 'B03'}">
+						<c:if test="${param.category eq 'B03'}">
 							<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#myModal">친구초대</button>
 						</c:if>
 					</div>
@@ -325,13 +416,13 @@
 						</div>
 						<div style="position: relative; z-index: 1; top:-35px;">
 							<img width="60px" height="60px"
-							style=" border: 2px solid #5F4B8B;
-									border-radius: 40px;
+							style=" border-radius: 40px;
 									-moz-border-radius: 40px;
 									-khtml-border-radius: 40px;
 									-webkit-border-radius: 40px;
-									 box-shadow: 3px 3px 3px rgba(237,237,237,1)"
-							src="/resources/upload_files/images/sample_profile.png" />&nbsp;&nbsp;&nbsp;${bob.writtenUserName}
+									 box-shadow: 1px #cccccc;"
+							src = "../resources/upload_files/images/${bob.writtenUserProfile}"
+							onerror="this.src='../resources/upload_files/images/sample_profile.png'" />&nbsp;&nbsp;&nbsp;${bob.writtenUserName}
 						</div>
 					</div>
 					
@@ -339,12 +430,11 @@
 						<c:if test="${participant.userId ne bob.writtenUserId}">
 							<div class="col-xs-4" align="left" style="margin-top:20px; padding-right:15px;">
 								<img width="55px" height="55px"
-									style=" border: 2px solid #5F4B8B;
-											border-radius: 40px;
+									style=" border-radius: 40px;
 											-moz-border-radius: 40px;
 											-khtml-border-radius: 40px;
 											-webkit-border-radius: 40px;
-											 box-shadow: 3px 3px 3px rgba(237,237,237,1)"
+											 box-shadow: 1px #cccccc;"
 									src = "../resources/upload_files/images/${participant.participantProfile}"
 					      			onerror="this.src='../resources/upload_files/images/sample_profile.png'" />
 					      			${participant.participantName}
@@ -354,19 +444,25 @@
 				</div>
 				<hr>
 				
-				<c:if test="${category ne 'B03'}">
+				<c:if test="${param.category ne 'B03'}">
 					<div class="row" style="padding: 5px;">
-						<button class="btn-bob" data-toggle="modal" data-target="#enterBob">
+						<button class="btn-bob">
+							<c:set var="flag" value="true"/>
 							<c:if test="${user.userId ne bob.writtenUserId}">
-								<c:if test="${category eq 'B01'}">약속비 1000원으로 참여하기</c:if>
-								<c:if test="${category eq 'B02'}">번개 참여하기</c:if>
+								<c:forEach var="participant" items="${participant}">
+									<c:if test="${user.userId eq participant.userId}">취소하기
+										<c:set var="flag" value="false" />
+									</c:if>
+								</c:forEach>
+								<c:if test="${param.category eq 'B01' && flag}">약속비 1000원으로 참여하기</c:if>
+								<c:if test="${param.category eq 'B02' && flag}">번개 참여하기</c:if>
 							</c:if>
 							<c:if test="${user.userId eq bob.writtenUserId}">마감하기</c:if>
 						</button>
 					</div>
 				</c:if>
 				
-				<c:if test="${category eq 'B03'}">
+				<c:if test="${param.category eq 'B03'}">
 					<div class="row" style="padding: 5px;">
 						<div class="col-xs-9" style="padding: 5px;">
 							<button type="submit" class="btn-bob" >회비 내기</button>
@@ -403,7 +499,7 @@
 				<div class="col-sm-3" style="font-size: 13px; text-align: end;">
 					<div style="padding-right: 50px;">
 						<fmt:parseDate value="${comment.createdDate}" var="Date" pattern="yyyy-MM-dd hh:mm"/>
-						<fmt:formatDate value="${Date}" pattern="yyyy-MM-dd일 a hh:mm"/>
+						<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 a hh:mm"/>
 					</div>
 					<div class="deleteComment" style="position: relative; right: 10px; top:-10px; text-align: end;">
 						X
@@ -418,7 +514,7 @@
       
       	<div class="row" style="padding:15px 5px 5px 5px;">
       		<div class="col-xs-9">
-      			<input type="text" class="form-control" placeholder="댓글을 입력해주세요."/>       		
+      			<input type="text" name="inputComment" class="form-control" placeholder="댓글을 입력해주세요."/>       		
       		</div>
       		<div class="col-xs-3">
 				<button type="submit" class="form-control">등록</button>
@@ -438,7 +534,7 @@
 
       <!-- 회비 div 시작 -->
 
-	  <c:if test="${category eq 'B03'}">
+	  <c:if test="${param.category eq 'B03'}">
 	      <div class="row custumRow" style="margin-top:20px; padding-top: 30px;">
 		    <div class="text-center textBold" style="font-size: 35px;">회비 장부</div>
 	      	<hr>
@@ -529,6 +625,33 @@
                     </div>
                     <div align="center" class="modal-footer" style="text-align: center;">
                     	<button class="btn btn-default btn-ico" >참여하기</button>
+                    </div>
+               </div> 
+        </div> 
+	</div>
+	
+		<!-- Modal --> 
+	<div class="modal fade" id="cancleBob" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+        <div class="modal-dialog"> 
+               <div class="modal-content"> 
+                    <div class="modal-header"> 
+                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+                             <h4 class="modal-title" style="text-align: center;" id="myModalLabel">참여취소하기</h4> 
+                     </div> 
+                     <div class="modal-body" align="center">
+	                    약속일 일주일 이내에는 약속 취소를 할 수 없습니다.<br>
+	                    밥친구와의 약속을 깨시겠어요? T.T
+                    </div>
+                    <div align="center" class="modal-footer" style="text-align: center;">
+                    	<c:if test="${empty bob.appointmentTime}">
+	                    	<button class="btn btn-default btn-ico" >취소하기</button>
+	                    </c:if>
+                    	<c:if test="${!empty bob.appointmentTime}">
+                    		<fmt:formatDate var="now" value="${currentTime}"  pattern="yyyyMMdd"/>
+							<fmt:formatDate var="appointmentTime" value="${dateFmt}" pattern="yyyyMMdd"/>
+                    		<c:if test="${appointmentTime < (now - 7)}"><button class="btn btn-default btn-ico" >취소하기</button></c:if>
+                    		<c:if test="${appointmentTime > (now - 7)}">취소할 수 없어용T.T</c:if>
+	                    </c:if>
                     </div>
                </div> 
         </div> 

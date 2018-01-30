@@ -24,13 +24,14 @@ import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
+import com.zaching.service.domain.Comment;
 import com.zaching.service.domain.Payment;
 import com.zaching.service.payment.PaymentService;
 
 @RestController("/bob/rest/*")
 public class BobRestController {
 	
-	private String fileDirectory = "C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\images\\";
+	private String fileDirectory = "C:\\Users\\301-6\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
 
 	@Autowired
 	@Qualifier("commonServiceImpl")
@@ -110,6 +111,7 @@ public class BobRestController {
 	}
 	
 	@RequestMapping(value="/enterBob", method=RequestMethod.POST)
+	@ResponseBody
 	public JSONObject enterBob(@RequestBody Map<String, Object> obj) throws Exception {
 		
 		System.out.println("µ·³ª°©´Ï´Ù?");
@@ -130,13 +132,57 @@ public class BobRestController {
 				payment.setPoint(1000);
 				payment.setPaymentCode("P02");
 				paymentService.managePoint(payment);
-			} else {
-				
 			}
 		}
 		
-		bobService.enterBob(userId, bobId);
-	
-		return null;
+		// Âü°¡ÁßÀÌ ¾Æ´Ò¶§ Âü°¡µÊ
+		boolean result = bobService.enterBob(userId, bobId);
+		
+		JSONObject object = new JSONObject();
+
+		if(result) {
+			object.put("response", "success");
+		} else {
+			object.put("response", "fail");
+		}
+		
+		return object;
 	}
+	
+	@RequestMapping(value="/cancleBob", method=RequestMethod.POST)
+	public void cancleBob(@RequestBody Map<String, Object> obj) throws Exception {
+		
+		System.out.println("µ·³ª°©´Ï´Ù?");
+		String category = (String)obj.get("category");
+		int userId = (int)obj.get("userId");
+		int bobId = (int)obj.get("bobId");
+		
+		System.out.println(category+"//"+userId+"//"+bobId);
+		
+		if(category.equals("B01")) {
+			Payment payment = new Payment();
+			payment.setUserId(userId);
+			payment.setPoint(1000);
+			payment.setPaymentCode("P06");
+			paymentService.managePoint(payment);
+
+		}
+		
+		// Âü°¡ÁßÀÌ ¾Æ´Ò¶§ Âü°¡µÊ
+		bobService.enterBob(userId, bobId);
+	}
+	
+	@RequestMapping(value="/addComment", method=RequestMethod.POST)
+	public JSONObject addComment(@RequestBody Comment comment) throws Exception {
+		
+		System.out.println(comment);
+		
+		comment = commonService.addComment(comment);
+		
+		JSONObject obj = new JSONObject();
+		obj.put("comment", comment);
+		
+		return obj;
+	}
+	
 }
