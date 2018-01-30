@@ -5,6 +5,9 @@ import java.util.Date;
 public class User {
 	
 	///Field
+	private String authNum;//인증번호
+
+
 	private int userId;//유저ID시퀀스
 	private String email;//이메일ID
 	private String password;//패스워드
@@ -14,6 +17,11 @@ public class User {
 	private String latitude;//위도
 	private String gender;//성별 =====>남자'1' 여자'2'
 	private String phone;//연락처
+	
+	private String phone1;//연락처
+	private String phone2;//연락처
+	private String phone3;//연락처
+	
 	private String birth;//생일
 	private String profileImage;//프로필사진
 	private String role;//회원등급 정회원 준회원 ========> 계정정지'0' 준회원 '1' 정회원 '2'
@@ -43,6 +51,15 @@ public class User {
 	
 	public int getUserId() {
 		return userId;
+	}
+	
+	public String getAuthNum() {
+		return authNum;
+	}
+
+
+	public void setAuthNum(String authNum) {
+		this.authNum = authNum;
 	}
 
 
@@ -119,15 +136,33 @@ public class User {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-
-
 	public String getPhone() {
-		return phone.replace("-", "");
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+		/////////////// EL 적용 위해 추가 ///////////
+		if(phone != null && phone.length() !=0 ){
+			phone1 = phone.split("-")[0];
+			phone2 = phone.split("-")[1];
+			phone3 = phone.split("-")[2];
+		}
+	}
+	
+
+	public void setPhone1(String phone1) {
+		this.phone1 = phone1;
 	}
 
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+
+	public void setPhone2(String phone2) {
+		this.phone2 = phone2;
+	}
+
+
+	public void setPhone3(String phone3) {
+		this.phone3 = phone3;
 	}
 
 
@@ -335,16 +370,20 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", email=" + email + ", password=" + password + ", name=" + name
-				+ ", address=" + address + ", longitude=" + longitude + ", latitude=" + latitude + ", gender="
-				+ gender + ", phone=" + phone +",\n birth=" + birth + ", profileImage=" + profileImage + ", role=" + role
-				+ ", realName=" + realName + ", bankCode=" + bankCode + ", accountNumber=" + accountNumber
-				+ ", accountCi=" + accountCi + ", accountSeqNo=" + accountSeqNo + ", totalPoint=" + totalPoint
-				+ ", totalMileage=" + totalMileage + ",\n totalRecommend=" + totalRecommend + ", latestDate=" + latestDate
-				+ ", createdDate=" + createdDate + ",\n setRentCharge=" + setRentCharge + ", setNews=" + setNews
-				+ ", setNewsFeed=" + setNewsFeed + ", setBroadcast=" + setBroadcast + ", setFriend=" + setFriend
-				+ ", setBob=" + setBob + ", SnsType=" + snsType + "]";
+				+ ", address=" + address + ", longitude=" + longitude + ",\n latitude=" + latitude + ", gender=" + gender
+				+ ", phone1=" + phone1 + ", phone2=" + phone2 + ", phone3=" + phone3 + ", birth=" + birth
+				+ ", profileImage=" + profileImage + ",\n role=" + role + ", realName=" + realName + ", bankCode="
+				+ bankCode + ", accountNumber=" + accountNumber + ", accountCi=" + accountCi + ", accountSeqNo="
+				+ accountSeqNo + ", totalPoint=" + totalPoint + ", totalMileage=" + totalMileage + ", totalRecommend="
+				+ totalRecommend + ",\n latestDate=" + latestDate + ", createdDate=" + createdDate + ", setRentCharge="
+				+ setRentCharge + ", setNews=" + setNews + ", setNewsFeed=" + setNewsFeed + ", setBroadcast="
+				+ setBroadcast + ",\n setFriend=" + setFriend + ", setBob=" + setBob + ", snsType=" + snsType + "]";
 	}
+	
+	
 
+
+	
 
 	
 }

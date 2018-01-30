@@ -31,14 +31,6 @@ public class UserRestController {
 		System.out.println(this.getClass());
 	}
 	
-	@RequestMapping( value="json/getUser/{userId}", method=RequestMethod.GET )
-	public User getUser( @PathVariable int userId ) throws Exception{
-		
-		System.out.println("/user/json/getUser : GET");
-		
-		//Business Logic
-		return userService.getUser(userId);
-	}
 	
 	@RequestMapping(value="json/login", method=RequestMethod.POST)
 	public User login( @RequestBody User user,
@@ -64,24 +56,6 @@ public class UserRestController {
 		return dbUser;
 	}
 	
-	//이메일 중복체크
-	@RequestMapping(value="/checkEmail", method= RequestMethod.POST)
-	public String checkEmail(HttpServletRequest request,Model model)throws Exception {
-			
-			System.out.println("/user/rest/checkEmail : POST");
-			
-			String email = request.getParameter("email");
-			System.out.println("email===>"+email);
-			
-			int rowcount = userService.checkEmail(email);
-			
-			model.addAttribute("rowcount",new Integer(rowcount));
-			model.addAttribute("email", email);
-			
-			System.out.println("중복되는 갯수 :::"+rowcount);
-			
-			return String.valueOf(rowcount);
-		}
-
+	
 
 }
