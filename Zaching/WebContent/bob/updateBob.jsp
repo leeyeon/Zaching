@@ -106,7 +106,7 @@
     <div class="container">
 
     	<div class="page-header text-center">
-			<h3 class="text-info" style="color: #4d4d4d; font-weight: bold;">[${categoryName}] 방만들기</h3>
+			<h3 class="text-info" style="color: #4d4d4d; font-weight: bold;">[${categoryName}] 방 수정하기</h3>
 		</div>
     
 		<form class="form-horizontal" enctype="multipart/form-data">

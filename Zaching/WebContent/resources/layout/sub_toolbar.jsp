@@ -74,6 +74,11 @@
 		.mainbar-menu:hover, .mainbar-menu .active{
 		    border-bottom: 4px solid RGB(237,125,49);
 		}
+		
+		.social-login{
+			margin-left: 10px;
+
+		}
 	</style>
 	
 	<script type="text/javascript">
@@ -100,15 +105,14 @@
 				self.location = "/livingInfo/mainLivingInfo";
 
 			});
-			
-			$("a:contains('로그인')").on("click", function() {
-				self.location = "/user/login.jsp";
-
-			});
-			
+		
 			$("a:contains('회원가입')").on("click", function() {
 				self.location = "/user/addUser.jsp";
 
+			});
+			
+			$('#loginModal').on('show.bs.modal', function (e) {
+				  if (!data) return e.preventDefault() 
 			});
 
 		});
@@ -141,13 +145,85 @@
             <li><a href="#">생활정보</a></li>
           </ul>
           <ul class="nav navbar-nav" style="float:right;">
-            <li><a href="#">로그인</a></li>
+            <li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
             <li><a href="#">회원가입</a></li>
           </ul>
         </div><!--/.nav-collapse -->
 	  </div>
+		
 
+		
     </nav>
+   
+
+	 <!-- Modal -->
+  <div  id="loginModal"  class="modal fade"  >
+  
+  <div class="modal-dialog">
+    
+  <!-- Modal content-->
+      <div class="modal-content">
+      
+      <!-- Modal Header start-->
+       <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+          aria-label="Close">&times;</button>
+          <div class="modal-title" align="center" style="margin-bottom:15px;"><!-- 자췽로고 -->
+          <img src="/resources/images/temp_logo.png" class="img-logo" width="50" height="50" ></div> 
+       </div><!-- Modal Header end -->  
+
+       <!-- Modal Body start-->
+       <div class="modal-body" align="left">
+       	
+       	<div class="row">
+          <div class="col-xs-4">
+           	<label for="inputlg" style="margin-left: 5px">이메일(ID)</label>
+          </div>
+        </div>
+        
+        
+         <div class="row">
+           <div class="col-sm-6">
+   			<input type="text" class="form-control input-lg" id="email"  name="email"
+				placeholder="이메일을입력하세요"	style="margin-left: 5px"/>
+   			
+           </div>
+         </div>
+         
+         <div class="row">
+           <div class="col-sm-6">
+           	<label for="inputlg" style="margin-left: 5px" 
+           	style="margin-top: 5px">패스워드(PW)</label>
+           </div>
+         </div>
+       
+       
+         <div class="row">
+           <div class="col-sm-6">
+   			 <input class="form-control input-lg" id="password" type="password" name="password"
+   				placeholder="패스워드를입력하세요"	 style="margin-left: 5px">
+           </div>
+		</div>
+		
+		
+		<div class="row">
+              <div class="social-login" align="left">
+   			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" >
+   			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50" >
+   			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50" />
+   			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" >
+             </div>  
+        </div>
+      </div><!--Modal Body  -->
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+      
+     </div><!-- Modal content-->
+    </div> <!-- Modal dialog -->  
+   </div> <!-- Modal Fade  --> 	
+
 
 </body>
 </html>

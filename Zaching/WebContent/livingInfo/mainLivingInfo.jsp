@@ -25,7 +25,7 @@
 <style>
  	 	body {
        		padding-top: 50px;
-       		padding-bottom: 50px;
+       		padding-bottom: 100px;
        		background: #f5f5f5;
        	}
 
@@ -93,18 +93,35 @@ $(function() {
 		 self.location = "/livingInfo/getNoticeInfo";
 		});
 	 
+	 $( ".col-xs-4:contains('현재영화순위')" ).on("click" , function() {
+		 self.location = "/livingInfo/getMovieInfo";
+		});
+	 $( ".col-xs-4:contains('베스트샐러')" ).on("click" , function() {
+		 self.location = "/livingInfo/getBestBook";
+		});
+	 
+	 $( ".col-xs-4:contains('음악순위')" ).on("click" , function() {
+		 self.location = "/livingInfo/getMusicChart";
+		});
+	 
+	
 });
 </script>
 <body>
 <div class="container" align="center">
-<div class="row" style="padding: 300px;">
+<div class="row" style="padding: 200px;">
+
       		<div class="col-xs-4 select-bob">전월세정보</div>
       		<div class="col-xs-4 select-bob">주변편의시설</div>
       		<div class="col-xs-4 select-bob">편의점행사정보</div>
       		<div class="col-xs-4 select-bob">국내여행정보</div>
       		<div class="col-xs-4 select-bob">알리미정보</div>
+      		<div class="col-xs-4 select-bob">현재영화순위</div>
+      		<div class="col-xs-4 select-bob">베스트샐러</div>
+      		<div class="col-xs-4 select-bob">음악순위</div>
       		</div>
 		</div>
+	
 
 </body>
 <img src="../resources/images/chat.png" id="fixedbtn">

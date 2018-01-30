@@ -157,7 +157,7 @@
 					
 		<if test='category == "B01" || category == "B02"'>
 			,limit_num, bob.location_name AS location_name, bob.longitude AS longitude, 
-			bob.latitude AS latitude, to_date(bob.time,'yyyy-mm-dd hh24 mi') AS time
+			bob.latitude AS latitude, to_char(bob.time,'yyyy-mm-dd hh:mm') AS time
 		</if>
 		
 		FROM BOB, PARTICIPANT, USERS
