@@ -61,10 +61,12 @@
 		}
 		
 		.mainbar {
+			margin-top:40px;
 			padding: 0px;
 			height: 150px;
 			width: 100%;
-					text-align: center;			
+			text-align: center;
+					
 		}
 		
 		.mainbar-menu {
@@ -85,27 +87,7 @@
 		.mainbar-menu:hover, .mainbar-menu.active{
 		    border-bottom: 4px solid RGB(237,125,49);
 		}
-	/* ////////////////////로그인 모달 창 style/////////////////////// */
-		.modal-dialog.modal{
- 		 width: 50%;
- 		 height: 50%;
- 		 margin: 0;
- 		 padding: 0;
-
-		}
-		img.img-logo{
-
-		margin-left: 250px;
-
-		}
-
-		img.img-rounded{
-		margin-top: 10px;
-		margin-left: 10px;
-		margin-right: 10px;
-		margin-bottom: 10px;
-
-		}
+	
 		
 	</style>
 	

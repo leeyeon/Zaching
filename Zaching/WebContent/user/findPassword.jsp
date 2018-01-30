@@ -49,7 +49,7 @@
 		 $("input[name='email']").on("change" , function() {
 			
 			 var email=$("input[name='email']").val();
-		    
+			
 			 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
 		    	alert("이메일 형식이 아닙니다.");
 		     }

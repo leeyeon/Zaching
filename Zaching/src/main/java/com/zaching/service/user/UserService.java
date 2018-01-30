@@ -41,9 +41,10 @@ public interface UserService {
     //알림수신설정
     public  void updateNotice(User user)throws Exception;
     
-    //이메일 중복체크
-    public int checkEmail(String email)throws Exception;
+    // 이매일 ID 중복 확인
+ 	public boolean checkDuplication(String email) throws Exception;
     
-    
+    //이메일 전송
+ 	public void sendMail(String email, String authNum)throws Exception;
 
 }
