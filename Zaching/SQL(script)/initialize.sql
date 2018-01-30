@@ -30,7 +30,7 @@ CREATE TABLE USERS (
 	email  	 VARCHAR2(50)	 NOT NULL,
 	password  		 VARCHAR2(16)	  NOT NULL,
 	role  				 CHAR(2) 		DEFAULT 0  NOT NULL   ,
-	name  				 	 VARCHAR2(10)  	   NOT NULL,
+	name  				 	 VARCHAR2(20)  	   NOT NULL,
 	address  		 	VARCHAR2(50),
 	longitude  		 		number(15,10),
 	latitude  		 		number(15,10),
@@ -210,7 +210,8 @@ INSERT INTO users(user_id, email, password, name, role, created_date)
 VALUES(seq_user_id.nextval, 'admin@admin.com', 'admin', '관리자',3, sysdate);
 INSERT INTO users(user_id, email, password, name, role, created_date)
 VALUES(seq_user_id.nextval, 'test@test.com', 'test', '자췽',2, sysdate);
-
+INSERT INTO users(user_id, email, password, name, role, address,created_date)
+VALUES(seq_user_id.nextval, 'abc@abc.com', 'test', '자췽',2, '서울시 서초구 서초동',sysdate);
 
 commit;
 

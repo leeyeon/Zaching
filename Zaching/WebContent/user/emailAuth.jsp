@@ -39,6 +39,16 @@ function check() {
 		alret("인증번호를 입력해주셔요");
 		return false;
 	}
+	if(form.authNum.value != authNum){
+		alret("인증번호가 일치하지 않습니다.")
+		form.authNum.value="";
+		return false;
+	}
+	if(form.authNum.value == authNum){
+		alret("인증이 완료 되었습니다.")
+		opener.document.userinput.mailCheck.value="인증완료";
+		self.close();
+	}
 }
 
 </script>
@@ -48,13 +58,12 @@ function check() {
 <br><br/>
 <h4>인증번호를 입력하세요</h4>
 
-<div class="container">
-<form action="post" name="authenform" onSubmit="return check();">
-	<input type="text" name="authnum"><br><br/>
-	<input type="submit" class="btn btn-warning" value="submit">
-
-</form>
-
+<div class="container-center">
+	<form action="post" name="authenform" onSubmit="return check();">
+		<input type="text" name="authnum"><br><br/>
+		<input type="submit" class="btn btn-warning" value="submit">
+	</form>
 </div>
+
 </body>
 </html>

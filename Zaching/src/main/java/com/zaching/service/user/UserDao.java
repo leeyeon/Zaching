@@ -10,8 +10,11 @@ public interface UserDao {
 	//회원가입 ok
 	public void addUser(User user)throws Exception;
 	
-	//내정보조회  & 로그인 SELECT ok
+	//내정보조회  
 	public User getUser(int userId)throws Exception;
+	
+	//로그인
+	public User login(String email)throws Exception;
 	
 	//타임라인 보기
 	public User getTimeLine(int userId)throws Exception;
@@ -36,5 +39,8 @@ public interface UserDao {
 	
 	//추억지도 보기
 	public List<User> memoryMap(Search search)throws Exception;
+	
+	//이메일 중복체크
+	public int checkEmail(String email)throws Exception;
 	
 }
