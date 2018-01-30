@@ -14,6 +14,7 @@ import com.zaching.service.user.UserDao;
 @Repository("userDaoImpl")
 public class UserDaoImpl implements UserDao{
 	
+
 	//Field
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
@@ -26,6 +27,13 @@ public class UserDaoImpl implements UserDao{
 	//Constructor
 	public UserDaoImpl() {
 		System.out.println(this.getClass());
+	}
+	
+	
+	@Override
+	public User login(String email) throws Exception {
+		
+		return sqlSession.selectOne("UserMapper.login", email);
 	}
 
 	@Override
@@ -43,7 +51,7 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public User getUser(int userId) throws Exception {
-		
+		System.out.println("DaoImpl ::getUser" +userId);
 		return sqlSession.selectOne("UserMapper.getUser",userId);
 	}
 	
@@ -93,7 +101,13 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	
-	
+
+	@Override
+	public int checkEmail(String email) throws Exception {
+		System.out.println("DaoImpl===>"+email);
+		int rowcount=1;
+		return sqlSession.selectOne("UserMapper.checkEmail", rowcount);
+	}
 	
 
 }
