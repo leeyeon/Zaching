@@ -51,6 +51,13 @@
 	<!-- 한글이 안들어가 ㅠㅠ -->
 	</insert>
 	
+	
+	<select id="checkEmail" parameterType="string" resultMap="userSelectMap">
+		SELECT COUNT(*)
+		FROM users 
+		WHERE email= #{email} 
+	</select>
+	
 	 <select id="getTimeLine"	parameterType="int"	resultMap="userSelectMap">
 		SELECT *
 		FROM( SELECT inner_table.*, ROWNUM AS row_seq
@@ -74,6 +81,14 @@
 		birth, profile_image, real_name, account_number, created_date 		
 		FROM users 
 		WHERE user_id = #{value}
+	 </select>
+	 
+	 <select id="login"	parameterType="string"	resultMap="userSelectMap">
+		SELECT
+		user_id , name , email , role, password, address, gender, phone,
+		birth, profile_image, real_name, account_number, created_date 		
+		FROM users 
+		WHERE email = #{value}
 	 </select>
 	 
 	 

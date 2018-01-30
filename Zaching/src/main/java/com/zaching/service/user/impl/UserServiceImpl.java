@@ -1,23 +1,19 @@
 package com.zaching.service.user.impl;
 
-import java.io.File;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+
 import org.springframework.stereotype.Service;
 
 import com.zaching.common.domain.Search;
-import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.domain.User;
-import com.zaching.service.newsfeed.NewsfeedDao;
 import com.zaching.service.user.UserDao;
 import com.zaching.service.user.UserService;
 
@@ -28,12 +24,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	@Qualifier("userDaoImpl")
 	private UserDao userDao;
-	private JavaMailSender mailSender;
 	
-	// org.springframework.mail.javamail.JavaMailSender
-
- 
-
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
@@ -49,6 +40,13 @@ public class UserServiceImpl implements UserService {
 			userDao.addUser(user);
 	}
 	
+
+	@Override
+	public User login(String email) throws Exception {
+		
+		return userDao.login(email);
+	}
+
 	
 
 	@Override
@@ -60,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUser(int userId) throws Exception {
-		
+		System.out.println("ServiceImpl ::getUser" +userId);
 		return userDao.getUser(userId);
 	}
 	
@@ -111,8 +109,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUser(User user) throws Exception {
 		
-		
-		
 		userDao.updateUser(user);
 
 	}
@@ -123,11 +119,11 @@ public class UserServiceImpl implements UserService {
 		userDao.updateNotice(user);
 	}
 
-//	@Override
-//	public boolean sendMail(String subject, String text, String from, String to, String filePath) {
-//
-//	}
-
+	@Override
+	public int checkEmail(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return userDao.checkEmail(email);
+	}
 
 
 }

@@ -1,14 +1,14 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
 
 <html lang="ko">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<meta charset="EUC-KR">
 
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -28,76 +28,32 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
-		//============= "°¡ÀÔ"  Event ¿¬°á =============
-		 $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "button.btn.btn-primary" ).on("click" , function() {
-				fncAddUser();
-			});
-		});	
-		
-		
-		//============= "Ãë¼Ò"  Event Ã³¸® ¹×  ¿¬°á =============
-		$(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
-			});
-		});	
-	
-		
-		function fncAddUser() {
-			
-			var email=$("input[name='email']").val();
-			var pw=$("input[name='password']").val();
-			var pw_confirm=$("input[name='password2']").val();
-			var name=$("input[name='name']").val();
-			
-			
-			if(email == null || email.length <1){
-				alert("¾ÆÀÌµğ´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			if(pw == null || pw.length <1){
-				alert("ÆĞ½º¿öµå´Â  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			if(pw_confirm == null || pw_confirm.length <1){
-				alert("ÆĞ½º¿öµå È®ÀÎÀº  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			if(name == null || name.length <1){
-				alert("ÀÌ¸§Àº  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			
-			if( pw != pw_confirm ) {				
-				alert("ºñ¹Ğ¹øÈ£ È®ÀÎÀÌ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
-				$("input:text[name='password2']").focus();
-				return;
-			}
-				
-			
-			$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
-		}
+
 		
 
-		//==>"ÀÌ¸ŞÀÏ" À¯È¿¼ºCheck  Event Ã³¸® ¹× ¿¬°á
-		 $(function() {
-			 
-			 $("input[name='email']").on("change" , function() {
-				
-				 var email=$("input[name='email']").val();
-			    
-				 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
-			    	alert("ÀÌ¸ŞÀÏ Çü½ÄÀÌ ¾Æ´Õ´Ï´Ù.");
-			     }
-			});
-			 
-		});	
 		
- 
+		
+		 $(document).ready(function(){
+			    $('#checkbtn').on('click', function(){
+			        $.ajax({
+			            type: 'POST',
+			            url: '/user/checkEmail',
+			            data: {
+			                "email" : $('#email').val()
+			            },
+			            success: function(data){
+			                if($.trim(data) == 0){
+			                    $("#checkMsg").html('<p style="color:blue">ì‚¬ìš©ê°€ëŠ¥</p>');
+			                }
+			                else{
+			                    $("#checkMsg").html('<p style="color:red">ì‚¬ìš©ë¶ˆê°€ëŠ¥</p>');
+			                }
+			            }
+			        });    //end ajax    
+			    });    //end on    
+			});
 
+  
 	</script>		
     
 </head>
@@ -108,56 +64,63 @@
 	<jsp:include page="/resources/layout/toolbar.jsp"/>
    	<!-- ToolBar End /////////////////////////////////////-->
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">È¸ ¿ø °¡ ÀÔ</h1>
+		<h1 class="bg-primary text-center">íšŒ ì› ê°€ ì…</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
 		
 		  <div class="form-group">
-		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ ¸Ş ÀÏ</label>
+		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">ì´ ë©” ì¼</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="email" name="email" placeholder="ÀÌ ¸Ş ÀÏ">
-		      
+		      <input type="email" class="form-control" id="email"
+		       name="email" placeholder="ì´ ë©” ì¼ ì… ë ¥ í•˜ ì„¸ ìš”" >
+		     <div id="checkMsg">
+		    
+		       </div>
+   			
+   			<button type="submit" id="checkbtn" class="btn btn-default">ì¤‘ë³µí™•ì¸</button>
+   			 
 		    </div>
 		   
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">ºñ¹Ğ¹øÈ£</label>
+		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">ë¹„ë°€ë²ˆí˜¸</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password" name="password" placeholder="ºñ¹Ğ¹øÈ£">
+		      <input type="password" class="form-control" id="password" name="password" placeholder="ë¹„ë°€ë²ˆí˜¸">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">ºñ¹Ğ¹øÈ£ È®ÀÎ</label>
+		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">ë¹„ë°€ë²ˆí˜¸ í™•ì¸</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password2" name="password2" placeholder="ºñ¹Ğ¹øÈ£ È®ÀÎ">
+		      <input type="password" class="form-control" id="password2" 
+		      	name="password2" placeholder="ë¹„ë°€ë²ˆí˜¸ í™•ì¸" >
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="name" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸§</label>
+		    <label for="name" class="col-sm-offset-1 col-sm-3 control-label">ì´ë¦„</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="name" name="name" placeholder="È¸¿øÀÌ¸§">
+		      <input type="text" class="form-control" id="name" name="name" placeholder="íšŒì›ì´ë¦„">
 		    </div>
 		  </div>
 		  
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >°¡ &nbsp;ÀÔ</button>
-			  <a class="btn btn-primary btn" href="#" role="button">Ãë&nbsp;¼Ò</a>
+		      <button type="button" class="btn btn-primary" id="signUp" >ê°€ &nbsp;ì…</button>
+			  <a class="btn btn-primary cancelbtn" href="#" role="button">ì·¨&nbsp;ì†Œ</a>
 		    </div>
 		  </div>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 		
  	</div>
-	<!--  È­¸é±¸¼º div end /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div end /////////////////////////////////////-->
 	
 </body>
 

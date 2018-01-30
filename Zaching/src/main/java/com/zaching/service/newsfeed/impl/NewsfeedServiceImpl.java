@@ -6,14 +6,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.newsfeed.NewsfeedDao;
 import com.zaching.service.newsfeed.NewsfeedService;
 
-@Repository("newsfeedServiceImpl")
+@Service("newsfeedServiceImpl")
 public class NewsfeedServiceImpl implements NewsfeedService{
 	@Autowired
 	@Qualifier("newsfeedDaoImpl")

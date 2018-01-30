@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -74,9 +74,42 @@
 		.mainbar-menu:hover, .mainbar-menu .active{
 		    border-bottom: 4px solid RGB(237,125,49);
 		}
+		
+		.social-login{
+			margin-left: 10px;
+
+		}
 	</style>
 	
 	<script type="text/javascript">
+	
+$( function() {
+		
+		$("#email").focus();
+		
+		//==>"Login"  Event ì—°ê²°
+		$("#login").on("click" , function() {
+
+			var email =$("input:text").val();
+			var password =$("input:password").val();
+			
+			if(email == null || email.length <1) {
+				alert('ID ë¥¼ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤.');
+				$("input:text").focus();
+				return;
+			}
+			
+			if(password == null || password.length <1) {
+				alert('íŒ¨ìŠ¤ì›Œë“œë¥¼ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤.');
+				$("input:password").focus();
+				return;
+			}
+			
+			
+			$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
+			
+		});
+	});
 		$(function() {
 			
 			$('body > nav > div.container > div > div:nth-child(3)').addClass('active');
@@ -91,25 +124,26 @@
 				
 		 	});
 			
-		 	$( "a:contains('¹äÄ£±¸')" ).on("click" , function() {
+		 	$( "a:contains('ë°¥ì¹œêµ¬')" ).on("click" , function() {
 				$(self.location).attr("href","/bob/mainBob");
 				
 		 	});
 
-			$("a:contains('»ıÈ°Á¤º¸')").on("click", function() {
+			$("a:contains('ìƒí™œì •ë³´')").on("click", function() {
 				self.location = "/livingInfo/mainLivingInfo";
 
 			});
-			
-			$("a:contains('·Î±×ÀÎ')").on("click", function() {
-				self.location = "/user/login.jsp";
-
-			});
-			
-			$("a:contains('È¸¿ø°¡ÀÔ')").on("click", function() {
+		
+			$("a:contains('íšŒì›ê°€ì…')").on("click", function() {
 				self.location = "/user/addUser.jsp";
 
 			});
+			
+			$('#loginModal').on('show.bs.modal', function (e) {
+				  if (!data) return e.preventDefault() 
+			});
+			
+			
 
 		});
 	
@@ -129,25 +163,106 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">
-          	<img alt="´º½ºÇÇµå·Î ÀÌµ¿" src="/resources/images/temp_logo.png"  height="40px" 
+          	<img alt="ë‰´ìŠ¤í”¼ë“œë¡œ ì´ë™" src="/resources/images/temp_logo.png"  height="40px" 
           		style="margin-top: -10px;"/>
           </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse" >
           <ul class="nav navbar-nav">
-            <li><a href="#">¹äÄ£±¸</a></li>
-            <li><a href="#">¶óÀÌºê¹æ¼Û</a></li>
-            <li><a href="#">º¸ÀÌ½º¸®ÇÃ</a></li>
-            <li><a href="#">»ıÈ°Á¤º¸</a></li>
+            <li><a href="#">ë°¥ì¹œêµ¬</a></li>
+            <li><a href="#">ë¼ì´ë¸Œë°©ì†¡</a></li>
+            <li><a href="#">ë³´ì´ìŠ¤ë¦¬í”Œ</a></li>
+            <li><a href="#">ìƒí™œì •ë³´</a></li>
           </ul>
           <ul class="nav navbar-nav" style="float:right;">
-            <li><a href="#">·Î±×ÀÎ</a></li>
-            <li><a href="#">È¸¿ø°¡ÀÔ</a></li>
+            <li><a data-toggle="modal" data-target="#loginModal">ë¡œê·¸ì¸</a></li>
+            <li><a href="#">íšŒì›ê°€ì…</a></li>
           </ul>
         </div><!--/.nav-collapse -->
 	  </div>
+		
 
+		
     </nav>
+   
+
+	 <!-- Modal -->
+  <div  id="loginModal"  class="modal fade"  >
+  
+  <div class="modal-dialog">
+    
+  <!-- Modal content-->
+      <div class="modal-content">
+      
+      <!-- Modal Header start-->
+       <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+          aria-label="Close">&times;</button>
+          <div class="modal-title" align="center" style="margin-bottom:15px;"><!-- ìì·½ë¡œê³  -->
+          <img src="/resources/images/temp_logo.png" class="img-logo" width="50" height="50" ></div> 
+       </div><!-- Modal Header end -->  
+
+       <!-- Modal Body start-->
+       <div class="modal-body" align="left">
+       	
+       	<form>
+       	<div class="form-group">
+          <div class="col-xs-4">
+           	<label for="inputlg" style="margin-left: 5px">ì´ë©”ì¼(ID)</label>
+          </div>
+        </div>
+        
+        
+         <div class="form-group">
+           <div class="col-sm-6">
+   			<input type="text" class="form-control input-lg" id="email"  name="email"
+				placeholder="ì´ë©”ì¼ì„ì…ë ¥í•˜ì„¸ìš”"	style="margin-left: 5px"/>
+   			
+           </div>
+         </div>
+         
+         <div class="form-group">
+           <div class="col-sm-6">
+           	<label for="inputlg" style="margin-left: 5px" 
+           	style="margin-top: 5px">íŒ¨ìŠ¤ì›Œë“œ(PW)</label>
+           </div>
+         </div>
+       
+       
+         <div class="form-group">
+           <div class="col-sm-6">
+   			 <input type="password" class="form-control input-lg" id="password" name="password"
+   				placeholder="íŒ¨ìŠ¤ì›Œë“œë¥¼ì…ë ¥í•˜ì„¸ìš”"	 style="margin-left: 5px">
+           </div>
+		</div>
+		
+		
+		<div class="form-group">
+              <div class="social-login" align="left">
+   			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" >
+   			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50" >
+   			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50" />
+   			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" >
+             </div>  
+        </div>
+        
+        <div class="form-group">
+			  <div class="col-sm-offset-4 col-sm-6 text-center">
+		      <button type="submit" class="btn btn-primary" id="login" >ë¡œ &nbsp;ê·¸ &nbsp;ì¸</button>
+			  <a class="btn btn-primary btn" href="#" role="button">íŒ¨ìŠ¤ì›Œë“œì°¾ê¸°</a>
+			  </div>
+		</div>
+		</form>
+      </div><!--Modal Body  -->
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+      
+     </div><!-- Modal content-->
+    </div> <!-- Modal dialog -->  
+   </div> <!-- Modal Fade  --> 	
+
 
 </body>
 </html>
