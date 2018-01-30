@@ -174,7 +174,7 @@
 			});
 			
 			$(".mainbar-menu img").on("click", function() {
-				$(self.location).attr("href","/");
+				$(self.location).attr("href","/newsfeed/listNewsfeed");
 			});
 
 		});
