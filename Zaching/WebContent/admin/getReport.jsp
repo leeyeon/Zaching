@@ -4,8 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<jsp:include page="admintoolbar.jsp"/>
 </head>
+<style>
+body {
+			padding-top:50px;
+			padding-bottom: 50px;
+			background: rgba(227,227,227,1);
+		
+	}
+</style>
 <body>
 
 </body>

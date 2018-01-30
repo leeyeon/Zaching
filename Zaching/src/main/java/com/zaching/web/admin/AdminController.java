@@ -85,15 +85,16 @@ public class AdminController {
 	@RequestMapping(value="/listUser", method=RequestMethod.GET)
 	public String listUser(Model model) {
 	
-		return "forward:/admin/admin/listUser.jsp";
+		return "forward:/admin/listUser.jsp";
 
 	}
 
 	
 	@RequestMapping(value="/mainAdmin", method=RequestMethod.GET)
 	public String mainAdmin(Model model) {
+		
 	
-		return "forward:/admin/admin/mainAdmin.jsp";
+		return "forward:/admin/mainAdmin.jsp";
 
 	}
 	

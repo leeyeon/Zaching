@@ -12,7 +12,7 @@ import com.zaching.service.domain.Report;
 import com.zaching.service.report.ReportDao;
 import com.zaching.service.report.ReportService;
 
-@Service("paymentServiceImpl")
+@Service("reportServiceImpl")
 public class ReportServiceImpl implements ReportService {
 	
 	@Autowired
