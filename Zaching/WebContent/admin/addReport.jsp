@@ -18,7 +18,7 @@ body { line-height:1.58;}
 <script>
 $(function() {
 	
-	$("#ok").click(function() {
+	$(".btn btn-primary").click(function() {
 
 	    alert("하이");
 
@@ -50,8 +50,7 @@ $(function() {
     <textarea class="form-control" id="exampleTextarea" rows="5"></textarea>
   </div>
   
-  <button type="button" class="btn btn-primary" id="ok">보내기</button>
-   <button type="button" class="btn btn-primary cancel" id="no">취소</button>
+  <button type="submit" class="btn btn-primary" id="ok">보내기</button>
 </form>
             </div>
 </div>

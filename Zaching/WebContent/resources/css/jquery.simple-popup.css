@@ -25,6 +25,7 @@
     position: absolute;
     right: 0;
     top: 0;
+    color:  grey;
 }
 
 .simple-popup-content .close::before {
@@ -32,7 +33,7 @@
     text-align: center;
     content: "\00d7";
     font-size: 40px;
-    color:  rgba(227,227,227,1);
+    color: grey;
     width: 40px;
     line-height: 40px;
 }
