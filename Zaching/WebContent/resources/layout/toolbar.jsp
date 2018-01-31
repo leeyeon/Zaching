@@ -152,11 +152,11 @@
 			});
 			
 			$(".mainbar-menu:contains('라이브방송')").on("click", function() {
-				$(self.location).attr("href","http://192.168.0.31:9001");
+				$(self.location).attr("href","/broadcast/mainBroadcast");
 			});
 			
 			$(".mainbar-menu img").on("click", function() {
-				$(self.location).attr("href","/newsfeed/listNewsfeed");
+				$(self.location).attr("href","/");
 			});
 
 		});

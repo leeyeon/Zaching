@@ -145,7 +145,7 @@
 			$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
 			
 		});
-			
+
 		$('body > nav > div.container > div > div:nth-child(3)').addClass('active');
 		
 		$('.mainbar-menu').on('click', function(){
@@ -155,22 +155,33 @@
 		
 		$( ".navbar-brand img" ).on("click" , function() {
 			$(self.location).attr("href","/");
-			
+		});
+		
+		$('body > nav > div.container > div > div:nth-child(3)').addClass('active');
+		
+		$('.mainbar-menu').on('click', function(){
+			 $('.active').removeClass('active');
+			 $(this).addClass('active');
+		})
+		
+		$( ".navbar-brand img" ).on("click" , function() {
+			$(self.location).attr("href","/");			
 	 	});
+
+		$("a:contains('라이브방송')").on("click", function() {
+			self.location = "/broadcast/mainBroadcast";
+		});
 		
 	 	$( "a:contains('밥친구')" ).on("click" , function() {
-			$(self.location).attr("href","/bob/mainBob");
-			
+			$(self.location).attr("href","/bob/mainBob");			
 	 	});
 
 		$("a:contains('생활정보')").on("click", function() {
 			self.location = "/livingInfo/mainLivingInfo";
-
 		});
 	
 		$("a:contains('회원가입')").on("click", function() {
 			self.location = "/user/addUser";
-
 		});
 		
 		$('#loginModal').on('show.bs.modal', function (e) {
@@ -178,8 +189,7 @@
 		});
 		
 		$( "#profile" ).on("click" , function() {
-			self.location = "/user/getTimeLine?userId=${user.userId}";
-			
+			self.location = "/user/getTimeLine?userId=${user.userId}";			
 	 	});
 		
 		$("a:contains('패스워드찾기')").on("click", function() {
