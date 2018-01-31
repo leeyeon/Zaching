@@ -18,6 +18,7 @@
 		<result property="accountNumber" column="account_number" jdbcType="VARCHAR"/>
 		<result property="accountCi" column="account_ci" jdbcType="INTEGER"/>
 		<result property="accountSeqNo" column="account_seq_no" jdbcType="INTEGER"/>
+		<result property="paymentCode" column="payment_code" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<insert id="managepayment"
@@ -67,7 +68,7 @@
 			parameterType="payment">
 		UPDATE PAYMENT
 		<set>
-			payment_code = #{paymentCode}
+			payment_code = 'P04'
 		</set>
 		<where>
 			payment_id = #{paymentId}

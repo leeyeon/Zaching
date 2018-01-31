@@ -132,7 +132,7 @@ public class BobDaoImpl implements BobDao {
 		map.put("participantId", participantId);
 		map.put("settingFee", settingFee);
 		
-		sqlSession.update("BobMapper.setFeeBob",map);
+		sqlSession.update("BobMapper.setFeeBob", map);
 	}
 
 	@Override

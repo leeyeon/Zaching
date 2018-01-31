@@ -369,21 +369,18 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [authNum="+authNum+", userId=" + userId + ", email=" + email + ", password=" + password + ", name=" + name
-				+ ", address=" + address + ", longitude=" + longitude + ",\n latitude=" + latitude + ", gender=" + gender
-				+ ", phone1=" + phone1 + ", phone2=" + phone2 + ", phone3=" + phone3 + ", birth=" + birth
-				+ ", profileImage=" + profileImage + ",\n role=" + role + ", realName=" + realName + ", bankCode="
-				+ bankCode + ", accountNumber=" + accountNumber + ", accountCi=" + accountCi + ", accountSeqNo="
-				+ accountSeqNo + ", totalPoint=" + totalPoint + ", totalMileage=" + totalMileage + ", totalRecommend="
-				+ totalRecommend + ",\n latestDate=" + latestDate + ", createdDate=" + createdDate + ", setRentCharge="
-				+ setRentCharge + ", setNews=" + setNews + ", setNewsFeed=" + setNewsFeed + ", setBroadcast="
-				+ setBroadcast + ",\n setFriend=" + setFriend + ", setBob=" + setBob + ", snsType=" + snsType + "]";
+
+		return "User [authNum=" + authNum + ", userId=" + userId + ", email=" + email + ", password=" + password
+				+ ", name=" + name + ", address=" + address + ", longitude=" + longitude + ", latitude=" + latitude
+				+ ", gender=" + gender + ", phone=" + phone + ", phone1=" + phone1 + ", phone2=" + phone2 + ", phone3="
+				+ phone3 + ", birth=" + birth + ", profileImage=" + profileImage + ", role=" + role + ", realName="
+				+ realName + ", bankCode=" + bankCode + ", accountNumber=" + accountNumber + ", accountCi=" + accountCi
+				+ ", accountSeqNo=" + accountSeqNo + ", totalPoint=" + totalPoint + ", totalMileage=" + totalMileage
+				+ ", totalRecommend=" + totalRecommend + ", latestDate=" + latestDate + ", createdDate=" + createdDate
+				+ ", setRentCharge=" + setRentCharge + ", setNews=" + setNews + ", setNewsFeed=" + setNewsFeed
+				+ ", setBroadcast=" + setBroadcast + ", setFriend=" + setFriend + ", setBob=" + setBob + ", snsType="
+				+ snsType + "]";
+
 	}
-	
-	
-
-
-	
-
 	
 }

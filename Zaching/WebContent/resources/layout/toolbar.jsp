@@ -156,7 +156,7 @@
 			});
 			
 			$(".mainbar-menu img").on("click", function() {
-				$(self.location).attr("href","/newsfeed/listNewsfeed");
+				$(self.location).attr("href","/");
 			});
 
 		});
