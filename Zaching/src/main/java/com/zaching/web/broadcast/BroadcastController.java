@@ -85,7 +85,7 @@ public class BroadcastController {
 		
 		System.out.println("이름 :"+broadcast.getBroadcaster().getName());
 		
-		http://127.0.0.1:9001/send?id=값&...
+		//http://127.0.0.1:9001/send?id=값&...
 		
 		return "redirect:http://127.0.0.1:9001?broadcaster="+broadcast.getBroadcaster().getUserId();
 		//return "forward:/chat/broadcast.jsp";
