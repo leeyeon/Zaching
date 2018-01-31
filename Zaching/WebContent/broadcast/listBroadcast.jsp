@@ -52,11 +52,11 @@
 		
 		
 		//============= "검색"  Event  처리 =============	
-		 $(function() {
-			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 //$( "button.btn.btn-default" ).on("click" , function() {
-			//	fncGetUserList(1);
-			//});
+		 $(function() {			 
+			 $("td:nth-child(2)").on("click" , function() {
+				 alert($($("input[name='broadcast']")[$("td:nth-child(2)").index(this)]).val());
+				 self.location = "http://127.0.0.1:9001?broadcaster=${obj.broadcaster}"
+			 });
 		 });	
 	</script>
 	
@@ -133,7 +133,9 @@
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td align="left">${ i }</td>
-			  <td align="left"  title="Click : 회원정보 확인">${obj.broadcaster}</td>
+			  <td align="left"  title="Click : 회원정보 확인">
+			  <input type="hidden" name ="broadcaster" value ="${obj.broadcaster}">
+			  ${obj.broadcaster}</td>
 			  <td align="left">${obj.title}</td>
 			  <td align="left">${obj.detail}</td>
 			  <td align="left">${obj.image}</td>
@@ -151,10 +153,11 @@
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	
+ 	<%-- 
  	<!-- PageNavigation Start...
 	<jsp:include page="../common/pageNavigator_new.jsp"/> -->
 	<!-- PageNavigation End... -->
-	
+	--%>
 </body>
 
 </html>

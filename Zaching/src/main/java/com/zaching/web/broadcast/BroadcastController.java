@@ -43,9 +43,8 @@ public class BroadcastController {
 	
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;	
-	@Value("#{commonProperties['pageSize']}")
-	int pageSize;
-	
+	//@Value("#{commonProperties['pageSize']}")
+	int pageSize = 9;
 	
 	@RequestMapping(value = "mainBroadcast", method=RequestMethod.GET)
 	public String mainBroadcast() throws Exception {
@@ -77,21 +76,25 @@ public class BroadcastController {
 		User user = (User)session.getAttribute("user");
 		
 		//broadcast.setBroadcaster(user);
-		System.out.println("user 정보 : "+user);
+		//System.out.println("user 정보 : "+user);
 		broadcast.setBroadcaster(user);
-		System.out.println("broadcast end ==>"+ broadcast);
+		//System.out.println("broadcast end ==>"+ broadcast);
 		broadcastDao.addBroadcast(broadcast);
 		
 		model.addAttribute("broadcast",broadcast);
 		
-		return "forward:http://127.0.0.1:3000";
+		System.out.println("이름 :"+broadcast.getBroadcaster().getName());
+		
+		http://127.0.0.1:9001/send?id=값&...
+		
+		return "redirect:http://127.0.0.1:9001?broadcaster="+broadcast.getBroadcaster().getUserId();
 		//return "forward:/chat/broadcast.jsp";
 	}
 	
 	@RequestMapping(value = "listBroadcast")
 	public String listUser( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
  
-		System.out.println("/messenger/listRoom : GET / POST");
+		System.out.println("/broadast/listBroadcast : GET / POST");
 //		List<Broadcast> list = broadcastDao.getBroadcastList(search);
 //		request.setAttribute("list", list);
 		

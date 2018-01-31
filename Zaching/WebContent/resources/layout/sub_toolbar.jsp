@@ -133,7 +133,12 @@ $( function() {
 				self.location = "/livingInfo/mainLivingInfo";
 
 			});
-		
+
+			$("a:contains('라이브방송')").on("click", function() {
+				self.location = "/broadcast/mainBroadcast";
+
+			});
+			
 			$("a:contains('회원가입')").on("click", function() {
 				self.location = "/user/addUser.jsp";
 
