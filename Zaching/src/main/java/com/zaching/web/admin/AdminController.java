@@ -112,6 +112,18 @@ public class AdminController {
 	
 	@RequestMapping(value="/listUser", method=RequestMethod.GET)
 	public String listUser(@ModelAttribute("search") Search search, Model model) throws Exception {
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+
+		// Business logic 수행
+		//List list = paymentService.listExchargePoint(search);
+		
+	
+		//model.addAttribute("list", list);
 	
 		return "forward:/admin/listUser.jsp";
 
@@ -120,6 +132,18 @@ public class AdminController {
 	
 	@RequestMapping(value="/mainAdmin", method=RequestMethod.GET)
 	public String mainAdmin(@ModelAttribute("search") Search search, Model model) {
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+
+		// Business logic 수행
+		//List list = paymentService.listExchargePoint(search);
+		
+	
+		//model.addAttribute("list", list);
 		
 	
 		return "forward:/admin/mainAdmin.jsp";

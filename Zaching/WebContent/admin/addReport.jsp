@@ -2,6 +2,7 @@
 	pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
 <meta charset="utf-8">
@@ -14,19 +15,43 @@ integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8q
 body { line-height:1.58;}
 .container { margin:70px auto;}
 #popup1 { display:none; }
+
+
 </style>
-<script>
-$(function() {
-	
-	$(".btn btn-primary").click(function() {
+<script type="text/javascript">
 
-	    alert("하이");
-
-	});
+function report(){
 	
 
-});
-
+	
+	
+	$.ajax({
+			 
+        url : "/admin/rest/addReport",
+        method : "POST",
+        contentType : "application/json; charset=UTF-8",
+        data : JSON.stringify({
+        	"reportID" : ,
+            "category" : ,
+            "userID" : ,
+            "text" : ,
+            "reportUserID" : ,
+            "roomID" : 
+        }),
+        async : false,
+        dataType : "json",
+        success : function(serverData) {
+        	
+        	alert("신고가 완료되었습니다.");
+           
+        }
+        
+        
+     });
+	
+	
+}
+	
 
 </script>
 
@@ -49,8 +74,8 @@ $(function() {
     &nbsp;&nbsp;<label for="exampleTextarea">카테고리/신고대상:</label>
     <textarea class="form-control" id="exampleTextarea" rows="5"></textarea>
   </div>
-  
-  <button type="submit" class="btn btn-primary" id="ok">보내기</button>
+
+  <button type="submit" class="btn btn-primary" onClick="report()">보내기</button>
 </form>
             </div>
 </div>
