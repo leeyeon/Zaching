@@ -2,6 +2,7 @@
 package com.zaching.web.user;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -25,11 +26,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.zaching.common.domain.Page;
+import com.zaching.common.domain.Search;
 import com.zaching.service.domain.User;
 import com.zaching.service.user.UserService;
 
@@ -54,13 +58,6 @@ public class UserController {
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 
-	@RequestMapping(value = "findPassword", method = RequestMethod.GET)
-	public String findPassword() throws Exception {
-
-		System.out.println("/user/findPassword : GET");
-
-		return "redirect:/user/findPassword.jsp";
-	}
 
 	@RequestMapping(value = "addUser", method = RequestMethod.GET)
 	public String addUser() throws Exception {
@@ -77,17 +74,9 @@ public class UserController {
 		// Business Logic
 		user.setRole("1");
 		userService.addUser(user);
-		System.out.println("name" + user.getName());
+		System.out.println("name : " + user.getName());
 
-		return "redirect:/user/login.jsp";
-	}
-
-	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public String login() throws Exception {
-
-		System.out.println("/user/logon : GET");
-
-		return "redirect:/user/login.jsp";
+		return "redirect:/index.jsp";
 	}
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
@@ -100,17 +89,42 @@ public class UserController {
 		User dbUser = userService.login(user.getEmail());
 		System.out.println("::::: " + dbUser);
 
-		System.out.println("=====>  " + session);
+		
 		if (user.getPassword().equals(dbUser.getPassword()) 
 				&& user.getEmail().equals(dbUser.getEmail())) {
 			session.setAttribute("user", dbUser);
 		}
+		if(session.getAttribute("user")==null) {
+			
+			
+		}
+		System.out.println("=====>  " + session.getAttribute("user"));
 		System.out.println("비교===>" + user.getEmail() + " = " + dbUser.getEmail());
 		System.out.println("비교===>" + user.getPassword() + " = " + dbUser.getPassword());
 
 		return "redirect:/index.jsp";
 	}
+	
+	@RequestMapping( value="logout", method=RequestMethod.GET )
+	public String logout(HttpSession session ) throws Exception{
+		
+		System.out.println("/user/logout : POST");
+		
+		session.invalidate();
+		
+		return "redirect:/index.jsp";
+	}
+	
+	
+	@RequestMapping(value = "findPassword", method = RequestMethod.GET)
+	public String findPassword() throws Exception {
 
+		System.out.println("/user/findPassword : GET");
+
+		return "redirect:/user/findPassword.jsp";
+	}
+	
+	
 	@RequestMapping(value = "getUser", method = RequestMethod.GET)
 	public String getUser(@RequestParam("userId") int userId, Model model) throws Exception {
 
@@ -122,22 +136,107 @@ public class UserController {
 
 		return "forward:/user/getUser.jsp";
 	}
+	
+	@RequestMapping(value = "getTimeLine", method = RequestMethod.GET)
+	public String getTimeLine(@RequestParam("userId") int userId, Model model) throws Exception {
+
+		System.out.println("/user/getTimeLine : GET");
+		// Business Logic
+		User user = userService.getUser(userId);
+		// Model 과 View 연결
+		model.addAttribute("user", user);
+
+		return "forward:/user/getTimeLine.jsp";
+	}
+	@RequestMapping( value="updateUser", method=RequestMethod.GET )
+	public String updateUser( @RequestParam("userId") int userId , Model model ) throws Exception{
+
+		System.out.println("/user/updateUser : GET");
+		//Business Logic
+		User user = userService.getUser(userId);
+		// Model 과 View 연결
+		model.addAttribute("user", user);
+		
+		return "forward:/user/updateUser.jsp";
+	}
+	
+	@RequestMapping( value="updateUser", method=RequestMethod.POST )
+	public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session) throws Exception{
+
+		System.out.println("/user/updateUser : POST");
+		//Business Logic
+		user.setRole("2");
+		userService.updateUser(user);
+		
+		int sessionId=((User)session.getAttribute("user")).getUserId();
+		if(sessionId == (user.getUserId())){
+			session.setAttribute("user", user);
+		}
+		
+		return "redirect:/user/getUser?userId="+user.getUserId();
+	}
+	
+	@RequestMapping( value="listUser" )
+	public String listUser( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+		
+		System.out.println("/user/listUser : GET / POST");
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		// Business logic 수행
+		Map<String , Object> map=userService.listUser(search);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		
+		// Model 과 View 연결
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		
+		return "forward:/user/listUser.jsp";
+	}
+	
+	@RequestMapping( value="checkDuplication", method=RequestMethod.POST )
+	public String checkDuplication( @RequestParam("email") String email , Model model ) throws Exception{
+		
+		System.out.println("/user/checkDuplication : POST");
+		//Business Logic
+		boolean result=userService.checkDuplication(email);
+		// Model 과 View 연결
+		model.addAttribute("result", new Boolean(result));
+		model.addAttribute("email", email);
+
+		return "forward:/user/checkDuplication.jsp";
+	}
 
 	// 이메일 인증
 	@RequestMapping(value = "emailAuth", method = RequestMethod.POST)
-	public String emailAuth(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String emailAuth(HttpServletRequest request,
+			
+			@ModelAttribute("user") User user) throws Exception {
 
 		System.out.println("/user/emailAuth : POST");
 
 		String email = request.getParameter("email");
-		String authNum = "";
-
+		String authNum="";//보내 인증번호
+		
 		authNum = RandomNum();
-
+		
+		
 		System.out.println("받는사람 email 정보==>" + email);
-		sendMail(email, authNum);
-
-		return "forward:/user/emailAuth.jsp";
+		System.out.println("새로생성한 인증번호==> "+authNum);
+		
+		user.setAuthNum(authNum);
+		userService.sendMail(email, authNum);
+		
+		
+		System.out.println("DB인증번호 ===> "+user.getAuthNum());
+	
+		return "redirect:/user/emailAuth.jsp?";
 	}
 
 	// 난수발생 메소드
@@ -151,49 +250,5 @@ public class UserController {
 		return buffer.toString();
 	}
 
-	// 이메일 발송 메소드
-	private void sendMail(String email, String authNum) {
-
-		String host = "smtp.gmail.com";// smtp서버
-		String subject = "자췽ing 인증번호 전송";
-		String fromName = "자췽 관리자";
-		String from = "hi3pig@gmail.com";// 관리자 메일 주소
-		String to = email;// 인증번호 받을 유저의이메일
-
-		String content = "인증번호[" + authNum + "]";
-		// 인증번호를 우리 DB에 저장?해서 비교???
-
-		try {
-
-			Properties props = new Properties();
-			props.put("mail.smtp.starttls.enable", "true");
-			props.put("mail.transport.protocol", "smtp");
-			props.put("mail.smtp.host", host);
-			props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-			props.put("mail.smtp.port", "465");// 이것은 무엇인가 왜 465 포트일까
-			props.put("mail.smtp.user", from);
-			props.put("mail.smtp.auth", "true");
-
-			Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("hi3pig@gmail.com", "1379dlek");
-				}
-			});
-			Message msg = new MimeMessage(mailSession);
-			msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "UTF-8", "B")));
-
-			InternetAddress[] address1 = { new InternetAddress(to) };
-			msg.setRecipients(Message.RecipientType.TO, address1);// 받는사람
-			msg.setSubject(subject);// 메일제목
-			msg.setSentDate(new Date());// 보내는 날짜
-			msg.setContent(content, "text/html;charset=euc-kr");// 내용 설정(HTML형식)
-
-			Transport.send(msg);// 메일보내기
-		} catch (MessagingException e) {
-			e.printStackTrace();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 }
