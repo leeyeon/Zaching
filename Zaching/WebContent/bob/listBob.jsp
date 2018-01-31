@@ -38,14 +38,6 @@
 	<script type="text/javascript">
 	
 		$(function() {
-			
-			/*
-			$.each($("div > img"), function (index, value) {
-				var bobId = $($("input[name=bobId]")[index]).val();
-				var category = $($("input[name=category]")[index]).val();
-				alert(index+"//"+bobId+"//"+category);
-			});
-			*/
 
 			$('.thumbnail > img').on("click", function(){
 				var index = $(".thumbnail > img").index(this);	
@@ -53,6 +45,13 @@
 				var category = $($("input[name=category]")[index]).val();
 				//alert(index+"//"+bobId+"//"+category);
 				$(self.location).attr("href","/bob/getBob?category="+category+"&bobId="+bobId);
+			});
+			
+			$(".user_thumnail").on("click", function(){
+				var index = $(".user_thumnail").index(this);
+				var userId = $($("input[name=writtenUserId]")[index]).val();
+				//alert(index+"//"+bobId+"//"+category);
+				$(self.location).attr("href","/user/getTimeLine?userId="+userId);
 			});
 			
 			var pageInfo = 1;
@@ -116,6 +115,7 @@
 			<c:forEach var="bob" items="${list}" varStatus="status">
 			  <input type="hidden" name="bobId" value="${bob.bobId}">
 			  <input type="hidden" name="category" value="${bob.category}">
+			  <input type="hidden" name="writtenUserId" value="${bob.writtenUserId}">
 			  <div class="col-sm-6 col-md-4 text-center">
 			    <div class="thumbnail">
 			    <div class="thumbnail-top" style="left: 40px;">
