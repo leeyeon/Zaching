@@ -19,6 +19,13 @@ public interface FriendService {
 	
 	//친구추천(알수도있는친구)
 	public Map<String, Object> recommendFriend(Search search ) throws Exception;
-	
+
+	//친구확인 
+	public Friend getFriend (int friendId) throws Exception;
+
+	//status 업데이트
+	public void updateFriend(Friend friend) throws Exception;
+
+	public void deleteFreind(int id )throws Exception;
 
 }

@@ -18,7 +18,7 @@ public class MessageDaoImpl implements MessageDao{
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
 	
-	public void serSqlSession(SqlSession sqlSession) {
+	public void setSqlSession(SqlSession sqlSession) {
 		
 		this.sqlSession=sqlSession;
 	}
