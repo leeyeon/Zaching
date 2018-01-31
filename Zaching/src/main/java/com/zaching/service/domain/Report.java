@@ -1,18 +1,38 @@
 package com.zaching.service.domain;
 
+import java.util.Date;
+
 public class Report {
 	
 	private int reportID;
 	private String category;
 	private int userID;
-	private String day;
-	private boolean flag;
+	private Date day;
+	private char flag;
 	private String text;
-	private String reportUserID;
+	private int reportUserID;
+	private int roomID;
+	
+	
+	
 
 	public Report() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public int getRoomID() {
+		return roomID;
+	}
+
+
+
+	public void setRoomID(int roomID) {
+		this.roomID = roomID;
+	}
+
+
 
 	public int getReportID() {
 		return reportID;
@@ -38,21 +58,31 @@ public class Report {
 		this.userID = userID;
 	}
 
-	public String getDay() {
+		
+
+	public Date getDay() {
 		return day;
 	}
 
-	public void setDay(String day) {
+
+
+	public void setDay(Date day) {
 		this.day = day;
 	}
 
-	public boolean isFlag() {
+
+
+	public char getFlag() {
 		return flag;
 	}
 
-	public void setFlag(boolean flag) {
+
+
+	public void setFlag(char flag) {
 		this.flag = flag;
 	}
+
+
 
 	public String getText() {
 		return text;
@@ -62,13 +92,19 @@ public class Report {
 		this.text = text;
 	}
 
-	public String getReportUserID() {
+	
+
+	public int getReportUserID() {
 		return reportUserID;
 	}
 
-	public void setReportUserID(String reportUserID) {
+
+
+	public void setReportUserID(int reportUserID) {
 		this.reportUserID = reportUserID;
 	}
+
+
 
 	@Override
 	public String toString() {

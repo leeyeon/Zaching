@@ -88,16 +88,16 @@ public class BobDaoImpl implements BobDao {
 	}
 	
 	@Override
-	public void enterBob(int userId, int bobId) throws Exception {
+	public int enterBob(int userId, int bobId) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bobId", bobId);
 		map.put("userId", userId);
-		sqlSession.insert("BobMapper.enterBob", map);
+		return sqlSession.insert("BobMapper.enterBob", map);
 	}
 	
 	@Override
-	public void cancleBob(int participantId) throws Exception {
-		sqlSession.delete("BobMapper.cancleParticipant", participantId);
+	public int cancleBob(int participantId) throws Exception {
+		return sqlSession.delete("BobMapper.cancleParticipant", participantId);
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class paymentServiceImpl implements PaymentService {
 		return paymentDao.listExchargePoint(search);
 	}
 
-	// 포인트 신청/사용/반환신청/반환완료/반환신청취소
+	// 포인트 신청/사용/반환신청/반환완료/반환신청취소 /사용취소(P06)
 	// 반환시에 필요한 데이터: payment_id , payment_code , point 
 	@Override
 	public void managePoint(Payment payment) throws Exception {
@@ -48,6 +48,9 @@ public class paymentServiceImpl implements PaymentService {
 			paymentDao.exchargePoint(payment);
 		} else if("P05".equals(code)) {
 			paymentDao.exchargePoint(payment);
+			paymentDao.updateUserPayment(payment);
+		} else if("P06".equals(code)) {
+			paymentDao.managePayment(payment);
 			paymentDao.updateUserPayment(payment);
 		}
 		

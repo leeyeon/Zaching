@@ -4,20 +4,55 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="UserMapper">
+<mapper namespace="ReportMapper">
 	
-	<!-- 
-	<resultMap id="cartSelectMap"
-			   type="cart" >
-		<result property="cartNo" column="cart_no" jdbcType="INTEGER" />		
-		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
-		<result property="prodNo" column="prod_no" jdbcType="INTEGER"/>
-		<result property="prodName" column="prod_name" jdbcType="VARCHAR"/>
-		<result property="cartDate" column="cart_date" jdbcType="DATE"/>
-		<result property="price" column="price" jdbcType="INTEGER"/>
-		<result property="status" column="status" jdbcType="CHAR"/>
+	<resultMap id="reportSelectMap" type="report" >
+		<result property="reportID" column="report_id" jdbcType="INTEGER" />
+		<result property="text" column="description" jdbcType="VARCHAR"/>
+		<result property="day" column="report_date" jdbcType="DATE"/>
+		<result property="flag" column="status" jdbcType="CHAR"/>
+		<result property="category" column="category_code" jdbcType="VARCHAR"/>
+		<result property="roomID" column="room_id" jdbcType="INTEGER"/>
+		<result property="userID" column="reporter_id" jdbcType="INTEGER"/>
+		<result property="reportUserID" column="reported_user_id" jdbcType="INTEGER"/>
 	</resultMap>
-	 -->
+	
+	
+	<insert id="addReport" parameterType="report">
+		INSERT
+		INTO report(report_id, description, category_code, report_date, room_id, reporter_id, reported_user_id, status)
+		VALUES (
+			seq_report_id.nextval,
+			#{text:VARCHAR},
+			#{category:VARCHAR}, 
+			SYSDATE,
+			#{roomID:INTEGER},
+			#{userID:INTEGER},
+			#{reportUserID:INTEGER},
+			#{flag:CHAR}
+			)			
+	</insert>
+	
+	<select id="getReport"  parameterType="int">
+		SELECT report_id, description, category_code, report_date, room_id, reporter_id, reported_user_id, status
+		FROM report
+		<where>
+			report_id = #{reportId}
+		</where>	
+	</select>
+	
+	<update id="updateReport" parameterType="int">
+		UPDATE report
+		SET status=01
+		WHERE report_id = #{reportId}
+	</update>
+	
+	<select id="listReport" parameterType="int" resultMap="reportSelectMap">
+		SELECT report_id, reported_user_id, status
+	  	FROM report	
+	  	ORDER BY report_date		
+	</select>
+	
 	
 
 </mapper>
