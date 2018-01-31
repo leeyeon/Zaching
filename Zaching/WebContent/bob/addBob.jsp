@@ -315,8 +315,6 @@
 <body>
     
     <div class="container">
-    ${user.userId} // ${param.category}
-
     	<div class="page-header text-center">
 			<h3 class="text-info" style="color: #4d4d4d; font-weight: bold;">[${categoryName}] 방만들기</h3>
 		</div>
@@ -413,11 +411,11 @@
 		    		<div class="row">
 		            	<div class="col-sm-3 btn-bob">회비 (원)</div>
 		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
-		            		<input type="text" class="form-control" name="imageCheck" value="" placeholder="(ex) 20000">
+		            		<input type="text" class="form-control" name="fee" placeholder="(ex) 20000">
 		            	</div>
 		            	<div class="col-sm-3 btn-bob">회비날짜</div>
 		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
-		            		<input type="date" name="appointmentTime" class="form-control"style="font-size: 16px;"/>
+		            		<input type="date" name="feeDate" class="form-control" style="font-size: 16px;"/>
 		            	</div>
 			    	</div>
 		    		

@@ -420,11 +420,11 @@
 		    		<div class="row">
 		            	<div class="col-sm-3 btn-bob">수정할 회비 (원)</div>
 		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
-		            		<input type="text" class="form-control" name="imageCheck" value="" placeholder="(ex) 20000">
+		            		<input type="text" class="form-control" name="fee" value="${bob.fee}" placeholder="(ex) 20000">
 		            	</div>
 		            	<div class="col-sm-3 btn-bob">수정할 회비날짜</div>
 		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
-		            		<input type="date" name="appointmentTime" class="form-control"style="font-size: 16px;"/>
+		            		<input type="date" name="feeDate" class="form-control" value="${bob.feeDate}" style="font-size: 16px;"/>
 		            	</div>
 			    	</div>
 			    	

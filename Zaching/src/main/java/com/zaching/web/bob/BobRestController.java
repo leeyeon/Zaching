@@ -74,7 +74,7 @@ public class BobRestController {
 		System.out.println("addImage...2");
 		
 		JSONObject obj = new JSONObject();
-		obj.put("url", fileDirectory+fileName);
+		obj.put("url", "..\\resources\\upload_files\\images\\"+fileName);
 		
 		return obj;
 	}

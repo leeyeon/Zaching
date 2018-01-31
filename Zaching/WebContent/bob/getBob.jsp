@@ -146,6 +146,10 @@
 		    height: 250px;
 		    overflow-x: auto;
 		}
+		
+		.blog-post > p > img {
+			width: 100%;
+		}
        	
     </style>
     
@@ -399,11 +403,14 @@
 						</c:if>
 					</div>
 					<div class="col-xs-4 textBold" align="right" style="font-size: 25px;">
-						<c:if test="${param.category ne 'B03'}">
+						<c:if test="${param.category eq 'B01'}">
 							${fn:length(participant)} / ${bob.limitNum}
 						</c:if>
+						<c:if test="${param.category eq 'B02'}">
+							${fn:length(participant)}명
+						</c:if>
 						<c:if test="${param.category eq 'B03'}">
-							<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#myModal">친구초대</button>
+							<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#myModal" style="">친구초대</button>
 						</c:if>
 					</div>
 					

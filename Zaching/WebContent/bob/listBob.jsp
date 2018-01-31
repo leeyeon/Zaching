@@ -29,10 +29,16 @@
 	
 		$(function() {
 			
-			
-			$('div > img').on("click", function(){
-				var index = $("div > img").index(this);
-				
+			/*
+			$.each($("div > img"), function (index, value) {
+				var bobId = $($("input[name=bobId]")[index]).val();
+				var category = $($("input[name=category]")[index]).val();
+				alert(index+"//"+bobId+"//"+category);
+			});
+			*/
+
+			$('.thumbnail > img').on("click", function(){
+				var index = $(".thumbnail > img").index(this);	
 				var bobId = $($("input[name=bobId]")[index]).val();
 				var category = $($("input[name=category]")[index]).val();
 				//alert(index+"//"+bobId+"//"+category);
@@ -88,8 +94,8 @@
 			방만들기를 통해 친구를 만들어보세요.
 		</c:if>
 
-		<c:if test="${search.category eq 'B01' }">
-			<c:forEach var="bob" items="${list}">
+		<c:if test="${search.category eq 'B01'}">
+			<c:forEach var="bob" items="${list}" varStatus="status">
 			  <input type="hidden" name="bobId" value="${bob.bobId}">
 			  <input type="hidden" name="category" value="${bob.category}">
 			  <div class="col-sm-6 col-md-4 text-center">
@@ -128,7 +134,8 @@
 			      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
 			      	style="cursor: pointer; height:250px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;">
 			      <div class="user_thumnail" 
-			      	style="background: url(../resources/images/user-icon.png) center center no-repeat; background-size: cover;
+			      	style="background: url('../resources/upload_files/images/${bob.writtenUserProfile}'),
+			      		url('../resources/images/user-icon.png') center center no-repeat; background-size: cover;
 			      			box-shadow: 1px #cccccc;"></div>
 			      <div class="caption" style="position:relative; top:-20px; font-size: 20px;">
 			      	<div style="font-size:20px; font-weight: bold;">${bob.title}</div>
@@ -148,7 +155,6 @@
 		
 		<c:if test="${search.category eq 'B03' }">
 			<c:forEach var="bob" items="${list}">
-			 
 			  <input type="hidden" name="bobId" value="${bob.bobId}">
 			  <input type="hidden" name="category" value="${bob.category}">
 			  <div class="col-sm-6 col-md-4">
