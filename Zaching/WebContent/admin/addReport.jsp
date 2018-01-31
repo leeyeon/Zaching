@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <meta charset="utf-8">
@@ -14,12 +15,28 @@ body { line-height:1.58;}
 .container { margin:70px auto;}
 #popup1 { display:none; }
 </style>
+<script>
+$(function() {
+	
+	$("#ok").click(function() {
+
+	    alert("하이");
+
+	});
+	
+
+});
+
+
+</script>
+
+
 </head>
 
 <body>
 
 
-<a class="demo-2 btn btn-primary">각자 신고 버튼 여기 넣으세용</a>
+<a class="demo-2 btn btn-primary">각자 신고 버튼</a>
 
 
 
@@ -32,10 +49,9 @@ body { line-height:1.58;}
     &nbsp;&nbsp;<label for="exampleTextarea">카테고리/신고대상:</label>
     <textarea class="form-control" id="exampleTextarea" rows="5"></textarea>
   </div>
- 
   
-  <button type="submit" class="btn btn-primary">보내기</button>
-   <button type="" class="btn btn-primary">취소</button>
+  <button type="button" class="btn btn-primary" id="ok">보내기</button>
+   <button type="button" class="btn btn-primary cancel" id="no">취소</button>
 </form>
             </div>
 </div>

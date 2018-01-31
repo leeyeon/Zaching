@@ -7,7 +7,9 @@ public class Search {
 	private String searchKeyword;
 	private int pageSize;
 	private int endRowNum;
-	private int startRowNum;	
+	private int startRowNum;
+	
+	private int searchsorting;
 	
 	/* Category ±¸ºÐ */
 	private String category;
@@ -15,6 +17,20 @@ public class Search {
 	public Search() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public int getSearchsorting() {
+		return searchsorting;
+	}
+
+
+
+	public void setSearchsorting(int searchsorting) {
+		this.searchsorting = searchsorting;
+	}
+
+
 
 	public int getCurrentPage() {
 		return currentPage;
