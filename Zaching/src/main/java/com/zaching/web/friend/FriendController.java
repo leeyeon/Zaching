@@ -42,7 +42,7 @@ public class FriendController {
 	public String addFriend(@ModelAttribute("friend") Friend friend, Model model) throws Exception {
 		System.out.println("/friend/addFriend:POST");
 
-		return "forward:/friend/addfriend.jsp";
+		return "forward:/friend/addFriend.jsp";
 	}
 
 	@RequestMapping(value = "listFreind")

@@ -27,8 +27,8 @@ public class FriendServiceTest {
 	@Qualifier("friendServiceImpl")
 	private FriendService friendService;
 	
-	private int friendId=5;
-	private int id=3;
+	private int friendId=9;
+	private int id=27;
 	private int status=1;
 
 //	@Test
@@ -38,10 +38,8 @@ public class FriendServiceTest {
 		
 		Friend friend=new Friend();
 		friend.setUserId(25);
-//		friend.setName("±è»ó¹Î");
 		friend.setId(id);
 		friend.setFriendId(friendId);
-//		friend.setProfileImage("zzzz");
 		
 		
 		friendService.addFriend(friend);
@@ -108,6 +106,11 @@ public class FriendServiceTest {
 		System.out.println("list:size::"+list.size()+"&totalCount::"+totalCount);
 		
 		System.out.println("=================listFriend=============");
+	}
+	
+	@Test
+	public void testacceptFriend() throws Exception{
+		
 	}
 	
 
