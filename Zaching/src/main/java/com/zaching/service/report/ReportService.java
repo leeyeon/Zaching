@@ -9,7 +9,7 @@ public interface ReportService {
 	
 	public List<Report> listReport(int reportId) throws Exception;
 	
-	public int addReport(Report report) throws Exception;
+	public void addReport(Report report) throws Exception;
 	
 	public Report getReport(int reportId) throws Exception;
 	

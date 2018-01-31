@@ -403,7 +403,7 @@
 		            	<div class="col-xs-12" align="center">
 		            		<input type="text" name="locationName" class="form-control" style="font-size: 16px; margin-top:10px; margin-bottom:10px;"
 		            				placeholder="위치를 지정해주세요" value="${bob.locationName}" />
-		            		<span id="locationDuplicateCheck" class="col-sm-12 text-center" style="color: red; margin-bottom:10px; ">장소를 검색하세요.</span>
+		            		<span id="locationDuplicateCheck" class="col-sm-12 text-center" style="color: red; margin-bottom:10px; visibility: hidden; ">장소를 검색하세요.</span>
 		            		<div class="map_wrap">
 							    <div id="map" style="width:100%;height:400px;position:relative;overflow:hidden;"></div>
 							</div>

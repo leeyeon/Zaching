@@ -216,8 +216,7 @@ public class UserController {
 	// 이메일 인증
 	@RequestMapping(value = "emailAuth", method = RequestMethod.POST)
 	public String emailAuth(HttpServletRequest request,
-			
-			@ModelAttribute("user") User user) throws Exception {
+					HttpSession session) throws Exception {
 
 		System.out.println("/user/emailAuth : POST");
 
@@ -226,15 +225,21 @@ public class UserController {
 		
 		authNum = RandomNum();
 		
+		User getSessionUser = (User)session.getAttribute("user");
+		
+		System.out.println("getSessionUser :: "+getSessionUser);
 		
 		System.out.println("받는사람 email 정보==>" + email);
 		System.out.println("새로생성한 인증번호==> "+authNum);
 		
-		user.setAuthNum(authNum);
+		getSessionUser.setAuthNum(authNum);
 		userService.sendMail(email, authNum);
 		
+		System.out.println("DB인증번호 ===> "+getSessionUser.getAuthNum());
 		
-		System.out.println("DB인증번호 ===> "+user.getAuthNum());
+		session.setAttribute("user", getSessionUser);
+		
+		System.out.println("setSessionUser :: "+getSessionUser);
 	
 		return "redirect:/user/emailAuth.jsp?";
 	}
