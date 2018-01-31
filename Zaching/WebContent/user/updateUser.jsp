@@ -28,6 +28,13 @@
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
    
+   
+   <!-- jQuery Simple PopUp -->
+	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="/resources/javascript/jquery.simple-popup.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
+		integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+	<link href="/resources/css/jquery.simple-popup.min.css" rel="stylesheet" type="text/css">
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
@@ -37,6 +44,7 @@
         button.btn.btn-emailAuth{
         	background-color: #5f4b8b;
         }
+        #popup1 { display:none; }
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -59,13 +67,17 @@
 			});
 		});	
 		 
-		
+			
 	
-		
+		 $(document).ready(function() {
+			  $("a.demo-1").simplePopup();
+			  $("a.demo-2").simplePopup({ type: "html", htmlSelector: "#popup1"});
+			});
 		//============= "이메일 인증"  Event 연결 =============
 		$(function() {
 		
-			$( "button.btn.btn-emailAuth" ).on("click", function() {
+			$( "#emailAuth" ).on("click", function() {
+					alert("메일이전송되었습니다.");
 					fncEmailAuth();
 				});
 			});
@@ -78,26 +90,64 @@
 						alert("이메일은  반드시 입력하셔야 합니다.");
 						return;
 					}
-					
+				
 					$("form").attr("method" , "POST").attr("action" , "/user/emailAuth").submit();
 					
-				}
+			}
+					/* $.ajax(
+							
+					{
+						url:"/user/emailAuth/{user.userId}",
+						method:"POST",
+						dataType:"json",
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						data : JSON.stringify({
+							email : email
+							
+						}),
+						success : function(JSONData , status) {
+
+							//Debug...
+							console.log("JSONData : \n "+JSONData);
+							console.log(status);
+							console.log( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+							console.log(JSONData != null);
+						
+							
+						}
+						
+						
+					});
+				} */
 
 			
 			
-	
+			
 		
 
 	
 	</script>
-	
+
 </head>
 
 <body>
 
+	 <!-- 팝업창 -->
+		  	<div id="popup1">
+                <form>
+  					 <div class="form-group">
+    					<label for="exampleTextarea">인증번호</label>
+    					<input type="text" class=""/>
+    				</div>
+  					<button type="submit" class="btn btn-primary" id="ok">확인</button>
+				</form>
+            </div>		
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
+		
 		<div class="page-header text-center">
 		
 		<c:if test="${user.role.trim()=='2'}"> <!-- 정회원일경우 -->
@@ -126,10 +176,12 @@
 		    </div>
 		   
 		    	<div class="col-sm-3" id="contents">
-		    		<button type="submit" class="btn btn-emailAuth" id="emailAuth">이메일 인증</button>
+		    		
+		    		<a class="demo-2 btn btn-primary" type="submit" id="emailAuth">이메일 인증</a>
 		    	</div>
-		    	
+	
 		  </div>
+		 
 				
 		  
 		
@@ -173,7 +225,7 @@
 		  </div>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
-	    
+	 
  	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
  	

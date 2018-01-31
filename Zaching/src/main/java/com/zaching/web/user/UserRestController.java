@@ -33,31 +33,6 @@ public class UserRestController {
 	}
 	
 	
-	@RequestMapping(value="json/login", method=RequestMethod.POST)
-	public User login( @RequestBody User user,
-				HttpSession session	)throws Exception{
-		
-		System.out.println("/user/json/login : POST");
-		
-		System.out.println("::"+user);
-		
-		
-		User dbUser=userService.login(user.getEmail());
-		System.out.println("::::: "+dbUser);
-		
-		
-		System.out.println("=====>  "+session);
-		if(user.getPassword().equals(dbUser.getPassword()) &&
-				user.getEmail().equals(dbUser.getEmail())) {
-			session.setAttribute("user", dbUser);
-		}
-		System.out.println("비교===>"+user.getEmail()+" = "+dbUser.getEmail());
-		System.out.println("비교===>"+user.getPassword()+" = "+dbUser.getPassword());
-		
-		return dbUser;
-	}
-	
-	
 	
 
 }
