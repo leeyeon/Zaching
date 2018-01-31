@@ -7,7 +7,7 @@ public class Search {
 	private String searchKeyword;
 	private int pageSize;
 	private int endRowNum;
-	private int startRowNum;	
+	private int startRowNum;
 	
 	/* Category ±¸ºÐ */
 	private String category;
