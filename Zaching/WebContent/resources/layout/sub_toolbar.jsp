@@ -27,6 +27,12 @@
 	  --%>
 
 	<style>
+	
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+		
+		* {
+			font-family: 'Nanum Gothic', serif;
+		}
 		
 		.navbar-fixed-top {
 		    background: #ffffff;

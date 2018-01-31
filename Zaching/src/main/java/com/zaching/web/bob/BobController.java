@@ -88,7 +88,7 @@ public class BobController {
 		System.out.println(this.getClass()+"/mainBob");
 		
 		/* session처리! */
-		request.getSession().setAttribute("user", userService.getUser(24));
+		request.getSession().setAttribute("user", userService.getUser(8));
 		
 		// 단순 네비게이션		
 		return "forward:/bob/mainBob.jsp";

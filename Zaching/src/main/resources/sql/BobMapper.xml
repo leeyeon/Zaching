@@ -188,7 +188,7 @@
 			resultMap="participantSelectMap">
 	
 		SELECT participant_id, users.user_id AS user_id, participated_date, writer_id,
-				users.profile_image AS profile_image, users.name AS user_name
+				users.profile_image AS profile_image, users.name AS user_name, TRIM(setting_fee) AS setting_fee
 		FROM BOB, PARTICIPANT, USERS
 		<where>
 			participant.user_id = users.user_id
