@@ -13,6 +13,7 @@
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 	
 	<style>
+
 	
 		body {
 			padding-top:50px;
@@ -75,15 +76,16 @@
 			 margin-right: 20px;
 			 cursor: pointer;
 			 color: #FFFFFF;
+			 box-shadow: 0 5px 15px -5px #666;
        	}
        	
        	.dialog-add-bob {
        		background: #ccc;
-       		position: relative; 
-       		z-index:1;
+       		position: relative;
        		width: 200px;
        		left: -100px;
        		top: -230px;
+       		box-shadow: 0 5px 15px -5px #666;
        	}
        	
 		.user_thumnail {
@@ -235,7 +237,7 @@
 
 	<!-- 방만들기 버튼 시작 -->
 	
-   	<div id="footer" align="right">
+   	<div id="footer" align="right" style="z-index: 100;">
    	  <div class="container">
 	  	<div class="btn-add-bob text-center">방 만들기</div>
 	  	<div class="dialog-add-bob text-center">

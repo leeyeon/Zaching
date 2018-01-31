@@ -25,8 +25,8 @@ public class ReportDaoImpl implements ReportDao {
 	}
 	
 	@Override
-	public int addReport(Report report) throws Exception{
-		return sqlSession.insert("ReportMapper.addReport", report);
+	public void addReport(Report report) throws Exception{
+		sqlSession.insert("ReportMapper.addReport", report);
 	}
 	
 	

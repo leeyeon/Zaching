@@ -4,15 +4,16 @@
 		xmlns:context="http://www.springframework.org/schema/context"
 		xmlns:mvc="http://www.springframework.org/schema/mvc"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation=
-				"http://www.springframework.org/schema/beans 
+		xmlns:task="http://www.springframework.org/schema/task"
+		xsi:schemaLocation="
+				http://www.springframework.org/schema/beans 
 				http://www.springframework.org/schema/beans/spring-beans.xsd
-				
 				http://www.springframework.org/schema/context 
 				http://www.springframework.org/schema/context/spring-context.xsd
-				
 				http://www.springframework.org/schema/mvc
-				http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+				http://www.springframework.org/schema/mvc/spring-mvc.xsd
+				http://www.springframework.org/schema/task
+       			http://www.springframework.org/schema/task/spring-task-3.2.xsd">
     
    <!-- :: 공통적인 사항을 설정한 common-servlet.xml 사용. -->
        
@@ -28,7 +29,7 @@
    	<!-- ■ DefaultAnnotationHandlerMapping 설정 등 기타 Annotation 기반
    	        모든 기능을 사용 할 수 있는 아래의 설정으로 변경 -->
 	<mvc:annotation-driven />
-	
+	<task:annotation-driven />
 	
 	<!-- ■ Annotation 기반의 모든 기능을 사용 할 수 있는 설정
 	          <mvc:annotation-driven /> 사용으로 interceptor 를 직접

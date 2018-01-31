@@ -30,7 +30,7 @@
 	<jsp:include page="../resources/javascript/fileUploadCDN.jsp"/>
 	
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-	
+
 	<link rel="stylesheet" href="../resources/css/bootstrap-datetimepicker.min.css">
 	<script src="../resources/javascript/bootstrap-datetimepicker.min.js"></script>
 	<script src="../resources/javascript/bootstrap-datetimepicker.ko.js"></script> 
@@ -253,15 +253,18 @@
 	    	}
 	    });
 	    
+	    var todayDate = new Date().getDate();
+	   // alert(todayDate + ":" + new Date(new Date().setDate(todayDate + 30)).getDate());
+	    
 	    $('.form_datetime').datetimepicker({
 	        language:  'ko',
 	        weekStart: 1,
-	        todayBtn:  1,
 			autoclose: 1,
 			todayHighlight: 1,
 			startView: 2,
 			forceParse: 0,
-	        showMeridian: 1
+	        showMeridian: 1,
+	        startDate: new Date()
 	    });
 		
 	    /* surmmernote*/
