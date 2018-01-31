@@ -369,7 +369,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", email=" + email + ", password=" + password + ", name=" + name
+		return "User [authNum="+authNum+", userId=" + userId + ", email=" + email + ", password=" + password + ", name=" + name
 				+ ", address=" + address + ", longitude=" + longitude + ",\n latitude=" + latitude + ", gender=" + gender
 				+ ", phone1=" + phone1 + ", phone2=" + phone2 + ", phone3=" + phone3 + ", birth=" + birth
 				+ ", profileImage=" + profileImage + ",\n role=" + role + ", realName=" + realName + ", bankCode="

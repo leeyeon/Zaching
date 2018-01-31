@@ -66,6 +66,46 @@ public class UserController {
 
 		return "redirect:/user/addUser.jsp";
 	}
+	
+
+	// 이메일 인증
+	@RequestMapping(value = "emailAuth", method = RequestMethod.POST)
+	public String emailAuth(HttpServletRequest request,
+								HttpSession session,
+								@ModelAttribute("user")User user,Model model) throws Exception {
+
+			System.out.println("/user/emailAuth : POST");
+			String email=request.getParameter("email");
+			String authNum="";//보내 인증번호
+				
+			
+			authNum = RandomNum();
+			
+			User sessionAuth= (User)session.getAttribute("user");
+			
+			userService.sendMail(email, authNum);
+			session.setAttribute("user", sessionAuth);
+			
+			
+			System.out.println("받는사람 email 정보==>" + email);
+			System.out.println("인증번호==> "+authNum);
+			System.out.println("세션에 저장된 인증번호==>> "+session.getAttribute("user"));
+			
+			
+			return "forward:/user/emailAuth.jsp";
+			
+		}
+
+		// 난수발생 메소드
+		public String RandomNum() {
+
+			StringBuffer buffer = new StringBuffer();
+			for (int i = 0; i <= 6; i++) {
+				int n = (int) (Math.random() * 10);
+				buffer.append(n);
+			}
+			return buffer.toString();
+		}
 
 	@RequestMapping(value = "addUser", method = RequestMethod.POST)
 	public String addUser(@ModelAttribute("user") User user) throws Exception {
@@ -213,42 +253,6 @@ public class UserController {
 		return "forward:/user/checkDuplication.jsp";
 	}
 
-	// 이메일 인증
-	@RequestMapping(value = "emailAuth", method = RequestMethod.POST)
-	public String emailAuth(HttpServletRequest request,
-			
-			@ModelAttribute("user") User user) throws Exception {
-
-		System.out.println("/user/emailAuth : POST");
-
-		String email = request.getParameter("email");
-		String authNum="";//보내 인증번호
-		
-		authNum = RandomNum();
-		
-		
-		System.out.println("받는사람 email 정보==>" + email);
-		System.out.println("새로생성한 인증번호==> "+authNum);
-		
-		user.setAuthNum(authNum);
-		userService.sendMail(email, authNum);
-		
-		
-		System.out.println("DB인증번호 ===> "+user.getAuthNum());
 	
-		return "redirect:/user/emailAuth.jsp?";
-	}
-
-	// 난수발생 메소드
-	public String RandomNum() {
-
-		StringBuffer buffer = new StringBuffer();
-		for (int i = 0; i <= 6; i++) {
-			int n = (int) (Math.random() * 10);
-			buffer.append(n);
-		}
-		return buffer.toString();
-	}
-
 	
 }
