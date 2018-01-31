@@ -66,6 +66,19 @@ public class UserController {
 
 		return "redirect:/user/addUser.jsp";
 	}
+	
+
+
+		// 난수발생 메소드
+		public String RandomNum() {
+
+			StringBuffer buffer = new StringBuffer();
+			for (int i = 0; i <= 6; i++) {
+				int n = (int) (Math.random() * 10);
+				buffer.append(n);
+			}
+			return buffer.toString();
+		}
 
 	@RequestMapping(value = "addUser", method = RequestMethod.POST)
 	public String addUser(@ModelAttribute("user") User user) throws Exception {
@@ -213,6 +226,7 @@ public class UserController {
 		return "forward:/user/checkDuplication.jsp";
 	}
 
+
 	// 이메일 인증
 	@RequestMapping(value = "emailAuth", method = RequestMethod.POST)
 	public String emailAuth(HttpServletRequest request,
@@ -240,20 +254,8 @@ public class UserController {
 		session.setAttribute("user", getSessionUser);
 		
 		System.out.println("setSessionUser :: "+getSessionUser);
-	
-		return "redirect:/user/emailAuth.jsp?";
+
+		return "forward:/user/emailAuth.jsp";
 	}
-
-	// 난수발생 메소드
-	public String RandomNum() {
-
-		StringBuffer buffer = new StringBuffer();
-		for (int i = 0; i <= 6; i++) {
-			int n = (int) (Math.random() * 10);
-			buffer.append(n);
-		}
-		return buffer.toString();
-	}
-
 	
 }
