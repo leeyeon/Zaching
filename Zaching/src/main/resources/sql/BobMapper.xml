@@ -66,7 +66,7 @@
 			#{locationName:VARCHAR}, 
 			#{latitude:LONGVARCHAR}, 
 			#{longitude:LONGVARCHAR},
-			#{appointmentTime:DATE}, 
+			TO_DATE(#{appointmentTime:DATE}, 'yyyy-mm-dd HH:mi'), 
 			#{limitNum:INTEGER}, 
 			#{fee:INTEGER}, 
 			#{feeDate:DATE}
@@ -86,7 +86,7 @@
 			users.profile_image AS profile_image, users.name AS user_name, writer_id, limit_num,
 			
 		<if test="category == 'B01' || category == 'B02'">
-			location_name, bob.latitude AS latitude, bob.longitude AS longitude
+			location_name, bob.latitude AS latitude, bob.longitude AS longitude, to_char(bob.time,'yyyy-mm-dd HH:mi') AS time
 		</if>
 		<if test="category == 'B03'">
 			fee, fee_date
@@ -104,12 +104,14 @@
 		<set>
 			title = #{title},
 			content = #{content:VARCHAR},
-			background_image = #{image:VARCHAR},
+			<if test="image != null and !image.equeals('')">
+				background_image = #{image:VARCHAR},
+			</if>
 			<if test='category == "B01" || category == "B02"'>
 				location_name = #{locationName: VARCHAR},
 				latitude = #{latitude: LONGVARCHAR},
 				longitude = #{longitude: LONGVARCHAR},
-				time = #{appointmentTime:DATE},
+				time = TO_DATE(#{appointmentTime:DATE}, 'yyyy-mm-dd HH:mi')
 			</if>
 			<if test='category == "B03"'>
 				fee = #{fee: INTEGER},
@@ -155,18 +157,24 @@
 			bob.bob_id AS bob_id, title, content, background_image, trim(category_code) AS category_code,
 			users.profile_image AS profile_image, writer_id, users.name AS user_name
 					
-		<if test='category == "B01" || category == "B02"'>
+		<if test='category == "B01" || category == "B02" || category == "B04"'>
 			,limit_num, bob.location_name AS location_name, bob.longitude AS longitude, 
-			bob.latitude AS latitude, to_char(bob.time,'yyyy-mm-dd hh:mm') AS time
+			bob.latitude AS latitude, to_char(bob.time,'yyyy-mm-dd HH:mi') AS time
 		</if>
 		
-		FROM BOB, PARTICIPANT, USERS
+		FROM BOB, USERS <if test='category == "B03"'> , PARTICIPANT </if>
 		<where>
-			bob.bob_id = participant.bob_id
-			AND participant.user_id = users.user_id
+			bob.writer_id = users.user_id
 			
 			<if test='category == "B01" || category == "B02" || category == "B03"'>
 				AND trim(category_code) = #{category}
+			</if>
+			<if test='category == "B03"'>
+				AND bob.bob_id = participant.bob_id
+				AND participant.user_id = #{searchKeyword}
+			</if>
+			<if test='category == "B04"'>
+				AND trim(category_code) IN ('B01', 'B02')
 			</if>
 		</where>
 		ORDER BY bob.created_date
@@ -180,7 +188,7 @@
 			resultMap="participantSelectMap">
 	
 		SELECT participant_id, users.user_id AS user_id, participated_date, writer_id,
-				users.profile_image AS profile_image, users.name AS user_name
+				users.profile_image AS profile_image, users.name AS user_name, TRIM(setting_fee) AS setting_fee
 		FROM BOB, PARTICIPANT, USERS
 		<where>
 			participant.user_id = users.user_id

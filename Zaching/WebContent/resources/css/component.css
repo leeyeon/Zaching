@@ -3,6 +3,7 @@
 	list-style: none;
 	margin: 30px auto;
 	padding: 0;
+	
 }
 
 .grid li {
@@ -11,6 +12,28 @@
 	padding: 7px;
 	width: 33%;
 	opacity: 0;
+	overflow: hidden; 
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	border-style:;
+	border-width:midium;
+		  border:1px solid rgba(0,0,0,0.2);
+	text-decoration: none;
+	color:#424242;
+	box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+	display: inline-block;
+			
+	margin-bottom:20px;
+			
+	transition: all .3s cubic-bezier(0.25, .8, .25, 1);
+}
+
+.grid:hover li:not(:hover){
+	opacity: .6;
+}
+
+.grid li:hover{
+	box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .20);
 }
 
 .grid li.shown,
@@ -26,6 +49,8 @@
 	display: block;
 	max-width: 100%;
 }
+
+
 
 /* Effect 1: opacity */
 .grid.effect-1 li.animate {

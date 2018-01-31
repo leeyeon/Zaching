@@ -8,8 +8,8 @@ public class Search {
 	private int pageSize;
 	private int endRowNum;
 	private int startRowNum;
-	
 	private int searchsorting;
+
 	
 	/* Category ±¸ºÐ */
 	private String category;

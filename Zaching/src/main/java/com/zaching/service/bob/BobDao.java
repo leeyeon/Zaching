@@ -23,9 +23,9 @@ public interface BobDao {
 	
 	public int getParticipant(int userId, int bobId) throws Exception;
 	
-	public void enterBob(int userId, int bobId) throws Exception;
+	public int enterBob(int userId, int bobId) throws Exception;
 	
-	public void cancleBob(int participantId) throws Exception;
+	public int cancleBob(int participantId) throws Exception;
 	
 	public void inviteBob(List<Integer> listUser, int bobId) throws Exception;
 	

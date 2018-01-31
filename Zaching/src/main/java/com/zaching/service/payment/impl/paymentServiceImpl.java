@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.zaching.common.domain.Search;
@@ -34,7 +35,7 @@ public class paymentServiceImpl implements PaymentService {
 		return paymentDao.listExchargePoint(search);
 	}
 
-	// 포인트 신청/사용/반환신청/반환완료/반환신청취소
+	// 포인트 신청/사용/반환신청/반환완료/반환신청취소 /사용취소(P06)
 	// 반환시에 필요한 데이터: payment_id , payment_code , point 
 	@Override
 	public void managePoint(Payment payment) throws Exception {
@@ -48,6 +49,9 @@ public class paymentServiceImpl implements PaymentService {
 			paymentDao.exchargePoint(payment);
 		} else if("P05".equals(code)) {
 			paymentDao.exchargePoint(payment);
+			paymentDao.updateUserPayment(payment);
+		} else if("P06".equals(code)) {
+			paymentDao.managePayment(payment);
 			paymentDao.updateUserPayment(payment);
 		}
 		
@@ -84,6 +88,12 @@ public class paymentServiceImpl implements PaymentService {
 	@Override
 	public int getPoint(int userId) throws Exception {
 		return paymentDao.getPayment(userId, true);
+	}
+	
+	//@Scheduled(fixedDelay=1000)
+	@Scheduled(cron="0 0 12 * * *")
+	public void doSomething() {
+		System.out.println("회비 출금하는 시간 매일 12시");
 	}
 
 }

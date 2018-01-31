@@ -40,7 +40,6 @@ public interface UserDao {
 	//추억지도 보기
 	public List<User> memoryMap(Search search)throws Exception;
 	
-	//이메일 중복체크
-	public int checkEmail(String email)throws Exception;
-	
+	//안증번호 DB에 넣기
+	public void emailAuth(String authNum)throws Exception;
 }

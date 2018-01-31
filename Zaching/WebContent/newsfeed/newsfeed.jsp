@@ -6,13 +6,23 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-		<title>Loading Effects for Grid Items | Demo 2</title>
+		<title>자췽 뉴스피드</title>
 		<meta name="description" content="Loading Effects for Grid Items with CSS Animations" />
 		<meta name="keywords" content="css animation, loading effect, google plus, grid items, masonry" />
 		<meta name="author" content="Codrops" />
 		<link rel="shortcut icon" href="../favicon.ico"> 
 		<link rel="stylesheet" type="text/css" href="../resources/css/default.css" />
 		<link rel="stylesheet" type="text/css" href="../resources/css/component.css" />
+		<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-7243260-2']);
+		_gaq.push(['_trackPageview']);
+		(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+		</script>
 		<link rel='dns-prefetch' href='//fonts.googleapis.com' />
 		<link rel='dns-prefetch' href='//s.w.org' />
 		<script src="../resources/javascript/modernizr.custom.js"></script>
@@ -20,60 +30,10 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >	
 		
-		<script type='text/javascript' defer="defer" src='https://themify.me/demo/themes/pinboard/wp-content/themes/pinboard/themify/js/main.js?ver=3.3.9'></script>
-		
-		<script type='text/javascript' src='https://themify.me/demo/themes/pinboard/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=4.9.1'></script>
-		<script type='text/javascript' src='https://themify.me/demo/themes/pinboard/wp-includes/js/jquery/jquery.form.min.js?ver=4.2.1'></script>
-		<script type='text/javascript' defer="defer" src='https://themify.me/demo/themes/pinboard/wp-content/themes/pinboard/js/jquery.isotope.min.js?ver=4.9.1'></script>
-		<script type='text/javascript' defer="defer" src='https://themify.me/demo/themes/pinboard/wp-content/themes/pinboard/js/jquery.infinitescroll.min.js?ver=4.9.1'></script>
-		
-		<script type='text/javascript' defer="defer" src='https://themify.me/demo/themes/pinboard/wp-content/themes/pinboard/js/themify.script.js?ver=4.9.1'></script>
-		<script type='text/javascript' src='https://themify.me/demo/themes/pinboard/wp-includes/js/comment-reply.min.js?ver=4.9.1'></script>
-		<script type='text/javascript' src='https://themify.me/demo/themes/pinboard/wp-includes/js/wp-embed.min.js?ver=4.9.1'></script>
-		<script type='text/javascript' src='https://themify.me/demo/themes/pinboard/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
-		<script type='text/javascript' src='https://themify.me/demo/themes/pinboard/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
-		<link rel='https://api.w.org/' href='https://themify.me/demo/themes/pinboard/wp-json/' />
-		<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://themify.me/demo/themes/pinboard/xmlrpc.php?rsd" />
-		<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://themify.me/demo/themes/pinboard/wp-includes/wlwmanifest.xml" /> 
-		<meta name="generator" content="WordPress 4.9.1" />
-		<link rel='shortlink' href='https://themify.me/demo/themes/pinboard/?p=186' />
-		<link rel="alternate" type="application/json+oembed" href="https://themify.me/demo/themes/pinboard/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Flayouts%2Flarge-board%2F" />
-		<link rel="alternate" type="text/xml+oembed" href="https://themify.me/demo/themes/pinboard/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Flayouts%2Flarge-board%2F&#038;format=xml" />
-		<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/themify.me\/demo\/themes\/pinboard\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.1"}};
-			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56794,8205,9794,65039],[55358,56794,8203,9794,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
-		</script>
 		
 		<style type="text/css">
-		img.wp-smiley,
-		img.emoji {
-			display: inline !important;
-			border: none !important;
-			box-shadow: none !important;
-			height: 1em !important;
-			width: 1em !important;
-			margin: 0 .07em !important;
-			vertical-align: -0.1em !important;
-			background: none !important;
-			padding: 0 !important;
-		}
 		
-		li {
-		  overflow: hidden; 
-		  text-overflow: ellipsis;
-		  white-space: nowrap;
-		}
 		
-		.post-content {
-	min-width: 120px;
-	padding: 0.925em;
-}
-a.themify_lightbox_post{
-	cursor: not-allowed;
-}
-.themify_lightbox_loaded a.themify_lightbox_post{
-	cursor:auto;
-}
 		</style>
 
 	</head>
@@ -98,21 +58,21 @@ a.themify_lightbox_post{
 			<c:set var="i" value="0" />
 				<c:forEach var="newsfeed" items="${list}">
 					<c:set var="i" value="${ i+1 }" />
-					<li><div class="post-content">
+					<li>
 					<p class="author-pic">
-					<img alt='' src='../resources/images/profile_test.png' srcset='https://secure.gravatar.com/avatar/cb2e9e4d63e271d04ee4e5753d24586f?s=80&#038;d=mm&#038;r=g 2x' itemprop='image' class='avatar avatar-40 photo' height='40' width='40'/>
+					<img alt='' src='../resources/images/profile_test.png' srcset='https://secure.gravatar.com/avatar/cb2e9e4d63e271d04ee4e5753d24586f?s=80&#038;d=mm&#038;r=g 2x' itemprop='image' class='avatar avatar-40 photo' height='40' width='40' align="left"/>
 					<span class="post-author">
 						<span class="author vcard"><a class="url fn n" href="../resources/images/profile_test.png" rel="author">소현태</a></span> 
 						<em>&sdot;</em>
 					</span>
 					<time datetime="2012-03-20" class="post-date entry-date updated">${newsfeed.regDate}</time></p>
-					</div>
+					
 					
 					<c:if test="${!empty newsfeed.fileName}"><a href="http://drbl.in/fWMM"><img src="../resources/images/${newsfeed.fileName }"></a></c:if>
-					<h3 class="post-title entry-title"><a href="https://themify.me/demo/themes/pinboard/baking-cake/?post_in_lightbox=1" class="themify_lightbox_post">${newsfeed.content} </a> </h3><hr style="border:solid 0.5px gray">
+					<h3 class="post-title entry-title">${newsfeed.content}</h3><hr style="border:solid 0.5px gray">
 					<p class="post-meta entry-meta">
 					<span class="post-category">
-					<a href="https://themify.me/demo/themes/pinboard/category/life/" rel="category tag"><i class="glyphicon glyphicon-thumbs-up"></i>${newsfeed.countLikey}</a><i class="glyphicon glyphicon-pencil"></i>${newsfeed.countReply }</span></p>
+					<a href="https://themify.me/demo/themes/pinboard/category/life/" rel="category tag"><i class="glyphicon glyphicon-thumbs-up"></i>${newsfeed.countLikey}</a><a href="#"><i class="glyphicon glyphicon-pencil"></i>${newsfeed.countReply }</a></span></p>
 					
 					</li>
 				</c:forEach>
@@ -234,6 +194,6 @@ a.themify_lightbox_post{
 			} );
 		</script>
 		<!-- For the demo ad -->   
-		<script src="../tympanus.net/codrops/adpacks/demoad.js"></script>
+		<script src="//tympanus.net/codrops/adpacks/demoad.js"></script>
 	</body>
 </html>

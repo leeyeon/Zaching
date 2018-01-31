@@ -36,10 +36,10 @@
 			parameterType="payment">
 		UPDATE USERS
 		<set>
-			<if test="paymentCode == 'P01' || paymentCode == 'P05'">
+			<if test="paymentCode == 'P01' || paymentCode == 'P05' || paymentCode == 'P06'">
 				total_point = total_point + #{point}
 			</if>
-			<if test="paymentCode == 'P02' || paymentCode == 'P03' || paymentCode == 'P06'">
+			<if test="paymentCode == 'P02' || paymentCode == 'P03'">
 				total_point = total_point - #{point}
 			</if>
 			<if test="paymentCode == 'M01'">

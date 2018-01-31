@@ -1,11 +1,20 @@
 package com.zaching.service.user.impl;
 
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
-
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -118,12 +127,65 @@ public class UserServiceImpl implements UserService {
 		
 		userDao.updateNotice(user);
 	}
-
-	@Override
-	public int checkEmail(String email) throws Exception {
-		// TODO Auto-generated method stub
-		return userDao.checkEmail(email);
+	
+	
+	public boolean checkDuplication(String email) throws Exception {
+		boolean result=true;
+		User user=userDao.login(email);
+		if(user != null) {
+			result=false; //중복
+		}
+		return result;
 	}
+	
+	// 이메일 발송 메소드
+	public void sendMail(String email, String authNum)throws Exception {
+
+			String host = "smtp.gmail.com";// smtp서버
+			String subject = "자췽ing 인증번호 전송";
+			String fromName = "자췽 관리자";
+			String from = "hi3pig@gmail.com";// 관리자 메일 주소
+			String to = email;// 인증번호 받을 유저의이메일
+
+			String content = "인증번호[" + authNum + "]";
+			// 인증번호를 우리 DB에 저장?해서 비교???
+
+			try {
+
+				Properties props = new Properties();
+				props.put("mail.smtp.starttls.enable", "true");
+				props.put("mail.transport.protocol", "smtp");
+				props.put("mail.smtp.host", host);
+				props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+				props.put("mail.smtp.port", "465");// 이것은 무엇인가 왜 465 포트일까
+				props.put("mail.smtp.user", from);
+				props.put("mail.smtp.auth", "true");
+
+				Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication("hi3pig@gmail.com", "1379dlek");
+					}
+				});
+				Message msg = new MimeMessage(mailSession);
+				msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "UTF-8", "B")));
+
+				InternetAddress[] address1 = { new InternetAddress(to) };
+				msg.setRecipients(Message.RecipientType.TO, address1);// 받는사람
+				msg.setSubject(subject);// 메일제목
+				msg.setSentDate(new Date());// 보내는 날짜
+				msg.setContent(content, "text/html;charset=euc-kr");// 내용 설정(HTML형식)
+
+				Transport.send(msg);// 메일보내기
+				
+				userDao.emailAuth(authNum);
+			} catch (MessagingException e) {
+				e.printStackTrace();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 
 
 }

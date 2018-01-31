@@ -17,13 +17,19 @@ public interface FriendDao {
 	public void recommendFriend(Friend friend) throws Exception;
 	
 	//친구끊기
-	public void deleteFriend(Friend friend) throws Exception;
+	public void deleteFriend(int friendId) throws Exception;
 	
 	//친구목록
 	public List<Friend> listFriend(Search search) throws Exception;
 	
 	//친구차단
 	public boolean blockFriend(Friend friendId) throws Exception;
+	
+	//친구조회
+	public Friend getFriend(int friendId) throws Exception;
+	
+	//status상태 업데이트
+	public Friend updateFriend(Friend status) throws Exception;
 	
 	//totalCount
 	public int getTotalCount(Search search) throws Exception;
