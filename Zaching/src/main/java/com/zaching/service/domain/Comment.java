@@ -10,7 +10,7 @@ public class Comment {
 	private String category;
 	private int userId;
 	private String content;
-	private Date createdDate;
+	private String createdDate;
 	/* 조회 가능/ 조회 불가능 (삭제 유무) */
 	private String status;
 	private String userName;
@@ -18,6 +18,14 @@ public class Comment {
 
 	public Comment() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getUserImage() {
+		return userImage;
+	}
+
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
 	}
 
 	public int getCommentId() {
@@ -60,11 +68,11 @@ public class Comment {
 		this.content = content;
 	}
 
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -84,19 +92,11 @@ public class Comment {
 		this.userName = userName;
 	}
 
-	public String getUserProfile() {
-		return userImage;
-	}
-
-	public void setUserProfile(String userProfile) {
-		this.userImage = userProfile;
-	}
-
 	@Override
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", roomId=" + roomId + ", category=" + category + ", userId="
 				+ userId + ", content=" + content + ", createdDate=" + createdDate + ", status=" + status
-				+ ", userName=" + userName + ", userProfile=" + userImage + "]";
+				+ ", userName=" + userName + ", userImage=" + userImage + "]";
 	}
 
 	

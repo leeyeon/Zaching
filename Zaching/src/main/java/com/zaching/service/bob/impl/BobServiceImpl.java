@@ -13,7 +13,6 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.bob.BobDao;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
-import com.zaching.service.domain.Fee;
 import com.zaching.service.domain.Participant;
 
 /*
@@ -51,11 +50,8 @@ public class BobServiceImpl implements BobService {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		if(search.getCategory().equals("B03")) {
-			for (Bob bob : list) {
-				bob.setParticipantList(bobDao.listParticipant(bob.getBobId()));
-			}
-			
+		for (Bob bob : list) {
+			bob.setParticipantList(bobDao.listParticipant(bob.getBobId()));
 		}
 		
 		map.put("list", list);
@@ -71,12 +67,10 @@ public class BobServiceImpl implements BobService {
 	@Override
 	public Map<String, Object> getBob(int bobId, String category, int monthFee) throws Exception {
 		
-		List<Participant> list = bobDao.listParticipant(bobId);
-		List<Fee> feeList = bobDao.listFeeBob(bobId, monthFee);
+		List<Participant> feeList = bobDao.listFeeBob(bobId, monthFee);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bob", bobDao.getBob(bobId, category));
-		map.put("participant", list);
-		map.put("fee", feeList);
+		map.put("participant", feeList);
 		return map;
 	}
 	
@@ -101,16 +95,24 @@ public class BobServiceImpl implements BobService {
 	}
 
 	@Override
-	public void enterBob(int userId, int bobId) throws Exception {
+	public boolean enterBob(int userId, int bobId) throws Exception {
 		
 		int participantId = bobDao.getParticipant(userId, bobId);
 		//System.out.println("참가 시퀀스 id : "+participantId);
 		
+		int result = 0;
+		
 		/* 참가 중이 아닐때 */
 		if(participantId == 0) {
-			bobDao.enterBob(userId, bobId);
+			result = bobDao.enterBob(userId, bobId);
 		} else {
-			bobDao.cancleBob(participantId);
+			result = bobDao.cancleBob(participantId);
+		}
+		
+		if(result==1) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -130,8 +132,8 @@ public class BobServiceImpl implements BobService {
 	}
 
 	@Override
-	public void payFeeBob(Fee fee) throws Exception {
-		bobDao.payFeeBob(fee);
+	public void payFeeBob(int participantId, int paidFee) throws Exception {
+		bobDao.payFeeBob(participantId, paidFee);
 	}
 
 }

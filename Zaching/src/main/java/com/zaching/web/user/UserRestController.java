@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,58 +31,50 @@ public class UserRestController {
 	public UserRestController() {
 		System.out.println(this.getClass());
 	}
-	
-	@RequestMapping( value="json/getUser/{userId}", method=RequestMethod.GET )
-	public User getUser( @PathVariable int userId ) throws Exception{
-		
-		System.out.println("/user/json/getUser : GET");
-		
-		//Business Logic
-		return userService.getUser(userId);
-	}
-	
-	@RequestMapping(value="json/login", method=RequestMethod.POST)
-	public User login( @RequestBody User user,
-				HttpSession session	)throws Exception{
-		
-		System.out.println("/user/json/login : POST");
-		
-		System.out.println("::"+user);
-		
-		
-		User dbUser=userService.login(user.getEmail());
-		System.out.println("::::: "+dbUser);
-		
-		
-		System.out.println("=====>  "+session);
-		if(user.getPassword().equals(dbUser.getPassword()) &&
-				user.getEmail().equals(dbUser.getEmail())) {
-			session.setAttribute("user", dbUser);
-		}
-		System.out.println("비교===>"+user.getEmail()+" = "+dbUser.getEmail());
-		System.out.println("비교===>"+user.getPassword()+" = "+dbUser.getPassword());
-		
-		return dbUser;
-	}
-	
-	//이메일 중복체크
-	@RequestMapping(value="/checkEmail", method= RequestMethod.POST)
-	public String checkEmail(HttpServletRequest request,Model model)throws Exception {
-			
-			System.out.println("/user/rest/checkEmail : POST");
-			
+	// 이메일 인증
+		@RequestMapping(value = "json/emailAuth", method = RequestMethod.POST)
+		public User emailAuth(HttpServletRequest request,
+						HttpSession session) throws Exception {
+
+			System.out.println("/user/json/emailAuth : POST");
+
 			String email = request.getParameter("email");
-			System.out.println("email===>"+email);
+			String authNum="";//보내 인증번호
 			
-			int rowcount = userService.checkEmail(email);
+			authNum = RandomNum();
 			
-			model.addAttribute("rowcount",new Integer(rowcount));
-			model.addAttribute("email", email);
+			User getSessionUser = (User)session.getAttribute("user");
 			
-			System.out.println("중복되는 갯수 :::"+rowcount);
+			System.out.println("getSessionUser :: "+getSessionUser);
 			
-			return String.valueOf(rowcount);
+			System.out.println("받는사람 email 정보==>" + email);
+			System.out.println("새로생성한 인증번호==> "+authNum);
+			
+			getSessionUser.setAuthNum(authNum);
+			userService.sendMail(email, authNum);
+			
+			System.out.println("DB인증번호 ===> "+getSessionUser.getAuthNum());
+			
+			session.setAttribute("user", getSessionUser);
+			
+			System.out.println("setSessionUser :: "+getSessionUser);
+
+			return getSessionUser;
 		}
 
+
+		// 난수발생 메소드
+				public String RandomNum() {
+
+					StringBuffer buffer = new StringBuffer();
+					for (int i = 0; i <= 6; i++) {
+						int n = (int) (Math.random() * 10);
+						buffer.append(n);
+					}
+					return buffer.toString();
+				}
+
+	
+	
 
 }

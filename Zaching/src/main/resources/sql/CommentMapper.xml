@@ -59,7 +59,7 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 				FROM	( 
 				
-				SELECT comments.comment_id, comments.content, comments.created_date,
+				SELECT comments.comment_id, comments.content, to_char(comments.created_date,'yyyy-mm-dd hh:mi') AS created_date,
 					comments.user_id, users.name AS user_name, users.profile_image AS profile_image
 				FROM COMMENTS, USERS 
 				<where>

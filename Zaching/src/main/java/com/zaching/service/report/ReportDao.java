@@ -6,7 +6,7 @@ import com.zaching.service.domain.Report;
 
 public interface ReportDao {
 	
-	public int addReport(Report report) throws Exception;
+	public void addReport(Report report) throws Exception;
 	
 	public List<Report> listReport(int reportId) throws Exception;
 	

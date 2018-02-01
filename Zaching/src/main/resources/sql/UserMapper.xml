@@ -37,6 +37,7 @@
 		<result property="setBob" 		  column="setting_bob" 		   jdbcType="CHAR"/>
 		<result property="snsType" 		  column="sns_type" 		   jdbcType="CHAR"/>
 		
+		
 	
 	
 	</resultMap>
@@ -101,17 +102,23 @@
 		WHERE user_id = #{value}
 	 </select>
 	 
+	<update id="emailAuth" parameterType="user">
+		UPDATE users
+		<set>
+			role ='2'
+		</set>
+		WHERE user_id = #{userId}
+	</update>
 	 
 	<update	id="updateUser"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
-	   		name =  #{name},
-	   		birth 	= #{birth},
+	   		birth 	= #{birth:VARCHAR},
 			phone	= #{phone:VARCHAR},
 			address	= #{address:VARCHAR},
 			gender	= #{gender:CHAR},
 			email	= #{email},
-			role = 	#{role:CHAR}, <!-- 이메일 인증시 ROLE 2로 UPDATE -->
+			role 	= #{role:CHAR}, <!-- 이메일 인증시 ROLE 2로 UPDATE -->
 			password = #{password},
 			profile_image = #{profileImage:VARCHAR},
 			<!-- real_name = #{realName:VARCHAR},

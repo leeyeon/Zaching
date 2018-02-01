@@ -13,6 +13,7 @@
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 	
 	<style>
+
 	
 		body {
 			padding-top:50px;
@@ -75,15 +76,16 @@
 			 margin-right: 20px;
 			 cursor: pointer;
 			 color: #FFFFFF;
+			 box-shadow: 0 5px 15px -5px #666;
        	}
        	
        	.dialog-add-bob {
        		background: #ccc;
-       		position: relative; 
-       		z-index:1;
+       		position: relative;
        		width: 200px;
        		left: -100px;
        		top: -230px;
+       		box-shadow: 0 5px 15px -5px #666;
        	}
        	
 		.user_thumnail {
@@ -175,11 +177,19 @@
 			        loadurl = $this.attr('href'),
 			        targ = $this.attr('data-target');
 
-			    $.get(loadurl, function(data) {
-			        $(targ).html(data);
-			    });
+			    if('${user}' == '' && (targ == "#B03" || targ == "#B04")) {
+					alert("로그인 후 사용하실 수 있습니다. \n"
+							+"간편회원가입을 통해서 쉽고 간편하게 자췽 서비스를 이용하실 수 있습니다.");
+					$(self.location).attr("href","/user/addUser");
+				} else {
+				    
+				    $.get(loadurl, function(data) {
+				        $(targ).html(data);
+				    });
+				    
+				    $this.tab('show');
+				}
 
-			    $this.tab('show');
 			    return false;
 			});
 			/* tab Event End */
@@ -214,7 +224,7 @@
 					<input type="text" name="searchKeyword" class="form-control" placeholder="검색 내용을 입력하세요." 
       					style="width: 360px; height:45px;"/>
 	      		</li>
-	      		<li class="pull-right"><a href="#" style="select-bob">내 주소로 검색하기</a></li>
+	      		<li class="pull-right"><a href="/bob/listBob?category=B04" data-target="#B04"  data-toggle="tabajax" style="select-bob">내 주소로 검색하기</a></li>
 			</ul>
 			
 			<!-- Tab 끝 -->
@@ -224,8 +234,8 @@
 				<div class="tab-pane active" id="B01"> </div>
 				<div class="tab-pane" id="B02"> </div>
 				<div class="tab-pane" id="B03"> </div>
-
-				<!-- 데이터 끝... -->	
+				<div class="tab-pane" id="B04"> </div>
+				<!-- 데이터 끝... -->
 				</div>
 			</div>
 		</div>
@@ -235,7 +245,7 @@
 
 	<!-- 방만들기 버튼 시작 -->
 	
-   	<div id="footer" align="right">
+   	<div id="footer" align="right" style="z-index: 100;">
    	  <div class="container">
 	  	<div class="btn-add-bob text-center">방 만들기</div>
 	  	<div class="dialog-add-bob text-center">

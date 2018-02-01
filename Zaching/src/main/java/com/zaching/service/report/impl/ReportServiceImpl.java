@@ -33,8 +33,9 @@ public class ReportServiceImpl implements ReportService {
 	
 	
 	@Override
-	public int addReport(Report report) throws Exception{
-		return reportDao.addReport(report);
+	public void addReport(Report report) throws Exception{
+		
+		reportDao.addReport(report);
 		
 	}
 	

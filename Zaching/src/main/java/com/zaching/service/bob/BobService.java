@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Bob;
-import com.zaching.service.domain.Fee;
 
 public interface BobService {
 
@@ -24,7 +23,7 @@ public interface BobService {
 	public void updateBob(Bob bob) throws Exception;
 	
 	// 참석중이면 삭제되고 참석 중이 아니면 추가시킴
-	public void enterBob(int userId, int bobId) throws Exception;
+	public boolean enterBob(int userId, int bobId) throws Exception;
 	
 	public void inviteBob(List<Integer> listUser, int bobId) throws Exception;
 	
@@ -32,6 +31,6 @@ public interface BobService {
 	
 	public void setFeeBob(int participantId, boolean isAutoFee) throws Exception;
 	
-	public void payFeeBob(Fee fee) throws Exception;
+	public void payFeeBob(int participantId, int paidFee) throws Exception;
 	
 }

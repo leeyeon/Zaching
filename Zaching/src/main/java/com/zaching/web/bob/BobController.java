@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ import com.zaching.common.service.CommonService;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
 import com.zaching.service.domain.Comment;
+import com.zaching.service.domain.User;
+import com.zaching.service.user.UserService;
 
 @Controller
 @RequestMapping("/bob/*")
@@ -53,9 +56,9 @@ public class BobController {
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
 
-	//@Value("#{commonProperties['pageSize']}")
+	@Value("#{commonProperties['pageSize']}")
 	// @Value("#{commonProperties['pageSize'] ?: 2}")
-	int pageSize = 9;
+	int pageSize;
 	
 	@Autowired
 	@Qualifier("commonServiceImpl")
@@ -64,6 +67,10 @@ public class BobController {
 	@Autowired
 	@Qualifier("bobServiceImpl")
 	private BobService bobService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 	
 	
 	public BobController() {
@@ -75,43 +82,18 @@ public class BobController {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true)); 
 	}
-	
-	@RequestMapping(value="/addBob", method=RequestMethod.GET)
-	public String addBobView(@RequestParam String category, Model model) {
-		System.out.println(this.getClass()+"/addBob_ GET");
+
+	@RequestMapping("/mainBob")
+	public String mainBob(HttpServletRequest request) throws Exception {
+		System.out.println(this.getClass()+"/mainBob");
 		
-		//System.out.println(category);
+		/* session처리! */
+		//request.getSession().setAttribute("user", userService.getUser(8));
 		
-		model.addAttribute("category", category);
-		model.addAttribute("categoryName", this.getCategoryName(category));
-		
-		return "forward:/bob/addBob.jsp";
+		// 단순 네비게이션		
+		return "forward:/bob/mainBob.jsp";
 	}
-	
-	@RequestMapping(value="/addBob", method=RequestMethod.POST)
-	public String addBob(@ModelAttribute Bob bob, 
-						BindingResult result, 
-						Model model) {
-		
-		// binding Test
-		if (result.hasErrors()) {
-			System.out.println(result.getTarget());
-            return "error";
-        }
-		
-		System.out.println(this.getClass()+"/addBob_ POST");
-		
-		try {
-			bob.setImage(commonService.addFile(fileDirectory, bob.getUploadFile()));
-			bobService.addBob(bob);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println(bob);
-		
-		return "redirect:/bob/getBob?bobId="+bob.getBobId()+"&category="+bob.getCategory();
-	}
+
 	
 	@RequestMapping(value= "/getBob", method=RequestMethod.GET)
 	public String getBob(@RequestParam int bobId, 
@@ -140,11 +122,12 @@ public class BobController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		
-		
-		
-		model.addAttribute("comments", (List<Comment>)(commonService.listComment(search, "B00", bobId).get("list")));
+
+		Calendar cal = Calendar.getInstance();
+
+		model.addAttribute("comments", commonService.listComment(search, "B00", bobId).get("list"));
 		model.addAttribute("category", category);
+		model.addAttribute("currentTime", cal.getTime());
 		model.addAllAttributes(bob);
 		
 		return "forward:/bob/getBob.jsp";
@@ -152,6 +135,7 @@ public class BobController {
 
 	@RequestMapping("/listBob")
 	public String listBob(@ModelAttribute Search search,
+						  HttpSession session,
 						  Model model) throws Exception {
 		System.out.println(this.getClass()+"/listBob?category="+search.getCategory());
 		
@@ -165,6 +149,10 @@ public class BobController {
 		
 		//System.out.println(search);
 		
+		if(search.getCategory().equals("B03")) {
+			search.setSearchKeyword(((User)session.getAttribute("user")).getUserId()+"");
+		}
+		
 		Map<String, Object> map = bobService.listBob(search);
 		
 		Page resultPage	= 
@@ -177,18 +165,58 @@ public class BobController {
 		return "forward:/bob/listBob.jsp";
 	}
 	
-	@RequestMapping("/mainBob")
-	public String mainBob() throws Exception {
-		System.out.println(this.getClass()+"/mainBob");
+	
+	@RequestMapping(value="/addBob", method=RequestMethod.GET)
+	public String addBobView(@RequestParam String category, Model model) {
+		System.out.println(this.getClass()+"/addBob_ GET");
 		
-		// 단순 네비게이션		
-		return "forward:/bob/mainBob.jsp";
+		//System.out.println(category);
+		
+		model.addAttribute("category", category);
+		model.addAttribute("categoryName", this.getCategoryName(category));
+		
+		return "forward:/bob/addBob.jsp";
 	}
+	
+	@RequestMapping(value="/addBob", method=RequestMethod.POST)
+	public String addBob(@ModelAttribute Bob bob, @RequestParam boolean imageCheck,
+						BindingResult result) throws Exception {
+		
+		// binding Test
+		if (result.hasErrors()) {
+			System.out.println(result.getTarget());
+            return "error";
+        }
+		
+		System.out.println(this.getClass()+"/addBob_ POST");
+		//System.out.println(bob);
+		
+		System.out.println(imageCheck);
+		
+		if(bob.getUploadFile() != null) {
+			try {
+				bob.setImage(commonService.addFile(fileDirectory, bob.getUploadFile()));
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(imageCheck) {
+			bob.setImage(null);
+		}
+		
+		bobService.addBob(bob);		
+		System.out.println(bob);
+		
+		return "redirect:/bob/getBob?bobId="+bob.getBobId()+"&category="+bob.getCategory();
+	}
+
 
 	@RequestMapping(value="/updateBob", method=RequestMethod.GET)
 	public String updateBobView(@RequestParam String category,
 								@RequestParam int bobId,
 								Model model) throws Exception {
+		
 		System.out.println(this.getClass()+"/updateBob_GET");
 		
 		Bob bob = bobService.getBobInfo(bobId, category);
@@ -197,17 +225,56 @@ public class BobController {
 
 		model.addAttribute("category", category);
 		model.addAttribute("categoryName", this.getCategoryName(category));
+		model.addAttribute("bob", bob);
 		
 		return "forward:/bob/updateBob.jsp";
 	}
 	
 	@RequestMapping(value="/updateBob", method=RequestMethod.POST)
-	public String updateBob(@ModelAttribute Bob bob,
-							Model model) {
+	public String updateBob(@ModelAttribute Bob bob, @RequestParam boolean imageCheck) throws Exception{
+
 		System.out.println(this.getClass()+"/updateBob_POST");
 		
+		System.out.println(imageCheck);
 		
-		return "forward:/bob/getBob.jsp?bobId="+bob.getBobId()+"&category="+bob.getCategory();
+		if(bob.getUploadFile() != null) {
+			try {
+				bob.setImage(commonService.addFile(fileDirectory, bob.getUploadFile()));
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(imageCheck) {
+			bob.setImage(null);
+		}
+		
+		bobService.updateBob(bob);
+		System.out.println("1:: "+bob);
+		
+		return "redirect:/bob/getBob?bobId="+bob.getBobId()+"&category="+bob.getCategory();
+	}
+	
+	@RequestMapping(value= "/listCommment", method=RequestMethod.GET)
+	public String listCommment(@RequestParam int bobId,
+						Model model) throws Exception {
+		System.out.println(this.getClass()+"/listCommment");
+		
+		//System.out.println("방 ID :: "+bobId);
+		//System.out.println(category+"나왔따");
+
+		Search search = new Search();
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+
+		Calendar cal = Calendar.getInstance();
+
+		model.addAttribute("comments", commonService.listComment(search, "B00", bobId).get("list"));
+		
+		return "forward:/bob/listComment.jsp";
 	}
 	
     /**

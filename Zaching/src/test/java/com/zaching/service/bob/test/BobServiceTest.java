@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.zaching.common.domain.Search;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
-import com.zaching.service.domain.Fee;
 import com.zaching.service.domain.Participant;
 
 /*
@@ -106,10 +105,12 @@ public class BobServiceTest {
 			System.out.println(participant);
 		}
 		
+		/*
 		List<Fee> feeList = (List<Fee>)map.get("fee");
 		for (Fee fee : feeList) {
 			System.out.println(fee);
 		}
+		*/
 	}
 	
 	//@Test
@@ -154,12 +155,13 @@ public class BobServiceTest {
 	
 	//@Test
 	public void payFeeBob() throws Exception {
-		
+		/*
 		Fee fee = new Fee();
 		fee.setPaidFee(20000);
 		fee.setParticipantId(15);
 		
 		bobService.payFeeBob(fee);
+		*/
 	}
 	
 	//@Test

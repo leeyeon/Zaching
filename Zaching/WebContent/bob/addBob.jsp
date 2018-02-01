@@ -6,15 +6,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%
-
-	User user = new User();
-	user.setUserId(9);
-	
-	request.setAttribute("user", user);
-
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,10 +16,7 @@
     
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <!-- Make sure the path to CKEditor is correct. -->
-    <script src="//cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
@@ -42,13 +30,10 @@
 	<jsp:include page="../resources/javascript/fileUploadCDN.jsp"/>
 	
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-	
-	
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment-with-locales.min.js"></script> 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js"></script>
-	<script src="../resources/javascript/jquery.simple-dtpicker.js"></script>
-	<link href="../resources/css/jquery.simple-dtpicker.css" rel="stylesheet" />
+
+	<link rel="stylesheet" href="../resources/css/bootstrap-datetimepicker.min.css">
+	<script src="../resources/javascript/bootstrap-datetimepicker.min.js"></script>
+	<script src="../resources/javascript/bootstrap-datetimepicker.ko.js"></script> 
 
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
   	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
@@ -154,18 +139,10 @@
 	
 	function fcnAddBob() {
 
-
 		$("form").attr("method", "POST").attr("action", "/bob/addBob").submit();
 	}
 	
 	$(function() {
-		
-		/*
-		$("input[type='text']").on('focus', function() {
-			$(this).addClass("focus");
-		})
-		*/
-
 		
 		$('button:contains("방 만들기")').on('click', function(){
 			fcnAddBob();
@@ -227,16 +204,11 @@
 	    	                	        });
 	    	                	        map.setCenter(coords);
 	    	                	        
-	    	                	        var obj = JSON.stringify(coords);
+	    	                	        console.log(coords.getLat());
+	    	                	        console.log(coords.getLng());
 	    	                	        
-	    	                	        console.log(obj);
-	    	                	        
-	    	                	        var obj = JSON.parse(obj);
-	    	                	        console.log(obj);
-	    	                	        console.log(obj.ib);
-	    	                	        
-	    	                	        $("longitude").val(obj.ib);
-	    	                	        $("latitude").val(obj.jb);
+	    	                	        $("input[name=latitude]").val(coords.getLat());
+	    	                	        $("input[name=longitude]").val(coords.getLng());
 	    	                	    } 
 	    	                	});
 		    	            }
@@ -281,12 +253,64 @@
 	    	}
 	    });
 	    
+	    var todayDate = new Date().getDate();
+	   // alert(todayDate + ":" + new Date(new Date().setDate(todayDate + 30)).getDate());
 	    
+	    $('.form_datetime').datetimepicker({
+	        language:  'ko',
+	        weekStart: 1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 2,
+			forceParse: 0,
+	        showMeridian: 1,
+	        startDate: new Date()
+	    });
 		
+	    /* surmmernote*/
+	    
+	    $('#summernote').summernote({ 
+			placeholder: '이번 밥친구 모임에 대하여 설명해주세요.',
+			callbacks: { // 콜백을 사용
+                      // 이미지를 업로드할 경우 이벤트를 발생
+			    onImageUpload: function(files, editor, welEditable) {
+			    	console.log("editor: "+editor);
+				    sendFile(files[0], this);
+				}
+			},
+	        tabsize: 2,
+	        height: 500,
+			lang: 'ko-KR'
+		}); 
 	});
 
-
-</script>
+	function sendFile(file, editor) {
+           // 파일 전송을 위한 폼생성
+           $("input:hidden[name='uploadFile']").val(JSON.stringify(file.name));
+ 		
+			var form = new FormData();
+			form.append("uploadFile", file);
+			$.ajax({ 
+			url: "/bob/rest/addSummernoteImage", 
+			data: form, 
+			dataType: 'json', 
+			processData: false, 
+			contentType: false, 
+			type: 'POST',
+ 	        success : function(data, status) { // 처리가 성공할 경우
+                   // 에디터에 이미지 출력
+                   console.log(status);
+                   console.log(data);
+                   console.log(data.url);
+                   
+ 	        	$('#summernote').summernote('editor.insertImage', data.url);
+ 	        	 var image = $('<img>').attr('src', '' + data.url); // 에디터에 img 태그로 저장
+ 	            $('#summernote').summernote("insertNode", image[0]); // 
+ 	           
+ 	        }
+ 	    });
+ 	}
+  </script>
  
     
 </head>
@@ -294,7 +318,6 @@
 <body>
     
     <div class="container">
-
     	<div class="page-header text-center">
 			<h3 class="text-info" style="color: #4d4d4d; font-weight: bold;">[${categoryName}] 방만들기</h3>
 		</div>
@@ -335,54 +358,8 @@
 		    	</c:if>
 		    	
 	            <div class="row">
-	            	<div class="col-xs-12" style="margin-bottom:20px;">
-					<input type="hidden" id="uploadFile" name="uploadFile" value="" />
-	                	<textarea name="content" id="ckeditor"></textarea>
-	                	<div id="summernote"><p>Hello Summernote</p></div>
-						  <script>
-							$(document).ready(function() { 
-								$('#summernote').summernote({ 
-									placeholder: 'Hello bootstrap 4',
-									callbacks: { // 콜백을 사용
-				                        // 이미지를 업로드할 경우 이벤트를 발생
-									    onImageUpload: function(files, editor, welEditable) {
-									    	console.log("editor: "+editor);
-										    sendFile(files[0], this);
-										}
-									},
-							        tabsize: 2,
-							        height: 500,
-									lang: 'ko-KR'
-								}); 
-							});
-							
-							function sendFile(file, editor) {
-					            // 파일 전송을 위한 폼생성
-					            $("input:hidden[name='uploadFile']").val(JSON.stringify(file.name));
-						 		
-									var form = new FormData();
-									form.append("uploadFile", file);
-									$.ajax({ 
-									url: "/bob/rest/addSummernoteImage", 
-									data: form, 
-									dataType: 'json', 
-									processData: false, 
-									contentType: false, 
-									type: 'POST',
-						 	        success : function(data, status) { // 처리가 성공할 경우
-					                    // 에디터에 이미지 출력
-					                    console.log(status);
-					                    console.log(data);
-					                    console.log(data.url);
-					                    
-						 	        	$('#summernote').summernote('editor.insertImage', data.url);
-						 	        	 var image = $('<img>').attr('src', '' + data.url); // 에디터에 img 태그로 저장
-						 	            $('#summernote').summernote("insertNode", image[0]); // 
-						 	           
-						 	        }
-						 	    });
-						 	}
-						  </script>
+	            	<div class="col-xs-12">
+	                	<textarea  id="summernote" name="content"></textarea>
 	                </div>
 	            </div>
 	            
@@ -392,7 +369,7 @@
 	            	<div class="col-sm-2 btn-bob">대표사진 설정</div>
 	            	<div class="col-sm-2 text-center" style="padding-top: 7px;">
 	            		<div class="checkbox">
-	            			<label><input type="checkbox" name="imageCheck" value="">기본배경화면</label>
+	            			<label><input type="checkbox" name="imageCheck">기본배경화면</label>
 	            		</div>
 	            	</div>
 	            	<div class="col-sm-8" align="center" style="padding-top: 7px;">
@@ -406,7 +383,11 @@
 			    	<div class="row">
 			    		<div class="col-sm-6 btn-bob">날짜</div>
 		            	<div class="col-sm-6" align="center" style="padding-top: 8px;">
-		            		<input type="date" name="appointmentTime" class="form-control" placeholder="날짜" style="font-size: 16px;"/>
+			                <div class="input-group date form_datetime col-md-5" data-date-format="yyyy-mm-dd HH:i" data-link-field="dtp_input1" style="width: 100%;">
+			                    <input type="text" name="appointmentTime" class="form-control" style="font-size: 16px;" readonly>
+			                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+			                </div>
 		            	</div>
 			    	</div>
 			    	
@@ -433,11 +414,11 @@
 		    		<div class="row">
 		            	<div class="col-sm-3 btn-bob">회비 (원)</div>
 		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
-		            		<input type="text" class="form-control" name="imageCheck" value="" placeholder="(ex) 20000">
+		            		<input type="text" class="form-control" name="fee" placeholder="(ex) 20000">
 		            	</div>
 		            	<div class="col-sm-3 btn-bob">회비날짜</div>
 		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
-		            		<input type="date" name="appointmentTime" class="form-control"style="font-size: 16px;"/>
+		            		<input type="date" name="feeDate" class="form-control" style="font-size: 16px;"/>
 		            	</div>
 			    	</div>
 		    		
@@ -497,30 +478,5 @@
 	 </div>
 	        
     </body>
-    
-    
-    <script>
-         // Replace the <textarea id="editor1"> with a CKEditor
-         // instance, using default configuration.
-         CKEDITOR.replace('ckeditor',{
-		      height: 300,
-		      filebrowserUploadUrl: '${pageContext.request.contextPath}/test/ckeditorImageUpload'
-		  } );
-		         
-         CKEDITOR.on('dialogDefinition', function( ev ){
-             var dialogName = ev.data.name;
-             var dialogDefinition = ev.data.definition;
-           
-             switch (dialogName) {
-                 case 'image': //Image Properties dialog
-                     //dialogDefinition.removeContents('info');
-                     dialogDefinition.removeContents('Link');
-                     dialogDefinition.removeContents('advanced');
-                     break;
-             }
-         });
-     </script>
-
 	
 </html>
-

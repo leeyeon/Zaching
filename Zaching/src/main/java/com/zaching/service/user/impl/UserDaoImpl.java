@@ -1,6 +1,8 @@
 package com.zaching.service.user.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,14 +102,12 @@ public class UserDaoImpl implements UserDao{
 		return sqlSession.selectList("UserMapper.memoryMap", search);
 	}
 
-	
-
 	@Override
-	public int checkEmail(String email) throws Exception {
-		System.out.println("DaoImpl===>"+email);
-		int rowcount=1;
-		return sqlSession.selectOne("UserMapper.checkEmail", rowcount);
+	public void emailAuth(User user) throws Exception {
+		sqlSession.update("UserMapper.emailAuth", user);
+		
 	}
+
 	
 
 }

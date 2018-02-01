@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -27,6 +28,14 @@
 	  --%>
 
 	<style>
+	
+		/* 글꼴 수정 */
+		
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+		
+		* {
+			font-family: 'Nanum Gothic', serif;
+		}
 		
 		.navbar-fixed-top {
 		    background: #ffffff;
@@ -75,23 +84,51 @@
 		    border-bottom: 4px solid RGB(237,125,49);
 		}
 		
+		/* //////////////// main css */
+		
+		/* 모달 크기조정 */
 		.social-login{
-			margin-left: 10px;
+			margin-left: 20px;
+		}
+		
+		.modal-dialog.login{
+	 		width: 300px;
+	  		height: 200px;
+	  		margin: 0;
+	  		padding: 0;
+		}
+		
+		/* ////////////////////로그인 모달 창 style/////////////////////// */
+		.modal-dialog.modal{
+	 		 width: 50%;
+	 		 height: 50%;
+	 		 margin: 0;
+	 		 padding: 0;
 
 		}
+		
+		img.img-rounded{
+			margin-top: 10px;
+			margin-left: 10px;
+			margin-right: 10px;
+			margin-bottom: 10px;
+		}
+
 	</style>
 	
 	<script type="text/javascript">
 	
-$( function() {
+	$( function() {
 		
-		$("#email").focus();
+		
 		
 		//==>"Login"  Event 연결
 		$("#login").on("click" , function() {
+			
+			$("#email").focus();
 
-			var email =$("input:text").val();
-			var password =$("input:password").val();
+			var email =$("#email").val();
+			var password =$("#password").val();
 			
 			if(email == null || email.length <1) {
 				alert('ID 를 입력하지 않으셨습니다.');
@@ -109,45 +146,58 @@ $( function() {
 			$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
 			
 		});
-	});
-		$(function() {
-			
-			$('body > nav > div.container > div > div:nth-child(3)').addClass('active');
-			
-			$('.mainbar-menu').on('click', function(){
-				 $('.active').removeClass('active');
-				 $(this).addClass('active');
-			})
-			
-			$( ".navbar-brand img" ).on("click" , function() {
-				$(self.location).attr("href","/");
-				
-		 	});
-			
-		 	$( "a:contains('밥친구')" ).on("click" , function() {
-				$(self.location).attr("href","/bob/mainBob");
-				
-		 	});
 
-			$("a:contains('생활정보')").on("click", function() {
-				self.location = "/livingInfo/mainLivingInfo";
-
-			});
+		$('body > nav > div.container > div > div:nth-child(3)').addClass('active');
 		
-			$("a:contains('회원가입')").on("click", function() {
-				self.location = "/user/addUser.jsp";
+		$('.mainbar-menu').on('click', function(){
+			 $('.active').removeClass('active');
+			 $(this).addClass('active');
+		})
+		
+		$( ".navbar-brand img" ).on("click" , function() {
+			$(self.location).attr("href","/");
+		});
+		
+		$('body > nav > div.container > div > div:nth-child(3)').addClass('active');
+		
+		$('.mainbar-menu').on('click', function(){
+			 $('.active').removeClass('active');
+			 $(this).addClass('active');
+		})
+		
+		$( ".navbar-brand img" ).on("click" , function() {
+			$(self.location).attr("href","/");			
+	 	});
 
-			});
-			
-			$('#loginModal').on('show.bs.modal', function (e) {
-				  if (!data) return e.preventDefault() 
-			});
-			
-			
+		$("a:contains('라이브방송')").on("click", function() {
+			self.location = "/broadcast/mainBroadcast";
+		});
+		
+	 	$( "a:contains('밥친구')" ).on("click" , function() {
+			$(self.location).attr("href","/bob/mainBob");			
+	 	});
 
+		$("a:contains('생활정보')").on("click", function() {
+			self.location = "/livingInfo/mainLivingInfo";
 		});
 	
-	</script>
+		$("a:contains('회원가입')").on("click", function() {
+			self.location = "/user/addUser";
+		});
+		
+		$( "#profile" ).on("click" , function() {
+			self.location = "/user/getTimeLine?userId=${user.userId}";			
+	 	});
+		
+		$("a:contains('패스워드찾기')").on("click", function() {
+			self.location = "/user/findPassword";
+
+		});
+		
+
+	});
+	
+</script>
 
 <title>zaching</title>
 </head>
@@ -175,8 +225,19 @@ $( function() {
             <li><a href="#">생활정보</a></li>
           </ul>
           <ul class="nav navbar-nav" style="float:right;">
+          	<c:if test="${user.userId ne null}">
+	          	<li><div style="padding-top: 10px; color:#FFF;">
+		          	<img src="/resources/images/profile_default.png" id="profile"
+		          	 width="30px"/>&nbsp;<u>${user.name}</u>&nbsp;님 환영합니다!
+	          	</div></li>
+	          	<li><a href="#">로그아웃</a></li>
+          	</c:if>
+          	 
+          	 
+            <c:if test="${user.userId eq null}">
             <li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
             <li><a href="#">회원가입</a></li>
+          </c:if>
           </ul>
         </div><!--/.nav-collapse -->
 	  </div>
@@ -187,7 +248,7 @@ $( function() {
    
 
 	 <!-- Modal -->
-  <div  id="loginModal"  class="modal fade"  >
+  <div  id="loginModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   
   <div class="modal-dialog">
     
@@ -196,8 +257,7 @@ $( function() {
       
       <!-- Modal Header start-->
        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-          aria-label="Close">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <div class="modal-title" align="center" style="margin-bottom:15px;"><!-- 자췽로고 -->
           <img src="/resources/images/temp_logo.png" class="img-logo" width="50" height="50" ></div> 
        </div><!-- Modal Header end -->  
@@ -206,14 +266,13 @@ $( function() {
        <div class="modal-body" align="left">
        	
        	<form>
-       	<div class="form-group">
+       	<div class="row">
           <div class="col-xs-4">
            	<label for="inputlg" style="margin-left: 5px">이메일(ID)</label>
           </div>
         </div>
         
-        
-         <div class="form-group">
+         <div class="row">
            <div class="col-sm-6">
    			<input type="text" class="form-control input-lg" id="email"  name="email"
 				placeholder="이메일을입력하세요"	style="margin-left: 5px"/>
@@ -221,7 +280,7 @@ $( function() {
            </div>
          </div>
          
-         <div class="form-group">
+         <div class="row">
            <div class="col-sm-6">
            	<label for="inputlg" style="margin-left: 5px" 
            	style="margin-top: 5px">패스워드(PW)</label>
@@ -229,7 +288,7 @@ $( function() {
          </div>
        
        
-         <div class="form-group">
+         <div class="row">
            <div class="col-sm-6">
    			 <input type="password" class="form-control input-lg" id="password" name="password"
    				placeholder="패스워드를입력하세요"	 style="margin-left: 5px">
@@ -237,7 +296,7 @@ $( function() {
 		</div>
 		
 		
-		<div class="form-group">
+		<div class="row">
               <div class="social-login" align="left">
    			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" >
    			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50" >
@@ -246,7 +305,7 @@ $( function() {
              </div>  
         </div>
         
-        <div class="form-group">
+        <div class="row">
 			  <div class="col-sm-offset-4 col-sm-6 text-center">
 		      <button type="submit" class="btn btn-primary" id="login" >로 &nbsp;그 &nbsp;인</button>
 			  <a class="btn btn-primary btn" href="#" role="button">패스워드찾기</a>
