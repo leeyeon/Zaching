@@ -92,22 +92,6 @@ $(function() {
 						 for(var i=0; i<5; i++){
 							 $.ajax( 
 										{
-											url : "/livingInfo/rest/movieImg/"+name[i],
-											method : "GET" ,
-											dataType : "json" ,
-											async: false,											
-											headers : {
-												"Accept" : "application/json",
-												"Content-Type" : "application/json"
-											},success : function(moviecode , status) {
-												img[i] = moviecode.items[0].link;
-												}
-											});	
-						 }
-						 
-						 for(var i=0; i<5; i++){
-							 $.ajax( 
-										{
 											url : "/livingInfo/rest/movieInfo/"+code[i],
 											method : "GET" ,
 											dataType : "json" ,
@@ -124,6 +108,25 @@ $(function() {
 												}
 											});	
 						 }
+						 
+						
+						 for(var i=0; i<5; i++){
+							 $.ajax( 
+										{
+											url : "/livingInfo/rest/movieImg/"+name[i],
+											method : "GET" ,
+											dataType : "json" ,
+											async: false,											
+											headers : {
+												"Accept" : "application/json",
+												"Content-Type" : "application/json"
+											},success : function(moviecode , status) {
+												img[i] = moviecode.items[0].link;
+												}
+											});	
+						 }
+						 
+					
 						
 						
 						for(var i=0; i<5; i++){

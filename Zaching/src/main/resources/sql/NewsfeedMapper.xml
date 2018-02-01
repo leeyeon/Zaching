@@ -62,7 +62,21 @@
 	
 	<select id="getTotalCount" parameterType="search" resultType="int">
 		SELECT COUNT(*)
-		FROM( SELECT * FROM newsfeed WHERE status='0') countTable
+	  	FROM(	SELECT *
+						FROM newsfeed
+						<if test="category != null">
+							<where>
+								<if test="category == 'V01'">
+						 			category_code = #{category}
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+						 		category_code = #{searchKeyword}
+								</if>
+								<if test="searchCondition == 2 and searchKeyword !='' ">
+						 		category_code = #{searchKeyword}
+								</if>
+							</where>
+						</if> ) countTable		
 	</select>
 	
 	<select id="getCountLike" parameterType="int" resultType="int">
