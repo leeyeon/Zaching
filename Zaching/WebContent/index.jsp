@@ -22,9 +22,14 @@
 </head>
 <body>
 
+
 	<div class="container">
+
 		<jsp:include page="/newsfeed/newsfeed.jsp" />
+
 	</div>
 
+
+  
 </body>
 </html>

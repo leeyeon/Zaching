@@ -14,8 +14,11 @@ public interface UserService {
 	//타임라인보기
 	public User getTimeLine(int userId)throws Exception;
 	
-	//내정보조회 & 로그인?
+	//내정보조회 
 	public User getUser(int userId)throws Exception;
+	
+	//로그인
+	public User login(String email)throws Exception;
 	
 	//user계좌정보 조회
     public User getAccountUser(int userId)throws Exception;
@@ -38,6 +41,10 @@ public interface UserService {
     //알림수신설정
     public  void updateNotice(User user)throws Exception;
     
+    // 이매일 ID 중복 확인
+ 	public boolean checkDuplication(String email) throws Exception;
     
+    //이메일 전송
+ 	public void sendMail(String email, String authNum)throws Exception;
 
 }

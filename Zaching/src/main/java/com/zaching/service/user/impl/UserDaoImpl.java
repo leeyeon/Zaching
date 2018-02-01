@@ -1,6 +1,8 @@
 package com.zaching.service.user.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import com.zaching.service.user.UserDao;
 @Repository("userDaoImpl")
 public class UserDaoImpl implements UserDao{
 	
+
 	//Field
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
@@ -26,6 +29,13 @@ public class UserDaoImpl implements UserDao{
 	//Constructor
 	public UserDaoImpl() {
 		System.out.println(this.getClass());
+	}
+	
+	
+	@Override
+	public User login(String email) throws Exception {
+		
+		return sqlSession.selectOne("UserMapper.login", email);
 	}
 
 	@Override
@@ -43,7 +53,7 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public User getUser(int userId) throws Exception {
-		
+		System.out.println("DaoImpl ::getUser" +userId);
 		return sqlSession.selectOne("UserMapper.getUser",userId);
 	}
 	
@@ -92,8 +102,13 @@ public class UserDaoImpl implements UserDao{
 		return sqlSession.selectList("UserMapper.memoryMap", search);
 	}
 
-	
-	
+	@Override
+	public void emailAuth(String authNum) throws Exception {
+		
+		sqlSession.update("UserMapper.emailAuth", authNum);
+		
+	}
+
 	
 
 }

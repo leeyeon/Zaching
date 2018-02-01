@@ -1,85 +1,106 @@
-<%@page import="com.zaching.service.domain.Friend"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@page import="com.zaching.service.domain.User"%>
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+User user = (User) request.getAttribute("user");
 
+%>
 
-<!DOCTYPE html>
-
-<html lang="ko">
-
+<html>
 <head>
-<meta charset="EUC-KR">
-
-<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-
-
-        
-        <style>
-
-        
-        	body {
-        		padding-top: 50px;
-        	}
-        
-        
-        </style>
-        <script type="text/javascript">
-        
-        
-		 </script>
-</head>
-<body>
-<div class="container">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
 	
+	<!--   jQuery , Bootstrap CDN  -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/resources/layout/sub_toolbar.jsp"/>
+	<style>
+ 		body {
+            padding-top : 80px;
+        }
+     </style>
+    
+     <!--  ///////////////////////// JavaScript ////////////////////////// -->
+	<script type="text/javascript">
 		
 	
-<h3>Ä£±¸¸ñ·Ï</h3>
-
-<div class="row">
-	    
-		    <div class="col-md-6 text-left">
-		    	<p class="text-primary">
-		    		ÀüÃ¼  ${resultPage.totalCount } °Ç¼ö, ÇöÀç ${resultPage.currentPage}  ÆäÀÌÁö
-		    	</p>
-		    </div>
-		    
-		    <div class="col-md-6 text-right">
-			    <form class="form-inline" name="detailForm">
-			    
-			     <div class="form-group">
-				    <select class="form-control" name="searchCondition" >
-						<option value="0" ${! empty searchCondition.equals && searchCondition.equals==0 ? "selected" : "" }>ÀÌ¸§</option>
-						<option value="0" ${! empty searchCondition.equals && searchCondition.equals==0 ? "selected" : "" }>Áö¿ª</option>
-					</select>
-				  </div>
-			    
-				  
-				  
-				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword"></label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="°Ë»ö¾î"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-				  </div>
-				 <button type="button" class="btn btn-default">°Ë»ö</button>
-				  
-				  <!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-</form></div></div>
-</div>
-		    
+	</script>
 	
+</head>
+
+<body>
+
+	<!-- ToolBar Start /////////////////////////////////////-->
+	
+   	<!-- ToolBar End /////////////////////////////////////-->
+	
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
+	<div class="container">
+	
+		<div class="page-header">
+			<c:if test="${user.role eq '1'}">
+    		<h3 class="text-info">ì¶”ê°€ì •ë³´ì…ë ¥</h3>
+    		<h5 class="text-muted"> <strong class="text-danger">ì¶”ê°€ì •ë³´</strong>ë¥¼ì…ë ¥í•´ ì£¼ì„¸ìš”.</h5>
+    		</c:if>
+    		<c:if test="${user.role eq '2'}">
+    		<h3 class="text-info">íšŒì›ì •ë³´ì¡°íšŒ</h3>
+    		<h5 class="text-muted">ë‚´ ì •ë³´ë¥¼ <strong class="text-danger">ìµœì‹ ì •ë³´ë¡œ ê´€ë¦¬</strong>í•´ ì£¼ì„¸ìš”.</h5>
+    		</c:if>
+	  
+	    </div>
+	
+		
+		
+		<div class="center">
+			       <div style="width: 120px; height: 90px; overflow: hidden">
+    <a href="#">
+    <img src="../resources/images/main@2x.png" style="width: 120px; height: auto;" alt="ìœ ì €ì´ë¦„${user.name}" onclick="clickBtn();" ></a>
+</div>
+	  		<div class="col-xs-4 col-md-2 "><strong>ì´ ë¦„</strong></div>
+			<div class="col-xs-8 col-md-4">${user.name}</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>ì´ë¦„</strong></div>
+			<div class="col-xs-8 col-md-4">${user.name}</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>ì´ë¦„</strong></div>
+			<div class="col-xs-8 col-md-4"></div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>ì´ë¦„</strong></div>
+			<div class="col-xs-8 col-md-4">${user.name}</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-md-12 text-center ">
+	  			<button type="button" id="updateUser">íšŒì›ì •ë³´ìˆ˜ì •</button>
+	  		</div>
+		</div>
+		
+		<br/>
+		
+ 	</div>
+ 	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
+
 </body>
+
 </html>

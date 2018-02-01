@@ -1,12 +1,106 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Å¸ÀÓ¶óÀÎº¸±â(´º½ºÇÇµå °Ô½Ã¹°Áß Ä«Å×°í¸® Å¸ÀÓ¶óÀÎ ÀÎ°Í¸¸ º¸¿©ÁÜ?)</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	<!--   jQuery , Bootstrap CDN  -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/resources/layout/sub_toolbar.jsp"/>
+   	<!-- ToolBar End /////////////////////////////////////-->
+	
+	<!--  ///////////////////////// CSS ////////////////////////// -->
+	<style>
+       body > div.container{
+        	
+            margin-top: 50px;
+        }
+    </style>
+    
+     <!--  ///////////////////////// JavaScript ////////////////////////// -->
+	<script type="text/javascript">
+	
+	$( function () {
+		$( "#getUser" ).on("click" , function() {
+			self.location = "/user/getUser?userId=${user.userId}";
+			
+	 	});
+		
+		$( "#listFrieds" ).on("click" , function() {
+			self.location = "/friend/listFriend?friendId=${friend.firendId}";
+			
+	 	});
+	});
+
+</script>
+
+
 </head>
+
+
 <body>
+<div class="container">
+	
+	<div class="row">
+		<div class="col-xs-3" id="profile">
+		<img  src="/resources/images/profile_default.png" id="profile"
+          	 width="150px" style="margin: 20px;"/>
+        </div>
+        <div class="col-xs-3" id="name" style="margin-top: 100px; margin-left: 20px">
+		<h3>${user.name}</h3>
+        </div>
+    </div>
+    
+     <c:if test="${user.userId ne null }"><!-- ì„¸ì…˜ì—ìˆëŠ” ì•„ì´ë””ë‘  -->
+    <div class="row" >
+    	<div class="col-xs-2">
+    		<button type="button" id="memoryMap">ì¶”ì–µì§€ë„</button>
+    	</div>
+    	<div class="col-xs-2">
+    		<button type="button" id="point">í¬ì¸íŠ¸ê´€ë¦¬</button>
+    	</div>
+    	<div class="col-xs-2">
+    		<button type="button" id="listFrieds">ì¹œêµ¬ëª©ë¡</button>
+    	</div>
+    	<div class="col-xs-3">
+    		<c:if test="${user.role eq '1'}">
+    		<button type="button" id="getUser">ì¶”ê°€ì •ë³´ì…ë ¥</button></c:if>
+    		<c:if test="${user.role eq '2'}">
+    		<button type="button" id="getUser">ë‚´ì •ë³´ì¡°íšŒ</button></c:if>
+    	</div>
+    	<div class="col-xs-2">
+    		<button type="button" id="listNotice">ì•Œë¦¼í•¨</button>
+    	</div>
+  </div>
+  </c:if>
+  
+  <c:if test="${user.userId eq null }">
+  <div class="row" >
+    	<div class="col-xs-3">
+    		<button type="button" >ì¹œêµ¬ì‹ ì²­</button>
+    	</div>
+    	<div class="col-xs-3">
+    		<button type="button" >FOLLOW</button>
+    	</div>
+    	<div class="col-xs-3">
+    		<button type="button" >ë©”ì„¸ì§€ì „ì†¡</button>
+    	</div>
+    	<div class="col-xs-3">
+    		<button type="button" >ì‹ ê³ í•˜ê¸°</button>
+    	</div>
+  </div>
+  </c:if>
+    
+</div>
+
 
 </body>
 </html>

@@ -31,7 +31,7 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
-            padding-top : 150px;
+            padding-top : 80px;
         }
         
         button.btn.btn-emailAuth{
@@ -52,8 +52,9 @@
 		//============= "이메일 인증"  Event 연결 =============
 		$(function () {
 			
-			$("button.btn.btn-emailAuth").on("click", function() {
+			$("#emailAuth").on("click", function() {
 				fncEmailAuth();
+				
 			});
 		});
 			
@@ -67,19 +68,7 @@
 			});
 		});	
 		
-		//============="이메일" 유효성Check  Event 처리 =============
-		 $(function() {
-			 
-			 $("button.btn.btn-emailAuth").on("change" , function() {
-					
-				 var email=$("button.btn.btn-emailAuth").val();
-			    
-				 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
-			    	alert("이메일 형식이 아닙니다.");
-			     }
-			});
-			 
-		});	
+		
 		
 		///////////////////////////////////////////////////////////////////////
 		function fncEmailAuth() {
@@ -93,27 +82,14 @@
 			
 			$("form").attr("method","POST").attr("action","/user/emailAuth").submit();
 			alert("email");
+			
+			
 		}
+		
 		
 		////////////////////////////////////////////////////////////
 		function fncUpdateUser() {
-			var name=$("input[name='userName']").val();
 			
-			if(name == null || name.length <1){
-				alert("이름은  반드시 입력하셔야 합니다.");
-				return;
-			}
-				
-			var value = "";	
-			if( $("input[name='phone2']").val() != ""  &&  $("input[name='phone3']").val() != "") {
-				var value = $("option:selected").val() + "-" 
-									+ $("input[name='phone2']").val() + "-" 
-									+ $("input[name='phone3']").val();
-			}
-			
-			//Debug...
-			//alert("phone : "+value);
-			$("input:hidden[name='phone']").val( value );
 				
 			$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
 		}
@@ -124,10 +100,6 @@
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/resources/layout/toolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
-	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
@@ -148,18 +120,21 @@
 		<form class="form-horizontal">
 		
 		  <div class="form-group">
-		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
+		  
+		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="email" name="email" value="${user.email}" placeholder="중복확인하세요"  >
+		      <input type="email" class="form-control" id="email" name="email" value="${user.email}" placeholder="중복확인하세요"  >
 		       <span id="helpBlock" class="help-block">
 		    
-		      	<strong class="text-danger">이메일 인증여부 출력예정</strong>
+		      	<strong class="text-danger" name="userinput">이메일 인증여부 출력예정</strong>
 		      </span>
 		    </div>
-		    <div class="col-sm-3">
-		    <button type="button" class="btn btn-emailAuth" id="emailAuth">이메일 인증</button>
-		    </div>
+		   
+		    	<div class="col-sm-3">
+		    		<button type="button" class="btn btn-emailAuth" id="emailAuth">이메일 인증</button>
+		    	</div>
 		  </div>
+		  
 		
 		  <div class="form-group">
 		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
@@ -189,25 +164,7 @@
 		    </div>
 		  </div>
 		  
-		  <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호</label>
-		     <div class="col-sm-2">
-		      <select class="form-control" name="phone1" id="phone1">
-				  	<option value="010" ${ ! empty user.phone1 && user.phone1 == "010" ? "selected" : ""  } >010</option>
-					<option value="011" ${ ! empty user.phone1 && user.phone1 == "011" ? "selected" : ""  } >011</option>
-					<option value="016" ${ ! empty user.phone1 && user.phone1 == "016" ? "selected" : ""  } >016</option>
-					<option value="018" ${ ! empty user.phone1 && user.phone1 == "018" ? "selected" : ""  } >018</option>
-					<option value="019" ${ ! empty user.phone1 && user.phone1 == "019" ? "selected" : ""  } >019</option>
-				</select>
-		    </div>
-		    <div class="col-sm-2">
-		      <input type="text" class="form-control" id="phone2" name="phone2" value="${ ! empty user.phone2 ? user.phone2 : ''}"  placeholder="변경번호">
-		    </div>
-		    <div class="col-sm-2">
-		      <input type="text" class="form-control" id="phone3" name="phone3" value="${ ! empty user.phone3 ? user.phone3 : ''}"   placeholder="변경번호">
-		    </div>
-		    <input type="hidden" name="phone"  />
-		  </div>
+		 
 		  
 		  
 		  

@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -74,9 +75,69 @@
 		.mainbar-menu:hover, .mainbar-menu .active{
 		    border-bottom: 4px solid RGB(237,125,49);
 		}
+		/* 모달 크기조정 */
+		.social-login{
+		margin-left: 20px;
+		}
+		
+		.modal-dialog.login{
+ 		width: 300px;
+  		height: 200px;
+  		margin: 0;
+  		padding: 0;
+		}
+		
+		/* ////////////////////로그인 모달 창 style/////////////////////// */
+		.modal-dialog.modal{
+ 		 width: 50%;
+ 		 height: 50%;
+ 		 margin: 0;
+ 		 padding: 0;
+
+		}
+		img.img-rounded{
+		margin-top: 10px;
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-bottom: 10px;
+
+		}
+		
+		#navbar > ul:nth-child(2) > li{
+		margin-top: 10px;
+		color: #e8e8e8;
+		}
 	</style>
 	
 	<script type="text/javascript">
+	
+$( function() {
+		
+		$("#email").focus();
+		
+		//==>"Login"  Event 연결
+		$("#login").on("click" , function() {
+
+			var email =$("input:text").val();
+			var password =$("input:password").val();
+			
+			if(email == null || email.length <1) {
+				alert('ID 를 입력하지 않으셨습니다.');
+				$("input:text").focus();
+				return;
+			}
+			
+			if(password == null || password.length <1) {
+				alert('패스워드를 입력하지 않으셨습니다.');
+				$("input:password").focus();
+				return;
+			}
+			
+			
+			$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
+			
+		});
+	});
 		$(function() {
 			
 			$('body > nav > div.container > div > div:nth-child(3)').addClass('active');
@@ -91,25 +152,35 @@
 				
 		 	});
 			
-		 	$( "a:contains('��ģ��')" ).on("click" , function() {
+		 	$( "a:contains('밥친구')" ).on("click" , function() {
 				$(self.location).attr("href","/bob/mainBob");
 				
 		 	});
 
-			$("a:contains('��Ȱ����')").on("click", function() {
+			$("a:contains('생활정보')").on("click", function() {
 				self.location = "/livingInfo/mainLivingInfo";
 
 			});
-			
-			$("a:contains('�α���')").on("click", function() {
-				self.location = "/user/login.jsp";
+		
+			$("a:contains('회원가입')").on("click", function() {
+				self.location = "/user/addUser";
 
 			});
 			
-			$("a:contains('ȸ������')").on("click", function() {
-				self.location = "/user/addUser.jsp";
+			$('#loginModal').on('show.bs.modal', function (e) {
+				  if (!data) return e.preventDefault() 
+			});
+			
+			$( "#profile" ).on("click" , function() {
+				self.location = "/user/getTimeLine?userId=${user.userId}";
+				
+		 	});
+			
+			$("a:contains('패스워드찾기')").on("click", function() {
+				self.location = "/user/findPassword";
 
 			});
+			
 
 		});
 	
@@ -129,25 +200,112 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">
-          	<img alt="�����ǵ�� �̵�" src="/resources/images/temp_logo.png"  height="40px" 
+          	<img alt="뉴스피드로 이동" src="/resources/images/temp_logo.png"  height="40px" 
           		style="margin-top: -10px;"/>
           </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse" >
           <ul class="nav navbar-nav">
-            <li><a href="#">��ģ��</a></li>
-            <li><a href="#">���̺���</a></li>
-            <li><a href="#">���̽�����</a></li>
-            <li><a href="#">��Ȱ����</a></li>
+            <li><a href="#">밥친구</a></li>
+            <li><a href="#">라이브방송</a></li>
+            <li><a href="#">보이스리플</a></li>
+            <li><a href="#">생활정보</a></li>
           </ul>
           <ul class="nav navbar-nav" style="float:right;">
-            <li><a href="#">�α���</a></li>
-            <li><a href="#">ȸ������</a></li>
+          	<c:if test="${user.userId ne null}"><li>
+          	<img  src="/resources/images/profile_default.png" id="profile"
+          	 width="30px"/>&nbsp;<u>${user.name}</u>&nbsp;님 환영합니다!</li></c:if>
+          	 
+            <c:if test="${user.userId eq null}">
+            <li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
+            <li><a href="#">회원가입</a></li>
+          </c:if>
           </ul>
         </div><!--/.nav-collapse -->
 	  </div>
+		
 
+		
     </nav>
+   
+
+	 <!-- Modal -->
+  <div  id="loginModal"  class="modal fade"  >
+  
+  <div class="modal-dialog">
+    
+  <!-- Modal content-->
+      <div class="modal-content">
+      
+      <!-- Modal Header start-->
+       <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+          aria-label="Close">&times;</button>
+          <div class="modal-title" align="center" style="margin-bottom:15px;"><!-- 자췽로고 -->
+          <img src="/resources/images/temp_logo.png" class="img-logo" width="50" height="50" ></div> 
+       </div><!-- Modal Header end -->  
+
+       <!-- Modal Body start-->
+       <div class="modal-body" align="left">
+       	
+       	<form>
+       	<div class="row">
+          <div class="col-xs-4">
+           	<label for="inputlg" style="margin-left: 5px">이메일(ID)</label>
+          </div>
+        </div>
+        
+        
+         <div class="row">
+           <div class="col-sm-6">
+   			<input type="text" class="form-control input-lg" id="email"  name="email"
+				placeholder="이메일을입력하세요"	style="margin-left: 5px"/>
+   			
+           </div>
+         </div>
+         
+         <div class="row">
+           <div class="col-sm-6">
+           	<label for="inputlg" style="margin-left: 5px" 
+           	style="margin-top: 5px">패스워드(PW)</label>
+           </div>
+         </div>
+       
+       
+         <div class="row">
+           <div class="col-sm-6">
+   			 <input type="password" class="form-control input-lg" id="password" name="password"
+   				placeholder="패스워드를입력하세요"	 style="margin-left: 5px">
+           </div>
+		</div>
+		
+		
+		<div class="row">
+              <div class="social-login" align="left">
+   			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" >
+   			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50" >
+   			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50" />
+   			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" >
+             </div>  
+        </div>
+        
+        <div class="row">
+			  <div class="col-sm-offset-4 col-sm-6 text-center">
+		      <button type="submit" class="btn btn-primary" id="login" >로 &nbsp;그 &nbsp;인</button>
+			  <a class="btn btn-primary btn" href="#" role="button">패스워드찾기</a>
+			  </div>
+		</div>
+		</form>
+      </div><!--Modal Body  -->
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+      
+     </div><!-- Modal content-->
+    </div> <!-- Modal dialog -->  
+   </div> <!-- Modal Fade  --> 	
+
 
 </body>
 </html>
