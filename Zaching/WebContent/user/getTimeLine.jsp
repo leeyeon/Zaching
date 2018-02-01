@@ -29,10 +29,45 @@
 	<script type="text/javascript">
 	
 	$( function () {
+		//내정보조회 Event
 		$( "#getUser" ).on("click" , function() {
 			self.location = "/user/getUser?userId=${user.userId}";
 			
 	 	});
+		
+		//추억지도 Event
+		$( "#memoryMap" ).on("click" , function() {
+			self.location = "/user/memoryMap?userId=${user.userId}";
+			
+	 	});
+		
+		//포인트관리 Event
+		$( "#point" ).on("click" , function() {
+			self.location = "/payment/mainPayment";
+			
+	 	});
+		
+		//친구목록 Event
+		$( "#listFrieds" ).on("click" , function() {
+			self.location = "/friend/";
+			
+	 	});
+		
+		//알림함 Event
+		$("#listNotice").on("clcick", function() {
+			self.location = "/user/listNotice?userId=${user.userId}";
+		});
+		
+		//친구신청 Event
+		
+		
+		//FOLLOW Event
+		
+		
+		//메세지 전송 Event
+		
+		
+		//신고하기 Event
 	});
 
 </script>

@@ -185,6 +185,10 @@
 			self.location = "/user/addUser";
 		});
 		
+		$("a:contains('로그아웃')").on("click", function() {
+			self.location = "/user/logout";
+		});
+		
 		$( "#profile" ).on("click" , function() {
 			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";			
 	 	});
@@ -195,7 +199,8 @@
 		});
 		
 		$("#kakaologin").on("click", function() {
-			self.location = "https://kauth.kakao.com/oauth/authorize?client_id=dfe2041581c23da0c4e9c8aefb3c28a1&redirect_uri=http://127.0.0.1:8080/kakaologin&response_type=code";
+			self.location =
+		"https://kauth.kakao.com/oauth/authorize?client_id=dfe2041581c23da0c4e9c8aefb3c28a1&redirect_uri=http://127.0.0.1:8080/kakaologin&response_type=code";
 
 		});
 		
