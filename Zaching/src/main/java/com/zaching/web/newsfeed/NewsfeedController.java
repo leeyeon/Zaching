@@ -2,6 +2,7 @@ package com.zaching.web.newsfeed;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Newsfeed;
-import com.zaching.service.domain.User;
 import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.user.UserService;
 
@@ -76,30 +77,41 @@ public class NewsfeedController {
 		return "forward:/newsfeed/getNewsfeed.jsp";
 	}
 	
+	@RequestMapping(value="getNewsfeed")
+	public String getNewsfeed(@RequestParam int newsfeedId, Model model) throws Exception{
+		System.out.println("getNewsfeed()");
+		System.out.println(newsfeedId);
+		
+		model.addAttribute("newsfeed", newsfeedService.getNewsfeed(newsfeedId));
+		
+		return "forward:/newsfeed/getNewsfeed.jsp";
+		
+	}
 	@RequestMapping(value="listNewsfeed")
 	public String listNewsfeed( @ModelAttribute("search") Search search,  Model model, HttpServletRequest request) throws Exception{
 		System.out.println("listNewsfeed");
-		String sorting = null;
+		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
+		search.setCategory("V01");
 		search.setPageSize(pageSize);
-		
-		List<Newsfeed> list = newsfeedService.listNewsfeeds(search);
+		Map<String, Object> map = newsfeedService.listNewsfeed(search);
+		//List<Newsfeed> list = newsfeedService.listNewsfeeds(search);
 		//User user = userService.getUser(userId);
 		// Business logic 수행
 		
-		//Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		//System.out.println(resultPage);
 		
 		// Model 과 View 연결
 		//model.addAttribute("list", map.get("list"));
 		//model.addAttribute("resultPage", resultPage);
-		System.out.println(list);
-		model.addAttribute("sorting", sorting);
+		//System.out.println(list);
+		model.addAttribute("category", search.getCategory());
 		model.addAttribute("search", search);
-		
-		model.addAttribute("list",list);
+		model.addAttribute("list",map.get("list"));
+		model.addAttribute("resultPage", resultPage);
 		
 		return "forward:/newsfeed/newsfeed.jsp";
 	}

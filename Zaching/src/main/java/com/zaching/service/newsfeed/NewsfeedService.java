@@ -13,7 +13,7 @@ public interface NewsfeedService {
 	
 	public void updateNewsfeed(Newsfeed newsfeed) throws Exception;
 	
-	public void getNewsfeed(int newsfeedId) throws Exception;
+	public Newsfeed getNewsfeed(int newsfeedId) throws Exception;
 	
 	public Map<String, Object> listNewsfeed(Search search) throws Exception;
 	

@@ -12,12 +12,9 @@
 	padding: 7px;
 	width: 33%;
 	opacity: 0;
-	overflow: hidden; 
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	border-style:;
+	overflow: hidden;
 	border-width:midium;
-		  border:1px solid rgba(0,0,0,0.2);
+	border:1px solid rgba(0,0,0,0.2);
 	text-decoration: none;
 	color:#424242;
 	box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
@@ -32,7 +29,7 @@
 	opacity: .6;
 }
 
-li:hover{
+.grid:li:hover{
 	box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .20);
 }
 

@@ -149,6 +149,8 @@ public class LivingInfoRestController {
 		
 		String clientId = "gVDmQkx91BgYSzY0iCZw";//애플리케이션 클라이언트 아이디값";
         String clientSecret = "ZYh3yjIlSQ";//애플리케이션 클라이언트 시크릿값";
+        
+        System.out.println(movieImg);
        
             String text = URLEncoder.encode(movieImg+" 영화 포스터", "UTF-8");
             String apiURL = "https://openapi.naver.com/v1/search/image?query="+ text; // json 결과
