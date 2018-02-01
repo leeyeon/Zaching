@@ -10,377 +10,270 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 	
-	<title>밥친구(우리지금만나)</title>
-	
-	<style>
-        
-       	body {
-       		padding-top: 50px;
-       		padding-bottom: 50px;
-       		background: #f5f5f5;
-       	}
-       	
-       	.bg {
-			background: url('../resources/upload_files/images/download.jpg') no-repeat center center;
-			position: fixed;
-			width: 100%;
-			height: 500px;
-			background-size: cover;
-			top:0;
-			left:0;
-			z-index: -1;
-		}
-		
-		.jumbotron {
-		    margin-bottom: 0px;
-		    margin-top: -2px;
-		    height: 500px;
-		    background: transparent;
-		}
-		
-		.jumbotron .textStyle {
-			color: #000000;
-		    font-weight: bold;
-		}
-		
-		.overlay {
-			left: 0;
-			padding: 10px;
-			position: absolute;
-    		width: 100%;
-    		top: 210px;
-    		background-color: rgba(221, 215, 224, 0.9);
-		}
-		
-		.blog-sidebar .textBold, .textBold {
-			font-weight: bold;
-			font-size: 20px;
-		}
-		
-		body > div.container > div > div.col-sm-3.col-sm-offset-1.blog-sidebar, .custumRow {
-			-webkit-box-shadow: 0px 0px 6px 4px rgba(237,237,237,1);
-			-moz-box-shadow: 0px 0px 6px 4px rgba(237,237,237,1);
-			box-shadow: 0px 0px 6px 4px rgba(237,237,237,1);
-			background: #FFFFFF;
-			padding:10px;
-		}
-		
-       	.btn-bob {
-       		background: #5F4B8B; 
-       		border: none; 
-       		display: inline-block;
-       		color: rgb(255, 255, 255); 
-       		font-size: 18px; 
-       		font-weight: bold;
-       		text-align: center;
-       		height: 70px;
-			line-height: 70px;
-       		width: 100%;
-       		text-decoration: none;
-       	}
-       	
-       	.select-bob {
-       		background: rgba(237,237,237,1); 
-       		border: none; 
-       		display: inline-block;
-       		color: #000000;
-       		font-size: 18px; 
-       		font-weight: bold;
-       		text-align: center;
-       		height: 70px;
-			line-height: 70px;
-       		text-decoration: none;
-       		border: 2px solid #FFFFFF;
-       		cursor: pointer;
-       	}
-       	
-        .select-bob:hover, .select-bob.active{
-		    background: #5F4B8B;
-		    color: #FFFFFF;
-		}
-       	
-       	.col-sm-3.col-sm-offset-1.blog-sidebar img {
-       		cursor: pointer;
-       	}
-       	
-       	
-       	body > div.jumbotron > div > div.row > .col-xs-1 {
-       		border: 1px solid #FFFFFF;
-			border-radius: 40px;
-			-moz-border-radius: 40px;
-			-khtml-border-radius: 40px;
-			-webkit-border-radius: 40px;
-			 background: #FFFFFF;
-			 width: 70px;
-			 height: 70px;
-			 line-height: 70px;
-			 font-size: 17px;
-			 font-weight: bold;
-			 float:right;
-			 margin-right: 10px;
-			 cursor: pointer;
-       	}
-       	
-       	.modal {
-		     text-align: center;
-		}
-		 
-		@media screen and (min-width: 768px) { 
-		        .modal:before {
-		                display: inline-block;
-		                vertical-align: middle;
-		                content: " ";
-		                height: 100%;
-		        }
-		}
-		 
-		.modal-dialog {
-	        display: inline-block;
-	        text-align: left;
-	        vertical-align: middle;
-	        overflow-y: initial !important
-		}
-
-		.modal-body{
-		    height: 250px;
-		    overflow-x: auto;
-		}
-		
-		.blog-post > p > img {
-			width: 100%;
-		}
-       	
-    </style>
-    
+	<link rel="stylesheet" href="../resources/css/getBob.css">
+	    
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
     <script type="text/javascript">
     
-	$(function() {
-		
-		var jumboHeight = $('.jumbotron').outerHeight();
-		function parallax(){
-		    var scrolled = $(window).scrollTop();
-		    $('.bg').css('height', (jumboHeight-scrolled) + 'px');
-		}
-	
-		$(window).scroll(function(e){
-		    parallax();
-		});
-	   
-		$('.select-bob').on('click', function(){
-			$('.active').removeClass('active');
-			$(this).addClass('active');
-		});
-	 	
-	 	$('.comment').on('click', function(){
-	 		alert('댓글달기');
-	 	});
-	 	
-	 	$('.col-xs-1:contains("신고")').on('click', function() {
-	 		alert('신고');
-	 	});
-	 	
-	 	$('.col-xs-1:contains("수정")').on('click', function() {
-			//alert('수정');
-			$(self.location).attr("href","/bob/updateBob?category=${category}&bobId=${bob.bobId}");
-		});
-	 	
-	 	$('.btn-ico:contains("초대하기")').on('click', function() {
-			alert('초대하기');
-		});
-	 	
-	 	$('.deleteComment').on('click', function() {
-	 		alert();
-	 	});
-	 	
-	 	/* 댓글 */
 
-	 	$(":text[name='inputComment']").on("keydown", function(e) {
-			
-			if(e.keyCode == 13) {
-				alert($(this).val());
-				$.ajax({
-					url : "/bob/rest/addComment",
-					method : "POST",
-					contentType : "application/json; charset=UTF-8",
-					data : JSON.stringify({
-						"userId" : ${user.userId},
-						"roomId" : ${bob.bobId},
-						"category" : '${param.category}',
-						"content" : $(this).val()
-					}),
-					async : false,
-					dataType : "json",
-					success : function(serverData) {
-						console.log(serverData.comment);
-						
-					},
-					error:function(request,status,error){
-					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					}
-					
-				});
-			} else {
-				
-			}
-		});
-		$('body > div.container > div:nth-child(2) > div.row > div.col-xs-3 > button').on("click", function() {
-			//alert($(this).attr('href'));
-		});
-	 	
-	 	/* 결제 modal toggle */
-	 	$('button:contains("참여하기")').on('click',function() {
-	 		$('#enterBob').modal('toggle');
-	 	});
-	 	
-	 	$('button:contains("취소하기")').on('click',function() {
-	 		$('#cancleBob').modal('toggle');
-	 	});
-	 	
-	 	/* 결제 ajax 처리*/
-	 	
-	 	$('.btn-bob:contains("취소하기")').on('click',function() {
-	 		$('#cancleBob').modal('show');
-	 	});
-	 	
-	 	$('.btn-ico:contains("취소하기")').on('click',function() {
-	 		
-	 		$.ajax({
-				url : "/bob/rest/cancleBob",
-				method : "POST",
-				contentType : "application/json; charset=UTF-8",
-				data : JSON.stringify({
-					"userId" : ${user.userId},
-					"bobId" : ${bob.bobId},
-					"category" : '${param.category}'
-				}),
-				async : false,
-				dataType : "json",
-				success : function(serverData) {
-					console.log(serverData.response);
-					if(serverData.response == 'success') {
-						location.reload();
-					} else {
-						alert("우엥");
-					}
-				},
-				error:function(request,status,error){
-				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-			});
-	 		
-	 		$('#cancleBob').modal('hide');
-	 	});
-	 	
-	 	$('button:contains("마감하기")').on('click', function() {
-	 		alert("참여제한 status E 로 update");
-	 	});
-	 	
-	 	$('button:contains("회비")').on('click', function() {
-	 		alert("회비 냅니다아아앙");
-	 	});
-	 	
-	 	$('.btn-ico:contains("참여하기")').on('click', function() {
+    $(function() {
+    		
+    		var jumboHeight = $('.jumbotron').outerHeight();
+    		function parallax(){
+    		    var scrolled = $(window).scrollTop();
+    		    $('.bg').css('height', (jumboHeight-scrolled) + 'px');
+    		}
+    	
+    		$(window).scroll(function(e){
+    		    parallax();
+    		});
+    	   
+    		$('.select-bob').on('click', function(){
+    			$('.active').removeClass('active');
+    			$(this).addClass('active');
+    		});
+    	 	
+    	 	$('button:contains("등록")').on('click', function(){
+    	 		alert('댓글달기');
+    	 	});
+    	 	
+    	 	$('.col-xs-1:contains("신고")').on('click', function() {
+    	 		alert('신고');
+    	 	});
+    	 	
+    	 	$('.col-xs-1:contains("수정")').on('click', function() {
+    			//alert('수정');
+    			$(self.location).attr("href","/bob/updateBob?category=${category}&bobId=${bob.bobId}");
+    		});
+    	 	
+    	 	$('.btn-ico:contains("초대하기")').on('click', function() {
+    			alert('초대하기');
+    		});
+    	 	
+    	 	$('.deleteComment').on('click', function() {
+    	 		alert();
+    	 	});
+    	 	
+    	 	/* 댓글 */
 
-			$.ajax({
-				url : "/bob/rest/enterBob",
-				method : "POST",
-				contentType : "application/json; charset=UTF-8",
-				data : JSON.stringify({
-					"userId" : ${user.userId},
-					"bobId" : ${bob.bobId},
-					"category" : 'B00'
-				}),
-				async : false,
-				dataType : "json",
-				success : function(serverData) {
-					console.log(serverData.response);
-					if(serverData.response == 'success') {
-						location.reload();
-					} else {
-						alert("포인트 충전하세요~~");
-						alert("페이지 이동");
-					}
-				},
-				error:function(request,status,error){
-				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-				
-			});
-			
-			$('#enterBob').modal('hide');
+    	 	$(":text[name='inputComment']").on("keydown", function(e) {
 
-	 	});
-	 	
-	 	/* 맵!!! */
-	 	
-	 	<c:if test="${!empty bob.longitude}">
-	 	
-			 // 이미지 지도에 표시할 마커입니다
-			 // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
-			 var markers = 
-			    
-			     {
-			         position: new daum.maps.LatLng(${bob.latitude}, ${bob.longitude}), 
-			         text: '${bob.locationName}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
-			     };
-		
-			 var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
-			     staticMapOption = { 
-			         center: new daum.maps.LatLng(${bob.latitude}, ${bob.longitude}), // 이미지 지도의 중심좌표
-			         level: 2, // 이미지 지도의 확대 레벨
-			         marker: markers // 이미지 지도에 표시할 마커 
-			     };    
-		
-			 // 이미지 지도를 생성합니다
-			 var staticMap = new daum.maps.StaticMap(staticMapContainer, staticMapOption);
-	 	
-		</c:if>
-		
-		$('button:contains("설정")').on('click', function(){
-			if($('.list-group').css('visibility') =='visible') {
-				$('.list-group').css('visibility','hidden');
-			} else {
-				$('.list-group').css('visibility','visible');
-				
-			}
-		});
-		
-		$('a:contains("자동으로 회비내기")').on('click', function() {
-			//alert($("input[name='participantId']").val() +"&&"+$("input[name='isAutoFee']").val());
+    			if(e.keyCode == 13) {
+    				alert($(this).val());
+    				$.ajax({
+    					url : "/bob/rest/addComment",
+    					method : "POST",
+    					contentType : "application/json; charset=UTF-8",
+    					data : JSON.stringify({
+    						"userId" : <c:out value="${user.userId}" escapeXml="false" />,
+    						"roomId" : <c:out value="${bob.bobId}" escapeXml="false" />,
+    						"category" : '<c:out value="${param.category}" escapeXml="false" />',
+    						"content" : $(this).val()
+    					}),
+    					async : false,
+    					dataType : "json",
+    					success : function(serverData) {
+    						console.log(serverData.comment);
+    						
+    					},
+    					error:function(request,status,error){
+    					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    					}
+    					
+    				});
+    			} else {
+    				
+    			}
+    		});
+    		$('body > div.container > div:nth-child(2) > div.row > div.col-xs-3 > button').on("click", function() {
+    			//alert($(this).attr('href'));
+    		});
+    	 	
+    	 	/* 결제 modal toggle */
+    	 	$('button:contains("참여하기")').on('click',function() {
+    	 		$('#enterBob').modal('toggle');
+    	 	});
+    	 	
+    	 	$('button:contains("취소하기")').on('click',function() {
+    	 		$('#cancleBob').modal('toggle');
+    	 	});
+    	 	
+    	 	/* 결제 ajax 처리*/
+    	 	
+    	 	$('.btn-bob:contains("취소하기")').on('click',function() {
+    	 		$('#cancleBob').modal('show');
+    	 	});
+    	 	
+    	 	$('.btn-ico:contains("취소하기")').on('click',function() {
+    	 		
+    	 		$.ajax({
+    				url : "/bob/rest/cancleBob",
+    				method : "POST",
+    				contentType : "application/json; charset=UTF-8",
+    				data : JSON.stringify({
+    					"userId" : <c:out value="${user.userId}" escapeXml="false" />,
+    					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />,
+    					"category" : '${param.category}'
+    				}),
+    				async : false,
+    				dataType : "json",
+    				success : function(serverData) {
+    					console.log(serverData.response);
+    					if(serverData.response == 'success') {
+    						location.reload();
+    					} else {
+    						alert("우엥");
+    					}
+    				},
+    				error:function(request,status,error){
+    				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    				}
+    			});
+    	 		
+    	 		$('#cancleBob').modal('hide');
+    	 	});
+    	 	
+    	 	$('button:contains("마감하기")').on('click', function() {
+    	 		alert("참여제한 status E 로 update");
+    	 	});
+    	 	
+    	 	$('.btn-ico:contains("참여하기")').on('click', function() {
 
-			$.ajax({
-				url : "/bob/rest/setFeebob",
-				method : "POST",
-				contentType : "application/json; charset=UTF-8",
-				data : JSON.stringify({
-					"participantId" : $("input[name='participantId']").val(),
-					"isAutoFee" : $("input[name='isAutoFee']").val()
-				}),
-				async : false,
-				dataType : "json",
-				success : function(serverData) {
-					console.log(serverData.isAutoFee);
-					if(serverData.isAutoFee == 'Y') {
-						alert("회비는 다음달부터 자동으로 출금됩니다. \n 회비날에 포인트가 없을 시 수동으로 납부하셔야 합니다.");											
-					} else {
-						alert("회비 자동납부가 해제되었습니다.");
-					}
-					location.reload();
-				},
-				error:function(request,status,error){
-				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-				
-			});
+    			$.ajax({
+    				url : "/bob/rest/enterBob",
+    				method : "POST",
+    				contentType : "application/json; charset=UTF-8",
+    				data : JSON.stringify({
+    					"userId" : <c:out value="${user.userId}" escapeXml="false" />,
+    					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />,
+    					"category" : 'B00'
+    				}),
+    				async : false,
+    				dataType : "json",
+    				success : function(serverData) {
+    					console.log(serverData.response);
+    					if(serverData.response == 'success') {
+    						location.reload();
+    					} else {
+    						alert("포인트 충전하세요~~");
+    						alert("페이지 이동");
+    					}
+    				},
+    				error:function(request,status,error){
+    				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    				}
+    				
+    			});
+    			
+    			$('#enterBob').modal('hide');
 
-		});
-	});
+    	 	});
+
+    		
+    		$('button:contains("설정")').on('click', function(){
+    			if($('.list-group').css('visibility') =='visible') {
+    				$('.list-group').css('visibility','hidden');
+    			} else {
+    				$('.list-group').css('visibility','visible');
+    				
+    			}
+    		});
+    		
+    	 	
+    	 	$('button:contains("회비 내기")').on('click', function() {
+    	 		alert("회비 냅니다아아앙");
+    	 		
+    	 		$.ajax({
+    				url : "/bob/rest/payFeebob",
+    				method : "POST",
+    				contentType : "application/json; charset=UTF-8",
+    				data : JSON.stringify({
+    					"userId" : <c:out value="${user.userId}" escapeXml="false" />,
+    					"participantId" : $("input[name='participantId']").val(),
+    					"fee" : <c:out value="${bob.fee}" escapeXml="false" />
+    				}),
+    				async : false,
+    				dataType : "json",
+    				success : function(serverData) {
+    					console.log(serverData.response);
+    					if(serverData.response == 'success') {
+    						location.reload();
+    					} else {
+    						alert("포인트 충전하세요~~");
+    						alert("페이지 이동");
+    					}
+    				},
+    				error:function(request,status,error){
+    				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    				}
+    				
+    			});
+    	 	});
+    		
+    		$('a:contains("자동으로 회비내기")').on('click', function() {
+    			//alert($("input[name='participantId']").val() +"&&"+$("input[name='isAutoFee']").val());
+
+    			$.ajax({
+    				url : "/bob/rest/setFeebob",
+    				method : "POST",
+    				contentType : "application/json; charset=UTF-8",
+    				data : JSON.stringify({
+    					"participantId" : $("input[name='participantId']").val(),
+    					"isAutoFee" : $("input[name='isAutoFee']").val()
+    				}),
+    				async : false,
+    				dataType : "json",
+    				success : function(serverData) {
+    					console.log(serverData.isAutoFee);
+    					if(serverData.isAutoFee == 'Y') {
+    						alert("회비는 다음달부터 자동으로 출금됩니다. \n 회비날에 포인트가 없을 시 수동으로 납부하셔야 합니다.");											
+    					} else {
+    						alert("회비 자동납부가 해제되었습니다.");
+    					}
+    					location.reload();
+    				},
+    				error:function(request,status,error){
+    				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    				}
+    				
+    			});
+
+    		});
+    		
+    	 	
+    	 	/* 맵!!! */
+
+    	 	<c:if test="${!empty bob.longitude}">
+    	 	
+    			 // 이미지 지도에 표시할 마커입니다
+    			 // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
+    			 var markers = 
+    			    
+    			     {
+    			         position: new daum.maps.LatLng(<c:out value="${bob.latitude}" escapeXml="false" />,
+    			        		 <c:out value="${bob.longitude}" escapeXml="false" />), 
+    			         text: '<c:out value="${bob.locationName}" escapeXml="false" />' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
+    			     };
+    		
+    			 var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
+    			     staticMapOption = { 
+    			         center: new daum.maps.LatLng(<c:out value="${bob.latitude}" escapeXml="false" />,
+    			        		 <c:out value="${bob.longitude}" escapeXml="false" />), // 이미지 지도의 중심좌표
+    			         level: 2, // 이미지 지도의 확대 레벨
+    			         marker: markers // 이미지 지도에 표시할 마커 
+    			     };    
+    		
+    			 // 이미지 지도를 생성합니다
+    			 var staticMap = new daum.maps.StaticMap(staticMapContainer, staticMapOption);
+    	 	
+    		</c:if>
+    	});
 
     </script>
     
 </head>
 <body>
+
 
 	<div class="bg"></div>
 	<div class="jumbotron">
@@ -399,12 +292,15 @@
 					<c:if test="${category ne 'B03'}">
 						<h3>
 							<c:if test="${category eq 'B01'}">
-								<fmt:parseDate value="${bob.appointmentTime}" var="dateFmt" pattern="yyyy-MM-dd hh:mm"/>
-						<fmt:formatDate value="${dateFmt}" pattern="yyyy년 MM월 dd일 HH시 mm분"/>
+								<c:if test="${!empty bob.appointmentTime}">
+						        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
+									<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 (E) HH시 mm분"/>
+					        	</c:if>
+					        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
 							</c:if>
 							<c:if test="${category eq 'B02'}">오늘</c:if>
 							/ ${bob.locationName}
-						</h3>			
+						</h3>
 					</c:if>
 				</div>
 			</div>
@@ -430,6 +326,8 @@
           </div><!-- /.blog-post -->
 
         </div><!-- /.blog-main -->
+        
+        <!-- /////////////////////  우리지금만나/당장만나 Participant /////////////////////  -->
 
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar" style="padding-bottom: 0px;">
         	<div style="padding:8px;">
@@ -469,18 +367,19 @@
 									-webkit-border-radius: 40px;
 									 box-shadow: 1px #cccccc;"
 							src = "../resources/upload_files/images/${bob.writtenUserProfile}"
-							onerror="this.src='../resources/upload_files/images/sample_profile.png'" />&nbsp;&nbsp;&nbsp;${bob.writtenUserName}
+							onerror="this.src='../resources/images/user-icon.png'" />&nbsp;&nbsp;&nbsp;${bob.writtenUserName}
 						</div>
 					</div>
 					
 					<c:forEach var="participant" items="${participant}">
-						<c:if test="${participant.isWriter}">
+						<c:if test="${participant.userId eq user.userId}">
 							<input type="hidden" name="participantId" value="${participant.participantId}" />
 							<input type="hidden" name="isAutoFee" value="${participant.isAutoFee}" />
 							<c:set var="isAutoFee" value="${participant.isAutoFee}" />
+							<c:set var="paidFee" value="${participant.paidFee}"/>
 						</c:if>
 						<c:if test="${!participant.isWriter}">
-							<div class="col-xs-4" align="left" style="margin-top:20px; padding-right:15px;">
+							<div class="col-xs-4 text-center" align="left" style="margin-top:20px; padding-right:15px;">
 								<img width="55px" height="55px"
 									style=" border-radius: 40px;
 											-moz-border-radius: 40px;
@@ -488,13 +387,17 @@
 											-webkit-border-radius: 40px;
 											 box-shadow: 1px #cccccc;"
 									src = "../resources/upload_files/images/${participant.participantProfile}"
-					      			onerror="this.src='../resources/upload_files/images/sample_profile.png'" />
+					      			onerror="this.src='../resources/images/user-icon.png'" />
 					      			${participant.participantName}
 							</div>
 						</c:if>						
 					</c:forEach>
 				</div>
 				<hr>
+				
+			<!-- ///////////////////// 우리지금만나/당장만나 Participant 끝 ///////////////////// -->
+			
+			<!-- ///////////////////// 주기적으로 만나 Participant & 회비 /////////////////////  -->
 				
 				<c:if test="${param.category ne 'B03'}">
 					<div class="row" style="padding: 5px;">
@@ -521,7 +424,12 @@
 								<div class="btn-bob" style="background-color: #FFF; color: #000;" >회비 자동 납부 중</div>
 							</c:if>
 							<c:if test="${isAutoFee eq 'N'}">
-								<button type="submit" class="btn-bob" >회비 내기</button>
+								<c:if test="${paidFee eq 0 }">
+									<button type="submit" class="btn-bob" >회비 내기</button>
+								</c:if>
+								<c:if test="${paidFee ne 0 }">
+									<div class="btn-bob" style="background-color: #FFF; color: #000;" >회비 납부 완료</div>
+								</c:if>
 							</c:if>
 						</div>
 						<div class="col-xs-3" style="padding: 5px;">
@@ -536,11 +444,14 @@
 					</div>
 				</c:if>
 				
+				<!-- ///////////////////// 주기적으로 만나 Participant & 회비 끝 /////////////////////  -->
+				
 			</div>
         </div><!-- /.blog-sidebar -->
 
       </div><!-- /.row -->
       
+      <!-- ///////////////////////////////// 댓글 시작 /////////////////////////////////  -->
       
       <div class="row custumRow" style="margin-top:20px; padding-top:30px;">
       	<div class="text-center textBold" style="font-size: 20px;">친구들과 대화를 나누세요 :)</div>
@@ -554,6 +465,14 @@
       		<input type="hidden" name="commentId" value="${comment.commentId}" />
       		<div class="row comment" style="margin: 5px;">
 	      		<div class="col-sm-2">
+					<img width="60px" height="60px"
+					style=" border-radius: 40px;
+							-moz-border-radius: 40px;
+							-khtml-border-radius: 40px;
+							-webkit-border-radius: 40px;
+							 box-shadow: 1px #cccccc;"
+					src = "../resources/upload_files/images/${comment.userImage}"
+					onerror="this.src='../resources/images/user-icon.png'" />
 					${comment.userName}
 				</div>
 				<div class="col-sm-7">
@@ -586,6 +505,10 @@
 
       </div>
       
+      <!-- ///////////////////////////////// 댓글 끝 /////////////////////////////////  -->
+      
+      <!-- ///////////////////////////////// 후기 시작 /////////////////////////////////  -->
+      
       <c:if test="${param.category ne 'B03'}">
 	      <div class="row custumRow" style="margin-top:20px;">
 		      <div class="row">
@@ -605,7 +528,8 @@
 	      </div>
       
       </c:if>
-
+      
+	<!-- ///////////////////////////////// 후기 끝 /////////////////////////////////  -->
 
       <!-- 회비 div 시작 -->
 
@@ -627,19 +551,19 @@
 	      	<hr>
 	
 	      	<div class="row" style="padding: 0 20px 0 20px;">
-	   			<c:forEach var="i" begin="0" end="4" step="1">
+	   			<c:forEach var="participant" items="${participant}">
 	   				
 					<div class="col-xs-4" align="left" style="margin-top:20px; padding-right:15px;">
-						<img width="55px" height="55px"
-						style=" border: 2px solid #5F4B8B;
-								border-radius: 40px;
-								-moz-border-radius: 40px;
-								-khtml-border-radius: 40px;
-								-webkit-border-radius: 40px;
-								 box-shadow: 3px 3px 3px rgba(237,237,237,1)"
-						src="/resources/upload_files/images/sample_profile.png" />
-						&nbsp;&nbsp;&nbsp;이름&nbsp;&nbsp;&nbsp;
-						<c:if test="${i%3 == 0}">
+						<img src = "../resources/upload_files/images/${participant.participantProfile}"
+			      			onerror="this.src='../resources/images/user-icon.png'"
+			      			width="55px" height="55px"
+							style=" border-radius: 40px;
+									-moz-border-radius: 40px;
+									-khtml-border-radius: 40px;
+									-webkit-border-radius: 40px;
+									 box-shadow: 1px #cccccc;" />
+						&nbsp;&nbsp;&nbsp;${participant.participantName}&nbsp;&nbsp;&nbsp;
+						<c:if test="${participant.paidFee != 0}">
 							<img width="55px" height="55px" src="/resources/images/checkmark.png" />
 						</c:if>
 					</div>
@@ -657,6 +581,13 @@
       <!-- /회비 div 끝 -->
 
     </div><!-- /.container -->
+
+
+
+
+
+
+
 
 	<!-- Modal --> 
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 

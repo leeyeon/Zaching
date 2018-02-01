@@ -186,15 +186,15 @@ public class BobRestController {
 	@RequestMapping(value="/setFeebob", method=RequestMethod.POST)
 	public JSONObject setFeebob(@RequestBody Map<String, Object> obj) throws Exception {
 	
-		System.out.println(obj.get("participantId"));
-		System.out.println(obj.get("isAutoFee"));
+		//System.out.println(obj.get("participantId"));
+		//System.out.println(obj.get("isAutoFee"));
 		boolean isAutoFee = true;
 		
 		if(obj.get("isAutoFee").equals("Y")) {
 			isAutoFee = false;
 		}
 		
-		System.out.println("요기11");
+		//System.out.println("요기11");
 		
 		bobService.setFeeBob(Integer.valueOf(obj.get("participantId").toString()), isAutoFee);
 		
@@ -206,7 +206,38 @@ public class BobRestController {
 			object.put("isAutoFee", "N");
 		}
 		
-		System.out.println("요기22");
+		//System.out.println("요기22");
+		
+		return object;
+	}
+	
+	@RequestMapping(value="/payFeebob", method=RequestMethod.POST)
+	public JSONObject payFeebob(@RequestBody Map<String, Object> obj) throws Exception {
+		
+		System.out.println(obj.get("userId"));
+		System.out.println(obj.get("participantId"));
+		System.out.println(obj.get("fee"));
+		
+		int fee = Integer.valueOf(obj.get("paidFee").toString());
+		int userPoint = paymentService.getPoint(Integer.valueOf(obj.get("userId").toString()));
+		
+		JSONObject object = new JSONObject();
+		
+		if(userPoint >= fee) {
+			
+			bobService.payFeeBob(Integer.valueOf(obj.get("participantId").toString()), fee);
+			
+			Payment payment = new Payment();
+			payment.setPaymentCode("P02");
+			payment.setUserId(Integer.valueOf(obj.get("userId").toString()));
+			payment.setPoint(fee);
+			
+			paymentService.managePoint(payment);
+			
+			object.put("response", "success");
+		} else {
+			object.put("response", "fail");
+		}
 		
 		return object;
 	}

@@ -158,6 +158,10 @@
 			$(".mainbar-menu img").on("click", function() {
 				$(self.location).attr("href","/");
 			});
+			
+			$('#loginModal').on('show.bs.modal', function (e) {
+				if (!data) return e.preventDefault();
+			});
 
 		});
 		

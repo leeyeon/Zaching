@@ -40,18 +40,30 @@
 		$(function() {
 
 			$('.thumbnail > img').on("click", function(){
-				var index = $(".thumbnail > img").index(this);	
-				var bobId = $($("input[name=bobId]")[index]).val();
-				var category = $($("input[name=category]")[index]).val();
-				//alert(index+"//"+bobId+"//"+category);
-				$(self.location).attr("href","/bob/getBob?category="+category+"&bobId="+bobId);
+				if('${user}' != '') {
+					var index = $(".thumbnail > img").index(this);	
+					var bobId = $($("input[name=bobId]")[index]).val();
+					var category = $($("input[name=category]")[index]).val();
+					//alert(index+"//"+bobId+"//"+category);
+					$(self.location).attr("href","/bob/getBob?category="+category+"&bobId="+bobId);
+				} else {
+					alert("로그인 후 사용하실 수 있습니다.\n"
+							+ "간편회원가입을 통해서 쉽고 간편하게 자췽 서비스를 이용하실 수 있습니다.");
+					$(self.location).attr("href","/user/addUser");
+				}				
 			});
 			
 			$(".user_thumnail").on("click", function(){
-				var index = $(".user_thumnail").index(this);
-				var userId = $($("input[name=writtenUserId]")[index]).val();
-				//alert(index+"//"+bobId+"//"+category);
-				$(self.location).attr("href","/user/getTimeLine?userId="+userId);
+				if('${user}' != '') {
+					var index = $(".user_thumnail").index(this);
+					var userId = $($("input[name=writtenUserId]")[index]).val();
+					//alert(index+"//"+bobId+"//"+category);
+					$(self.location).attr("href","/user/getTimeLine?userId="+userId);
+				} else {
+					alert("로그인 후에 친구의 타임라인을 들어가실 수 있습니다.\n"
+							+ "간편회원가입을 통해서 자췽 서비스를 이용해보세요.");
+					$(self.location).attr("href","/user/addUser");
+				}				
 			});
 			
 			var pageInfo = 1;
@@ -102,12 +114,13 @@
 </head>
 <body>
 
-	<div class="row">
+<div class="row">
+	
 		<c:if test="${empty list}">
 			목록이 없습니다. <br>
 			방만들기를 통해 친구를 만들어보세요.
 		</c:if>
-		
+	
 		<jsp:useBean id="today" class="java.util.Date" />
 		<fmt:formatDate var="today" value="${today}" pattern="yyyyMMddHHmm"/>
 		
@@ -159,6 +172,7 @@
 			<c:forEach var="bob" items="${list}">
 			  <input type="hidden" name="bobId" value="${bob.bobId}">
 			  <input type="hidden" name="category" value="${bob.category}">
+			  <input type="hidden" name="writtenUserId" value="${bob.writtenUserId}">
 			  <div class="col-sm-6 col-md-4 text-center">
 			    <div class="thumbnail">
 			    	<div class="thumbnail-top" style="right: 40px;">${fn:length(bob.participantList)}명 참여 중</div>
@@ -204,8 +218,8 @@
 			      <div>
 			      	<c:forEach var="participant" items="${bob.participantList}">
 						<img class="thumnail" src = "../resources/upload_files/images/${participant.participantProfile}" 
-							onerror="this.src='../resources/images/sample_bob_background.jpg'"/>
-						${participant.participantName}
+							onerror="this.src='../resources/images/user-icon.png'"/>
+						<p style="font-size: 17px;">${participant.participantName}</p>
 					</c:forEach>
 				  </div>
 			    </div>
@@ -214,35 +228,36 @@
 		</c:if>
 		
 		<c:if test="${search.category eq 'B04' }">
-			<c:forEach var="bob" items="${list}">
-			  <input type="hidden" name="bobId" value="${bob.bobId}">
-			  <input type="hidden" name="category" value="${bob.category}">
-			  <div class="col-sm-6 col-md-4 text-center">
-			    <div class="thumbnail">
-			      <div style="position:absolute; font-weight: bold; font-size: 22px; top:20px; right: 40px;  z-index: 10;">${fn:length(bob.participantList)}/${bob.limitNum} 명</div>
-			      <img src = "../resources/upload_files/images/${bob.image}"
-			      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
-			      	style="cursor: pointer; height:250px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;">
-			      <div class="user_thumnail" 
-			      	style="background: url(../resources/images/user-icon.png) center center no-repeat; background-size: cover;
-			      			box-shadow: 1px #cccccc;"></div>
-			      <div class="caption" style="position:relative; top:-20px; font-size: 20px;">
-			      	<div style="font-size:20px; font-weight: bold;">${bob.title}</div>
-			      	<hr>
-			        <p>${bob.locationName} <br>
-			        	<c:if test="${!empty bob.appointmentTime}">
-				        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd hh:mm"/>
-							<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 hh시 mm분"/>
-			        	</c:if>
-			        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
-			        </p>
-			      </div>
-			    </div>
-			  </div>
-			</c:forEach>
+			<c:if test="${!empty user}">
+				<c:forEach var="bob" items="${list}">
+				  <input type="hidden" name="bobId" value="${bob.bobId}">
+				  <input type="hidden" name="category" value="${bob.category}">
+				  <div class="col-sm-6 col-md-4 text-center">
+				    <div class="thumbnail">
+				      <div style="position:absolute; font-weight: bold; font-size: 22px; top:20px; right: 40px;  z-index: 10;">${fn:length(bob.participantList)}/${bob.limitNum} 명</div>
+				      <img src = "../resources/upload_files/images/${bob.image}"
+				      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
+				      	style="cursor: pointer; height:250px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;">
+				      <div class="user_thumnail" 
+				      	style="background: url(../resources/images/user-icon.png) center center no-repeat; background-size: cover;
+				      			box-shadow: 1px #cccccc;"></div>
+				      <div class="caption" style="position:relative; top:-20px; font-size: 20px;">
+				      	<div style="font-size:20px; font-weight: bold;">${bob.title}</div>
+				      	<hr>
+				        <p>${bob.locationName} <br>
+				        	<c:if test="${!empty bob.appointmentTime}">
+					        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd hh:mm"/>
+								<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 hh시 mm분"/>
+				        	</c:if>
+				        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
+				        </p>
+				      </div>
+				    </div>
+				  </div>
+				</c:forEach>
+			</c:if>
 		</c:if>
-		
-	</div>
+</div>
 
 </body>
 </html>

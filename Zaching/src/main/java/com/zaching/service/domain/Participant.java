@@ -14,6 +14,8 @@ public class Participant {
 	private String isAutoFee;
 	private boolean isWriter;
 	private String status;
+	private String paidDate;
+	private int paidFee;
 
 	public Participant() {
 
@@ -87,11 +89,28 @@ public class Participant {
 		}
 	}
 
+	public String getPaidDate() {
+		return paidDate;
+	}
+
+	public void setPaidDate(String paidDate) {
+		this.paidDate = paidDate;
+	}
+
+	public int getPaidFee() {
+		return paidFee;
+	}
+
+	public void setPaidFee(int paidFee) {
+		this.paidFee = paidFee;
+	}
+
 	@Override
 	public String toString() {
 		return "Participant [participantId=" + participantId + ", userId=" + userId + ", participantName="
 				+ participantName + ", participantProfile=" + participantProfile + ", participatedDate="
-				+ participatedDate + ", isAutoFee=" + isAutoFee + ", isWriter=" + isWriter + ", status=" + status + "]";
+				+ participatedDate + ", isAutoFee=" + isAutoFee + ", isWriter=" + isWriter + ", status=" + status
+				+ ", paidDate=" + paidDate + ", paidFee=" + paidFee + "]";
 	}
 
 }
