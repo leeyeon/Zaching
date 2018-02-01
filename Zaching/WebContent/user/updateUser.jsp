@@ -84,44 +84,37 @@
 			
 			//============= "emailAuth =============
 			 function fncEmailAuth() {
-					var email = $("input[name='email']").val();
-			
+					var email = $("#email").val(); //인증번호전송이메일
+					
+					
 					if(email == null || email.length <1){
 						alert("이메일은  반드시 입력하셔야 합니다.");
 						return;
 					}
-				
-					$("form").attr("method" , "POST").attr("action" , "/user/emailAuth").submit();
 					
-			}
-					/* $.ajax(
-							
-					{
-						url:"/user/emailAuth/{user.userId}",
+				
+					//$("form").attr("method" , "POST").attr("action" , "/user/emailAuth").submit();
+					
+			
+					 $.ajax({
+						
+						url:"/user/json/emailAuth",
 						method:"POST",
 						dataType:"json",
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},
+						contentType :'application/json',
 						data : JSON.stringify({
 							email : email
-							
+						
 						}),
 						success : function(JSONData , status) {
-
-							//Debug...
-							console.log("JSONData : \n "+JSONData);
-							console.log(status);
-							console.log( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
-							console.log(JSONData != null);
-						
-							
+							alert(status);
+							alert("JSONData : \n"+JSONData);
+							//alert();
 						}
 						
 						
 					});
-				} */
+				}
 
 			
 			
@@ -140,11 +133,12 @@
                 <form>
   					 <div class="form-group">
     					<label for="exampleTextarea">인증번호</label>
-    					<input type="text" class=""/>
+    					<input type="text" name="authnum"/>
     				</div>
   					<button type="submit" class="btn btn-primary" id="ok">확인</button>
 				</form>
             </div>		
+            
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 		
@@ -168,7 +162,7 @@
 		  	
 		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
 		    <div class="col-sm-4">
-		      <input type="email" class="form-control" id="email" name="email" value="${user.email}" placeholder="중복확인하세요"  >
+		      <input type="email" class="form-control" id="email" name="email" placeholder="중복확인하세요"  >
 		       <span id="helpBlock" class="help-block">
 		    
 		      	<strong class="text-danger" name="userinput">이메일 인증여부 출력예정</strong>
