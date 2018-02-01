@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html lang="ko" class="no-js">
+<html lang="en" class="no-js">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
@@ -10,11 +10,66 @@
 		<meta name="description" content="Loading Effects for Grid Items with CSS Animations" />
 		<meta name="keywords" content="css animation, loading effect, google plus, grid items, masonry" />
 		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="../favicon.ico"> 
-		<link rel="stylesheet" type="text/css" href="../resources/css/default.css" />
+		<link rel="shortcut icon" href="../favicon.ico"/> 
+		
 		<link rel="stylesheet" type="text/css" href="../resources/css/component.css" />
+		<link rel="stylesheet" type="text/css" href="../resources/css/default.css" />
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript">
+			var page = 1;
+			
+			/*
+			window.onscroll = function(ev) {
+			    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+			        alert("you're at the bottom of the page");
+			    }
+			};
+			*/
+			
+			$(window).scroll(function(){
+				if($(window).scrollTop() == $(document).height() - $(window).height()){
+					page += 1;
+					
+					 $.ajax( 
+							{
+							url : "/newsfeed/json/listNewsfeed/",
+							method : "POST" ,
+							dataType : "json" ,
+							data : {
+								resultPage : page,
+								category : "${category}"
+							},
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+								},
+								success : function(JSONData , status) {
+								
+								for(var i=0; i<JSONData.length;i++){
+								var displayValue =
+									'<li>'+
+										'<p class="author-pic">'+
+										'<img alt="" src="../resources/images/profile_test.png" srcset="https://secure.gravatar.com/avatar/cb2e9e4d63e271d04ee4e5753d24586f?s=80&#038;d=mm&#038;r=g 2x" itemprop="image" class="avatar avatar-40 photo" height="40" width="40" align="left"/>'+
+										'<span class="post-author">'+
+											'<span class="author vcard"><a class="url fn n" href="../resources/images/profile_test.png" rel="author">소현태</a></span>'+ 
+											'<em>&sdot;</em>'+
+										'</span>'+
+										'<time datetime="2012-03-20" class="post-date entry-date updated">${newsfeed.regDate}</time></p>'+
+										'<c:if test="'+JSONData[i].fileName+'"><a href="http://drbl.in/fWMM"><img src="../resources/images/'+JSONData[i].fileName+'></a></c:if>'+
+										'<h3 class="post-title entry-title">'+JSONData[i].content+'</h3><hr style="border:solid 0.5px gray">'+
+										'<p class="post-meta entry-meta">'+
+										'<span class="post-category">'+
+										'<a href="https://themify.me/demo/themes/pinboard/category/life/" rel="category tag"><i class="glyphicon glyphicon-thumbs-up"></i>'+JSONData[i].countLikey+'</a><a href="#"><i class="glyphicon glyphicon-pencil"></i>'+JSONData[i].countReply+'</a></span></p>'+
+									'</li>';
+
+									$('#grid').append(displayValue);
+									}
+								}
+						});
+						
+				}
+			});
+		
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', 'UA-7243260-2']);
 			_gaq.push(['_trackPageview']);
@@ -24,10 +79,7 @@
 				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 				})();
 			
-			$("#li").on("click", function(){
-				var index = $($("input[name='newsfeedId']")[$("#li").index(this)]).val();
-				alert(index);
-			})
+			
 		</script>
 		<link rel='dns-prefetch' href='//fonts.googleapis.com' />
 		<link rel='dns-prefetch' href='//s.w.org' />
@@ -43,11 +95,11 @@
 
 	</head>
 	<body>
-		<div class="container">
+		<div class="container" id="news">
 			<!-- Top Navigation -->
 			
 			<header>
-				<h1>자췽 뉴스피드 <span>카테고리를 선택하세요</span></h1>	
+				<h1>자췽 뉴스피드 test04 <span>카테고리를 선택하세요</span></h1>	
 				<nav class="codrops-demos">
 					<a href="index.html">자취지식인</a>
 					<a class="current-demo" href="index2.html">전체보기</a>
@@ -64,28 +116,21 @@
 				<c:forEach var="newsfeed" items="${list}">
 					<c:set var="i" value="${ i+1 }" />
 					<li>
-					<input type="hidden" id="newsfeedId" name="newsfeedId" value="${newsfeed.newsfeedId}"/>
-					<p class="author-pic">
-					<img alt='' src='../resources/images/profile_test.png' srcset='https://secure.gravatar.com/avatar/cb2e9e4d63e271d04ee4e5753d24586f?s=80&#038;d=mm&#038;r=g 2x' itemprop='image' class='avatar avatar-40 photo' height='40' width='40' align="left"/>
-					<span class="post-author">
-						<span class="author vcard"><a class="url fn n" href="../resources/images/profile_test.png" rel="author">소현태</a>
+						<p class="author-pic">
+						<img alt='' src='../resources/images/profile_test.png' srcset='https://secure.gravatar.com/avatar/cb2e9e4d63e271d04ee4e5753d24586f?s=80&#038;d=mm&#038;r=g 2x' itemprop='image' class='avatar avatar-40 photo' height='40' width='40' align="left"/>
+						<span class="post-author">
+							<span class="author vcard"><a class="url fn n" href="../resources/images/profile_test.png" rel="author">소현태</a></span> 
+							<em>&sdot;</em>
 						</span>
+						<time datetime="2012-03-20" class="post-date entry-date updated">${newsfeed.regDate}</time></p>
 						
-						<em>&sdot;</em>
-					</span>
-					
-					<time datetime="2012-03-20" class="post-date entry-date updated" align="left">${newsfeed.regDate}</time>
-					<i class="glyphicon glyphicon-option-vertical" style="text-align:right"></i></p>
-				
-					 
-					
-					
-					<c:if test="${!empty newsfeed.fileName}"><a href="newsfeed/getNewsfeed?newsfeedId=${newsfeed.newsfeedId}"><img src="../resources/images/${newsfeed.fileName}"></a></c:if>
-					<h3 class="post-title entry-title">${newsfeed.content}</h3><hr style="border:solid 0.5px gray">
-					<p class="post-meta entry-meta">
-					<span class="post-category">
-					<a href="https://themify.me/demo/themes/pinboard/category/life/" rel="category tag"><i class="glyphicon glyphicon-thumbs-up"></i>${newsfeed.countLikey}</a><a href="#"><i class="glyphicon glyphicon-pencil"></i>${newsfeed.countReply }</a></span></p>
-					
+						
+						<c:if test="${!empty newsfeed.fileName}"><a href="http://drbl.in/fWMM"><img src="../resources/images/${newsfeed.fileName }"></a></c:if>
+						<h3 class="post-title entry-title">${newsfeed.content}</h3><hr style="border:solid 0.5px gray">
+						<p class="post-meta entry-meta">
+						<span class="post-category">
+						<a href="https://themify.me/demo/themes/pinboard/category/life/" rel="category tag"><i class="glyphicon glyphicon-thumbs-up"></i>${newsfeed.countLikey}</a><a href="#"><i class="glyphicon glyphicon-pencil"></i>${newsfeed.countReply }</a></span></p>
+						
 					</li>
 				</c:forEach>
 				<li><div class="post-content">
@@ -193,6 +238,7 @@
 				<li><a href="http://drbl.in/fGhI"><img src="../resources/images/test_5.jpg"></a></li>
 				<li><a href="http://drbl.in/fzYo"><img src="../resources/images/test_2.jpg"></a></li>
 			</ul>
+			
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.0.0/masonry.pkgd.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.0/imagesloaded.pkgd.min.js"></script>

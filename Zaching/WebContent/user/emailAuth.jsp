@@ -34,7 +34,7 @@
 <script type="text/javascript">
 function check() {
 	var form = document.authform;
-	var authnum = ${authnum};
+	var authnum = document.authform;
 	
 	if(!form.authnum.value!=authnum){
 		alert("인증번호를 입력해주셔요");

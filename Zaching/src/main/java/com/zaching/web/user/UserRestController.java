@@ -31,8 +31,9 @@ public class UserRestController {
 	public UserRestController() {
 		System.out.println(this.getClass());
 	}
+
 	
-	
+	/*
 	@RequestMapping(value="json/login", method=RequestMethod.POST)
 	public User login( @RequestBody User user, HttpSession session	)throws Exception{
 		
@@ -49,13 +50,51 @@ public class UserRestController {
 		if(user.getPassword().equals(dbUser.getPassword()) &&
 				user.getEmail().equals(dbUser.getEmail())) {
 			session.setAttribute("user", dbUser);
+
+	// 이메일 인증
+		@RequestMapping(value = "json/emailAuth", method = RequestMethod.POST)
+		public User emailAuth(HttpServletRequest request,
+						HttpSession session) throws Exception {
+
+			System.out.println("/user/json/emailAuth : POST");
+
+			String email = request.getParameter("email");
+			String authNum="";//보내 인증번호
+			
+			authNum = RandomNum();
+			
+			User getSessionUser = (User)session.getAttribute("user");
+			
+			System.out.println("getSessionUser :: "+getSessionUser);
+			
+			System.out.println("받는사람 email 정보==>" + email);
+			System.out.println("새로생성한 인증번호==> "+authNum);
+			
+			getSessionUser.setAuthNum(authNum);
+			userService.sendMail(email, authNum);
+			
+			System.out.println("DB인증번호 ===> "+getSessionUser.getAuthNum());
+			
+			session.setAttribute("user", getSessionUser);
+			
+			System.out.println("setSessionUser :: "+getSessionUser);
+
+			return getSessionUser;
+
 		}
-		System.out.println("비교===>"+user.getEmail()+" = "+dbUser.getEmail());
-		System.out.println("비교===>"+user.getPassword()+" = "+dbUser.getPassword());
-		
-		return dbUser;
-	}
-	
+
+
+		// 난수발생 메소드
+				public String RandomNum() {
+
+					StringBuffer buffer = new StringBuffer();
+					for (int i = 0; i <= 6; i++) {
+						int n = (int) (Math.random() * 10);
+						buffer.append(n);
+					}
+					return buffer.toString();
+				}
+*/
 	
 	@RequestMapping(value="/rest/memoryMap/{userId}", method=RequestMethod.GET)
 	public String memoryMap( @PathVariable int userId, HttpSession session)throws Exception{

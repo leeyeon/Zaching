@@ -177,11 +177,19 @@
 			        loadurl = $this.attr('href'),
 			        targ = $this.attr('data-target');
 
-			    $.get(loadurl, function(data) {
-			        $(targ).html(data);
-			    });
+			    if('${user}' == '' && (targ == "#B03" || targ == "#B04")) {
+					alert("로그인 후 사용하실 수 있습니다. \n"
+							+"간편회원가입을 통해서 쉽고 간편하게 자췽 서비스를 이용하실 수 있습니다.");
+					$(self.location).attr("href","/user/addUser");
+				} else {
+				    
+				    $.get(loadurl, function(data) {
+				        $(targ).html(data);
+				    });
+				    
+				    $this.tab('show');
+				}
 
-			    $this.tab('show');
 			    return false;
 			});
 			/* tab Event End */
@@ -227,7 +235,7 @@
 				<div class="tab-pane" id="B02"> </div>
 				<div class="tab-pane" id="B03"> </div>
 				<div class="tab-pane" id="B04"> </div>
-				<!-- 데이터 끝... -->	
+				<!-- 데이터 끝... -->
 				</div>
 			</div>
 		</div>

@@ -369,7 +369,7 @@
 	            	<div class="col-sm-2 btn-bob">대표사진 설정</div>
 	            	<div class="col-sm-2 text-center" style="padding-top: 7px;">
 	            		<div class="checkbox">
-	            			<label><input type="checkbox" name="imageCheck" value="">기본배경화면</label>
+	            			<label><input type="checkbox" name="imageCheck">기본배경화면</label>
 	            		</div>
 	            	</div>
 	            	<div class="col-sm-8" align="center" style="padding-top: 7px;">
@@ -383,7 +383,7 @@
 			    	<div class="row">
 			    		<div class="col-sm-6 btn-bob">날짜</div>
 		            	<div class="col-sm-6" align="center" style="padding-top: 8px;">
-			                <div class="input-group date form_datetime col-md-5" data-date-format="yyyy-mm-dd HH:mi" data-link-field="dtp_input1" style="width: 100%;">
+			                <div class="input-group date form_datetime col-md-5" data-date-format="yyyy-mm-dd HH:i" data-link-field="dtp_input1" style="width: 100%;">
 			                    <input type="text" name="appointmentTime" class="form-control" style="font-size: 16px;" readonly>
 			                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>

@@ -66,20 +66,54 @@ public class UserController {
 
 		return "redirect:/user/addUser.jsp";
 	}
+
+	// 이메일 인증
+	@RequestMapping(value = "emailAuth", method = RequestMethod.POST)
+	public User emailAuth(HttpServletRequest request,
+					HttpSession session) throws Exception {
+
+		System.out.println("/user/emailAuth : POST");
+
+		String email = request.getParameter("email");
+		String authNum="";//보내 인증번호
+		
+		authNum = RandomNum();
+		
+		User getSessionUser = (User)session.getAttribute("user");
+		
+		System.out.println("getSessionUser :: "+getSessionUser);
+		
+		System.out.println("받는사람 email 정보==>" + email);
+		System.out.println("새로생성한 인증번호==> "+authNum);
+		
+		getSessionUser.setAuthNum(authNum);
+		userService.sendMail(email, authNum);
+		
+		System.out.println("DB인증번호 ===> "+getSessionUser.getAuthNum());
+		
+		session.setAttribute("user", getSessionUser);
+		
+		System.out.println("setSessionUser :: "+getSessionUser);
+
+		return getSessionUser;
+	}
+
+
+	// 난수발생 메소드
+			public String RandomNum() {
+
+				StringBuffer buffer = new StringBuffer();
+				for (int i = 0; i <= 6; i++) {
+					int n = (int) (Math.random() * 10);
+					buffer.append(n);
+				}
+				return buffer.toString();
+			}
+
 	
 
 
-		// 난수발생 메소드
-		public String RandomNum() {
-
-			StringBuffer buffer = new StringBuffer();
-			for (int i = 0; i <= 6; i++) {
-				int n = (int) (Math.random() * 10);
-				buffer.append(n);
-			}
-			return buffer.toString();
-		}
-
+		
 	@RequestMapping(value = "addUser", method = RequestMethod.POST)
 	public String addUser(@ModelAttribute("user") User user) throws Exception {
 
@@ -225,47 +259,16 @@ public class UserController {
 
 		return "forward:/user/checkDuplication.jsp";
 	}
-
-
-	// 이메일 인증
-	@RequestMapping(value = "emailAuth", method = RequestMethod.POST)
-	public String emailAuth(HttpServletRequest request,
-					HttpSession session) throws Exception {
-
-		System.out.println("/user/emailAuth : POST");
-
-		String email = request.getParameter("email");
-		String authNum="";//보내 인증번호
-		
-		authNum = RandomNum();
-		
-		User getSessionUser = (User)session.getAttribute("user");
-		
-		System.out.println("getSessionUser :: "+getSessionUser);
-		
-		System.out.println("받는사람 email 정보==>" + email);
-		System.out.println("새로생성한 인증번호==> "+authNum);
-		
-		getSessionUser.setAuthNum(authNum);
-		userService.sendMail(email, authNum);
-		
-		System.out.println("DB인증번호 ===> "+getSessionUser.getAuthNum());
-		
-		session.setAttribute("user", getSessionUser);
-		
-		System.out.println("setSessionUser :: "+getSessionUser);
-
-		return "forward:/user/emailAuth.jsp";
-	}
 	
+
+
 	@RequestMapping(value="memoryMap")
 	public String memoryMap( HttpSession session)throws Exception{
 
-		
-		//데이터 아래 형식으로 나타냄.
-		
-		
-		return "forward:/user/memoryMap.jsp";
+	
+	return "forward:/user/memoryMap.jsp";
 	}
+	
+	
 	
 }

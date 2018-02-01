@@ -106,13 +106,14 @@
 	 		 padding: 0;
 
 		}
+		
 		img.img-rounded{
 			margin-top: 10px;
 			margin-left: 10px;
 			margin-right: 10px;
 			margin-bottom: 10px;
-
 		}
+
 	</style>
 	
 	<script type="text/javascript">
@@ -184,10 +185,6 @@
 			self.location = "/user/addUser";
 		});
 		
-		$('#loginModal').on('show.bs.modal', function (e) {
-			  if (!data) return e.preventDefault();
-		});
-		
 		$( "#profile" ).on("click" , function() {
 			self.location = "/user/getTimeLine?userId=${user.userId}";			
 	 	});
@@ -228,9 +225,14 @@
             <li><a href="#">생활정보</a></li>
           </ul>
           <ul class="nav navbar-nav" style="float:right;">
-          	<c:if test="${user.userId ne null}"><li>
-          	<img  src="/resources/images/profile_default.png" id="profile"
-          	 width="30px"/>&nbsp;<u>${user.name}</u>&nbsp;님 환영합니다!</li></c:if>
+          	<c:if test="${user.userId ne null}">
+	          	<li><div style="padding-top: 10px; color:#FFF;">
+		          	<img src="/resources/images/profile_default.png" id="profile"
+		          	 width="30px"/>&nbsp;<u>${user.name}</u>&nbsp;님 환영합니다!
+	          	</div></li>
+	          	<li><a href="#">로그아웃</a></li>
+          	</c:if>
+          	 
           	 
             <c:if test="${user.userId eq null}">
             <li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
@@ -246,7 +248,7 @@
    
 
 	 <!-- Modal -->
-  <div  id="loginModal"  class="modal fade"  >
+  <div  id="loginModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   
   <div class="modal-dialog">
     
@@ -255,8 +257,7 @@
       
       <!-- Modal Header start-->
        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-          aria-label="Close">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <div class="modal-title" align="center" style="margin-bottom:15px;"><!-- 자췽로고 -->
           <img src="/resources/images/temp_logo.png" class="img-logo" width="50" height="50" ></div> 
        </div><!-- Modal Header end -->  

@@ -21,7 +21,12 @@ body { line-height:1.58;}
 <script type="text/javascript">
 
 function report(){
-	
+	var reportID = "a";
+	var category = "a";
+	var userID = "a";
+	var text = "a";
+	var reportUserID = "a";
+	var roomID = "a";
 
 	
 	
@@ -31,12 +36,12 @@ function report(){
         method : "POST",
         contentType : "application/json; charset=UTF-8",
         data : JSON.stringify({
-        	"reportID" : ,
-            "category" : ,
-            "userID" : ,
-            "text" : ,
-            "reportUserID" : ,
-            "roomID" : 
+        	"reportID" : reportID,
+            "category" : category,
+            "userID" : userID,
+            "text" : text,
+            "reportUserID" : reportUserID,
+            "roomID" : roomID
         }),
         async : false,
         dataType : "json",
