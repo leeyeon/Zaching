@@ -9,7 +9,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -190,15 +193,27 @@ public class LivingInfoRestController {
 	        // value 취득    get
 	        String year = Integer.toString(cal.get(Calendar.YEAR));
 	        String month = Integer.toString(cal.get(Calendar.MONTH) + 1);
-	        int day = cal.get(Calendar.DATE) - 1;
+	        String day = Integer.toString(cal.get(Calendar.DATE));
 	        if(Integer.parseInt(month) < 10) {
 	        	month = "0" + month;
 	        }
+	        if(Integer.parseInt(day) < 10) {
+	        	day = "0" + day;
+	        }
+	   
 	        
-	        String ymd = year+month+Integer.toString(day);
+	        String ymd = year+month+day;
+	        DateFormat df = new SimpleDateFormat("yyyyMMdd");
+	        long chStart = 0;
+	        chStart = df.parse(ymd).getTime();           
+	        chStart -= 86400000;    //24*60*60*1000 하루치의 숫자를 빼준다
+	        
+	        System.out.println(chStart);
+	        
+	        Date aa = new Date(chStart); 
 	        
 	       
-		 parameter = parameter + "&" + "targetDt="+ymd;
+		 parameter = parameter + "&" + "targetDt="+df.format(aa);
 			 
 		addr = addr + serviceKey + parameter;
 	
@@ -217,7 +232,7 @@ public class LivingInfoRestController {
 			sb.append((char) c);
 		}
 		
-		
+		System.out.println(sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString());
 		return sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString();
 		
 	}

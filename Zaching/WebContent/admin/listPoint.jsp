@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<link href="/resources/css/adminlist.css" rel="stylesheet" type="text/css">
 <jsp:include page="admintoolbar.jsp"/>
 
 </head>
@@ -35,7 +36,7 @@ $(function() {
 
    		 	if (chageIndex[i].checked){
 
-   		 	var paymentId = $($("input[name='paymentId']")[$('.ct_list_pop td:nth-child(1)').index(i-1)]).val();
+   		 	var paymentId = $($("input[name='paymentId']")[i-1]).val();
 
    		 $.ajax({
    			 
@@ -93,68 +94,6 @@ body {
 		height: 500px;
 
 	}
-	
-	input[type=checkbox] + label {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  border: 2px solid #bcbcbc;
-  cursor: pointer;
-	}
-	
-	input[type=checkbox]:checked + label:after {
-  content: '\2714';
-  font-size: 11px;
-	}
-	
-	input[type=checkbox] {
-  display: none;
-	}
-	
-	.th{
-		color: rgba(0,158,216,1);
-		font-weight:bold;
-	}
-	.myButton {
-	-moz-box-shadow:inset 0px 1px 0px 0px #009ed8;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #009ed8;
-	box-shadow:inset 0px 1px 0px 0px #009ed8;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #009ed8), color-stop(1, #009ed8));
-	background:-moz-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:-webkit-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:-o-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:-ms-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:linear-gradient(to bottom, #009ed8 5%, #009ed8 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#009ed8', endColorstr='#009ed8',GradientType=0);
-	background-color:#009ed8;
-	-moz-border-radius:9px;
-	-webkit-border-radius:9px;
-	border-radius:9px;
-	border:1px solid #84bcf3;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:10px;
-	font-weight:bold;
-	padding:6px 13px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #009ed8;
-	}
-	.myButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #009ed8), color-stop(1, #009ed8));
-	background:-moz-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:-webkit-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:-o-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:-ms-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:linear-gradient(to bottom, #009ed8 5%, #009ed8 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#009ed8', endColorstr='#009ed8',GradientType=0);
-	background-color:#009ed8;
-	}
-	.myButton:active {
-	position:relative;
-	top:1px;
-	}
 </style>
 <body>
  <input type="hidden" id="currentPage" name="currentPage" value=""/>
@@ -169,13 +108,14 @@ body {
  	<td class="th" align="left">이름</td>
  	<td class="th" align="left">포인트</td>
  	<td class="th" align="left">처리유무</td>
- 	<td class="right" align="right"><input type="checkbox" name="cb" id="cb1"><label for="cb1"></label></td>
+ 	<td class="right" align="right"><input type="checkbox" name="cb" id="cb1"></td>
  	</tr>
  	<tbody>	
- 	<tr class="ct_list_pop">
  	 <c:set var="i" value="0" />
 	 <c:forEach var="payment" items="${list}">
- 	<td align="left"><input type="hidden" name="userId" value="${payment.userId}">
+ 	
+ 	<tr class="ct_list_pop">
+ 	 	<td align="left"><input type="hidden" name="userId" value="${payment.userId}">
  	<input type="hidden" name="paymentId" value="${payment.paymentId}">
  	<input type="hidden" name="point" value="${payment.point}">
  	${payment.userId}</td>
@@ -192,17 +132,19 @@ body {
  	<c:choose>
  	<c:when test="${payment.paymentCode == 'P03  '}">
  	<input type="hidden" name="1" value="${payment.point}">
- 	<input type="checkbox" id="cb2" name="cb"><label for="cb2"></c:when>
+ 	 <input type="checkbox" id="${i}" name="cb"></c:when>
  	<c:when test="${payment.paymentCode == 'P04  '}"></c:when>
  	</c:choose></td>
- 	</label>
- 	</td>
- 	</c:forEach>
  		</tr>
+ 			</c:forEach>
  		</tbody>
  		</table>
  	</div> 
  	<div class="change" align="right"><a href="#" class="myButton" id="point">처리하기</a></div>
+ 	
+ 	<form>	
+ 	<input type="hidden"	id="currentPage" name="currentPage" value="" />
+ 		</form>
  	<jsp:include page="../common/pageNavigator.jsp" />
   </div>
   

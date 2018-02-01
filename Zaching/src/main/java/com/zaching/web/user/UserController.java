@@ -258,4 +258,14 @@ public class UserController {
 		return "forward:/user/emailAuth.jsp";
 	}
 	
+	@RequestMapping(value="memoryMap")
+	public String memoryMap( HttpSession session)throws Exception{
+
+		
+		//데이터 아래 형식으로 나타냄.
+		
+		
+		return "forward:/user/memoryMap.jsp";
+	}
+	
 }

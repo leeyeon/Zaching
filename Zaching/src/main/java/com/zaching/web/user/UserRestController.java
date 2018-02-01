@@ -34,8 +34,7 @@ public class UserRestController {
 	
 	
 	@RequestMapping(value="json/login", method=RequestMethod.POST)
-	public User login( @RequestBody User user,
-				HttpSession session	)throws Exception{
+	public User login( @RequestBody User user, HttpSession session	)throws Exception{
 		
 		System.out.println("/user/json/login : POST");
 		
@@ -55,6 +54,19 @@ public class UserRestController {
 		System.out.println("비교===>"+user.getPassword()+" = "+dbUser.getPassword());
 		
 		return dbUser;
+	}
+	
+	
+	@RequestMapping(value="/rest/memoryMap/{userId}", method=RequestMethod.GET)
+	public String memoryMap( @PathVariable int userId, HttpSession session)throws Exception{
+
+		System.out.println(userId);
+		
+		//데이터 아래 형식으로 나타냄.
+		
+		
+		return "{\"positions\":[{\"lat\": 37.3733103146403,\"lng\": 127.43708794867802,\"imgsrc\": \"/resources/images/user-icon.png\"},{\"lat\": 37.1627912237388,\"lng\": 128.99580192447536,\"imgsrc\": \"/resources/images/author.png\"},{\"lat\": 36.93980515531936,\"lng\": 128.8060765485201,\"imgsrc\": \"/resources/upload_files/images/main@2x.png\"},"
+				+ "{\"lat\": 37.27943075229118,\"lng\": 127.01763998406159,\"imgsrc\": \"/resources/images/profile_test.png\"},{\"lat\": 37.55915668706214,\"lng\": 126.92536526611102,\"imgsrc\": \"/resources/images/test_2.jpg\"}]}";
 	}
 	
 	

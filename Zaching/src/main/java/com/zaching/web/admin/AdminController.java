@@ -3,6 +3,7 @@ package com.zaching.web.admin;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zaching.service.domain.User;
 import com.zaching.service.payment.PaymentService;
+import com.zaching.service.report.ReportService;
 import com.zaching.service.user.UserService;
 import com.zaching.common.domain.Search;
 import com.zaching.common.domain.Page;
@@ -31,14 +33,21 @@ public class AdminController {
 	private UserService userService;
 	
 	@Autowired
+	@Qualifier("reportServiceImpl")
+	private ReportService reportService;
+	
+	@Autowired
 	@Qualifier("paymentServiceImpl")
 	private PaymentService paymentService;
 	
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
 
-	@Value("#{commonProperties['pageSize']}")
-	int pageSize;
+	
+	//@Value("#{commonProperties['pageSize']}")
+	//int pageSize;
+	
+	int pageSize = 3;
 
 
 	public AdminController() {
@@ -82,7 +91,20 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/listReport", method=RequestMethod.GET)
-	public String listReport(Model model) throws Exception {
+	public String listReport(@ModelAttribute("search") Search search, Model model) throws Exception {
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+
+		// Business logic 수행
+		List list = reportService.listReport(search);
+		
+	
+		model.addAttribute("list", list);
+
 	
 		return "forward:/admin/listReport.jsp";
 
@@ -110,20 +132,29 @@ public class AdminController {
 	
 	
 	
-	@RequestMapping(value="/listUser", method=RequestMethod.GET)
-	public String listUser(@ModelAttribute("search") Search search, Model model) throws Exception {
+	@RequestMapping(value="/listUser")
+	public String listPostUser(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
 		
+		System.out.println(search);
 
-		// Business logic 수행
-		//List list = paymentService.listExchargePoint(search);
+		Map<String, Object> map = userService.listUser(search);
+		
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+				pageSize);
+		
+		System.out.println(resultPage);
 		
 	
-		//model.addAttribute("list", list);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		
+		System.out.println(map.get("list"));
 	
 		return "forward:/admin/listUser.jsp";
 

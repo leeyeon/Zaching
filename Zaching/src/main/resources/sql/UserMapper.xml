@@ -120,7 +120,7 @@
 			email	= #{email},
 			role 	= #{role:CHAR}, <!-- 이메일 인증시 ROLE 2로 UPDATE -->
 			password = #{password},
-			profile_image = #{profileImage:VARCHAR},
+			profile_image = #{profileImage:VARCHAR}
 			<!-- real_name = #{realName:VARCHAR},
 			bank_code = #{bankCode:INTEGER},
 			account_number = #{accountNumber:VARCHAR},
