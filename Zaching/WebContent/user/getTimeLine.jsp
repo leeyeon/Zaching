@@ -54,7 +54,7 @@
         </div>
     </div>
     
-     <c:if test="${user.userId ne null }"><!-- 세션에있는 아이디랑  -->
+     <c:if test="${user.userId eq sessionScope.user.userId}"><!-- 세션에있는 아이디랑  -->
     <div class="row" >
     	<div class="col-xs-2">
     		<button type="button" id="memoryMap">추억지도</button>
@@ -77,7 +77,7 @@
   </div>
   </c:if>
   
-  <c:if test="${user.userId eq null }">
+  <c:if test="${user.userId ne sessionScope.user.userId}">
   <div class="row" >
     	<div class="col-xs-3">
     		<button type="button" >친구신청</button>
