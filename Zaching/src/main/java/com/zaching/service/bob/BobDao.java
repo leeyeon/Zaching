@@ -30,6 +30,8 @@ public interface BobDao {
 	
 	public void deleteBob(int bobId) throws Exception;
 	
+	public void blockBob(int bobId) throws Exception;
+	
 	public void setFeeBob(int participantId, boolean isAutoFee) throws Exception;
 	
 	public void payFeeBob(int participantId, int paidFee) throws Exception;

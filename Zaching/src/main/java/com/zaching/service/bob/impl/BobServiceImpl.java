@@ -125,6 +125,11 @@ public class BobServiceImpl implements BobService {
 	public void deleteBob(int bobId) throws Exception {
 		bobDao.deleteBob(bobId);
 	}
+	
+	@Override
+	public void blockBob(int bobId) throws Exception {
+		bobDao.blockBob(bobId);
+	}
 
 	@Override
 	public void setFeeBob(int participantId, boolean isAutoFee) throws Exception {

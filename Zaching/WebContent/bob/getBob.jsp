@@ -128,13 +128,12 @@
    					"category" : '${param.category}'
    				}),
    				async : false,
-   				dataType : "json",
    				success : function(serverData) {
    					console.log(serverData.response);
    					if(serverData.response == 'success') {
    						location.reload();
    					} else {
-   						alert("우엥");
+   						alert("error");
    					}
    				},
    				error:function(request,status,error){
@@ -146,7 +145,28 @@
    	 	});
    	 	
    	 	$('button:contains("마감하기")').on('click', function() {
-   	 		alert("참여제한 status E 로 update");
+   	 		console.log("${bob.bobId}");
+   	 		//확인
+	   	 	if (confirm("참여자 신청을 마감하시겠어요? \n마감 시, 참여자를 더 이상 받으 실 수 없습니다.") == true){
+		   	 	$.ajax({
+	   				url : "/bob/rest/blockBob",
+	   				method : "POST",
+	   				contentType : "application/json; charset=UTF-8",
+	   				data : JSON.stringify({
+	   					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />
+	   				}),
+	   				async : false,
+	   				success : function(serverData) {
+	   					location.reload();
+	   				},
+	   				error:function(request,status,error){
+	   				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	   				}
+	   			});
+		   	//취소
+		   	}else{
+		   	    return;
+		   	}
    	 	});
    	 	
    	 	$('.btn-ico:contains("참여하기")').on('click', function() {
@@ -168,7 +188,6 @@
    						location.reload();
    					} else {
    						alert("포인트 충전하세요~~");
-   						alert("페이지 이동");
    					}
    				},
    				error:function(request,status,error){
@@ -211,7 +230,7 @@
    						location.reload();
    					} else {
    						alert("포인트 충전하세요~~");
-   						alert("페이지 이동");
+   						$(self.location).attr("href","/payment/mainPayment");
    					}
    				},
    				error:function(request,status,error){
@@ -382,7 +401,6 @@
 							onerror="this.src='../resources/images/user-icon.png'" />&nbsp;&nbsp;&nbsp;${bob.writtenUserName}
 						</div>
 					</div>
-					
 					<c:forEach var="participant" items="${participant}">
 						<c:if test="${participant.userId eq user.userId}">
 							<input type="hidden" name="participantId" value="${participant.participantId}" />
@@ -413,19 +431,24 @@
 				
 				<c:if test="${param.category ne 'B03'}">
 					<div class="row" style="padding: 5px;">
-						<button class="btn-bob">
-							<c:set var="flag" value="true"/>
-							<c:if test="${user.userId ne bob.writtenUserId}">
-								<c:forEach var="participant" items="${participant}">
-									<c:if test="${user.userId eq participant.userId}">취소하기
-										<c:set var="flag" value="false" />
-									</c:if>
-								</c:forEach>
-								<c:if test="${param.category eq 'B01' && flag}">약속비 1000원으로 참여하기</c:if>
-								<c:if test="${param.category eq 'B02' && flag}">번개 참여하기</c:if>
-							</c:if>
-							<c:if test="${user.userId eq bob.writtenUserId}">마감하기</c:if>
-						</button>
+						<c:if test="${bob.status eq 'Y'}">
+							<button class="btn-bob">
+								<c:set var="flag" value="true"/>
+								<c:if test="${user.userId ne bob.writtenUserId}">
+									<c:forEach var="participant" items="${participant}">
+										<c:if test="${user.userId eq participant.userId}">취소하기
+											<c:set var="flag" value="false" />
+										</c:if>
+									</c:forEach>
+									<c:if test="${param.category eq 'B01' && flag}">약속비 1000원으로 참여하기</c:if>
+									<c:if test="${param.category eq 'B02' && flag}">번개 참여하기</c:if>
+								</c:if>
+								<c:if test="${user.userId eq bob.writtenUserId}">마감하기</c:if>
+							</button>
+						</c:if>
+						<c:if test="${bob.status eq 'E'}">
+							<div class="btn-bob" style="background-color: #FFF; color: #000;" >참여자 마감</div>
+						</c:if>
 					</div>
 				</c:if>
 				
@@ -523,6 +546,10 @@
 	      	</div>
 	      	
 	      	<div class="row text-center textBold" style="padding-top:25px; padding-botton:30px;">
+	      		<fmt:parseDate value="${bob.feeDate}" var="Date" pattern="yyyy-MM-dd HH:mm:ss.S"/>
+	      		<fmt:formatDate var="feeDate" value="${Date}" pattern="d"/><br>
+	      		<h1 style="font-size: 20px">회비 내는 날 : 매 월 ${feeDate}일</h1>
+	      		
 	      		이 달의 회비는 <fmt:formatNumber type="currency" value="${bob.fee}" pattern="###,###" />원입니다.
 	      	</div>
 	      	

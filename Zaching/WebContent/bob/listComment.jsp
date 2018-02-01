@@ -27,7 +27,7 @@
 		</div>
 		<div class="col-sm-3" style="font-size: 13px; text-align: end;">
 			<div style="padding-right: 50px;">
-				<fmt:parseDate value="${comment.createdDate}" var="Date" pattern="yyyy-MM-dd hh:mm"/>
+				<fmt:parseDate value="${comment.createdDate}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
 				<fmt:formatDate value="${Date}" pattern="yyyy³â MM¿ù ddÀÏ a hh:mm"/>
 			</div>
 			<div class="deleteComment" style="position: relative; right: 10px; top:-10px; text-align: end;">
