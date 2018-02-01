@@ -68,7 +68,7 @@
 			parameterType="payment">
 		UPDATE PAYMENT
 		<set>
-			payment_code = #{paymentCode}
+			payment_code = 'P04'
 		</set>
 		<where>
 			payment_id = #{paymentId}

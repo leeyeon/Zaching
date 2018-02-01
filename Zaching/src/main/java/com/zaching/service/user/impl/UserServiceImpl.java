@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUser(int userId) throws Exception {
-		System.out.println("ServiceImpl ::getUser" +userId);
+		System.out.println("ServiceImpl ::getUser " +userId);
 		return userDao.getUser(userId);
 	}
 	
@@ -177,7 +177,6 @@ public class UserServiceImpl implements UserService {
 
 				Transport.send(msg);// 메일보내기
 				
-				userDao.emailAuth(authNum);
 			} catch (MessagingException e) {
 				e.printStackTrace();
 
@@ -185,6 +184,8 @@ public class UserServiceImpl implements UserService {
 				e.printStackTrace();
 			}
 		}
+	
+	
 
 
 
