@@ -403,7 +403,7 @@
 		            	<div class="col-xs-12" align="center">
 		            		<input type="text" name="locationName" class="form-control" style="font-size: 16px; margin-top:10px; margin-bottom:10px;"
 		            				placeholder="위치를 지정해주세요" value="${bob.locationName}" />
-		            		<span id="locationDuplicateCheck" class="col-sm-12 text-center" style="color: red; margin-bottom:10px; ">장소를 검색하세요.</span>
+		            		<span id="locationDuplicateCheck" class="col-sm-12 text-center" style="color: red; margin-bottom:10px; visibility: hidden; ">장소를 검색하세요.</span>
 		            		<div class="map_wrap">
 							    <div id="map" style="width:100%;height:400px;position:relative;overflow:hidden;"></div>
 							</div>
@@ -420,11 +420,11 @@
 		    		<div class="row">
 		            	<div class="col-sm-3 btn-bob">수정할 회비 (원)</div>
 		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
-		            		<input type="text" class="form-control" name="imageCheck" value="" placeholder="(ex) 20000">
+		            		<input type="text" class="form-control" name="fee" value="${bob.fee}" placeholder="(ex) 20000">
 		            	</div>
 		            	<div class="col-sm-3 btn-bob">수정할 회비날짜</div>
 		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
-		            		<input type="date" name="appointmentTime" class="form-control"style="font-size: 16px;"/>
+		            		<input type="date" name="feeDate" class="form-control" value="${bob.feeDate}" style="font-size: 16px;"/>
 		            	</div>
 			    	</div>
 			    	

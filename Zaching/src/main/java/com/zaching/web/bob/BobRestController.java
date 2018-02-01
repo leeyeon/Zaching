@@ -1,7 +1,6 @@
 package com.zaching.web.bob;
 
-import java.io.IOException;
-import java.io.File;
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -74,7 +72,7 @@ public class BobRestController {
 		System.out.println("addImage...2");
 		
 		JSONObject obj = new JSONObject();
-		obj.put("url", fileDirectory+fileName);
+		obj.put("url", "..\\resources\\upload_files\\images\\"+fileName);
 		
 		return obj;
 	}
@@ -183,6 +181,34 @@ public class BobRestController {
 		obj.put("comment", comment);
 		
 		return obj;
+	}
+	
+	@RequestMapping(value="/setFeebob", method=RequestMethod.POST)
+	public JSONObject setFeebob(@RequestBody Map<String, Object> obj) throws Exception {
+	
+		System.out.println(obj.get("participantId"));
+		System.out.println(obj.get("isAutoFee"));
+		boolean isAutoFee = true;
+		
+		if(obj.get("isAutoFee").equals("Y")) {
+			isAutoFee = false;
+		}
+		
+		System.out.println("요기11");
+		
+		bobService.setFeeBob(Integer.valueOf(obj.get("participantId").toString()), isAutoFee);
+		
+		JSONObject object = new JSONObject();
+		
+		if(isAutoFee) {
+			object.put("isAutoFee", "Y");
+		} else {
+			object.put("isAutoFee", "N");
+		}
+		
+		System.out.println("요기22");
+		
+		return object;
 	}
 	
 }

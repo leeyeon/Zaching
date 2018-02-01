@@ -28,6 +28,14 @@
 	  --%>
 
 	<style>
+	
+		/* 글꼴 수정 */
+		
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+		
+		* {
+			font-family: 'Nanum Gothic', serif;
+		}
 		
 		.navbar-fixed-top {
 		    background: #ffffff;
@@ -75,51 +83,51 @@
 		.mainbar-menu:hover, .mainbar-menu .active{
 		    border-bottom: 4px solid RGB(237,125,49);
 		}
+		
+		/* //////////////// main css */
+		
 		/* 모달 크기조정 */
 		.social-login{
-		margin-left: 20px;
+			margin-left: 20px;
 		}
 		
 		.modal-dialog.login{
- 		width: 300px;
-  		height: 200px;
-  		margin: 0;
-  		padding: 0;
+	 		width: 300px;
+	  		height: 200px;
+	  		margin: 0;
+	  		padding: 0;
 		}
 		
 		/* ////////////////////로그인 모달 창 style/////////////////////// */
 		.modal-dialog.modal{
- 		 width: 50%;
- 		 height: 50%;
- 		 margin: 0;
- 		 padding: 0;
+	 		 width: 50%;
+	 		 height: 50%;
+	 		 margin: 0;
+	 		 padding: 0;
 
 		}
 		img.img-rounded{
-		margin-top: 10px;
-		margin-left: 10px;
-		margin-right: 10px;
-		margin-bottom: 10px;
+			margin-top: 10px;
+			margin-left: 10px;
+			margin-right: 10px;
+			margin-bottom: 10px;
 
-		}
-		
-		#navbar > ul:nth-child(2) > li{
-		margin-top: 10px;
-		color: #e8e8e8;
 		}
 	</style>
 	
 	<script type="text/javascript">
 	
-$( function() {
+	$( function() {
 		
-		$("#email").focus();
+		
 		
 		//==>"Login"  Event 연결
 		$("#login").on("click" , function() {
+			
+			$("#email").focus();
 
-			var email =$("input:text").val();
-			var password =$("input:password").val();
+			var email =$("#email").val();
+			var password =$("#password").val();
 			
 			if(email == null || email.length <1) {
 				alert('ID 를 입력하지 않으셨습니다.');
@@ -137,54 +145,62 @@ $( function() {
 			$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
 			
 		});
-	});
-		$(function() {
-			
-			$('body > nav > div.container > div > div:nth-child(3)').addClass('active');
-			
-			$('.mainbar-menu').on('click', function(){
-				 $('.active').removeClass('active');
-				 $(this).addClass('active');
-			})
-			
-			$( ".navbar-brand img" ).on("click" , function() {
-				$(self.location).attr("href","/");
-				
-		 	});
-			
-		 	$( "a:contains('밥친구')" ).on("click" , function() {
-				$(self.location).attr("href","/bob/mainBob");
-				
-		 	});
 
-			$("a:contains('생활정보')").on("click", function() {
-				self.location = "/livingInfo/mainLivingInfo";
-
-			});
+		$('body > nav > div.container > div > div:nth-child(3)').addClass('active');
 		
-			$("a:contains('회원가입')").on("click", function() {
-				self.location = "/user/addUser";
+		$('.mainbar-menu').on('click', function(){
+			 $('.active').removeClass('active');
+			 $(this).addClass('active');
+		})
+		
+		$( ".navbar-brand img" ).on("click" , function() {
+			$(self.location).attr("href","/");
+		});
+		
+		$('body > nav > div.container > div > div:nth-child(3)').addClass('active');
+		
+		$('.mainbar-menu').on('click', function(){
+			 $('.active').removeClass('active');
+			 $(this).addClass('active');
+		})
+		
+		$( ".navbar-brand img" ).on("click" , function() {
+			$(self.location).attr("href","/");			
+	 	});
 
-			});
-			
-			$('#loginModal').on('show.bs.modal', function (e) {
-				  if (!data) return e.preventDefault() 
-			});
-			
-			$( "#profile" ).on("click" , function() {
-				self.location = "/user/getTimeLine?userId=${user.userId}";
-				
-		 	});
-			
-			$("a:contains('패스워드찾기')").on("click", function() {
-				self.location = "/user/findPassword";
+		$("a:contains('라이브방송')").on("click", function() {
+			self.location = "/broadcast/mainBroadcast";
+		});
+		
+	 	$( "a:contains('밥친구')" ).on("click" , function() {
+			$(self.location).attr("href","/bob/mainBob");			
+	 	});
 
-			});
-			
-
+		$("a:contains('생활정보')").on("click", function() {
+			self.location = "/livingInfo/mainLivingInfo";
 		});
 	
-	</script>
+		$("a:contains('회원가입')").on("click", function() {
+			self.location = "/user/addUser";
+		});
+		
+		$('#loginModal').on('show.bs.modal', function (e) {
+			  if (!data) return e.preventDefault();
+		});
+		
+		$( "#profile" ).on("click" , function() {
+			self.location = "/user/getTimeLine?userId=${user.userId}";			
+	 	});
+		
+		$("a:contains('패스워드찾기')").on("click", function() {
+			self.location = "/user/findPassword";
+
+		});
+		
+
+	});
+	
+</script>
 
 <title>zaching</title>
 </head>
@@ -254,7 +270,6 @@ $( function() {
            	<label for="inputlg" style="margin-left: 5px">이메일(ID)</label>
           </div>
         </div>
-        
         
          <div class="row">
            <div class="col-sm-6">

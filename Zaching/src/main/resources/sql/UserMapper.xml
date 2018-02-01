@@ -36,7 +36,7 @@
 		<result property="setFriend" 	  column="setting_friend" 	   jdbcType="CHAR"/>
 		<result property="setBob" 		  column="setting_bob" 		   jdbcType="CHAR"/>
 		<result property="snsType" 		  column="sns_type" 		   jdbcType="CHAR"/>
-		<result property="authNum" 		  column="authNum" 		   	   jdbcType="VARCHAR"/>
+		
 		
 	
 	
@@ -102,13 +102,13 @@
 		WHERE user_id = #{value}
 	 </select>
 	 
-	 <update id="emailAuth"	parameterType="user" >
-	 	   	UPDATE users
-	   	<set>
-	   	authNum = #{authNum}
-	   	</set>
-	   	WHERE user_id = #{userId}
-	 </update>
+	<update id="emailAuth" parameterType="user">
+		UPDATE users
+		<set>
+			role ='2'
+		</set>
+		WHERE user_id = #{userId}
+	</update>
 	 
 	<update	id="updateUser"	parameterType="user" >
 	   	UPDATE users

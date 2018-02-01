@@ -104,7 +104,9 @@
 		<set>
 			title = #{title},
 			content = #{content:VARCHAR},
-			background_image = #{image:VARCHAR},
+			<if test="image != null and !image.equeals('')">
+				background_image = #{image:VARCHAR},
+			</if>
 			<if test='category == "B01" || category == "B02"'>
 				location_name = #{locationName: VARCHAR},
 				latitude = #{latitude: LONGVARCHAR},
@@ -160,12 +162,16 @@
 			bob.latitude AS latitude, to_char(bob.time,'yyyy-mm-dd HH:mi') AS time
 		</if>
 		
-		FROM BOB, USERS
+		FROM BOB, USERS <if test='category == "B03"'> , PARTICIPANT </if>
 		<where>
 			bob.writer_id = users.user_id
 			
 			<if test='category == "B01" || category == "B02" || category == "B03"'>
 				AND trim(category_code) = #{category}
+			</if>
+			<if test='category == "B03"'>
+				AND bob.bob_id = participant.bob_id
+				AND participant.user_id = #{searchKeyword}
 			</if>
 			<if test='category == "B04"'>
 				AND trim(category_code) IN ('B01', 'B02')
@@ -182,7 +188,7 @@
 			resultMap="participantSelectMap">
 	
 		SELECT participant_id, users.user_id AS user_id, participated_date, writer_id,
-				users.profile_image AS profile_image, users.name AS user_name
+				users.profile_image AS profile_image, users.name AS user_name, TRIM(setting_fee) AS setting_fee
 		FROM BOB, PARTICIPANT, USERS
 		<where>
 			participant.user_id = users.user_id

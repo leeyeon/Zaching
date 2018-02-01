@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ import com.zaching.common.service.CommonService;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
 import com.zaching.service.domain.Comment;
+import com.zaching.service.domain.User;
 import com.zaching.service.user.UserService;
 
 @Controller
@@ -86,7 +88,7 @@ public class BobController {
 		System.out.println(this.getClass()+"/mainBob");
 		
 		/* session처리! */
-		request.getSession().setAttribute("user", userService.getUser(24));
+		//request.getSession().setAttribute("user", userService.getUser(8));
 		
 		// 단순 네비게이션		
 		return "forward:/bob/mainBob.jsp";
@@ -171,6 +173,7 @@ public class BobController {
 
 	@RequestMapping("/listBob")
 	public String listBob(@ModelAttribute Search search,
+						  HttpSession session,
 						  Model model) throws Exception {
 		System.out.println(this.getClass()+"/listBob?category="+search.getCategory());
 		
@@ -183,6 +186,10 @@ public class BobController {
 		search.setPageSize(pageSize);
 		
 		//System.out.println(search);
+		
+		if(search.getCategory().equals("B03")) {
+			search.setSearchKeyword(((User)session.getAttribute("user")).getUserId()+"");
+		}
 		
 		Map<String, Object> map = bobService.listBob(search);
 		

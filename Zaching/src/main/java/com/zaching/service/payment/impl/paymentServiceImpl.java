@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.zaching.common.domain.Search;
@@ -87,6 +88,12 @@ public class paymentServiceImpl implements PaymentService {
 	@Override
 	public int getPoint(int userId) throws Exception {
 		return paymentDao.getPayment(userId, true);
+	}
+	
+	//@Scheduled(fixedDelay=1000)
+	@Scheduled(cron="0 0 12 * * *")
+	public void doSomething() {
+		System.out.println("회비 출금하는 시간 매일 12시");
 	}
 
 }

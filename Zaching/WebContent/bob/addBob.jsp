@@ -30,7 +30,7 @@
 	<jsp:include page="../resources/javascript/fileUploadCDN.jsp"/>
 	
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-	
+
 	<link rel="stylesheet" href="../resources/css/bootstrap-datetimepicker.min.css">
 	<script src="../resources/javascript/bootstrap-datetimepicker.min.js"></script>
 	<script src="../resources/javascript/bootstrap-datetimepicker.ko.js"></script> 
@@ -253,15 +253,18 @@
 	    	}
 	    });
 	    
+	    var todayDate = new Date().getDate();
+	   // alert(todayDate + ":" + new Date(new Date().setDate(todayDate + 30)).getDate());
+	    
 	    $('.form_datetime').datetimepicker({
 	        language:  'ko',
 	        weekStart: 1,
-	        todayBtn:  1,
 			autoclose: 1,
 			todayHighlight: 1,
 			startView: 2,
 			forceParse: 0,
-	        showMeridian: 1
+	        showMeridian: 1,
+	        startDate: new Date()
 	    });
 		
 	    /* surmmernote*/
@@ -315,8 +318,6 @@
 <body>
     
     <div class="container">
-    ${user.userId} // ${param.category}
-
     	<div class="page-header text-center">
 			<h3 class="text-info" style="color: #4d4d4d; font-weight: bold;">[${categoryName}] 방만들기</h3>
 		</div>
@@ -413,11 +414,11 @@
 		    		<div class="row">
 		            	<div class="col-sm-3 btn-bob">회비 (원)</div>
 		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
-		            		<input type="text" class="form-control" name="imageCheck" value="" placeholder="(ex) 20000">
+		            		<input type="text" class="form-control" name="fee" placeholder="(ex) 20000">
 		            	</div>
 		            	<div class="col-sm-3 btn-bob">회비날짜</div>
 		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
-		            		<input type="date" name="appointmentTime" class="form-control"style="font-size: 16px;"/>
+		            		<input type="date" name="feeDate" class="form-control" style="font-size: 16px;"/>
 		            	</div>
 			    	</div>
 		    		
