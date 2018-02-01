@@ -4,6 +4,7 @@
 eclipse.preferences.version=1
 encoding//WebContent/newsfeed/checkBlindNewfeed.jsp=ISO-8859-1
 encoding//WebContent/newsfeed/checkDeleteNewfeed.jsp=UTF-8
+encoding//WebContent/newsfeed/getNewsfeed.jsp=UTF-8
 encoding//WebContent/newsfeed/getget.jsp=UTF-8
 encoding//WebContent/newsfeed/newsfeed.jsp=EUC_KR
 encoding//WebContent/newsfeed/test.jsp=UTF-8

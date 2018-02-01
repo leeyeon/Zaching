@@ -1,10 +1,10 @@
 package com.zaching.web.newsfeed;
 
 import java.io.File;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Newsfeed;
+import com.zaching.service.domain.User;
 import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.user.UserService;
 
@@ -78,11 +79,14 @@ public class NewsfeedController {
 	}
 	
 	@RequestMapping(value="getNewsfeed")
-	public String getNewsfeed(@RequestParam int newsfeedId, Model model) throws Exception{
+	public String getNewsfeed(@RequestParam int newsfeedId, Model model, HttpSession session) throws Exception{
 		System.out.println("getNewsfeed()");
 		System.out.println(newsfeedId);
 		
+		session.setAttribute("user", (User)userService.getUser(24));
+		
 		model.addAttribute("newsfeed", newsfeedService.getNewsfeed(newsfeedId));
+		model.addAttribute("user", userService.getUser(32));
 		
 		return "forward:/newsfeed/getNewsfeed.jsp";
 		

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html lang="en" class="no-js">
+<html lang="ko" class="no-js">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
@@ -80,7 +80,7 @@
 					 
 					
 					
-					<c:if test="${!empty newsfeed.fileName}"><a href="../resources/images/${newsfeed.fileName }"><img src="../resources/images/${newsfeed.fileName }"></a></c:if>
+					<c:if test="${!empty newsfeed.fileName}"><a href="newsfeed/getNewsfeed?newsfeedId=${newsfeed.newsfeedId}"><img src="../resources/images/${newsfeed.fileName}"></a></c:if>
 					<h3 class="post-title entry-title">${newsfeed.content}</h3><hr style="border:solid 0.5px gray">
 					<p class="post-meta entry-meta">
 					<span class="post-category">

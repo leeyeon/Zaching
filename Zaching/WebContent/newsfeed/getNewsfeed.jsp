@@ -1,4 +1,7 @@
-<html class="no-js" lang="en-US">
+<%@ page contentType="text/html;charset=UTF-8" %>
+
+<html class="no-js" lang="ko">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,6 +39,9 @@ img.emoji {
 <script type='text/javascript' src='http://demo.designwall.com/dw-timeline/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
 <script type='text/javascript' src='http://demo.designwall.com/dw-timeline/wp-content/themes/dw-timeline/assets/js/vendor/modernizr-2.7.0.min.js'></script>
 <script type='text/javascript' src='http://demo.designwall.com/dw-timeline/wp-content/themes/dw-timeline/assets/js/vendor/nivo-lightbox.min.js'></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <link rel='https://api.w.org/' href='http://demo.designwall.com/dw-timeline/wp-json/' />
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://demo.designwall.com/dw-timeline/xmlrpc.php?rsd" />
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://demo.designwall.com/dw-timeline/wp-includes/wlwmanifest.xml" /> 
@@ -58,6 +64,34 @@ img.emoji {
       color: #f25f48; 
     }
     
+    .thumb{
+    	display: block;
+    	overflow: hidden;
+    	height: 50px;
+    	width: 50px;
+    }
+    
+    .thumb img{
+    	display: block;
+    	min-width: 100%;
+    	min-height: 100%;
+    	-ms-interpolation-mode: bicubic;
+    }
+    
+    .thumb2{
+    	display: block;
+    	overflow: hidden;
+    	height: 35px;
+    	width: 35px;
+    }
+    
+    .thumb2 img{
+    	display: block;
+    	min-width: 100%;
+    	min-height: 100%;
+    	-ms-interpolation-mode: bicubic;
+    }
+    
     
     </style>    
       
@@ -72,21 +106,34 @@ img.emoji {
       <main class="main col-sm-8 col-sm-offset-2" role="main">
         <article class="post-60 page type-page status-publish hentry dwtl normal">
   <div class="page-header">
-  <h1>
-   <img src="../resources/images/profile_test.png" height='50' width='100'/> ${user.name}</h1>
+  <div class="thumb" style="float: left;">
+   <img src="../resources/images/profile_test.png" height='50' width='100' align="left"/></div>
+   <div style="font-size: 12pt; line-height: 200%;">${user.name}</div>&nbsp;${newsfeed.regDate}
 </div>
-    <p>Phasellus a mi odio. Aenean ut ligula massa. Suspendisse potenti. Suspendisse ultrices rutrum ipsum, vel eleifend lacus elementum egestas. Vestibulum sit amet scelerisque ante. Sed quis magna at risus accumsan mollis ut eu dui. Aenean hendrerit congue velit consequat facilisis. In gravida ac lectus nec facilisis. Curabitur eu metus commodo, posuere ante in, lacinia justo. Donec egestas, velit a rhoncus aliquam, risus mauris rhoncus ante, vitae scelerisque nisi lorem et magna. Aliquam ante risus, pretium et ullamcorper sed, ornare at ligula.</p>
-<p>Praesent ipsum libero, elementum sit amet rutrum nec, pretium ac lorem. Nunc sem tellus, varius eu elementum sed, commodo in ante. Suspendisse ipsum sapien, tempor eu aliquam sit amet, viverra et risus. Donec rutrum fermentum orci, ut sollicitudin lorem faucibus nec. Aliquam ac molestie purus. Donec blandit metus at tellus facilisis aliquam in a arcu. Ut porta aliquam ornare. Aliquam fermentum augue in justo placerat pellentesque. Donec vel lacus vel dui dapibus volutpat vel vel diam. Fusce dapibus tincidunt interdum. Quisque quis risus in diam viverra consectetur sit amet a justo. Cras ac viverra urna. Nulla condimentum nunc mattis felis facilisis rhoncus. Etiam posuere tellus sapien, in ornare arcu tristique non. Cras odio risus, feugiat quis erat gravida, semper placerat nisi. Nulla faucibus, sapien eget commodo dapibus, purus ligula iaculis orci, non volutpat nibh turpis et mi.</p>
-    
+	
+	<c:if test="${!empty newsfeed.fileName}"><a href="../resources/images/${newsfeed.fileName}"><img src="../resources/images/${newsfeed.fileName}"></a></c:if>
+    <p>${newsfeed.content}</p>
+    <br/>
 	<div id="respond" class="comment-respond">
-		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/dw-timeline/about/#respond" style="display:none;">Cancel reply</a></small></h3>			<form action="http://demo.designwall.com/dw-timeline/wp-comments-post.php" method="post" id="commentform" class="comment-form">
-				<div class="form-group"><label for="comment">Comment</label><textarea placeholder="Write your comment" name="comment" id="comment" class="form-control" rows="5" aria-required="true"></textarea></div><div class="form-group"><label for="author">Name</label> <input placeholder="Name" id="author" name="author" type="text" value="" class="form-control" /></div>
-<div class="form-group"><label for="email">Email</label> <input placeholder="Email" id="email" name="email" type="text" value="" class="form-control" /></div>
-<div class="form-group"><label for="url">Website</label><input placeholder="Website" id="url" name="url" type="text" value="" class="form-control" /></div>
-<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='60' id='comment_post_ID' />
-<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
-</p>			</form>
-			</div><!-- #respond -->
+	<p style="font-size: 15pt">
+	<a href="#"><i class="glyphicon glyphicon-thumbs-up"></i>${newsfeed.countLikey}</a> &nbsp; <a href="#"><i class="fas fa-comment"></i>${newsfeed.countReply}</a></p>
+		<h3 id="reply-title" class="comment-reply-title"> 
+		<small>Leave a Reply
+		</small>
+		<div class="thumb2" style="float: left;">
+   		<img src="../resources/images/201800/${user.profileImage}" height='20' width='20' align='left'/>
+   		</div><br/><p style="font-size: 10pt">&nbsp;${user.name}</p></h3>			
+			<form action="http://demo.designwall.com/dw-timeline/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+				 
+				<div class="form-group"><label for="comment">Comment</label>
+					<textarea placeholder="Write your comment" name="comment" id="comment" class="form-control" rows="5" aria-required="true"></textarea>
+				</div>
+				<p class="form-submit">
+				<input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> 
+				<input type='hidden' name='comment_post_ID' value='60' id='comment_post_ID' />
+				<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+				</p>			</form>
+		</div><!-- #respond -->
 	</article>
       </main>
     </div>
@@ -121,3 +168,4 @@ var infinitescroll = {"page":"page","the_end":"the end"};
 
 </body>
 </html>
+
