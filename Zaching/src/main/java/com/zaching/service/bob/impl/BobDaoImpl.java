@@ -118,6 +118,11 @@ public class BobDaoImpl implements BobDao {
 		/* status update肺 昏力等 规 备喊 */
 		sqlSession.update("BobMapper.deleteBob", bobId);
 	}
+	
+	@Override
+	public void blockBob(int bobId) throws Exception {
+		sqlSession.update("BobMapper.blockBob", bobId);
+	}
 
 	@Override
 	public void setFeeBob(int participantId, boolean isAutoFee) throws Exception {

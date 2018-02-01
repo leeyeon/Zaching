@@ -118,7 +118,7 @@
 	
 		<c:if test="${empty list}">
 			목록이 없습니다. <br>
-			방만들기를 통해 친구를 만들어보세요.
+			하단의 방만들기를 통해 친구를 만들어보세요.
 		</c:if>
 	
 		<jsp:useBean id="today" class="java.util.Date" />
@@ -134,11 +134,16 @@
 			    <div class="thumbnail-top" style="left: 40px;">
 			    	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
 					<fmt:formatDate value="${Date}" var="appointmentTime" pattern="yyyyMMddHHmm"/>
-					<c:if test="${appointmentTime>today}">
-						참여 가능
+					<c:if test="${bob.status eq 'Y'}">
+						<c:if test="${appointmentTime>today || empty appointmentTime}">
+							참여 가능
+						</c:if>
+						<c:if test="${appointmentTime<=today}">
+							참여 불가
+						</c:if>
 					</c:if>
-					<c:if test="${appointmentTime<=today}">
-						참여 불가
+					<c:if test="${bob.status eq 'E'}">
+						참여 마감
 					</c:if>
 			    </div>
 			    <div class="thumbnail-top" style="right: 40px;">${fn:length(bob.participantList)}/${bob.limitNum} 명</div>
@@ -248,8 +253,8 @@
 				      	<hr>
 				        <p>${bob.locationName} <br>
 				        	<c:if test="${!empty bob.appointmentTime}">
-					        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd hh:mm"/>
-								<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 hh시 mm분"/>
+					        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
+								<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
 				        	</c:if>
 				        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
 				        </p>
