@@ -385,7 +385,7 @@
 			    	<div class="row">
 			    		<div class="col-sm-6 btn-bob">³¯Â¥</div>
 		            	<div class="col-sm-6" align="center" style="padding-top: 8px;">
-			                <div class="input-group date form_datetime col-md-5" data-date-format="yyyy-mm-dd A HH:ii" data-link-field="dtp_input1" style="width: 100%;"
+			                <div class="input-group date form_datetime col-md-5" data-date-format="yyyy-mm-dd P HH:ii" data-link-field="dtp_input1" style="width: 100%;"
 			               		data-date-useseconds="false" data-date-pickDate="false">
 			                    <input type="text" name="appointmentTime" class="form-control" style="font-size: 16px;" readonly>
 			                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>

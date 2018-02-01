@@ -90,7 +90,12 @@ function report(){
 <script>
 $(document).ready(function() {
   $("a.demo-1").simplePopup();
-  $("a.demo-2").simplePopup({ type: "html", htmlSelector: "#popup1"});
+  	
+  $("a.demo-2").simplePopup(
+		  {
+			  type: "html", 
+			  htmlSelector: "#popup1"
+			  });
 });
 </script>
 

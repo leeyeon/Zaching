@@ -47,7 +47,7 @@ public class AdminController {
 	//@Value("#{commonProperties['pageSize']}")
 	//int pageSize;
 	
-	int pageSize = 3;
+	int pageSize = 8;
 
 
 	public AdminController() {
