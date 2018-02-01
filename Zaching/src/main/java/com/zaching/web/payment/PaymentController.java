@@ -1,6 +1,7 @@
 package com.zaching.web.payment;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -8,12 +9,15 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.Payment;
 import com.zaching.service.domain.User;
@@ -35,6 +39,14 @@ public class PaymentController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Value("#{commonProperties['pageUnit']}")
+	// @Value("#{commonProperties['pageUnit'] ?: 3}")
+	int pageUnit;
+
+	@Value("#{commonProperties['pageSize']}")
+	// @Value("#{commonProperties['pageSize'] ?: 2}")
+	int pageSize;
 
 	public PaymentController() {
 		// TODO Auto-generated constructor stub
@@ -53,6 +65,28 @@ public class PaymentController {
 	public String chargePoint() {
 		
 		return "forward:/payment/chargePoint.jsp";
+	}
+
+	@RequestMapping(value="mainPayment")
+	public String mainPayment(@ModelAttribute Search search,
+							HttpSession session,
+							Model model) throws Exception {
+		
+		User user = (User)session.getAttribute("user");
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		List<Payment> payment = paymentService.listPoint(search, user.getUserId());
+		int totalPoint = paymentService.getPoint(user.getUserId());
+		int totalMileage = paymentService.getMileage(user.getUserId());
+		model.addAttribute("payment", payment);
+		model.addAttribute("totalPoint", totalPoint);
+		model.addAttribute("totalMileage", totalMileage);
+		
+		return "forward:/payment/mainPayment.jsp";
 	}
 	
 	@RequestMapping("kakaoPay")

@@ -215,11 +215,13 @@
 			      	${bob.title}</div>
 			      <hr>
 			      <h4 style="padding:10px; font-weight: bold;">참여하고 있는 친구 (${fn:length(bob.participantList)}명)</h4>
-			      <div>
+			      <div class="row">
 			      	<c:forEach var="participant" items="${bob.participantList}">
-						<img class="thumnail" src = "../resources/upload_files/images/${participant.participantProfile}" 
-							onerror="this.src='../resources/images/user-icon.png'"/>
-						<p style="font-size: 17px;">${participant.participantName}</p>
+			      		<div class="col-sm-6 col-md-4 text-center">
+							<img class="thumnail" src = "../resources/upload_files/images/${participant.participantProfile}" 
+								onerror="this.src='../resources/images/user-icon.png'"/>
+							<p style="font-size: 17px;">${participant.participantName}</p>
+						</div>
 					</c:forEach>
 				  </div>
 			    </div>

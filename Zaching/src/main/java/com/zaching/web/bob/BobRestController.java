@@ -122,13 +122,18 @@ public class BobRestController {
 		if(category.equals("B01")) {
 			int userPoint = paymentService.getPoint((int)obj.get("userId"));
 			
-			/* 약속비 1000원 차감 */
 			if(userPoint > 1000) {
+				/* 약속비 1000원 차감 */
 				System.out.println("돈 진짜 나갑니다 2");
 				Payment payment = new Payment();
 				payment.setUserId(userId);
 				payment.setPoint(1000);
 				payment.setPaymentCode("P02");
+				paymentService.managePoint(payment);
+				
+				/* 마일리지 적립 */
+				payment.setPoint(500);
+				payment.setPaymentCode("M01");
 				paymentService.managePoint(payment);
 			}
 		}
@@ -163,26 +168,17 @@ public class BobRestController {
 			payment.setPoint(1000);
 			payment.setPaymentCode("P06");
 			paymentService.managePoint(payment);
-
+			
+			/* 마일리지 적립취소 */
+			payment.setPoint(500);
+			payment.setPaymentCode("M03");
+			paymentService.managePoint(payment);
 		}
 		
 		// 참가중이 아닐때 참가됨
 		bobService.enterBob(userId, bobId);
 	}
-	
-	@RequestMapping(value="/addComment", method=RequestMethod.POST)
-	public JSONObject addComment(@RequestBody Comment comment) throws Exception {
-		
-		System.out.println(comment);
-		
-		comment = commonService.addComment(comment);
-		
-		JSONObject obj = new JSONObject();
-		obj.put("comment", comment);
-		
-		return obj;
-	}
-	
+
 	@RequestMapping(value="/setFeebob", method=RequestMethod.POST)
 	public JSONObject setFeebob(@RequestBody Map<String, Object> obj) throws Exception {
 	

@@ -52,8 +52,8 @@
 		</div>
 		
 		<div class="row text-center" style="padding-top:50px;">
-			<h3>OOO님의 잔여 포인트 : 10,000 Point</h3><br>
-			<h4>( 마일리지 : 1,000점 )</h4>
+			<h3>${user.name}님의 잔여 포인트 : ${totalPoint} Point</h3><br>
+			<h4>( 마일리지 : ${totalMileage}점 )</h4>
 		</div>
 		
 		<div class="row" style="padding-top:50px;">

@@ -35,6 +35,11 @@
     <script type="text/javascript">
     
   		$(function() {
+  			
+  			setTimeout(function(){
+  			    location = ''
+  			  },60000)
+  			  
   			$('button:contains("충전")').on('click', function(){
   				$("form").attr("method", "POST").attr("action", "/payment/kakaoPay").submit();
   			});
@@ -56,7 +61,13 @@
 			<div class="row" style="padding-top:50px;">
 				<div class="col-xs-5"><h3>충전하신 금액</h3></div>
 				<div class="col-xs-7">
-					${approvedDate} 에 ${point} Point 충전되셨습니다.
+					${point} Point
+				</div>
+			</div>
+			<div class="row" style="padding-top:50px;">
+				<div class="col-xs-5"><h3>충전한 날짜</h3></div>
+				<div class="col-xs-7">
+					${approvedDate}
 				</div>
 			</div>
 		</form>
