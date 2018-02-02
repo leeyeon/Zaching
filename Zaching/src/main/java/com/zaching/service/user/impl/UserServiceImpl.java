@@ -184,6 +184,12 @@ public class UserServiceImpl implements UserService {
 				e.printStackTrace();
 			}
 		}
+
+	@Override
+	public void updateRole(User user) throws Exception {
+		System.out.println(":: updateRole:: ");
+		userDao.updateRole(user);		
+	}
 	
 	
 

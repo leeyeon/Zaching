@@ -17,4 +17,6 @@ public interface CommentDao {
 	public List<Comment> listComment(Search search, String categoryCode, int roomId) throws Exception;
 
 	public void updateComment(Comment comment) throws Exception;
+	
+	public int getTotalCount(Search search, String categoryCode, int roomId) throws Exception;
 }

@@ -235,10 +235,20 @@
             <li><a href="#">생활정보</a></li>
           </ul>
           <ul class="nav navbar-nav" style="float:right;">
-          	<c:if test="${user.userId ne null}">
+          	<c:if test="${user.userId ne null && user.profileImage eq null}">
 	          	<li><div style="padding-top: 10px; color:#FFF;">
-		          	<img src="/resources/images/profile_default.png" id="profile"
-		          	 width="30px"/>&nbsp;<u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
+		       	<img src="../resources/images/profile_default.png" id="profile"
+		          	width="30px"/>&nbsp;<u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
+		       
+	          	</div></li>
+	          	<li><a href="#">로그아웃</a></li>
+          	</c:if>
+          	
+          	<c:if test="${user.userId ne null && user.profileImage ne null}">
+	          	<li><div style="padding-top: 10px; color:#FFF;">
+		       	<img src="../resources/upload_files/images/${user.profileImage} id="profile"
+		          	width="30px"/>&nbsp;<u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
+		       
 	          	</div></li>
 	          	<li><a href="#">로그아웃</a></li>
           	</c:if>
