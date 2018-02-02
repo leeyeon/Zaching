@@ -83,11 +83,11 @@ public class BroadcastController {
 		
 		model.addAttribute("broadcast",broadcast);
 		
-		System.out.println("이름 :"+broadcast.getBroadcaster().getName());
+		System.out.println("이름 :"+broadcast.getBroadcaster().getUserId());
 		
 		//http://127.0.0.1:9001/send?id=값&...
 		
-		return "redirect:http://127.0.0.1:9001?broadcaster="+broadcast.getBroadcaster().getUserId();
+		return "redirect:http://127.0.0.1:9001?broadcaster="+broadcast.getTitle();
 		//return "forward:/chat/broadcast.jsp";
 	}
 	
