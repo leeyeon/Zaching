@@ -34,14 +34,12 @@
 			self.location = "/user/getUser?userId=${user.userId}";
 			
 	 	});
-<<<<<<< HEAD
 		$( function () {
 		$( "#listFriend" ).on("click" , function() {
 			self.location = "/friend/listFriend?userId=${friend.userId}";
 			
 	 	});
 	});
-=======
 		
 		//추억지도 Event
 		$( "#memoryMap" ).on("click" , function() {
@@ -76,7 +74,6 @@
 		
 		
 		//신고하기 Event
->>>>>>> refs/remotes/origin/master
 	});
 
 </script>

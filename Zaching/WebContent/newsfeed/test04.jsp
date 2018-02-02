@@ -14,7 +14,7 @@
 		
 		<link rel="stylesheet" type="text/css" href="../resources/css/component.css" />
 		<link rel="stylesheet" type="text/css" href="../resources/css/default.css" />
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
 		<script type="text/javascript">
 			var page = 1;
 			

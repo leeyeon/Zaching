@@ -31,29 +31,28 @@ body {
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
+	function fncGetUserList(currentPage) {
+		$("#currentPage").val(currentPage)
+		$("form").attr("method", "POST").attr("action", "/friend/listFriend")
+				.submit();
+	}
 
-function fncGetUserList(currentPage) {
-	$("#currentPage").val(currentPage)
-	$("form").attr("method" , "POST").attr("action" , "/friend/listFriend").submit();
-}
-	
-$(function(){
-	 $( "td.ct_btn01:contains('검색')" ).on("click" , function() {
-		 
-		alert(  $( "td.ct_btn01:contains('검색')" ).html() );
-		
+	$(function() {
+		$("td.ct_btn01:contains('검색')").on("click", function() {
+
+			alert($("td.ct_btn01:contains('검색')").html());
+
 			fncGetUserList(1);
-});
-	 
-	$( function () {
-		$( "#image" ).on("click" , function() {
-			self.location = "/user/getUser?userId=${user.userId}";
-			
-	 	});
-		
-		
-	
-	</script>
+		});
+
+		$(function() {
+			$("#image").on("click", function() {
+				self.location = "/user/getUser?userId=${user.userId}";
+
+			});
+		});
+	});
+</script>
 
 </head>
 
@@ -109,7 +108,7 @@ $(function(){
 						style="width: 120px; height: auto;" alt="image"
 						onclick="clickBtn();"></a>
 				</div>
-				
+
 				<div class="col-xs-4 col-md-2 ">
 					<strong>이 름</strong>
 				</div>

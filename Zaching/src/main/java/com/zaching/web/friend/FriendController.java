@@ -45,7 +45,7 @@ public class FriendController {
 		return "forward:/friend/addFriend.jsp";
 	}
 
-	@RequestMapping(value = "listFreind",method=RequestMethod.GET)
+	@RequestMapping(value = "listFriend",method=RequestMethod.GET)
 	public String listFriend(@ModelAttribute("search") Search search, Model model) throws Exception {
 		System.out.println("friend/listFriend : GET");
 		
