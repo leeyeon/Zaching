@@ -64,12 +64,20 @@ public class CommonServiceTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void updateCommnet() throws Exception {
 		Comment comment = new Comment();
 		comment.setCommentId(5);
 		comment.setContent("업데이트테스트");
 		
 		commonService.updateComment(comment);
+	}
+	
+	@Test
+	public void getCommnet() throws Exception {
+		
+		Comment comment = commonService.getComment(24);
+		
+		System.out.println(comment);
 	}
 }

@@ -179,7 +179,7 @@ public class BobController {
 	}
 	
 	@RequestMapping(value="/addBob", method=RequestMethod.POST)
-	public String addBob(@ModelAttribute Bob bob, @RequestParam boolean imageCheck,
+	public String addBob(@ModelAttribute Bob bob, @RequestParam(required=false) boolean imageCheck,
 						BindingResult result) throws Exception {
 		
 		// binding Test
@@ -189,9 +189,8 @@ public class BobController {
         }
 		
 		System.out.println(this.getClass()+"/addBob_ POST");
-		//System.out.println(bob);
 		
-		System.out.println(imageCheck);
+		//System.out.println(imageCheck);
 		
 		if(bob.getUploadFile() != null) {
 			try {
@@ -204,6 +203,9 @@ public class BobController {
 		if(imageCheck) {
 			bob.setImage(null);
 		}
+		
+		/* 시간 */
+		bob.setAppointmentTime(getAppointmentTime(bob.getAppointmentTime()));
 		
 		bobService.addBob(bob);		
 		System.out.println(bob);
@@ -231,7 +233,7 @@ public class BobController {
 	}
 	
 	@RequestMapping(value="/updateBob", method=RequestMethod.POST)
-	public String updateBob(@ModelAttribute Bob bob, @RequestParam boolean imageCheck) throws Exception{
+	public String updateBob(@ModelAttribute Bob bob, @RequestParam(required=false) boolean imageCheck) throws Exception{
 
 		System.out.println(this.getClass()+"/updateBob_POST");
 		
@@ -248,6 +250,9 @@ public class BobController {
 		if(imageCheck) {
 			bob.setImage(null);
 		}
+		
+		/* 시간 */
+		bob.setAppointmentTime(getAppointmentTime(bob.getAppointmentTime()));
 		
 		bobService.updateBob(bob);
 		System.out.println("1:: "+bob);
@@ -305,4 +310,24 @@ public class BobController {
 		}
 		return categoryName;
     }
+    
+    public String getAppointmentTime(String date) {
+    	
+    	int index = date.indexOf("오후");
+    	String result = "";
+    	
+    	if(date.indexOf("오후") == -1) {
+    		index = date.indexOf("오전");
+    		result = date.substring(0, index)+date.substring(index+3);
+    	} else if(date.indexOf("오전") == -1) {
+    		result = date.substring(0, index)
+    				+(Integer.parseInt(date.substring(index+3 , index+5)) + 12)
+    				+date.substring(index+5);
+    	} else {
+    		result = date;
+    	}
+    	
+    	return result;
+    }
+	
 }
