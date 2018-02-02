@@ -126,6 +126,11 @@
 }
 </style>
 <script>
+function search(){
+	
+	
+	
+}
 
 $(function(){   
 	$("#search").on('click',function(){
@@ -143,52 +148,27 @@ $(function(){
 	       async : false,
 	       dataType : "json",
 	       success : function(serverData) {
-				
-		 	var name = "";
-		 	
-		 	//'<tr><td align="left">'+song.song[i].songName+'</td><td align="left">${user.email}</td></tr>'+
-		 	
-			 	for(var i=0; i<50; i++){
-			 		name = name + '<tr><td align="left"><input type="hidden" id="name" name="name" value="'+serverData.melon.songs.song[i].artists.artist[0].artistName+'" /><input type="hidden" id="title" name="title" value="'+serverData.melon.songs.song[i].songName+'" />'+serverData.melon.songs.song[i].songName+
-			 		'</td><td align="left">'+serverData.melon.songs.song[i].artists.artist[0].artistName+'</td></tr>';
-			 	}
-
-			 	var displayValue = '<div class="list"><table class="table table-hover table-striped"><tr><thead>'+
-			 	'<td class="th" align="left">노래제목</td><td class="th" align="left">가수명</td></tr><tbody>' + name + '</tbody></table></div>';
-			 
-			 	$(".viewlist").html(displayValue);
-			 	
-			 	$(".viewlist td").click(function() {
-			 		var title = $($("input[name='title']")[$('.viewlist td:nth-child(1)').index(this)-1]).val();
-			 		var name = $($("input[name='name']")[$('.viewlist td:nth-child(1)').index(this)-1]).val();
-			 		
-				 	$("input[name='selectsong']").val(title);
-					$("input[name='selectsinger']").val(name);
-				});			 	
-				
-	    }
-	});
-	});
-		
+	       	
+	       	console.log(serverData);
+	          
+	       }
+	       
+	       
+	    });
+	})
 	$("#searchsong").on('input',function(){
 	 	if($("#searchsong").val()=='')
 	 		$("#search").attr("disabled",true);
 	 	else
 	 		$("#search").attr("disabled",false);
 	});
-	
-	
-	
-});
+})
 </script>
 <body>
 <div class="container">
-
   <div class="row">
     <div class="col-xs-12">
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">노래검색하기</button>
-      <input type="text" placeholder="선택된노래" name="selectsong" id="selectsong" value="">
-	<input type="text" placeholder="가수이름" name="selectsinger" id="selectsinger" value="">
     </div>
   </div>
 </div>
@@ -206,11 +186,7 @@ $(function(){
       <div class="search-container">
       	<input type="text" placeholder="제목이나 가수명을 입력하세요" name="searchsong" id="searchsong" value="">
         	<button type="button" class="btn btn-primary" id="search">검색</button>
-        	<button type="button" class="btn btn-primary" id="select">선택</button>
-    	<br/>
-    	 <div class="viewlist" >
-
-	</div>
+    	 <button type="button" class="btn btn-primary" id="select">선택</button>
     </div>
     </div>
         </div>
