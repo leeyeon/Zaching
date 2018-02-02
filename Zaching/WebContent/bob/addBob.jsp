@@ -263,10 +263,8 @@
 			todayHighlight: 1,
 			startView: 2,
 			forceParse: 0,
-	        showMeridian: false,
-	        use24hours: true,
+	        showMeridian: true,
 	        startDate: new Date(),
-	        pick12HourFormat: false
 	    });
 		
 	    /* surmmernote*/
@@ -406,8 +404,7 @@
 		            		<div class="map_wrap">
 							    <div id="map" style="width:100%;height:400px;position:relative;overflow:hidden;"></div>
 							</div>
-							<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
-							<script src="/resources/javascript/map.js"></script>	            		
+							<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>	            		
 		            	</div>
 			    	</div>
 		    	</c:if>

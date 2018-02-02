@@ -16,6 +16,8 @@ public interface CommonService {
 	
 	public Comment addComment(Comment comment) throws Exception;
 	
+	public Comment getComment(int commentId) throws Exception;
+	
 	public void deleteComment(int commentId) throws Exception;
 	
 	public void updateComment(Comment comment) throws Exception;
