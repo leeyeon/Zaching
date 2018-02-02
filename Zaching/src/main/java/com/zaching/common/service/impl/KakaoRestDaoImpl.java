@@ -121,6 +121,7 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("approvedDate",(Date)obj.get("approved_at"));
+		System.out.println("DATE :: "+(Date)obj.get("approved_at"));
 		map.put("point", (int)((JSONObject)obj.get("amount")).get("total"));
 		
 		return map;

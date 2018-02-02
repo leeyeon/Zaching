@@ -189,7 +189,7 @@
    				data : JSON.stringify({
    					"userId" : <c:out value="${user.userId}" escapeXml="false" />,
    					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />,
-   					"category" : 'B00'
+   					"category" : '<c:out value="${param.category}" escapeXml="false" />',
    				}),
    				async : false,
    				dataType : "json",
@@ -198,7 +198,8 @@
    					if(serverData.response == 'success') {
    						location.reload();
    					} else {
-   						alert("포인트 충전하세요~~");
+   						alert("포인트가 부족합니다. 포인트를 충전해주세요.");
+   						$(self.location).attr("href","/payment/mainPayment");
    					}
    				},
    				error:function(request,status,error){
@@ -672,7 +673,7 @@
                     	<c:if test="${!empty bob.appointmentTime}">
                     		<fmt:formatDate var="now" value="${currentTime}"  pattern="yyyyMMdd"/>
 							<fmt:formatDate var="appointmentTime" value="${dateFmt}" pattern="yyyyMMdd"/>
-                    		<c:if test="${appointmentTime < (now - 7)}"><button class="btn btn-default btn-ico" >취소하기</button></c:if>
+                    		<c:if test="${appointmentTime <= (now - 7)}"><button class="btn btn-default btn-ico" >취소하기</button></c:if>
                     		<c:if test="${appointmentTime > (now - 7)}">취소할 수 없어용T.T</c:if>
 	                    </c:if>
                     </div>
