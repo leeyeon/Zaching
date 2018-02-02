@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zaching.service.domain.User;
+import com.zaching.service.user.UserDao;
 import com.zaching.service.user.UserService;
 
 @RestController
@@ -34,18 +35,15 @@ public class UserRestController {
 
 
 
-	/*// 이메일 인증
+	//이메일 인증
 	@RequestMapping(value = "json/emailAuth", method = RequestMethod.POST )
-	public User emailAuth(
+	public User emailAuth(@RequestBody Map<String, Object> map,
 			HttpServletRequest request, HttpSession session) throws Exception {
 
 		System.out.println("/user/json/emailAuth : POST");
 
-<<<<<<< HEAD
-			return getSessionUser;
 
-=======
-		String email = request.getParameter("email");
+		String email = (String)map.get("email");
 		String authNum = "";// 보내 인증번호
 
 		authNum = RandomNum();
@@ -58,11 +56,12 @@ public class UserRestController {
 		System.out.println("새로생성한 인증번호==> " + authNum);
 
 		getSessionUser.setAuthNum(authNum);
-		
+		getSessionUser.setEmail(email);
 
 		userService.sendMail(email, authNum);
 
 		System.out.println("DB인증번호 ===> " + getSessionUser.getAuthNum());
+		System.out.println("DB이메일 ===> " + getSessionUser.getEmail());
 
 		session.setAttribute("user", getSessionUser);
 
@@ -82,7 +81,30 @@ public class UserRestController {
 		}
 		return buffer.toString();
 	}
-	*/
+	@RequestMapping(value="json/authNum", method=RequestMethod.POST)
+	public String authNum(@RequestBody Map<String, Object> map,
+			
+			HttpServletRequest request,HttpSession session)throws Exception{
+		
+		System.out.println("/user/json/authNum : POST");
+		
+		String authNum=(String)map.get("authNum");//입력받은 인증번호
+		
+		System.out.println("입력받은 인증번호 ==> "+authNum);
+		
+		User getSessionAuth = (User)session.getAttribute("user");//세션에 있는 정보
+		System.out.println("세션정보 ==> "+getSessionAuth);
+		
+		if(authNum.equals(getSessionAuth.getAuthNum())) {
+			System.out.println("Before updateRole===> "+getSessionAuth);
+			userService.updateRole(getSessionAuth);
+			System.out.println("After updateRole===> "+getSessionAuth);
+			return authNum;
+		}
+		
+		return "";
+	}
+	
 
 	
 	@RequestMapping(value="/rest/memoryMap/{userId}", method=RequestMethod.GET)
