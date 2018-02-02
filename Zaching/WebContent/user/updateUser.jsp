@@ -20,27 +20,26 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-   
-   
-   <!-- jQuery Simple PopUp -->
-	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-	<script src="/resources/javascript/jquery.simple-popup.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
-		integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
-	<link href="/resources/css/jquery.simple-popup.min.css" rel="stylesheet" type="text/css">
+   	
+   	<!-- 뭔지 모르지만 추가  -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	   
+	 <!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/resources/layout/sub_toolbar.jsp"/>
+   	<!-- ToolBar End /////////////////////////////////////-->
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
             padding-top : 80px;
         }
         
-        #emailAuth{
+        #emailAuth,#check{
+        	color:#fff;
         	background-color: #5f4b8b;
         }
         
-        #popup1 { 
-        	display:none; 
-        }
+       
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -86,23 +85,10 @@
 				}
 
 			
-			//=======팝업창에서 "확인" REvent=========
-			//============= pop-up 창 띄우기 =============
-					
-					
-			$(document).ready(function() {
-				  
-				  $("a.demo-2").simplePopup({ 
-					  		
-					  		type: "html", 
-							htmlSelector: "#popup1"
-							
-						  });
-			});
-	
 			//입력한 인증번호와 세션에 저장된 인증번호 비교
 			$(function(){   
-				$("#ok").on('click',function(){
+				$("#check").on('click',function(){
+					alert("클릭?");
 				
 				var authNum =$("#authNum").val();
 				 alert(authNum);
@@ -140,16 +126,9 @@
 
 <body>
 
-	 <!-- 팝업창 -->
-		  	<div id="popup1">
-                <form>
-  					 <div class="form-group">
-    					<label for="exampleTextarea">인증번호</label>
-    					<input type="text" name="authNum" id="authNum"/>
-    				</div>
-  					<button type="button" class="btn btn-primary" id="ok">확인</button>
-				</form>
-            </div>		
+	<!-- Modal -->
+
+		 	
             
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
@@ -173,17 +152,24 @@
 		  <div class="form-group ">
 				<label for="email" class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
 		    <div class="col-sm-4">
-		      <input type="email" class="form-control" id="email" name="email" placeholder="이메일을입력해주세요"  >
-		       <span id="helpBlock" class="help-block">
-		    	<strong class="text-danger" name="userinput">이메일 인증여부 출력예정</strong>
-		      </span>
+		      <input type="email" class="form-control" id="email" name="email"  placeholder="${user.email }"  >
+		       
 		  </div>
 		   
 		   <div class="col-sm-3" id="contents">
-		   		<a class="demo-2 btn btn" type="submit" id="emailAuth">이메일 인증</a>
+		   		<a class="button btn" type="submit" id="emailAuth">이메일 인증</a>
 		   </div>
 		</div>
 		 
+		   <div class="form-group">
+		    <label for="input-authNum" class="col-sm-offset-1 col-sm-3 control-label">인증번호</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="authNum" name="authNum" placeholder="인증번호를 입력해주세요">
+		    </div>
+		    <div class="col-sm-3" id="contents">
+		   		<a class="button btn " type="submit" id="check">확인</a>
+		   </div>
+		  </div>
 				
 		  
 		
@@ -212,6 +198,13 @@
 		    <label for="address" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="address" name="address"  value="${user.address}" placeholder="변경주소">
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="phone" class="col-sm-offset-1 col-sm-3 control-label">연락처</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="phone" name="phone"  value="${user.phone}" placeholder="연락처">
 		    </div>
 		  </div>
 		
