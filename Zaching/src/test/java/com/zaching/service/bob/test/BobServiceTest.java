@@ -1,5 +1,6 @@
 package com.zaching.service.bob.test;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,13 +12,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -200,15 +200,14 @@ public class BobServiceTest {
          
         // Workbook 생성
         Workbook xlsWb = new HSSFWorkbook(); // Excel 2007 이전 버전
-        //Workbook xlsxWb = new XSSFWorkbook(); // Excel 2007 이상
  
         // *** Sheet-------------------------------------------------
         // Sheet 생성
-        Sheet sheet1 = xlsWb.createSheet("firstSheet");
+        Sheet sheet = xlsWb.createSheet("firstSheet");
  
         // 컬럼 너비 설정
-        sheet1.setColumnWidth(0, 10000);
-        sheet1.setColumnWidth(9, 10000);
+        sheet.setColumnWidth(0, 1000);
+        sheet.setColumnWidth(9, 1000);
         // ----------------------------------------------------------
          
         // *** Style--------------------------------------------------
@@ -219,30 +218,32 @@ public class BobServiceTest {
         cellStyle.setWrapText(true);
          
         // Cell 색깔, 무늬 채우기
-        cellStyle.setFillForegroundColor(HSSFColor.LIME.index);
+        cellStyle.setFillForegroundColor(new XSSFColor(Color.decode("#FF0000")).getIndexed());
          
         Row row = null;
         Cell cell = null;
         //----------------------------------------------------------
          
         // 첫 번째 줄
-        row = sheet1.createRow(0);
-         
-        // 첫 번째 줄에 Cell 설정하기-------------
-        cell = row.createCell(0);
-        cell.setCellValue("1-1");
-        cell.setCellStyle(cellStyle); // 셀 스타일 적용
+        row = sheet.createRow(0);
          
         cell = row.createCell(1);
-        cell.setCellValue("1-2");
+        cell.setCellValue("이름");
          
         cell = row.createCell(2);
-        cell.setCellValue("1-3 abccdefghijklmnopqrstuvwxyz");
-        cell.setCellStyle(cellStyle); // 셀 스타일 적용
+        cell.setCellValue("회비달");
+        //cell.setCellStyle(cellStyle); // 셀 스타일 적용
+        
+        cell = row.createCell(3);
+        cell.setCellValue("회비");
+        
+        cell = row.createCell(4);
+        cell.setCellValue("회비유무");
+        
         //---------------------------------
          
         // 두 번째 줄
-        row = sheet1.createRow(1);
+        row = sheet.createRow(1);
          
         // 두 번째 줄에 Cell 설정하기-------------
         cell = row.createCell(0);
@@ -268,4 +269,27 @@ public class BobServiceTest {
         }
          
     }
+	
+	//@Test
+	public void testDate() {
+		String date = "2018-02-15 오후 03:25";
+		
+		if(date.indexOf("오후") == -1) {
+			System.out.println(date.substring(date.indexOf("오전")));
+		} else {
+			int index = date.indexOf("오후");
+			System.out.println("ㅇㅅㅇ ::"+
+					date.substring(0, index)+date.substring(index+3));
+			
+			System.out.println(date.substring(index+3 , index+5));
+			
+			int result = Integer.parseInt(date.substring(index+3 , index+5)) + 12;
+			System.out.println(result);
+			
+			System.out.println(date.substring(0, index)+result+date.substring(index+5));
+		}
+		
+		
+		
+	}
 }

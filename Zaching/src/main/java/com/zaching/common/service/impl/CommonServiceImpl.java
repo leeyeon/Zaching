@@ -56,6 +56,11 @@ public class CommonServiceImpl implements CommonService {
 		commentDao.addComment(comment);
 		return comment;
 	}
+	
+	@Override
+	public Comment getComment(int commentId) throws Exception {
+		return commentDao.getComment(commentId);
+	}
 
 	@Override
 	public void deleteComment(int commentId) throws Exception {

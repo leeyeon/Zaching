@@ -146,7 +146,9 @@
 						참여 마감
 					</c:if>
 			    </div>
-			    <div class="thumbnail-top" style="right: 40px;">${fn:length(bob.participantList)}/${bob.limitNum} 명</div>
+			    <c:if test="${bob.status eq 'Y'}">
+					<div class="thumbnail-top" style="right: 40px;">${fn:length(bob.participantList)}/${bob.limitNum} 명</div>
+				</c:if>
 			      <img src = "../resources/upload_files/images/${bob.image}"
 			      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
 			      	style="cursor: pointer; width: 100%; height:270px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;">
@@ -246,8 +248,9 @@
 				      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
 				      	style="cursor: pointer; height:250px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;">
 				      <div class="user_thumnail" 
-				      	style="background: url(../resources/images/user-icon.png) center center no-repeat; background-size: cover;
-				      			box-shadow: 1px #cccccc;"></div>
+				      	style="background: url('../resources/upload_files/images/${bob.writtenUserProfile}'),
+				      	url('../resources/images/user-icon.png') center center no-repeat; background-size: cover;
+				      	box-shadow: 1px #cccccc;"></div>
 				      <div class="caption" style="position:relative; top:-20px; font-size: 20px;">
 				      	<div style="font-size:20px; font-weight: bold;">${bob.title}</div>
 				      	<hr>
