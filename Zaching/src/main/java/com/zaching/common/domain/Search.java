@@ -63,10 +63,10 @@ public class Search {
 	}
 
 	public int getStartRowNum() {
-		if(getCategory().equals("comment")) {
-			return 1;
-		} else {
+		if(getCategory() == null) {
 			return (getCurrentPage()-1)*getPageSize()+1;
+		} else {
+			return 1;
 		}
 	}
 

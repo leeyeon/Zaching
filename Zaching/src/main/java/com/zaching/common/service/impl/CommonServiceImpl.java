@@ -57,6 +57,7 @@ public class CommonServiceImpl implements CommonService {
 		//for (Comment comment : list) {
 		//	System.out.println(comment);
 		//}
+		System.out.println(list);
 		
 		map.put("list", commentDao.listComment(search, categoryCode, roomId));
 		map.put("totalCount", commentDao.getTotalCount(search, categoryCode, roomId));

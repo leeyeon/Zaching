@@ -191,7 +191,7 @@
 	<div class="likeit-wrap">
 	<a href="#" class="likeit" data-postid="4">
 		<span class="like-text">Like</span>
-		<ins class="like-count">13</ins>
+		<ins class="like-count">${newsfeed.countLikey}</ins>
 	</a>
 	<span class="newliker">Thanks!</span>
 	<span class="isliker">You've already liked this</span>
