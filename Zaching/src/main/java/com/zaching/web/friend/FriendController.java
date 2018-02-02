@@ -45,9 +45,11 @@ public class FriendController {
 		return "forward:/friend/addFriend.jsp";
 	}
 
-	@RequestMapping(value = "listFreind")
+	@RequestMapping(value = "listFreind",method=RequestMethod.GET)
 	public String listFriend(@ModelAttribute("search") Search search, Model model) throws Exception {
-		System.out.println("friend/listFriend:GET");
+		System.out.println("friend/listFriend : GET");
+		
+		System.out.println("요기까지 왔습니다");
 
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -59,13 +61,15 @@ public class FriendController {
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
 				pageSize);
 		System.out.println(resultPage);
-		model.addAllAttributes(map);
+		
+		model.addAttribute("list",map.get("list"));
 		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
 		
 		return "forward:/friend/listFriend.jsp";
 	}
 	
-	@RequestMapping(value="getFriend")
+	@RequestMapping(value="getFriend",method=RequestMethod.POST)
 	public String getFriend(@RequestParam(value="id",required=false)int id, Model model) throws Exception{
 		
 		System.out.println("friend/getFriend:POST");

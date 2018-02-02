@@ -33,11 +33,12 @@
 			self.location = "/user/getUser?userId=${user.userId}";
 			
 	 	});
-		
-		$( "#listFrieds" ).on("click" , function() {
-			self.location = "/friend/listFriend?friendId=${friend.firendId}";
+		$( function () {
+		$( "#listFriend" ).on("click" , function() {
+			self.location = "/friend/listFriend?userId=${friend.userId}";
 			
 	 	});
+	});
 	});
 
 </script>
@@ -68,7 +69,7 @@
     		<button type="button" id="point">포인트관리</button>
     	</div>
     	<div class="col-xs-2">
-    		<button type="button" id="listFrieds">친구목록</button>
+    		<button type="button" id="listFriend">친구목록</button>
     	</div>
     	<div class="col-xs-3">
     		<c:if test="${user.role eq '1'}">
