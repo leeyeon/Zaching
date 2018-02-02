@@ -46,5 +46,8 @@ public interface UserService {
     
     //이메일 전송
  	public void sendMail(String email, String authNum)throws Exception;
+ 	
+ 	//이메일 인증시 정회원으로 등급 up
+ 	public void updateRole(User user)throws Exception;
 
 }

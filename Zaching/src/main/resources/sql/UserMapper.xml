@@ -102,7 +102,7 @@
 		WHERE user_id = #{value}
 	 </select>
 	 
-	<update id="emailAuth" parameterType="user">
+	<update id="updateRole" parameterType="user">
 		UPDATE users
 		<set>
 			role ='2'

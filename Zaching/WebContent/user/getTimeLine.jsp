@@ -29,7 +29,7 @@
 	<script type="text/javascript">
 	
 	$( function () {
-		//내정보조회 Event
+		//내정보조회 Event && 추가 저보 입력
 		$( "#getUser" ).on("click" , function() {
 			self.location = "/user/getUser?userId=${user.userId}";
 			
@@ -54,8 +54,8 @@
 	 	});
 		
 		//친구목록 Event
-		$( "#listFrieds" ).on("click" , function() {
-			self.location = "/friend/";
+		$( "#listFreind" ).on("click" , function() {
+			self.location = "/friend/listFriend?";
 			
 	 	});
 		
@@ -64,8 +64,10 @@
 			self.location = "/user/listNotice?userId=${user.userId}";
 		});
 		
-		//친구신청 Event
-		
+		//추가정보입력 Event
+		$("#listNotice").on("clcick", function() {
+			self.location = "/user/listNotice?userId=${user.userId}";
+		});
 		
 		//FOLLOW Event
 		
@@ -87,9 +89,17 @@
 	
 	<div class="row">
 		<div class="col-xs-3" id="profile">
-		<img  src="/resources/images/profile_default.png" id="profile"
-          	 width="150px" style="margin: 20px;"/>
+		<c:if test="${user.profileImage eq null }">
+		<img class="img-circle" src= "../resources/images/profile_default.png"  id="profile"
+          	 width="150px" height="150px" style="margin: 20px;"/>
+		</c:if>
+		
+		<c:if test="${user.profileImage ne null }">
+		<img class="img-circle" src= "../resources/upload_files/images/${user.profileImage }"  id="profile"
+          	 width="150px" height="150px" style="margin: 20px;"/>
+        </c:if>
         </div>
+        
         <div class="col-xs-3" id="name" style="margin-top: 100px; margin-left: 20px">
 		<h3>${user.name}</h3>
         </div>
@@ -104,7 +114,7 @@
     		<button type="button" id="point">포인트관리</button>
     	</div>
     	<div class="col-xs-2">
-    		<button type="button" id="listFriend">친구목록</button>
+    		<button type="button" id="listFreind">친구목록</button>
     	</div>
     	<div class="col-xs-3">
     		<c:if test="${user.role eq '1'}">

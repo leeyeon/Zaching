@@ -122,14 +122,22 @@ public class BobController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
+		search.setCategory("B00");
 
 		Calendar cal = Calendar.getInstance();
-
-		model.addAttribute("comments", commonService.listComment(search, "B00", bobId).get("list"));
-		model.addAttribute("category", category);
-		model.addAttribute("currentTime", cal.getTime());
-		model.addAllAttributes(bob);
 		
+		Map<String,Object> map = (Map<String,Object>)commonService.listComment(search, "B00", bobId);
+		
+		Page resultPage	= 
+				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
+				pageUnit, pageSize);
+
+		model.addAttribute("comments", map.get("list"))
+			.addAttribute("commentPage", resultPage)
+			.addAttribute("category", category)
+			.addAttribute("currentTime", cal.getTime())
+			.addAllAttributes(bob);
+
 		return "forward:/bob/getBob.jsp";
 	}
 
@@ -261,7 +269,7 @@ public class BobController {
 	}
 	
 	@RequestMapping(value= "/listCommment", method=RequestMethod.GET)
-	public String listCommment(@RequestParam int bobId,
+	public String listCommment(@RequestParam int bobId, @RequestParam int currentPage,
 						Model model) throws Exception {
 		System.out.println(this.getClass()+"/listCommment");
 		
@@ -269,15 +277,24 @@ public class BobController {
 		//System.out.println(category+"³ª¿Ôµû");
 
 		Search search = new Search();
-		
-		if(search.getCurrentPage() ==0 ){
-			search.setCurrentPage(1);
-		}
+		search.setCurrentPage(currentPage);
 		search.setPageSize(pageSize);
+		search.setCategory("comment");
+		
+		System.out.println(search);
+		
+		Map<String,Object> map = (Map<String,Object>)commonService.listComment(search, "B00", bobId);
+		
+		Page resultPage	= 
+				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
+				pageUnit, pageSize);
+		
+		for (Comment comment : (List<Comment>)map.get("list")) {
+			System.out.println(comment);
+		}
 
-		Calendar cal = Calendar.getInstance();
-
-		model.addAttribute("comments", commonService.listComment(search, "B00", bobId).get("list"));
+		model.addAttribute("comments", map.get("list"))
+			.addAttribute("commentPage", resultPage);
 		
 		return "forward:/bob/listComment.jsp";
 	}

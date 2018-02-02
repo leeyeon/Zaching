@@ -64,4 +64,14 @@ public class CommentDaoImpl implements CommentDao {
 	public void updateComment(Comment comment) throws Exception {
 		sqlSession.update("CommentMapper.updateComment", comment);
 	}
+	
+	@Override
+	public int getTotalCount(Search search, String categoryCode, int roomId) throws Exception {
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("categoryCode", categoryCode);
+		map.put("roomId", roomId);
+		map.put("search", search);
+		
+		return sqlSession.selectOne("CommentMapper.getTotalCount", map);
+	}
 }

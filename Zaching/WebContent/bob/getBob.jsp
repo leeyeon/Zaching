@@ -2,13 +2,14 @@
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
+	<!--<jsp:include page="../admin/addReport.jsp"/> -->
 	
 	<link rel="stylesheet" href="../resources/css/getBob.css">
 	<style type="text/css">
@@ -17,7 +18,7 @@
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
     <script type="text/javascript">
     
-
+	
     $(function() {
    	
    		$(this).scrollTop(0);
@@ -51,13 +52,8 @@
    			alert('초대하기');
    		});
    	 	
-   	 	$('.deleteComment').on('click', function() {
-   	 		alert();
-   	 	});
+   	 	/*///////////////////////////// 댓글 시작 /////////////////////////////*/
    	 	
-   	 	/* 댓글 */
-   	 	
-   	 	   	 	
    	 	$('button:contains("등록")').on('click', function(){
    	 		fuc_addComment();
    	 	});
@@ -87,7 +83,7 @@
 					
 					console.log(comment);
 
-					$("#listComment").load("/bob/listCommment?category=${param.category}&bobId=${param.bobId}");
+					$("#listComment").load("/bob/listCommment?category=${param.category}&bobId=${param.bobId}&currentPage=${commentPage.currentPage}");
 					$(":text[name='inputComment']").val("");
 				},
 				error:function(request,status,error){
@@ -96,6 +92,21 @@
 				
 			});
    	 	}
+
+   	 	$('.deleteComment').on('click', function() {
+   	 		alert();
+   	 	});
+   	 	
+   	 	$('div .row .text-center:contains("더 보기")').on("click", function() {
+   	 		$("#listComment").load("/bob/listCommment?category=${param.category}&bobId=${param.bobId}&currentPage=${commentPage.currentPage+1}");
+   	 	});
+   	 	
+   	 	$('#listComment img').on('click', function() {
+	 		var commentUserId = $($("input[name=commentUserId]")[$('#listComment img').index(this)]).val();
+	 		$(self.location).attr("href","/user/getTimeLine?userId="+commentUserId);
+	 	});
+   	 	
+   	 	/*///////////////////////////// 댓글 끝 /////////////////////////////*/
    	 	
    		$('body > div.container > div:nth-child(2) > div.row > div.col-xs-3 > button').on("click", function() {
    			//alert($(this).attr('href'));
@@ -487,15 +498,12 @@
       </div><!-- /.row -->
       
       <!-- ///////////////////////////////// 댓글 시작 /////////////////////////////////  -->
-            <div class="row custumRow" style="margin-top:20px; padding-top:30px;">
+      <div class="row custumRow" style="margin-top:20px; padding-top:30px;">
+      	
       	<div class="text-center textBold" style="font-size: 20px;">친구들과 대화를 나누세요 :)</div>
         <hr>
 		
-		<div id="listComment">
-	      <jsp:include page="listComment.jsp" />
-      	</div>
-      
-      	<div class="row" style="padding:15px 5px 5px 5px;">
+		<div class="row" style="padding:0px 5px 15px 5px;">
       		<div class="col-xs-9">
       			<input type="text" name="inputComment" class="form-control" placeholder="댓글을 입력해주세요."/>       		
       		</div>
@@ -503,7 +511,11 @@
 				<button type="submit" class="form-control">등록</button>
 			</div>
       	</div>
-
+		
+		<div id="listComment">
+	      <jsp:include page="listComment.jsp" />
+      	</div>
+      	
       </div>
       
       <!-- ///////////////////////////////// 댓글 끝 /////////////////////////////////  -->
@@ -540,9 +552,9 @@
 	      	<hr>
 	      	
 	      	<div class="row" style="padding: 10px;">
-	      		<div class="col-xs-4 select-bob">두달전</div>
-	      		<div class="col-xs-4 select-bob">저번달</div>
-	      		<div class="col-xs-4 select-bob active">이번달</div>
+	      		<div class="col-xs-4 select-bob" id="fee-2">두달전</div>
+	      		<div class="col-xs-4 select-bob" id="fee-1">저번달</div>
+	      		<div class="col-xs-4 select-bob active" id="fee-0">이번달</div>
 	      	</div>
 	      	
 	      	<div class="row text-center textBold" style="padding-top:25px; padding-botton:30px;">
@@ -561,7 +573,7 @@
 					<div class="col-xs-4" align="left" style="margin-top:20px; padding-right:15px;">
 						<img src = "../resources/upload_files/images/${participant.participantProfile}"
 			      			onerror="this.src='../resources/images/user-icon.png'"
-			      			width="55px" height="55px"
+			      			width="60px" height="60px"
 							style=" border-radius: 40px;
 									-moz-border-radius: 40px;
 									-khtml-border-radius: 40px;

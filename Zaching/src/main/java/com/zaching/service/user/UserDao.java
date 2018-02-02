@@ -41,6 +41,6 @@ public interface UserDao {
 	public List<User> memoryMap(Search search)throws Exception;
 	
 	//이메일 인증성공시 정회원으로 업데이트
-	public void emailAuth(User user)throws Exception;
+	public void updateRole(User user)throws Exception;
 	
 }

@@ -20,13 +20,6 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-   
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
    
    
    <!-- jQuery Simple PopUp -->
@@ -41,75 +34,51 @@
             padding-top : 80px;
         }
         
-        button.btn.btn-emailAuth{
+        #emailAuth{
         	background-color: #5f4b8b;
         }
-        #popup1 { display:none; }
+        
+        #popup1 { 
+        	display:none; 
+        }
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 		
-
-		//============= "취소"  Event 처리 및  연결 =============
-		$(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
-			});
-		});	
-		 
-		 //============= "수정"  Event 연결 =============
-		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "button.btn.btn-primary" ).on("click" , function() {
-				fncUpdateUser();
-			});
-		});	
-		 
-			
-	
-		 $(document).ready(function() {
-			  $("a.demo-1").simplePopup();
-			  $("a.demo-2").simplePopup({ type: "html", htmlSelector: "#popup1"});
-			});
-		//============= "이메일 인증"  Event 연결 =============
-		$(function() {
+			//============= "이메일 인증"  Event 연결 =============
+			$(function() {
 		
-			$( "#emailAuth" ).on("click", function() {
-					alert("메일이전송되었습니다.");
+				$( "#emailAuth" ).on("click", function() {
+					alert("인증버튼클릭!");
 					fncEmailAuth();
 				});
 			});
 			
 			//============= "emailAuth =============
 			 function fncEmailAuth() {
-					var email = $("#email").val(); //인증번호전송이메일
-					
+					var email = $("#email").val(); //입력받은이메일
+				 	alert(email);
 					
 					if(email == null || email.length <1){
 						alert("이메일은  반드시 입력하셔야 합니다.");
-						return;
+						return false;
 					}
 					
-				
-					//$("form").attr("method" , "POST").attr("action" , "/user/emailAuth").submit();
-					
-			
-					 $.ajax({
+					$.ajax({
 						
 						url:"/user/json/emailAuth",
 						method:"POST",
-						dataType:"json",
 						contentType :'application/json',
 						data : JSON.stringify({
-							email : email
+							"email" : email
 						
 						}),
-						success : function(JSONData , status) {
-							alert(status);
-							alert("JSONData : \n"+JSONData);
-							//alert();
+						async : false,
+						dataType : "json",
+						success : function(serverData) {
+							alert(serverData);
+							
 						}
 						
 						
@@ -117,11 +86,52 @@
 				}
 
 			
-			
-			
-		
-
+			//=======팝업창에서 "확인" REvent=========
+			//============= pop-up 창 띄우기 =============
+					
+					
+			$(document).ready(function() {
+				  
+				  $("a.demo-2").simplePopup({ 
+					  		
+					  		type: "html", 
+							htmlSelector: "#popup1"
+							
+						  });
+			});
 	
+			//입력한 인증번호와 세션에 저장된 인증번호 비교
+			 function fncAuthNum() {
+				var authNum =$("#authNum").val();
+				
+				
+				 alert(authNum);
+				 alert("인증버노확인!");
+				 
+				
+				 $.ajax({
+					 
+				        url : "/user/json/authNum",
+				        method : "POST",
+				        contentType : "application/json",
+				        data : JSON.stringify({
+				        	"authNum" : authNum,
+				        	
+				        }),
+				        async : false,
+				        dataType : "json",
+				        success : function(serverData) {
+				        	
+				        	alert("인증이가 완료되었습니다.");
+				           
+				        }
+				        
+				        
+				     });
+				
+			}
+		 
+		
 	</script>
 
 </head>
@@ -133,9 +143,9 @@
                 <form>
   					 <div class="form-group">
     					<label for="exampleTextarea">인증번호</label>
-    					<input type="text" name="authnum"/>
+    					<input type="text" name="authNum" id="authNum"/>
     				</div>
-  					<button type="submit" class="btn btn-primary" id="ok">확인</button>
+  					<button type="submit" class="btn btn-primary" onclick="fncAuthNum()">확인</button>
 				</form>
             </div>		
             
@@ -159,22 +169,18 @@
 		<form class="form-horizontal">
 		
 		  <div class="form-group ">
-		  	
-		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
+				<label for="email" class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
 		    <div class="col-sm-4">
-		      <input type="email" class="form-control" id="email" name="email" placeholder="중복확인하세요"  >
+		      <input type="email" class="form-control" id="email" name="email" placeholder="이메일을입력해주세요"  >
 		       <span id="helpBlock" class="help-block">
-		    
-		      	<strong class="text-danger" name="userinput">이메일 인증여부 출력예정</strong>
+		    	<strong class="text-danger" name="userinput">이메일 인증여부 출력예정</strong>
 		      </span>
-		    </div>
-		   
-		    	<div class="col-sm-3" id="contents">
-		    		
-		    		<a class="demo-2 btn btn-primary" type="submit" id="emailAuth">이메일 인증</a>
-		    	</div>
-	
 		  </div>
+		   
+		   <div class="col-sm-3" id="contents">
+		   		<a class="demo-2 btn btn" type="submit" id="emailAuth">이메일 인증</a>
+		   </div>
+		</div>
 		 
 				
 		  
@@ -206,19 +212,15 @@
 		      <input type="text" class="form-control" id="address" name="address"  value="${user.address}" placeholder="변경주소">
 		    </div>
 		  </div>
-		  
-		 
-		  
-		  
-		  
+		
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary"  >수 &nbsp;정</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
+			  
 		    </div>
 		  </div>
 		</form>
-		<!-- form Start /////////////////////////////////////-->
+		<!-- form end /////////////////////////////////////-->
 	 
  	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
