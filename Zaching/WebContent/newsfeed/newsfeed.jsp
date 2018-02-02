@@ -68,7 +68,7 @@
 					<p class="author-pic">
 					<img alt='' src='../resources/images/profile_test.png' srcset='https://secure.gravatar.com/avatar/cb2e9e4d63e271d04ee4e5753d24586f?s=80&#038;d=mm&#038;r=g 2x' itemprop='image' class='avatar avatar-40 photo' height='40' width='40' align="left"/>
 					<span class="post-author">
-						<span class="author vcard"><a class="url fn n" href="../resources/images/profile_test.png" rel="author">소현태</a>
+						<span class="author vcard"><a class="url fn n" href="../resources/images/profile_test.png" rel="author">소간지</a>
 						</span>
 						
 						<em>&sdot;</em>
@@ -76,122 +76,16 @@
 					
 					<time datetime="2012-03-20" class="post-date entry-date updated" align="left">${newsfeed.regDate}</time>
 					<i class="glyphicon glyphicon-option-vertical" style="text-align:right"></i></p>
-				
-					 
 					
-					
-					<c:if test="${!empty newsfeed.fileName}"><a href="newsfeed/getNewsfeed?newsfeedId=${newsfeed.newsfeedId}"><img src="../resources/images/${newsfeed.fileName}"></a></c:if>
+					<c:if test="${!empty newsfeed.fileName}"><a href="getNewsfeed?newsfeedId=${newsfeed.newsfeedId}"><img src="../resources/images/${newsfeed.fileName}"></a></c:if>
 					<h3 class="post-title entry-title">${newsfeed.content}</h3><hr style="border:solid 0.5px gray">
 					<p class="post-meta entry-meta">
 					<span class="post-category">
-					<a href="https://themify.me/demo/themes/pinboard/category/life/" rel="category tag"><i class="glyphicon glyphicon-thumbs-up"></i>${newsfeed.countLikey}</a><a href="#"><i class="glyphicon glyphicon-pencil"></i>${newsfeed.countReply }</a></span></p>
+					<a href="https://themify.me/demo/themes/pinboard/category/life/" rel="category tag"><i class="glyphicon glyphicon-thumbs-up"></i>${newsfeed.countLikey}</a><a href="getNewsfeed?newsfeedId=${newsfeed.newsfeedId}"><i class="glyphicon glyphicon-pencil"></i>${newsfeed.countReply }</a></span></p>
 					
 					</li>
 				</c:forEach>
-				<li><div class="post-content">
-				<p class="author-pic">
-				<img alt='' src='../resources/images/profile_test.png' srcset='https://secure.gravatar.com/avatar/cb2e9e4d63e271d04ee4e5753d24586f?s=80&#038;d=mm&#038;r=g 2x' itemprop='image' class='avatar avatar-40 photo' height='40' width='40'/>
-				<span class="post-author">
 				
-					<span class="author vcard"><a class="url fn n" href="../resources/images/profile_test.png" rel="author">소현태</a></span> 
-					<em>&sdot;</em>
-				</span>
-				<time datetime="2012-03-20" class="post-date entry-date updated">March 20, 2012</time></p>
-				
-				</div>
-				<a href="http://drbl.in/fWMM"><img src="../resources/images/author.png"></a>
-				<h3 class="post-title entry-title"><a href="https://themify.me/demo/themes/pinboard/baking-cake/?post_in_lightbox=1" class="themify_lightbox_post">야무지게 먹어드립니다.</a>먹방 </h3>	
-				<p class="post-meta entry-meta">
-				<span class="post-category">
-				<a href="https://themify.me/demo/themes/pinboard/category/life/" rel="category tag"><i class="glyphicon glyphicon-thumbs-up"></i>좋아요</a></span></p>
-				
-				</li>
-				<li><a href="http://drbl.in/fWPV"><img src="../resources/images/test_3.jpg"></a></li>
-				<li><a href="http://drbl.in/fWMT"><img src="../resources/images/test_4.jpg"></a></li>
-				<li><a href="http://drbl.in/fQdt"><img src="../resources/images/test_12.png"></a></li>
-				<li><a href="http://drbl.in/fHaa"><img src="../resources/images/test_13.png"></a></li>
-				<li><a href="http://drbl.in/gXMo"><img src="../resources/images/test_10.png"></a></li>
-				<li><a href="http://drbl.in/gXMn"><img src="../resources/images/test_9.jpg"></a></li>
-				<li><a href="http://drbl.in/fzYo"><img src="../resources/images/test_2.jpg"></a></li>
-				<li><a href="http://drbl.in/fARU"><img src="../resources/images/test_14.png"></a></li>
-				<li><a href="http://drbl.in/fGhI"><img src="../resources/images/test_5.jpg"></a></li>
-				<li><a href="http://drbl.in/fKCf"><img src="../resources/images/test_6.jpg"></a></li>
-				<li><a href="http://drbl.in/fLBG"><img src="../resources/images/test_7.jpg"></a></li>
-				<li><a href="http://drbl.in/fPEY"><img src="../resources/images/test_8.jpg"></a></li>
-				<li><a href="http://drbl.in/fWwG"><img src="../resources/images/test_9.jpg"></a></li>
-				<li><a href="http://drbl.in/fQdt"><img src="../resources/images/test_12.png"></a></li>
-				<li><a href="http://drbl.in/fHaa"><img src="../resources/images/test_13.png"></a></li>
-				<li><a href="http://drbl.in/gXMo"><img src="../resources/images/test_10.png"></a></li>
-				<li><a href="http://drbl.in/gXMn"><img src="../resources/images/test_11.png"></a></li>
-				<li><a href="http://drbl.in/fzYo"><img src="../resources/images/test_2.jpg"></a></li>
-				<li><a href="http://drbl.in/fARU"><img src="../resources/images/test_14.png"></a></li>
-				<li><a href="http://drbl.in/fWMM"><img src="../resources/images/test_1.jpg"></a></li>
-				<li><a href="http://drbl.in/fWPV"><img src="../resources/images/test_3.jpg"></a></li>
-				<li><a href="http://drbl.in/fWMT"><img src="../resources/images/test_4.jpg"></a></li>
-				<li><a href="http://drbl.in/fGhI"><img src="../resources/images/test_5.jpg"></a></li>
-				<li><a href="http://drbl.in/fKCf"><img src="../resources/images/test_6.jpg"></a></li>
-				<li><a href="http://drbl.in/fLBG"><img src="../resources/images/test_7.jpg"></a></li>
-				<li><a href="http://drbl.in/fPEY"><img src="../resources/images/test_8.jpg"></a></li>
-				<li><a href="http://drbl.in/fWwG"><img src="../resources/images/test_9.jpg"></a></li>
-				<li><a href="http://drbl.in/fQdt"><img src="../resources/images/test_12.png"></a></li>
-				<li><a href="http://drbl.in/fHaa"><img src="../resources/images/test_13.png"></a></li>
-				<li><a href="http://drbl.in/gXMo"><img src="../resources/images/test_10.png"></a></li>
-				<li><a href="http://drbl.in/gXMn"><img src="../resources/images/test_11.png"></a></li>
-				<li><a href="http://drbl.in/fzYo"><img src="../resources/images/test_2.jpg"></a></li>
-				<li><a href="http://drbl.in/fARU"><img src="../resources/images/test_14.png"></a></li>
-				<li><a href="http://drbl.in/fWMM"><img src="../resources/images/test_1.jpg"></a></li>
-				<li><a href="http://drbl.in/fWPV"><img src="../resources/images/test_3.jpg"></a></li>
-				<li><a href="http://drbl.in/fWMT"><img src="../resources/images/test_4.jpg"></a></li>
-				<li><a href="http://drbl.in/fGhI"><img src="../resources/images/test_5.jpg"></a></li>
-				<li><a href="http://drbl.in/fKCf"><img src="../resources/images/test_6.jpg"></a></li>
-				<li><a href="http://drbl.in/fLBG"><img src="../resources/images/test_7.jpg"></a></li>
-				<li><a href="http://drbl.in/fPEY"><img src="../resources/images/test_8.jpg"></a></li>
-				<li><a href="http://drbl.in/fWwG"><img src="../resources/images/test_9.jpg"></a></li>
-				<li><a href="http://drbl.in/fQdt"><img src="../resources/images/test_12.png"></a></li>
-				<li><a href="http://drbl.in/fHaa"><img src="../resources/images/test_13.png"></a></li>
-				<li><a href="http://drbl.in/gXMo"><img src="../resources/images/test_10.png"></a></li>
-				<li><a href="http://drbl.in/gXMn"><img src="../resources/images/test_11.png"></a></li>
-				<li><a href="http://drbl.in/fzYo"><img src="../resources/images/test_2.jpg"></a></li>
-				<li><a href="http://drbl.in/fARU"><img src="../resources/images/test_14.png"></a></li>
-				<li><a href="http://drbl.in/fWMM"><img src="../resources/images/test_1.jpg"></a></li>
-				<li><a href="http://drbl.in/fWPV"><img src="../resources/images/test_3.jpg"></a></li>
-				<li><a href="http://drbl.in/fWMT"><img src="../resources/images/test_4.jpg"></a></li>
-				<li><a href="http://drbl.in/fGhI"><img src="../resources/images/test_5.jpg"></a></li>
-				<li><a href="http://drbl.in/fKCf"><img src="../resources/images/test_6.jpg"></a></li>
-				<li><a href="http://drbl.in/fLBG"><img src="../resources/images/test_7.jpg"></a></li>
-				<li><a href="http://drbl.in/fPEY"><img src="../resources/images/test_8.jpg"></a></li>
-				<li><a href="http://drbl.in/fWwG"><img src="../resources/images/test_9.jpg"></a></li>
-				<li><a href="http://drbl.in/fQdt"><img src="../resources/images/test_12.png"></a></li>
-				<li><a href="http://drbl.in/fHaa"><img src="../resources/images/test_13.png"></a></li>
-				<li><a href="http://drbl.in/gXMo"><img src="../resources/images/test_10.png"></a></li>
-				<li><a href="http://drbl.in/gXMn"><img src="../resources/images/test_11.png"></a></li>
-				<li><a href="http://drbl.in/fzYo"><img src="../resources/images/test_2.jpg"></a></li>
-				<li><a href="http://drbl.in/fARU"><img src="../resources/images/test_14.png"></a></li>
-				<li><a href="http://drbl.in/fWMM"><img src="../resources/images/test_1.jpg"></a></li>
-				<li><a href="http://drbl.in/fWPV"><img src="../resources/images/test_3.jpg"></a></li>
-				<li><a href="http://drbl.in/fWMT"><img src="../resources/images/test_4.jpg"></a></li>
-				<li><a href="http://drbl.in/fGhI"><img src="../resources/images/test_5.jpg"></a></li>
-				<li><a href="http://drbl.in/fKCf"><img src="../resources/images/test_6.jpg"></a></li>
-				<li><a href="http://drbl.in/fLBG"><img src="../resources/images/test_7.jpg"></a></li>
-				<li><a href="http://drbl.in/fPEY"><img src="../resources/images/test_8.jpg"></a></li>
-				<li><a href="http://drbl.in/fWwG"><img src="../resources/images/test_9.jpg"></a></li>
-				<li><a href="http://drbl.in/fQdt"><img src="../resources/images/test_12.png"></a></li>
-				<li><a href="http://drbl.in/fHaa"><img src="../resources/images/test_13.png"></a></li>
-				<li><a href="http://drbl.in/gXMo"><img src="../resources/images/test_10.png"></a></li>
-				<li><a href="http://drbl.in/gXMn"><img src="../resources/images/test_11.png"></a></li>
-				<li><a href="http://drbl.in/fzYo"><img src="../resources/images/test_2.jpg"></a></li>
-				<li><a href="http://drbl.in/fARU"><img src="../resources/images/test_14.png"></a></li>
-				<li><a href="http://drbl.in/fWMM"><img src="../resources/images/test_1.jpg"></a></li>
-				<li><a href="http://drbl.in/fWPV"><img src="../resources/images/test_3.jpg"></a></li>
-				<li><a href="http://drbl.in/fWMT"><img src="../resources/images/test_4.jpg"></a></li>
-				<li><a href="http://drbl.in/fGhI"><img src="../resources/images/test_5.jpg"></a></li>
-				<li><a href="http://drbl.in/fKCf"><img src="../resources/images/test_6.jpg"></a></li>
-				<li><a href="http://drbl.in/fLBG"><img src="../resources/images/test_7.jpg"></a></li>
-				<li><a href="http://drbl.in/fPEY"><img src="../resources/images/test_8.jpg"></a></li>
-				<li><a href="http://drbl.in/fWwG"><img src="../resources/images/test_9.jpg"></a></li>
-				<li><a href="http://drbl.in/fWPV"><img src="../resources/images/test_3.jpg"></a></li>
-				<li><a href="http://drbl.in/fGhI"><img src="../resources/images/test_5.jpg"></a></li>
-				<li><a href="http://drbl.in/fzYo"><img src="../resources/images/test_2.jpg"></a></li>
 			</ul>
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.0.0/masonry.pkgd.min.js"></script>

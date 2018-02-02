@@ -85,7 +85,7 @@ public class NewsfeedController {
 	}
 	
 	@RequestMapping(value="getNewsfeed")
-	public String getNewsfeed(@RequestParam int newsfeedId, @RequestParam int userId, Model model, @RequestParam String category, HttpSession session, @ModelAttribute("search") Search search) throws Exception{
+	public String getNewsfeed(@RequestParam int newsfeedId, Model model, HttpSession session, @ModelAttribute("search") Search search) throws Exception{
 		System.out.println("getNewsfeed()");
 		System.out.println(newsfeedId);
 		
@@ -94,11 +94,15 @@ public class NewsfeedController {
 		}
 		search.setPageSize(pageSize);
 		
-		session.setAttribute("user", (User)userService.getUser(33));
+		session.setAttribute("user", (User)userService.getUser(32));
 		
-		model.addAttribute("newsfeed", newsfeedService.getNewsfeed(newsfeedId));
-		model.addAttribute("roomUser", userService.getUser(userId));
-		model.addAttribute("list", (List)(commonService.listComment(search, category,newsfeedId).get("list")));
+		Newsfeed newsfeed = newsfeedService.getNewsfeed(newsfeedId);
+		model.addAttribute("newsfeed", newsfeed);
+		model.addAttribute("roomUser", userService.getUser(newsfeed.getuserId()));
+		System.out.println("image :: "+userService.getUser(newsfeed.getuserId()));
+		System.out.println(newsfeed.getCategoryCode());
+		model.addAttribute("list", (List)(commonService.listComment(search, newsfeed.getCategoryCode(), newsfeedId).get("list")));
+		System.out.println("list :: "+(List)(commonService.listComment(search, "N01", newsfeedId).get("list")));
 		
 		return "forward:/newsfeed/getNewsfeed.jsp";
 		
