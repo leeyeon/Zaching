@@ -70,23 +70,38 @@
 			
 		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-				FROM	( 
-				
-				SELECT comments.comment_id, comments.content, to_char(comments.created_date,'yyyy-mm-dd hh24:mi') AS created_date,
-					comments.user_id, users.name AS user_name, users.profile_image AS profile_image
-				FROM COMMENTS, USERS 
-				<where>
-					COMMENTS.user_id = USERS.user_id
-					AND comments.category_code = '${categoryCode}'
-					AND comments.room_id = #{roomId}
-					AND comments.status = 'Y'
-				</where>
-				ORDER BY comments.created_date
+				FROM	(
+					<include refid="selectCommentSql" />
 				) inner_table
 				WHERE ROWNUM &lt;= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 			
 	</select>
+	
+	<select id="getTotalCount"
+			parameterType="map"
+			resultType="int">
+		SELECT COUNT(*)
+		FROM ( <include refid="selectCommentSql" /> ) countTable
+	</select>
+	
+	<sql id="selectCommentSql">
+		SELECT comments.comment_id, comments.content, to_char(comments.created_date,'yyyy-mm-dd hh24:mi') AS created_date,
+			comments.user_id, users.name AS user_name, users.profile_image AS profile_image
+		FROM COMMENTS, USERS 
+		<where>
+			COMMENTS.user_id = USERS.user_id
+			AND comments.category_code = '${categoryCode}'
+			AND comments.room_id = #{roomId}
+			AND comments.status = 'Y'
+		</where>
+		<if test="categoryCode == 'B00'">
+			ORDER BY comments.created_date DESC
+		</if>
+		<if test="categoryCode != 'B00'">
+			ORDER BY comments.created_date
+		</if>
+	</sql>
 	
 	<update id="updateComment"
 			parameterType="comment">
