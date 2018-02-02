@@ -6,10 +6,13 @@ public class Search {
 	private String searchCondition;
 	private String searchKeyword;
 	private int pageSize;
+	
 	private int endRowNum;
 	private int startRowNum;
-	private int searchsorting;
+	
 
+	
+	
 	
 	/* Category ±¸ºÐ */
 	private String category;
@@ -20,16 +23,7 @@ public class Search {
 	
 	
 
-	public int getSearchsorting() {
-		return searchsorting;
-	}
-
-
-
-	public void setSearchsorting(int searchsorting) {
-		this.searchsorting = searchsorting;
-	}
-
+	
 
 
 	public int getCurrentPage() {

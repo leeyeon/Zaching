@@ -39,6 +39,11 @@ public class CommentDaoImpl implements CommentDao {
 		
 		return comment;
 	}
+	
+	@Override
+	public Comment getComment(int commentId) throws Exception {
+		return sqlSession.selectOne("CommentMapper.getComment", commentId);
+	}
 
 	@Override
 	public void deleteComment(int commentId) throws Exception {

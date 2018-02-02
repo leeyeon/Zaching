@@ -9,6 +9,8 @@ public interface CommentDao {
 
 	public Comment addComment(Comment comment) throws Exception;
 	
+	public Comment getComment(int commentId) throws Exception;
+	
 	public void deleteComment(int commentId) throws Exception;
 	
 	/* 밥친구, 뉴스피드, 보이스리플 을 구분하는 categoryCode */

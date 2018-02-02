@@ -26,8 +26,8 @@ public class ReportServiceImpl implements ReportService {
 	
 	
 	@Override
-	public List<Report> listReport(int reportId) throws Exception{
-		return reportDao.listReport(reportId);
+	public List<Report> listReport(Search search) throws Exception{
+		return reportDao.listReport(search);
 	}
 	
 	

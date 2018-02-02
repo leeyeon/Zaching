@@ -41,8 +41,8 @@ public class NewsfeedServiceImpl implements NewsfeedService{
 	}
 
 	@Override
-	public void getNewsfeed(int newsfeedId) throws Exception {
-		newsfeedDao.getNewsfeed(newsfeedId);
+	public Newsfeed getNewsfeed(int newsfeedId) throws Exception {
+		return newsfeedDao.getNewsfeed(newsfeedId);
 		
 	}
 
@@ -53,7 +53,7 @@ public class NewsfeedServiceImpl implements NewsfeedService{
 		int count = newsfeedDao.getTotalCount(search);
 		
 		map.put("list", list);
-		map.put("count", count);
+		map.put("totalCount", count);
 		return map;
 	}
 

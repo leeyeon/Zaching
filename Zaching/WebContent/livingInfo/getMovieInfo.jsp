@@ -81,13 +81,54 @@ $(function() {
 					},
 					success : function(JSONData , status) {
 									
-						var displayValue = '';				
+						var displayValue = '';		
 						
+						console.log(JSONData);
 						
-						for(var i=0; i<5; i++){
+						for(var i=0; i<10; i++){
 							name[i] = JSONData.boxOfficeResult.dailyBoxOfficeList[i].movieNm;
 							code[i] = JSONData.boxOfficeResult.dailyBoxOfficeList[i].movieCd;
 						}
+						
+						 for(var i=0; i<10; i++){
+						
+							 $.ajax( 
+										{
+											url : "/livingInfo/rest/movieImg/"+name[i],
+											method : "GET" ,
+											dataType : "json" ,
+											async: false,											
+											headers : {
+												"Accept" : "application/json",
+												"Content-Type" : "application/json"
+											},success : function(moviecode , status) {
+												img[i] = moviecode.items[0].link;
+												console.log("3");
+												}
+											});	
+						 }
+						 
+						 for(var i=0; i<10; i++){
+							 $.ajax( 
+										{
+
+											url : "/livingInfo/rest/movieInfo/"+code[i],
+											method : "GET" ,
+											dataType : "json" ,
+											async: false,											
+											headers : {
+												"Accept" : "application/json",
+												"Content-Type" : "application/json"
+											},success : function(moviecode , status) {
+												console.log(moviecode);
+												item1[i] = moviecode.movieInfoResult.movieInfo.genres[0].genreNm;
+												item2[i] = moviecode.movieInfoResult.movieInfo.openDt;
+												item3[i] = moviecode.movieInfoResult.movieInfo.actors[0].peopleNm+","+moviecode.movieInfoResult.movieInfo.actors[1].peopleNm+","+moviecode.movieInfoResult.movieInfo.actors[2].peopleNm;
+												console.log("4");
+												}
+											});	
+						 }
+						 
 						
 						 for(var i=0; i<5; i++){
 							 $.ajax( 
@@ -105,28 +146,10 @@ $(function() {
 											});	
 						 }
 						 
-						 for(var i=0; i<5; i++){
-							 $.ajax( 
-										{
-											url : "/livingInfo/rest/movieInfo/"+code[i],
-											method : "GET" ,
-											dataType : "json" ,
-											async: false,											
-											headers : {
-												"Accept" : "application/json",
-												"Content-Type" : "application/json"
-											},success : function(moviecode , status) {
-												console.log(moviecode);
-												item1[i] = moviecode.movieInfoResult.movieInfo.genres[0].genreNm;
-												item2[i] = moviecode.movieInfoResult.movieInfo.openDt;
-												item3[i] = moviecode.movieInfoResult.movieInfo.actors[0].peopleNm+","+moviecode.movieInfoResult.movieInfo.actors[1].peopleNm+","+moviecode.movieInfoResult.movieInfo.actors[2].peopleNm;
-												
-												}
-											});	
-						 }
+					
 						
 						
-						for(var i=0; i<5; i++){
+						for(var i=0; i<10; i++){
 							
 							displayValue = displayValue + '<h1>'+(i+1)+'</h1><div class="container"><div class="card">'+
 							'<div class="col-xs-2"><img src="'+img[i]+'" width="150px"/></div>'+

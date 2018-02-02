@@ -20,6 +20,14 @@ public class Comment {
 		// TODO Auto-generated constructor stub
 	}
 
+	public String getUserImage() {
+		return userImage;
+	}
+
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
+	}
+
 	public int getCommentId() {
 		return commentId;
 	}
@@ -84,19 +92,11 @@ public class Comment {
 		this.userName = userName;
 	}
 
-	public String getUserProfile() {
-		return userImage;
-	}
-
-	public void setUserProfile(String userProfile) {
-		this.userImage = userProfile;
-	}
-
 	@Override
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", roomId=" + roomId + ", category=" + category + ", userId="
 				+ userId + ", content=" + content + ", createdDate=" + createdDate + ", status=" + status
-				+ ", userName=" + userName + ", userProfile=" + userImage + "]";
+				+ ", userName=" + userName + ", userImage=" + userImage + "]";
 	}
 
 	

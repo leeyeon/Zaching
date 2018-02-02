@@ -57,16 +57,14 @@ public class paymentServiceImpl implements PaymentService {
 		
 	}
 	
-	// 마일리지 적립/사용
+	// 마일리지 적립/사용/적립취소 (M01/M02/M03)
 	@Override
 	public void manageMileage(Payment payment) throws Exception {
 		
 		String code = payment.getPaymentCode();
 		
-		if("M01".equals(code) || "M02".equals(code)) {
-			paymentDao.managePayment(payment);
-			paymentDao.updateUserPayment(payment);
-		}
+		paymentDao.managePayment(payment);
+		paymentDao.updateUserPayment(payment);
 		
 	}
 

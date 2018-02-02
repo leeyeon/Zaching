@@ -37,7 +37,6 @@
 		<selectKey keyProperty="commentId" resultType="Integer" order="AFTER"> 
 			SELECT seq_comment_id.currval FROM dual
 		</selectKey>
-		
 	</insert>
 	
 	<update id="deleteComment"
@@ -51,6 +50,20 @@
 		</where>	
 	</update>
 	
+	<select id="getComment"
+			parameterType="int"
+			resultMap="commentSelectMap">
+		SELECT comments.comment_id, comments.content, to_char(comments.created_date,'yyyy-mm-dd hh24:mi') AS created_date,
+			comments.user_id, users.name AS user_name, users.profile_image AS profile_image
+		FROM COMMENTS, USERS
+		<where>
+			COMMENTS.user_id = USERS.user_id
+			AND comments.status = 'Y'
+			AND comments.comment_id = #{commentId}
+		</where>
+		ORDER BY comments.created_date
+	</select>
+	
 	<select id="listComment" 
 			parameterType="map"
 			resultMap="commentSelectMap">
@@ -59,7 +72,7 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 				FROM	( 
 				
-				SELECT comments.comment_id, comments.content, to_char(comments.created_date,'yyyy-mm-dd hh:mm') AS created_date,
+				SELECT comments.comment_id, comments.content, to_char(comments.created_date,'yyyy-mm-dd hh24:mi') AS created_date,
 					comments.user_id, users.name AS user_name, users.profile_image AS profile_image
 				FROM COMMENTS, USERS 
 				<where>
@@ -68,6 +81,7 @@
 					AND comments.room_id = #{roomId}
 					AND comments.status = 'Y'
 				</where>
+				ORDER BY comments.created_date
 				) inner_table
 				WHERE ROWNUM &lt;= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}

@@ -6,8 +6,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<link href="/resources/css/adminlist.css" rel="stylesheet" type="text/css">
 <jsp:include page="admintoolbar.jsp"/>
-<script src="/resources/css/adminbutton.css"></script>
+
 </head>
 <script>
 $(function() {
@@ -26,7 +27,61 @@ $(function() {
 
 	});
 	
+	$("#report").click(function() {
+
+		
+		var chageIndex = document.getElementsByName("cb");
+		
+		var count = 0;
+
+		for (var i = 0; i < chageIndex.length ; i++) {
+			
+			 	if (chageIndex[i].checked){
+
+			 		
+			 	var reportId = $($("input[name='reportId']")[i-1]).val();
+			 	
+
+
+			 $.ajax({
+				 
+	         url : "/admin/rest/updateReport",
+	         method : "POST",
+	         contentType : "application/json; charset=UTF-8",
+	         data : JSON.stringify({
+	            "reportId" : reportId
+	         }),
+	         async : false,
+	         dataType : "json",
+	         success : function(serverData) {
+	            console.log(serverData);
+	            
+	         },
+	         error:function(request,status,error){
+	             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	         }
+	         
+	      });
+			 		
+				}
+			 	
+		} 
+			
+
+
+	});
+	
 });
+
+
+
+
+function fncGetUserList(currentPage) {
+	
+	$("#currentPage").val(currentPage);
+	$("form").attr("method" , "POST").attr("action" , "/admin/listReport").submit();
+}
+
 </script>
 <style>
 body {
@@ -47,69 +102,6 @@ body {
 		height: 500px;
 
 	}
-	
-	input[type=checkbox] + label {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  border: 2px solid #bcbcbc;
-  cursor: pointer;
-	}
-	
-	input[type=checkbox]:checked + label:after {
-  content: '\2714';
-  font-size: 11px;
-	}
-	
-	input[type=checkbox] {
-  display: none;
-	}
-	
-	.th{
-		color: rgba(0,158,216,1);
-		font-weight:bold;
-	}
-	.myButton {
-	-moz-box-shadow:inset 0px 1px 0px 0px #009ed8;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #009ed8;
-	box-shadow:inset 0px 1px 0px 0px #009ed8;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #009ed8), color-stop(1, #009ed8));
-	background:-moz-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:-webkit-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:-o-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:-ms-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:linear-gradient(to bottom, #009ed8 5%, #009ed8 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#009ed8', endColorstr='#009ed8',GradientType=0);
-	background-color:#009ed8;
-	-moz-border-radius:9px;
-	-webkit-border-radius:9px;
-	border-radius:9px;
-	border:1px solid #84bcf3;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:10px;
-	font-weight:bold;
-	padding:6px 13px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #009ed8;
-	}
-	.myButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #009ed8), color-stop(1, #009ed8));
-	background:-moz-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:-webkit-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:-o-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:-ms-linear-gradient(top, #009ed8 5%, #009ed8 100%);
-	background:linear-gradient(to bottom, #009ed8 5%, #009ed8 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#009ed8', endColorstr='#009ed8',GradientType=0);
-	background-color:#009ed8;
-	}
-	.myButton:active {
-	position:relative;
-	top:1px;
-	}
-	
 </style>
 <body>
 
@@ -120,21 +112,27 @@ body {
  	<td class="th" align="left">회원ID</td>
  	<td class="th" align="left">신고내용</td>
  	<td class="th" align="left">처리유무</td>
- 	<td class="right" align="right"><input type="checkbox" id="cb1"><label for="cb1"></label></td>
+ 	<td class="right" align="right"><input type="checkbox" id="cb1"></td>
  	</tr>
  	<tbody>
+ 	<c:set var="i" value="0" />
+	 <c:forEach var="reprot" items="${list}">
  	<tr class="ct_list_pop">
- 	<td align="left">1</td>
- 	<td align="left">2</td>
- 	<td align="left">3</td>
- 	<td align="right"> <input type="checkbox" id="cb2"><label for="cb2"></label></td> 	
+ 	<td align="left"><input type="hidden" name="reportId" value="${report.reportId}">${report.reportUserID}</td>
+ 	<td align="left">${report.text}</td>
+ 	<td align="left">${report.flag}</td>
+ 	<td align="right"> <input type="checkbox" id="${i}" name="cb"></td> 	
  		</tr>
+ 		</c:forEach>
  		</tbody>
  		</table>
  		
  		
  	</div>
  	<div class="change" align="right"><a href="#" class="myButton" id="point">처리하기</a></div>
+ 	<form>
+ 	<input type="hidden"	id="currentPage" name="currentPage" value="" />
+ 	</form>
  	<jsp:include page="../common/pageNavigator.jsp" />
   </div>
   
