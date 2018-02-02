@@ -80,7 +80,7 @@ function report(){
     <textarea class="form-control" id="exampleTextarea" rows="5"></textarea>
   </div>
 
-  <button type="submit" class="btn btn-primary" onClick="report()">보내기</button>
+  <button type="submit" class="btn btn-primary" onClick="id()">보내기</button>
 </form>
             </div>
 </div>

@@ -164,6 +164,9 @@ $(function(){
 			 		
 				 	$("input[name='selectsong']").val(title);
 					$("input[name='selectsinger']").val(name);
+					
+					$("input[name='ok']").val(title+" - "+name);
+					
 				});			 	
 				
 	    }
@@ -206,7 +209,7 @@ $(function(){
       <div class="search-container">
       	<input type="text" placeholder="제목이나 가수명을 입력하세요" name="searchsong" id="searchsong" value="">
         	<button type="button" class="btn btn-primary" id="search">검색</button>
-        	<button type="button" class="btn btn-primary" id="select">선택</button>
+        	<button type="submit" class="btn btn-primary" data-dismiss="modal"id="select">선택</button>
     	<br/>
     	 <div class="viewlist" >
 
@@ -215,7 +218,12 @@ $(function(){
     </div>
         </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       <div class="topnav">
+      <div class="search-container">
+      	<input type="text" placeholder="선택된노래" name="ok" id="ok" value="" readonly>
+      	 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      	</div></div>
+       
       </div>
     </div>
   </div>
