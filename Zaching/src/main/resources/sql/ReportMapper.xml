@@ -47,12 +47,24 @@
 		WHERE report_id = #{reportId}
 	</update>
 	
-	<select id="listReport" parameterType="int" resultMap="reportSelectMap">
-		SELECT report_id, reported_user_id, status
-	  	FROM report	
-	  	ORDER BY report_date		
+	<select id="listReport" parameterType="search" resultMap="reportSelectMap">	  	
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT report_id, reported_user_id, status
+											FROM report
+											<if test="searchCondition != null">
+												
+											</if>
+											ORDER BY report_date ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	</select>
 	
+	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM( SELECT report_id 
+	  			FROM report ) countTable						
+	 </select>
 	
 
 </mapper>

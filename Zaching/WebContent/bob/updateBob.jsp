@@ -177,7 +177,7 @@
 	    });
 	    
 	    <c:if test="${category ne 'B03'}">
-	    
+
 		    $("input[name='locationName']").on("keyup", function() {
 		    	if(!$(this).val()) {
 		    		$('#locationDuplicateCheck').show();
@@ -218,8 +218,16 @@
 		    	
 		    });
 		    
+		    var latitude = 37.498164651039694;
+		    var longitude = 127.02830790088069;
+		    
+	    	<c:if test="${!empty bob.longitude}">
+	    		latitude = ${bob.latitude};
+	    		longitude = ${bob.longitude};
+	    	</c:if>
+		    
 		    var markers = {
-		         position: new daum.maps.LatLng(${bob.latitude}, ${bob.longitude}), 
+		         position: new daum.maps.LatLng(latitude, longitude), 
 		         text: '${bob.locationName}'
 		     };
 	
@@ -228,7 +236,7 @@
 		     
 		    var mapContainer = document.getElementById('map'), 
 		        mapOption = {
-		            center: new daum.maps.LatLng(${bob.latitude}, ${bob.longitude}), 
+		            center: new daum.maps.LatLng(latitude, longitude), 
 		            level: 2
 		        };  
 		    var map = new daum.maps.Map(mapContainer, mapOption); 
@@ -266,7 +274,8 @@
 			todayHighlight: 1,
 			startView: 2,
 			forceParse: 0,
-	        showMeridian: 1
+	        showMeridian: 1,
+	        startDate: new Date()
 	    });
 		
 	    /* surmmernote*/
@@ -371,14 +380,22 @@
 	            
 	            <div class="row">
 	            	<div class="col-sm-2 btn-bob">대표사진 설정</div>
-	            	<div class="col-sm-2 text-center" style="padding-top: 7px;">
-	            		<div class="checkbox">
-	            			<label><input type="checkbox" name="imageCheck" value="">기본배경화면</label>
-	            		</div>
-	            	</div>
-	            	<div class="col-sm-8" align="center" style="padding-top: 7px;">
-	            		<input id="input-b1" name="uploadFile" type="file" class="file" style="width:80%;"/>
-	            	</div>
+	            	<c:if test="${!empty bob.image}">
+	            		<div class="col-sm-10 text-center" style="padding-top: 7px;">
+		            		배경화면이 설정되어 있습니다. 변경하시겠습니까?
+		            		<button class="form-control" style="width: 50px;">얍</button>
+			            </div>
+	            	</c:if>
+	            	<c:if test="${empty bob.image}">
+		            	<div class="col-sm-2 text-center" style="padding-top: 7px;">
+		            		<div class="checkbox">
+		            			<label><input type="checkbox" name="imageCheck" >기본배경화면</label>
+		            		</div>
+			            </div>
+		            	<div class="col-sm-8" align="center" style="padding-top: 7px;">
+		            		<input id="input-b1" name="uploadFile" type="file" class="file" style="width:80%;"/>
+		            	</div>
+	            	</c:if>	            		
 		    	</div>
 		    	
 		    	<hr/>
@@ -387,7 +404,7 @@
 			    	<div class="row">
 			    		<div class="col-sm-6 btn-bob">날짜</div>
 		            	<div class="col-sm-6" align="center" style="padding-top: 8px;">
-			                <div class="input-group date form_datetime col-md-5" data-date-format="yyyy MM dd일 HH:mm" data-link-field="dtp_input1" style="width: 100%;">
+			                <div class="input-group date form_datetime col-md-5" data-date-format="yyyy-mm-dd p HH:ii" data-link-field="dtp_input1" style="width: 100%;">
 			                    <input type="text" name="appointmentTime" class="form-control" style="font-size: 16px;" value="${bob.appointmentTime}" readonly>
 			                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
@@ -408,7 +425,6 @@
 							    <div id="map" style="width:100%;height:400px;position:relative;overflow:hidden;"></div>
 							</div>
 							<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
-							<script src="/resources/javascript/map.js"></script>	            		
 		            	</div>
 			    	</div>
 		    	</c:if>

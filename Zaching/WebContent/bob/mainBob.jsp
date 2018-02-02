@@ -3,6 +3,7 @@
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -150,18 +151,18 @@
 				//alert($(this).attr('href'));
 			});
 			
-			/* 리스트 불러오기 */
+			/* addBob */
 			
-			$('.list-group-item:contains("우리지금만나")').on("click", function() {
-				$(self.location).attr("href","/bob/addBob?category=B01");
-			});
-			
-			$('.list-group-item:contains("당장만나")').on("click", function() {
-				$(self.location).attr("href","/bob/addBob?category=B02");
-			});
-			
-			$('.list-group-item:contains("주기적으로만나")').on("click", function() {
-				$(self.location).attr("href","/bob/addBob?category=B03");
+			$('.list-group-item').on("click", function() {
+				<c:if test="${!empty user && (fn:trim(user.role) eq '2')}"> 
+					$(self.location).attr("href","/bob/addBob?category="+($(this).attr("id")).substring(4));
+				</c:if>
+				<c:if test="${!empty user && (fn:trim(user.role) eq '1')}"> 
+					alert("본인인증 이후에 밥친구 서비스를 모두 이용하실 수 있습니다.");
+				</c:if>
+				<c:if test="${empty user}">
+					alert("로그인을 해주세요.");
+				</c:if>
 			});
 
 			
@@ -177,11 +178,19 @@
 			        loadurl = $this.attr('href'),
 			        targ = $this.attr('data-target');
 
-			    $.get(loadurl, function(data) {
-			        $(targ).html(data);
-			    });
+			    if('${user}' == '' && (targ == "#B03" || targ == "#B04")) {
+					alert("로그인 후 사용하실 수 있습니다. \n"
+							+"간편회원가입을 통해서 쉽고 간편하게 자췽 서비스를 이용하실 수 있습니다.");
+					$(self.location).attr("href","/user/addUser");
+				} else {
+				    
+				    $.get(loadurl, function(data) {
+				        $(targ).html(data);
+				    });
+				    
+				    $this.tab('show');
+				}
 
-			    $this.tab('show');
 			    return false;
 			});
 			/* tab Event End */
@@ -227,7 +236,7 @@
 				<div class="tab-pane" id="B02"> </div>
 				<div class="tab-pane" id="B03"> </div>
 				<div class="tab-pane" id="B04"> </div>
-				<!-- 데이터 끝... -->	
+				<!-- 데이터 끝... -->
 				</div>
 			</div>
 		</div>
@@ -243,9 +252,9 @@
 	  	<div class="dialog-add-bob text-center">
 	  		<div class="list-group" style="float: right; visibility: hidden;">
 			  <a class="list-group-item" style="background: #5F4B8B; color: #FFFFFF;"> 카테고리선택 </a>
-			  <a class="list-group-item" style="cursor: pointer;">우리지금만나</a>
-			  <a class="list-group-item" style="cursor: pointer;">당장만나</a>
-			  <a class="list-group-item" style="cursor: pointer;">주기적으로만나</a>
+			  <a class="list-group-item" style="cursor: pointer;" id="add-B01">우리지금만나</a>
+			  <a class="list-group-item" style="cursor: pointer;" id="add-B02">당장만나</a>
+			  <a class="list-group-item" style="cursor: pointer;" id="add-B03">주기적으로만나</a>
 			</div>
 	  	</div>
 	  </div>

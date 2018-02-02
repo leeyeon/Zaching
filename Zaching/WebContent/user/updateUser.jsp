@@ -1,8 +1,8 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
-
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ 
 
 
 <!DOCTYPE html>
@@ -12,7 +12,7 @@
 <head>
 	<meta charset="EUC-KR">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -20,165 +20,210 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
    
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
    
+   <!-- jQuery Simple PopUp -->
+	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="/resources/javascript/jquery.simple-popup.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
+		integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+	<link href="/resources/css/jquery.simple-popup.min.css" rel="stylesheet" type="text/css">
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
             padding-top : 80px;
         }
         
-        button.btn.btn-emailAuth{
+        #emailAuth{
         	background-color: #5f4b8b;
+        }
+        
+        #popup1 { 
+        	display:none; 
         }
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
+		
+			//============= "ì´ë©”ì¼ ì¸ì¦"  Event ì—°ê²° =============
+			$(function() {
+		
+				$( "#emailAuth" ).on("click", function() {
+					alert("ì¸ì¦ë²„íŠ¼í´ë¦­!");
+					fncEmailAuth();
+				});
+			});
+			
+			//============= "emailAuth =============
+			 function fncEmailAuth() {
+					var email = $("#email").val(); //ì…ë ¥ë°›ì€ì´ë©”ì¼
+				 	alert(email);
+					
+					if(email == null || email.length <1){
+						alert("ì´ë©”ì¼ì€  ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+						return false;
+					}
+					
+					$.ajax({
+						
+						url:"/user/json/emailAuth",
+						method:"POST",
+						contentType :'application/json',
+						data : JSON.stringify({
+							"email" : email
+						
+						}),
+						async : false,
+						dataType : "json",
+						success : function(serverData) {
+							alert(serverData);
+							
+						}
+						
+						
+					});
+				}
+
+			
+			//=======íŒì—…ì°½ì—ì„œ "í™•ì¸" REvent=========
+			//============= pop-up ì°½ ë„ìš°ê¸° =============
+					
+					
+			$(document).ready(function() {
+				  
+				  $("a.demo-2").simplePopup({ 
+					  		
+					  		type: "html", 
+							htmlSelector: "#popup1"
+							
+						  });
+			});
 	
-		//============= "¼öÁ¤"  Event ¿¬°á =============
-		 $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "button.btn.btn-primary" ).on("click" , function() {
-				fncUpdateUser();
-			});
-		});	
-		//============= "ÀÌ¸ŞÀÏ ÀÎÁõ"  Event ¿¬°á =============
-		$(function () {
-			
-			$("#emailAuth").on("click", function() {
-				fncEmailAuth();
+			//ì…ë ¥í•œ ì¸ì¦ë²ˆí˜¸ì™€ ì„¸ì…˜ì— ì €ì¥ëœ ì¸ì¦ë²ˆí˜¸ ë¹„êµ
+			 function fncAuthNum() {
+				var authNum =$("#authNum").val();
 				
-			});
-		});
-			
-			
-			
-		//============= "Ãë¼Ò"  Event Ã³¸® ¹×  ¿¬°á =============
-		$(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
-			});
-		});	
-		
-		
-		
-		///////////////////////////////////////////////////////////////////////
-		function fncEmailAuth() {
-			var email=$("input[name='email']").val();
-			
-			if(email == null || email.length <1){
-				alert("ÀÌ¸ŞÀÏÀº  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
+				
+				 alert(authNum);
+				 alert("ì¸ì¦ë²„ë…¸í™•ì¸!");
+				 
+				
+				 $.ajax({
+					 
+				        url : "/user/json/authNum",
+				        method : "POST",
+				        contentType : "application/json",
+				        data : JSON.stringify({
+				        	"authNum" : authNum,
+				        	
+				        }),
+				        async : false,
+				        dataType : "json",
+				        success : function(serverData) {
+				        	
+				        	alert("ì¸ì¦ì´ê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
+				           
+				        }
+				        
+				        
+				     });
+				
 			}
-			
-			
-			$("form").attr("method","POST").attr("action","/user/emailAuth").submit();
-			alert("email");
-			
-			
-		}
+		 
 		
-		
-		////////////////////////////////////////////////////////////
-		function fncUpdateUser() {
-			
-				
-			$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
-		}
-	
 	</script>
-	
+
 </head>
 
 <body>
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	 <!-- íŒì—…ì°½ -->
+		  	<div id="popup1">
+                <form>
+  					 <div class="form-group">
+    					<label for="exampleTextarea">ì¸ì¦ë²ˆí˜¸</label>
+    					<input type="text" name="authNum" id="authNum"/>
+    				</div>
+  					<button type="submit" class="btn btn-primary" onclick="fncAuthNum()">í™•ì¸</button>
+				</form>
+            </div>		
+            
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
-	
+		
 		<div class="page-header text-center">
 		
-		<c:if test="${user.role.trim()=='2'}"> <!-- Á¤È¸¿øÀÏ°æ¿ì -->
-	       <h3 class=" text-info">³»Á¤º¸¼öÁ¤</h3>
-	       <h5 class="text-muted">È¸¿ø´ÔÀº <strong class="text-danger">Á¤È¸¿ø</strong>ÀÔ´Ï´Ù.</h5>
+		<c:if test="${user.role.trim()=='2'}"> <!-- ì •íšŒì›ì¼ê²½ìš° -->
+	       <h3 class=" text-info">ë‚´ì •ë³´ìˆ˜ì •</h3>
+	       <h5 class="text-muted">íšŒì›ë‹˜ì€ <strong class="text-danger">ì •íšŒì›</strong>ì…ë‹ˆë‹¤.</h5>
 	    </c:if>
 		
-		<c:if test="${user.role.trim()=='1'}"> <!-- ÁØÈ¸¿øÀÏ°æ¿ì -->
-	       <h3 class=" text-info">Ãß°¡Á¤º¸ÀÔ·Â</h3>
-	       <h5 class="text-muted">È¸¿ø´ÔÀº <strong class="text-danger">ÁØÈ¸¿ø</strong>ÀÔ´Ï´Ù.</h5>
+		<c:if test="${user.role.trim()=='1'}"> <!-- ì¤€íšŒì›ì¼ê²½ìš° -->
+	       <h3 class=" text-info">ì¶”ê°€ì •ë³´ì…ë ¥</h3>
+	       <h5 class="text-muted">íšŒì›ë‹˜ì€ <strong class="text-danger">ì¤€íšŒì›</strong>ì…ë‹ˆë‹¤.</h5>
 	    </c:if>
 	    </div>
 	    
 	    <!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
 		
-		  <div class="form-group">
-		  
-		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ ¸Ş ÀÏ</label>
+		  <div class="form-group ">
+				<label for="email" class="col-sm-offset-1 col-sm-3 control-label">ì´ ë©” ì¼</label>
 		    <div class="col-sm-4">
-		      <input type="email" class="form-control" id="email" name="email" value="${user.email}" placeholder="Áßº¹È®ÀÎÇÏ¼¼¿ä"  >
+		      <input type="email" class="form-control" id="email" name="email" placeholder="ì´ë©”ì¼ì„ì…ë ¥í•´ì£¼ì„¸ìš”"  >
 		       <span id="helpBlock" class="help-block">
-		    
-		      	<strong class="text-danger" name="userinput">ÀÌ¸ŞÀÏ ÀÎÁõ¿©ºÎ Ãâ·Â¿¹Á¤</strong>
+		    	<strong class="text-danger" name="userinput">ì´ë©”ì¼ ì¸ì¦ì—¬ë¶€ ì¶œë ¥ì˜ˆì •</strong>
 		      </span>
-		    </div>
-		   
-		    	<div class="col-sm-3">
-		    		<button type="button" class="btn btn-emailAuth" id="emailAuth">ÀÌ¸ŞÀÏ ÀÎÁõ</button>
-		    	</div>
 		  </div>
+		   
+		   <div class="col-sm-3" id="contents">
+		   		<a class="demo-2 btn btn" type="submit" id="emailAuth">ì´ë©”ì¼ ì¸ì¦</a>
+		   </div>
+		</div>
+		 
+				
 		  
 		
 		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">ºñ¹Ğ¹øÈ£</label>
+		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">ë¹„ë°€ë²ˆí˜¸</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password" name="password" placeholder="º¯°æºñ¹Ğ¹øÈ£">
+		      <input type="password" class="form-control" id="password" name="password" placeholder="ë³€ê²½ë¹„ë°€ë²ˆí˜¸">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">ºñ¹Ğ¹øÈ£ È®ÀÎ</label>
+		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">ë¹„ë°€ë²ˆí˜¸ í™•ì¸</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password2" name="password2" placeholder="º¯°æºñ¹Ğ¹øÈ£ È®ÀÎ">
+		      <input type="password" class="form-control" id="password2" name="password2" placeholder="ë³€ê²½ë¹„ë°€ë²ˆí˜¸ í™•ì¸">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸§</label>
+		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ì´ë¦„</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="name" name="name" value="${user.name}" readonly="readonly">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="address" class="col-sm-offset-1 col-sm-3 control-label">ÁÖ¼Ò</label>
+		    <label for="address" class="col-sm-offset-1 col-sm-3 control-label">ì£¼ì†Œ</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="address" name="address"  value="${user.address}" placeholder="º¯°æÁÖ¼Ò">
+		      <input type="text" class="form-control" id="address" name="address"  value="${user.address}" placeholder="ë³€ê²½ì£¼ì†Œ">
 		    </div>
 		  </div>
-		  
-		 
-		  
-		  
-		  
+		
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >¼ö &nbsp;Á¤</button>
-			  <a class="btn btn-primary btn" href="#" role="button">Ãë &nbsp;¼Ò</a>
+		      <button type="button" class="btn btn-primary"  >ìˆ˜ &nbsp;ì •</button>
+			  
 		    </div>
 		  </div>
 		</form>
-		<!-- form Start /////////////////////////////////////-->
-	    
+		<!-- form end /////////////////////////////////////-->
+	 
  	</div>
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
  	
 </body>
 

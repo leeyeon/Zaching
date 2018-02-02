@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import com.zaching.common.domain.Search;
 import com.zaching.service.bob.BobDao;
 import com.zaching.service.domain.Bob;
-import com.zaching.service.domain.Fee;
 import com.zaching.service.domain.Participant;
 
 /*
@@ -50,7 +49,7 @@ public class BobDaoImpl implements BobDao {
 	}
 
 	@Override
-	public List<Fee> listFeeBob(int bobId, int month) throws Exception {
+	public List<Participant> listFeeBob(int bobId, int month) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bobId", bobId);
 		map.put("month", month);
@@ -119,6 +118,11 @@ public class BobDaoImpl implements BobDao {
 		/* status update肺 昏力等 规 备喊 */
 		sqlSession.update("BobMapper.deleteBob", bobId);
 	}
+	
+	@Override
+	public void blockBob(int bobId) throws Exception {
+		sqlSession.update("BobMapper.blockBob", bobId);
+	}
 
 	@Override
 	public void setFeeBob(int participantId, boolean isAutoFee) throws Exception {
@@ -136,8 +140,11 @@ public class BobDaoImpl implements BobDao {
 	}
 
 	@Override
-	public void payFeeBob(Fee fee) throws Exception {
-		sqlSession.insert("BobMapper.payFeeBob", fee);
+	public void payFeeBob(int participantId, int paidFee) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("participantId", participantId);
+		map.put("paidFee", paidFee);
+		sqlSession.insert("BobMapper.payFeeBob", map);
 	}
 
 	@Override

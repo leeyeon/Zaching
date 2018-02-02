@@ -2,6 +2,7 @@
 	pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
 <meta charset="utf-8">
@@ -14,19 +15,48 @@ integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8q
 body { line-height:1.58;}
 .container { margin:70px auto;}
 #popup1 { display:none; }
+
+
 </style>
-<script>
-$(function() {
+<script type="text/javascript">
+
+function report(){
+	var reportID = "a";
+	var category = "a";
+	var userID = "a";
+	var text = "a";
+	var reportUserID = "a";
+	var roomID = "a";
+
 	
-	$(".btn btn-primary").click(function() {
-
-	    alert("하이");
-
-	});
 	
-
-});
-
+	$.ajax({
+			 
+        url : "/admin/rest/addReport",
+        method : "POST",
+        contentType : "application/json; charset=UTF-8",
+        data : JSON.stringify({
+        	"reportID" : reportID,
+            "category" : category,
+            "userID" : userID,
+            "text" : text,
+            "reportUserID" : reportUserID,
+            "roomID" : roomID
+        }),
+        async : false,
+        dataType : "json",
+        success : function(serverData) {
+        	
+        	alert("신고가 완료되었습니다.");
+           
+        }
+        
+        
+     });
+	
+	
+}
+	
 
 </script>
 
@@ -49,8 +79,8 @@ $(function() {
     &nbsp;&nbsp;<label for="exampleTextarea">카테고리/신고대상:</label>
     <textarea class="form-control" id="exampleTextarea" rows="5"></textarea>
   </div>
-  
-  <button type="submit" class="btn btn-primary" id="ok">보내기</button>
+
+  <button type="submit" class="btn btn-primary" onClick="id()">보내기</button>
 </form>
             </div>
 </div>
@@ -60,7 +90,12 @@ $(function() {
 <script>
 $(document).ready(function() {
   $("a.demo-1").simplePopup();
-  $("a.demo-2").simplePopup({ type: "html", htmlSelector: "#popup1"});
+  	
+  $("a.demo-2").simplePopup(
+		  {
+			  type: "html", 
+			  htmlSelector: "#popup1"
+			  });
 });
 </script>
 

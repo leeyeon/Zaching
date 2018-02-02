@@ -65,8 +65,9 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public void updateUser(User user) throws Exception {
-		
+		System.out.println("IMp"+user);
 		sqlSession.update("UserMapper.updateUser", user);
+		System.out.println("12222222");
 		
 	}
 
@@ -103,9 +104,8 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public void emailAuth(String authNum) throws Exception {
-		
-		sqlSession.update("UserMapper.emailAuth", authNum);
+	public void updateRole(User user) throws Exception {
+		sqlSession.update("UserMapper.emailAuth", user);
 		
 	}
 

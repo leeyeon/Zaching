@@ -6,10 +6,13 @@ public class Search {
 	private String searchCondition;
 	private String searchKeyword;
 	private int pageSize;
+	
 	private int endRowNum;
 	private int startRowNum;
-	private int searchsorting;
+	
 
+	
+	
 	
 	/* Category ±¸ºÐ */
 	private String category;
@@ -20,16 +23,7 @@ public class Search {
 	
 	
 
-	public int getSearchsorting() {
-		return searchsorting;
-	}
-
-
-
-	public void setSearchsorting(int searchsorting) {
-		this.searchsorting = searchsorting;
-	}
-
+	
 
 
 	public int getCurrentPage() {
@@ -69,7 +63,11 @@ public class Search {
 	}
 
 	public int getStartRowNum() {
-		return (getCurrentPage()-1)*getPageSize()+1;
+		if(getCategory().equals("comment")) {
+			return 1;
+		} else {
+			return (getCurrentPage()-1)*getPageSize()+1;
+		}
 	}
 
 	public String getCategory() {

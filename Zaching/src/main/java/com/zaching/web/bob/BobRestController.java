@@ -122,13 +122,18 @@ public class BobRestController {
 		if(category.equals("B01")) {
 			int userPoint = paymentService.getPoint((int)obj.get("userId"));
 			
-			/* 약속비 1000원 차감 */
 			if(userPoint > 1000) {
+				/* 약속비 1000원 차감 */
 				System.out.println("돈 진짜 나갑니다 2");
 				Payment payment = new Payment();
 				payment.setUserId(userId);
 				payment.setPoint(1000);
 				payment.setPaymentCode("P02");
+				paymentService.managePoint(payment);
+				
+				/* 마일리지 적립 */
+				payment.setPoint(500);
+				payment.setPaymentCode("M01");
 				paymentService.managePoint(payment);
 			}
 		}
@@ -163,38 +168,30 @@ public class BobRestController {
 			payment.setPoint(1000);
 			payment.setPaymentCode("P06");
 			paymentService.managePoint(payment);
-
+			
+			/* 마일리지 적립취소 */
+			payment.setPoint(500);
+			payment.setPaymentCode("M03");
+			paymentService.managePoint(payment);
 		}
 		
 		// 참가중이 아닐때 참가됨
 		bobService.enterBob(userId, bobId);
 	}
-	
-	@RequestMapping(value="/addComment", method=RequestMethod.POST)
-	public JSONObject addComment(@RequestBody Comment comment) throws Exception {
-		
-		System.out.println(comment);
-		
-		comment = commonService.addComment(comment);
-		
-		JSONObject obj = new JSONObject();
-		obj.put("comment", comment);
-		
-		return obj;
-	}
-	
+
 	@RequestMapping(value="/setFeebob", method=RequestMethod.POST)
+	@ResponseBody
 	public JSONObject setFeebob(@RequestBody Map<String, Object> obj) throws Exception {
 	
-		System.out.println(obj.get("participantId"));
-		System.out.println(obj.get("isAutoFee"));
+		//System.out.println(obj.get("participantId"));
+		//System.out.println(obj.get("isAutoFee"));
 		boolean isAutoFee = true;
 		
 		if(obj.get("isAutoFee").equals("Y")) {
 			isAutoFee = false;
 		}
 		
-		System.out.println("요기11");
+		//System.out.println("요기11");
 		
 		bobService.setFeeBob(Integer.valueOf(obj.get("participantId").toString()), isAutoFee);
 		
@@ -206,9 +203,51 @@ public class BobRestController {
 			object.put("isAutoFee", "N");
 		}
 		
-		System.out.println("요기22");
+		//System.out.println("요기22");
 		
 		return object;
+	}
+	
+	@RequestMapping(value="/payFeebob", method=RequestMethod.POST)
+	@ResponseBody
+	public JSONObject payFeebob(@RequestBody Map<String, Object> obj) throws Exception {
+		
+		System.out.println(obj.get("userId"));
+		System.out.println(obj.get("participantId"));
+		System.out.println(obj.get("fee"));
+		
+		int fee = Integer.valueOf(obj.get("fee").toString());
+		int userPoint = paymentService.getPoint(Integer.valueOf(obj.get("userId").toString()));
+		
+		JSONObject object = new JSONObject();
+		
+		if(userPoint >= fee) {
+			
+			bobService.payFeeBob(Integer.valueOf(obj.get("participantId").toString()), fee);
+			
+			Payment payment = new Payment();
+			payment.setPaymentCode("P02");
+			payment.setUserId(Integer.valueOf(obj.get("userId").toString()));
+			payment.setPoint(fee);
+			
+			paymentService.managePoint(payment);
+			
+			object.put("response", "success");
+		} else {
+			object.put("response", "fail");
+		}
+		
+		return object;
+	}
+	
+	@RequestMapping(value="/blockBob", method=RequestMethod.POST)
+	@ResponseBody
+	public void blockBob(@RequestBody Map<String, Object> obj) throws Exception {
+		
+		int bobId = Integer.valueOf(obj.get("bobId").toString());
+		
+		bobService.blockBob(bobId);
+		
 	}
 	
 }

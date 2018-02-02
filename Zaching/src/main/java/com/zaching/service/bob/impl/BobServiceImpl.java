@@ -13,7 +13,6 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.bob.BobDao;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
-import com.zaching.service.domain.Fee;
 import com.zaching.service.domain.Participant;
 
 /*
@@ -68,12 +67,10 @@ public class BobServiceImpl implements BobService {
 	@Override
 	public Map<String, Object> getBob(int bobId, String category, int monthFee) throws Exception {
 		
-		List<Participant> list = bobDao.listParticipant(bobId);
-		List<Fee> feeList = bobDao.listFeeBob(bobId, monthFee);
+		List<Participant> feeList = bobDao.listFeeBob(bobId, monthFee);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bob", bobDao.getBob(bobId, category));
-		map.put("participant", list);
-		map.put("fee", feeList);
+		map.put("participant", feeList);
 		return map;
 	}
 	
@@ -128,6 +125,11 @@ public class BobServiceImpl implements BobService {
 	public void deleteBob(int bobId) throws Exception {
 		bobDao.deleteBob(bobId);
 	}
+	
+	@Override
+	public void blockBob(int bobId) throws Exception {
+		bobDao.blockBob(bobId);
+	}
 
 	@Override
 	public void setFeeBob(int participantId, boolean isAutoFee) throws Exception {
@@ -135,8 +137,8 @@ public class BobServiceImpl implements BobService {
 	}
 
 	@Override
-	public void payFeeBob(Fee fee) throws Exception {
-		bobDao.payFeeBob(fee);
+	public void payFeeBob(int participantId, int paidFee) throws Exception {
+		bobDao.payFeeBob(participantId, paidFee);
 	}
 
 }

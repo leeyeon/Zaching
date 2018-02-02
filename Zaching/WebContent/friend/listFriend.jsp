@@ -1,21 +1,19 @@
-<%@page import="com.zaching.service.domain.Friend"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@page import="com.zaching.service.domain.User"%>
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	User user = (User) request.getAttribute("user");
+%>
 
-
-<!DOCTYPE html>
-
-<html lang="ko">
-
+<html>
 <head>
-<meta charset="EUC-KR">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
-<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+<!--   jQuery , Bootstrap CDN  -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -23,63 +21,154 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="/resources/layout/sub_toolbar.jsp" />
+<style>
+body {
+	padding-top: 80px;
+}
+</style>
 
+<!--  ///////////////////////// JavaScript ////////////////////////// -->
+<script type="text/javascript">
+	function fncGetUserList(currentPage) {
+		$("#currentPage").val(currentPage)
+		$("form").attr("method", "POST").attr("action", "/friend/listFriend")
+				.submit();
+	}
 
-        
-        <style>
+	$(function() {
+		$("td.ct_btn01:contains('ê²€ìƒ‰')").on("click", function() {
 
-        
-        	body {
-        		padding-top: 50px;
-        	}
-        
-        
-        </style>
-        <script type="text/javascript">
-        
-        
-		 </script>
+			alert($("td.ct_btn01:contains('ê²€ìƒ‰')").html());
+
+			fncGetUserList(1);
+		});
+
+		$(function() {
+			$("#image").on("click", function() {
+				self.location = "/user/getUser?userId=${user.userId}";
+
+			});
+		});
+	});
+</script>
+
 </head>
-<body>
-<div class="container">
-	
-		
-	
-<h3>Ä£±¸¸ñ·Ï</h3>
 
-<div class="row">
-	    
-		    <div class="col-md-6 text-left">
-		    	<p class="text-primary">
-		    		ÀüÃ¼  ${resultPage.totalCount } °Ç¼ö, ÇöÀç ${resultPage.currentPage}  ÆäÀÌÁö
-		    	</p>
-		    </div>
-		    
-		    <div class="col-md-6 text-right">
-			    <form class="form-inline" name="detailForm">
-			    
-			     <div class="form-group">
-				    <select class="form-control" name="searchCondition" >
-						<option value="0" ${! empty searchCondition.equals && searchCondition.equals==0 ? "selected" : "" }>ÀÌ¸§</option>
-						<option value="0" ${! empty searchCondition.equals && searchCondition.equals==0 ? "selected" : "" }>Áö¿ª</option>
-					</select>
-				  </div>
-			    
-				  
-				  
-				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword"></label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="°Ë»ö¾î"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-				  </div>
-				 <button type="button" class="btn btn-default">°Ë»ö</button>
-				  
-				  <!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-</form></div></div>
-</div>
-		    
-	
+<body>
+
+	<!-- ToolBar Start /////////////////////////////////////-->
+
+	<!-- ToolBar End /////////////////////////////////////-->
+
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
+	<div class="container">
+
+		<div class="page-header text-info">
+			<h3>ì¹œêµ¬ëª©ë¡ì¡°íšŒ</h3>
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-6 text-left">
+				<p class="text-primary">ì „ì²´ ${resultPage.totalCount } ê±´ìˆ˜, í˜„ì¬
+					${resultPage.currentPage} í˜ì´ì§€</p>
+			</div>
+
+			<div class="col-md-6 text-right">
+				<form class="form-inline" name="detailForm">
+
+					<div class="form-group">
+						<select class="form-control" name="searchCondition">
+							<option value="0"
+								${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>ì´ë¦„</option>
+							<option value="1"
+								${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>íšŒì›ID</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label class="sr-only" for="searchKeyword">ê²€ìƒ‰ì–´</label> <input
+							type="text" class="form-control" id="searchKeyword"
+							name="searchKeyword" placeholder="ê²€ìƒ‰ì–´"
+							value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+					</div>
+
+					<button type="button" class="btn btn-default">ê²€ìƒ‰</button>
+
+				</form>
+			</div>
+
+
+
+			<div class="row">
+				<div style="width: 120px; height: 90px; overflow: hidden">
+					<a href="#"> <img src="../resources/images/main@2x.png"
+						style="width: 120px; height: auto;" alt="image"
+						onclick="clickBtn();"></a>
+				</div>
+
+				<div class="col-xs-4 col-md-2 ">
+					<strong>ì´ ë¦„</strong>
+				</div>
+				<div class="col-xs-8 col-md-4">"íšŒì›ì´ë¦„"${user.name}</div>
+			</div>
+
+			<hr />
+
+			<div class="row">
+				<div style="width: 120px; height: 90px; overflow: hidden">
+					<a href="#"> <img
+						src="../resources/images/200505031750520100_1.jpg"
+						style="width: 120px; height: auto;" alt="ìœ ì €ì´ë¦„${user.name}"
+						onclick="clickBtn();"></a>
+				</div>
+				<div class="col-xs-4 col-md-2 ">
+					<strong>ì´ë¦„</strong>
+				</div>
+				<div class="col-xs-8 col-md-4">${user.name}</div>
+			</div>
+
+			<hr />
+
+			<div class="row">
+				<div style="width: 120px; height: 90px; overflow: hidden">
+					<a href="#"> <img
+						src="../resources/images/IqvbWykbrkHmV4Kj6xV9c8Di-4qA.png"
+						style="width: 120px; height: auto;" alt="ìœ ì €ì´ë¦„${user.name}"
+						onclick="clickBtn();"></a>
+				</div>
+				<div class="col-xs-4 col-md-2 ">
+					<strong>ì´ë¦„</strong>
+				</div>
+				<div class="col-xs-8 col-md-4"></div>
+			</div>
+
+			<hr />
+
+			<div class="row">
+				<div style="width: 120px; height: 90px; overflow: hidden">
+					<a href="#"> <img
+						src="../resources/images/naver_com_20130311_080208.jpg"
+						style="width: 120px; height: auto;" alt="ìœ ì €ì´ë¦„${user.name}"
+						onclick="clickBtn();"></a>
+				</div>
+				<div class="col-xs-4 col-md-2 ">
+					<strong>ì´ë¦„</strong>
+				</div>
+				<div class="col-xs-8 col-md-4">${user.name}</div>
+			</div>
+
+			<hr />
+
+		</div>
+
+		<br />
+
+	</div>
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
+
 </body>
+
 </html>

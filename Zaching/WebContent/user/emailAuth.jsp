@@ -1,6 +1,7 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
-
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
+<!--  ///////////////////////// JSTL  ////////////////////////// -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 
@@ -9,7 +10,7 @@
 <head>
 <meta charset="EUC-KR">
 
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -33,20 +34,20 @@
 <script type="text/javascript">
 function check() {
 	var form = document.authform;
-	var authNum = ${user.authNum};
+	var authnum = document.authform;
 	
-	if(!form.authNum.value!=authNum){
-		alert("ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼Å¿ä");
+	if(!form.authnum.value!=authnum){
+		alert("ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì…”ìš”");
 		return false;
 	}
-	if(form.authNum.value != authNum){
-		alert("ÀÎÁõ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.")
-		form.authNum.value="";
+	if(form.authnum.value != authnum){
+		alert("ì¸ì¦ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.")
+		form.authnum.value="";
 		return false;
 	}
-	if(form.authNum.value == authNum){
-		alert("ÀÎÁõÀÌ ¿Ï·á µÇ¾ú½À´Ï´Ù.")
-		opener.document.userinput.emailAuth.value ="ÀÎÁõ¿Ï·á";
+	if(form.authnum.value == authnum){
+		alert("ì¸ì¦ì´ ì™„ë£Œ ë˜ì—ˆìŠµë‹ˆë‹¤.")
+		opener.document.userinput.emailAuth.value ="ì¸ì¦ì™„ë£Œ";
 		self.close();
 	}
 }
@@ -56,11 +57,11 @@ function check() {
 </head>
 <body>
 <br><br/>
-<h4>ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä</h4>
+<h4>ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”</h4>
 
 <div class="container-center">
 	<form action="post" name="authenform" onSubmit="return check();">
-		<input type="text" name="authNum"><br><br/>
+		<input type="text" name="authnum"><br><br/>
 		<input type="submit" class="btn btn-warning" value="submit">
 	</form>
 </div>

@@ -42,7 +42,7 @@
 			<if test="paymentCode == 'P02' || paymentCode == 'P03'">
 				total_point = total_point - #{point}
 			</if>
-			<if test="paymentCode == 'M01'">
+			<if test="paymentCode == 'M01' || paymentCode == 'M03'">
 				total_mileage = total_mileage + #{point}
 			</if>
 			<if test="paymentCode == 'M02'">
@@ -87,7 +87,7 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 				FROM	( 
 					SELECT
-						payment_id, to_char(time,'YYYY-MM-DD HH24:MI:SS') AS time, money, payment_code
+						payment_id, to_char(time, 'yyyy-mm-dd HH:mi') AS time, money, payment_code
 					FROM PAYMENT
 					<where>
 						user_id = #{userId}
@@ -123,7 +123,7 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 				FROM	( 
 					SELECT
-						payment_id, to_char(time,'YYYY-MM-DD HH24:MI:SS') AS time, 
+						payment_id, to_char(time, 'yyyy-mm-dd HH:mi') AS time, 
 						money, payment_code, users.bank_code, users.account_number,
 						users.real_name, payment.money AS point
 					FROM PAYMENT, USERS

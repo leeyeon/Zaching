@@ -3,11 +3,12 @@ package com.zaching.service.report;
 import java.util.List;
 import java.util.Map;
 
+import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Report;
 
 public interface ReportService {
 	
-	public List<Report> listReport(int reportId) throws Exception;
+	public List<Report> listReport(Search search) throws Exception;
 	
 	public void addReport(Report report) throws Exception;
 	

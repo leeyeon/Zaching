@@ -56,9 +56,9 @@ public class BobController {
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
 
-	//@Value("#{commonProperties['pageSize']}")
+	@Value("#{commonProperties['pageSize']}")
 	// @Value("#{commonProperties['pageSize'] ?: 2}")
-	int pageSize = 9;
+	int pageSize;
 	
 	@Autowired
 	@Qualifier("commonServiceImpl")
@@ -93,45 +93,7 @@ public class BobController {
 		// 단순 네비게이션		
 		return "forward:/bob/mainBob.jsp";
 	}
-	
-	@RequestMapping(value="/addBob", method=RequestMethod.GET)
-	public String addBobView(@RequestParam String category, Model model) {
-		System.out.println(this.getClass()+"/addBob_ GET");
-		
-		//System.out.println(category);
-		
-		model.addAttribute("category", category);
-		model.addAttribute("categoryName", this.getCategoryName(category));
-		
-		return "forward:/bob/addBob.jsp";
-	}
-	
-	@RequestMapping(value="/addBob", method=RequestMethod.POST)
-	public String addBob(@ModelAttribute Bob bob, 
-						BindingResult result) throws Exception {
-		
-		// binding Test
-		if (result.hasErrors()) {
-			System.out.println(result.getTarget());
-            return "error";
-        }
-		
-		System.out.println(this.getClass()+"/addBob_ POST");
-		//System.out.println(bob);
-		
-		if(bob.getUploadFile() != null) {
-			try {
-				bob.setImage(commonService.addFile(fileDirectory, bob.getUploadFile()));
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		bobService.addBob(bob);		
-		System.out.println(bob);
-		
-		return "redirect:/bob/getBob?bobId="+bob.getBobId()+"&category="+bob.getCategory();
-	}
+
 	
 	@RequestMapping(value= "/getBob", method=RequestMethod.GET)
 	public String getBob(@RequestParam int bobId, 
@@ -160,14 +122,22 @@ public class BobController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
+		search.setCategory("B00");
 
 		Calendar cal = Calendar.getInstance();
-
-		model.addAttribute("comments", commonService.listComment(search, "B00", bobId).get("list"));
-		model.addAttribute("category", category);
-		model.addAttribute("currentTime", cal.getTime());
-		model.addAllAttributes(bob);
 		
+		Map<String,Object> map = (Map<String,Object>)commonService.listComment(search, "B00", bobId);
+		
+		Page resultPage	= 
+				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
+				pageUnit, pageSize);
+
+		model.addAttribute("comments", map.get("list"))
+			.addAttribute("commentPage", resultPage)
+			.addAttribute("category", category)
+			.addAttribute("currentTime", cal.getTime())
+			.addAllAttributes(bob);
+
 		return "forward:/bob/getBob.jsp";
 	}
 
@@ -202,6 +172,54 @@ public class BobController {
 		
 		return "forward:/bob/listBob.jsp";
 	}
+	
+	
+	@RequestMapping(value="/addBob", method=RequestMethod.GET)
+	public String addBobView(@RequestParam String category, Model model) {
+		System.out.println(this.getClass()+"/addBob_ GET");
+		
+		//System.out.println(category);
+		
+		model.addAttribute("category", category);
+		model.addAttribute("categoryName", this.getCategoryName(category));
+		
+		return "forward:/bob/addBob.jsp";
+	}
+	
+	@RequestMapping(value="/addBob", method=RequestMethod.POST)
+	public String addBob(@ModelAttribute Bob bob, @RequestParam(required=false) boolean imageCheck,
+						BindingResult result) throws Exception {
+		
+		// binding Test
+		if (result.hasErrors()) {
+			System.out.println(result.getTarget());
+            return "error";
+        }
+		
+		System.out.println(this.getClass()+"/addBob_ POST");
+		
+		//System.out.println(imageCheck);
+		
+		if(bob.getUploadFile() != null) {
+			try {
+				bob.setImage(commonService.addFile(fileDirectory, bob.getUploadFile()));
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(imageCheck) {
+			bob.setImage(null);
+		}
+		
+		/* 시간 */
+		bob.setAppointmentTime(getAppointmentTime(bob.getAppointmentTime()));
+		
+		bobService.addBob(bob);		
+		System.out.println(bob);
+		
+		return "redirect:/bob/getBob?bobId="+bob.getBobId()+"&category="+bob.getCategory();
+	}
 
 
 	@RequestMapping(value="/updateBob", method=RequestMethod.GET)
@@ -223,9 +241,11 @@ public class BobController {
 	}
 	
 	@RequestMapping(value="/updateBob", method=RequestMethod.POST)
-	public String updateBob(@ModelAttribute Bob bob) throws Exception{
+	public String updateBob(@ModelAttribute Bob bob, @RequestParam(required=false) boolean imageCheck) throws Exception{
 
 		System.out.println(this.getClass()+"/updateBob_POST");
+		
+		System.out.println(imageCheck);
 		
 		if(bob.getUploadFile() != null) {
 			try {
@@ -235,10 +255,48 @@ public class BobController {
 			}
 		}
 		
+		if(imageCheck) {
+			bob.setImage(null);
+		}
+		
+		/* 시간 */
+		bob.setAppointmentTime(getAppointmentTime(bob.getAppointmentTime()));
+		
 		bobService.updateBob(bob);
 		System.out.println("1:: "+bob);
 		
 		return "redirect:/bob/getBob?bobId="+bob.getBobId()+"&category="+bob.getCategory();
+	}
+	
+	@RequestMapping(value= "/listCommment", method=RequestMethod.GET)
+	public String listCommment(@RequestParam int bobId, @RequestParam int currentPage,
+						Model model) throws Exception {
+		System.out.println(this.getClass()+"/listCommment");
+		
+		//System.out.println("방 ID :: "+bobId);
+		//System.out.println(category+"나왔따");
+
+		Search search = new Search();
+		search.setCurrentPage(currentPage);
+		search.setPageSize(pageSize);
+		search.setCategory("comment");
+		
+		System.out.println(search);
+		
+		Map<String,Object> map = (Map<String,Object>)commonService.listComment(search, "B00", bobId);
+		
+		Page resultPage	= 
+				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
+				pageUnit, pageSize);
+		
+		for (Comment comment : (List<Comment>)map.get("list")) {
+			System.out.println(comment);
+		}
+
+		model.addAttribute("comments", map.get("list"))
+			.addAttribute("commentPage", resultPage);
+		
+		return "forward:/bob/listComment.jsp";
 	}
 	
     /**
@@ -269,4 +327,24 @@ public class BobController {
 		}
 		return categoryName;
     }
+    
+    public String getAppointmentTime(String date) {
+    	
+    	int index = date.indexOf("오후");
+    	String result = "";
+    	
+    	if(date.indexOf("오후") == -1) {
+    		index = date.indexOf("오전");
+    		result = date.substring(0, index)+date.substring(index+3);
+    	} else if(date.indexOf("오전") == -1) {
+    		result = date.substring(0, index)
+    				+(Integer.parseInt(date.substring(index+3 , index+5)) + 12)
+    				+date.substring(index+5);
+    	} else {
+    		result = date;
+    	}
+    	
+    	return result;
+    }
+	
 }

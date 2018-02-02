@@ -29,10 +29,53 @@
 	<script type="text/javascript">
 	
 	$( function () {
+		//내정보조회 Event && 추가 저보 입력
 		$( "#getUser" ).on("click" , function() {
 			self.location = "/user/getUser?userId=${user.userId}";
 			
 	 	});
+		$( function () {
+		$( "#listFriend" ).on("click" , function() {
+			self.location = "/friend/listFriend?userId=${friend.userId}";
+			
+	 	});
+	});
+		
+		//추억지도 Event
+		$( "#memoryMap" ).on("click" , function() {
+			self.location = "/user/memoryMap?userId=${user.userId}";
+			
+	 	});
+		
+		//포인트관리 Event
+		$( "#point" ).on("click" , function() {
+			self.location = "/payment/mainPayment";
+			
+	 	});
+		
+		//친구목록 Event
+		$( "#listFreind" ).on("click" , function() {
+			self.location = "/friend/listFriend?";
+			
+	 	});
+		
+		//알림함 Event
+		$("#listNotice").on("clcick", function() {
+			self.location = "/user/listNotice?userId=${user.userId}";
+		});
+		
+		//추가정보입력 Event
+		$("#listNotice").on("clcick", function() {
+			self.location = "/user/listNotice?userId=${user.userId}";
+		});
+		
+		//FOLLOW Event
+		
+		
+		//메세지 전송 Event
+		
+		
+		//신고하기 Event
 	});
 
 </script>
@@ -46,15 +89,23 @@
 	
 	<div class="row">
 		<div class="col-xs-3" id="profile">
-		<img  src="/resources/images/profile_default.png" id="profile"
-          	 width="150px" style="margin: 20px;"/>
+		<c:if test="${user.profileImage eq null }">
+		<img class="img-circle" src= "../resources/images/profile_default.png"  id="profile"
+          	 width="150px" height="150px" style="margin: 20px;"/>
+		</c:if>
+		
+		<c:if test="${user.profileImage ne null }">
+		<img class="img-circle" src= "../resources/upload_files/images/${user.profileImage }"  id="profile"
+          	 width="150px" height="150px" style="margin: 20px;"/>
+        </c:if>
         </div>
+        
         <div class="col-xs-3" id="name" style="margin-top: 100px; margin-left: 20px">
 		<h3>${user.name}</h3>
         </div>
     </div>
     
-     <c:if test="${user.userId ne null }"><!-- 세션에있는 아이디랑  -->
+     <c:if test="${user.userId eq sessionScope.user.userId}"><!-- 세션에있는 아이디랑  -->
     <div class="row" >
     	<div class="col-xs-2">
     		<button type="button" id="memoryMap">추억지도</button>
@@ -63,7 +114,7 @@
     		<button type="button" id="point">포인트관리</button>
     	</div>
     	<div class="col-xs-2">
-    		<button type="button" id="listFrieds">친구목록</button>
+    		<button type="button" id="listFreind">친구목록</button>
     	</div>
     	<div class="col-xs-3">
     		<c:if test="${user.role eq '1'}">
@@ -77,7 +128,7 @@
   </div>
   </c:if>
   
-  <c:if test="${user.userId eq null }">
+  <c:if test="${user.userId ne sessionScope.user.userId}">
   <div class="row" >
     	<div class="col-xs-3">
     		<button type="button" >친구신청</button>

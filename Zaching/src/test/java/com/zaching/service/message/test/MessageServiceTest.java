@@ -27,7 +27,7 @@ public class MessageServiceTest {
 	@Qualifier("messageServiceImpl")
 	private MessageService messageService;
 
-	private int friendId = 6;
+	private int friendId = 9;
 	private int messageId = 28;
 
 	 @Test

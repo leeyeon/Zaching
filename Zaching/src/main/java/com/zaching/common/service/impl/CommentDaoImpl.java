@@ -39,6 +39,11 @@ public class CommentDaoImpl implements CommentDao {
 		
 		return comment;
 	}
+	
+	@Override
+	public Comment getComment(int commentId) throws Exception {
+		return sqlSession.selectOne("CommentMapper.getComment", commentId);
+	}
 
 	@Override
 	public void deleteComment(int commentId) throws Exception {
@@ -58,5 +63,15 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public void updateComment(Comment comment) throws Exception {
 		sqlSession.update("CommentMapper.updateComment", comment);
+	}
+	
+	@Override
+	public int getTotalCount(Search search, String categoryCode, int roomId) throws Exception {
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("categoryCode", categoryCode);
+		map.put("roomId", roomId);
+		map.put("search", search);
+		
+		return sqlSession.selectOne("CommentMapper.getTotalCount", map);
 	}
 }
