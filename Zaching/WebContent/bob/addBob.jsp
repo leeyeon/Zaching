@@ -263,8 +263,8 @@
 			todayHighlight: 1,
 			startView: 2,
 			forceParse: 0,
-	        showMeridian: 1,
-	        startDate: new Date()
+	        showMeridian: true,
+	        startDate: new Date(),
 	    });
 		
 	    /* surmmernote*/
@@ -383,7 +383,8 @@
 			    	<div class="row">
 			    		<div class="col-sm-6 btn-bob">³¯Â¥</div>
 		            	<div class="col-sm-6" align="center" style="padding-top: 8px;">
-			                <div class="input-group date form_datetime col-md-5" data-date-format="yyyy-mm-dd HH:i" data-link-field="dtp_input1" style="width: 100%;">
+			                <div class="input-group date form_datetime col-md-5" data-date-format="yyyy-mm-dd P HH:ii" data-link-field="dtp_input1" style="width: 100%;"
+			               		data-date-useseconds="false" data-date-pickDate="false">
 			                    <input type="text" name="appointmentTime" class="form-control" style="font-size: 16px;" readonly>
 			                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
@@ -403,8 +404,7 @@
 		            		<div class="map_wrap">
 							    <div id="map" style="width:100%;height:400px;position:relative;overflow:hidden;"></div>
 							</div>
-							<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
-							<script src="/resources/javascript/map.js"></script>	            		
+							<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>	            		
 		            	</div>
 			    	</div>
 		    	</c:if>

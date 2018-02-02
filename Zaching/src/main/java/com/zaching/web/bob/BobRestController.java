@@ -180,6 +180,7 @@ public class BobRestController {
 	}
 
 	@RequestMapping(value="/setFeebob", method=RequestMethod.POST)
+	@ResponseBody
 	public JSONObject setFeebob(@RequestBody Map<String, Object> obj) throws Exception {
 	
 		//System.out.println(obj.get("participantId"));
@@ -208,13 +209,14 @@ public class BobRestController {
 	}
 	
 	@RequestMapping(value="/payFeebob", method=RequestMethod.POST)
+	@ResponseBody
 	public JSONObject payFeebob(@RequestBody Map<String, Object> obj) throws Exception {
 		
 		System.out.println(obj.get("userId"));
 		System.out.println(obj.get("participantId"));
 		System.out.println(obj.get("fee"));
 		
-		int fee = Integer.valueOf(obj.get("paidFee").toString());
+		int fee = Integer.valueOf(obj.get("fee").toString());
 		int userPoint = paymentService.getPoint(Integer.valueOf(obj.get("userId").toString()));
 		
 		JSONObject object = new JSONObject();
@@ -236,6 +238,16 @@ public class BobRestController {
 		}
 		
 		return object;
+	}
+	
+	@RequestMapping(value="/blockBob", method=RequestMethod.POST)
+	@ResponseBody
+	public void blockBob(@RequestBody Map<String, Object> obj) throws Exception {
+		
+		int bobId = Integer.valueOf(obj.get("bobId").toString());
+		
+		bobService.blockBob(bobId);
+		
 	}
 	
 }

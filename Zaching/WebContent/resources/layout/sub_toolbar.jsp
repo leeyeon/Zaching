@@ -185,12 +185,22 @@
 			self.location = "/user/addUser";
 		});
 		
+		$("a:contains('로그아웃')").on("click", function() {
+			self.location = "/user/logout";
+		});
+		
 		$( "#profile" ).on("click" , function() {
-			self.location = "/user/getTimeLine?userId=${user.userId}";			
+			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";			
 	 	});
 		
 		$("a:contains('패스워드찾기')").on("click", function() {
 			self.location = "/user/findPassword";
+
+		});
+		
+		$("#kakaologin").on("click", function() {
+			self.location =
+		"https://kauth.kakao.com/oauth/authorize?client_id=dfe2041581c23da0c4e9c8aefb3c28a1&redirect_uri=http://127.0.0.1:8080/kakaologin&response_type=code";
 
 		});
 		
@@ -228,7 +238,7 @@
           	<c:if test="${user.userId ne null}">
 	          	<li><div style="padding-top: 10px; color:#FFF;">
 		          	<img src="/resources/images/profile_default.png" id="profile"
-		          	 width="30px"/>&nbsp;<u>${user.name}</u>&nbsp;님 환영합니다!
+		          	 width="30px"/>&nbsp;<u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
 	          	</div></li>
 	          	<li><a href="#">로그아웃</a></li>
           	</c:if>
@@ -298,7 +308,7 @@
 		
 		<div class="row">
               <div class="social-login" align="left">
-   			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" >
+   			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" type="button" id="kakaologin">
    			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50" >
    			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50" />
    			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" >

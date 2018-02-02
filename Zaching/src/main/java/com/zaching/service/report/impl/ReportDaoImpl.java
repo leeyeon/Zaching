@@ -31,8 +31,8 @@ public class ReportDaoImpl implements ReportDao {
 	
 	
 	@Override
-	public List<Report> listReport(int reportId) throws Exception{
-		return sqlSession.selectList("ReportMapper.listReport", reportId);
+	public List<Report> listReport(Search search) throws Exception{
+		return sqlSession.selectList("ReportMapper.listReport", search);
 	}
 	
 	
