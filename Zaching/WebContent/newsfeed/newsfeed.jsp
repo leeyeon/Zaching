@@ -37,8 +37,14 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >	
 		
 		<style type="text/css">
-		
-		
+			body > div:nth-child(8) > div > header > nav {
+			    background-color: white;
+			}
+			
+			body > div:nth-child(8) > div > header {
+			    background-color: white;
+			}
+			
 		</style>
 
 	</head>
@@ -46,8 +52,7 @@
 		<div class="container">
 			<!-- Top Navigation -->
 			
-			<header>
-				<h1>자췽 뉴스피드 <span>카테고리를 선택하세요</span></h1>	
+			<header>	
 				<nav class="codrops-demos">
 					<a href="index.html">자취지식인</a>
 					<a class="current-demo" href="index2.html">전체보기</a>
@@ -77,11 +82,11 @@
 					<time datetime="2012-03-20" class="post-date entry-date updated" align="left">${newsfeed.regDate}</time>
 					<i class="glyphicon glyphicon-option-vertical" style="text-align:right"></i></p>
 					
-					<c:if test="${!empty newsfeed.fileName}"><a href="getNewsfeed?newsfeedId=${newsfeed.newsfeedId}"><img src="../resources/images/${newsfeed.fileName}"></a></c:if>
+					<c:if test="${!empty newsfeed.fileName}"><a href="/newsfeed/getNewsfeed?newsfeedId=${newsfeed.newsfeedId}"><img src="../resources/images/${newsfeed.fileName}"></a></c:if>
 					<h3 class="post-title entry-title">${newsfeed.content}</h3><hr style="border:solid 0.5px gray">
 					<p class="post-meta entry-meta">
 					<span class="post-category">
-					<a href="https://themify.me/demo/themes/pinboard/category/life/" rel="category tag"><i class="glyphicon glyphicon-thumbs-up"></i>${newsfeed.countLikey}</a><a href="getNewsfeed?newsfeedId=${newsfeed.newsfeedId}"><i class="glyphicon glyphicon-pencil"></i>${newsfeed.countReply }</a></span></p>
+					<a href="https://themify.me/demo/themes/pinboard/category/life/" rel="category tag"><i class="glyphicon glyphicon-thumbs-up"></i>${newsfeed.countLikey}</a><a href="/newsfeed/getNewsfeed?newsfeedId=${newsfeed.newsfeedId}"><i class="glyphicon glyphicon-pencil"></i>${newsfeed.countReply }</a></span></p>
 					
 					</li>
 				</c:forEach>
