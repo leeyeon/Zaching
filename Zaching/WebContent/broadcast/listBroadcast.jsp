@@ -34,7 +34,7 @@
 					var title = $($("input[name=title]")[index]).val();
 					var detail = $($("input[name=detail]")[index]).val();
 					//alert(index+"//"+bobId+"//"+category);
-					$(self.location).attr("href","http://127.0.0.1:9001?broadcaster="+broadcaster+"&title="+title);
+					$(self.location).attr("href","http://127.0.0.1:9001?title="+title);
 				});
 			 
 		 });	

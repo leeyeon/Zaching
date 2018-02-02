@@ -24,10 +24,10 @@
    
    
    		<link rel="shortcut icon" href="../favicon.ico">
-		<link rel="stylesheet" type="text/css" href="/css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="/css/vicons-font.css" />
-		<link rel="stylesheet" type="text/css" href="/css/base.css" />
-		<link rel="stylesheet" type="text/css" href="/css/buttons.css" />
+		<link rel="stylesheet" type="text/css" href="/resources/css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="/resources/css/vicons-font.css" />
+		<link rel="stylesheet" type="text/css" href="/resources/css/base.css" />
+		<link rel="stylesheet" type="text/css" href="/resources/css/buttons.css" />
    
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
