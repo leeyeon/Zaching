@@ -101,10 +101,10 @@
 			});
 	
 			//입력한 인증번호와 세션에 저장된 인증번호 비교
-			 function fncAuthNum() {
+			$(function(){   
+				$("#ok").on('click',function(){
+				
 				var authNum =$("#authNum").val();
-				
-				
 				 alert(authNum);
 				 alert("인증버노확인!");
 				 
@@ -115,7 +115,7 @@
 				        method : "POST",
 				        contentType : "application/json",
 				        data : JSON.stringify({
-				        	"authNum" : authNum,
+				        	"authNum" : authNum
 				        	
 				        }),
 				        async : false,
@@ -129,7 +129,9 @@
 				        
 				     });
 				
-			}
+				});
+				
+			});
 		 
 		
 	</script>
@@ -145,7 +147,7 @@
     					<label for="exampleTextarea">인증번호</label>
     					<input type="text" name="authNum" id="authNum"/>
     				</div>
-  					<button type="submit" class="btn btn-primary" onclick="fncAuthNum()">확인</button>
+  					<button type="button" class="btn btn-primary" id="ok">확인</button>
 				</form>
             </div>		
             
