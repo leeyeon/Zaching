@@ -1,6 +1,7 @@
 package com.zaching.web.newsfeed;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
+import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.domain.User;
 import com.zaching.service.newsfeed.NewsfeedService;
@@ -34,6 +36,10 @@ public class NewsfeedController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("commonServiceImpl")
+	private CommonService commonService;
 
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
@@ -79,14 +85,24 @@ public class NewsfeedController {
 	}
 	
 	@RequestMapping(value="getNewsfeed")
-	public String getNewsfeed(@RequestParam int newsfeedId, Model model, HttpSession session) throws Exception{
+	public String getNewsfeed(@RequestParam int newsfeedId, Model model, HttpSession session, @ModelAttribute("search") Search search) throws Exception{
 		System.out.println("getNewsfeed()");
 		System.out.println(newsfeedId);
 		
-		session.setAttribute("user", (User)userService.getUser(24));
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
 		
-		model.addAttribute("newsfeed", newsfeedService.getNewsfeed(newsfeedId));
-		model.addAttribute("user", userService.getUser(32));
+		session.setAttribute("user", (User)userService.getUser(32));
+		
+		Newsfeed newsfeed = newsfeedService.getNewsfeed(newsfeedId);
+		model.addAttribute("newsfeed", newsfeed);
+		model.addAttribute("roomUser", userService.getUser(newsfeed.getuserId()));
+		System.out.println("image :: "+userService.getUser(newsfeed.getuserId()));
+		System.out.println(newsfeed.getCategoryCode());
+		model.addAttribute("list", (List)(commonService.listComment(search, newsfeed.getCategoryCode(), newsfeedId).get("list")));
+		System.out.println("list :: "+(List)(commonService.listComment(search, "N01", newsfeedId).get("list")));
 		
 		return "forward:/newsfeed/getNewsfeed.jsp";
 		
