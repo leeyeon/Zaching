@@ -246,7 +246,7 @@
           	
           	<c:if test="${user.userId ne null && user.profileImage ne null}">
 	          	<li><div style="padding-top: 10px; color:#FFF;">
-		       	<img src="../resources/upload_files/images/${user.profileImage} id="profile"
+		       	<img src="../resources/upload_files/images/${user.profileImage}" id="profile"
 		          	width="30px"/>&nbsp;<u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
 		       
 	          	</div></li>
