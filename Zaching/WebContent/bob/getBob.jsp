@@ -9,7 +9,6 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
-	<!--<jsp:include page="../admin/addReport.jsp"/> -->
 	
 	<link rel="stylesheet" href="../resources/css/getBob.css">
 	<style type="text/css">
@@ -189,7 +188,7 @@
    				data : JSON.stringify({
    					"userId" : <c:out value="${user.userId}" escapeXml="false" />,
    					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />,
-   					"category" : '<c:out value="${param.category}" escapeXml="false" />',
+   					"category" : '<c:out value="${param.category}" escapeXml="false" />'
    				}),
    				async : false,
    				dataType : "json",
@@ -232,7 +231,8 @@
    				data : JSON.stringify({
    					"userId" : <c:out value="${user.userId}" escapeXml="false" />,
    					"participantId" : $("input[name='participantId']").val(),
-   					"fee" : <c:out value="${bob.fee}" escapeXml="false" />
+   					"fee" : <c:out value="${bob.fee}" escapeXml="false" />,
+   					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />
    				}),
    				async : false,
    				dataType : "json",
@@ -282,6 +282,26 @@
 
    		});
    		
+   		$("#report").on('click',function(){
+   			$.ajax({
+   					 
+   		        url : "/admin/rest/addReport",
+   		        method : "POST",
+   		        contentType : "application/json; charset=UTF-8",
+   		        data : JSON.stringify({
+   		            "category" : 2,
+   		            "userID" : <c:out value="${user.userId}" escapeXml="false" />,
+   		            "text" : $("#reportText").val(),
+   		            "roomID" : <c:out value="${bob.bobId}" escapeXml="false" />
+   		        }),
+   		        async : false,
+   		        dataType : "json",
+   		        success : function(serverData) {
+   		        	alert("신고가 완료되었습니다.");
+   		        }
+   			})
+   		});
+   		
    	 	
    	 	/* 맵!!! */
 
@@ -324,7 +344,7 @@
 		<div class="container" align="center">
 		
 			<div class="row" >
-				<div class="col-xs-1">신고</div>
+				<div class="col-xs-1" data-toggle="modal" data-target="#addReport">신고</div>
 				<c:if test="${user.userId eq bob.writtenUserId}">
 					<div class="col-xs-1">수정</div>
 				</c:if>
@@ -391,7 +411,7 @@
 							${fn:length(participant)}명
 						</c:if>
 						<c:if test="${param.category eq 'B03'}">
-							<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#myModal" style="">친구초대</button>
+							<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#inviteFriend" style="">친구초대</button>
 						</c:if>
 					</div>
 					
@@ -608,7 +628,7 @@
 
 
 	<!-- Modal --> 
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+	<div class="modal fade" id="inviteFriend" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
         <div class="modal-dialog"> 
                <div class="modal-content"> 
                     <div class="modal-header"> 
@@ -679,6 +699,28 @@
                     </div>
                </div> 
         </div> 
+	</div>
+
+	<div class="modal fade" id="addReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel"><b>신고하기</b></h4><label for="exampleTextarea">카테고리/신고대상:</label>
+	      </div>
+	      <div class="modal-body">    
+	      	 <textarea class="form-control" id="reportText" rows="5"></textarea>
+	        </div>
+	      <div class="modal-footer">
+	       <div class="topnav">
+	      <div class="search-container">
+	      	<button type="button" class="btn btn-primary" id="report" data-dismiss="modal" >신고하기</button>
+	      	 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      	</div></div>
+	       
+	      </div>
+	    </div>
+	  </div>
 	</div>
 
 </body>

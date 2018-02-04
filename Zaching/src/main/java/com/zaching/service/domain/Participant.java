@@ -16,6 +16,8 @@ public class Participant {
 	private String status;
 	private String paidDate;
 	private int paidFee;
+	private String feeDate;
+	private int fee;
 
 	public Participant() {
 
@@ -105,12 +107,28 @@ public class Participant {
 		this.paidFee = paidFee;
 	}
 
+	public String getFeeDate() {
+		return feeDate;
+	}
+
+	public void setFeeDate(String feeDate) {
+		this.feeDate = feeDate;
+	}
+
+	public int getFee() {
+		return fee;
+	}
+
+	public void setFee(int fee) {
+		this.fee = fee;
+	}
+
 	@Override
 	public String toString() {
 		return "Participant [participantId=" + participantId + ", userId=" + userId + ", participantName="
 				+ participantName + ", participantProfile=" + participantProfile + ", participatedDate="
 				+ participatedDate + ", isAutoFee=" + isAutoFee + ", isWriter=" + isWriter + ", status=" + status
-				+ ", paidDate=" + paidDate + ", paidFee=" + paidFee + "]";
+				+ ", paidDate=" + paidDate + ", paidFee=" + paidFee + ", feeDate=" + feeDate + ", fee=" + fee + "]";
 	}
 
 }

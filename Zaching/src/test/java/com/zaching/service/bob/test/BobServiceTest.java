@@ -14,9 +14,11 @@ import java.util.Map;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +30,8 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
 import com.zaching.service.domain.Participant;
+
+import javafx.scene.layout.Region;
 
 /*
  * 작성자 : 이연희
@@ -196,77 +200,9 @@ public class BobServiceTest {
 	}
 	
 	@Test
-	public void excel() {
-         
-        // Workbook 생성
-        Workbook xlsWb = new HSSFWorkbook(); // Excel 2007 이전 버전
- 
-        // *** Sheet-------------------------------------------------
-        // Sheet 생성
-        Sheet sheet = xlsWb.createSheet("firstSheet");
- 
-        // 컬럼 너비 설정
-        sheet.setColumnWidth(0, 1000);
-        sheet.setColumnWidth(9, 1000);
-        // ----------------------------------------------------------
-         
-        // *** Style--------------------------------------------------
-        // Cell 스타일 생성
-        CellStyle cellStyle = xlsWb.createCellStyle();
-         
-        // 줄 바꿈
-        cellStyle.setWrapText(true);
-         
-        // Cell 색깔, 무늬 채우기
-        cellStyle.setFillForegroundColor(new XSSFColor(Color.decode("#FF0000")).getIndexed());
-         
-        Row row = null;
-        Cell cell = null;
-        //----------------------------------------------------------
-         
-        // 첫 번째 줄
-        row = sheet.createRow(0);
-         
-        cell = row.createCell(1);
-        cell.setCellValue("이름");
-         
-        cell = row.createCell(2);
-        cell.setCellValue("회비달");
-        //cell.setCellStyle(cellStyle); // 셀 스타일 적용
-        
-        cell = row.createCell(3);
-        cell.setCellValue("회비");
-        
-        cell = row.createCell(4);
-        cell.setCellValue("회비유무");
-        
-        //---------------------------------
-         
-        // 두 번째 줄
-        row = sheet.createRow(1);
-         
-        // 두 번째 줄에 Cell 설정하기-------------
-        cell = row.createCell(0);
-        cell.setCellValue("2-1");
-         
-        cell = row.createCell(1);
-        cell.setCellValue("2-2");
-         
-        cell = row.createCell(2);
-        cell.setCellValue("2-3");
-        cell.setCellStyle(cellStyle); // 셀 스타일 적용
-        //---------------------------------
- 
-        // excel 파일 저장
-        try {
-            File xlsFile = new File("D:/testExcel.xls");
-            FileOutputStream fileOut = new FileOutputStream(xlsFile);
-            xlsWb.write(fileOut);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	public void excel() throws Exception {
+		
+		bobService.excel(26);
          
     }
 	

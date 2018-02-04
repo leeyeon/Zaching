@@ -38,11 +38,18 @@
 				<fmt:formatDate var="commentDate" value="${Date}" pattern="yyyyMMdd"/>
 				<fmt:formatDate var="commentHour" value="${Date}" pattern="HH"/>
 				<fmt:formatDate var="commentMinutes" value="${Date}" pattern="mm"/>
+				
+				${comment.createdDate}
 				<!-- 오늘 일때 -->
 				<c:if test="${todayFull - commentDate eq 0}">
 					<!-- 1시간 내 -->
 					<c:if test="${todayHour - commentHour eq 0}">
-						${todayMinutes - commentMinutes}분 전
+						<c:if test="${todayMinutes - commentMinutes == 0}">
+							방금
+						</c:if>
+						<c:if test="${todayMinutes - commentMinutes > 0}">
+							${todayMinutes - commentMinutes}분 전
+						</c:if>						
 					</c:if>
 					<c:if test="${todayHour - commentHour eq 1}">
 						<c:if test="${todayMinutes - commentMinutes > 0}">
@@ -65,7 +72,7 @@
 						어제
 					</c:if>
 				</c:if>
-				<c:if test="${todayFull-commentDate > 2}">
+				<c:if test="${todayFull-commentDate >= 2}">
 					<fmt:formatDate value="${Date}" pattern="MM월 dd일"/>
 				</c:if>
 			</div>

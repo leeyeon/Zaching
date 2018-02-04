@@ -1,10 +1,23 @@
 package com.zaching.service.bob.impl;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -140,5 +153,105 @@ public class BobServiceImpl implements BobService {
 	public void payFeeBob(int participantId, int paidFee) throws Exception {
 		bobDao.payFeeBob(participantId, paidFee);
 	}
+	
+	@Override
+	public void excel(int bobId) throws Exception {
+		
+		List<Participant> list = bobDao.listFeeBob(bobId, -1);
+		
+		for (Participant participant : list) {
+			System.out.println(participant);
+		}
+
+        // Workbook 생성
+        Workbook xlsWb = new HSSFWorkbook(); // Excel 2007 이전 버전
+ 
+        // *** Sheet-------------------------------------------------
+        // Sheet 생성
+        Sheet sheet = xlsWb.createSheet("firstSheet");
+ 
+        // 컬럼 너비 설정
+        sheet.setColumnWidth(0, 1000);
+        sheet.setColumnWidth(1, 4500);
+        sheet.setColumnWidth(2, 4500);
+        sheet.setColumnWidth(3, 3000);
+        // ----------------------------------------------------------
+         
+        // *** Style--------------------------------------------------
+        // Cell 스타일 생성
+        CellStyle cellStyle = xlsWb.createCellStyle();
+
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+
+        // 줄 바꿈
+        // cellStyle.setWrapText(true);
+         
+        // Cell 색깔, 무늬 채우기
+        //cellStyle.setFillForegroundColor(new XSSFColor(Color.decode("#FF0000")).getIndexed());
+         
+        Row row = null;
+        Cell cell = null;
+        //----------------------------------------------------------
+        
+        
+        
+        // 첫 번째 줄
+        row = sheet.createRow(0);
+        
+        cell = row.createCell(4);
+        cell.setCellValue("이름");
+        
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, list.size()+3));
+        cell.setCellStyle(cellStyle);
+        
+        row = sheet.createRow(1);
+         
+        cell = row.createCell(1);
+        cell.setCellValue("회비달");
+        cell.setCellStyle(cellStyle);
+        cell = row.createCell(2);
+        cell.setCellValue("낸 날짜");
+        cell.setCellStyle(cellStyle);
+        cell = row.createCell(3);
+        cell.setCellValue("회비");
+        cell.setCellStyle(cellStyle);
+        
+        for(int i = 0; i < list.size(); i++) {
+        	cell = row.createCell(i+4);
+            cell.setCellValue(list.get(i).getParticipantName());
+        }
+        
+        //---------------------------------
+        // 두 번째 줄
+        for (int i = 2; i < 10; i++) {
+        	row = sheet.createRow(i);
+
+            cell = row.createCell(1);
+            cell.setCellValue("2018.02.04");
+            
+            cell = row.createCell(2);
+            cell.setCellValue("2018.02.01");
+             
+            cell = row.createCell(3);
+            cell.setCellValue(list.get(0).getFee());
+            
+            for(int j = 0; j < list.size(); j++) {
+            	cell = row.createCell(j+4);
+                cell.setCellValue("O");
+            }
+		}
+ 
+        // excel 파일 저장
+        try {
+            File xlsFile = new File("D:/testExcel.xls");
+            FileOutputStream fileOut = new FileOutputStream(xlsFile);
+            xlsWb.write(fileOut);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+         
+    }
 
 }

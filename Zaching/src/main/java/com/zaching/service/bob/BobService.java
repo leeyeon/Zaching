@@ -35,4 +35,6 @@ public interface BobService {
 	
 	public void payFeeBob(int participantId, int paidFee) throws Exception;
 	
+	public void excel(int bobId) throws Exception;
+	
 }

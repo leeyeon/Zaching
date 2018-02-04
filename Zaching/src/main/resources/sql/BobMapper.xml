@@ -39,6 +39,8 @@
 		<result property="isWriter" column="writer_id" jdbcType="INTEGER"/>
 		<result property="paidDate" column="paid_date" jdbcType="DATE"/>
 		<result property="paidFee" column="paid_fee" jdbcType="INTEGER"/>
+		<result property="fee" column="fee" jdbcType="INTEGER"/>
+		<result property="feeDate" column="fee_date" jdbcType="DATE"/>
 	</resultMap>
 	
 	<insert id="addBob" 
@@ -282,8 +284,9 @@
 	<select id="listFeeBob"
 			parameterType="map"
 			resultMap="participantSelectMap">
-		SELECT participant.participant_id AS participant_id, bob.bob_id, participant.user_id, fee.paid_date, fee.paid_fee,
-		add_months(bob.fee_date, extract(month from SYSDATE)) AS fee_date,
+		SELECT participant.participant_id AS participant_id, bob.bob_id, participant.user_id,
+		to_char(fee.paid_date,'yyyy-mm-dd hh24:mi') AS paid_date, fee,
+		to_char(add_months(bob.fee_date, extract(month from SYSDATE)),'yyyy-mm-dd hh24:mi') AS fee_date,
 		users.user_id AS user_id, users.name AS user_name, users.profile_image AS profile_image,
 		TRIM(setting_fee) AS setting_fee, participated_date, writer_id,
 		(CASE 
@@ -298,6 +301,7 @@
 			AND USERS.user_id = PARTICIPANT.user_id
 			AND bob.category_code = 'B03'
 			AND BOB.bob_id = #{bobId}
+			<if test="month != -1"></if>
 		</where>
 	</select>
 
