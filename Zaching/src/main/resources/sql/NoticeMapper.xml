@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NoticeMapper">
+
+	<resultMap id="noticeSelectMap" type="notice" >
+		<result property="noticeId" column="notice_id" jdbcType="INTEGER" />
+		<result property="name" column="user_name" jdbcType="VARCHAR" />		
+		<result property="category" column="category_code" jdbcType="CHAR"/>
+		<result property="date" column="created_date" jdbcType="DATE"/>
+		<result property="bobId" column="bob_id" jdbcType="INTEGER"/>
+		<result property="noticeTargetId" column="notice_target_id" jdbcType="INTEGER" />		
+		<result property="userId" column="receiver_id" jdbcType="INTEGER"/>
+		<result property="senderId" column="sender_id" jdbcType="INTEGER"/>
+		<result property="status" column="status" jdbcType="CHAR"/>
+	</resultMap>
+	
+	<insert id="addNotice" 
+			parameterType="notice">
+		INSERT
+		INTO notice(notice_id, user_name, category_code, created_date, bob_id, sender_id)
+		VALUES (
+			seq_notice_id.nextval,
+			#{name:VARCHAR},
+			#{category:CHAR}, 
+			SYSDATE,
+			#{bobId:INTEGER},
+			#{senderId:INTEGER}
+			)
+
+	</insert>
+	
+	<insert id="addNoticeTarget" 
+			parameterType="notice">
+		INSERT
+		INTO notice_target(notice_target_id, notice_id, receiver_id, sender_id, status)
+		VALUES (
+			seq_notice_target_id.nextval, 
+			#{noticeId:INTEGER}, 
+			#{userId:INTEGER}, 
+			#{senderId:INTEGER}, 
+			#{status:CHAR}
+			)
+
+	</insert>
+	
+	
+	<select id="listNotice" 
+			parameterType="map"
+			resultMap="noticeSelectMap">
+			
+		SELECT notice.notice_id, notice.user_name, notice.category_code, notice.created_date, notice.bob_id, notice.sender_id,
+										notice_target.receiver_id, notice_target.notice_target_id,  notice_target.receiver_id
+											FROM notice, notice_target
+												<where>
+													notice.notice_Id = notice_target.notice_Id AND
+										 				RECEIVER_ID = #{userId}
+												</where>
+			
+	</select>
+		
+
+	<select id="getNoticeTotalCount" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM( SELECT notice.notice_Id FROM notice, notice_target
+					<where>
+						notice.notice_Id = notice_target.notice_Id AND
+										RECEIVER_ID = #{userId}
+					</where>
+				) countTable
+	</select>
+	
+</mapper>

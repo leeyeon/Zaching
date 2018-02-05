@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Comment;
+import com.zaching.service.domain.Notice;
 
 public interface CommonService {
 	
@@ -21,6 +22,8 @@ public interface CommonService {
 	public void deleteComment(int commentId) throws Exception;
 	
 	public void updateComment(Comment comment) throws Exception;
+	
+	
 	
 	/* FileDao 사용 
 	 * fileDirectory : file이 들어갈 경로 맨 뒤에 \\ 필수 입력.
@@ -39,5 +42,13 @@ public interface CommonService {
 	public String getPaymentReady(String token, int point) throws Exception;
 	
 	public Map<String, Object> getPaymentApprove(String token, String pgToken) throws Exception;
+	
+	/**********************************************/
+	
+	public void addNotice(Notice notice) throws Exception;
+	
+	public void addNoticeTarget(Notice notice) throws Exception;
+	
+	public Map<String, Object> listNotice(Search search, int userId) throws Exception;
 
 }

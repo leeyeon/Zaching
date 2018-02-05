@@ -5,7 +5,7 @@ import java.util.Date;
 public class Report {
 	
 	private int reportID;
-	private String category;
+	private String category; // 회원 : 1 , 밥친구 : 2 , 뉴스피드  : 3, 보이스 : 4
 	private int userID;
 	private Date day;
 	private char flag;

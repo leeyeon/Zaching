@@ -113,14 +113,83 @@
 			margin-right: 10px;
 			margin-bottom: 10px;
 		}
+		
+		.notice{
+		 overflow: inherit;
+  	overflow-y: inherit;
+ 	 text-align: center;
+  	display: inline-block;
+  	vertical-align: right;
+  	 width: 300px;
+  	 height: 150px;
+  	 overflow-y: scroll;
+		}
 
 	</style>
 	
 	<script type="text/javascript">
+		$( function() {
+		
+		
+		$( "#notice" ).on("click" , function() {
 	
-	$( function() {
+			if ($('.noticelist').attr('hide') == "true") {
+		    	$('.noticelist').slideUp(function() {
+		    		$(this).attr('hide', false);
+		   	 	});
+		    } else {
+		    	$('.noticelist').slideDown(function() {
+		    		$(this).attr('hide', true);
+		   	 	});
+		    }
+
+			
+			console.log($("input[name='userId']").val());
+			var userId = $("input[name='userId']").val();
+				
+			$.ajax( {
+							url : "/notice/rest/noticeList",
+							method : "POST",
+					        contentType : "application/json; charset=UTF-8",
+					        data : JSON.stringify({
+					        	"RECEIVER_ID" : userId
+					        }),
+					        dataType : "json",
+					        success : function(serverData) {
+					        	
+					        	
+					        	var displayValue = '';
+									
+								var tr = '';
+								
+								var category = '';
+					        	
+					        	for(var i=0; i<serverData.list.length; i++){
+					        		
+					        		if(serverData.list[i].category == 'V'){
+					        			category = '보이스리플에 게시글을 올렸습니다.';
+					        		}
+					        		else if(serverData.list[i].category == 'B'){
+					        			category = '밥친구에 초대하였습니다.';
+					        		}
 		
-		
+					        		tr = tr + '<tr><td class="th" align="left">'+serverData.list[i].name+'님이 '+ category+'</td></tr>'
+					        	
+					        	}
+					        	
+									
+									displayValue = '<div class="notice"><table class="table table-hover">'+ tr + '</table></div>';
+									
+					        	
+									$(".noticelist").html(displayValue);
+					           
+					        }
+			 
+	 		
+			});
+			
+			
+		});
 		
 		//==>"Login"  Event 연결
 		$("#login").on("click" , function() {
@@ -204,6 +273,9 @@
 
 		});
 		
+		
+		
+		
 
 	});
 	
@@ -237,8 +309,10 @@
           <ul class="nav navbar-nav" style="float:right;">
           	<c:if test="${user.userId ne null && user.profileImage eq null}">
 	          	<li><div style="padding-top: 10px; color:#FFF;">
+	          	<a href="#"><img src="../resources/images/paper-plane.png" id="notice"
+		          	width="30px"/></a>&nbsp;&nbsp;
 		       	<img src="../resources/images/profile_default.png" id="profile"
-		          	width="30px"/>&nbsp;<u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
+		          	width="30px"/>&nbsp;<input type="hidden" name="userId" value="${user.userId}"><u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
 		       
 	          	</div></li>
 	          	<li><a href="#">로그아웃</a></li>
@@ -246,11 +320,14 @@
           	
           	<c:if test="${user.userId ne null && user.profileImage ne null}">
 	          	<li><div style="padding-top: 10px; color:#FFF;">
+	          	<a href="#"><img src="../resources/images/paper-plane.png" id="notice"
+		          	width="30px"/></a>
 		       	<img src="../resources/upload_files/images/${user.profileImage} id="profile"
 		          	width="30px"/>&nbsp;<u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
 		       
 	          	</div></li>
 	          	<li><a href="#">로그아웃</a></li>
+	          	 
           	</c:if>
           	 
           	 
@@ -259,7 +336,11 @@
             <li><a href="#">회원가입</a></li>
           </c:if>
           </ul>
+          			
         </div><!--/.nav-collapse -->
+        <div class="noticelist" align="right" style="display:none;">
+						
+					</div>
 	  </div>
 		
 
