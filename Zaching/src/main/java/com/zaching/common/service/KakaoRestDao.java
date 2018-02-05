@@ -14,7 +14,7 @@ public interface KakaoRestDao {
 	
 	public Map<String, Object> getAceessToken(String code) throws Exception;
 	
-	public Map<String, Object> getAceessToken2(String code) throws Exception;
+	public User getAceessToken2(String code) throws Exception;
 	
 	public String getPaymentReady(String token, int point) throws Exception;
 	

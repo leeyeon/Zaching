@@ -167,7 +167,7 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 	
 	//사용자 토큰 생성
 	@Override
-	public Map<String, Object> getAceessToken2(String code) throws Exception {
+	public User getAceessToken2(String code) throws Exception {
 		
 		System.out.println("KakaoR.getAccessToken()");
 		
@@ -178,12 +178,19 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 				URLConnection.getJSON_PARAM(URLConnection.HTTPMETHOD_POST, GET_TOKEN_API_URL, param,
 						"application/x-www-form-urlencoded");
 		 	
-			Map<String, Object> map = new HashMap<String, Object>();
-	        map.put("accessToken", obj.get("access_token").toString());
-	        map.put("refreshToken", obj.get("refresh_token").toString());
+//			Map<String, Object> map = new HashMap<String, Object>();
+//	        map.put("accessToken", obj.get("access_token").toString());
+//	        map.put("refreshToken", obj.get("refresh_token").toString());
+			
+		 	User user = new User();
+	        user.setAccessToken(obj.get("access_token").toString());
+	        user.setRefreshToken(obj.get("refresh_token").toString());
+	       
+	        this.accessToken = obj.get("access_token").toString();
+	        this.refreshToken = obj.get("refresh_token").toString();
        
         
-        return map;
+        return user;
 	}
 
 
@@ -193,9 +200,10 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 		
 		System.out.println(":: KAKAO.getAppConnection() ::");
 		
-		JSONObject obj = URLConnection.getJSON(URLConnection.HTTPMETHOD_GET, APP_CONNECTION_URL,
-				"application/x-www-form-urlencoded;charset=utf-8", "Authorization", "Bearer"+token);
-				
+		JSONObject obj = URLConnection.getJSON(URLConnection.HTTPMETHOD_POST, 
+				APP_CONNECTION_URL, "application/x-www-form-urlencoded;charset=utf-8",
+				"Authorization", "Bearer"+token);
+		System.out.println("App Connect response :: "+obj);		
 	}
 	
 	//사용자 정보 받아오기
@@ -209,7 +217,13 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 		 
 		System.out.println(":: accessToken::"+accessToken);
 		
-		 user.setEmail(obj.get("kaccount_email").toString());
+		JSONObject properties = (JSONObject)obj.get("properties");
+		
+        
+        user.setEmail(obj.get("kaccount_email").toString());
+        user.setProfileImage(properties.get("profile_image").toString());
+        user.setName(properties.get("nickname").toString());
+        user.setSnsType("kakao");
 		
 		return user;
 	}

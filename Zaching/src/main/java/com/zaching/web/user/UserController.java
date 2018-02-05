@@ -62,15 +62,7 @@ public class UserController {
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 	
-	@RequestMapping(value= "kakaoLoginRequest", method=RequestMethod.GET)
-	public String kakaoLogin() {
-		
-		System.out.println("[ kakao Login Request!! ]");
-		
-		return commonService.getAuthorizationUrl_login();
-		
-	}
-	
+
 	
 	@RequestMapping(value = "addUser", method = RequestMethod.GET)
 	public String addUser() throws Exception {

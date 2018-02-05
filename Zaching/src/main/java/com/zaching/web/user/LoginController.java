@@ -41,24 +41,40 @@ public class LoginController {
 		@Value("#{commonProperties['pageSize']}")
 		int pageSize;
 		
+		
+		@RequestMapping(value= "kakaoLoginRequest", method=RequestMethod.GET)
+		public String kakaoLoginRequest() {
+			
+			System.out.println("[ kakao Login Request!! ]");
+			
+			return commonService.getAuthorizationUrl_login();
+			
+		}
+
 		//
 		@RequestMapping(value="kakaoLogin",method=RequestMethod.GET)
-		public String KakaoLoginCode(@RequestParam("code") String code,
+		public String KakaoLogin(@RequestParam("code") String code,
 									HttpSession session)throws Exception {
 			
-			System.out.println("/user/kakaoLogin/code");
+			System.out.println("/kakaoLogin/code");
+			
+			User user = commonService.getAceessToken2(code);
+			user = commonService.getUserInfo(user);
 			
 			
-			Map<String, Object> map = commonService.getAceessToken2(code);
-			System.out.println("code====> "+code);
-			User user= new User();
+			if(userService.login(user.getEmail()) == null) {
+				
+				userService.addUser(user);
+		}
 			
-			user.setAccessToken((String)map.get("accessToken"));
-			user=commonService.getUserInfo(user);
+			session.setAttribute("user", user);
 			
-			System.out.println("user ====>"+user);
+			System.out.println("session 저장정보===>"+session.getAttribute("user"));
+			System.out.println("이메일 ==> "+user.getEmail());
+			System.out.println("프로필 이미지 ==> "+user.getProfileImage());
 			
-			return code;
+			
+			return "forward:/index.jsp";
 		}
 
 }

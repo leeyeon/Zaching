@@ -129,7 +129,7 @@ public class CommonServiceImpl implements CommonService {
 	}
 	//토큰요청
 	@Override
-	public Map<String, Object> getAceessToken2(String code) throws Exception {
+	public User getAceessToken2(String code) throws Exception {
 		
 		return kakaoRestDao.getAceessToken2(code);
 	}
