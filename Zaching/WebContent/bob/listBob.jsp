@@ -1,9 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib prefix="fn" uri = "http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fmt2" uri="http://java.sun.com/jstl/fmt_rt" %>
 
@@ -38,6 +37,8 @@
 	<script type="text/javascript">
 	
 		$(function() {
+			
+			$("html, body").animate({ scrollTop: 0 }, "slow"); 
 
 			$('.thumbnail > img').on("click", function(){
 				if('${user}' != '') {

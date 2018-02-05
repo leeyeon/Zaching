@@ -9,6 +9,8 @@
 	<meta name="author" content="">
 	
 	<!--   jQuery , Bootstrap CDN  -->
+	
+  
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -39,7 +41,6 @@
 		
 		.navbar-fixed-top {
 		    background: #ffffff;
-		    border-color: #ffffff;
 		}
 		
 		#navbar > ul> li> a {
@@ -113,14 +114,128 @@
 			margin-right: 10px;
 			margin-bottom: 10px;
 		}
+		
+		.notice{
+		 overflow: inherit;
+  	overflow-y: inherit;
+ 	 text-align: center;
+  	display: inline-block;
+  	vertical-align: right;
+  	 width: 300px;
+  	 height: 150px;
+  	 overflow-y: scroll;
+		}
+		
+
 
 	</style>
 	
 	<script type="text/javascript">
+		$( function() {
+
+			
+			
+			
+		
+		
+		$( "#notice" ).on("click" , function() {
+			
+			
+        	var displayValue = '';
+			var tr = '';
+			var category = '';
+			var status = 0;
+			
+			
 	
-	$( function() {
+			if ($('.noticelist').attr('hide') == "true") {
+		    	$('.noticelist').slideUp(function() {
+		    		$(this).attr('hide', false);
+		   	 	});
+		    } else {
+		    	$('.noticelist').slideDown(function() {
+		    		$(this).attr('hide', true);
+		   	 	});
+		    }
+
+			
+			console.log($("input[name='userId']").val());
+			var userId = $("input[name='userId']").val();
+				
+			$.ajax( {
+							url : "/notice/rest/noticeList",
+							method : "POST",
+					        contentType : "application/json; charset=UTF-8",
+					        data : JSON.stringify({
+					        	"RECEIVER_ID" : userId
+					        }),
+					        dataType : "json",
+					        success : function(serverData) {
+					        	
+					       
+					        	
+					        	for(var i=0; i<serverData.list.length; i++){
+					        		var read = '읽음';
+					        		
+					        		if(serverData.list[i].category == 'V'){
+					        			
+					        			category = '보이스리플에 게시글을 올렸습니다.';
+					        		}
+					        		else if(serverData.list[i].category == 'B'){
+					        			category = '밥친구에 초대하였습니다.';
+					        		}
+					        		
+					        		
+					        		if(serverData.list[i].status == '0'){
+					        			++status;
+					        			read = "안 읽음";
+					        		}
 		
-		
+					        		tr = tr + '<tr class="notice_list_click"><td align="left"><input type="hidden" name="noticeid" value="'+serverData.list[i].noticeId+'">'+
+					        		serverData.list[i].name+'님이 '+ category+' ['+read+']</td></tr>'
+					        	
+					        	}
+					        	
+									
+									displayValue = '<div class="notice"><table class="table table-hover">'+ tr + '</table></div>';
+									
+								
+									$(".noticelist").html(displayValue);
+									$(".badge").text(status);
+									
+
+									
+									$(".notice_list_click td").on("click" , function() {
+										
+					
+										var noticeId = $($("input[name='noticeid']")[$('.notice_list_click td:nth-child(1)').index(this)]).val();
+										
+										$.ajax( {
+											
+											url : "/notice/rest/noticeUpdate",
+											method : "POST",
+									        contentType : "application/json; charset=UTF-8",
+									        data : JSON.stringify({
+									        	"NOTICE_ID" : noticeId
+									        }),
+
+									        success : function(serverData) {
+									        	$(".badge").text(status-1);
+									        }									
+											
+										});
+										
+									});
+					           
+					        }
+			 
+	 		
+			});
+			
+			
+			
+			
+		});
 		
 		//==>"Login"  Event 연결
 		$("#login").on("click" , function() {
@@ -204,8 +319,43 @@
 
 		});
 		
+		
+		
+		
 
 	});
+	
+		$(document).ready(function(){
+			
+			var userId = $("input[name='userId']").val();
+
+			$.ajax({
+				url : "/notice/rest/noticeList",
+				method : "POST",
+		        contentType : "application/json; charset=UTF-8",
+		        data : JSON.stringify({
+		        	"RECEIVER_ID" : userId
+		        }),
+		        dataType : "json",
+		        success : function(serverData) {
+		        	var status = 0;
+		        	
+		        
+		        	for(var i=0; i<serverData.list.length; i++){
+		        		if(serverData.list[i].status == '0'){
+	        				++status;
+	        			}
+		        	
+		        	}
+
+		        	$(".badge").text(status);
+		        	
+		        }
+			});
+			});
+			
+		
+		
 	
 </script>
 
@@ -235,31 +385,28 @@
             <li><a href="#">생활정보</a></li>
           </ul>
           <ul class="nav navbar-nav" style="float:right;">
-          	<c:if test="${user.userId ne null && user.profileImage eq null}">
+          	<c:if test="${user.userId ne null}">
 	          	<li><div style="padding-top: 10px; color:#FFF;">
-		       	<img src="../resources/images/profile_default.png" id="profile"
+	          	<a href="#"><img src="../resources/images/paper-plane.png" id="notice"
+		          	width="30px"/></a><div class="badge   badge-primary"></div>&nbsp;&nbsp;
+		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" onerror="this.src='../resources/images/profile_default.png'"
 		          	width="30px"/>&nbsp;<u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
 		       
 	          	</div></li>
 	          	<li><a href="#">로그아웃</a></li>
-          	</c:if>
-          	
-          	<c:if test="${user.userId ne null && user.profileImage ne null}">
-	          	<li><div style="padding-top: 10px; color:#FFF;">
-		       	<img src="../resources/upload_files/images/${user.profileImage} id="profile"
-		          	width="30px"/>&nbsp;<u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
-		       
-	          	</div></li>
-	          	<li><a href="#">로그아웃</a></li>
-          	</c:if>
-          	 
-          	 
-            <c:if test="${user.userId eq null}">
+
+          	</c:if>          	 
+
+            <c:if test="${sessionScope.user.userId eq null}">
             <li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
             <li><a href="#">회원가입</a></li>
           </c:if>
           </ul>
+          			
         </div><!--/.nav-collapse -->
+        <div class="noticelist" align="right" style="display:none;">
+						
+					</div>
 	  </div>
 		
 

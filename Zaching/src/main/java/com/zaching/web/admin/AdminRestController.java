@@ -118,7 +118,7 @@ public class AdminRestController {
 	@RequestMapping(value="/addReport", method=RequestMethod.POST)
 	public String exchargePoint(@RequestBody Map<String, Object> map, @ModelAttribute("report") Report report) throws Exception {
 		
-		String reportID = ((String)map.get("reportID"));
+
 		String category = ((String)map.get("category"));
 		String userID = ((String)map.get("userID"));
 		//String day = ((String)map.get("day"));
@@ -127,17 +127,16 @@ public class AdminRestController {
 		String reportUserID = ((String)map.get("reportUserID"));
 		String roomID = ((String)map.get("roomID"));
 		
+		
 		report.setCategory(category);
 		report.setFlag('0');
-		report.setReportID(Integer.parseInt(reportID));
 		report.setReportUserID(Integer.parseInt(reportUserID));
 		report.setRoomID(Integer.parseInt(roomID));
 		report.setText(text);
 		report.setUserID(Integer.parseInt(userID));
-		
+
 		reportService.addReport(report);
-
-
+		
 	
 		return "";
 

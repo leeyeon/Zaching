@@ -5,7 +5,10 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
 	<title>포인트충전</title>
 	
@@ -37,12 +40,15 @@
   		$(function() {
   			
   			setTimeout(function(){
-  			    location = ''
-  			  },60000)
-  			  
-  			$('button:contains("충전")').on('click', function(){
-  				$("form").attr("method", "POST").attr("action", "/payment/kakaoPay").submit();
+  				window.opener.location.reload();
+  				window.close();
+  			},60000);
+  			
+  			$('button:contains("확인")').on('click', function() {
+  				window.opener.location.reload();
+  				window.close();
   			});
+
   		});
 
     </script>
@@ -52,25 +58,27 @@
 
 	<div class="container" align="center">
 		
-		<div class="page-header" style="padding: 100px;">
-		  <h1>${user.name}님 포인트 충전이 완료되었습니다.</h1>
+		<div class="page-header" style="padding: 10px;">
+		  <h3>${user.name}</h3>님<br>
+		  포인트 충전이 완료되었습니다.
 		</div>
 		
-		<form class="form-horizontal" >
-			<input type="hidden" name="userId" value="9" />
-			<div class="row" style="padding-top:50px;">
-				<div class="col-xs-5"><h3>충전하신 금액</h3></div>
-				<div class="col-xs-7">
-					${point} Point
-				</div>
+		<input type="hidden" name="userId" value="9" />
+		<div class="row" style="padding-top:30px;">
+			<div class="col-xs-5">충전하신 금액</div>
+			<div class="col-xs-7">
+				${point} Point
 			</div>
-			<div class="row" style="padding-top:50px;">
-				<div class="col-xs-5"><h3>충전한 날짜</h3></div>
-				<div class="col-xs-7">
-					${approvedDate}
-				</div>
+		</div>
+		<div class="row" style="padding-top:50px;">
+			<div class="col-xs-5">충전한 날짜</div>
+			<div class="col-xs-7">
+				${approvedDate}
 			</div>
-		</form>
+		</div>
+		<div class="row" style="padding-top:50px;">
+			<button>확인</button>
+		</div>
     </div><!-- /.container -->
 </body>
 </html>

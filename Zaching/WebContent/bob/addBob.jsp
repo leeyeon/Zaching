@@ -13,6 +13,7 @@
     <title>addBob</title>
     
     <jsp:include page="../resources/layout/sub_toolbar.jsp"/>
+    <link rel="stylesheet" href="../resources/css/bob.css">
     
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -37,114 +38,109 @@
 
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
   	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
-	
-	   
-<style>
-	    
-	body {
-	    padding-top: 50px;
-	}
-	    
-	.btn-bob {
-		background: #5F4B8B; 
-		border: none; 
-		color: rgb(255, 255, 255); 
-		font-size: 15px; 
-		font-weight: bold;
-		text-align: center;
-		height: 50px;
-		line-height: 50px;
-		text-decoration: none;
-	}
-	    	
-	.row {
-	  	margin-bottom: 5px;
-	}
-	     	
-	.form-style-1{
-	    -webkit-transition: all 0.30s ease-in-out;
-	    -moz-transition: all 0.30s ease-in-out;
-	    -ms-transition: all 0.30s ease-in-out;
-	    -o-transition: all 0.30s ease-in-out;
-	    outline: none;
-	    box-sizing: border-box;
-	    -webkit-box-sizing: border-box;
-	    -moz-box-sizing: border-box;
-	    width: 100%;
-	    height: 50px;
-	    background: #fff;
-	    margin-bottom: 5px;
-	    border: 1px solid #ccc;
-	    padding: 10px;
-	    color: #555;
-	    font: 95% Arial, Helvetica, sans-serif;
-	}
-	
-	.text-info {
-	    padding: 20px 0;
-	    font-weight: 300;
-	    text-align: center;
-	    color: #fff;
-	    margin: -16px -16px 16px -16px;
-	}
-	
-	.focus {
-	    box-shadow: 0 0 5px #43D1AF;
-	    padding: 3%;
-	    border: 1px solid #43D1AF;
-	}
-	
-	#addBob > div > div:nth-child(2) > div.col-xs-10 > div {
-		width:100%;
-		padding-top: 7px;
-	}
-	
-	.datepicker {
-		width: 100%;
-	}
-	
-	body > div.container > form > div > div:nth-child(10) > div > div.datepicker_inner_container > div.datepicker_calendar {
-		width: 50%;
-	}
-	
-	body > div.container > form > div > div:nth-child(10) > div > div.datepicker_inner_container > div.datepicker_calendar > table {
-		width: 50%;
-	}
-	
-	body > div.container > form > div > div:nth-child(10) > div > div.datepicker_inner_container > div.datepicker_timelist {
-		width: 50%;
-	}
-	
-	/* 친구목록 */
-	
-	#sortable1, #sortable2 { 
-		list-style-type: none; 
-		margin: 0; 
-		padding: 0; 
-		margin-bottom: 10px;
-		overflow-y: auto;
-    	overflow-x: hidden;
-	}
-	
-  	.ui-state-default { 
-  		margin: 5px; 
-  		padding: 10px;
-  		z-index: 100;
-  	}
-}
-     
-</style>
-
+  	
 	<script type='text/javascript'>
+
+	$(document).on('DOMMouseScroll mousewheel', '.bootstrap-select .dropdown-menu',
+		function (ev) {
+		    $(this).scrollTop($(this).scrollTop()-ev.originalEvent.wheelDelta);
+		    ev.stopPropagation();
+		    ev.preventDefault();
+	});
 	
 	function fcnAddBob() {
 
-		$("form").attr("method", "POST").attr("action", "/bob/addBob").submit();
+		var category = $("input[name=category]");
+		var title = $("input[name=title]");
+		var limitNum = $("select[name=limitNum]");
+		var content = $("#summernote");
+		var imageCheck = $("input[name=imageCheck]");
+		var uploadFile = $("input[name=uploadFile]");
+		var appointmentTime = $("input[name=appointmentTime]");
+		var locationName = $("input[name=locationName]");
+		var feeDate = $("input[name=feeDate]");
+		var fee = $("input[name=fee]");
+
+		if(title.val() == "") {
+			title.focus();
+			makeToast("타이틀을 입력해주세요.");
+			return false;
+		}
+		
+		if(content.val() == "") {
+			$("body > div.container > form > div > div:nth-child(6) > div > div > div.note-editing-area > div.note-editable").focus();
+			makeToast("내용을 입력해주세요.");
+			return false;
+		}
+		
+		if(imageCheck.is(":checked") == true) {
+			uploadFile.val("");
+		} else {
+			uploadFile.focus();
+			makeToast("대표사진을 선택해주세요.");
+			return false;
+		}
+		
+		if(category.val() == "B01" ) {
+			if(limitNum.val() == ""){
+				limitNum.focus();
+				makeToast("제한인원수를 선택해주세요.");
+				return false;
+			}
+			if(appointmentTime.val() == "") {
+				if (confirm("약속 날짜가 정해지지 않으셨나요? \n 날짜 미선택 시 참가신청을 받을 수 없습니다.") == true){
+					
+			   	}else{
+			   	    return false;
+			   	}
+			}
+		}
+
+		if(category.val() == "B01" ||  category.val() == "B02") {
+			if(locationName.val() == "") {
+				locationName.focus();
+				makeToast("위치를 지정해주세요.");
+				return false;
+			}
+		}
+		
+		if(category.val() == "B03") {
+			alert($("input[name=category]").val());
+			if(fee.val() == "") {
+				fee.focus();
+				makeToast("회비를 지정해주세요.");
+				return false;
+			} else if(fee.val() < 0 || fee.val()>10000) {
+				makeToast("회비는 0부터 10,000원까지 가능합니다.");
+			}
+			
+			if(feeDate.val() == "") {
+				feeDate.focus();
+				makeToast("회비 납부일을 지정해주세요.");
+				return false;
+			} else {
+				alert(feeDate.val().subString);
+			}
+
+		}
+		
+
+		//$("form").attr("method", "POST").attr("action", "/bob/addBob").submit();
+
 	}
 	
 	$(function() {
 		
-		$('button:contains("방 만들기")').on('click', function(){
+		function parallax(){
+   		    var scrolled = $(window).scrollTop();
+   		    $('.bg').css('height', (530-scrolled) + 'px');
+   		}
+   	
+   		$(window).scroll(function(e){
+   		    parallax();
+   		});
+
+		$('input[name=addBob]').on('click', function(){
 			fcnAddBob();
 		});
 		
@@ -165,6 +161,7 @@
 	          } else {
 	          }
 	    });
+		/*
 	    $("input[name='title']").keyup();
 	    
 	    $("input[name='title']").on({
@@ -172,6 +169,15 @@
 	    		$('#titleDuplicateCheck').show();
 	    	},
 	    	"focusout":function(){
+	    		$('#titleDuplicateCheck').hide();
+	    	}
+	    });
+	    */
+	    
+	    $("input[name='title']").on("keyup", function() {
+	    	if(!$(this).val()) {
+	    		$('#titleDuplicateCheck').show();
+	    	} else {
 	    		$('#titleDuplicateCheck').hide();
 	    	}
 	    });
@@ -264,7 +270,7 @@
 			startView: 2,
 			forceParse: 0,
 	        showMeridian: true,
-	        startDate: new Date(),
+	        startDate: new Date()
 	    });
 		
 	    /* surmmernote*/
@@ -281,7 +287,9 @@
 	        tabsize: 2,
 	        height: 500,
 			lang: 'ko-KR'
-		}); 
+		});
+	    
+	    
 	});
 
 	function sendFile(file, editor) {
@@ -310,16 +318,23 @@
  	        }
  	    });
  	}
+	
+	function makeToast(title) {
+		$('#toastMessage').text(title).fadeIn(400).delay(3000).fadeOut(400);
+	}
+	
   </script>
  
     
 </head>
 
-<body>
+<body class="addBob">
+
+	<div class="bg" style="background-image: url('../resources/images/wood_background.jpg')"></div>
     
     <div class="container">
-    	<div class="page-header text-center">
-			<h3 class="text-info" style="color: #4d4d4d; font-weight: bold;">[${categoryName}] 방만들기</h3>
+    	<div class="page-header text-center" style="margin: 180px 0 150px 0; border: none;">
+			<h3 class="text-info" style="color: #000; font-weight: bold; font-size: 30px;">[${categoryName}] 방만들기</h3>
 		</div>
     
 		<form class="form-horizontal" enctype="multipart/form-data">
@@ -329,33 +344,12 @@
 		    	<input type="hidden" name="latitude" />
 		    	<input type="hidden" name="longitude" />
 		    	<div class="row">
-		    		<div class="col-sm-2 btn-bob" >제목</div>
-	            	<div class="col-sm-10" align="center">
-	            		<input type="text" name="title" class="form-control" placeholder="제목" style="font-size: 16px;"/>
-	            		<span id="titleDuplicateCheck" class="col-sm-12 text-left" style="color: red; display: none;" >글자수는 30자로 제한됩니다.</span>
+	            	<div class="col-sm-12 text-center" style="margin: 30px 0 30px 0;" >
+	            		<input type="text" name="title" placeholder="제목" style="font-size: 20px; width: 90%; height: 50px; padding-left: 20px; border: none; border-bottom: 1px solid #eee;"
+	            			title="Please provide your firstname."/>
 	            	</div>
 		    	</div>
-		    	
-		    	<hr/>
-		    	
-		    	<c:if test="${categoryName eq '우리지금만나'}">
-			    	<div class="row">
-			    		<div class="col-sm-6 btn-bob" align="center">
-			    			제한인원수
-			    		</div>
-		            	<div class="col-sm-6" align="left" style="padding-top: 8px;">
-					    	<select name="limitNum" class="selectpicker show-tick" title="제한 인원수">
-					    	  <c:forEach var="i" begin="2" end="20" step="1">
-					    	  	<option >${i}</option>
-					    	  </c:forEach>
-							</select>
-							<span style="color: red;" > * 인원수는 20명 제한입니다.</span>
-		            	</div>
-			    	</div>
-			    	
-			    	<hr/>
 
-		    	</c:if>
 		    	
 	            <div class="row">
 	            	<div class="col-xs-12">
@@ -364,6 +358,25 @@
 	            </div>
 	            
 	            <hr/>
+		    	
+		    	<c:if test="${categoryName eq '우리지금만나'}">
+			    	<div class="row">
+			    		<div class="col-sm-6 btn-bob" align="center">
+			    			제한인원수
+			    		</div>
+		            	<div class="col-sm-6" align="left" style="padding-top: 8px;">
+					    	<select name="limitNum" class="selectpicker show-tick" title="제한 인원수" >
+					    	  <c:forEach var="i" begin="2" end="20" step="1">
+					    	  	<option >${i}</option>
+					    	  </c:forEach>
+							</select>
+							<span id="limitNumDuplicateCheck" style="color: red;" > * 인원수는 20명 제한입니다.</span>
+		            	</div>
+			    	</div>
+			    	
+			    	<hr/>
+
+		    	</c:if>
 	            
 	            <div class="row">
 	            	<div class="col-sm-2 btn-bob">대표사진 설정</div>
@@ -379,7 +392,7 @@
 		    	
 		    	<hr/>
 		    	
-		    	<c:if test="${categoryName ne '주기적으로만나'}">
+		    	<c:if test="${categoryName eq '우리지금만나'}">
 			    	<div class="row">
 			    		<div class="col-sm-6 btn-bob">날짜</div>
 		            	<div class="col-sm-6" align="center" style="padding-top: 8px;">
@@ -391,8 +404,11 @@
 			                </div>
 		            	</div>
 			    	</div>
-			    	
+			    
 			    	<hr>
+			    </c:if>
+			    	
+		        <c:if test="${categoryName ne '주기적으로만나'}">
 		            
 		            <div class="row" style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px; border: 1px solid #5F4B8B;">
 		            	<div class="col-xs-12 btn-bob" style="width: 100%; ">위치</div>
@@ -400,7 +416,6 @@
 		            	<div class="col-xs-12" align="center">
 		            		<input type="text" name="locationName" class="form-control" style="font-size: 16px; margin-top:10px; margin-bottom:10px;"
 		            				placeholder="위치를 지정해주세요" />
-		            		<span id="locationDuplicateCheck" class="col-sm-12 text-center" style="color: red; margin-bottom:10px; ">장소를 검색하세요.</span>
 		            		<div class="map_wrap">
 							    <div id="map" style="width:100%;height:400px;position:relative;overflow:hidden;"></div>
 							</div>
@@ -416,9 +431,9 @@
 		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
 		            		<input type="text" class="form-control" name="fee" placeholder="(ex) 20000">
 		            	</div>
-		            	<div class="col-sm-3 btn-bob">회비날짜</div>
+		            	<div class="col-sm-3 btn-bob">회비 납부일</div>
 		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
-		            		<input type="date" name="feeDate" class="form-control" style="font-size: 16px;"/>
+		            		<input type="date" class="form-control" name="feeDate" style="font-size: 16px;"/>
 		            	</div>
 			    	</div>
 		    		
@@ -427,11 +442,11 @@
 		            <div class="row" style="margin-top: 10px;">
 		            	<div class="col-xs-12 btn-bob" style="width: 100%; ">초대할 친구</div>
 					</div>	
-					
+
 					<div class="row" style="padding: 10px;">
 
 	            		<ul id="sortable1" class="col-sm-5 droptrue" align="center" style="background: #ccc; height: 200px; padding:5px;">
-
+	            		
 						</ul>
 
 		            	<div class="col-sm-2" align="center">
@@ -440,42 +455,26 @@
 		            	</div>
 
 						<ul id="sortable2" class="col-sm-5 droptrue" align="center" style="background: #ccc; height: 200px; padding: 5px;">
-						  <li class="ui-state-default">
-						  	<div class="draggable_area">
-						  		이연희
-						  	</div></li>
-						  <li class="ui-state-default">
-						  	<div class="draggable_area">
-						  		이정은
-						  	</div></li>
-						  <li class="ui-state-default">
-						  	<div class="draggable_area">
-						  		박진수
-						  	</div></li>
-						  <li class="ui-state-default">
-						  	<div class="draggable_area">
-						  		김지원
-						  	</div></li>
-						  <li class="ui-state-default">
-						  	<div class="draggable_area">
-						  		소현태
-						  	</div></li>
-						 <li class="ui-state-default">
-						  	<div class="draggable_area">
-						  		김상민
-						  	</div></li>
+						  <c:forEach var="friend" items="${friend.list}">
+							  <li class="ui-state-default">
+							  	<div class="draggable_area">
+							  		${friend.friendId}
+							  	</div></li>
+						  </c:forEach>
 						</ul>		            	
 	            	</div>		            	
 			    	
 		    	</c:if>
 	
 	            <div class="row" align="center">
-	                <button type="submit" class="btn-bob" style="margin: 10px; width:250px;" >방 만들기</button>
-	                <button type="reset" class="btn-bob" style="background: #ededed; color: #4d4d4d; margin: 10px; width:250px;">취소</button>
+	                <input type="button" name="addBob" class="btn-bob" style="margin: 10px; width:250px;" value="방 만들기" >
+	                <button class="btn-bob" style="background: #ededed; color: #4d4d4d; margin: 10px; width:250px;">취소</button>
 	            </div>
 		    </div>
 		</form>
 	 </div>
+	 
+	 <div id="toastMessage" class='toastMessage' style='display:none'>Toast</div>
 	        
     </body>
 	

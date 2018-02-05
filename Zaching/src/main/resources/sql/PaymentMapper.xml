@@ -19,17 +19,19 @@
 		<result property="accountCi" column="account_ci" jdbcType="INTEGER"/>
 		<result property="accountSeqNo" column="account_seq_no" jdbcType="INTEGER"/>
 		<result property="paymentCode" column="payment_code" jdbcType="VARCHAR"/>
+		<result property="content" column="content" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<insert id="managepayment"
 			parameterType="map">
 		INSERT
-		INTO PAYMENT (payment_id, time, payment_code, money, user_id)
+		INTO PAYMENT (payment_id, time, payment_code, money, user_id, content)
 		VALUES (seq_payment_id.nextval,
 				SYSDATE,
 				#{paymentCode},
 				#{point},
-				#{userId})
+				#{userId},
+				#{content})
 	</insert>
 	
 	<update id="updateUserPayment"
@@ -87,7 +89,8 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 				FROM	( 
 					SELECT
-						payment_id, to_char(time, 'yyyy-mm-dd HH:mi') AS time, money, payment_code
+						payment_id, to_char(time, 'yyyy-mm-dd HH24:mi') AS time, money, trim(payment_code) AS payment_code,
+						content
 					FROM PAYMENT
 					<where>
 						user_id = #{userId}
@@ -123,8 +126,8 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 				FROM	( 
 					SELECT
-						payment_id, to_char(time, 'yyyy-mm-dd HH:mi') AS time, 
-						money, payment_code, users.bank_code, users.account_number,
+						payment_id, to_char(time, 'yyyy-mm-dd HH24:mi') AS time, 
+						money, trim(payment_code) AS payment_code, users.bank_code, users.account_number,
 						users.real_name, payment.money AS point
 					FROM PAYMENT, USERS
 					<where>

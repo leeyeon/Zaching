@@ -2,12 +2,12 @@
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
-	
-	<title>포인트충전</title>
 	
 	<style>
         
@@ -20,8 +20,7 @@
        		border: none; 
        		display: inline-block;
        		color: rgb(255, 255, 255); 
-       		font-size: 20px; 
-       		font-weight: bold;
+       		font-size: 20px;
        		text-align: center;
        		height: 50px;
 			line-height: 50px;
@@ -46,8 +45,8 @@
 		
 	<div class="container" align="center">
 		
-		<div class="page-header">
-		  <h1>포인트 충전</h1>
+		<div class="page-header" style="padding-bottom: 30px;">
+		  <h1>포인트 반환 신청</h1>
 		</div>
 		
 		
@@ -58,7 +57,8 @@
 			<div class="col-xs-8">
 				<div class="input-group">
 					<input type="text" class="form-control text-right" aria-describedby="basic-addon2" id="point" name="point" />
-					<span class="input-group-addon" id="basic-addon2"> / 10,000 Point</span>
+					<span class="input-group-addon" id="basic-addon2"> 
+					/<fmt:formatNumber type="currency" value="${user.totalPoint}" pattern="###,###" />Point</span>
 				</div>
 			</div>
 		</div>
@@ -68,21 +68,20 @@
 		</div>
 		
 		<div class="row">
-		  <div class="col-xs-4"></div>
-		  <div class="col-xs-4">
+		  <div class="col-xs-6">
 		    <div class="input-group">
 		      <span class="input-group-addon">
-		        <input type="radio" checked>
+		        <input type="radio" name="account" checked>
 		      </span>
-		      <input type="text" class="form-control" value="기존 계좌 사용">
+		      <div class="form-control">기존계좌사용</div>
 		    </div><!-- /input-group -->
 		  </div><!-- /.col-lg-6 -->
-		  <div class="col-xs-4">
+		  <div class="col-xs-6">
 		    <div class="input-group">
 		      <span class="input-group-addon">
-		        <input type="radio">
+		        <input type="radio" name="account">
 		      </span>
-		      <input type="text" class="form-control" value="새로운 계좌 사용">
+		      <div class="form-control">새로운계좌사용</div>
 		    </div><!-- /input-group -->
 		  </div><!-- /.col-lg-6 -->
 		</div><!-- /.row -->
@@ -92,7 +91,7 @@
 					이름
 			</label>
 			<div class="col-xs-8">
-				<input type="text" class="form-control" id="name" name="name" />
+				<input type="text" class="form-control" name="name" />
 			</div>
 		</div>
 		
@@ -101,7 +100,7 @@
 					은행명
 			</label>
 			<div class="col-xs-8">
-				<input type="text" class="form-control" id="name" name="name" />
+				<input type="text" class="form-control" name="bankName" />
 			</div>
 		</div>
 		
@@ -110,7 +109,7 @@
 					계좌번호
 			</label>
 			<div class="col-xs-8">
-				<input type="text" class="form-control" id="name" name="name" />
+				<input type="text" class="form-control" name="account" />
 			</div>
 		</div>				
 		
