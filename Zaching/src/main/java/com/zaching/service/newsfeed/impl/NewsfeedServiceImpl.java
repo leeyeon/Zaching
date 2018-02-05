@@ -92,6 +92,22 @@ public class NewsfeedServiceImpl implements NewsfeedService{
 		newsfeedDao.addLikeBlind(newsfeedId, userId, status);
 		
 	}
+
+	@Override
+	public void deleteLikeBlind(int newsfeedId, int userId, String status) throws Exception {
+		newsfeedDao.deleteLikeBlind(newsfeedId, userId, status);
+		
+	}
+
+	@Override
+	public void cancelCountLike(int newsfeedId) throws Exception {
+		newsfeedDao.cancelCountLike(newsfeedId);
+	}
+
+	@Override
+	public int getLikeUser(int newsfeedId, int userId, String status) throws Exception {
+		return newsfeedDao.getLikeUser(newsfeedId, userId, status);
+	}
 	
 	
 	
