@@ -125,16 +125,18 @@ public class BobRestController {
 		
 		if(category.equals("B01")) {
 			int userPoint = paymentService.getPoint((int)obj.get("userId"));
-			
+
 			System.out.println("UserPoint ? :: "+userPoint);
 			
 			if(userPoint >= 1000) {
+				Bob bob = bobService.getBobInfo(bobId, category);
 				/* 약속비 1000원 차감 */
 				System.out.println("돈 진짜 나갑니다 2");
 				Payment payment = new Payment();
 				payment.setUserId(userId);
 				payment.setPoint(1000);
 				payment.setPaymentCode("P02");
+				payment.setContent(category+":"+bobId+":"+bob.getTitle());
 				paymentService.managePoint(payment);
 				
 				/* 마일리지 적립 */
@@ -174,10 +176,12 @@ public class BobRestController {
 		System.out.println(category+"//"+userId+"//"+bobId);
 		
 		if(category.equals("B01")) {
+			Bob bob = bobService.getBobInfo(bobId, category);
 			Payment payment = new Payment();
 			payment.setUserId(userId);
 			payment.setPoint(1000);
 			payment.setPaymentCode("P06");
+			payment.setContent(category+":"+bobId+":"+bob.getTitle());
 			paymentService.managePoint(payment);
 			
 			/* 마일리지 적립취소 */
@@ -222,24 +226,22 @@ public class BobRestController {
 	@RequestMapping(value="/payFeebob", method=RequestMethod.POST)
 	@ResponseBody
 	public JSONObject payFeebob(@RequestBody Map<String, Object> obj) throws Exception {
-		
-		System.out.println(obj.get("userId"));
-		System.out.println(obj.get("participantId"));
-		System.out.println(obj.get("fee"));
-		
+
 		int fee = Integer.valueOf(obj.get("fee").toString());
 		int userPoint = paymentService.getPoint(Integer.valueOf(obj.get("userId").toString()));
+		int bobId = (int)obj.get("bobId");
 		
 		JSONObject object = new JSONObject();
 		
 		if(userPoint >= fee) {
-			
+			Bob bob = bobService.getBobInfo(bobId, "B03");
 			bobService.payFeeBob(Integer.valueOf(obj.get("participantId").toString()), fee);
 			
 			Payment payment = new Payment();
 			payment.setPaymentCode("P02");
 			payment.setUserId(Integer.valueOf(obj.get("userId").toString()));
 			payment.setPoint(fee);
+			payment.setContent("B03:"+bobId+":"+bob.getTitle());
 			
 			paymentService.managePoint(payment);
 			
