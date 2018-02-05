@@ -39,7 +39,6 @@
 		
 		.navbar-fixed-top {
 		    background: #ffffff;
-		    border-color: #ffffff;
 		}
 		
 		#navbar > ul> li> a {

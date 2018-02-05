@@ -1,26 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 	
-	<link rel="stylesheet" href="../resources/css/getBob.css">
-	<style type="text/css">
-	
-	</style>
+	<link rel="stylesheet" href="../resources/css/bob.css">
+
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
     <script type="text/javascript">
     
 	
     $(function() {
-   	
-   		$(this).scrollTop(0);
+   		
+    	$("html, body").animate({ scrollTop: 0 }, "slow"); 
+
+   		//$(this).scrollTop(0);
 
    		var jumboHeight = $('.jumbotron').outerHeight();
    		function parallax(){
@@ -32,9 +31,11 @@
    		    parallax();
    		});
    	   
+   		// 회비목록 달별로 보여줌
    		$('.select-bob').on('click', function(){
    			$('.active').removeClass('active');
    			$(this).addClass('active');
+   			$("#listFee").load("/bob/listFee?bobId=${param.bobId}&monthFee="+$(this).attr("id").substring(4));
    		});
 
    	 	
@@ -50,6 +51,11 @@
    	 	$('.btn-ico:contains("초대하기")').on('click', function() {
    			alert('초대하기');
    		});
+   	 	
+   	 	$('.btn-bob:contains("엑셀 다운로드")').on('click', function() {
+   	 		//alert("${bob.bobId}");
+   	 		$("#excelForm").attr("method", "POST").attr("action", "/bob/excelFee").submit();
+		});
    	 	
    	 	/*///////////////////////////// 댓글 시작 /////////////////////////////*/
    	 	
@@ -334,7 +340,7 @@
 </script>
     
 </head>
-<body>
+<body class="getBob">
 
 	<c:set var="frontImage" value="${fn:substring(bob.image, 0, 6)}"/>
 	<c:set var="endImage" value="${fn:substring(bob.image, 7, fn:length(bob.image))}"/>
@@ -587,31 +593,18 @@
 	      	</div>
 	      	
 	      	<hr>
-	
-	      	<div class="row" style="padding: 0 20px 0 20px;">
-	   			<c:forEach var="participant" items="${participant}">
-	   				
-					<div class="col-xs-4" align="left" style="margin-top:20px; padding-right:15px;">
-						<img src = "../resources/upload_files/images/${participant.participantProfile}"
-			      			onerror="this.src='../resources/images/user-icon.png'"
-			      			width="60px" height="60px"
-							style=" border-radius: 40px;
-									-moz-border-radius: 40px;
-									-khtml-border-radius: 40px;
-									-webkit-border-radius: 40px;
-									 box-shadow: 1px #cccccc;" />
-						&nbsp;&nbsp;&nbsp;${participant.participantName}&nbsp;&nbsp;&nbsp;
-						<c:if test="${participant.paidFee != 0}">
-							<img width="55px" height="55px" src="/resources/images/checkmark.png" />
-						</c:if>
-					</div>
-				</c:forEach>
-			</div>
 	      	
+	      	<div id="listFee" class="row" style="padding: 0 20px 0 20px;">
+		      <jsp:include page="listFee.jsp" />
+	      	</div>
+
 	      	<hr>
 	      	
 	      	<div class="row" align="right" style="margin-right:5px;">
-	      		<button type="submit" class="btn-bob" style="width: 210px; height: 60px; line-height:60px;">엑셀 다운로드</button>
+	      		<form id="excelForm">
+	      			<input type="hidden" name="bobId" value="${bob.bobId}" />
+	      			<button type="submit" class="btn-bob" style="width: 210px; height: 60px; line-height:60px;">엑셀 다운로드</button>
+	      		</form>
 	      	</div>
 	      </div>
       
@@ -619,11 +612,6 @@
       <!-- /회비 div 끝 -->
 
     </div><!-- /.container -->
-
-
-
-
-
 
 
 

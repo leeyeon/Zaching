@@ -38,8 +38,6 @@
 				<fmt:formatDate var="commentDate" value="${Date}" pattern="yyyyMMdd"/>
 				<fmt:formatDate var="commentHour" value="${Date}" pattern="HH"/>
 				<fmt:formatDate var="commentMinutes" value="${Date}" pattern="mm"/>
-				
-				${comment.createdDate}
 				<!-- 오늘 일때 -->
 				<c:if test="${todayFull - commentDate eq 0}">
 					<!-- 1시간 내 -->
@@ -77,7 +75,7 @@
 				</c:if>
 			</div>
 			<div class="deleteComment" style="position: relative; right: 10px; top:-10px; text-align: end;">
-				X
+				<c:if test="${sessionScope.user.userId eq comment.userId}">X</c:if>
 			</div>
 		</div>
 	</div>
