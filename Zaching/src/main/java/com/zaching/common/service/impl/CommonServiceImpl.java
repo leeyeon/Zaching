@@ -146,5 +146,10 @@ public class CommonServiceImpl implements CommonService {
 	public void addNoticeTarget(Notice notice) throws Exception{
 		commentDao.addNoticeTarget(notice);
 	}
+	
+	@Override
+	public void noticeUpdate(int noticeId) throws Exception{
+		commentDao.noticeUpdate(noticeId);
+	}
 
 }

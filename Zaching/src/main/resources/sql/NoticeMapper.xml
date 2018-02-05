@@ -33,6 +33,17 @@
 
 	</insert>
 	
+	<update id="updateNotice" parameterType="int">
+		UPDATE NOTICE_TARGET
+		<set>
+			status = '1'
+		</set>
+		<where>
+			NOTICE_ID = #{noticeId}
+		</where>
+	</update>
+	
+	
 	<insert id="addNoticeTarget" 
 			parameterType="notice">
 		INSERT
@@ -53,7 +64,7 @@
 			resultMap="noticeSelectMap">
 			
 		SELECT notice.notice_id, notice.user_name, notice.category_code, notice.created_date, notice.bob_id, notice.sender_id,
-										notice_target.receiver_id, notice_target.notice_target_id,  notice_target.receiver_id
+										notice_target.receiver_id, notice_target.notice_target_id,  notice_target.receiver_id, notice_target.status
 											FROM notice, notice_target
 												<where>
 													notice.notice_Id = notice_target.notice_Id AND

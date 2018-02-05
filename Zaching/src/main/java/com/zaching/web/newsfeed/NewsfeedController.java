@@ -94,7 +94,7 @@ public class NewsfeedController {
 		}
 		search.setPageSize(pageSize);
 		
-		session.setAttribute("user", (User)userService.getUser(32));
+		
 		
 		Newsfeed newsfeed = newsfeedService.getNewsfeed(newsfeedId);
 		model.addAttribute("newsfeed", newsfeed);

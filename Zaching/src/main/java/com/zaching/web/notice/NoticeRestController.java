@@ -94,10 +94,24 @@ public class NoticeRestController {
 		
 		Gson gson = new Gson(); 
 		String json = gson.toJson(mapp); 
+		
 
 	
 		
 		return json;
+		
+		
+	}
+	
+	@RequestMapping(value = "rest/noticeUpdate", method = RequestMethod.POST)
+	public void noticeUpdate(@RequestBody Map<String, Object> map, @ModelAttribute("notice") Notice notice) throws Exception {
+
+			System.out.println("µé¾î¿È");
+		String noticeId = ((String)map.get("NOTICE_ID"));
+		
+		commonService.noticeUpdate(Integer.parseInt(noticeId));
+		
+		System.out.println("¿Ï·á");
 		
 		
 	}

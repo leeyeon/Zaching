@@ -50,5 +50,7 @@ public interface CommonService {
 	public void addNoticeTarget(Notice notice) throws Exception;
 	
 	public Map<String, Object> listNotice(Search search, int userId) throws Exception;
+	
+	public void noticeUpdate(int noticeId) throws Exception;
 
 }

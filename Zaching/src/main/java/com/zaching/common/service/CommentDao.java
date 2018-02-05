@@ -33,4 +33,6 @@ public interface CommentDao {
 	public void addNotice(Notice notice) throws Exception;
 	
 	public void addNoticeTarget(Notice notice) throws Exception;
+	
+	public void noticeUpdate(int noticeId) throws Exception;
 }

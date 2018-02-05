@@ -31,6 +31,11 @@ public class CommentDaoImpl implements CommentDao {
 	}
 	
 	@Override
+	public void noticeUpdate(int noticeId) throws Exception{
+		sqlSession.update("NoticeMapper.updateNotice", noticeId);
+	}
+	
+	@Override
 	public List<Notice> listNotice(Search search, int userId) throws Exception{
 	
 		
