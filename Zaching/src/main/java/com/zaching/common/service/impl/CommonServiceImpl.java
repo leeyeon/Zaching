@@ -97,7 +97,14 @@ public class CommonServiceImpl implements CommonService {
 
 	@Override
 	public Map<String, Object> getAceessToken(String code) throws Exception {
+		
 		return kakaoRestDao.getAceessToken(code);
+	}
+	
+	@Override
+	public String getAceessToken2(String code) throws Exception {
+		
+		return kakaoRestDao.getAceessToken2(code);
 	}
 
 	@Override
@@ -116,6 +123,12 @@ public class CommonServiceImpl implements CommonService {
 		} else {
 			return kakaoRestDao.getPaymentApprove(token, pgToken);
 		}
+	}
+
+	@Override
+	public String getAuthorizationUrl_login() {
+		
+		return kakaoRestDao.getAuthorizationUrl_login();
 	}
 
 }

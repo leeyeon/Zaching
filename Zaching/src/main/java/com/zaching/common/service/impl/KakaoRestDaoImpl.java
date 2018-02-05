@@ -17,6 +17,7 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 	
 	private final String REST_API_KEY = "90d9379d1246c1e7e36d34027d2e497d";
 	private final String ADMIN_KEY = "3639f373825926cf896298541090d7a2";
+	private final String REDIRECT_URI_Login = "http://127.0.0.1:8080/kakaoLogin";
 	private final String REDIRECT_URI = "http://127.0.0.1:8080/kakaoPay";
 	private final String GET_TOKEN_API_URL = "https://kauth.kakao.com/oauth/token";
 
@@ -43,6 +44,31 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 		
 		return url;
 	}
+	@Override
+	public String getAuthorizationUrl_login() {
+		String url = "redirect:https://kauth.kakao.com/oauth/authorize?client_id="+this.REST_API_KEY
+				+"&redirect_uri="+this.REDIRECT_URI_Login+"&response_type=code";
+		
+		return url;
+	}
+	
+	@Override
+	public String getAceessToken2(String code) throws Exception {
+		
+		System.out.println("KakaoR.getAccessToken()");
+		
+		String param = "grant_type=authorization_code&client_id="+REST_API_KEY
+						+"&redirect_uri="+REDIRECT_URI_Login+"&code="+code;
+
+		JSONObject obj = 
+				URLConnection.getJSON_PARAM(URLConnection.HTTPMETHOD_POST, GET_TOKEN_API_URL, param,
+						"application/x-www-form-urlencoded");
+       
+        
+        return param;
+	}
+
+	
 
 	@Override
 	public Map<String, Object> getAceessToken(String code) throws Exception {
@@ -149,5 +175,7 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 		
 		return map;
 	}
+
+	
 
 }

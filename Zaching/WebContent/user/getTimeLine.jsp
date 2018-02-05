@@ -101,13 +101,13 @@
         </div>
         
         <div class="col-xs-3" id="name" style="margin-top: 100px; margin-left: 20px">
-		<h3>${user.name}</h3>
+		<%-- <h3>${user.name}</h3> --%><h3>이정은</h3>
         </div>
     </div>
     
      <c:if test="${user.userId eq sessionScope.user.userId}"><!-- 세션에있는 아이디랑  -->
     <div class="row" >
-    	<div class="col-xs-2">
+    	<div class="col--2">
     		<button type="button" id="memoryMap">추억지도</button>
     	</div>
     	<div class="col-xs-2">

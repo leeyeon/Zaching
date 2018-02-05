@@ -91,6 +91,8 @@
 			margin-left: 20px;
 		}
 		
+		
+		
 		.modal-dialog.login{
 	 		width: 300px;
 	  		height: 200px;
@@ -198,10 +200,23 @@
 
 		});
 		
-		$("#kakaologin").on("click", function() {
-			self.location =
-		"https://kauth.kakao.com/oauth/authorize?client_id=dfe2041581c23da0c4e9c8aefb3c28a1&redirect_uri=http://127.0.0.1:8080/kakaologin&response_type=code";
+		//이름으로 타임라인 이동
+		$("#navbar > ul:nth-child(2) > li:nth-child(1) > div > a").on("click", function() {
+			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";
 
+		});
+		
+		//카카오로그인 으로 이동
+		$("#kakaologin").on("click", function() {
+			var windowW = 400;  // 창의 가로 길이
+		    var windowH = 500;  // 창의 세로 길이
+			var left = Math.ceil((window.screen.width - windowW)/2);
+		    var top = Math.ceil((window.screen.height - windowH)/2);
+		    
+			window.open("/user/kakaoLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
+			opener.location.reload(true);
+			    self.close();
+	
 		});
 		
 
@@ -238,19 +253,19 @@
           	<c:if test="${user.userId ne null && user.profileImage eq null}">
 	          	<li><div style="padding-top: 10px; color:#FFF;">
 		       	<img src="../resources/images/profile_default.png" id="profile"
-		          	width="30px"/>&nbsp;<u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
+		          	width="30px"/>&nbsp;<a href="#profile" style="color: #fffe09;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
 		       
 	          	</div></li>
-	          	<li><a href="#">로그아웃</a></li>
+	          	<li><a href="#" title="로그아웃">로그아웃</a></li>
           	</c:if>
           	
           	<c:if test="${user.userId ne null && user.profileImage ne null}">
 	          	<li><div style="padding-top: 10px; color:#FFF;">
 		       	<img src="../resources/upload_files/images/${user.profileImage}" id="profile"
-		          	width="30px"/>&nbsp;<u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
+		          	width="30px"/>&nbsp;<a href="#profile" style="color: #fffe09;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
 		       
 	          	</div></li>
-	          	<li><a href="#">로그아웃</a></li>
+	          	<li><a href="#logout" title="로그아웃">로그아웃</a></li>
           	</c:if>
           	 
           	 
@@ -318,10 +333,14 @@
 		
 		<div class="row">
               <div class="social-login" align="left">
-   			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" type="button" id="kakaologin">
-   			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50" >
-   			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50" />
-   			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" >
+   			 	<a href="#kakaoLogin" id="kakaoLogin">
+   			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" type="button" id="kakaologin"/></a>
+   			 	<a href="#facebookLogin" id="facebookLogin">
+   			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50"  type="button" id="facebooklogin"></a>
+   			 	<a href="#naverLogin" id="naverLogin">
+   			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50"  	type="button" id="Naverlogin"/></a>
+   			 	<a href="#googleLogin" id="googleLogin">
+   			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" 	type="button" id="Googlelogin"/></a>
              </div>  
         </div>
         

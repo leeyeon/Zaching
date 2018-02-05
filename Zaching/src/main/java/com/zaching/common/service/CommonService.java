@@ -34,7 +34,11 @@ public interface CommonService {
 	
 	public String getAuthorizationUrl();
 	
+	public String getAuthorizationUrl_login();
+	
 	public Map<String, Object> getAceessToken(String code) throws Exception;
+	
+	public String getAceessToken2(String code) throws Exception;
 	
 	public String getPaymentReady(String token, int point) throws Exception;
 	

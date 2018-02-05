@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
+import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.User;
 import com.zaching.service.user.UserService;
 
@@ -43,7 +44,10 @@ public class UserController {
 
 	/// Field
 	@Autowired
-
+	@Qualifier("commonServiceImpl")
+	private CommonService commonService;
+	
+	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 
@@ -57,7 +61,29 @@ public class UserController {
 	int pageUnit;
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
-
+	
+	@RequestMapping(value= "kakaoLoginRequest", method=RequestMethod.GET)
+	public String kakaoLogin() {
+		
+		System.out.println("[ kakao Login Request ]");
+		
+		return commonService.getAuthorizationUrl_login();
+		
+	}
+	@RequestMapping("kakaoLogin")
+	public String KakaoLoginCode(@RequestParam("code") String code,
+			HttpSession session)throws Exception {
+		
+		System.out.println("/user/kakaoLogin/code");
+		
+		String url =commonService.getAceessToken2(code);
+		
+		
+		System.out.println("code ::"+code);
+		
+		return "redirect:/index.jsp";
+	}
+	
 	@RequestMapping(value = "addUser", method = RequestMethod.GET)
 	public String addUser() throws Exception {
 
@@ -259,5 +285,8 @@ public class UserController {
 	
 	return "forward:/user/memoryMap.jsp";
 	}
+	
+	
+
 	
 }
