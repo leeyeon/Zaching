@@ -112,6 +112,8 @@ public class BobRestController {
 	@ResponseBody
 	public JSONObject enterBob(@RequestBody Map<String, Object> obj) throws Exception {
 		
+		System.out.println(this.getClass()+"/enterBob");
+		
 		System.out.println("µ·³ª°©´Ï´Ù?");
 		String category = (String)obj.get("category");
 		int userId = (int)obj.get("userId");
@@ -119,10 +121,14 @@ public class BobRestController {
 		
 		System.out.println(category+"//"+userId+"//"+bobId);
 		
+		boolean result = true;
+		
 		if(category.equals("B01")) {
 			int userPoint = paymentService.getPoint((int)obj.get("userId"));
 			
-			if(userPoint > 1000) {
+			System.out.println("UserPoint ? :: "+userPoint);
+			
+			if(userPoint >= 1000) {
 				/* ¾à¼Óºñ 1000¿ø Â÷°¨ */
 				System.out.println("µ· ÁøÂ¥ ³ª°©´Ï´Ù 2");
 				Payment payment = new Payment();
@@ -135,14 +141,20 @@ public class BobRestController {
 				payment.setPoint(500);
 				payment.setPaymentCode("M01");
 				paymentService.managePoint(payment);
+				
+				bobService.enterBob(userId, bobId);
+				
+				System.out.println("result1111");
+			} else {
+				System.out.println("result2222");
+				result = false;
 			}
 		}
 		
-		// Âü°¡ÁßÀÌ ¾Æ´Ò¶§ Âü°¡µÊ
-		boolean result = bobService.enterBob(userId, bobId);
-		
 		JSONObject object = new JSONObject();
-
+		
+		System.out.println(result);
+		
 		if(result) {
 			object.put("response", "success");
 		} else {
@@ -155,7 +167,6 @@ public class BobRestController {
 	@RequestMapping(value="/cancleBob", method=RequestMethod.POST)
 	public void cancleBob(@RequestBody Map<String, Object> obj) throws Exception {
 		
-		System.out.println("µ·³ª°©´Ï´Ù?");
 		String category = (String)obj.get("category");
 		int userId = (int)obj.get("userId");
 		int bobId = (int)obj.get("bobId");

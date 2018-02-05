@@ -209,7 +209,7 @@ $(function(){
       <div class="search-container">
       	<input type="text" placeholder="제목이나 가수명을 입력하세요" name="searchsong" id="searchsong" value="">
         	<button type="button" class="btn btn-primary" id="search">검색</button>
-        	<button type="submit" class="btn btn-primary" data-dismiss="modal"id="select">선택</button>
+        	<button type="submit" class="btn btn-primary" data-dismiss="modal" id="select">선택</button>
     	<br/>
     	 <div class="viewlist" >
 
