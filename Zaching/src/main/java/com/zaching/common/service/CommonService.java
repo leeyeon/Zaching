@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Comment;
+import com.zaching.service.domain.User;
 
 public interface CommonService {
 	
@@ -38,10 +39,14 @@ public interface CommonService {
 	
 	public Map<String, Object> getAceessToken(String code) throws Exception;
 	
-	public String getAceessToken2(String code) throws Exception;
+	public Map<String, Object> getAceessToken2(String code) throws Exception;
 	
 	public String getPaymentReady(String token, int point) throws Exception;
 	
 	public Map<String, Object> getPaymentApprove(String token, String pgToken) throws Exception;
+	
+	public void getAppConnection(String token)throws Exception;
+	
+	public User getUserInfo(User user)throws Exception;
 
 }

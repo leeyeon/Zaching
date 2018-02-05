@@ -65,24 +65,12 @@ public class UserController {
 	@RequestMapping(value= "kakaoLoginRequest", method=RequestMethod.GET)
 	public String kakaoLogin() {
 		
-		System.out.println("[ kakao Login Request ]");
+		System.out.println("[ kakao Login Request!! ]");
 		
 		return commonService.getAuthorizationUrl_login();
 		
 	}
-	@RequestMapping("kakaoLogin")
-	public String KakaoLoginCode(@RequestParam("code") String code,
-			HttpSession session)throws Exception {
-		
-		System.out.println("/user/kakaoLogin/code");
-		
-		String url =commonService.getAceessToken2(code);
-		
-		
-		System.out.println("code ::"+code);
-		
-		return "redirect:/index.jsp";
-	}
+	
 	
 	@RequestMapping(value = "addUser", method = RequestMethod.GET)
 	public String addUser() throws Exception {

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.zaching.common.URLConnection;
 import com.zaching.common.service.KakaoRestDao;
+import com.zaching.service.domain.User;
 
 @Repository("kakaoRestDaoImpl")
 public class KakaoRestDaoImpl implements KakaoRestDao {
@@ -23,6 +24,9 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 
 	private final String PAYMENT_READY_URL = "https://kapi.kakao.com/v1/payment/ready";
 	private final String PAYMENT_APPROVE_URL = "https://kapi.kakao.com//v1/payment/approve";
+	
+	private final String APP_CONNECTION_URL = "https://kapi.kakao.com/v1/user/signup";//앱연결
+	private final String USER_INFO_URL = "https://kapi.kakao.com/v1/user/me";//사용자정보 받아오는 URL
 	
 	private final String PAYMENT_TEST_PARAM = "cid=TC0ONETIME&partner_order_id=partner_order_id&partner_user_id=partner_user_id";
 	
@@ -44,30 +48,6 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 		
 		return url;
 	}
-	@Override
-	public String getAuthorizationUrl_login() {
-		String url = "redirect:https://kauth.kakao.com/oauth/authorize?client_id="+this.REST_API_KEY
-				+"&redirect_uri="+this.REDIRECT_URI_Login+"&response_type=code";
-		
-		return url;
-	}
-	
-	@Override
-	public String getAceessToken2(String code) throws Exception {
-		
-		System.out.println("KakaoR.getAccessToken()");
-		
-		String param = "grant_type=authorization_code&client_id="+REST_API_KEY
-						+"&redirect_uri="+REDIRECT_URI_Login+"&code="+code;
-
-		JSONObject obj = 
-				URLConnection.getJSON_PARAM(URLConnection.HTTPMETHOD_POST, GET_TOKEN_API_URL, param,
-						"application/x-www-form-urlencoded");
-       
-        
-        return param;
-	}
-
 	
 
 	@Override
@@ -175,7 +155,64 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 		
 		return map;
 	}
+	
+	//카카오 로그인
+	@Override
+	public String getAuthorizationUrl_login() {
+		String url = "redirect:https://kauth.kakao.com/oauth/authorize?client_id="+this.REST_API_KEY
+				+"&redirect_uri="+this.REDIRECT_URI_Login+"&response_type=code";
+		
+		return url;
+	}
+	
+	//사용자 토큰 생성
+	@Override
+	public Map<String, Object> getAceessToken2(String code) throws Exception {
+		
+		System.out.println("KakaoR.getAccessToken()");
+		
+		String param = "grant_type=authorization_code&client_id="+REST_API_KEY
+						+"&redirect_uri="+REDIRECT_URI_Login+"&code="+code;
 
+		JSONObject obj = 
+				URLConnection.getJSON_PARAM(URLConnection.HTTPMETHOD_POST, GET_TOKEN_API_URL, param,
+						"application/x-www-form-urlencoded");
+		 	
+			Map<String, Object> map = new HashMap<String, Object>();
+	        map.put("accessToken", obj.get("access_token").toString());
+	        map.put("refreshToken", obj.get("refresh_token").toString());
+       
+        
+        return map;
+	}
+
+
+	//앱연결
+	@Override
+	public void getAppConnection(String token) throws Exception {
+		
+		System.out.println(":: KAKAO.getAppConnection() ::");
+		
+		JSONObject obj = URLConnection.getJSON(URLConnection.HTTPMETHOD_GET, APP_CONNECTION_URL,
+				"application/x-www-form-urlencoded;charset=utf-8", "Authorization", "Bearer"+token);
+				
+	}
+	
+	//사용자 정보 받아오기
+	@Override
+	public User getUserInfo(User user) throws Exception {
+		
+		System.out.println("::KAKAO.getUserInfo() ::");
+		
+		JSONObject obj = URLConnection.getJSON(URLConnection.HTTPMETHOD_GET, USER_INFO_URL,
+				"application/x-www-form-urlencoded;charset=utf-8", "Authorization", "Bearer "+accessToken);
+		 
+		System.out.println(":: accessToken::"+accessToken);
+		
+		 user.setEmail(obj.get("kaccount_email").toString());
+		
+		return user;
+	}
 	
 
 }
