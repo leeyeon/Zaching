@@ -87,7 +87,7 @@ public class BroadcastController {
 		
 		//http://127.0.0.1:9001/send?id=°ª&...
 		
-		return "redirect:http://127.0.0.1:9001?broadcaster="+broadcast.getTitle();
+		return "redirect:http://192.168.0.31:9001?broadcaster="+broadcast.getTitle();
 		//return "forward:/chat/broadcast.jsp";
 	}
 	

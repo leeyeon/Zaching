@@ -200,7 +200,7 @@
 		<small>Leave a Reply
 		</small>
 		<div class="thumb2" style="float: left;">
-   		<img src="../resources/images/201800/${user.profileImage}" height='20' width='20' align='left'/>
+   		<img src="../resources/images/${user.profileImage}" height='20' width='20' align='left'/>
    		</div><br/><p style="font-size: 10pt">&nbsp;${user.name}</p></h3>			
 			<div id="commentform" class="comment-form">
 				 
