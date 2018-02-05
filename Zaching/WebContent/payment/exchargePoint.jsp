@@ -7,8 +7,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 	
-	<title>포인트충전</title>
-	
 	<style>
         
        	body {
@@ -47,7 +45,7 @@
 	<div class="container" align="center">
 		
 		<div class="page-header">
-		  <h1>포인트 충전</h1>
+		  <h1>포인트 반환 신청</h1>
 		</div>
 		
 		

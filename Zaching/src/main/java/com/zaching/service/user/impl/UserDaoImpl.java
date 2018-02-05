@@ -105,6 +105,8 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public void updateRole(User user) throws Exception {
+		
+		System.out.println("::UserDao updateRole::\n"+user);
 		sqlSession.update("UserMapper.emailAuth", user);
 		
 	}

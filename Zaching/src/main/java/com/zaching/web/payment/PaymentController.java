@@ -66,6 +66,12 @@ public class PaymentController {
 		
 		return "forward:/payment/chargePoint.jsp";
 	}
+	
+	@RequestMapping("exchargePoint")
+	public String exchargePoint() {
+		
+		return "forward:/payment/exchargePoint.jsp";
+	}
 
 	@RequestMapping(value="mainPayment")
 	public String mainPayment(@ModelAttribute Search search,
@@ -102,9 +108,10 @@ public class PaymentController {
 	
 	@RequestMapping("kakaoPay/success")
 	public String kakaoPayApprove(@RequestParam("pg_token") String pgToken,
+								HttpSession session,
 								Model model) throws Exception {
 		
-		int userId = 9;
+		int userId = ((User)session.getAttribute("user")).getUserId();
 		
 		System.out.println("pg_token :: "+pgToken);
 		
@@ -118,7 +125,7 @@ public class PaymentController {
 		
 		System.out.println(result);
 		
-		User user = userService.getUser(9);
+		User user = userService.getUser(userId);
 		
 		// 가격 amount.total && amout.vat (부가세)
 		// 수량 quantity
