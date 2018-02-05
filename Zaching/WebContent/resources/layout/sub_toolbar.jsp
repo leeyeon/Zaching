@@ -147,6 +147,7 @@
 			var category = '';
 			var status = 0;
 			
+			
 	
 			if ($('.noticelist').attr('hide') == "true") {
 		    	$('.noticelist').slideUp(function() {
@@ -175,8 +176,10 @@
 					       
 					        	
 					        	for(var i=0; i<serverData.list.length; i++){
+					        		var read = '읽음';
 					        		
 					        		if(serverData.list[i].category == 'V'){
+					        			
 					        			category = '보이스리플에 게시글을 올렸습니다.';
 					        		}
 					        		else if(serverData.list[i].category == 'B'){
@@ -186,10 +189,11 @@
 					        		
 					        		if(serverData.list[i].status == '0'){
 					        			++status;
+					        			read = "안 읽음";
 					        		}
 		
 					        		tr = tr + '<tr class="notice_list_click"><td align="left"><input type="hidden" name="noticeid" value="'+serverData.list[i].noticeId+'">'+
-					        		serverData.list[i].name+'님이 '+ category+'</td></tr>'
+					        		serverData.list[i].name+'님이 '+ category+' ['+read+']</td></tr>'
 					        	
 					        	}
 					        	
@@ -217,7 +221,7 @@
 									        }),
 
 									        success : function(serverData) {
-									        	
+									        	$(".badge").text(status-1);
 									        }									
 											
 										});
