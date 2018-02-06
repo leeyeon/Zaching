@@ -15,19 +15,6 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	  <!-- CSS -->
-	  <%-- 
-	  <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	  <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	  <link href="../css/nivo-lightbox.css" rel="stylesheet" />
-	  <link href="../css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
-	  <link href="../css/owl.carousel.css" rel="stylesheet" media="screen" />
-	  <link href="../css/owl.theme.css" rel="stylesheet" media="screen" />
-	  <link href="../css/animate.css" rel="stylesheet" />
-	  <link href="../css/style.css" rel="stylesheet">
-	  <link href="../color/default.css" rel="stylesheet">
-	  --%>
 
 	<style>
 	
@@ -43,6 +30,12 @@
 		    background: #ffffff;
 		}
 		
+		#navigationbar {
+			margin-top: 10px;
+			padding-top: 20px;
+			background: #FFFFFF;
+		}
+		
 		#navbar > ul> li> a {
 			color:#FFFFFF;
 		}
@@ -55,15 +48,11 @@
 		    background-image: linear-gradient(to bottom,#cccccc 0,#cccccc 100%);
 		}
 		
-		.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
-		    background: #5F4B8B;
-		}
-		
 		.mainbar {
 			padding: 0px;
 			height: 150px;
 			width: 100%;
-					text-align: center;			
+			text-align: center;			
 		}
 		
 		.mainbar-menu {
@@ -324,7 +313,8 @@
 		
 
 	});
-	
+		
+		/*
 		$(document).ready(function(){
 			
 			var userId = $("input[name='userId']").val();
@@ -353,7 +343,7 @@
 		        }
 			});
 			});
-			
+			*/
 		
 		
 	
@@ -361,28 +351,33 @@
 
 <title>zaching</title>
 </head>
-<body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid" style="background: #5F4B8B; height:50px;">
+<body style="background-color: rgb(240, 239, 238);">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="height: 105px; background-color: #FFF;  
+    	background-image: url('/resources/images/toolbar_img.png');     background-repeat: repeat-x;
+    	border-bottom: 1px solid rgba(214, 213, 212, 0.64);">
+      <div class="container" style="color:#000">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigationbar" aria-expanded="false" aria-controls="navbar"
+          	style="margin-top: 35px;">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
+            
           </button>
           <a class="navbar-brand" href="#">
-          	<img alt="뉴스피드로 이동" src="/resources/images/temp_logo.png"  height="40px" 
-          		style="margin-top: -10px;"/>
-          </a>
+	          	<img alt="뉴스피드로 이동" src="/resources/images/temp_logo.png"  height="40px" 
+	          		style="margin-top: 20px;"/>
+	        </a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse" >
+        <div id="navigationbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#">밥친구</a></li>
-            <li><a href="#">라이브방송</a></li>
-            <li><a href="#">보이스리플</a></li>
-            <li><a href="#">생활정보</a></li>
+            <li><a href="#" style="color:#000;">밥친구</a></li>
+            <li><a href="#" style="color:#000;">라이브방송</a></li>
+            <li><a href="#" style="color:#000;">보이스리플</a></li>
+            <li><a href="#" style="color:#000;">생활정보</a></li>
           </ul>
           <ul class="nav navbar-nav" style="float:right;">
           	<c:if test="${user.userId ne null}">
