@@ -19,6 +19,16 @@
 <title>Insert title here</title>
 </head>
 <style>
+
+body {
+	padding-top: 50px;
+}
+
+body>div.container {
+	
+	margin-top: 10px;
+}
+
 .modal {
   overflow: inherit;
   overflow-y: inherit;
@@ -188,6 +198,22 @@ $(function(){
 <div class="container">
 
   <div class="row">
+  <ul data-role="listview" data-inset="true" data-theme="d">
+
+             <li data-role="list-divider">Divider</li>
+
+             <li><a href="index.html">Inbox <span class="ui-li-count">12</span></a></li>
+
+             <li><a href="index.html">Outbox <span class="ui-li-count">0</span></a></li>
+
+             <li><a href="index.html">Sent <span class="ui-li-count">328</span></a></li>
+
+</ul>
+
+
+
+
+
     <div class="col-xs-12">
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">노래검색하기</button>
       <input type="text" placeholder="선택된노래" name="selectsong" id="selectsong" value="">

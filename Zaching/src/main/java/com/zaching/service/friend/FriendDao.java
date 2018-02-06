@@ -33,6 +33,8 @@ public interface FriendDao {
 	
 	//totalCount
 	public int getTotalCount(Search search) throws Exception;
+
+	public void enterFriend(Friend friend)throws Exception;
 	
 	
 	

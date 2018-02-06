@@ -69,7 +69,7 @@ public class NewsfeedController {
 		
 		newsfeedService.addNewsfeed(newsfeed);
 		
-		return "redirect:/newsfeed/listNewsfeed";
+		return "/";
 	}
 	
 	@RequestMapping(value="deleteNewsfeed", method=RequestMethod.GET)
