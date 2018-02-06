@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,9 +15,11 @@ import java.util.Map;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +31,8 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
 import com.zaching.service.domain.Participant;
+
+import javafx.scene.layout.Region;
 
 /*
  * 작성자 : 이연희
@@ -195,79 +200,22 @@ public class BobServiceTest {
 		
 	}
 	
-	@Test
-	public void excel() {
+	//@Test
+	public void excel() throws Exception {
+		
+		//bobService.excel(26);
          
-        // Workbook 생성
-        Workbook xlsWb = new HSSFWorkbook(); // Excel 2007 이전 버전
- 
-        // *** Sheet-------------------------------------------------
-        // Sheet 생성
-        Sheet sheet = xlsWb.createSheet("firstSheet");
- 
-        // 컬럼 너비 설정
-        sheet.setColumnWidth(0, 1000);
-        sheet.setColumnWidth(9, 1000);
-        // ----------------------------------------------------------
-         
-        // *** Style--------------------------------------------------
-        // Cell 스타일 생성
-        CellStyle cellStyle = xlsWb.createCellStyle();
-         
-        // 줄 바꿈
-        cellStyle.setWrapText(true);
-         
-        // Cell 색깔, 무늬 채우기
-        cellStyle.setFillForegroundColor(new XSSFColor(Color.decode("#FF0000")).getIndexed());
-         
-        Row row = null;
-        Cell cell = null;
-        //----------------------------------------------------------
-         
-        // 첫 번째 줄
-        row = sheet.createRow(0);
-         
-        cell = row.createCell(1);
-        cell.setCellValue("이름");
-         
-        cell = row.createCell(2);
-        cell.setCellValue("회비달");
-        //cell.setCellStyle(cellStyle); // 셀 스타일 적용
-        
-        cell = row.createCell(3);
-        cell.setCellValue("회비");
-        
-        cell = row.createCell(4);
-        cell.setCellValue("회비유무");
-        
-        //---------------------------------
-         
-        // 두 번째 줄
-        row = sheet.createRow(1);
-         
-        // 두 번째 줄에 Cell 설정하기-------------
-        cell = row.createCell(0);
-        cell.setCellValue("2-1");
-         
-        cell = row.createCell(1);
-        cell.setCellValue("2-2");
-         
-        cell = row.createCell(2);
-        cell.setCellValue("2-3");
-        cell.setCellStyle(cellStyle); // 셀 스타일 적용
-        //---------------------------------
- 
-        // excel 파일 저장
-        try {
-            File xlsFile = new File("D:/testExcel.xls");
-            FileOutputStream fileOut = new FileOutputStream(xlsFile);
-            xlsWb.write(fileOut);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-         
+    }
+	
+	//@Test
+	public void date() throws Exception {
+		
+		String date_s = " 2018-02-01 15:18"; 
+		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
+		Date date = dt.parse(date_s);
+		SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println(dt1.format(date));
+		
     }
 	
 	//@Test
@@ -292,4 +240,55 @@ public class BobServiceTest {
 		
 		
 	}
+	
+	@Test
+	// 서울 역삼역, 선른역 두 지점의 거리를 계산 
+	public void testDate2() {
+	
+		 double distanceMile = 
+		            distance(37.504198, 127.047967, 37.501025, 127.037701, "");
+		         
+		        // 미터(Meter) 단위
+		        double distanceMeter = 
+		            distance(37.504198, 127.047967, 37.501025, 127.037701, "meter");
+		         
+		        // 킬로미터(Kilo Meter) 단위
+		        double distanceKiloMeter = 
+		            distance(37.504198, 127.047967, 37.501025, 127.037701, "kilometer");
+		         
+		        System.out.println(distanceMile + " mile") ;
+		        System.out.println(distanceMeter + " meter") ;
+		        System.out.println(distanceKiloMeter + " kilometer") ;
+		
+		
+	}
+
+	 private static double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
+		double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+         
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+         
+        if (unit == "kilometer") {
+            dist = dist * 1.609344;
+        } else if(unit == "meter"){
+            dist = dist * 1609.344;
+        } 
+ 
+        return (dist);
+    }
+     
+ 
+    // This function converts decimal degrees to radians
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+     
+    // This function converts radians to decimal degrees
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
+ 
 }

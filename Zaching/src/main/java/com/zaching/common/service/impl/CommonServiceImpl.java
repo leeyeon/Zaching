@@ -16,6 +16,9 @@ import com.zaching.common.service.CommonService;
 import com.zaching.common.service.FileDao;
 import com.zaching.common.service.KakaoRestDao;
 import com.zaching.service.domain.Comment;
+
+import com.zaching.service.domain.Notice;
+
 import com.zaching.service.domain.User;
 
 @Service("commonServiceImpl")
@@ -64,6 +67,8 @@ public class CommonServiceImpl implements CommonService {
 		map.put("totalCount", commentDao.getTotalCount(search, categoryCode, roomId));
 		return map;
 	}
+	
+	
 
 	@Override
 	public Comment addComment(Comment comment) throws Exception {
@@ -121,6 +126,7 @@ public class CommonServiceImpl implements CommonService {
 		}
 	}
 	
+
 	//로그인화면
 	@Override
 	public String getAuthorizationUrl_login() {
@@ -149,8 +155,35 @@ public class CommonServiceImpl implements CommonService {
 	}
 	
 	
+
+	@Override
+	public Map<String, Object> listNotice(Search search, int userId) throws Exception {
+		
+		List<Notice> list= commentDao.listNotice(search, userId);
+		
+		int totalCount = commentDao.getNoticeTotalCount(search, userId);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		map.put("totalCount", new Integer(totalCount));
+		
+		
+		return map;
+	}
 	
+	@Override
+	public void addNotice(Notice notice) throws Exception{
+		commentDao.addNotice(notice);
+	}
 	
+	@Override
+	public void addNoticeTarget(Notice notice) throws Exception{
+		commentDao.addNoticeTarget(notice);
+	}
 	
+	@Override
+	public void noticeUpdate(int noticeId) throws Exception{
+		commentDao.noticeUpdate(noticeId);
+	}
 
 }

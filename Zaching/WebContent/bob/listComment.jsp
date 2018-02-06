@@ -42,7 +42,12 @@
 				<c:if test="${todayFull - commentDate eq 0}">
 					<!-- 1시간 내 -->
 					<c:if test="${todayHour - commentHour eq 0}">
-						${todayMinutes - commentMinutes}분 전
+						<c:if test="${todayMinutes - commentMinutes == 0}">
+							방금
+						</c:if>
+						<c:if test="${todayMinutes - commentMinutes > 0}">
+							${todayMinutes - commentMinutes}분 전
+						</c:if>						
 					</c:if>
 					<c:if test="${todayHour - commentHour eq 1}">
 						<c:if test="${todayMinutes - commentMinutes > 0}">
@@ -65,12 +70,12 @@
 						어제
 					</c:if>
 				</c:if>
-				<c:if test="${todayFull-commentDate > 2}">
+				<c:if test="${todayFull-commentDate >= 2}">
 					<fmt:formatDate value="${Date}" pattern="MM월 dd일"/>
 				</c:if>
 			</div>
 			<div class="deleteComment" style="position: relative; right: 10px; top:-10px; text-align: end;">
-				X
+				<c:if test="${sessionScope.user.userId eq comment.userId}">X</c:if>
 			</div>
 		</div>
 	</div>

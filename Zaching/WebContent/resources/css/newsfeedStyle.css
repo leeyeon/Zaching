@@ -54,7 +54,7 @@ ins {
 /* FORM
 ================================================ */
 /* form input */
-input, textarea, select, input[type=search], button {
+input, textarea{
 	font-size: 1em;
 	font-family: inherit;
 }
@@ -83,7 +83,7 @@ textarea:focus{
 }
 
 /* form button */
-#submit{
+.submit{
 	color: #fff;
 	border: none;
 	padding: .7em 1.1em;

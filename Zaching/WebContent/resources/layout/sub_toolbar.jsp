@@ -213,8 +213,7 @@
 			var left = Math.ceil((window.screen.width - windowW)/2);
 		    var top = Math.ceil((window.screen.height - windowH)/2);
 		    
-			window.open("/kakaoLoginRequest",'popup',"l top="+top+
-					",left="+left+", height="+windowH+", width="+windowW);
+			window.open("/user/kakaoLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
 			opener.location.reload(true);
 			    self.close();
 	

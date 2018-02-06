@@ -90,4 +90,35 @@ public class NewsfeedDaoImpl implements NewsfeedDao{
 		sqlSession.insert("NewsfeedMapper.addLikeBlind", map);
 	}
 
+	@Override
+	public void deleteLikeBlind(int newsfeedId, int userId, String status) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("newsfeedId", newsfeedId);
+		map.put("userId", userId);
+		map.put("status", status);
+		sqlSession.delete("NewsfeedMapper.deleteLikeBlind", map);
+		
+	}
+
+	@Override
+	public void cancelCountLike(int newsfeedId) throws Exception {
+		sqlSession.update("NewsfeedMapper.cancelCountLike", newsfeedId);
+	}
+
+	@Override
+	public int getLikeUser(int newsfeedId, int userId, String status) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("newsfeedId", newsfeedId);
+		map.put("userId", userId);
+		map.put("status", status);
+		System.out.println("newsfeedId: "+newsfeedId+"userId: "+userId+"status: "+status);
+		
+		System.out.println("userDao");
+		System.out.println((Integer)sqlSession.selectOne("NewsfeedMapper.getLikeUser", map));
+		if((Integer)sqlSession.selectOne("NewsfeedMapper.getLikeUser", map)==null) {
+			return 0;
+		}
+		return (int)sqlSession.selectOne("NewsfeedMapper.getLikeUser", map);
+	}
+
 }

@@ -1,10 +1,27 @@
 package com.zaching.service.bob.impl;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -140,5 +157,12 @@ public class BobServiceImpl implements BobService {
 	public void payFeeBob(int participantId, int paidFee) throws Exception {
 		bobDao.payFeeBob(participantId, paidFee);
 	}
+	
+	@Override
+	public List<Participant> listFeeBob(int bobId, int month) throws Exception {
+		List<Participant> list = bobDao.listFeeBob(bobId, month);
+		
+		return list;
+    }
 
 }
