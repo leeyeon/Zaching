@@ -26,6 +26,9 @@ public interface FriendService {
 	//status 업데이트
 	public void updateFriend(Friend friend) throws Exception;
 
-	public void deleteFreind(int id )throws Exception;
+	public void deleteFreind(int friendId )throws Exception;
+	
+	public void  enterFriend(Friend friend) throws Exception;
+
 
 }

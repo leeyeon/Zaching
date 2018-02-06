@@ -1,13 +1,33 @@
 package com.zaching.service.domain;
 
-import java.util.Date;
-
 public class Friend {
 	
 	private int id;
-	private int friendId;// 친구ID 시퀀스
-	private int userId;//친구 ID시퀀스
-	private int status;//
+	private int friendId;
+	private int userId;
+	private int status;
+	private String profileImage;//프로필사진
+	private String realName;//실명
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
+
+	public String getRealName() {
+		return realName;
+	}
+
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+
 
 	public Friend() {
 

@@ -9,9 +9,13 @@
 		<result property="id" column="id" jdbcType="INTEGER" />
 		<result property="friendId" column="friend_id" jdbcType="INTEGER" />
 		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="profileImage"   column="profile_image" 	jdbcType="VARCHAR"/>
+		<result property="name"   		  column="name"    	 		jdbcType="VARCHAR"/>
 		<!-- <result property="name" column="name" jdbcType="VARCHAR" />
 		<result property="profileImage"   column="profile_image" 	jdbcType="VARCHAR"/> -->
 		<result property="status" column="status" jdbcType="CHAR" />
+
+
 
 
 	</resultMap>
@@ -23,15 +27,32 @@
 		seq_id.nextval,
 		#{userId:INTEGER},
 		#{friendId:INTEGER},
-		'0'
+		#{profileImage:VARCHAR},
+		#{name},
+		'1'
+		)
+		
+	</insert>
+	
+	<insert id="enterFriend" parameterType="map">
+		INSERT
+		INTO friend(id ,friend_id ,user_id ,status )
+		VALUES(
+		seq_id.nextval,
+		#{userId:INTEGER},
+		#{friendId:INTEGER},
+		#{profileImage:VARCHAR},
+		#{name},
+		'1'
 		)
 	</insert>
 	
+	
 	<select id="getFriend" parameterType="int" resultMap="friendSelectMap">
 	SELECT
-	id,friend_id,user_id,status
+	id,friend_id,user_id,status,profile_image,name
 	FROM friend
-	WHERE id=#{id}
+	WHERE user_id=#{userId} AND status=#{status}
 	</select>
 	
 	<update id="updateFriend" parameterType="friend">
@@ -39,7 +60,7 @@
 	<set>
 	status=#{status}
 	</set>
-	WHERE id=#{id}
+	WHERE user_id=#{userId} AND friend_id=#{friendId} and status=#{status}
 	</update>
 	
 	<delete id="deleteFriend" parameterType="friend">
@@ -55,13 +76,10 @@
 					<if test="searchCondition !=null">
 					<where>
 					<if test="searchCondition == 0 and searchKeyword !='' ">
-					id=#{searchKeyword}
+					user_id=#{searchKeyword}
 					</if>
 					<if test="searchCondition == 1 and searchKeyword !='' ">
 					friend_id=#{searchKeyword}
-					</if>
-					<if test="searchCondition == 2 and searchKeyword !='' ">
-					user_id=#{searchKeyword}
 					</if>
 					</where>
 					</if>
@@ -72,8 +90,19 @@
 	
 	 	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM( SELECT id,friend_id ,user_id, status 
-	  			FROM friend ) countTable						
+	  	FROM(SELECT id,friend_id,user_id,status
+					FROM friend
+					<if test="searchCondition !=null">
+					<where>
+					<if test="searchCondition == 0 and searchKeyword !='' ">
+					user_id=#{searchKeyword}
+					</if>
+					<if test="searchCondition == 1 and searchKeyword !='' ">
+					friend_id=#{searchKeyword}
+					</if>
+					</where>
+					</if>
+					ORDER BY id DESC)  countTable						
 	 </select>
 
 
