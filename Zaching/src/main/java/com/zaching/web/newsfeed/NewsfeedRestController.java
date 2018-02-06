@@ -88,7 +88,7 @@ public class NewsfeedRestController {
 		
 		Search search = new Search();
 		search.setCurrentPage(Integer.parseInt(page[1]));
-		
+
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
