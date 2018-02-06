@@ -18,7 +18,7 @@ public class URLConnection {
 		
 	}
 
-	// contentType ?—†?œ¼ë©? null ë¡? ?‘œ?‹œ
+	// contentType ¾øÀ¸¸é null ·Î Ç¥½Ã
 	// parameter / contentType / property
 	public static JSONObject getJSON_PARAM(String requestMethod, String requestURL, String param, String contentType,
 							String propertyName, String propertyValue) throws Exception {
@@ -41,7 +41,7 @@ public class URLConnection {
         if(requestMethod.equals("POST")) {
 	        OutputStream os = con.getOutputStream();
 	        
-	        // parameter ?•œê¸? ?¸ì½”ë”© ë¬¸ì œ ?•´ê²?!!!
+	        // parameter ÇÑ±Û ÀÎÄÚµù ¹®Á¦ ÇØ°á!!!
 	        os.write(param.getBytes("UTF-8"));
 	        os.flush();
 	        os.close();

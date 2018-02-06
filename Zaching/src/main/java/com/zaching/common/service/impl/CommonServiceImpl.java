@@ -16,7 +16,9 @@ import com.zaching.common.service.CommonService;
 import com.zaching.common.service.FileDao;
 import com.zaching.common.service.KakaoRestDao;
 import com.zaching.service.domain.Comment;
+
 import com.zaching.service.domain.Notice;
+
 import com.zaching.service.domain.User;
 
 @Service("commonServiceImpl")
@@ -101,8 +103,10 @@ public class CommonServiceImpl implements CommonService {
 
 	@Override
 	public Map<String, Object> getAceessToken(String code) throws Exception {
+		
 		return kakaoRestDao.getAceessToken(code);
 	}
+	
 
 	@Override
 	public String getPaymentReady(String token, int point) throws Exception {
@@ -122,6 +126,36 @@ public class CommonServiceImpl implements CommonService {
 		}
 	}
 	
+
+	//로그인화면
+	@Override
+	public String getAuthorizationUrl_login() {
+		
+		return kakaoRestDao.getAuthorizationUrl_login();
+	}
+	//토큰요청
+	@Override
+	public User getAceessToken2(String code) throws Exception {
+		
+		return kakaoRestDao.getAceessToken2(code);
+	}
+	
+	//앱연결
+	@Override
+	public void getAppConnection(String token) throws Exception {
+		// TODO Auto-generated method stub
+		kakaoRestDao.getAppConnection(token);
+	}
+	
+	//사용자 정보 요청
+	@Override
+	public User getUserInfo(User user) throws Exception {
+		
+		return kakaoRestDao.getUserInfo(user);
+	}
+	
+	
+
 	@Override
 	public Map<String, Object> listNotice(Search search, int userId) throws Exception {
 		

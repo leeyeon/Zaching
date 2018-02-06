@@ -42,13 +42,35 @@ public class User {
 	private String setFriend;//친구알림설정
 	private String setBob;//밥친구 알림설정
 	private String snsType;//sns계정 연동된 정보
-
-
+	
+	private String accessToken;//토큰저장?
+	private String refreshToken;//토큰갱신
+	
 	public User() {
 		
 	}
 	
 	
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+	}
+
+
 	public int getUserId() {
 		return userId;
 	}

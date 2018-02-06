@@ -172,6 +172,11 @@
 		</if>
 		
 		FROM BOB, USERS <if test='category == "B03"'> , PARTICIPANT </if>
+			<if test="category == 'B04'">
+				, (select latitude AS user_lat, longitude AS user_lng
+				from users
+				where user_id = 9)
+			</if>
 		<where>
 			bob.writer_id = users.user_id
 			AND bob.status NOT IN ('N')
@@ -184,6 +189,8 @@
 			</if>
 			<if test='category == "B04"'>
 				AND trim(category_code) IN ('B01', 'B02')
+				AND (user_lat between bob.latitude-0.019 and bob.latitude+0.019)
+			    AND (user_lng between bob.longitude-0.022 and bob.longitude+0.022)
 			</if>
 		</where>
 		ORDER BY bob.time NULLS LAST

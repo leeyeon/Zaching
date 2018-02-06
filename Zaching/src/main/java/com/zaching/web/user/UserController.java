@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
+import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.User;
 import com.zaching.service.user.UserService;
 
@@ -43,7 +44,10 @@ public class UserController {
 
 	/// Field
 	@Autowired
-
+	@Qualifier("commonServiceImpl")
+	private CommonService commonService;
+	
+	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 
@@ -57,11 +61,13 @@ public class UserController {
 	int pageUnit;
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
+	
 
+	
 	@RequestMapping(value = "addUser", method = RequestMethod.GET)
 	public String addUser() throws Exception {
 
-		System.out.println("/user/addUser : GET");
+		System.out.println("/user/addUser : GET ²ó?");
 
 		return "redirect:/user/addUser.jsp";
 	}
@@ -259,5 +265,8 @@ public class UserController {
 	
 	return "forward:/user/memoryMap.jsp";
 	}
+	
+	
+
 	
 }

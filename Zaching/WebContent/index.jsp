@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-	<jsp:include page="./resources/layout/toolbar.jsp"/>
+	<jsp:include page="./resources/layout/sub_toolbar.jsp"/>
 	
 	<style>
 	
