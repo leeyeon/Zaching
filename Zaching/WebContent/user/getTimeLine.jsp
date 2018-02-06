@@ -101,7 +101,7 @@
         </div>
         
         <div class="col-xs-3" id="name" style="margin-top: 100px; margin-left: 20px">
-		<%-- <h3>${user.name}</h3> --%><h3>이정은</h3>
+		<h3>${user.name}</h3>
         </div>
     </div>
     

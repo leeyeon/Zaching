@@ -67,7 +67,7 @@ public class UserController {
 	@RequestMapping(value = "addUser", method = RequestMethod.GET)
 	public String addUser() throws Exception {
 
-		System.out.println("/user/addUser : GET");
+		System.out.println("/user/addUser : GET ²ó?");
 
 		return "redirect:/user/addUser.jsp";
 	}
