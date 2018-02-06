@@ -20,9 +20,11 @@
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
 
-<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 
 </head>
 <style>
@@ -33,7 +35,7 @@
 </style>
 <script>
 $(function() {
-	console.log("gg");	
+	
 			 $.ajax({
 					url : "/livingInfo/rest/getBestBook",
 					method : "GET" ,
@@ -44,30 +46,32 @@ $(function() {
 						"Content-Type" : "application/json"
 					},
 					success : function(JSONData , status) {
-						console.log("gg");
-						var displayValue = '';
 						
-						console.log(JSONData.item[0].title);
-						console.log(JSONData.item[0].cover);
-						for(var i=0; i<10; i++){
-							displayValue = displayValue + '<h1>'+(i+1)+'</h1><div class="container"><div class="card">'+
+						var displayValue = '';
+						var active = '';
+						
+
+						for(var i=0; i<5; i++){
+							if(i == 0 ){
+								active = '<div class="item active">';
+							}
+							else{
+								active = '<div class="item">';
+							}
+							displayValue = displayValue + active +'<h1>'+(i+1)+'</h1><div class="container"><div class="card">'+
 							'<div class="col-xs-2"><img src="'+JSONData.item[i].cover+'" width="150px"/></div>'+
 							' <div class="col-xs-8"> <h4><b>'+JSONData.item[i].title+'</b><br/></h4>'+JSONData.item[i].author+
-							'<br/><br/>'+JSONData.item[i].description+'<br/><br/><b>'+JSONData.item[i].categoryName+'</b><br/></div></div></div>';
+							'<br/><br/>'+JSONData.item[i].description+'<br/><br/><b>'+JSONData.item[i].categoryName+'</b><br/></div></div></div></div>';
 
 						}
 						
 
-						
-						
-						$(".container").html(displayValue);
-						 
+						$("#bookchart").html(displayValue);
+
 					}
 		});
 			 
 });		 
- 
-
 
 </script>
 <style>
@@ -88,14 +92,6 @@ $(function() {
 }
 </style>
 <body>
-
-<br/>
-<br/>
-<br/>
-<div class="container" >
-
-</div>
-
 
 </body>
 </html>

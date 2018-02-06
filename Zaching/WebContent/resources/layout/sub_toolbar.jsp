@@ -9,6 +9,8 @@
 	<meta name="author" content="">
 	
 	<!--   jQuery , Bootstrap CDN  -->
+	
+  
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -91,8 +93,6 @@
 			margin-left: 20px;
 		}
 		
-		
-		
 		.modal-dialog.login{
 	 		width: 300px;
 	  		height: 200px;
@@ -115,14 +115,126 @@
 			margin-right: 10px;
 			margin-bottom: 10px;
 		}
+		
+		.notice{
+		 overflow: inherit;
+  	overflow-y: inherit;
+ 	 text-align: center;
+  	display: inline-block;
+  	vertical-align: right;
+  	 width: 300px;
+  	 height: 150px;
+  	 overflow-y: scroll;
+		}
+		
+
 
 	</style>
 	
 	<script type="text/javascript">
+		$( function() {
+
+			
+			
+			
+		
+		
+		$( "#notice" ).on("click" , function() {
+			
+			
+        	var displayValue = '';
+			var tr = '';
+			var category = '';
+			var status = 0;
+			
 	
-	$( function() {
+			if ($('.noticelist').attr('hide') == "true") {
+		    	$('.noticelist').slideUp(function() {
+		    		$(this).attr('hide', false);
+		   	 	});
+		    } else {
+		    	$('.noticelist').slideDown(function() {
+		    		$(this).attr('hide', true);
+		   	 	});
+		    }
+
+			
+			console.log($("input[name='userId']").val());
+			var userId = $("input[name='userId']").val();
+				
+			$.ajax( {
+							url : "/notice/rest/noticeList",
+							method : "POST",
+					        contentType : "application/json; charset=UTF-8",
+					        data : JSON.stringify({
+					        	"RECEIVER_ID" : userId
+					        }),
+					        dataType : "json",
+					        success : function(serverData) {
+					        	
+					       
+					        	
+					        	for(var i=0; i<serverData.list.length; i++){
+					        		
+					        		if(serverData.list[i].category == 'V'){
+					        			category = '보이스리플에 게시글을 올렸습니다.';
+					        		}
+					        		else if(serverData.list[i].category == 'B'){
+					        			category = '밥친구에 초대하였습니다.';
+					        		}
+					        		
+					        		
+					        		if(serverData.list[i].status == '0'){
+					        			++status;
+					        		}
 		
-		
+					        		tr = tr + '<tr class="notice_list_click"><td align="left"><input type="hidden" name="noticeid" value="'+serverData.list[i].noticeId+'">'+
+					        		serverData.list[i].name+'님이 '+ category+'</td></tr>'
+					        	
+					        	}
+					        	
+									
+									displayValue = '<div class="notice"><table class="table table-hover">'+ tr + '</table></div>';
+									
+								
+									$(".noticelist").html(displayValue);
+									$(".badge").text(status);
+									
+
+									
+									$(".notice_list_click td").on("click" , function() {
+										
+					
+										var noticeId = $($("input[name='noticeid']")[$('.notice_list_click td:nth-child(1)').index(this)]).val();
+										
+										$.ajax( {
+											
+											url : "/notice/rest/noticeUpdate",
+											method : "POST",
+									        contentType : "application/json; charset=UTF-8",
+									        data : JSON.stringify({
+									        	"NOTICE_ID" : noticeId
+									        }),
+
+									        success : function(serverData) {
+									        	$(".badge").text(status-1);
+									        	
+									        	
+									        }									
+											
+										});
+										
+									});
+					           
+					        }
+			 
+	 		
+			});
+			
+			
+			
+			
+		});
 		
 		//==>"Login"  Event 연결
 		$("#login").on("click" , function() {
@@ -200,27 +312,49 @@
 
 		});
 		
-		//이름으로 타임라인 이동
-		$("#navbar > ul:nth-child(2) > li:nth-child(1) > div > a").on("click", function() {
-			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";
+		$("#kakaologin").on("click", function() {
+			self.location =
+		"https://kauth.kakao.com/oauth/authorize?client_id=dfe2041581c23da0c4e9c8aefb3c28a1&redirect_uri=http://127.0.0.1:8080/kakaologin&response_type=code";
 
 		});
 		
-		//카카오로그인 으로 이동
-		$("#kakaologin").on("click", function() {
-			var windowW = 400;  // 창의 가로 길이
-		    var windowH = 500;  // 창의 세로 길이
-			var left = Math.ceil((window.screen.width - windowW)/2);
-		    var top = Math.ceil((window.screen.height - windowH)/2);
-		    
-			window.open("/user/kakaoLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
-			opener.location.reload(true);
-			    self.close();
-	
-		});
+		
+		
 		
 
 	});
+	
+		$(document).ready(function(){
+			
+			var userId = $("input[name='userId']").val();
+
+			$.ajax({
+				url : "/notice/rest/noticeList",
+				method : "POST",
+		        contentType : "application/json; charset=UTF-8",
+		        data : JSON.stringify({
+		        	"RECEIVER_ID" : userId
+		        }),
+		        dataType : "json",
+		        success : function(serverData) {
+		        	var status = 0;
+		        	
+		        
+		        	for(var i=0; i<serverData.list.length; i++){
+		        		if(serverData.list[i].status == '0'){
+	        				++status;
+	        			}
+		        	
+		        	}
+
+		        	$(".badge").text(status);
+		        	
+		        }
+			});
+			});
+			
+		
+		
 	
 </script>
 
@@ -252,20 +386,25 @@
           <ul class="nav navbar-nav" style="float:right;">
           	<c:if test="${user.userId ne null && user.profileImage eq null}">
 	          	<li><div style="padding-top: 10px; color:#FFF;">
+	          	<a href="#"><img src="../resources/images/paper-plane.png" id="notice"
+		          	width="30px"/></a><div class="badge   badge-primary"></div>&nbsp;&nbsp;
 		       	<img src="../resources/images/profile_default.png" id="profile"
-		          	width="30px"/>&nbsp;<a href="#profile" style="color: #fffe09;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
+		          	width="30px"/>&nbsp;<input type="hidden" name="userId" value="${user.userId}"><u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
 		       
 	          	</div></li>
-	          	<li><a href="#" title="로그아웃">로그아웃</a></li>
+	          	<li><a href="#">로그아웃</a></li>
           	</c:if>
           	
           	<c:if test="${user.userId ne null && user.profileImage ne null}">
 	          	<li><div style="padding-top: 10px; color:#FFF;">
-		       	<img src="../resources/upload_files/images/${user.profileImage}" id="profile"
-		          	width="30px"/>&nbsp;<a href="#profile" style="color: #fffe09;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
+	          	<a href="#"><img src="../resources/images/paper-plane.png" id="notice"
+		          	width="30px"/></a><div class="badge   badge-primary"></div>&nbsp;&nbsp;
+		       	<img src="../resources/upload_files/images/${user.profileImage} id="profile"
+		          	width="30px"/>&nbsp;<u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
 		       
 	          	</div></li>
-	          	<li><a href="#logout" title="로그아웃">로그아웃</a></li>
+	          	<li><a href="#">로그아웃</a></li>
+	          	 
           	</c:if>
           	 
           	 
@@ -274,7 +413,11 @@
             <li><a href="#">회원가입</a></li>
           </c:if>
           </ul>
+          			
         </div><!--/.nav-collapse -->
+        <div class="noticelist" align="right" style="display:none;">
+						
+					</div>
 	  </div>
 		
 
@@ -333,14 +476,10 @@
 		
 		<div class="row">
               <div class="social-login" align="left">
-   			 	<a href="#kakaoLogin" id="kakaoLogin">
-   			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" type="button" id="kakaologin"/></a>
-   			 	<a href="#facebookLogin" id="facebookLogin">
-   			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50"  type="button" id="facebooklogin"></a>
-   			 	<a href="#naverLogin" id="naverLogin">
-   			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50"  	type="button" id="Naverlogin"/></a>
-   			 	<a href="#googleLogin" id="googleLogin">
-   			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" 	type="button" id="Googlelogin"/></a>
+   			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" type="button" id="kakaologin">
+   			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50" >
+   			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50" />
+   			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" >
              </div>  
         </div>
         

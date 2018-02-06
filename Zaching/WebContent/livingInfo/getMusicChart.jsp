@@ -19,18 +19,11 @@
 
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 
 
-<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 
 </head>
-<style>
-#fixedbtn{position:fixed;
-			right:50px;
-			bottom:50px;
-			z-index:1000}
-</style>
+
 <script>
 $(function() {
 	
@@ -46,8 +39,7 @@ $(function() {
 					success : function(JSONData , status) {
 						var displayValue = '';
 						
-						console.log(JSONData.melon.songs.song[0].songName);
-						console.log(JSONData.melon.songs.song[0].artists.artist[0]);
+
 						
 						for(var i=0; i<10; i++){
 							displayValue = displayValue + '<div class="container"><div class="card">'+
@@ -59,7 +51,7 @@ $(function() {
 
 						
 						
-						$(".container").html(displayValue);
+						$(".musicChart").html(displayValue);
 						 
 						
 						 
@@ -71,31 +63,9 @@ $(function() {
 
 
 </script>
-<style>
-.card {
-    /* Add shadows to create the "card" effect */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-}
 
-/* On mouse-over, add a deeper shadow */
-.card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-/* Add some padding inside the card container */
-.container {
-    padding: 2px 16px;
-}
-</style>
 <body>
 
-<br/>
-<br/>
-<br/>
-<div class="container" >
-
-</div>
 
 
 </body>

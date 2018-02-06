@@ -153,7 +153,7 @@ public class LivingInfoRestController {
 		String clientId = "gVDmQkx91BgYSzY0iCZw";//애플리케이션 클라이언트 아이디값";
         String clientSecret = "ZYh3yjIlSQ";//애플리케이션 클라이언트 시크릿값";
         
-        System.out.println(movieImg);
+        
        
             String text = URLEncoder.encode(movieImg+" 영화 포스터", "UTF-8");
             String apiURL = "https://openapi.naver.com/v1/search/image?query="+ text; // json 결과
@@ -210,7 +210,7 @@ public class LivingInfoRestController {
 	        chStart = df.parse(ymd).getTime();           
 	        chStart -= 86400000;    //24*60*60*1000 하루치의 숫자를 빼준다
 	        
-	        System.out.println(chStart);
+	       
 	        
 	        Date aa = new Date(chStart); 
 	        
@@ -234,7 +234,6 @@ public class LivingInfoRestController {
 			sb.append((char) c);
 		}
 		
-		System.out.println(sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString());
 		return sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString();
 		
 	}
@@ -262,7 +261,6 @@ public class LivingInfoRestController {
 			}	
 		}
 
-		System.out.println(locationCode);
 		
 		String addr = "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSHRent"+"?serviceKey=";
 		String serviceKey = "UQrLvBzmIEGlEYA9kX%2FLntAGtGodzdBYhr5GXJqVkG5tw8MlBZTZh3b7V8jd4Ew6LJ3kAlE3r2qi%2B1K6j95gFw%3D%3D";
@@ -334,8 +332,7 @@ public class LivingInfoRestController {
 			
 		}
 		
-		System.out.println("전세"+count2);
-		System.out.println("월세"+count1);
+		
 		mMoney = (mMoney/count1);
 		dMoney = (dMoney/count1);
 		yMoney = (yMoney/count2);
