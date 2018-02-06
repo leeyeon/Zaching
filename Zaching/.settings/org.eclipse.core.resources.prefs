@@ -9,6 +9,7 @@ encoding//WebContent/newsfeed/newsfeed.jsp=EUC_KR
 encoding//WebContent/newsfeed/test.jsp=UTF-8
 encoding//WebContent/newsfeed/test02.jsp=UTF-8
 encoding//src/main/java/com/zaching/common/service/impl/KakaoRestDaoImpl.java=UTF-8
+encoding//src/main/java/com/zaching/service/user/impl/NaverDaoImpl.java=UTF-8
 encoding//src/main/resources/config/bankCode.properties=UTF-8
 encoding//src/main/resources/config/category.properties=UTF-8
 encoding//src/main/resources/config/rentCharge.properties=UTF-8

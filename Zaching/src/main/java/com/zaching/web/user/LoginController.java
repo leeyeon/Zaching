@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.User;
+import com.zaching.service.user.NaverService;
 import com.zaching.service.user.UserService;
 
 @Controller
@@ -31,6 +32,10 @@ public class LoginController {
 		@Autowired
 		@Qualifier("userServiceImpl")
 		private UserService userService;
+		
+		@Autowired
+		@Qualifier("naverServiceImpl")
+		private NaverService naverService;
 		
 		public LoginController() {
 			System.out.println(this.getClass());
@@ -75,6 +80,25 @@ public class LoginController {
 			
 			
 			return "forward:/index.jsp";
+		}
+		
+		
+		@RequestMapping(value= "naverLoginRequest", method=RequestMethod.GET)
+		public String naverLoginRequest() {
+			
+			System.out.println("[ Naver Login Request!! ]");
+			
+			return naverService.getAuthorizationUrl_login();
+			
+		}
+		
+		
+		@RequestMapping(value="naverLogin", method=RequestMethod.GET)
+		public String facebookLogin(@RequestParam("code") String code,
+				HttpSession session)throws Exception {
+			
+			
+			return"";
 		}
 
 }

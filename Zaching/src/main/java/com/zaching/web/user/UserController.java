@@ -190,7 +190,7 @@ public class UserController {
 		return "forward:/user/getTimeLine.jsp";
 	}
 
-	@RequestMapping(value = "updateUser", method = RequestMethod.GET)
+	@RequestMapping(value="updateUser", method = RequestMethod.GET)
 	public String updateUser(@RequestParam("userId") int userId, Model model) throws Exception {
 
 		System.out.println("/user/updateUser : GET");
@@ -202,7 +202,7 @@ public class UserController {
 		return "forward:/user/updateUser.jsp";
 	}
 
-	@RequestMapping(value = "updateUser", method = RequestMethod.POST)
+	@RequestMapping(value="updateUser", method = RequestMethod.POST)
 	public String updateUser(@ModelAttribute("user") User user, Model model, HttpSession session) throws Exception {
 
 		System.out.println("/user/updateUser : POST");
