@@ -107,7 +107,7 @@
     
      <c:if test="${user.userId eq sessionScope.user.userId}"><!-- 세션에있는 아이디랑  -->
     <div class="row" >
-    	<div class="col-xs-2">
+    	<div class="col--2">
     		<button type="button" id="memoryMap">추억지도</button>
     	</div>
     	<div class="col-xs-2">

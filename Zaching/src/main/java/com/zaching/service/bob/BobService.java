@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Bob;
+import com.zaching.service.domain.Participant;
 
 public interface BobService {
 
@@ -34,5 +35,7 @@ public interface BobService {
 	public void setFeeBob(int participantId, boolean isAutoFee) throws Exception;
 	
 	public void payFeeBob(int participantId, int paidFee) throws Exception;
+	
+	public List<Participant> listFeeBob(int bobId, int month) throws Exception;
 	
 }

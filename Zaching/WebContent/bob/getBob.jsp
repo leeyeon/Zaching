@@ -1,27 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
-	<!--<jsp:include page="../admin/addReport.jsp"/> -->
 	
-	<link rel="stylesheet" href="../resources/css/getBob.css">
-	<style type="text/css">
-	
-	</style>
+	<link rel="stylesheet" href="../resources/css/bob.css">
+
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
     <script type="text/javascript">
     
 	
     $(function() {
-   	
-   		$(this).scrollTop(0);
+   		
+    	$("html, body").animate({ scrollTop: 0 }, "slow"); 
+
+   		//$(this).scrollTop(0);
 
    		var jumboHeight = $('.jumbotron').outerHeight();
    		function parallax(){
@@ -33,9 +31,11 @@
    		    parallax();
    		});
    	   
+   		// 회비목록 달별로 보여줌
    		$('.select-bob').on('click', function(){
    			$('.active').removeClass('active');
    			$(this).addClass('active');
+   			$("#listFee").load("/bob/listFee?bobId=${param.bobId}&monthFee="+$(this).attr("id").substring(4));
    		});
 
    	 	
@@ -51,6 +51,11 @@
    	 	$('.btn-ico:contains("초대하기")').on('click', function() {
    			alert('초대하기');
    		});
+   	 	
+   	 	$('.btn-bob:contains("엑셀 다운로드")').on('click', function() {
+   	 		//alert("${bob.bobId}");
+   	 		$("#excelForm").attr("method", "POST").attr("action", "/bob/excelFee").submit();
+		});
    	 	
    	 	/*///////////////////////////// 댓글 시작 /////////////////////////////*/
    	 	
@@ -189,7 +194,7 @@
    				data : JSON.stringify({
    					"userId" : <c:out value="${user.userId}" escapeXml="false" />,
    					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />,
-   					"category" : '<c:out value="${param.category}" escapeXml="false" />',
+   					"category" : '<c:out value="${param.category}" escapeXml="false" />'
    				}),
    				async : false,
    				dataType : "json",
@@ -232,7 +237,8 @@
    				data : JSON.stringify({
    					"userId" : <c:out value="${user.userId}" escapeXml="false" />,
    					"participantId" : $("input[name='participantId']").val(),
-   					"fee" : <c:out value="${bob.fee}" escapeXml="false" />
+   					"fee" : <c:out value="${bob.fee}" escapeXml="false" />,
+   					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />
    				}),
    				async : false,
    				dataType : "json",
@@ -282,6 +288,26 @@
 
    		});
    		
+   		$("#report").on('click',function(){
+   			$.ajax({
+   					 
+   		        url : "/admin/rest/addReport",
+   		        method : "POST",
+   		        contentType : "application/json; charset=UTF-8",
+   		        data : JSON.stringify({
+   		            "category" : 2,
+   		            "userID" : <c:out value="${user.userId}" escapeXml="false" />,
+   		            "text" : $("#reportText").val(),
+   		            "roomID" : <c:out value="${bob.bobId}" escapeXml="false" />
+   		        }),
+   		        async : false,
+   		        dataType : "json",
+   		        success : function(serverData) {
+   		        	alert("신고가 완료되었습니다.");
+   		        }
+   			})
+   		});
+   		
    	 	
    	 	/* 맵!!! */
 
@@ -314,7 +340,7 @@
 </script>
     
 </head>
-<body>
+<body class="getBob">
 
 	<c:set var="frontImage" value="${fn:substring(bob.image, 0, 6)}"/>
 	<c:set var="endImage" value="${fn:substring(bob.image, 7, fn:length(bob.image))}"/>
@@ -324,7 +350,7 @@
 		<div class="container" align="center">
 		
 			<div class="row" >
-				<div class="col-xs-1">신고</div>
+				<div class="col-xs-1" data-toggle="modal" data-target="#addReport">신고</div>
 				<c:if test="${user.userId eq bob.writtenUserId}">
 					<div class="col-xs-1">수정</div>
 				</c:if>
@@ -391,7 +417,7 @@
 							${fn:length(participant)}명
 						</c:if>
 						<c:if test="${param.category eq 'B03'}">
-							<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#myModal" style="">친구초대</button>
+							<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#inviteFriend" style="">친구초대</button>
 						</c:if>
 					</div>
 					
@@ -567,31 +593,18 @@
 	      	</div>
 	      	
 	      	<hr>
-	
-	      	<div class="row" style="padding: 0 20px 0 20px;">
-	   			<c:forEach var="participant" items="${participant}">
-	   				
-					<div class="col-xs-4" align="left" style="margin-top:20px; padding-right:15px;">
-						<img src = "../resources/upload_files/images/${participant.participantProfile}"
-			      			onerror="this.src='../resources/images/user-icon.png'"
-			      			width="60px" height="60px"
-							style=" border-radius: 40px;
-									-moz-border-radius: 40px;
-									-khtml-border-radius: 40px;
-									-webkit-border-radius: 40px;
-									 box-shadow: 1px #cccccc;" />
-						&nbsp;&nbsp;&nbsp;${participant.participantName}&nbsp;&nbsp;&nbsp;
-						<c:if test="${participant.paidFee != 0}">
-							<img width="55px" height="55px" src="/resources/images/checkmark.png" />
-						</c:if>
-					</div>
-				</c:forEach>
-			</div>
 	      	
+	      	<div id="listFee" class="row" style="padding: 0 20px 0 20px;">
+		      <jsp:include page="listFee.jsp" />
+	      	</div>
+
 	      	<hr>
 	      	
 	      	<div class="row" align="right" style="margin-right:5px;">
-	      		<button type="submit" class="btn-bob" style="width: 210px; height: 60px; line-height:60px;">엑셀 다운로드</button>
+	      		<form id="excelForm">
+	      			<input type="hidden" name="bobId" value="${bob.bobId}" />
+	      			<button type="submit" class="btn-bob" style="width: 210px; height: 60px; line-height:60px;">엑셀 다운로드</button>
+	      		</form>
 	      	</div>
 	      </div>
       
@@ -602,13 +615,8 @@
 
 
 
-
-
-
-
-
 	<!-- Modal --> 
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+	<div class="modal fade" id="inviteFriend" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
         <div class="modal-dialog"> 
                <div class="modal-content"> 
                     <div class="modal-header"> 
@@ -679,6 +687,28 @@
                     </div>
                </div> 
         </div> 
+	</div>
+
+	<div class="modal fade" id="addReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel"><b>신고하기</b></h4><label for="exampleTextarea">카테고리/신고대상:</label>
+	      </div>
+	      <div class="modal-body">    
+	      	 <textarea class="form-control" id="reportText" rows="5"></textarea>
+	        </div>
+	      <div class="modal-footer">
+	       <div class="topnav">
+	      <div class="search-container">
+	      	<button type="button" class="btn btn-primary" id="report" data-dismiss="modal" >신고하기</button>
+	      	 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      	</div></div>
+	       
+	      </div>
+	    </div>
+	  </div>
 	</div>
 
 </body>

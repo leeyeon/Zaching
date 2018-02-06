@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommentDao;
 import com.zaching.service.domain.Comment;
+import com.zaching.service.domain.Notice;
 
 /*
  * 작성자 : 이연희
@@ -28,6 +29,46 @@ public class CommentDaoImpl implements CommentDao {
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
+	
+	@Override
+	public void noticeUpdate(int noticeId) throws Exception{
+		sqlSession.update("NoticeMapper.updateNotice", noticeId);
+	}
+	
+	@Override
+	public List<Notice> listNotice(Search search, int userId) throws Exception{
+	
+		
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("search", search);
+		map.put("userId", userId);
+		
+		
+		return sqlSession.selectList("NoticeMapper.listNotice", map);
+
+	}
+	
+	@Override
+	public int getNoticeTotalCount(Search search, int userId) throws Exception{
+				
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("userId", userId);
+		map.put("search", search);
+		
+
+		return sqlSession.selectOne("NoticeMapper.getNoticeTotalCount", map);
+	}
+	
+	@Override
+	public void addNotice(Notice notice) throws Exception{
+		sqlSession.insert("CommentMapper.addNotice", notice);
+	}
+	
+	@Override
+	public void addNoticeTarget(Notice notice) throws Exception{
+		sqlSession.insert("CommentMapper.addNoticeTarget", notice);
+	}
+	
 
 	public CommentDaoImpl() {
 		System.out.println(this.getClass());

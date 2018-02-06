@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.Comment;
+import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.newsfeed.NewsfeedService;
 
 @RestController
@@ -52,15 +54,28 @@ public class NewsfeedRestController {
 		return commonService.addComment(comment);
 	}
 	
-	@RequestMapping(value="json/updateLikey/{newsfeedId}/{userId}", method=RequestMethod.GET)
-	public int updateLikey(@RequestParam int newsfeedId, @RequestParam int userId, @RequestParam int countLikey, @RequestParam String status) throws Exception{
+	@RequestMapping(value="json/updateLikey/{userId}/{status}", method=RequestMethod.POST)
+	public int updateLikey(@RequestBody Newsfeed newsfeed, @PathVariable int userId, @PathVariable String status) throws Exception{
 		System.out.println("newsfeed/json/updateLikey");
 		
-		newsfeedService.updateCountLike(newsfeedId);
-		newsfeedService.addLikeBlind(newsfeedId, userId, status);
-		newsfeedService.getCountLike(newsfeedId);
+		int newsfeedId = newsfeed.getNewsfeedId();
+		System.out.println(newsfeedService.getLikeUser(newsfeedId, userId, status));
+		if(newsfeedService.getLikeUser(newsfeedId, userId, status)>0) {
+			System.out.println("if");
+			newsfeedService.cancelCountLike(newsfeedId);
+			newsfeedService.deleteLikeBlind(newsfeedId, userId, status);
+			
+			return newsfeed.getCountLikey()-1;
+		}
+		else {
+			newsfeedService.updateCountLike(newsfeed.getNewsfeedId());
+			newsfeedService.addLikeBlind(newsfeed.getNewsfeedId(), userId, status);
+			
+			//newsfeedService.getCountLike(newsfeed.getnewsfeedId());
+			
+			return newsfeed.getCountLikey()+1;
+		}
 		
-		return countLikey+1;
 	}
 	
 	@RequestMapping(value="json/listNewsfeed")

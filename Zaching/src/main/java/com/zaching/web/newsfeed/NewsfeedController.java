@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,20 +55,21 @@ public class NewsfeedController {
 	
 	
 	@RequestMapping(value="addNewsfeed", method=RequestMethod.POST)
-	public String addNewsfeed(@ModelAttribute("newsfeed") Newsfeed newsfeed, Model model) throws Exception{
+	public String addNewsfeed(@ModelAttribute("newsfeed") Newsfeed newsfeed, Model model, HttpServletRequest request) throws Exception{
 		System.out.println("addNewsfeed()");
+		
 		if(newsfeed.getFile() != null) {
 			String fileName = newsfeed.getFile().getOriginalFilename();
 			newsfeed.setFileName(fileName);
 			
-			File file = new File("C:/workspace/Zaching/WebContent/resources/upload_files/images/"+fileName);
+			File file = new File("C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\"+fileName);
 			
 			newsfeed.getFile().transferTo(file);
 		}
 		
 		newsfeedService.addNewsfeed(newsfeed);
 		
-		return "forward:/newsfeed/newsfeed.jsp";
+		return "redirect:/newsfeed/listNewsfeed";
 	}
 	
 	@RequestMapping(value="deleteNewsfeed", method=RequestMethod.GET)
@@ -94,12 +96,10 @@ public class NewsfeedController {
 		}
 		search.setPageSize(pageSize);
 		
-		session.setAttribute("user", (User)userService.getUser(32));
-		
 		Newsfeed newsfeed = newsfeedService.getNewsfeed(newsfeedId);
 		model.addAttribute("newsfeed", newsfeed);
-		model.addAttribute("roomUser", userService.getUser(newsfeed.getuserId()));
-		System.out.println("image :: "+userService.getUser(newsfeed.getuserId()));
+		model.addAttribute("roomUser", userService.getUser(newsfeed.getUserId()));
+		System.out.println("image :: "+userService.getUser(newsfeed.getUserId()));
 		System.out.println(newsfeed.getCategoryCode());
 		model.addAttribute("list", (List)(commonService.listComment(search, newsfeed.getCategoryCode(), newsfeedId).get("list")));
 		System.out.println("list :: "+(List)(commonService.listComment(search, "N01", newsfeedId).get("list")));
@@ -111,6 +111,7 @@ public class NewsfeedController {
 	public String listNewsfeed( @ModelAttribute("search") Search search,  Model model, HttpServletRequest request) throws Exception{
 		System.out.println("listNewsfeed");
 		
+		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
@@ -120,6 +121,8 @@ public class NewsfeedController {
 		//List<Newsfeed> list = newsfeedService.listNewsfeeds(search);
 		//User user = userService.getUser(userId);
 		// Business logic ผ๖วเ
+		System.out.println("list :: "+(List)map.get("list"));
+		System.out.println("list :: "+((List)map.get("list")).size());
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		//System.out.println(resultPage);

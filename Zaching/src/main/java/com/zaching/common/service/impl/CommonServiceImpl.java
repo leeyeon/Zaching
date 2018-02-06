@@ -17,6 +17,10 @@ import com.zaching.common.service.FileDao;
 import com.zaching.common.service.KakaoRestDao;
 import com.zaching.service.domain.Comment;
 
+import com.zaching.service.domain.Notice;
+
+import com.zaching.service.domain.User;
+
 @Service("commonServiceImpl")
 public class CommonServiceImpl implements CommonService {
 	
@@ -63,6 +67,8 @@ public class CommonServiceImpl implements CommonService {
 		map.put("totalCount", commentDao.getTotalCount(search, categoryCode, roomId));
 		return map;
 	}
+	
+	
 
 	@Override
 	public Comment addComment(Comment comment) throws Exception {
@@ -97,8 +103,10 @@ public class CommonServiceImpl implements CommonService {
 
 	@Override
 	public Map<String, Object> getAceessToken(String code) throws Exception {
+		
 		return kakaoRestDao.getAceessToken(code);
 	}
+	
 
 	@Override
 	public String getPaymentReady(String token, int point) throws Exception {
@@ -116,6 +124,66 @@ public class CommonServiceImpl implements CommonService {
 		} else {
 			return kakaoRestDao.getPaymentApprove(token, pgToken);
 		}
+	}
+	
+
+	//로그인화면
+	@Override
+	public String getAuthorizationUrl_login() {
+		
+		return kakaoRestDao.getAuthorizationUrl_login();
+	}
+	//토큰요청
+	@Override
+	public User getAceessToken2(String code) throws Exception {
+		
+		return kakaoRestDao.getAceessToken2(code);
+	}
+	
+	//앱연결
+	@Override
+	public void getAppConnection(String token) throws Exception {
+		// TODO Auto-generated method stub
+		kakaoRestDao.getAppConnection(token);
+	}
+	
+	//사용자 정보 요청
+	@Override
+	public User getUserInfo(User user) throws Exception {
+		
+		return kakaoRestDao.getUserInfo(user);
+	}
+	
+	
+
+	@Override
+	public Map<String, Object> listNotice(Search search, int userId) throws Exception {
+		
+		List<Notice> list= commentDao.listNotice(search, userId);
+		
+		int totalCount = commentDao.getNoticeTotalCount(search, userId);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		map.put("totalCount", new Integer(totalCount));
+		
+		
+		return map;
+	}
+	
+	@Override
+	public void addNotice(Notice notice) throws Exception{
+		commentDao.addNotice(notice);
+	}
+	
+	@Override
+	public void addNoticeTarget(Notice notice) throws Exception{
+		commentDao.addNoticeTarget(notice);
+	}
+	
+	@Override
+	public void noticeUpdate(int noticeId) throws Exception{
+		commentDao.noticeUpdate(noticeId);
 	}
 
 }

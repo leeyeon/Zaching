@@ -18,6 +18,14 @@
         	border: 3px solid #D6CDB7;
             margin-top: 10px;
         }
+        
+        #icon{
+        	cursor: pointer;
+        }
+        
+        #imgInput{
+        	cursor: pointer;
+        }
     </style>
 <script>
 // 파일찾기
@@ -35,45 +43,45 @@ function fncProductFile()
 	<form name='Form' class="form-vertical">
 		
 			<div class="container">
-			<div class="row">
-			<div class="form-group">
-				<div class="col-sm-2">
-				<br/>
-				<input type='file' name='txtProductFile' size="15" style='display:none'>
-				
-		   		
-			   <input type="Text" style="display:none" name="txtProductFileName" class='input' readOnly>
-			   <img width="200" style='cursor:hand' alt="파일찾기" src="/resources/images/imageButton.PNG" align="absMiddle" border="0" onclick="fncProductFile()">
-			   </div>
-			</div>
-			
-			
-		
-		  
-			    <div class="col-sm-5">
-			    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			    	   <textarea class="form-control" rows="10" placeholder="상태 업데이트 하세요." class="span1"></textarea>
-			      <!--  <input type="text" class="form-control" id="statement" name="statement" placeholder="상태 업데이트 하세요."> -->
-			    </div>
-			
-			  
-			 
-			  <div class="form-group">
-			    <label for="password" class="col-sm-offset-1 col-sm-2 control-label">비밀번호</label>
-			    <div class="col-sm-3">
-			      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
-			    </div>
-			  </div>
-			
-			  
-			 
-			  <div class="form-group">
-			    <label for="password2" class="col-sm-offset-1 col-sm-2 control-label">비밀번호 확인</label>
-			    <div class="col-sm-3">
-			      <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
-			      </div>
-			   </div>
-			   </div>
+				<div class="row">
+					<table border="0">
+						<tr>
+						<td>
+							<div class="form-group">
+								<br/>
+								<input type='file' name='txtProductFile' size="15" style='display:none'>
+								
+						   		
+							   <input type="Text" style="display:none" name="txtProductFileName" class='input' readOnly>
+							   <img width="200" style='cursor:hand' alt="파일찾기" src="/resources/images/imageButton.PNG" align="absMiddle" border="0" onclick="fncProductFile()" id="imgInput">
+							</div>
+							
+					
+					  <td width=700>
+					  <p style="font-size: 30px; color: #00D1CD;"><i class="glyphicon glyphicon-map-marker" id="icon"></i></p>
+						    	   <textarea class="form-control" rows="9" placeholder="상태 업데이트 하세요." class="span1" cols="40"></textarea>
+						      <!--  <input type="text" class="form-control" id="statement" name="statement" placeholder="상태 업데이트 하세요."> -->
+						   
+						    </td>
+					    </tr>
+					</table>
+					  
+					 <table border="1">
+					 <tr>
+					 <td width="300">
+						  <div class="form-group" align="left">
+						   <strong>카테고리</strong> <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+						  </div>
+					</td>
+						  
+					<td width="300">
+						  <div class="form-group">
+						    <strong>공개범위</strong> <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
+						   </div>
+					</td>
+					</tr> 
+					   </table>
+				   </div>
 			   </div>
 
 		</form>

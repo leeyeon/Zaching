@@ -210,5 +210,6 @@ VALUES(seq_user_id.nextval, 'test@test.com', 'test', '자췽',2, sysdate);
 INSERT INTO users(user_id, email, password, name, role, address,created_date)
 VALUES(seq_user_id.nextval, 'abc@abc.com', 'test', '자췽',2, '서울시 서초구 서초동',sysdate);
 
+
 commit;
 

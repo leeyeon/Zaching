@@ -21,13 +21,15 @@
 		<result property="countReply" column="total_reply" jdbcType="INTEGER"/>
 		<result property="privacyBound" column="privacy_bound" jdbcType="CHAR"/>
 		<result property="status" column="status" jdbcType="CHAR"/>
+		<result property="userName" column="name" jdbcType="VARCHAR"/>
+		<result property="profileImage" column="profile_image" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<insert id="addNewsfeed" parameterType="newsfeed">
 		INSERT 
 		INTO newsfeed(newsfeed_id, category_code, content, location_name, longitude, latitude, upload_file, created_date, status, privacy_bound, total_like, user_id, total_reply)
-		VALUES (seq_newsfeed_id.nextval, #{categoryCode}, #{content}, #{locationName:VARCHAR}, #{locationX:INTEGER}, #{locationY:VARCHAR}, #{fileName:VARCHAR}, #{regDate},
-				#{status:CHAR}, #{privacyBound}, #{countLikey}, #{userId}, #{countReply:INTEGER})
+		VALUES (seq_newsfeed_id.nextval, #{categoryCode}, #{content:VARCHAR}, #{locationName:VARCHAR}, #{locationX:INTEGER}, #{locationY:VARCHAR}, #{fileName:VARCHAR}, SYSDATE,
+				#{status:CHAR}, #{privacyBound}, 0, #{userId}, 0)
 	</insert>
 	
 	<delete id="deleteNewsfeed" parameterType="int">
@@ -51,7 +53,7 @@
 	<select id="getNewsfeedList" parameterType="search" resultMap="NewsfeedSelectMap">
 		SELECT *
 		FROM( SELECT inner_table.*, ROWNUM AS row_seq
-				FROM( SELECT * FROM newsfeed ) inner_table
+				FROM( select n.*, u.name, u.profile_image from newsfeed n, users u where n.user_id=u.user_id(+) ) inner_table
 		WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
@@ -62,11 +64,10 @@
 	
 	<select id="getTotalCount" parameterType="search" resultType="int">
 		SELECT COUNT(*)
-	  	FROM(	SELECT *
-						FROM newsfeed
+	  	FROM(	select n.*, u.name, u.profile_image from newsfeed n, users u where n.user_id=u.user_id(+)
 						<if test="category != null">
 							<where>
-								<if test="category == 'V01'">
+								<if test="category == 'N01'">
 						 			category_code = #{category}
 								</if>
 								<if test="searchCondition == 1 and searchKeyword !='' ">
@@ -97,7 +98,6 @@
 		SET total_like = total_like+1
 		WHERE newsfeed_id=#{value}
 		
-		
 	</update>
 	
 	<update id="updateCountReply" parameterType="int">
@@ -106,10 +106,28 @@
 		WHERE newsfeed_id=#{value}
 	</update>
 	
+	<update id="cancelCountLike" parameterType="int">
+		UPDATE newsfeed
+		SET total_like = total_like-1
+		WHERE newsfeed_id=#{value}
+	</update>
+	
 	<insert id="addLikeBlind" parameterType="java.util.Map">
 		INSERT 
 		INTO like_blind(like_blind_id, newsfeed_id, user_id, status)
 		VALUES(seq_like_blind_id.nextval, #{newsfeedId}, #{userId}, #{status}) 
 	</insert>
+	
+	<delete id="deleteLikeBlind" parameterType="java.util.Map">
+		DELETE
+		FROM like_blind
+		WHERE user_id=#{userId} AND trim(status)=#{status} AND newsfeed_id=#{newsfeedId}
+	</delete>
+	
+	<select id="getLikeUser" parameterType="java.util.Map" resultType="INTEGER">
+		SELECT count(*)
+		FROM like_blind 
+		WHERE newsfeed_id=#{newsfeedId} AND trim(status)=#{status} AND user_id=#{userId}
+	</select>
 
 </mapper>
