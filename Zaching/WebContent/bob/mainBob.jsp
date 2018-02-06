@@ -117,6 +117,21 @@
 		    height: 70px;
 		    margin: 5px;
 		}
+		
+		#exTab2 > ul > li> a {
+			height: 70px;
+		    border: 1px solid #ddd;
+		    line-height: 45px;
+		    border-radius: 15px 15px 0 0;
+		    color: #000;
+		    font-size: 17px;
+		    font-weight: bold;
+		    background-color: #eee;
+		}
+		
+		#exTab2 > ul > li .active > a {
+			background-color: #FFF;
+		}
 	
 	</style>
 	
@@ -124,7 +139,7 @@
     
 		$(function(){
 			
-			$('.btn-add-bob').on('click', function(){
+			$(document).on('click','.btn-add-bob', function(){
 				if($('.list-group').css('visibility') =='visible') {
 					$('.list-group').css('visibility','hidden');
 					$('.cover').css('visibility','hidden');
@@ -133,6 +148,11 @@
 					$('.cover').css('visibility','visible');
 					
 				}
+			});
+			
+			$('.cover').on('click', function() {
+				$('.list-group').css('visibility','hidden');
+				$('.cover').css('visibility','hidden');
 			});
 			
 			// 검색했을 때 tooltip
@@ -196,7 +216,8 @@
 			    if('${user}' == '' && (targ == "#B03" || targ == "#B04")) {
 					alert("로그인 후 사용하실 수 있습니다. \n"
 							+"간편회원가입을 통해서 쉽고 간편하게 자췽 서비스를 이용하실 수 있습니다.");
-					$(self.location).attr("href","/user/addUser");
+					$('#loginModal').modal('toggle');
+					//$(self.location).attr("href","/user/addUser");
 				} else {
 				    
 				    $.get(loadurl, function(data) {
@@ -226,39 +247,39 @@
 	</div>
 
 	<div class="container" style="font-size: 17px;"> 
-		<form class="form-horizontal" id="mainBob">
+		
 		<div class="form-group">
-			<!-- Tab 시작 -->
-		<div id="exTab2" style="padding:0;">
-			<ul class="nav nav-tabs nav-justified" style="border: none;">
-				<li class="active" ><a href="/bob/listBob?category=B01" data-target="#B01" data-toggle="tabajax">우리지금만나</a></li>
-				<li><a href="/bob/listBob?category=B02" data-target="#B02" data-toggle="tabajax">당장만나</a>
-				</li>
-				<li><a href="/bob/listBob?category=B03" data-target="#B03"  data-toggle="tabajax">주기적으로만나</a>
-				</li>
-			</ul>
-			<ul class="nav nav-tabs nav-justified" style="border: none;">
-
-				<li class="pull-right">
+			<form>
+				<div class="row" align="right" style="margin: 10px;">
 					<input type="text" name="searchKeyword" class="form-control" placeholder="검색 내용을 입력하세요." 
-      					style="width: 360px; height:45px;"/>
-	      		</li>
-	      		<li class="pull-right"><a href="/bob/listBob?category=B04" data-target="#B04"  data-toggle="tabajax" style="select-bob">내 주소로 검색하기</a></li>
-			</ul>
-			
-			<!-- Tab 끝 -->
-					
-			<!-- 데이터 들어갈 것들,,, -->
-			<div class="tab-content" style="padding:20px;">
-				<div class="tab-pane active" id="B01"> </div>
-				<div class="tab-pane" id="B02"> </div>
-				<div class="tab-pane" id="B03"> </div>
-				<div class="tab-pane" id="B04"> </div>
-				<!-- 데이터 끝... -->
+			      					style="height:45px; font-size: 16px;"/>
+		      	</div>
+	      	</form>
+		<form class="form-horizontal" id="mainBob">
+			<!-- Tab 시작 -->
+			<div id="exTab2" style="padding:0; margin-top: 10px;">
+				<ul class="nav nav-tabs nav-justified" style="border: none;">
+					<li class="active" ><a href="/bob/listBob?category=B01" data-target="#B01" data-toggle="tabajax">우리지금만나</a></li>
+					<li><a href="/bob/listBob?category=B02" data-target="#B02" data-toggle="tabajax">당장만나</a>
+					</li>
+					<li><a href="/bob/listBob?category=B03" data-target="#B03"  data-toggle="tabajax">주기적으로만나</a>
+					</li>
+					<li><a href="/bob/listBob?category=B04" data-target="#B04"  data-toggle="tabajax" style="select-bob">내 주소로 검색하기</a></li>
+				</ul>
+				
+				<!-- Tab 끝 -->
+						
+				<!-- 데이터 들어갈 것들,,, -->
+				<div class="tab-content" style="padding:20px; background: #FFF; box-shadow: 0 0 0 1px #ddd; border: 1px solid #ddd;">
+					<div class="tab-pane active" id="B01"> </div>
+					<div class="tab-pane" id="B02"> </div>
+					<div class="tab-pane" id="B03"> </div>
+					<div class="tab-pane" id="B04"> </div>
+					<!-- 데이터 끝... -->
 				</div>
 			</div>
-		</div>
 		</form>
+		</div>
 
 	</div>
 

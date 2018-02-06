@@ -82,7 +82,8 @@
    </c:forEach>
 
    <c:if test="${commentPage.totalCount > (commentPage.currentPage * commentPage.pageUnit)}">
-   <div class="row text-center" style="background: #ccc; height:50px; margin: 5px; line-height: 50px;">더 보기</div>
+   <div class="row text-center" style="height:50px; margin: 5px; line-height: 50px;
+   			    border-bottom: 2px solid #ccc; cursor: pointer;">더 보기</div>
    </c:if>
    
    

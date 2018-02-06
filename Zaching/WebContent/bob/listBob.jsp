@@ -50,7 +50,8 @@
 				} else {
 					alert("로그인 후 사용하실 수 있습니다.\n"
 							+ "간편회원가입을 통해서 쉽고 간편하게 자췽 서비스를 이용하실 수 있습니다.");
-					$(self.location).attr("href","/user/addUser");
+					$('#loginModal').modal('toggle');
+					//$(self.location).attr("href","/user/addUser");
 				}				
 			});
 			
@@ -63,7 +64,8 @@
 				} else {
 					alert("로그인 후에 친구의 타임라인을 들어가실 수 있습니다.\n"
 							+ "간편회원가입을 통해서 자췽 서비스를 이용해보세요.");
-					$(self.location).attr("href","/user/addUser");
+					$('#loginModal').modal('toggle');
+					//$(self.location).attr("href","/user/addUser");
 				}				
 			});
 			
@@ -158,7 +160,7 @@
 			      		url('../resources/images/user-icon.png') center center no-repeat; background-size: cover;
 			      			box-shadow: 1px #cccccc;"></div>
 			      <div class="caption" style="position:relative; top:-20px; font-size: 20px;">
-			      	<div style="font-size:22px; font-weight: bold;">${bob.title}</div>
+			      	<div style="font-size:20px; font-weight: bold;">${bob.title}</div>
 			      	<hr>
 			      	<p style="font-size: 17px;  font-weight: bold;">
 			        	${bob.locationName}<br>
@@ -166,7 +168,12 @@
 			        <p style="font-size: 16px;">
 			        	<c:if test="${!empty bob.appointmentTime}">
 				        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-							<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
+				        	<c:if test="${empty sessionScopr.user}">
+				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일"/>
+				        	</c:if>
+				        	<c:if test="${!empty sessionScopr.user}">
+				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
+				        	</c:if>
 			        	</c:if>
 			        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
 			        </p>
@@ -200,7 +207,12 @@
 			        <p style="font-size: 16px;">
 			        	<c:if test="${!empty bob.appointmentTime}">
 				        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-							<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
+				        	<c:if test="${empty sessionScopr.user}">
+				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일"/>
+				        	</c:if>
+				        	<c:if test="${!empty sessionScopr.user}">
+				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
+				        	</c:if>
 			        	</c:if>
 			        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
 			        </p>

@@ -53,7 +53,7 @@
 	<select id="getNewsfeedList" parameterType="search" resultMap="NewsfeedSelectMap">
 		SELECT *
 		FROM( SELECT inner_table.*, ROWNUM AS row_seq
-				FROM( select n.*, u.name, u.profile_image from newsfeed n, users u where n.user_id=u.user_id(+) ) inner_table
+				FROM( <include refid="listNewsfeedSql" /> ) inner_table
 		WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
@@ -64,21 +64,27 @@
 	
 	<select id="getTotalCount" parameterType="search" resultType="int">
 		SELECT COUNT(*)
-	  	FROM(	select n.*, u.name, u.profile_image from newsfeed n, users u where n.user_id=u.user_id(+)
-						<if test="category != null">
-							<where>
-								<if test="category == 'N01'">
-						 			category_code = #{category}
-								</if>
-								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 		category_code = #{searchKeyword}
-								</if>
-								<if test="searchCondition == 2 and searchKeyword !='' ">
-						 		category_code = #{searchKeyword}
-								</if>
-							</where>
-						</if> ) countTable		
+	  	FROM( <include refid="listNewsfeedSql" /> ) countTable		
 	</select>
+	
+	<sql id="listNewsfeedSql">
+		SELECT n.*, u.name, u.profile_image 
+	  			FROM newsfeed n, users u 
+	  			<where>
+	  			n.user_id=u.user_id(+)
+				<if test="category != null">
+					<if test="category != ''">
+			 			AND category_code = #{category}
+					</if>
+					<if test="searchCondition == 1 and searchKeyword !='' ">
+			 			AND category_code = #{searchKeyword}
+					</if>
+					<if test="searchCondition == 2 and searchKeyword !='' ">
+			 			AND category_code = #{searchKeyword}
+					</if>
+				</if>
+				</where>
+	</sql>
 	
 	<select id="getCountLike" parameterType="int" resultType="int">
 		SELECT total_like

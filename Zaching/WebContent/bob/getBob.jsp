@@ -16,6 +16,14 @@
     
 	
     $(function() {
+
+    	/*
+    	$(window).bind("pageshow", function(event) {
+    	    if (event.originalEvent.persisted) {
+    	        document.location.reload();
+    	    }
+    	});
+    	*/
    		
     	$("html, body").animate({ scrollTop: 0 }, "slow"); 
 
@@ -37,11 +45,6 @@
    			$(this).addClass('active');
    			$("#listFee").load("/bob/listFee?bobId=${param.bobId}&monthFee="+$(this).attr("id").substring(4));
    		});
-
-   	 	
-   	 	$('.col-xs-1:contains("신고")').on('click', function() {
-   	 		alert('신고');
-   	 	});
    	 	
    	 	$('.col-xs-1:contains("수정")').on('click', function() {
    			//alert('수정');
@@ -56,6 +59,55 @@
    	 		//alert("${bob.bobId}");
    	 		$("#excelForm").attr("method", "POST").attr("action", "/bob/excelFee").submit();
 		});
+   	 	
+   		$(document).on('click','#ListParticipant .userProfile', function() {
+	 		var participantUserId = $($("input[name=getUserTimeLine]")[$('#ListParticipant .userProfile').index(this)]).val();
+	 		alert(participantUserId);
+	 		$(self.location).attr("href","/user/getTimeLine?userId="+participantUserId);
+	 	});
+   	 	
+   	 	/*///////////////////////////// 후기 시작 /////////////////////////////*/
+   	 	
+   		$('button:contains("후기 올리기")').on('click', function(){
+   	 		fuc_addReview();
+	 	});
+   	 	
+   	 	$(':text[name="inputReview"]').on("keydown", function(e) {
+   	 		if(e.keyCode == 13) {
+	   	 		fuc_addReview();
+			}
+   	 	});
+   	 	
+   	 	function fuc_addReview() {
+	 		$.ajax({
+				url : "/bob/rest/addReview",
+				method : "POST",
+				contentType : "application/json; charset=UTF-8",
+				data : JSON.stringify({
+					"userId" : <c:out value="${user.userId}" escapeXml="false" />,
+					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />,
+					"content" : $(":text[name='inputReview']").val()
+				}),
+				async : false,
+				dataType : "json",
+				success : function(serverData) {
+					
+					if(serverData.response == "success") {
+						alert("후기가 무사히 등록되었습니다.");
+						location.reload();
+					} else {
+						alert("후기가 등록되지 않았습니다. \n 다시 시도해주세요.");
+					}
+
+				},
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+				
+			});
+	 	}
+   	 	
+   	 	/*///////////////////////////// 후기 끝 /////////////////////////////*/
    	 	
    	 	/*///////////////////////////// 댓글 시작 /////////////////////////////*/
    	 	
@@ -106,7 +158,7 @@
    	 		$("#listComment").load("/bob/listCommment?category=${param.category}&bobId=${param.bobId}&currentPage=${commentPage.currentPage+1}");
    	 	});
    	 	
-   	 	$('#listComment img').on('click', function() {
+   	 	$(document).on('click','#listComment img', function() {
 	 		var commentUserId = $($("input[name=commentUserId]")[$('#listComment img').index(this)]).val();
 	 		$(self.location).attr("href","/user/getTimeLine?userId="+commentUserId);
 	 	});
@@ -398,7 +450,7 @@
         
         <!-- /////////////////////  우리지금만나/당장만나 Participant /////////////////////  -->
 
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar" style="padding-bottom: 0px;">
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar" id="ListParticipant" style="padding-bottom: 0px;">
         	<div style="padding:8px;">
 				<div class="row">
 					<div class="col-xs-8 textBold" align="left" style="padding-right: 0px; padding-top:3px;">
@@ -429,7 +481,8 @@
 							<img src="/resources/images/sample_crown.png" width="60px" height="60px"/>
 						</div>
 						<div style="position: relative; z-index: 1; top:-35px;">
-							<img width="60px" height="60px"
+							
+							<img class="userProfile" width="60px" height="60px"
 							style=" border-radius: 40px;
 									-moz-border-radius: 40px;
 									-khtml-border-radius: 40px;
@@ -439,16 +492,22 @@
 							onerror="this.src='../resources/images/user-icon.png'" />&nbsp;&nbsp;&nbsp;${bob.writtenUserName}
 						</div>
 					</div>
+					
+					<input type="hidden" name="getUserTimeLine" value="${bob.writtenUserId}" />
+					
 					<c:forEach var="participant" items="${participant}">
+						
 						<c:if test="${participant.userId eq user.userId}">
-							<input type="hidden" name="participantId" value="${participant.participantId}" />
+							<input type="hidden" name="participantId" value="${bob.writtenUserId}" />
 							<input type="hidden" name="isAutoFee" value="${participant.isAutoFee}" />
 							<c:set var="isAutoFee" value="${participant.isAutoFee}" />
 							<c:set var="paidFee" value="${participant.paidFee}"/>
 						</c:if>
 						<c:if test="${!participant.isWriter}">
+							<input type="hidden" name="getUserTimeLine" value="${participant.userId}" />
+							<input type="hidden" name="participantId" value="${participant.participantId}" />
 							<div class="col-xs-4 text-center" align="left" style="margin-top:20px; padding-right:15px;">
-								<img width="55px" height="55px"
+								<img class="userProfile" width="55px" height="55px"
 									style=" border-radius: 40px;
 											-moz-border-radius: 40px;
 											-khtml-border-radius: 40px;
@@ -525,17 +584,18 @@
       </div><!-- /.row -->
       
       <!-- ///////////////////////////////// 댓글 시작 /////////////////////////////////  -->
-      <div class="row custumRow" style="margin-top:20px; padding-top:30px;">
+      <div class="row custumRow" style="margin-top:20px; padding: 50px;">
       	
       	<div class="text-center textBold" style="font-size: 20px;">친구들과 대화를 나누세요 :)</div>
         <hr>
 		
-		<div class="row" style="padding:0px 5px 15px 5px;">
+		<div class="row" style="padding:0px 5px 30px 5px;">
       		<div class="col-xs-9">
-      			<input type="text" name="inputComment" class="form-control" placeholder="댓글을 입력해주세요."/>       		
+      			<input type="text" name="inputComment" class="form-control"  style="height:45px; font-size: 16px;"
+      			placeholder="${!empty sessionScope.user? '댓글을 입력해주세요.':'로그인을 해주세요.'}"/>
       		</div>
       		<div class="col-xs-3">
-				<button type="submit" class="form-control">등록</button>
+				<button type="submit" class="form-control" style="background-color: #7a68a6; color: #FFF; height:45px; font-size: 16px;">등록</button>
 			</div>
       	</div>
 		
@@ -550,19 +610,27 @@
       <!-- ///////////////////////////////// 후기 시작 /////////////////////////////////  -->
       
       <c:if test="${param.category ne 'B03'}">
-	      <div class="row custumRow" style="margin-top:20px;">
-		      <div class="row">
-		      	<div class="col-xs-9">
-			      	<input type="text" class="form-control" style="width: 100%; height: 150px;"></input>
-		      	</div>
-		      	<div class="col-xs-3">
-		      		<button type="submit" class="form-control">후기 올리기</button>
-		      	</div>      	
+	      <div class="row custumRow" style="margin-top:20px; padding: 50px;">
+	      
+	      	<div class="text-center textBold" style="font-size: 20px;">
+	      		${sessionScope.user.name} 님, 이번 밥친구모임은 어떠셨나요?
 	      	</div>
-	
-	      	<c:forEach var="i" begin="0" end="6" step="1">
+	      	
+	      	<hr>
+		     <div class="row">
+		    	<c:if test="${bob.status eq 'Y'}">
+			      	<div class="col-xs-9">
+				      	<input type="text" name="inputReview" class="form-control" style="width: 100%; height: 150px; font-size:16px;"></input>
+			      	</div>
+			      	<div class="col-xs-3">
+			      		<button type="submit" class="form-control" style="background-color: #7a68a6; color: #FFF; height:45px; font-size: 16px;">후기 올리기</button>
+			      	</div>
+		      	</c:if>   	
+	      	</div>
+			
+	      	<c:forEach var="review" items="${review}">
 	      		<div class="row">
-	      			<div class="col-xs-12 text-center">후기후기</div>
+	      			<div class="col-xs-12 text-center">${review.content} // ${review.categoryCode}</div>
 	      		</div>
 	      	</c:forEach>
 	      </div>
