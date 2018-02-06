@@ -93,7 +93,7 @@ public class FriendServiceTest {
 		
 	}
 	
-//	@Test
+	@Test
 	public void testlistFriend() throws Exception{
 		Search search=new Search();
 		search.setCurrentPage(1);
@@ -111,7 +111,7 @@ public class FriendServiceTest {
 		
 		System.out.println("=================listFriend=============");
 	}
-	@Test
+//	@Test
 	public void testenterFriend() throws Exception{
 		System.out.println("enterFriendÇÏ±âÀü========");
 		Friend friend=new Friend();

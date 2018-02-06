@@ -50,9 +50,16 @@
 	
 	<select id="getFriend" parameterType="int" resultMap="friendSelectMap">
 	SELECT
-	id,friend_id,user_id,status,profile_image,name
-	FROM friend
-	WHERE user_id=#{userId} AND status=#{status}
+	friend.friend_id,
+	friend.status,
+	users.name,
+	users.profile_image
+	FROM
+	friend,users
+	<where>
+	friend.user_id=users.user_id
+	AND friend.status=1
+	</where>
 	</select>
 	
 	<update id="updateFriend" parameterType="friend">
@@ -60,12 +67,16 @@
 	<set>
 	status=#{status}
 	</set>
-	WHERE user_id=#{userId} AND friend_id=#{friendId} and status=#{status}
+	<where>
+	user_id=#{userId}
+	AND friend_id=#{friendId}
+	AND status=#{status}
+	</where>
 	</update>
 	
 	<delete id="deleteFriend" parameterType="friend">
 	DELETE 
-	FROM friend WHERE id=#{id}
+	FROM friend WHERE friend_id=#{friendId}
 	</delete>
 	
 	<select id="listFriend" parameterType="search" resultMap="friendSelectMap">

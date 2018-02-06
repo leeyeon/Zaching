@@ -7,7 +7,7 @@ public class Friend {
 	private int userId;
 	private int status;
 	private String profileImage;//프로필사진
-	private String realName;//실명
+	private String name;//실명
 
 	public String getProfileImage() {
 		return profileImage;
@@ -19,13 +19,13 @@ public class Friend {
 	}
 
 
-	public String getRealName() {
-		return realName;
+	public String getName() {
+		return name;
 	}
 
 
-	public void setRealName(String realName) {
-		this.realName = realName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 
