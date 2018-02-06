@@ -111,25 +111,27 @@
 	
 	$( function() {
 		
-		
+		$("input[name='email']").focus();
 		
 		//==>"Login"  Event 연결
 		$("#login").on("click" , function() {
 			
-			$("#email").focus();
 
-			var email =$("#email").val();
-			var password =$("#password").val();
+			var email =$("input[name='email']").val();
+			var password =$("input[name='password']").val();
+			
+			alert(email);
+			alert(password);
 			
 			if(email == null || email.length <1) {
 				alert('ID 를 입력하지 않으셨습니다.');
-				$("input:text").focus();
+				$("input[name='email']").focus();
 				return;
 			}
 			
 			if(password == null || password.length <1) {
 				alert('패스워드를 입력하지 않으셨습니다.');
-				$("input:password").focus();
+				$("input[name='password']").focus();
 				return;
 			}
 			
@@ -190,7 +192,7 @@
 		});
 		
 		//이름으로 타임라인 이동
-		$("#navbar > ul:nth-child(2) > li:nth-child(1) > div > a").on("click", function() {
+		$("#navigationbar > ul:nth-child(2) > li:nth-child(1) > div > a").on("click", function() {
 			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";
 
 		});
@@ -202,12 +204,51 @@
 			var left = Math.ceil((window.screen.width - windowW)/2);
 		    var top = Math.ceil((window.screen.height - windowH)/2);
 		    
-			window.open("/user/kakaoLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
+			window.open("/kakaoLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
 			opener.location.reload(true);
 			    self.close();
 	
 		});
 		
+		//네이버 로그인
+		$("#naverLogin").on("click", function() {
+			var windowW = 400;  // 창의 가로 길이
+		    var windowH = 500;  // 창의 세로 길이
+			var left = Math.ceil((window.screen.width - windowW)/2);
+		    var top = Math.ceil((window.screen.height - windowH)/2);
+		    
+			window.open("/naverLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
+			opener.location.reload(true);
+			    self.close();
+	
+		});
+		
+		//구글로그인
+		$("#googleLogin").on("click", function() {
+			var windowW = 400;  // 창의 가로 길이
+		    var windowH = 500;  // 창의 세로 길이
+			var left = Math.ceil((window.screen.width - windowW)/2);
+		    var top = Math.ceil((window.screen.height - windowH)/2);
+		    
+			window.open("/googleLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
+			opener.location.reload(true);
+			    self.close();
+	
+		});
+		
+		
+		//페이스북로그인
+		$("#facebookLogin").on("click", function() {
+			var windowW = 400;  // 창의 가로 길이
+		    var windowH = 500;  // 창의 세로 길이
+			var left = Math.ceil((window.screen.width - windowW)/2);
+		    var top = Math.ceil((window.screen.height - windowH)/2);
+		    
+			window.open("/facebookLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
+			opener.location.reload(true);
+			    self.close();
+	
+		});
 
 	});
 		/*
@@ -239,7 +280,7 @@
 		        }
 			});
 			});
-			*/
+			*/ 
 	
 </script>
 
@@ -275,18 +316,19 @@
           </ul>
           <ul class="nav navbar-nav" style="float:right;">
           	<c:if test="${user.userId ne null && user.profileImage eq null}">
-	          	<li><div style="padding-top: 10px; color:#FFF;">
+	          	<li><div style="padding-top: 10px; color:#333;">
 		       	<img src="../resources/images/profile_default.png" id="profile"
-		          	width="30px"/>&nbsp;<a href="#profile" style="color: #fffe09;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
+		          	width="30px"/>&nbsp;<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
 		       
 	          	</div></li>
 	          	<li><a href="#" title="로그아웃">로그아웃</a></li>
           	</c:if>
           	
           	<c:if test="${user.userId ne null && user.profileImage ne null}">
-	          	<li><div style="padding-top: 10px; color:#FFF;">
-		       	<img src="../resources/upload_files/images/${user.profileImage}" id="profile"
-		          	width="30px"/>&nbsp;<a href="#profile" style="color: #fffe09;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
+	          	<li><div style="padding-top: 10px; color:#333;">
+		       	<img src="../resources/upload_files/images/${user.profileImage}" id="profile" width="30px"/>&nbsp;
+		        <a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
+		        &nbsp;님 환영합니다!
 		       
 	          	</div></li>
 	          	<li><a href="#logout" title="로그아웃">로그아웃</a></li>
@@ -333,7 +375,7 @@
         
          <div class="row">
            <div class="col-sm-6">
-   			<input type="text" class="form-control input-lg" id="email"  name="email"
+   			<input type="email" class="form-control input-lg" name="email"
 				placeholder="이메일을입력하세요"	style="margin-left: 5px"/>
    			
            </div>
@@ -349,7 +391,7 @@
        
          <div class="row">
            <div class="col-sm-6">
-   			 <input type="password" class="form-control input-lg" id="password" name="password"
+   			 <input type="password" class="form-control input-lg" name="password"
    				placeholder="패스워드를입력하세요"	 style="margin-left: 5px">
            </div>
 		</div>
@@ -362,9 +404,9 @@
    			 	<a href="#facebookLogin" id="facebookLogin">
    			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50"  type="button" id="facebooklogin"></a>
    			 	<a href="#naverLogin" id="naverLogin">
-   			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50"  	type="button" id="Naverlogin"/></a>
+   			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50"  	type="button" id="naverlogin"/></a>
    			 	<a href="#googleLogin" id="googleLogin">
-   			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" 	type="button" id="Googlelogin"/></a>
+   			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" 	type="button" id="googlelogin"/></a>
              </div>  
         </div>
         
