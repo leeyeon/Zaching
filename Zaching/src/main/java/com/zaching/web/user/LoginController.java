@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.User;
+import com.zaching.service.user.GoogleService;
 import com.zaching.service.user.NaverService;
 import com.zaching.service.user.UserService;
 
@@ -36,6 +38,12 @@ public class LoginController {
 	@Autowired
 	@Qualifier("naverServiceImpl")
 	private NaverService naverService;
+	
+	
+	@Autowired
+	@Qualifier("googleServiceImpl")
+	private GoogleService googleService;
+
 
 	public LoginController() {
 		System.out.println(this.getClass());
@@ -81,11 +89,6 @@ public class LoginController {
 			User user = commonService.getAceessToken2(code);
 			user = commonService.getUserInfo(user);
 	
-			if (userService.login(user.getEmail()) == null) {
-	
-				userService.addUser(user);
-			}
-	
 			session.setAttribute("user", user);
 	
 			System.out.println("session 저장정보===>" + session.getAttribute("user"));
@@ -102,6 +105,8 @@ public class LoginController {
 	public String naverLoginRequest(HttpSession session) {
 
 		System.out.println("[ Naver Login Request!! ]");
+		
+		
 
 		return naverService.getAuthorizationUrl_login(session);
 
@@ -109,7 +114,7 @@ public class LoginController {
 
 	@RequestMapping(value = "naverLogin", method = RequestMethod.GET)
 	public String naverLogin(@RequestParam("code") String code,
-							 @RequestParam("state") String state,
+							 @RequestParam("state") String state,Model model,
 							 HttpSession session) throws Exception {
 
 		System.out.println("naverLogin/code받아서 토큰 요청하ㅣ");
@@ -121,18 +126,36 @@ public class LoginController {
 		System.out.println("state  ==>"+state);
 		System.out.println("user정보 ==>"+user);
 		
-		if(session.getAttribute(user.getEmail()) != null){
-			
-			System.out.println("user 정보 ==>"+user);
-			user.setPassword("1234");
-			userService.addUser(user);
-		}
-
+		
+	
 		System.out.println("session 저장정보===>" + session.getAttribute("user"));
 		System.out.println("이메일 ==> " + user.getEmail());
 		System.out.println("프로필 이미지 ==> " + user.getProfileImage());
 
-		return "";
+		return "forward:/index.jsp";
 	}
+	
+	@RequestMapping(value = "googleLoginRequest", method = RequestMethod.GET)
+	public String GoogleLoginRequest() {
+
+		System.out.println("[ Google Login Request!! ]");
+
+		return googleService.getAuthorizationUrl();
+
+	}
+	
+	@RequestMapping(value="googleLogin",method=RequestMethod.GET)
+	public String googleLogin(@RequestParam("code") String code,
+							HttpSession session)throws Exception{
+		
+		User user = googleService.getAccessToken(session, code);
+		user = googleService.getUserProfile(user);
+		
+		System.out.println("뉸눈눈"+user);
+		
+		
+		return "forward:/index.jsp";
+	}
+
 
 }

@@ -109,7 +109,15 @@
 		  <div class="form-group">
 		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
 		    <div class="col-sm-4">
-		      <input type="email" class="form-control" name="email" placeholder="중복확인하세요" readonly>
+		    	<c:if test="${sessionScope.user.snsType  ne null }">
+		      		<input type="text" class="form-control" name="email" placeholder="중복확인하세요" value="${sessionScope.user.email}">
+		      	</c:if>
+		      	
+		      	<c:if test="${sessionScope.user.snsType  eq null }">
+		      		<input type="email" class="form-control" name="email" placeholder="중복확인하세요" readonly>
+		      	</c:if>
+		      
+		      
 		      <span id="helpBlock" class="help-block">
 		      	<strong class="text-danger">입력전 중복확인 부터..</strong>
 		      </span>
