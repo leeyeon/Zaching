@@ -28,7 +28,7 @@
       	    padding-top: 10px;
     		padding-left: 10px;
     		padding-right: 10px;
-    		padding-bottom: 20px;	
+    		padding-bottom: 20px;
         }
         
         body{
@@ -37,14 +37,37 @@
         }
         
         
-        mypage > a{
-       	text-align:center;
-        display: block;
- 		margin-left: auto;
-  		margin-right: auto;
-        color: #333;
+        .btn-group a {
+    		background-color: rgb(253, 228, 241); /* Green background */
+    		border: 1px solid #800067; /* Green border */
+    		border-radius: 10px;
+    		color: black; /* White text */
+    		padding: 10px 24px; /* Some padding */
+    		cursor: pointer; /* Pointer/hand icon */
+    		float: center; /* Float the buttons side by side */
+		}
+		
+       		.btn-group:after {
+    			content: "";
+    			clear: both;
+    			display: table;
+    			
+			}
+			
+			.bnt-group{
+			
+				float: right;
+			}
+			
+		
+       form.op-form{
+        	padding-top: 10px;
+    		padding-left: 10px;
+    		padding-right: 10px;
+    		padding-bottom: 20px;
+       		border: 2px solid #333;
+       		border: 1px solid green;
        }
-       
        /* 프로필사진 업로드 */
      	#profile > div > label{
      
@@ -68,9 +91,19 @@
     		height: 25px;
      		
      	}
+     	
 		
+
+
+
     </style>
-    
+    <!--   a 태그 활성화 없애기
+   		<style type="text/css">
+ 		a:link { color: red; text-decoration: none;}
+ 		a:visited { color: black; text-decoration: none;}
+ 		a:hover { color: blue; text-decoration: underline;}
+		</style>
+     -->
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
@@ -80,7 +113,8 @@
 			self.location = "/user/getUser?userId=${user.userId}";
 			
 	 	});
-		$( function () {
+	
+	$( function () {
 		$( "#listFriend" ).on("click" , function() {
 			self.location = "/friend/listFriend?userId=${friend.userId}";
 			
@@ -110,10 +144,6 @@
 			self.location = "/user/listNotice?userId=${user.userId}";
 		});
 		
-		//추가정보입력 Event
-		$("#listNotice").on("clcick", function() {
-			self.location = "/user/listNotice?userId=${user.userId}";
-		});
 		
 		//FOLLOW Event
 		
@@ -150,9 +180,10 @@
 
 <body>
 <div class="container">
+
 	<form class="op-form" action="/settings/profile" method="POST" enctype="multipart/form-data">
 	
-	<div class="row" align="center">
+	<div class="row header" align="center">
 		<div class="col-xs-3" id="profile" align="left">
 		<c:if test="${user.profileImage eq null }">
 	
@@ -186,26 +217,16 @@
     </div>
     
      <c:if test="${user.userId eq sessionScope.user.userId}"><!-- 세션에있는 아이디랑  -->
-    <div class="row mypage"  id="myPage" style="background-color: #ddd;">
-    	<div class="col-xs-2">
-    		<a type="button" id="memoryMap">추억지도</a>
-    	</div>
-    	<div class="col-xs-3">
-    		<a type="button" id="point">포인트관리</a>
-    	</div>
-    	<div class="col-xs-2">
-    		<a type="button" id="listFreind">친구목록</a>
-    	</div>
-    	<div class="col-xs-3">
-    		<c:if test="${sessionScope.user.role eq '1'}">
-    		<a type="button" id="getUser">추가정보입력</a></c:if>
-    		<c:if test="${sessionScope.user.role eq '2'}">
-    		<a type="button" id="getUser">내정보조회</a></c:if>
-    	</div>
-    	<div class="col-xs-2">
-    		<a type="button" id="listNotice">알림함</a>
-    	</div>
-  </div>
+    <div class="btn-group"  id="myPage">
+    	<a class="btn" id="memoryMap">추억지도</a>
+    	<a class="btn" id="point">포인트관리</a>
+    	<a class="btn" id="listFreind">친구목록</a>
+    	<c:if test="${sessionScope.user.role eq '1'}">
+    	<a class="btn" id="getUser">추가정보입력</a></c:if>
+    	<c:if test="${sessionScope.user.role eq '2'}">
+    	<a class="btn" id="getUser">내정보조회</a></c:if>
+    	<a class="btn" id="listNotice">알림함</a>
+	  </div>
   </c:if>
   
   <c:if test="${user.userId ne sessionScope.user.userId}">
@@ -225,6 +246,10 @@
   </div>
   </c:if>
     </form>
+    
+    <div class="timeLine">
+    		<h1>여기는 뉴스피드 게시물</h1>
+    </div>
 </div>
 
 

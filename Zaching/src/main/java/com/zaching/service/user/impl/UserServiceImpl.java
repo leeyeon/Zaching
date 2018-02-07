@@ -46,6 +46,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void addUser(User user) throws Exception {
+		
+		System.out.println("");
 			userDao.addUser(user);
 	}
 	

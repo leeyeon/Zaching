@@ -135,6 +135,7 @@ public class NaverDaoImpl implements NaverDao {
         user.setEmail(userInfo.get("email").toString());
         user.setName(userInfo.get("name").toString());
         user.setSnsType("naver");
+        user.setRole("1");
         //age, gender, birthday ...
         
 		return user;
