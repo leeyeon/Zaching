@@ -6,14 +6,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 </head>
 <style>
-#pageFrame{
+html > #pageFrame{
 overflow:hidden;
 }
+html > .pageFrame{
+overflow:hidden;
+}
+
 </style>
 <body>
 <div>
 <iframe id="pageFrame" name="pageFrame" src="http://mindmap.ai:8000/v1/webchat/5a4ad8f565d44018f6cb15be" frameborder="0"
-width="350px" height="450px" scrolling="auto"></iframe>
+width="310px" height="420px" scrolling="no"></iframe>
 </div>
 </body>
 </html>

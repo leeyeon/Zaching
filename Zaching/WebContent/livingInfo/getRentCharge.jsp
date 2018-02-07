@@ -18,7 +18,7 @@
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-<link rel="stylesheet" type="text/css" href="/resources/livingInfo/rentcharge.css"/>
+<link rel="stylesheet" type="text/css" href="/resources/css/rentcharge.css"/>
 </head>
 
 <body>
@@ -31,15 +31,18 @@
 </div>
 </div>
 </div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
-<script src="/resources/livingInfo/rentcharge.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44dd51c2636fbb88246c60b0e27b4d42&libraries=services"></script>
+<script src="/resources/javascript/rentcharge.js"></script>
 <script>
-daum.maps.event.addListener(map, 'click', function(mouseEvent) {
+daum.maps.event.addListener(map1, 'click', function(mouseEvent) {
+	
 	
 	
     searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
     	
         if (status === daum.maps.services.Status.OK) {
+        	
+        	
         	var location = result[0].address.address_name;
         	
         	 $.ajax( 
@@ -81,12 +84,12 @@ daum.maps.event.addListener(map, 'click', function(mouseEvent) {
        
 
             // 마커를 클릭한 위치에 표시합니다 
-            marker.setPosition(mouseEvent.latLng);
-            marker.setMap(map);
+            marker1.setPosition(mouseEvent.latLng);
+            marker1.setMap(map1);
 
             // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-            infowindow.setContent(content);
-            infowindow.open(map, marker);
+            infowindow1.setContent(content);
+            infowindow1.open(map1, marker1);
             
         }   
         

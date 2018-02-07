@@ -22,7 +22,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 
 
-<link rel="stylesheet" type="text/css" href="/resources/livingInfo/aroundsearch.css"/>
+<link rel="stylesheet" type="text/css" href="/resources/css/aroundsearch.css"/>
 
 </head>
 <body>
@@ -78,7 +78,7 @@
 </div>
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
-<script src="/resources/livingInfo/aroundsearchmap.js"></script>
+<script src="/resources/javascript/aroundsearchmap.js"></script>
 
 
 
