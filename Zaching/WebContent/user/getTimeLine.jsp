@@ -170,7 +170,7 @@
 		<c:if test="${user.profileImage ne null }">
 		<div class="profileImage" align="center">
         <figure class="default-Profile" style="">
-        	<img  class="img-circle" src="../resources/images/upload_files/${sessionScope.user.profileImage}" 
+        	<img  class="img-circle" src="../resources/images/upload_files/images/${sessionScope.user.profileImage}" 
         	width="150px" height="150px"/>
         </figure>
         <label class="file-chooser-button horizontal-center btn btn-border btn-primary btn-lg">
