@@ -34,7 +34,18 @@
     <script type="text/javascript">
     
   		$(function() {
+			$('body > div.container > div:nth-child(4) > div:nth-child(2) > div').on('click', function(){
 
+				var windowW = 400;  // 창의 가로 길이
+ 		        var windowH = 500;  // 창의 세로 길이
+ 		        var left = Math.ceil((window.screen.width - windowW)/2);
+ 		        var top = Math.ceil((window.screen.height - windowH)/2);
+	
+				window.open("/", 
+						"l top="+top+", left="+left+", height="+windowH+", width="+windowW);
+				opener.location.reload(true);
+			    self.close();
+  			});
   		});
 
     </script>

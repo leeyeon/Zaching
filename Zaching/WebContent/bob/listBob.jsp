@@ -137,15 +137,10 @@
 			    <div class="thumbnail-top" style="left: 40px;">
 			    	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
 					<fmt:formatDate value="${Date}" var="appointmentTime" pattern="yyyyMMddHHmm"/>
-					<c:if test="${bob.status eq 'Y'}">
-						<c:if test="${appointmentTime>today || empty appointmentTime}">
-							참여 가능
-						</c:if>
-						<c:if test="${appointmentTime<=today}">
-							참여 불가
-						</c:if>
+					<c:if test="${bob.status eq 'Y' && (appointmentTime>today || empty appointmentTime)}">
+						참여 가능
 					</c:if>
-					<c:if test="${bob.status eq 'E'}">
+					<c:if test="${bob.status eq 'E' || (appointmentTime<=today)}">
 						참여 마감
 					</c:if>
 			    </div>

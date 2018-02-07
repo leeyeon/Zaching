@@ -201,6 +201,16 @@
 				});				
 			});
 			
+			$('.btn-bob:contains("충전")').on('click', function() {
+				<c:if test="${empty user.accessToken}">
+					$(self.location).attr("href","/payment/kakaoLoginRequest");
+				</c:if>
+				<c:if test="${!empty user.accessToken}">
+					$("#exchargePoint").modal("show");
+				</c:if>
+			});
+			
+			
 			$(".btn-bob:contains('마일리지 전환')").on('click', function() {
 				if(${totalMileage} < 1000) {
 					alert("마일리지 전환이 불가능합니다.");
@@ -228,12 +238,10 @@
 			<h4>( 마일리지 : <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" />점 )</h4>
 		</div>
 		
-		
-		
 		<div class="row" style="padding-top:50px;">
 			
             <button class="btn-bob" style="margin: 10px;" >마일리지 전환</button>
-            <button class="btn-bob" style="margin: 10px;" data-toggle="modal" data-target="#exchargePoint">충전</button>
+            <button class="btn-bob" style="margin: 10px;" data-toggle="modal">충전</button>
             <button class="btn-bob" style="margin: 10px;">반환신청</button>
             
         </div>

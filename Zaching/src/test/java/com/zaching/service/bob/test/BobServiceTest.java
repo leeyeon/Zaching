@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.zaching.common.domain.Search;
@@ -237,11 +238,51 @@ public class BobServiceTest {
 			System.out.println(date.substring(0, index)+result+date.substring(index+5));
 		}
 		
-		
-		
 	}
 	
 	@Test
+	public void testSchedule() throws Exception {
+		
+		SimpleDateFormat dt = new SimpleDateFormat("yyyyMMddHHmm"); 
+		Calendar calendar = Calendar.getInstance();
+
+		System.out.println(dt.format(calendar.getTime()));
+		
+		String date1 = dt.format(calendar.getTime()).trim();
+
+		System.out.println("???");
+		
+		int today = (Integer.valueOf(date1)).intValue();
+		
+		System.out.println("today:"+today);
+		
+		Search search = new Search();
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		if(search.getCategory() == null) {
+			search.setCategory("B01");
+		}
+		search.setPageSize(9);
+		
+		Map<String, Object> map = bobService.listBob(search);
+		
+		List<Bob> list = (List<Bob>)map.get("list");
+		
+		for (Bob bob : list) {
+			SimpleDateFormat dt2 = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
+			Date date = dt2.parse(bob.getAppointmentTime());
+
+			System.out.println(dt.format(date));
+			if(today < Integer.parseInt(dt.format(date))) {
+				System.out.println("ㅇㅅㅇ");
+			}
+		}
+		
+	}
+	
+	//@Test
 	// 서울 역삼역, 선른역 두 지점의 거리를 계산 
 	public void testDate2() {
 	

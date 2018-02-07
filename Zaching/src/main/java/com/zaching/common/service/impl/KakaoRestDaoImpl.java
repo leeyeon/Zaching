@@ -19,7 +19,7 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 	private final String REST_API_KEY = "90d9379d1246c1e7e36d34027d2e497d";
 	private final String ADMIN_KEY = "3639f373825926cf896298541090d7a2";
 	private final String REDIRECT_URI_Login = "http://127.0.0.1:8080/kakaoLogin";
-	private final String REDIRECT_URI = "http://127.0.0.1:8080/kakaoPay";
+	private final String REDIRECT_URI = "http://127.0.0.1:8080/payment/kakaoPay";
 	private final String GET_TOKEN_API_URL = "https://kauth.kakao.com/oauth/token";
 
 	private final String PAYMENT_READY_URL = "https://kapi.kakao.com/v1/payment/ready";
@@ -44,7 +44,7 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 	@Override
 	public String getAuthorizationUrl() {
 		String url = "redirect:https://kauth.kakao.com/oauth/authorize?client_id="+this.REST_API_KEY
-				+"&redirect_uri="+this.REDIRECT_URI+"&response_type=code";
+				+"&redirect_uri="+this.REDIRECT_URI_Login+"&response_type=code";
 		
 		return url;
 	}

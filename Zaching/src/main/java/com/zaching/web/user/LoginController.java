@@ -58,23 +58,37 @@ public class LoginController {
 			
 			System.out.println("/kakaoLogin/code");
 			
-			User user = commonService.getAceessToken2(code);
-			user = commonService.getUserInfo(user);
+			User sessionUser = (User)session.getAttribute("user");
 			
-			
-			if(userService.login(user.getEmail()) == null) {
+			if(sessionUser.getAccessToken() == null) {
 				
-				userService.addUser(user);
-		}
+				sessionUser.setAccessToken("kakaoPay");
+				
+				session.setAttribute("user", sessionUser);
+				
+				return "redirect:/payment/mainPayment";
+				
+			} else if(((User)session.getAttribute("user")).getAccessToken().equals("kakaoPay")) {
+				return null;
+			} else {
 			
-			session.setAttribute("user", user);
-			
-			System.out.println("session 저장정보===>"+session.getAttribute("user"));
-			System.out.println("이메일 ==> "+user.getEmail());
-			System.out.println("프로필 이미지 ==> "+user.getProfileImage());
-			
-			
-			return "forward:/index.jsp";
+				User user = commonService.getAceessToken2(code);
+				user = commonService.getUserInfo(user);
+				
+				
+				if(userService.login(user.getEmail()) == null) {
+					
+					userService.addUser(user);
+				}
+				
+				session.setAttribute("user", user);
+				
+				System.out.println("session 저장정보===>"+session.getAttribute("user"));
+				System.out.println("이메일 ==> "+user.getEmail());
+				System.out.println("프로필 이미지 ==> "+user.getProfileImage());
+				
+				return "forward:/index.jsp";
+			}
 		}
 
 }
