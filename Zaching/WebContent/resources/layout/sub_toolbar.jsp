@@ -114,6 +114,7 @@
   	 width: 300px;
   	 height: 150px;
   	 overflow-y: scroll;
+  	 background: #fff;
 		}
 		
 
@@ -124,7 +125,6 @@
 		$( function() {
 
 		$( "#notice" ).on("click" , function() {
-			
 			
         	var displayValue = '';
 			var tr = '';
@@ -254,6 +254,7 @@
 		
 		$('body > nav > div.container > div > div:nth-child(3)').addClass('active');
 		
+		
 		$('.mainbar-menu').on('click', function(){
 			 $('.active').removeClass('active');
 			 $(this).addClass('active');
@@ -304,6 +305,7 @@
 
 		//카카오로그인 으로 이동
 		$("#kakaologin").on("click", function() {
+			
 			var windowW = 400;  // 창의 가로 길이
 		    var windowH = 500;  // 창의 세로 길이
 			var left = Math.ceil((window.screen.width - windowW)/2);
@@ -318,28 +320,16 @@
 		
 		//네이버 로그인
 		$("#naverLogin").on("click", function() {
-			var windowW = 400;  // 창의 가로 길이
-		    var windowH = 500;  // 창의 세로 길이
-			var left = Math.ceil((window.screen.width - windowW)/2);
-		    var top = Math.ceil((window.screen.height - windowH)/2);
-		    
-			window.open("/naverLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
-			opener.location.reload(true);
-			    self.close();
+			self.location = "/naverLoginRequest";
 	
 		});
 		
 		//구글로그인
 		$("#googleLogin").on("click", function() {
-			var windowW = 400;  // 창의 가로 길이
-		    var windowH = 500;  // 창의 세로 길이
-			var left = Math.ceil((window.screen.width - windowW)/2);
-		    var top = Math.ceil((window.screen.height - windowH)/2);
-		    
-			window.open("/googleLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
-			opener.location.reload(true);
-			    self.close();
-	
+			
+			self.location = "/googleLoginRequest";
+			
+			
 		});
 		
 		
@@ -427,9 +417,10 @@
 
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage eq null}">
 	          	<li><div style="padding-top: 10px; color:#333;">
-				<a href="#"><img src="../resources/images/paper-plane.png" id="notice"
-		          	width="30px"/></a><div class="badge   badge-primary"></div>&nbsp;&nbsp;
-		       	<img src="../resources/images/profile_default.png" id="profile"
+	         <!-- 여기부터 --> 	<img src="../resources/images/paper-plane.png" id="notice"
+		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
+		          	 <!-- 여기까지 알림임ㅜㅠㅠ 지우지마셈 --> 
+	          	<img src="../resources/images/profile_default.png" id="profile"
 
 		          	width="30px"/>&nbsp;<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
 
@@ -442,8 +433,9 @@
           
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
 	          	<li><div style="padding-top: 10px; color:#333;">
-	          	<a href="#"><img src="../resources/images/paper-plane.png" id="notice"
-		          	width="30px"/></a><div class="badge   badge-primary"></div>&nbsp;&nbsp;
+	           <!-- 여기부터 -->	<img src="../resources/images/paper-plane.png" id="notice"
+		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
+		          		 <!-- 여기까지 알림임ㅜㅠㅠ 지우지마셈 --> 
 		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px"/>&nbsp;
 		        <a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
 		        &nbsp;님 환영합니다!

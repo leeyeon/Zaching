@@ -152,6 +152,8 @@ public class UserController {
 	public String logout(HttpSession session) throws Exception {
 
 		System.out.println("/user/logout : POST");
+		
+		
 
 		session.invalidate();
 
