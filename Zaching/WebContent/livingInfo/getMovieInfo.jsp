@@ -1,62 +1,86 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page contentType="text/html; charset=euc-kr"%>
 <%@ page pageEncoding="EUC-KR"%>
-
-<!--  ///////////////////////// JSTL  ////////////////////////// -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+ <meta charset="utf-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+  
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+   
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+   </head>
+   
+       <style>
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+		
+		* {
+			font-family: 'Nanum Gothic', serif;
+		}
 
-<link href="/css/animate.min.css" rel="stylesheet">
-<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-
-<!-- Bootstrap Dropdown Hover JS -->
-<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-
-
-<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
-
-</head>
-<style>
-#fixedbtn{
-position:fixed;
-			right:50px;
-			bottom:50px;
-			z-index:1000}
-
-.wrap-loading{ /*화면 전체를 어둡게 합니다.*/
-
-    position: fixed;
-    left:0;
-    right:0;
-    top:0;
-    bottom:0;
-    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');
-
+.containerr {
+  margin: 0 auto;
+  width: 250px;
+  height: 200px;
+  position: relative;
+  perspective: 1000px;
 }
 
-    .wrap-loading div{ /*로딩 이미지*/
-        position: fixed;
-        top:50%;
-        left:50%;
-        margin-left: -21px;
-        margin-top: -21px;
-    }
+.carouselMovie {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 1s;
 
-    .display-none{ /*감추기*/
-        display:none;
-    }
+  
+}
+
+.itemMovie {
+  display: block;
+  position: absolute;
+  width: 250px;
+  height: 200px;
+  line-height: 80px;
+  font-size: 20px;
+  text-align: center;
+  color: #00000;
+  
+ 
+}
+
+.a {
+  transform: rotateY(0deg) translateZ(250px);
+}
+.b {
+  transform: rotateY(60deg) translateZ(250px);
+}
+.c {
+  transform: rotateY(120deg) translateZ(250px);
+}
+.d {
+  transform: rotateY(180deg) translateZ(250px);
+}
+.e {
+  transform: rotateY(240deg) translateZ(250px);
+} 
+.f {
+  transform: rotateY(300deg) translateZ(250px);
+}
 
 
-</style>
+    </style>
+ 
+
+</head>
 <script>
 $(function() {
 	
@@ -67,7 +91,15 @@ $(function() {
 	var item1 = new Array();
 	var item2 = new Array();
 	var item3 = new Array();
+	var itemNum = new Array();
+	itemNum[0] = 'a';
+	itemNum[1] = 'b';
+	itemNum[2] = 'c';
+	itemNum[3] = 'd';
+	itemNum[4] = 'e';
+	itemNum[5] = 'f';
 	
+
 	
 			 $.ajax( 
 				{
@@ -85,12 +117,12 @@ $(function() {
 						
 						console.log(JSONData);
 						
-						for(var i=0; i<10; i++){
+						for(var i=0; i<6; i++){
 							name[i] = JSONData.boxOfficeResult.dailyBoxOfficeList[i].movieNm;
 							code[i] = JSONData.boxOfficeResult.dailyBoxOfficeList[i].movieCd;
 						}
 						
-						 for(var i=0; i<10; i++){
+						 for(var i=0; i<6; i++){
 						
 							 $.ajax( 
 										{
@@ -103,12 +135,12 @@ $(function() {
 												"Content-Type" : "application/json"
 											},success : function(moviecode , status) {
 												img[i] = moviecode.items[0].link;
-												console.log("3");
+												
 												}
 											});	
 						 }
 						 
-						 for(var i=0; i<10; i++){
+						 for(var i=0; i<6; i++){
 							 $.ajax( 
 										{
 
@@ -124,13 +156,13 @@ $(function() {
 												item1[i] = moviecode.movieInfoResult.movieInfo.genres[0].genreNm;
 												item2[i] = moviecode.movieInfoResult.movieInfo.openDt;
 												item3[i] = moviecode.movieInfoResult.movieInfo.actors[0].peopleNm+","+moviecode.movieInfoResult.movieInfo.actors[1].peopleNm+","+moviecode.movieInfoResult.movieInfo.actors[2].peopleNm;
-												console.log("4");
+		
 												}
 											});	
 						 }
 						 
 						
-						 for(var i=0; i<5; i++){
+						 for(var i=0; i<6; i++){
 							 $.ajax( 
 										{
 											url : "/livingInfo/rest/movieImg/"+name[i],
@@ -146,83 +178,30 @@ $(function() {
 											});	
 						 }
 						 
-					
+							var active = '';
 						
 						
-						for(var i=0; i<10; i++){
-							
-							displayValue = displayValue + '<h1>'+(i+1)+'</h1><div class="container"><div class="card">'+
-							'<div class="col-xs-2"><img src="'+img[i]+'" width="150px"/></div>'+
-							' <div class="col-xs-8"> <h4><b>'+name[i]+'</b><br/></h4>장르:'+item1[i]+'<br/>주연:'+item3[i]+'<br/>개봉일:'+item2[i]+'<br/></div></div></div>';
+						for(var i=0; i<6; i++){
+											
+							displayValue = displayValue + '<div class="itemMovie '+itemNum[i]+' " ><h1>'+(i+1)+'</h1><div class="containerr">'+
+							'<img src="'+img[i]+'" width="150px"/>'+
+							' <h4><b>'+name[i]+'</b><br/></h4>장르:'+item1[i]+'<br/>주연:'+item3[i]+'<br/>개봉일:'+item2[i]+'<br/></div></div>';
 							
 						}
+						console.log(displayValue);
+						$(".carouselMovie").html(displayValue);
 						 
-						 
-							
-						$(".container").html(displayValue);
-						 
-					},beforeSend:function(){
-
-
-				        $('.wrap-loading').removeClass('display-none');
-
-				    }
-				    ,complete:function(){
-
-
-				        $('.wrap-loading').addClass('display-none');
-
-				 
-
-				    }
+					}
 
 		});
 			 
-			
-			
-			
-			
-		
- 
 	 
-});		 
- 
-
-
+});		
 </script>
-<style>
-.card {
-    /* Add shadows to create the "card" effect */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-}
 
-/* On mouse-over, add a deeper shadow */
-.card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-/* Add some padding inside the card container */
-.container {
-    padding: 2px 16px;
-}
-</style>
 <body>
 
-<br/>
-<br/>
-<br/>
-<div class="container" >
-
-</div>
-
-<div class="wrap-loading display-none">
-
-    <div><img src="/resources/images/134.gif" /></div>
-
-</div>   
-
-
+<script  src="/resources/js/index.js"></script>
 </body>
-</html>
 
+</html>

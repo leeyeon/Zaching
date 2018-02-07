@@ -1,5 +1,6 @@
 $(function() {
 	 $( "#fixedbtn" ).on("click" , function() {
+		 
 		 $( document ).ready(function() {
 			    
 			    showPopup();

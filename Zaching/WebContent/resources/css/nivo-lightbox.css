@@ -6,6 +6,11 @@
  * Free to use and abuse under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
  */
+ @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+		
+		* {
+			font-family: 'Nanum Gothic', serif;
+		}
 
 .nivo-lightbox-overlay {
 	position: fixed;

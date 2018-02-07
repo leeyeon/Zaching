@@ -14,7 +14,11 @@
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 	
 	<style>
-
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+		
+		* {
+			font-family: 'Nanum Gothic', serif;
+		}
 	
 		body {
 			padding-top:50px;
