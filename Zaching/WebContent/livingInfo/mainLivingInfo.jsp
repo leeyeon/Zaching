@@ -21,7 +21,7 @@
   <link href="/resources/css/livingStyle.css" rel="stylesheet">
   <link href="/resources/color/default.css" rel="stylesheet">
   
-
+<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
   <script src="/resources/javascript/chatbot.js"></script>
 
 </head>
@@ -34,6 +34,39 @@ $(function() {
 			});
 		});
 });
+
+$('.mainbar-menu').on('click', function(){
+	 $('.active').removeClass('active');
+	 $(this).addClass('active');
+})
+
+$( ".navbar-brand img" ).on("click" , function() {
+	$(self.location).attr("href","/");			
+});
+
+$("a:contains('라이브방송')").on("click", function() {
+	self.location = "/broadcast/mainBroadcast";
+});
+
+$( "a:contains('밥친구')" ).on("click" , function() {
+	$(self.location).attr("href","/bob/mainBob");			
+});
+
+$("a:contains('생활정보')").on("click", function() {
+	self.location = "/livingInfo/mainLivingInfo";
+});
+
+$("a:contains('회원가입')").on("click", function() {
+	self.location = "/user/addUser";
+});
+
+$("a:contains('로그아웃')").on("click", function() {
+	self.location = "/user/logout";
+});
+
+$( "#profile" ).on("click" , function() {
+	self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";			
+});
 </script>
 <style>
 #music{
@@ -41,12 +74,16 @@ background-image: url('/resources/images/musicbg.png');
 background-repeat: repeat;
 }
 body{
-background: rgba(227,227,227,1);
+background: rgba(255,255,255,1);
+padding-top: 130px;
 }
 #fixedbtn{position:fixed;
 			right:50px;
 			bottom:50px;
 			z-index:1000}
+#pageFrame{
+background: rgba(255,255,255,1);
+}
 			
 
 .next, .prev {
@@ -94,8 +131,8 @@ font-size: 20px;
   <!-- /Section: intro -->
 
   <!-- Navigation -->
-  <div id="navigation">
-    <nav class="navbar navbar-custom" role="navigation">
+  <div id="navigation2">
+    <nav class="navbar navbar-custom" role="navigation2">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -106,13 +143,14 @@ font-size: 20px;
                                                 <i class="fa fa-bars"></i>
                                                 </button>
             </div>
+            <br/>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="menu">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#intro">HOME</a></li>
-                <li><a href="#about">편의시설검색</a></li>
-                <li><a href="#gallery">전월세정보</a></li>
-                <li><a href="#contact">문화정보</a></li>
+              <ul class="nav2 navbar-nav">
+                <li class="active"><a href="#intro">HOME</a></li>&nbsp;&nbsp;
+                <li><a href="#about">편의시설검색</a></li>&nbsp;&nbsp;
+                <li><a href="#gallery">전월세정보</a></li>&nbsp;&nbsp;
+                <li><a href="#contact">문화정보</a></li>&nbsp;&nbsp;
                 <li><a href="#job">공채정보</a></li>
               </ul>
             </div>
@@ -162,7 +200,7 @@ font-size: 20px;
   <!-- /Section: about -->
   
    <!-- Section: gallery -->
-  <section id="gallery" class="home-section text-center bg-gray">
+  <section id="gallery" class="home-section text-center">
 
     <div class="container">
       <div class="row">
@@ -276,6 +314,7 @@ font-size: 20px;
 </section>
 
 <br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/>
 <br/><br/><br/><br/><br/><br/><br/><br/><br/>
 <br/><br/><br/><br/><br/><br/><br/>
 <br/><br/><br/><br/><br/><br/><br/><br/><br/>
@@ -288,7 +327,7 @@ font-size: 20px;
 
             <div class="section-heading">
               <div class="wow bounceInDown" data-wow-delay="0.4s">
-                <h2>공개 채용 정보</h2>
+                <h2><b>공개 채용 정보</b></h2>
               </div>
               <p class="wow lightSpeedIn" data-wow-delay="0.3s">이번 달 공채 정보 달력입니다.</p>
             </div>
@@ -306,7 +345,11 @@ width="80%" height="1200px" scrolling="auto"></iframe><div class="container"></d
     <div class="container">
       <div class="row">
         <div class="col-md-12 col-lg-12">
+        <br/>
+        <br/>
           <p>&copy; ZACHING. All Rights Reserved</p>
+          <br/>
+          <br/>
         </div>
       </div>
     </div>

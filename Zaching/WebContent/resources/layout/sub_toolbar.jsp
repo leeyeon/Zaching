@@ -207,9 +207,8 @@
 									        }),
 
 									        success : function(serverData) {
-									        	$(".badge").text(status-1);
-									        	
-									        	
+									        	--status;
+									        	$(".badge").text(status);
 									        }									
 											
 										});
@@ -442,11 +441,11 @@
 
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage eq null}">
 	          	<li><div style="padding-top: 10px; color:#333;">
-	          	<a href="#"><img src="../resources/images/paper-plane.png" id="notice"
+				<a href="#"><img src="../resources/images/paper-plane.png" id="notice"
 		          	width="30px"/></a><div class="badge   badge-primary"></div>&nbsp;&nbsp;
-
 		       	<img src="../resources/images/profile_default.png" id="profile"
-		width="30px"/>&nbsp;<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
+
+		          	width="30px"/>&nbsp;<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
 
 		       
 	          	</div></li>
@@ -454,8 +453,7 @@
           	</c:if>
           	
 
-
-
+          
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
 	          	<li><div style="padding-top: 10px; color:#333;">
 	          	<a href="#"><img src="../resources/images/paper-plane.png" id="notice"
@@ -539,12 +537,7 @@
 		
 		<div class="row">
               <div class="social-login" align="left">
-<<<<<<< HEAD
-   			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" type="button" id="kakaologin">
-   			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50" >
-   			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50" />
-   			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" >
-=======
+
    			 	<a href="#kakaoLogin" id="kakaoLogin">
    			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" type="button" id="kakaologin"/></a>
    			 	<a href="#facebookLogin" id="facebookLogin">
@@ -553,7 +546,7 @@
    			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50"  	type="button" id="naverlogin"/></a>
    			 	<a href="#googleLogin" id="googleLogin">
    			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" 	type="button" id="googlelogin"/></a>
->>>>>>> refs/remotes/origin/master
+
              </div>  
         </div>
         
