@@ -64,10 +64,10 @@ public class LoginController {
 		User user = commonService.getAceessToken2(code);
 		user = commonService.getUserInfo(user);
 
-		if (userService.login(user.getEmail()) == null) {
-
+			
+			
 			userService.addUser(user);
-		}
+	
 
 		session.setAttribute("user", user);
 
@@ -88,30 +88,31 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "naverLogin", method = RequestMethod.GET)
-	public String naverLogin(@RequestParam("code") String code, @RequestParam("state") String state,
-			HttpSession session) throws Exception {
+	public String naverLogin(@RequestParam("code") String code,
+							 @RequestParam("state") String state,
+							 HttpSession session) throws Exception {
 
 		System.out.println("naverLogin/code받아서 토큰 요청하ㅣ");
 
 		User user = naverService.getAccessToken(session, code, state);
 		user = naverService.getUserProfile(user);
 		
-		System.out.println("code ===>"+code);
-		System.out.println("session ==>"+state);
-		System.out.println("session ==>"+session);
+		System.out.println("code ==>"+code);
+		System.out.println("state  ==>"+state);
+		System.out.println("user정보 ==>"+user);
 		
-		if (userService.login(user.getEmail()) == null) {
-
+		if(session.getAttribute(user.getEmail()) != null){
+			
+			System.out.println("user 정보 ==>"+user);
+			user.setPassword("1234");
 			userService.addUser(user);
 		}
-
-		session.setAttribute("user", user);
 
 		System.out.println("session 저장정보===>" + session.getAttribute("user"));
 		System.out.println("이메일 ==> " + user.getEmail());
 		System.out.println("프로필 이미지 ==> " + user.getProfileImage());
 
-		return "redirect:/index.jsp";
+		return "";
 	}
 
 }
