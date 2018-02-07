@@ -1,12 +1,10 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
-
-
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="ko">
 <head>
-	<meta charset="EUC-KR">
 
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,7 +22,7 @@
 	<style>
        body > div.container{
         	
-            margin-top: 50px;
+            margin-top: 130px;
         }
     </style>
     
@@ -50,17 +48,17 @@
 				fncAddUser();
 			});
 		});	
-	
+	//이메일형식 검사 필요!!
 		
 		function fncAddUser() {
 			
-			var id=$("input[name='email']").val();
-			var pw=$("input[name='password']").val();
-			var pw_confirm=$("input[name='password2']").val();
-			var name=$("input[name='name']").val();
+			var email = $("input[name='email']").val();
+			var pw = $("input[name='password']").val();
+			var pw2 = $("input[name='password2']").val();
+			var name = $("input[name='name']").val();
 			
 			
-			if(id == null || id.length <1){
+			if(email == null || email.length <1){
 				alert("이메일은 반드시 입력하셔야 합니다.");
 				return;
 			}
@@ -68,7 +66,7 @@
 				alert("패스워드는  반드시 입력하셔야 합니다.");
 				return;
 			}
-			if(pw_confirm == null || pw_confirm.length <1){
+			if(pw2 == null || pw2.length <1){
 				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
 				return;
 			}
@@ -77,7 +75,7 @@
 				return;
 			}
 			
-			if( pw != pw_confirm ) {				
+			if( pw != pw2 ) {				
 				alert("비밀번호 확인이 일치하지 않습니다.");
 				$("input:text[name='password2']").focus();
 				return;
@@ -87,7 +85,7 @@
 		}
 			
 			
-		//==>"회원가입" Event 처리 및 연결	
+		//==>"취소?" Event 처리 및 연결	
 		$(function() {
 			$("a[href='#' ]").on("click" , function() {
 				$("form")[0].reset();
@@ -111,8 +109,7 @@
 		  <div class="form-group">
 		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
 		    <div class="col-sm-4">
-		      <input type="email" class="form-control" id="email"
-		       name="email" placeholder="중복확인하세요" readonly>
+		      <input type="email" class="form-control" name="email" placeholder="중복확인하세요" readonly>
 		      <span id="helpBlock" class="help-block">
 		      	<strong class="text-danger">입력전 중복확인 부터..</strong>
 		      </span>
@@ -128,22 +125,21 @@
 		  <div class="form-group">
 		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+		      <input type="password" class="form-control" name="password" placeholder="비밀번호">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password2" 
-		      	name="password2" placeholder="비밀번호 확인" >
+		      <input type="password" class="form-control" name="password2" placeholder="비밀번호 확인" >
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="name" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="name" name="name" placeholder="회원이름">
+		      <input type="text" class="form-control" name="name" placeholder="회원이름">
 		    </div>
 		  </div>
 		  
