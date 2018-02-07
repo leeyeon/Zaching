@@ -150,7 +150,7 @@ public class BobServiceImpl implements BobService {
 	
 
 	//@Scheduled(fixedDelay=5000, initialDelay=2*1000)
-	@Scheduled(cron="0 * */1 * * *")
+	@Scheduled(cron="0 0 */1 * * *")
 	public void doSomething() {
 		// 한시간에 한번씩 실행
 		System.out.println("Scheduled Blockbob Check (BobServiceImpl)");
@@ -165,7 +165,7 @@ public class BobServiceImpl implements BobService {
 					System.out.println("block: "+integer);
 				}
 			} else {
-				System.out.println("요깅");
+				System.out.println("Blockbob List is none");
 				return;
 			}
 		

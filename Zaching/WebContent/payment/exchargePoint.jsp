@@ -12,7 +12,7 @@
 	<style>
         
        	body {
-       		padding-top: 50px;
+       		padding-top: 150px;
        	}
  
        	.btn-bob {
@@ -46,6 +46,41 @@
 				opener.location.reload(true);
 			    self.close();
   			});
+			
+			$("input[name=point]").on('keyup', function() {
+				$(this).val($(this).val().replace(/[^0-9]/g,""));
+				
+				if($(this).val().charAt(0) == 0) {
+					$(this).val("");
+				}
+				
+			});
+			
+			$("input[name=point]").on({'focusout': function() {
+				if($(this).val() == "") {
+					$("#pointCheck").show();
+					$("#pointCheck").text("* 5,000 Point 이상 출금이 가능합니다.");
+				}
+				
+				if($(this).val() > ${user.totalPoint}) {
+					$(this).val(${user.totalPoint});
+					$("#pointCheck").show();
+					$(this).css("background", "#ff8c8c");
+					$("#pointCheck").text("* 가지고 계신 Point 까지만 출금이 가능합니다.");
+				}
+				
+				if($(this).val() < 5000) {
+					$("#pointCheck").show();
+					$(this).css("background", "#ff8c8c");
+					$("#pointCheck").text("* 5,000 Point 이상 출금이 가능합니다.");
+				}
+				},
+				'focusin' : function() {
+					$(this).css("background", "#FFF");
+					$("#pointCheck").hide();
+
+				}
+			});
   		});
 
     </script>
@@ -56,77 +91,80 @@
 		
 	<div class="container" align="center">
 		
-		<div class="page-header" style="padding-bottom: 30px;">
-		  <h1>포인트 반환 신청</h1>
-		</div>
+		<div class="row" style="border: 1px solid #000; padding:10px; background-color: #FFF;">
 		
+			<div class="page-header" style="padding-bottom: 30px;">
+			  <h1 style="font-weight: bold;">포인트 반환 신청</h1>
+			</div>
 		
-		<div class="row" style="padding-top:50px;">
-			<label for="point" class="col-xs-4 control-label">
-					충전할 금액
-			</label>
-			<div class="col-xs-8">
-				<div class="input-group">
-					<input type="text" class="form-control text-right" aria-describedby="basic-addon2" id="point" name="point" />
-					<span class="input-group-addon" id="basic-addon2"> 
-					/<fmt:formatNumber type="currency" value="${user.totalPoint}" pattern="###,###" />Point</span>
+			<div class="row" style="padding-top:50px;">
+				<label for="point" class="col-xs-4 control-label">
+						충전할 금액
+				</label>
+				<div class="col-xs-8">
+					<div class="input-group">
+						<input type="text" class="form-control text-right" aria-describedby="basic-addon2" id="point" name="point" />
+						<span class="input-group-addon" id="basic-addon2" style="background: #FFF;"> 
+						/<fmt:formatNumber type="currency" value="${user.totalPoint}" pattern="###,###" />Point</span>
+					</div>
 				</div>
 			</div>
-		</div>
-		
-		<div class="row text-right" style="padding: 10px 10px 20px 0; color:red;">
-			* 5,000 Point 이상 출금이 가능합니다.
-		</div>
-		
-		<div class="row">
-		  <div class="col-xs-6">
-		    <div class="input-group">
-		      <span class="input-group-addon">
-		        <input type="radio" name="account" checked>
-		      </span>
-		      <div class="form-control">기존계좌사용</div>
-		    </div><!-- /input-group -->
-		  </div><!-- /.col-lg-6 -->
-		  <div class="col-xs-6">
-		    <div class="input-group">
-		      <span class="input-group-addon">
-		        <input type="radio" name="account">
-		      </span>
-		      <div class="form-control">새로운계좌사용</div>
-		    </div><!-- /input-group -->
-		  </div><!-- /.col-lg-6 -->
-		</div><!-- /.row -->
-		
-		<div class="row" style="padding-top:50px;">
-			<label for="name" class="col-xs-4 control-label">
-					이름
-			</label>
-			<div class="col-xs-8">
-				<input type="text" class="form-control" name="name" />
+			
+			<div id="pointCheck" class="row text-right" style="padding: 10px 10px 20px 0; color:red; display: none;">
+				* 5,000 Point 이상 출금이 가능합니다.
 			</div>
-		</div>
-		
-		<div class="row" style="padding-top:50px;">
-			<label for="name" class="col-xs-4 control-label">
-					은행명
-			</label>
-			<div class="col-xs-8">
-				<input type="text" class="form-control" name="bankName" />
+			
+			<div class="row" style="padding-top:50px;">
+			  <div class="col-xs-6">
+			    <div class="input-group">
+			      <span class="input-group-addon">
+			        <input type="radio" name="account" checked>
+			      </span>
+			      <div class="form-control">기존계좌사용</div>
+			    </div><!-- /input-group -->
+			  </div><!-- /.col-lg-6 -->
+			  <div class="col-xs-6">
+			    <div class="input-group">
+			      <span class="input-group-addon">
+			        <input type="radio" name="account">
+			      </span>
+			      <div class="form-control">새로운계좌사용</div>
+			    </div><!-- /input-group -->
+			  </div><!-- /.col-lg-6 -->
+			</div><!-- /.row -->
+			
+			<div class="row" style="padding-top:50px;">
+				<label for="name" class="col-xs-4 control-label">
+						이름
+				</label>
+				<div class="col-xs-8">
+					<input type="text" class="form-control" name="name" />
+				</div>
 			</div>
-		</div>
-		
-		<div class="row" style="padding-top:50px;">
-			<label for="name" class="col-xs-4 control-label">
-					계좌번호
-			</label>
-			<div class="col-xs-8">
-				<input type="text" class="form-control" name="account" />
+			
+			<div class="row" style="padding-top:50px;">
+				<label for="name" class="col-xs-4 control-label">
+						은행명
+				</label>
+				<div class="col-xs-8">
+					<input type="text" class="form-control" name="bankName" />
+				</div>
 			</div>
-		</div>				
-		
-        <div class="input-group" align="center" style="padding-top:50px;">
-            <button type="submit" class="btn-bob" style="margin: 10px;">충전</button>
-            <button type="reset" class="btn-bob" style="background: #ededed; color: #4d4d4d; margin: 10px;">취소</button>
+			
+			<div class="row" style="padding-top:50px;">
+				<label for="name" class="col-xs-4 control-label">
+						계좌번호
+				</label>
+				<div class="col-xs-8">
+					<input type="text" class="form-control" name="account" />
+				</div>
+			</div>				
+			
+	        <div class="input-group" align="center" style="padding-top:50px;">
+	            <button type="submit" class="btn-bob" style="margin: 10px;">충전</button>
+	            <button type="reset" class="btn-bob" style="background: #ededed; color: #4d4d4d; margin: 10px;">취소</button>
+	        </div>
+        
         </div>
 
     </div><!-- /.container -->
