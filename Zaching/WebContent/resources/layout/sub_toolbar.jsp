@@ -153,6 +153,7 @@
 		
 		$('body > nav > div.container > div > div:nth-child(3)').addClass('active');
 		
+		
 		$('.mainbar-menu').on('click', function(){
 			 $('.active').removeClass('active');
 			 $(this).addClass('active');
@@ -199,6 +200,7 @@
 		
 		//카카오로그인 으로 이동
 		$("#kakaologin").on("click", function() {
+			
 			var windowW = 400;  // 창의 가로 길이
 		    var windowH = 500;  // 창의 세로 길이
 			var left = Math.ceil((window.screen.width - windowW)/2);
@@ -212,28 +214,16 @@
 		
 		//네이버 로그인
 		$("#naverLogin").on("click", function() {
-			var windowW = 400;  // 창의 가로 길이
-		    var windowH = 500;  // 창의 세로 길이
-			var left = Math.ceil((window.screen.width - windowW)/2);
-		    var top = Math.ceil((window.screen.height - windowH)/2);
-		    
-			window.open("/naverLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
-			opener.location.reload(true);
-			    self.close();
+			self.location = "/naverLoginRequest";
 	
 		});
 		
 		//구글로그인
 		$("#googleLogin").on("click", function() {
-			var windowW = 400;  // 창의 가로 길이
-		    var windowH = 500;  // 창의 세로 길이
-			var left = Math.ceil((window.screen.width - windowW)/2);
-		    var top = Math.ceil((window.screen.height - windowH)/2);
-		    
-			window.open("/googleLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
-			opener.location.reload(true);
-			    self.close();
-	
+			
+			self.location = "/googleLoginRequest";
+			
+			
 		});
 		
 		
