@@ -47,8 +47,9 @@
 		
 		.jumbotron {
 		    margin-bottom: 0px;
+		    margin-top:50px;
 		    padding-top: 150px;
-		    height: 350px;
+		    height: 400px;
 		    background: transparent;
 		}
 		
@@ -230,7 +231,7 @@
 			    return false;
 			});
 			/* tab Event End */
-			
+
 		});		
 
     </script>
@@ -242,11 +243,14 @@
 
 	<div class="cover"></div>
 	<div class="bg"></div>
-	<div class="jumbotron">
-		<h1 class="text-center">밥친구 찾기</h1>
+	<div class="jumbotron text-center" style="background-image: url('../resources/images/bob_background.jpg');
+			background-size: cover;
+			background-repeat: no-repeat, no-repeat;
+			background-position: center center;">
+		<img src="../resources/images/bob_title.png"/>
 	</div>
 
-	<div class="container" style="font-size: 17px;"> 
+	<div class="container" style="font-size: 17px; margin-top: 10px;"> 
 		
 		<div class="form-group">
 			<form>
@@ -276,6 +280,10 @@
 					<div class="tab-pane" id="B03"> </div>
 					<div class="tab-pane" id="B04"> </div>
 					<!-- 데이터 끝... -->
+					    	
+		    	<div id="loader" class="text-center" style="margin: 50px;">
+					<img src = "../resources/images/ajax-loader.gif"/>
+				</div>
 				</div>
 			</div>
 		</form>

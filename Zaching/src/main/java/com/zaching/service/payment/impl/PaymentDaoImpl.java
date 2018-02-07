@@ -123,26 +123,6 @@ public class PaymentDaoImpl implements PaymentDao {
 		return obj;
 	}
 	
-	/*
-	public String getRealName(String accessToken, String bankCode, String accountNum, String accountHolderInfo,
-			String tranDtime) throws Exception {
-		
-		System.out.println("getRealName()");
-		
-		String param = "bank_code_std="+bankCode+"&account_num="+accountNum
-				+"&account_holder_info="+accountHolderInfo+"&tran_dtime="+tranDtime;
-		
-		JSONObject obj = JSON.getJSON_PARAM("POST", REAL_NAME_URI, param, 
-				"application/json; charset=UTF-8", "Authorization", "Bearer "+accessToken);
-		
-		String bankName = obj.get("bank_name").toString();
-		String accountHodlerName = obj.get("account_holder_name").toString();
-		
-		return accountHodlerName+"/"+accountHolderInfo+"/"+bankName+"/"+accountNum;
-		
-	}
-	*/
-	
 	// DBø° ¿˙¿Â
 	@Override
 	public String getUserCI(String accessToken, String userSeqNo) throws Exception {
@@ -155,6 +135,15 @@ public class PaymentDaoImpl implements PaymentDao {
 				"application/x-www-form-urlencoded; charset=UTF-8", "Authorization", "Bearer "+accessToken);
 		
 		return obj.get("user_ci").toString();
+	}
+	
+	public int getTotalCount(Search search, int userId) throws Exception {
+		
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("search", search);
+		map.put("userId", userId);
+		
+		return sqlSession.selectOne("PaymentMapper.getTotalCount", map);
 	}
 
 }

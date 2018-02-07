@@ -237,7 +237,7 @@
 				<p style="font-size:20px;">${user.name}님의 잔여 포인트 : <fmt:formatNumber type="currency" value="${totalPoint}" pattern="###,###" /> Point</p>
 				<h4>( 마일리지 : <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" />점 )</h4>
 			</div>
-			<div class="row text-center"  style="padding-top:50px;">
+			<div class="row text-center"  style="padding-top:50px; padding-bottom:30px;">
 				
 	            <button class="btn-bob" style="margin: 10px;" >마일리지 전환</button>
 	            <button class="btn-bob" style="margin: 10px;" data-toggle="modal">충전</button>
@@ -278,47 +278,8 @@
 		        	
 		        <hr style="border: 1px solid #bababa;">
 		       
-	        	<c:forEach var="payment" items="${payment}">
-		        	<div class="row listPayment">
-		        		<div class="col-xs-4">
-			        		<fmt:parseDate value="${payment.createdDate}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-		      				<fmt:formatDate value="${Date}" pattern="yyyy.MM.dd"/>
-			        	</div>
-			        	<div class="col-xs-4">
-			        		<c:if test="${payment.paymentCode eq 'P01'}">포인트 충전</c:if>
-			        		<c:if test="${payment.paymentCode eq 'P02'}">포인트 사용</c:if>
-			        		<c:if test="${payment.paymentCode eq 'P03'}">포인트 반환 신청</c:if>
-			        		<c:if test="${payment.paymentCode eq 'P04'}">포인트 반환 완료</c:if>
-			        		<c:if test="${payment.paymentCode eq 'P05'}">포인트 반환 신청 취소</c:if>
-			        		<c:if test="${payment.paymentCode eq 'P06'}">포인트 사용 취소</c:if>
-			        	</div>
-			        	<div class="col-xs-4">
-			        		<c:if test="${payment.paymentCode eq 'P01' || payment.paymentCode eq 'P05' || payment.paymentCode eq 'P06'}">+</c:if>
-			        		<c:if test="${payment.paymentCode eq 'P02' || payment.paymentCode eq 'P03' || payment.paymentCode eq 'P04'}">-</c:if>
-			        		<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /> p
-			        	</div>
-		        	</div>
-		        	
-		        	<div class="row text-left listExplain" style="background: #ccc; margin:10px; padding: 15px 10px 10px 10px; display: none;">
-		        		<p>거래일시 : ${payment.createdDate}</p>
-		        		<p>적립/포인트 : 
-		        			<span style="font-weight: bold;"> 
-				        		<c:if test="${payment.paymentCode eq 'P02' || payment.paymentCode eq 'P03' || payment.paymentCode eq 'P04'}">-</c:if>
-			        			<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /> p
-		        			</span></p>
-			        	<p>내역 : 
-			        		<c:set var="content" value="${fn:split(payment.content,':')}" />
-	
-			        		<c:if test="${fn:indexOf(payment.content, 'B03') != -1}">
-			        			주기적으로 만나 <a href="/bob/getBob?category=B03&bobId=${content[1]}">'${content[2]}'</a> 에 회비 포인트 지출
-			        		</c:if>
-			        		<c:if test="${fn:indexOf(payment.content, 'B03') == -1}">
-			        			${content[2]}
-			        		</c:if>
-			        	</p>
-		        	</div>
-		        	<hr>
-	        	</c:forEach>
+	        	<jsp:include page="./listPayment.jsp" />
+	        	
 	        </div>
         
         </div>

@@ -1,8 +1,10 @@
 package com.zaching.service.payment.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -26,8 +28,12 @@ public class paymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public List<Payment> listPoint(Search search, int userId) throws Exception {
-		return paymentDao.listPoint(search, userId);
+	public Map<String, Object> listPoint(Search search, int userId) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", paymentDao.listPoint(search, userId));
+		map.put("totalCount", paymentDao.getTotalCount(search, userId));
+		
+		return map;
 	}
 	
 	@Override
@@ -87,7 +93,23 @@ public class paymentServiceImpl implements PaymentService {
 	public int getPoint(int userId) throws Exception {
 		return paymentDao.getPayment(userId, true);
 	}
+
 	
+	@Override
+	public String getAuthorizationUrl(int authType) throws Exception {
+		return paymentDao.getAuthorizationUrl(authType);
+	}
+
+	@Override
+	public JSONObject getAccessToken(String code) throws Exception {
+		return paymentDao.getAccessToken(code);
+	}
+
+	@Override
+	public String getUserCI(String accessToken, String userSeqNo) throws Exception {
+		return paymentDao.getUserCI(accessToken, userSeqNo);
+	}
+
 	//@Scheduled(fixedDelay=1000)
 	@Scheduled(cron="0 0 12 * * *")
 	public void doSomething() {

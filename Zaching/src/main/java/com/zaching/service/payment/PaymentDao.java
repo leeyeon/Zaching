@@ -27,5 +27,7 @@ public interface PaymentDao {
 	
 	public JSONObject getAccessToken(String code) throws Exception;
 	
+	public int getTotalCount(Search search, int userId) throws Exception;
+	
 	public String getUserCI(String accessToken, String userSeqNo) throws Exception;
 }

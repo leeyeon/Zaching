@@ -287,7 +287,7 @@
 <title>zaching</title>
 </head>
 
-<body style="background-color: rgb(240, 239, 238);">
+<body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top" style="height: 105px; background-color: #FFF;  
     	background-image: url('/resources/images/toolbar_img.png');     background-repeat: repeat-x;

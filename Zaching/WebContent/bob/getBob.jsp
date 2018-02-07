@@ -522,10 +522,6 @@
 				</div>
 				<hr>
 				
-			<!-- ///////////////////// 우리지금만나/당장만나 Participant 끝 ///////////////////// -->
-			
-			<!-- ///////////////////// 주기적으로 만나 Participant & 회비 /////////////////////  -->
-				
 			<jsp:useBean id="today" class="java.util.Date" />
 			<fmt:formatDate var="today" value="${today}" pattern="yyyyMMddHHmm"/>
 			<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
@@ -533,12 +529,15 @@
 				
 				<c:if test="${param.category ne 'B03'}">
 					<div class="row" style="padding: 5px;">
-						<c:if test="${bob.status eq 'Y' && appointmentTime>today}">
+						<c:set var="flag" value="true"/>
+						<c:if test="${bob.status eq 'Y' && (appointmentTime > today || empty bob.appointmentTime)}">
+						
 							<button class="btn-bob">
 								<c:if test="${user.userId ne bob.writtenUserId}">
 									<c:forEach var="participant" items="${participant}">
-										<c:if test="${user.userId eq participant.userId}">취소하기
-
+										<c:if test="${user.userId eq participant.userId}">
+											<c:set var="flag" value="false"/>
+											취소하기
 										</c:if>
 									</c:forEach>
 									<c:if test="${param.category eq 'B01' && flag}">약속비 1000원으로 참여하기</c:if>

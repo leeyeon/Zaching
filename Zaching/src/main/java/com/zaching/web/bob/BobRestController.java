@@ -84,23 +84,30 @@ public class BobRestController {
 	}
 	
 	@RequestMapping(value="/listBob", method=RequestMethod.POST)
-	public JSONObject listBob(@ModelAttribute Search search) throws Exception {
+	public JSONObject listBob(@RequestBody Map<String, Object> map) throws Exception {
 		
-		if(search.getCurrentPage() ==0 ){
+		System.out.println("¤·¤µ¤·?");
+		
+		Search search = new Search();
+		search.setCategory((String)map.get("category"));
+		
+		if(((Integer)map.get("currentPage")).intValue() ==0 ){
 			search.setCurrentPage(1);
+		} else {
+			search.setCurrentPage(((Integer)map.get("currentPage")).intValue());
 		}
 		
 		search.setPageSize(pageSize);
 		
 		System.out.println(search);
 		
-		Map<String, Object> map = bobService.listBob(search);
+		Map<String, Object> map1 = bobService.listBob(search);
 		
 		Page resultPage	= 
-				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), 
+				new Page( search.getCurrentPage(), ((Integer)map1.get("totalCount")).intValue(), 
 				pageUnit, pageSize);
 		
-		List<Bob> list = (List<Bob>)map.get("list");
+		List<Bob> list = (List<Bob>)map1.get("list");
 		
 		JSONObject obj = new JSONObject();
 		obj.put("list", list);
