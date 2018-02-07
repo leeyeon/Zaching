@@ -68,7 +68,10 @@ public class PaymentController {
 	}
 	
 	@RequestMapping("exchargePoint")
-	public String exchargePoint() {
+	public String exchargePoint(HttpSession session, Model model) throws Exception {
+		
+		User user = userService.getAccountUser(((User)session.getAttribute("user")).getUserId());
+		model.addAttribute("user", user);
 		
 		return "forward:/payment/exchargePoint.jsp";
 	}

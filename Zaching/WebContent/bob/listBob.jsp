@@ -1,9 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib prefix="fn" uri = "http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fmt2" uri="http://java.sun.com/jstl/fmt_rt" %>
 
@@ -38,6 +37,8 @@
 	<script type="text/javascript">
 	
 		$(function() {
+			
+			$("html, body").animate({ scrollTop: 0 }, "slow"); 
 
 			$('.thumbnail > img').on("click", function(){
 				if('${user}' != '') {
@@ -49,7 +50,8 @@
 				} else {
 					alert("로그인 후 사용하실 수 있습니다.\n"
 							+ "간편회원가입을 통해서 쉽고 간편하게 자췽 서비스를 이용하실 수 있습니다.");
-					$(self.location).attr("href","/user/addUser");
+					$('#loginModal').modal('toggle');
+					//$(self.location).attr("href","/user/addUser");
 				}				
 			});
 			
@@ -62,7 +64,8 @@
 				} else {
 					alert("로그인 후에 친구의 타임라인을 들어가실 수 있습니다.\n"
 							+ "간편회원가입을 통해서 자췽 서비스를 이용해보세요.");
-					$(self.location).attr("href","/user/addUser");
+					$('#loginModal').modal('toggle');
+					//$(self.location).attr("href","/user/addUser");
 				}				
 			});
 			
@@ -134,15 +137,10 @@
 			    <div class="thumbnail-top" style="left: 40px;">
 			    	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
 					<fmt:formatDate value="${Date}" var="appointmentTime" pattern="yyyyMMddHHmm"/>
-					<c:if test="${bob.status eq 'Y'}">
-						<c:if test="${appointmentTime>today || empty appointmentTime}">
-							참여 가능
-						</c:if>
-						<c:if test="${appointmentTime<=today}">
-							참여 불가
-						</c:if>
+					<c:if test="${bob.status eq 'Y' && (appointmentTime>today || empty appointmentTime)}">
+						참여 가능
 					</c:if>
-					<c:if test="${bob.status eq 'E'}">
+					<c:if test="${bob.status eq 'E' || (appointmentTime<=today)}">
 						참여 마감
 					</c:if>
 			    </div>
@@ -157,7 +155,7 @@
 			      		url('../resources/images/user-icon.png') center center no-repeat; background-size: cover;
 			      			box-shadow: 1px #cccccc;"></div>
 			      <div class="caption" style="position:relative; top:-20px; font-size: 20px;">
-			      	<div style="font-size:22px; font-weight: bold;">${bob.title}</div>
+			      	<div style="font-size:20px; font-weight: bold;">${bob.title}</div>
 			      	<hr>
 			      	<p style="font-size: 17px;  font-weight: bold;">
 			        	${bob.locationName}<br>
@@ -165,7 +163,12 @@
 			        <p style="font-size: 16px;">
 			        	<c:if test="${!empty bob.appointmentTime}">
 				        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-							<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
+				        	<c:if test="${empty sessionScopr.user}">
+				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일"/>
+				        	</c:if>
+				        	<c:if test="${!empty sessionScopr.user}">
+				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
+				        	</c:if>
 			        	</c:if>
 			        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
 			        </p>
@@ -199,7 +202,12 @@
 			        <p style="font-size: 16px;">
 			        	<c:if test="${!empty bob.appointmentTime}">
 				        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-							<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
+				        	<c:if test="${empty sessionScopr.user}">
+				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일"/>
+				        	</c:if>
+				        	<c:if test="${!empty sessionScopr.user}">
+				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
+				        	</c:if>
 			        	</c:if>
 			        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
 			        </p>

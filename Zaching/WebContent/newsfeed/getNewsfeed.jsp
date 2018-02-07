@@ -33,18 +33,51 @@
 <link rel="alternate" type="application/json+oembed" href="http://demo.designwall.com/dw-timeline/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fdemo.designwall.com%2Fdw-timeline%2Fabout%2F" />
 <link rel="alternate" type="text/xml+oembed" href="http://demo.designwall.com/dw-timeline/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fdemo.designwall.com%2Fdw-timeline%2Fabout%2F&#038;format=xml" />
 <link rel="stylesheet" type="text/css" href="../resources/css/newsfeedStyle.css" />
-
-
-
+<script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+<script type = "text/javascript" 
+         src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+      </script>
 		<script type="text/javascript">
+		
 			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/demo.designwall.com\/dw-timeline\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.7.9"}};
 			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),!(j.toDataURL().length<3e3)&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,65039,8205,55356,57096),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,55356,57096),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55357,56425,55356,57341,8205,55357,56507),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55357,56425,55356,57341,55357,56507),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
 			$(function(){
 				$('.submit').on('click', function(){
-		   	 		fuc_addComment();
+		   	 		fnc_addComment();
 		   	 	});
+				$("#countLikey").on('click', function(){
+					fnc_addLikey();
+					//$("#respond >kkkkkkkkk div.likeit-wrap > a").effect( "bounce", {times:3}, 300 );
+					
+				});
+			
 				
-				function fuc_addComment() {
+				function fnc_addLikey(){
+					var finalLikey = $("input[name='countLikey']").val();
+					//$(".likeit").effect("bounce", {times:3}, 300);
+					
+					$.ajax({
+						url : "/newsfeed/json/updateLikey/"+${user.userId}+"/0",
+						method : "POST",
+						contentType : "application/json; charset=UTF-8",
+						data : JSON.stringify({
+							"newsfeedId" : <c:out value="${newsfeed.newsfeedId}" escapeXml="false" />,
+							"countLikey" : finalLikey
+						}),
+						async : false,
+						dataType : "json",
+						success : function(serverData){
+							$("#countLikey > ins").text(serverData);
+							$(".likeit-wrap .likeit")
+								.css("color","#E26F6A")
+								.css("text-decoration", "none");
+							$(".like-text::after").css("content", "\e802");
+							//$("#countLikey > ins").css("color","#E26F6A");
+						}
+					});
+				}
+				
+				function fnc_addComment() {
 					var count = $('#count');
 		   	 		$.ajax({
 						url : "/comment/rest/addComment",
@@ -163,8 +196,38 @@
 		    	min-height: 100%;
 		    	-ms-interpolation-mode: bicubic;
 		    }
-    
-	    
+		    
+		    #respond > div.likeit-wrap {
+			    font-size: large;
+			    margin-top: 0;
+			}
+			
+			#respond {
+			    border-top: none;
+			}
+			
+			#countLikey{
+				cursor: pointer;
+			}
+			
+			@-webkit-keyframes bounce {
+			    0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
+			    40% {-webkit-transform: translateY(-30px) }
+			    60% {-webkit-transform: translateY(-20px);}
+			} 
+			@keyframes bounce {
+			    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+			    40% {transform: translateY(-30px);}
+			    60% {transform: translateY(-20px);}
+			} 
+			
+			.bounce {
+			    -webkit-animation-duration: 1s;
+			    animation-duration: 1s;
+			    -webkit-animation-name: bounce;
+			    animation-name: bounce;
+			}
+				    
 	    </style>    
       
 </head>
@@ -186,16 +249,34 @@
 	<c:if test="${!empty newsfeed.fileName}"><a href="../resources/images/${newsfeed.fileName}"><img src="../resources/images/${newsfeed.fileName}"></a></c:if>
     <p style="font-size: 20pt;">${newsfeed.content}</p>
     <br/>
-	<div id="respond" class="comment-respond">
-	<p style="font-size: 15pt">
-	<div class="likeit-wrap">
-	<a href="#" class="likeit" data-postid="4">
+	<div id="respond">
+	<p style="font-size: 20pt">
+	<div class="likeit-wrap" id="item">
+	<div class="likeit" data-postid="4" id="countLikey">
 		<span class="like-text">Like</span>
 		<ins class="like-count">${newsfeed.countLikey}</ins>
-	</a>
+	</div>
 	<span class="newliker">Thanks!</span>
 	<span class="isliker">You've already liked this</span>
 </div></p>
+
+<div class="social-share msss4 sharrre">
+            <div class="twitter-share sharrre">
+            <a onclick="window.open('//twitter.com/intent/tweet?url=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Fbaking-cake&#038;text=Baking+Cake','twitter','toolbar=0, status=0, width=650, height=360')" title="Twitter" rel="nofollow" href="javascript:void(0);" class="share"></a>
+        </div>
+            <div class="facebook-share sharrre">
+            <a onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Fbaking-cake&#038;t=Baking+Cake&#038;original_referer=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Fbaking-cake%2F','facebook','toolbar=0, status=0, width=900, height=500')" title="Facebook" rel="nofollow" href="javascript:void(0);" class="share"></a>
+        </div>
+            <div class="pinterest-share sharrre">
+            <a onclick="window.open('//pinterest.com/pin/create/button/?url=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Fbaking-cake&#038;description=Baking+Cake&#038;media=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Ffiles%2F2012%2F06%2F86531227.jpg','pinterest','toolbar=no,width=700,height=300')" title="Pinterest" rel="nofollow" href="javascript:void(0);" class="share"></a>
+        </div>
+            <div class="googleplus-share sharrre">
+            <a onclick="window.open('//plus.google.com/share?hl=en-US&#038;url=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Fbaking-cake','googlePlus','toolbar=0, status=0, width=900, height=500')" title="Google+" rel="nofollow" href="javascript:void(0);" class="share"></a>
+        </div>
+            <div class="linkedin-share sharrre">
+            <a onclick="window.open('//www.linkedin.com/cws/share?url=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Fbaking-cake&#038;token=&#038;isFramed=true','linkedin','toolbar=no,width=550,height=550')" title="LinkedIn" rel="nofollow" href="javascript:void(0);" class="share"></a>
+        </div>
+    </div>
 		<h3 id="reply-title" class="comment-reply-title"> 
 		<small>Leave a Reply
 		</small>
@@ -211,6 +292,7 @@
 				<input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> 
 				<input type='hidden' name='comment_post_ID' value='60' id='comment_post_ID' />
 				<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+				<input type='hidden' name='countLikey' value='${newsfeed.countLikey}'/>
 				</p>
 		</div>
 	
@@ -236,21 +318,7 @@
     </div>
   </div>
   <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-34554947-5', 'auto');
-  ga('send', 'pageview');
-
-(function(d, s, id) {
-	var js, fjs = d.getElementsByTagName(s)[0];
-	if (d.getElementById(id)) return;
-	js = d.createElement(s); js.id = id;
-	js.src = "https://sdk.designbold.com/button/v1.0/js/sdk.js#app_id=4e7360360d";
-	fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'db-js-sdk'));
+  
 </script>
 <script type='text/javascript' src='http://demo.designwall.com/dw-timeline/wp-content/themes/dw-timeline/assets/js/vendor/jquery.infinitescroll.min.js?ver=4.7.9'></script>
 <script type='text/javascript' src='http://demo.designwall.com/dw-timeline/wp-content/themes/dw-timeline/assets/js/vendor/bootstrap-3.0.3.min.js?ver=4.7.9'></script>

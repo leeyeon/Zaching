@@ -9,13 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.zaching.common.domain.Page;
@@ -34,7 +36,13 @@ import com.zaching.common.service.CommonService;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
 import com.zaching.service.domain.Comment;
+import com.zaching.service.domain.Friend;
+import com.zaching.service.domain.Newsfeed;
+import com.zaching.service.domain.Participant;
 import com.zaching.service.domain.User;
+import com.zaching.service.domain.excelView;
+import com.zaching.service.friend.FriendService;
+import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.user.UserService;
 
 @Controller
@@ -72,6 +80,13 @@ public class BobController {
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 	
+	@Autowired
+	@Qualifier("friendServiceImpl")
+	private FriendService friendService;
+	
+	@Autowired
+	@Qualifier("newsfeedServiceImpl")
+	private NewsfeedService newsfeedService;	
 	
 	public BobController() {
 		System.out.println(this.getClass());
@@ -95,6 +110,7 @@ public class BobController {
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value= "/getBob", method=RequestMethod.GET)
 	public String getBob(@RequestParam int bobId, 
 						@RequestParam String category,
@@ -118,15 +134,23 @@ public class BobController {
 		
 		Search search = new Search();
 		
-		if(search.getCurrentPage() ==0 ){
+		if(search.getCurrentPage() ==0){
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
 		search.setCategory("B00");
-
-		Calendar cal = Calendar.getInstance();
 		
 		Map<String,Object> map = (Map<String,Object>)commonService.listComment(search, "B00", bobId);
+		
+		List<Newsfeed> review = null;
+		int reviewCount = 0;
+		
+		if(!category.equals("B03")) {
+			search.setCategory("N10:"+bobId);
+			Map<String, Object> newsfeedMap = newsfeedService.listNewsfeed(search);
+			review = (List<Newsfeed>)newsfeedMap.get("list");
+			reviewCount = (int)newsfeedMap.get("totalCount");
+		}
 		
 		Page resultPage	= 
 				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
@@ -135,7 +159,9 @@ public class BobController {
 		model.addAttribute("comments", map.get("list"))
 			.addAttribute("commentPage", resultPage)
 			.addAttribute("category", category)
-			.addAttribute("currentTime", cal.getTime())
+			.addAttribute("currentTime", (Calendar.getInstance()).getTime())
+			.addAttribute("review", review)
+			.addAttribute("reviewCount", reviewCount)
 			.addAllAttributes(bob);
 
 		return "forward:/bob/getBob.jsp";
@@ -175,13 +201,30 @@ public class BobController {
 	
 	
 	@RequestMapping(value="/addBob", method=RequestMethod.GET)
-	public String addBobView(@RequestParam String category, Model model) {
+	public String addBobView(@RequestParam String category,
+							HttpSession session, Model model) {
 		System.out.println(this.getClass()+"/addBob_ GET");
 		
-		//System.out.println(category);
+		Search search = new Search();
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setCategory("B03");
+		search.setPageSize(pageSize);
+		search.setSearchCondition("2");
+		search.setSearchKeyword(((User)session.getAttribute("user")).getUserId()+"");
+		
+		Map<String, Object> map = null;
+		
+		try {
+			map = friendService.listFriend(search);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 		model.addAttribute("category", category);
 		model.addAttribute("categoryName", this.getCategoryName(category));
+		model.addAttribute("friend", map);
 		
 		return "forward:/bob/addBob.jsp";
 	}
@@ -297,6 +340,33 @@ public class BobController {
 			.addAttribute("commentPage", resultPage);
 		
 		return "forward:/bob/listComment.jsp";
+	}
+	
+	@RequestMapping(value="/listFee", method=RequestMethod.GET)
+	public String listFee(@RequestParam int bobId, @RequestParam int monthFee, 
+			Model model) throws Exception {
+		
+		model.addAttribute("participant", bobService.listFeeBob(bobId, monthFee));
+		
+		return "forward:/bob/listFee.jsp";
+	}
+	
+	/**
+	 * excelFee
+	 * @data	model
+	 * @return	excel
+	 * 
+	 */
+	@RequestMapping(value="/excelFee", method=RequestMethod.POST)
+	@ResponseBody
+	public Object downloadExcel(HttpServletRequest request, HttpServletResponse response, @RequestParam int bobId,
+								Model model) throws Exception {
+		
+		List<Participant> excelList = (List<Participant>)bobService.listFeeBob(bobId, -1);
+		
+		model.addAttribute("list", excelList);
+		
+		return new excelView();
 	}
 	
     /**

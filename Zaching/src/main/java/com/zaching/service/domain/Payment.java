@@ -25,6 +25,7 @@ public class Payment {
 	private String accountNumber;
 	private int accountCi;
 	private int accountSeqNo;
+	private String content;
 
 	public Payment() {
 		// TODO Auto-generated constructor stub
@@ -128,12 +129,20 @@ public class Payment {
 	}
 
 
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
 	@Override
 	public String toString() {
 		return "Payment [paymentId=" + paymentId + ", createdDate=" + createdDate + ", paymentCode=" + paymentCode
 				+ ", userId=" + userId + ", point=" + point + ", receiverId=" + receiverId + ", realName=" + realName
 				+ ", bankCode=" + bankCode + ", accountNumber=" + accountNumber + ", accountCi=" + accountCi
-				+ ", accountSeqNo=" + accountSeqNo + "]";
+				+ ", accountSeqNo=" + accountSeqNo + ", content=" + content + "]";
 	}
 
 }

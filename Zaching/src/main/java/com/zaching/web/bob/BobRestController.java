@@ -23,7 +23,9 @@ import com.zaching.common.service.CommonService;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
 import com.zaching.service.domain.Comment;
+import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.domain.Payment;
+import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.payment.PaymentService;
 
 @RestController("/bob/rest/*")
@@ -42,6 +44,10 @@ public class BobRestController {
 	@Autowired
 	@Qualifier("paymentServiceImpl")
 	private PaymentService paymentService;
+	
+	@Autowired
+	@Qualifier("newsfeedServiceImpl")
+	private NewsfeedService newsfeedService;
 	
 	@Value("#{commonProperties['pageUnit']}")
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
@@ -125,16 +131,18 @@ public class BobRestController {
 		
 		if(category.equals("B01")) {
 			int userPoint = paymentService.getPoint((int)obj.get("userId"));
-			
+
 			System.out.println("UserPoint ? :: "+userPoint);
 			
 			if(userPoint >= 1000) {
+				Bob bob = bobService.getBobInfo(bobId, category);
 				/* 약속비 1000원 차감 */
 				System.out.println("돈 진짜 나갑니다 2");
 				Payment payment = new Payment();
 				payment.setUserId(userId);
 				payment.setPoint(1000);
 				payment.setPaymentCode("P02");
+				payment.setContent(category+":"+bobId+":"+bob.getTitle());
 				paymentService.managePoint(payment);
 				
 				/* 마일리지 적립 */
@@ -174,10 +182,12 @@ public class BobRestController {
 		System.out.println(category+"//"+userId+"//"+bobId);
 		
 		if(category.equals("B01")) {
+			Bob bob = bobService.getBobInfo(bobId, category);
 			Payment payment = new Payment();
 			payment.setUserId(userId);
 			payment.setPoint(1000);
 			payment.setPaymentCode("P06");
+			payment.setContent(category+":"+bobId+":"+bob.getTitle());
 			paymentService.managePoint(payment);
 			
 			/* 마일리지 적립취소 */
@@ -222,24 +232,22 @@ public class BobRestController {
 	@RequestMapping(value="/payFeebob", method=RequestMethod.POST)
 	@ResponseBody
 	public JSONObject payFeebob(@RequestBody Map<String, Object> obj) throws Exception {
-		
-		System.out.println(obj.get("userId"));
-		System.out.println(obj.get("participantId"));
-		System.out.println(obj.get("fee"));
-		
+
 		int fee = Integer.valueOf(obj.get("fee").toString());
 		int userPoint = paymentService.getPoint(Integer.valueOf(obj.get("userId").toString()));
+		int bobId = (int)obj.get("bobId");
 		
 		JSONObject object = new JSONObject();
 		
 		if(userPoint >= fee) {
-			
+			Bob bob = bobService.getBobInfo(bobId, "B03");
 			bobService.payFeeBob(Integer.valueOf(obj.get("participantId").toString()), fee);
 			
 			Payment payment = new Payment();
 			payment.setPaymentCode("P02");
 			payment.setUserId(Integer.valueOf(obj.get("userId").toString()));
 			payment.setPoint(fee);
+			payment.setContent("B03:"+bobId+":"+bob.getTitle());
 			
 			paymentService.managePoint(payment);
 			
@@ -259,6 +267,44 @@ public class BobRestController {
 		
 		bobService.blockBob(bobId);
 		
+	}
+	
+	/* 후기 */
+	
+	@RequestMapping(value="/addReview", method=RequestMethod.POST)
+	public JSONObject addReview(@RequestBody Map<String, Object> obj) {
+		
+		System.out.println("흠냐링?");
+		
+		Newsfeed newsfeed = new Newsfeed();
+		newsfeed.setCategoryCode("N10:"+obj.get("bobId"));
+		newsfeed.setContent((String)obj.get("content"));
+		newsfeed.setStatus("0");
+		newsfeed.setPrivacyBound("0");
+		newsfeed.setUserId(((Integer)obj.get("userId")).intValue());
+		
+		
+		
+		System.out.println(newsfeed);
+		
+		boolean result = false;
+		
+		try {
+			newsfeedService.addNewsfeed(newsfeed);
+			result = true;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		JSONObject object = new JSONObject();
+		
+		if(result) {
+			object.put("response", "success");
+		} else {
+			object.put("response", "fail");
+		}
+		
+		return object;
 	}
 	
 }

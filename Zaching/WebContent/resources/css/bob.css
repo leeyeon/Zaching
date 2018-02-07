@@ -1,0 +1,263 @@
+@charset "EUC-KR";
+
+/*getBob.css*/
+
+.getBob {
+	padding-top: 80px;
+	padding-bottom: 50px;
+	background: #f5f5f5;
+}
+		
+.getBob .bg {
+	position: fixed;
+	width: 100%;
+	height: 600px;
+	background-size: cover;
+	background-repeat: no-repeat, no-repeat;
+	background-position: center center;
+	top:0;
+	left:0;
+	z-index: -1;
+}
+
+.getBob .jumbotron {
+    margin-bottom: 0px;
+    margin-top: -2px;
+    height: 600px;
+    background: transparent;
+}
+
+.getBob .jumbotron .textStyle {
+	color: #000000;
+    font-weight: bold;
+}
+
+.getBob .overlay {
+	left: 0;
+	padding: 10px;
+	position: absolute;
+ 	width: 100%;
+ 	top: 290px;
+ 	background-color: rgba(221, 215, 224, 0.9);
+}
+
+.getBob .blog-sidebar .textBold, .textBold {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.getBob div.col-sm-3.col-sm-offset-1.blog-sidebar,
+.getBob .custumRow {
+	-webkit-box-shadow: 0px 0px 6px 4px rgba(237,237,237,1);
+	-moz-box-shadow: 0px 0px 6px 4px rgba(237,237,237,1);
+	box-shadow: 0px 0px 6px 4px rgba(237,237,237,1);
+	background: #FFFFFF;
+	padding:10px;
+}
+
+.getBob .btn-bob {
+	background: #5F4B8B; 
+	border: none; 
+	display: inline-block;
+	color: rgb(255, 255, 255); 
+	font-size: 18px; 
+	font-weight: bold;
+	text-align: center;
+	height: 70px;
+	line-height: 70px;
+	width: 100%;
+	text-decoration: none;
+}
+     	
+.getBob .select-bob {
+	background: rgba(237,237,237,1); 
+	border: none; 
+	display: inline-block;
+	color: #000000;
+	font-size: 18px; 
+	font-weight: bold;
+	text-align: center;
+	height: 70px;
+	line-height: 70px;
+	text-decoration: none;
+	border: 2px solid #FFFFFF;
+	cursor: pointer;
+}
+     	
+.getBob .select-bob:hover, .select-bob.active{
+    background: #5F4B8B;
+    color: #FFFFFF;
+}
+     	
+.getBob .col-sm-3.col-sm-offset-1.blog-sidebar img {
+	cursor: pointer;
+}
+     	
+.getBob .col-xs-1 {
+    border: 1px solid #FFFFFF;
+	border-radius: 40px;
+	-moz-border-radius: 40px;
+	-khtml-border-radius: 40px;
+	-webkit-border-radius: 40px;
+	 background: #FFFFFF;
+	 width: 70px;
+	 height: 70px;
+	 line-height: 70px;
+	 font-size: 17px;
+	 font-weight: bold;
+	 float:right;
+	 margin-right: 10px;
+	 cursor: pointer;
+}
+     	
+.getBob .modal {
+     text-align: center;
+}
+ 
+@media screen and (min-width: 768px) { 
+.getBob .modal:before {
+                display: inline-block;
+                vertical-align: middle;
+                content: " ";
+                height: 100%;
+        }
+}
+ 
+.getBob .modal-dialog {
+       display: inline-block;
+       text-align: left;
+       vertical-align: middle;
+       overflow-y: initial !important
+}
+
+.getBob .modal-body{
+    height: 250px;
+    overflow-x: auto;
+}
+
+.getBob .blog-post > p > img {
+	width: 100%;
+}
+
+
+/* addBob.jsp */
+.addBob {
+	padding-top: 100px;
+}
+
+.addBob .bg {
+	position: fixed;
+	width: 100%;
+	height: 570px;
+	margin-top: -100px;
+	background-size: cover;
+	background-repeat: no-repeat, no-repeat;
+	background-position: center center;
+	top:0;
+	left:0;
+	z-index: -1;
+	opacity: 0.8;
+}
+
+.addBob .btn-bob {
+	background: #5F4B8B; 
+	border: none; 
+	color: rgb(255, 255, 255); 
+	font-size: 15px; 
+	font-weight: bold;
+	text-align: center;
+	height: 50px;
+	line-height: 50px;
+	text-decoration: none;
+}
+    	
+.addBob .row {
+  	margin-bottom: 5px;
+}
+     	
+.addBob .form-style-1{
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    background: #fff;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    color: #555;
+    font: 95% Arial, Helvetica, sans-serif;
+}
+
+.addBob .text-info {
+    font-weight: 300;
+    text-align: center;
+    color: #fff;
+}
+
+.addBob #addBob > div > div:nth-child(2) > div.col-xs-10 > div {
+	width:100%;
+	padding-top: 7px;
+}
+
+.addBob .datepicker {
+	width: 100%;
+}
+
+.addBob body > div.container > form > div > div:nth-child(10) > div > div.datepicker_inner_container > div.datepicker_calendar {
+	width: 50%;
+}
+
+.addBob body > div.container > form > div > div:nth-child(10) > div > div.datepicker_inner_container > div.datepicker_calendar > table {
+	width: 50%;
+}
+
+.addBob body > div.container > form > div > div:nth-child(10) > div > div.datepicker_inner_container > div.datepicker_timelist {
+	width: 50%;
+}
+
+.dropdown-menu{
+   max-height:300px;
+   overflow-y: scroll;
+}
+
+/* 친구목록 */
+
+.addBob #sortable1, #sortable2 { 
+	list-style-type: none; 
+	margin: 0; 
+	padding: 0; 
+	margin-bottom: 10px;
+	overflow-y: auto;
+   	overflow-x: hidden;
+}
+
+.addBob .ui-state-default { 
+	margin: 5px; 
+	padding: 10px;
+	z-index: 100;
+}
+
+.toastMessage {
+    width:400px;
+    height:auto;
+    position:fixed;
+    left:50%;
+    margin-left:-200px;
+    bottom:15px;
+    background-color: #000000;
+    color: #F0F0F0;
+    font-size: 18px;
+    padding:12px;
+    text-align:center;
+    border-radius: 2px;
+    -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    z-index: 100;
+}

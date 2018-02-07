@@ -1,27 +1,33 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
-	<!--<jsp:include page="../admin/addReport.jsp"/> -->
 	
-	<link rel="stylesheet" href="../resources/css/getBob.css">
-	<style type="text/css">
-	
-	</style>
+	<link rel="stylesheet" href="../resources/css/bob.css">
+
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
     <script type="text/javascript">
     
 	
     $(function() {
-   	
-   		$(this).scrollTop(0);
+
+    	/*
+    	$(window).bind("pageshow", function(event) {
+    	    if (event.originalEvent.persisted) {
+    	        document.location.reload();
+    	    }
+    	});
+    	*/
+   		
+    	$("html, body").animate({ scrollTop: 0 }, "slow"); 
+
+   		//$(this).scrollTop(0);
 
    		var jumboHeight = $('.jumbotron').outerHeight();
    		function parallax(){
@@ -33,15 +39,12 @@
    		    parallax();
    		});
    	   
+   		// 회비목록 달별로 보여줌
    		$('.select-bob').on('click', function(){
    			$('.active').removeClass('active');
    			$(this).addClass('active');
+   			$("#listFee").load("/bob/listFee?bobId=${param.bobId}&monthFee="+$(this).attr("id").substring(4));
    		});
-
-   	 	
-   	 	$('.col-xs-1:contains("신고")').on('click', function() {
-   	 		alert('신고');
-   	 	});
    	 	
    	 	$('.col-xs-1:contains("수정")').on('click', function() {
    			//alert('수정');
@@ -51,6 +54,60 @@
    	 	$('.btn-ico:contains("초대하기")').on('click', function() {
    			alert('초대하기');
    		});
+   	 	
+   	 	$('.btn-bob:contains("엑셀 다운로드")').on('click', function() {
+   	 		//alert("${bob.bobId}");
+   	 		$("#excelForm").attr("method", "POST").attr("action", "/bob/excelFee").submit();
+		});
+   	 	
+   		$(document).on('click','#ListParticipant .userProfile', function() {
+	 		var participantUserId = $($("input[name=getUserTimeLine]")[$('#ListParticipant .userProfile').index(this)]).val();
+	 		alert(participantUserId);
+	 		$(self.location).attr("href","/user/getTimeLine?userId="+participantUserId);
+	 	});
+   	 	
+   	 	/*///////////////////////////// 후기 시작 /////////////////////////////*/
+   	 	
+   		$('button:contains("후기 올리기")').on('click', function(){
+   	 		fuc_addReview();
+	 	});
+   	 	
+   	 	$(':text[name="inputReview"]').on("keydown", function(e) {
+   	 		if(e.keyCode == 13) {
+	   	 		fuc_addReview();
+			}
+   	 	});
+   	 	
+   	 	function fuc_addReview() {
+	 		$.ajax({
+				url : "/bob/rest/addReview",
+				method : "POST",
+				contentType : "application/json; charset=UTF-8",
+				data : JSON.stringify({
+					"userId" : <c:out value="${user.userId}" escapeXml="false" />,
+					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />,
+					"content" : $(":text[name='inputReview']").val()
+				}),
+				async : false,
+				dataType : "json",
+				success : function(serverData) {
+					
+					if(serverData.response == "success") {
+						alert("후기가 무사히 등록되었습니다.");
+						location.reload();
+					} else {
+						alert("후기가 등록되지 않았습니다. \n 다시 시도해주세요.");
+					}
+
+				},
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+				
+			});
+	 	}
+   	 	
+   	 	/*///////////////////////////// 후기 끝 /////////////////////////////*/
    	 	
    	 	/*///////////////////////////// 댓글 시작 /////////////////////////////*/
    	 	
@@ -101,7 +158,7 @@
    	 		$("#listComment").load("/bob/listCommment?category=${param.category}&bobId=${param.bobId}&currentPage=${commentPage.currentPage+1}");
    	 	});
    	 	
-   	 	$('#listComment img').on('click', function() {
+   	 	$(document).on('click','#listComment img', function() {
 	 		var commentUserId = $($("input[name=commentUserId]")[$('#listComment img').index(this)]).val();
 	 		$(self.location).attr("href","/user/getTimeLine?userId="+commentUserId);
 	 	});
@@ -189,7 +246,7 @@
    				data : JSON.stringify({
    					"userId" : <c:out value="${user.userId}" escapeXml="false" />,
    					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />,
-   					"category" : '<c:out value="${param.category}" escapeXml="false" />',
+   					"category" : '<c:out value="${param.category}" escapeXml="false" />'
    				}),
    				async : false,
    				dataType : "json",
@@ -232,7 +289,8 @@
    				data : JSON.stringify({
    					"userId" : <c:out value="${user.userId}" escapeXml="false" />,
    					"participantId" : $("input[name='participantId']").val(),
-   					"fee" : <c:out value="${bob.fee}" escapeXml="false" />
+   					"fee" : <c:out value="${bob.fee}" escapeXml="false" />,
+   					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />
    				}),
    				async : false,
    				dataType : "json",
@@ -282,6 +340,26 @@
 
    		});
    		
+   		$("#report").on('click',function(){
+   			$.ajax({
+   					 
+   		        url : "/admin/rest/addReport",
+   		        method : "POST",
+   		        contentType : "application/json; charset=UTF-8",
+   		        data : JSON.stringify({
+   		            "category" : 2,
+   		            "userID" : <c:out value="${user.userId}" escapeXml="false" />,
+   		            "text" : $("#reportText").val(),
+   		            "roomID" : <c:out value="${bob.bobId}" escapeXml="false" />
+   		        }),
+   		        async : false,
+   		        dataType : "json",
+   		        success : function(serverData) {
+   		        	alert("신고가 완료되었습니다.");
+   		        }
+   			})
+   		});
+   		
    	 	
    	 	/* 맵!!! */
 
@@ -314,7 +392,7 @@
 </script>
     
 </head>
-<body>
+<body class="getBob">
 
 	<c:set var="frontImage" value="${fn:substring(bob.image, 0, 6)}"/>
 	<c:set var="endImage" value="${fn:substring(bob.image, 7, fn:length(bob.image))}"/>
@@ -324,7 +402,7 @@
 		<div class="container" align="center">
 		
 			<div class="row" >
-				<div class="col-xs-1">신고</div>
+				<div class="col-xs-1" data-toggle="modal" data-target="#addReport">신고</div>
 				<c:if test="${user.userId eq bob.writtenUserId}">
 					<div class="col-xs-1">수정</div>
 				</c:if>
@@ -372,7 +450,7 @@
         
         <!-- /////////////////////  우리지금만나/당장만나 Participant /////////////////////  -->
 
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar" style="padding-bottom: 0px;">
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar" id="ListParticipant" style="padding-bottom: 0px;">
         	<div style="padding:8px;">
 				<div class="row">
 					<div class="col-xs-8 textBold" align="left" style="padding-right: 0px; padding-top:3px;">
@@ -391,7 +469,7 @@
 							${fn:length(participant)}명
 						</c:if>
 						<c:if test="${param.category eq 'B03'}">
-							<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#myModal" style="">친구초대</button>
+							<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#inviteFriend" style="">친구초대</button>
 						</c:if>
 					</div>
 					
@@ -403,7 +481,8 @@
 							<img src="/resources/images/sample_crown.png" width="60px" height="60px"/>
 						</div>
 						<div style="position: relative; z-index: 1; top:-35px;">
-							<img width="60px" height="60px"
+							
+							<img class="userProfile" width="60px" height="60px"
 							style=" border-radius: 40px;
 									-moz-border-radius: 40px;
 									-khtml-border-radius: 40px;
@@ -413,16 +492,22 @@
 							onerror="this.src='../resources/images/user-icon.png'" />&nbsp;&nbsp;&nbsp;${bob.writtenUserName}
 						</div>
 					</div>
+					
+					<input type="hidden" name="getUserTimeLine" value="${bob.writtenUserId}" />
+					
 					<c:forEach var="participant" items="${participant}">
+						
 						<c:if test="${participant.userId eq user.userId}">
-							<input type="hidden" name="participantId" value="${participant.participantId}" />
+							<input type="hidden" name="participantId" value="${bob.writtenUserId}" />
 							<input type="hidden" name="isAutoFee" value="${participant.isAutoFee}" />
 							<c:set var="isAutoFee" value="${participant.isAutoFee}" />
 							<c:set var="paidFee" value="${participant.paidFee}"/>
 						</c:if>
 						<c:if test="${!participant.isWriter}">
+							<input type="hidden" name="getUserTimeLine" value="${participant.userId}" />
+							<input type="hidden" name="participantId" value="${participant.participantId}" />
 							<div class="col-xs-4 text-center" align="left" style="margin-top:20px; padding-right:15px;">
-								<img width="55px" height="55px"
+								<img class="userProfile" width="55px" height="55px"
 									style=" border-radius: 40px;
 											-moz-border-radius: 40px;
 											-khtml-border-radius: 40px;
@@ -441,15 +526,19 @@
 			
 			<!-- ///////////////////// 주기적으로 만나 Participant & 회비 /////////////////////  -->
 				
+			<jsp:useBean id="today" class="java.util.Date" />
+			<fmt:formatDate var="today" value="${today}" pattern="yyyyMMddHHmm"/>
+			<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
+			<fmt:formatDate value="${Date}" var="appointmentTime" pattern="yyyyMMddHHmm"/>
+				
 				<c:if test="${param.category ne 'B03'}">
 					<div class="row" style="padding: 5px;">
-						<c:if test="${bob.status eq 'Y'}">
+						<c:if test="${bob.status eq 'Y' && appointmentTime>today}">
 							<button class="btn-bob">
-								<c:set var="flag" value="true"/>
 								<c:if test="${user.userId ne bob.writtenUserId}">
 									<c:forEach var="participant" items="${participant}">
 										<c:if test="${user.userId eq participant.userId}">취소하기
-											<c:set var="flag" value="false" />
+
 										</c:if>
 									</c:forEach>
 									<c:if test="${param.category eq 'B01' && flag}">약속비 1000원으로 참여하기</c:if>
@@ -458,7 +547,7 @@
 								<c:if test="${user.userId eq bob.writtenUserId}">마감하기</c:if>
 							</button>
 						</c:if>
-						<c:if test="${bob.status eq 'E'}">
+						<c:if test="${bob.status eq 'E' || appointmentTime<=today}">
 							<div class="btn-bob" style="background-color: #FFF; color: #000;" >참여자 마감</div>
 						</c:if>
 					</div>
@@ -499,17 +588,18 @@
       </div><!-- /.row -->
       
       <!-- ///////////////////////////////// 댓글 시작 /////////////////////////////////  -->
-      <div class="row custumRow" style="margin-top:20px; padding-top:30px;">
+      <div class="row custumRow" style="margin-top:20px; padding: 50px;">
       	
       	<div class="text-center textBold" style="font-size: 20px;">친구들과 대화를 나누세요 :)</div>
         <hr>
 		
-		<div class="row" style="padding:0px 5px 15px 5px;">
+		<div class="row" style="padding:0px 5px 30px 5px;">
       		<div class="col-xs-9">
-      			<input type="text" name="inputComment" class="form-control" placeholder="댓글을 입력해주세요."/>       		
+      			<input type="text" name="inputComment" class="form-control"  style="height:45px; font-size: 16px;"
+      			placeholder="${!empty sessionScope.user? '댓글을 입력해주세요.':'로그인을 해주세요.'}"/>
       		</div>
       		<div class="col-xs-3">
-				<button type="submit" class="form-control">등록</button>
+				<button type="submit" class="form-control" style="background-color: #7a68a6; color: #FFF; height:45px; font-size: 16px;">등록</button>
 			</div>
       	</div>
 		
@@ -524,19 +614,27 @@
       <!-- ///////////////////////////////// 후기 시작 /////////////////////////////////  -->
       
       <c:if test="${param.category ne 'B03'}">
-	      <div class="row custumRow" style="margin-top:20px;">
-		      <div class="row">
-		      	<div class="col-xs-9">
-			      	<input type="text" class="form-control" style="width: 100%; height: 150px;"></input>
-		      	</div>
-		      	<div class="col-xs-3">
-		      		<button type="submit" class="form-control">후기 올리기</button>
-		      	</div>      	
+	      <div class="row custumRow" style="margin-top:20px; padding: 50px;">
+	      
+	      	<div class="text-center textBold" style="font-size: 20px;">
+	      		${sessionScope.user.name} 님, 이번 밥친구모임은 어떠셨나요?
 	      	</div>
-	
-	      	<c:forEach var="i" begin="0" end="6" step="1">
+	      	
+	      	<hr>
+		     <div class="row">
+		    	<c:if test="${bob.status eq 'Y'}">
+			      	<div class="col-xs-9">
+				      	<input type="text" name="inputReview" class="form-control" style="width: 100%; height: 150px; font-size:16px;"></input>
+			      	</div>
+			      	<div class="col-xs-3">
+			      		<button type="submit" class="form-control" style="background-color: #7a68a6; color: #FFF; height:45px; font-size: 16px;">후기 올리기</button>
+			      	</div>
+		      	</c:if>   	
+	      	</div>
+			
+	      	<c:forEach var="review" items="${review}">
 	      		<div class="row">
-	      			<div class="col-xs-12 text-center">후기후기</div>
+	      			<div class="col-xs-12 text-center">${review.content} // ${review.categoryCode}</div>
 	      		</div>
 	      	</c:forEach>
 	      </div>
@@ -567,31 +665,18 @@
 	      	</div>
 	      	
 	      	<hr>
-	
-	      	<div class="row" style="padding: 0 20px 0 20px;">
-	   			<c:forEach var="participant" items="${participant}">
-	   				
-					<div class="col-xs-4" align="left" style="margin-top:20px; padding-right:15px;">
-						<img src = "../resources/upload_files/images/${participant.participantProfile}"
-			      			onerror="this.src='../resources/images/user-icon.png'"
-			      			width="60px" height="60px"
-							style=" border-radius: 40px;
-									-moz-border-radius: 40px;
-									-khtml-border-radius: 40px;
-									-webkit-border-radius: 40px;
-									 box-shadow: 1px #cccccc;" />
-						&nbsp;&nbsp;&nbsp;${participant.participantName}&nbsp;&nbsp;&nbsp;
-						<c:if test="${participant.paidFee != 0}">
-							<img width="55px" height="55px" src="/resources/images/checkmark.png" />
-						</c:if>
-					</div>
-				</c:forEach>
-			</div>
 	      	
+	      	<div id="listFee" class="row" style="padding: 0 20px 0 20px;">
+		      <jsp:include page="listFee.jsp" />
+	      	</div>
+
 	      	<hr>
 	      	
 	      	<div class="row" align="right" style="margin-right:5px;">
-	      		<button type="submit" class="btn-bob" style="width: 210px; height: 60px; line-height:60px;">엑셀 다운로드</button>
+	      		<form id="excelForm">
+	      			<input type="hidden" name="bobId" value="${bob.bobId}" />
+	      			<button type="submit" class="btn-bob" style="width: 210px; height: 60px; line-height:60px;">엑셀 다운로드</button>
+	      		</form>
 	      	</div>
 	      </div>
       
@@ -602,13 +687,8 @@
 
 
 
-
-
-
-
-
 	<!-- Modal --> 
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+	<div class="modal fade" id="inviteFriend" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
         <div class="modal-dialog"> 
                <div class="modal-content"> 
                     <div class="modal-header"> 
@@ -679,6 +759,28 @@
                     </div>
                </div> 
         </div> 
+	</div>
+
+	<div class="modal fade" id="addReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel"><b>신고하기</b></h4><label for="exampleTextarea">카테고리/신고대상:</label>
+	      </div>
+	      <div class="modal-body">    
+	      	 <textarea class="form-control" id="reportText" rows="5"></textarea>
+	        </div>
+	      <div class="modal-footer">
+	       <div class="topnav">
+	      <div class="search-container">
+	      	<button type="button" class="btn btn-primary" id="report" data-dismiss="modal" >신고하기</button>
+	      	 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      	</div></div>
+	       
+	      </div>
+	    </div>
+	  </div>
 	</div>
 
 </body>

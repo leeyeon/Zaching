@@ -1,12 +1,12 @@
 package com.zaching.service.bob.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.zaching.common.domain.Search;
@@ -139,6 +139,40 @@ public class BobServiceImpl implements BobService {
 	@Override
 	public void payFeeBob(int participantId, int paidFee) throws Exception {
 		bobDao.payFeeBob(participantId, paidFee);
+	}
+	
+	@Override
+	public List<Participant> listFeeBob(int bobId, int month) throws Exception {
+		List<Participant> list = bobDao.listFeeBob(bobId, month);
+		
+		return list;
+    }
+	
+
+	//@Scheduled(fixedDelay=5000, initialDelay=2*1000)
+	@Scheduled(cron="0 0 */1 * * *")
+	public void doSomething() {
+		// 한시간에 한번씩 실행
+		System.out.println("Scheduled Blockbob Check (BobServiceImpl)");
+		
+		try {
+			
+			List<Integer> list = bobDao.listBobStatusEnd();
+			if(list.size() != 0) {
+				for (Integer integer : list) {
+					System.out.println(integer.intValue());
+					bobDao.blockBob(integer);
+					System.out.println("block: "+integer);
+				}
+			} else {
+				System.out.println("Blockbob List is none");
+				return;
+			}
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

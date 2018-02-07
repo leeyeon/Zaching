@@ -11,17 +11,22 @@ import org.springframework.stereotype.Repository;
 
 import com.zaching.common.URLConnection;
 import com.zaching.common.service.KakaoRestDao;
+import com.zaching.service.domain.User;
 
 @Repository("kakaoRestDaoImpl")
 public class KakaoRestDaoImpl implements KakaoRestDao {
 	
 	private final String REST_API_KEY = "90d9379d1246c1e7e36d34027d2e497d";
 	private final String ADMIN_KEY = "3639f373825926cf896298541090d7a2";
-	private final String REDIRECT_URI = "http://127.0.0.1:8080/kakaoPay";
+	private final String REDIRECT_URI_Login = "http://127.0.0.1:8080/kakaoLogin";
+	private final String REDIRECT_URI = "http://127.0.0.1:8080/payment/kakaoPay";
 	private final String GET_TOKEN_API_URL = "https://kauth.kakao.com/oauth/token";
 
 	private final String PAYMENT_READY_URL = "https://kapi.kakao.com/v1/payment/ready";
 	private final String PAYMENT_APPROVE_URL = "https://kapi.kakao.com//v1/payment/approve";
+	
+	private final String APP_CONNECTION_URL = "https://kapi.kakao.com/v1/user/signup";//앱연결
+	private final String USER_INFO_URL = "https://kapi.kakao.com/v1/user/me";//사용자정보 받아오는 URL
 	
 	private final String PAYMENT_TEST_PARAM = "cid=TC0ONETIME&partner_order_id=partner_order_id&partner_user_id=partner_user_id";
 	
@@ -39,10 +44,11 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 	@Override
 	public String getAuthorizationUrl() {
 		String url = "redirect:https://kauth.kakao.com/oauth/authorize?client_id="+this.REST_API_KEY
-				+"&redirect_uri="+this.REDIRECT_URI+"&response_type=code";
+				+"&redirect_uri="+this.REDIRECT_URI_Login+"&response_type=code";
 		
 		return url;
 	}
+	
 
 	@Override
 	public Map<String, Object> getAceessToken(String code) throws Exception {
@@ -149,5 +155,78 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 		
 		return map;
 	}
+	
+	//카카오 로그인
+	@Override
+	public String getAuthorizationUrl_login() {
+		String url = "redirect:https://kauth.kakao.com/oauth/authorize?client_id="+this.REST_API_KEY
+				+"&redirect_uri="+this.REDIRECT_URI_Login+"&response_type=code";
+		
+		return url;
+	}
+	
+	//사용자 토큰 생성
+	@Override
+	public User getAceessToken2(String code) throws Exception {
+		
+		System.out.println("KakaoR.getAccessToken()");
+		
+		String param = "grant_type=authorization_code&client_id="+REST_API_KEY
+						+"&redirect_uri="+REDIRECT_URI_Login+"&code="+code;
+
+		JSONObject obj = 
+				URLConnection.getJSON_PARAM(URLConnection.HTTPMETHOD_POST, GET_TOKEN_API_URL, param,
+						"application/x-www-form-urlencoded");
+		 	
+//			Map<String, Object> map = new HashMap<String, Object>();
+//	        map.put("accessToken", obj.get("access_token").toString());
+//	        map.put("refreshToken", obj.get("refresh_token").toString());
+			
+		 	User user = new User();
+	        user.setAccessToken(obj.get("access_token").toString());
+	        user.setRefreshToken(obj.get("refresh_token").toString());
+	       
+	        this.accessToken = obj.get("access_token").toString();
+	        this.refreshToken = obj.get("refresh_token").toString();
+       
+        
+        return user;
+	}
+
+
+	//앱연결
+	@Override
+	public void getAppConnection(String token) throws Exception {
+		
+		System.out.println(":: KAKAO.getAppConnection() ::");
+		
+		JSONObject obj = URLConnection.getJSON(URLConnection.HTTPMETHOD_POST, 
+				APP_CONNECTION_URL, "application/x-www-form-urlencoded;charset=utf-8",
+				"Authorization", "Bearer"+token);
+		System.out.println("App Connect response :: "+obj);		
+	}
+	
+	//사용자 정보 받아오기
+	@Override
+	public User getUserInfo(User user) throws Exception {
+		
+		System.out.println("::KAKAO.getUserInfo() ::");
+		
+		JSONObject obj = URLConnection.getJSON(URLConnection.HTTPMETHOD_GET, USER_INFO_URL,
+				"application/x-www-form-urlencoded;charset=utf-8", "Authorization", "Bearer "+accessToken);
+		 
+		System.out.println(":: accessToken::"+accessToken);
+		
+		JSONObject properties = (JSONObject)obj.get("properties");
+		
+        
+        user.setEmail(obj.get("kaccount_email").toString());
+        user.setProfileImage(properties.get("profile_image").toString());
+        user.setName(properties.get("nickname").toString());
+        user.setSnsType("kakao");
+		
+		return user;
+	}
+	
 
 }

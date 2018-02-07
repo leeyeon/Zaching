@@ -28,4 +28,10 @@ public interface NewsfeedService {
 	public List<Newsfeed> listNewsfeeds(Search search) throws Exception;
 	
 	public void addLikeBlind(int newsfeedId, int userId, String status) throws Exception;
+	
+	public void deleteLikeBlind(int newsfeedId, int userId, String status) throws Exception;
+	
+	public void cancelCountLike(int newsfeedId) throws Exception;
+	
+	public int getLikeUser(int newsfeedId, int userId, String status) throws Exception;
 }

@@ -38,4 +38,6 @@ public interface BobDao {
 	
 	public int getTotalCount(Search search) throws Exception;
 	
+	public List<Integer> listBobStatusEnd() throws Exception;
+	
 }

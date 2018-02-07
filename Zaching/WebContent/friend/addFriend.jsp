@@ -4,17 +4,7 @@
 <%@ page pageEncoding="EUC-KR"%>
 
 
-<%
-	Friend friend=new Friend();
-	friend.setFriendId(5);
-	
-	request.setAttribute("friend",friend);%>
-	
-	<%
-	User user =new User();
-	user.setUserId(9);
-	
-	request.setAttribute("user",user);%>
+
 
 <!DOCTYPE html>
 

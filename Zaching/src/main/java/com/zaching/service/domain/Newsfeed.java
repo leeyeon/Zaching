@@ -18,8 +18,58 @@ public class Newsfeed {
 	private String privacyBound;
 	private String status;
 	private MultipartFile file;
+	private String userName;
+	private String profileImage;
 
 	
+
+	public int getNewsfeedId() {
+		return newsfeedId;
+	}
+
+
+
+	public void setNewsfeedId(int newsfeedId) {
+		this.newsfeedId = newsfeedId;
+	}
+
+
+
+	public int getUserId() {
+		return userId;
+	}
+
+
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+
+
+	public String getUserName() {
+		return userName;
+	}
+
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
+
 
 	public String getStatus() {
 		return status;
@@ -47,18 +97,6 @@ public class Newsfeed {
 
 	public void setPrivacyBound(String privacyBound) {
 		this.privacyBound = privacyBound;
-	}
-
-
-
-	public int getnewsfeedId() {
-		return newsfeedId;
-	}
-
-
-
-	public void setnewsfeedId(int newsfeedId) {
-		this.newsfeedId = newsfeedId;
 	}
 
 
@@ -132,20 +170,6 @@ public class Newsfeed {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-
-
-
-	public int getuserId() {
-		return userId;
-	}
-
-
-
-	public void setuserId(int userId) {
-		this.userId = userId;
-	}
-
-
 
 	public String getLocationName() {
 		return locationName;
