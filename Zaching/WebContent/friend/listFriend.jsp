@@ -27,6 +27,8 @@
 body {
 	padding-top: 80px;
 }
+
+
 </style>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -101,21 +103,33 @@ body {
 			</div>
 
 
-
-			<div class="row">
-				<div style="width: 120px; height: 90px; overflow: hidden">
-					<a href="#"> <img src="../resources/images/main@2x.png"
-						style="width: 120px; height: auto;" alt="image"
-						onclick="clickBtn();"></a>
-				</div>
-
-				<div class="col-xs-4 col-md-2 ">
-					<strong>이 름</strong>
-				</div>
-				<div class="col-xs-8 col-md-4">"회원이름"${user.name}</div>
-			</div>
-
 			<hr />
+						<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>김상민</strong></div>
+			<div class="col-xs-8 col-md-4">
+			<img src="../resources/upload_files/images/main@2x.png" 
+			style="width: 120px; height: auto;" alt="image" class="img-circle"
+						onclick="clickBtn();"/>
+						</div>
+		</div>
+		<hr/>
+		
+		
+		<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="../resources/upload_files/images/main@2x.png" 	
+      style="width: 120px; height: auto;" alt="image" class="img-circle"
+						onclick="clickBtn();">
+      <div class="caption">
+        
+        <p>
+         <a href="#" class="btn btn-default" role="button">친구</a></p>
+         
+      </div>
+    </div>
+  </div>
+</div>
 
 			<div class="row">
 				<div style="width: 120px; height: 90px; overflow: hidden">
@@ -131,6 +145,7 @@ body {
 			</div>
 
 			<hr />
+			
 
 			<div class="row">
 				<div style="width: 120px; height: 90px; overflow: hidden">
