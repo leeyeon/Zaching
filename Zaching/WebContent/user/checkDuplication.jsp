@@ -26,15 +26,26 @@
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
-	
+		$(function() {
+	 
+			 $("input[name='email']").on("change" , function() {
+		
+				 var email=$("input[name='email']").val();
+	    
+				 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
+		    		alert("이메일 형식이 아닙니다.");
+		    	 }
+			});
+	 
+		});	
 		//=============  "중복확인"  Event 처리 =============
 		$(function() {
-			
+			var email =$("input[name='email']").val();
 			$("#email").focus();
 			
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("button.btn.btn-info").on("click" , function() {
-				
+				alert(email);
 				// Form 유효성 검증
 				if( $("#email").val() != null && $("#email").val().length >0) {
 					$("form").attr("method" , "POST");
@@ -87,7 +98,7 @@
 		
 		  <div class="form-group">
 		    <label for="email">아 이 디</label>
-		    <input type="text" class="form-control" name="email" id="email"  placeholder="이메일"
+		    <input type="email" class="form-control" name="email" id="email"  placeholder="이메일"
 		    																		value="${ ! empty result && result ? email : '' }" >
 		  </div>
 		  <button type="button" class="btn btn-info">중복확인</button>

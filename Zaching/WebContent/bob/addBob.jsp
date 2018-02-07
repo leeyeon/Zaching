@@ -63,7 +63,7 @@
 
 		if(title.val() == "") {
 			title.focus();
-			makeToast("타이틀을 입력해주세요.");
+			makeToast("제목을 입력해주세요.");
 			return false;
 		}
 		
@@ -133,7 +133,7 @@
 		
 		function parallax(){
    		    var scrolled = $(window).scrollTop();
-   		    $('.bg').css('height', (530-scrolled) + 'px');
+   		    $('.bg').css('height', (570-scrolled) + 'px');
    		}
    	
    		$(window).scroll(function(e){
@@ -333,11 +333,11 @@
 	<div class="bg" style="background-image: url('../resources/images/wood_background.jpg')"></div>
     
     <div class="container">
-    	<div class="page-header text-center" style="margin: 180px 0 150px 0; border: none;">
+    	<div class="page-header text-center" style="margin: 180px 0 140px 0; border: none;">
 			<h3 class="text-info" style="color: #000; font-weight: bold; font-size: 30px;">[${categoryName}] 방만들기</h3>
 		</div>
     
-		<form class="form-horizontal" enctype="multipart/form-data">
+		<form class="form-horizontal" enctype="multipart/form-data" style="background: #FFF; padding: 40px;">
 		    <div class="form-group">
 		    	<input type="hidden" name="writtenUserId" value="${user.userId}" />
 		    	<input type="hidden" name="category" value="${param.category}" />
@@ -345,8 +345,7 @@
 		    	<input type="hidden" name="longitude" />
 		    	<div class="row">
 	            	<div class="col-sm-12 text-center" style="margin: 30px 0 30px 0;" >
-	            		<input type="text" name="title" placeholder="제목" style="font-size: 20px; width: 90%; height: 50px; padding-left: 20px; border: none; border-bottom: 1px solid #eee;"
-	            			title="Please provide your firstname."/>
+	            		<input type="text" name="title" placeholder="제목" style="font-size: 20px; width: 90%; height: 50px; padding-left: 20px; border: none; border-bottom: 1px solid #eee;"/>
 	            	</div>
 		    	</div>
 

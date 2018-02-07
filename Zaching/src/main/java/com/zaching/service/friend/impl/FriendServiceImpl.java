@@ -29,8 +29,8 @@ public class FriendServiceImpl implements FriendService{
 	}
 
 	@Override
-	public void deleteFreind(int id) throws Exception {
-		friendDao.deleteFriend(id);
+	public void deleteFreind(int friendId) throws Exception {
+		friendDao.deleteFriend(friendId);
 	}
 
 	@Override
@@ -45,8 +45,18 @@ public class FriendServiceImpl implements FriendService{
 	}
 
 	@Override
+	public void enterFriend(Friend friend) throws Exception {
+		
+		friendDao.enterFriend(friend);
+	}
+
+	@Override
 	public void addFriend(Friend friend) throws Exception {
 		friendDao.addFriend(friend);
+		
+		System.out.println(friend.getFriendId());
+		
+		friendDao.enterFriend(friend);
 	}
 
 	@Override
@@ -72,6 +82,8 @@ public class FriendServiceImpl implements FriendService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 	
 	
 

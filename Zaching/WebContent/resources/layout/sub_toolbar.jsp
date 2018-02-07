@@ -15,19 +15,6 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	  <!-- CSS -->
-	  <%-- 
-	  <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	  <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	  <link href="../css/nivo-lightbox.css" rel="stylesheet" />
-	  <link href="../css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
-	  <link href="../css/owl.carousel.css" rel="stylesheet" media="screen" />
-	  <link href="../css/owl.theme.css" rel="stylesheet" media="screen" />
-	  <link href="../css/animate.css" rel="stylesheet" />
-	  <link href="../css/style.css" rel="stylesheet">
-	  <link href="../color/default.css" rel="stylesheet">
-	  --%>
 
 	<style>
 	
@@ -44,6 +31,12 @@
 		    border-color: #ffffff;
 		}
 		
+		#navigationbar {
+			margin-top: 10px;
+			padding-top: 20px;
+			background: #FFFFFF;
+		}
+		
 		#navbar > ul> li> a {
 			color:#FFFFFF;
 		}
@@ -56,15 +49,11 @@
 		    background-image: linear-gradient(to bottom,#cccccc 0,#cccccc 100%);
 		}
 		
-		.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
-		    background: #5F4B8B;
-		}
-		
 		.mainbar {
 			padding: 0px;
 			height: 150px;
 			width: 100%;
-					text-align: center;			
+			text-align: center;			
 		}
 		
 		.mainbar-menu {
@@ -188,6 +177,7 @@
 					        			++status;
 					        		}
 		
+
 					        		tr = tr + '<tr class="notice_list_click"><td align="left"><input type="hidden" name="noticeid" value="'+serverData.list[i].noticeId+'">'+
 					        		serverData.list[i].name+'님이 '+ category+'</td></tr>'
 					        	
@@ -235,24 +225,29 @@
 			
 			
 		});
+
+		$("input[name='email']").focus();
+
 		
 		//==>"Login"  Event 연결
 		$("#login").on("click" , function() {
 			
-			$("#email").focus();
 
-			var email =$("#email").val();
-			var password =$("#password").val();
+			var email =$("input[name='email']").val();
+			var password =$("input[name='password']").val();
+			
+			alert(email);
+			alert(password);
 			
 			if(email == null || email.length <1) {
 				alert('ID 를 입력하지 않으셨습니다.');
-				$("input:text").focus();
+				$("input[name='email']").focus();
 				return;
 			}
 			
 			if(password == null || password.length <1) {
 				alert('패스워드를 입력하지 않으셨습니다.');
-				$("input:password").focus();
+				$("input[name='password']").focus();
 				return;
 			}
 			
@@ -312,17 +307,72 @@
 
 		});
 		
-		$("#kakaologin").on("click", function() {
-			self.location =
-		"https://kauth.kakao.com/oauth/authorize?client_id=dfe2041581c23da0c4e9c8aefb3c28a1&redirect_uri=http://127.0.0.1:8080/kakaologin&response_type=code";
+
+		
+		//이름으로 타임라인 이동
+		$("#navigationbar > ul:nth-child(2) > li:nth-child(1) > div > a").on("click", function() {
+			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";
+
 
 		});
 		
+
+		//카카오로그인 으로 이동
+		$("#kakaologin").on("click", function() {
+			var windowW = 400;  // 창의 가로 길이
+		    var windowH = 500;  // 창의 세로 길이
+			var left = Math.ceil((window.screen.width - windowW)/2);
+		    var top = Math.ceil((window.screen.height - windowH)/2);
+		    
+			window.open("/kakaoLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
+			opener.location.reload(true);
+			    self.close();
+	
+		});
+
+		
+		//네이버 로그인
+		$("#naverLogin").on("click", function() {
+			var windowW = 400;  // 창의 가로 길이
+		    var windowH = 500;  // 창의 세로 길이
+			var left = Math.ceil((window.screen.width - windowW)/2);
+		    var top = Math.ceil((window.screen.height - windowH)/2);
+		    
+			window.open("/naverLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
+			opener.location.reload(true);
+			    self.close();
+	
+		});
+		
+		//구글로그인
+		$("#googleLogin").on("click", function() {
+			var windowW = 400;  // 창의 가로 길이
+		    var windowH = 500;  // 창의 세로 길이
+			var left = Math.ceil((window.screen.width - windowW)/2);
+		    var top = Math.ceil((window.screen.height - windowH)/2);
+		    
+			window.open("/googleLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
+			opener.location.reload(true);
+			    self.close();
+	
+		});
 		
 		
-		
+		//페이스북로그인
+		$("#facebookLogin").on("click", function() {
+			var windowW = 400;  // 창의 가로 길이
+		    var windowH = 500;  // 창의 세로 길이
+			var left = Math.ceil((window.screen.width - windowW)/2);
+		    var top = Math.ceil((window.screen.height - windowH)/2);
+		    
+			window.open("/facebookLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
+			opener.location.reload(true);
+			    self.close();
+	
+		});
 
 	});
+		
 	
 		$(document).ready(function(){
 			
@@ -360,47 +410,60 @@
 
 <title>zaching</title>
 </head>
-<body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid" style="background: #5F4B8B; height:50px;">
+<body style="background-color: rgb(240, 239, 238);">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="height: 105px; background-color: #FFF;  
+    	background-image: url('/resources/images/toolbar_img.png');     background-repeat: repeat-x;
+    	border-bottom: 1px solid rgba(214, 213, 212, 0.64);">
+      <div class="container" style="color:#000">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigationbar" aria-expanded="false" aria-controls="navbar"
+          	style="margin-top: 35px;">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
+            
           </button>
           <a class="navbar-brand" href="#">
-          	<img alt="뉴스피드로 이동" src="/resources/images/temp_logo.png"  height="40px" 
-          		style="margin-top: -10px;"/>
-          </a>
+	          	<img alt="뉴스피드로 이동" src="/resources/images/temp_logo.png"  height="40px" 
+	          		style="margin-top: 20px;"/>
+	        </a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse" >
+        <div id="navigationbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#">밥친구</a></li>
-            <li><a href="#">라이브방송</a></li>
-            <li><a href="#">보이스리플</a></li>
-            <li><a href="#">생활정보</a></li>
+            <li><a href="#" style="color:#000;">밥친구</a></li>
+            <li><a href="#" style="color:#000;">라이브방송</a></li>
+            <li><a href="#" style="color:#000;">보이스리플</a></li>
+            <li><a href="#" style="color:#000;">생활정보</a></li>
           </ul>
           <ul class="nav navbar-nav" style="float:right;">
-          	<c:if test="${user.userId ne null && user.profileImage eq null}">
-	          	<li><div style="padding-top: 10px; color:#FFF;">
+
+          	<c:if test="${user.userId ne null && sessionScope.user.profileImage eq null}">
+	          	<li><div style="padding-top: 10px; color:#333;">
 	          	<a href="#"><img src="../resources/images/paper-plane.png" id="notice"
 		          	width="30px"/></a><div class="badge   badge-primary"></div>&nbsp;&nbsp;
+
 		       	<img src="../resources/images/profile_default.png" id="profile"
-		          	width="30px"/>&nbsp;<input type="hidden" name="userId" value="${user.userId}"><u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
+		width="30px"/>&nbsp;<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
+
 		       
 	          	</div></li>
 	          	<li><a href="#">로그아웃</a></li>
           	</c:if>
           	
-          	<c:if test="${user.userId ne null && user.profileImage ne null}">
-	          	<li><div style="padding-top: 10px; color:#FFF;">
+
+
+
+          	<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
+	          	<li><div style="padding-top: 10px; color:#333;">
 	          	<a href="#"><img src="../resources/images/paper-plane.png" id="notice"
 		          	width="30px"/></a><div class="badge   badge-primary"></div>&nbsp;&nbsp;
-		       	<img src="../resources/upload_files/images/${user.profileImage} id="profile"
-		          	width="30px"/>&nbsp;<u>${sessionScope.user.name}</u>&nbsp;님 환영합니다!
+		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px"/>&nbsp;
+		        <a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
+		        &nbsp;님 환영합니다!
+
 		       
 	          	</div></li>
 	          	<li><a href="#">로그아웃</a></li>
@@ -452,7 +515,7 @@
         
          <div class="row">
            <div class="col-sm-6">
-   			<input type="text" class="form-control input-lg" id="email"  name="email"
+   			<input type="email" class="form-control input-lg" name="email"
 				placeholder="이메일을입력하세요"	style="margin-left: 5px"/>
    			
            </div>
@@ -468,7 +531,7 @@
        
          <div class="row">
            <div class="col-sm-6">
-   			 <input type="password" class="form-control input-lg" id="password" name="password"
+   			 <input type="password" class="form-control input-lg" name="password"
    				placeholder="패스워드를입력하세요"	 style="margin-left: 5px">
            </div>
 		</div>
@@ -476,10 +539,21 @@
 		
 		<div class="row">
               <div class="social-login" align="left">
+<<<<<<< HEAD
    			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" type="button" id="kakaologin">
    			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50" >
    			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50" />
    			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" >
+=======
+   			 	<a href="#kakaoLogin" id="kakaoLogin">
+   			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" type="button" id="kakaologin"/></a>
+   			 	<a href="#facebookLogin" id="facebookLogin">
+   			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50"  type="button" id="facebooklogin"></a>
+   			 	<a href="#naverLogin" id="naverLogin">
+   			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50"  	type="button" id="naverlogin"/></a>
+   			 	<a href="#googleLogin" id="googleLogin">
+   			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" 	type="button" id="googlelogin"/></a>
+>>>>>>> refs/remotes/origin/master
              </div>  
         </div>
         

@@ -172,6 +172,11 @@
 		</if>
 		
 		FROM BOB, USERS <if test='category == "B03"'> , PARTICIPANT </if>
+			<if test="category == 'B04'">
+				, (select latitude AS user_lat, longitude AS user_lng
+				from users
+				where user_id = 9)
+			</if>
 		<where>
 			bob.writer_id = users.user_id
 			AND bob.status NOT IN ('N')
@@ -184,9 +189,30 @@
 			</if>
 			<if test='category == "B04"'>
 				AND trim(category_code) IN ('B01', 'B02')
+				AND (user_lat between bob.latitude-0.019 and bob.latitude+0.019)
+			    AND (user_lng between bob.longitude-0.022 and bob.longitude+0.022)
 			</if>
 		</where>
-		ORDER BY bob.time NULLS LAST
+		ORDER BY
+			(
+				CASE trim(bob.status)
+				WHEN 'Y' THEN 1
+				WHEN 'E' THEN 5
+				ELSE 6
+				END
+			)
+			,(
+				CASE WHEN
+				to_number(to_char(bob.time,'yyyymmddhh24mi')) >  to_number(to_char(sysdate, 'yyyymmddhh24mi')) THEN 2
+				ELSE 3
+			END
+			)
+			,( 
+				CASE WHEN
+				bob.time IS NULL THEN 4
+				ELSE 7
+				END
+			)
 	</sql>
 
 	
@@ -310,6 +336,18 @@
 			AND bob.category_code = 'B03'
 			AND BOB.bob_id = #{bobId}
 			<if test="month != -1"></if>
+		</where>
+	</select>
+	
+	<select id="checkStatus"
+			resultType="integer">
+		SELECT
+			bob_id
+		FROM BOB
+		<where>
+			bob.status IN ('Y')
+			AND trim(category_code) IN ('B01', 'B02')
+			AND to_number(to_char(time,'yyyymmddhh24mi')) <![CDATA[<]]> to_number(to_char(SYSDATE, 'yyyymmddhh24mi'))
 		</where>
 	</select>
 

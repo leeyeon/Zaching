@@ -43,7 +43,7 @@ public class UserRestController {
 		System.out.println("/user/json/emailAuth : POST");
 
 
-		String email = (String)map.get("email");
+		String inputEmail = (String)map.get("inputEmail");
 		String authNum = "";// 보내 인증번호
 
 		authNum = RandomNum();
@@ -52,13 +52,13 @@ public class UserRestController {
 
 		System.out.println("getSessionUser :: " + getSessionUser);
 
-		System.out.println("받는사람 email 정보==>" + email);
+		System.out.println("받는사람 email 정보==>" + inputEmail);
 		System.out.println("새로생성한 인증번호==> " + authNum);
 
 		getSessionUser.setAuthNum(authNum);
-		getSessionUser.setEmail(email);
+		getSessionUser.setEmail(inputEmail);
 
-		userService.sendMail(email, authNum);
+		userService.sendMail(inputEmail, authNum);
 
 		System.out.println("DB인증번호 ===> " + getSessionUser.getAuthNum());
 		System.out.println("DB이메일 ===> " + getSessionUser.getEmail());
@@ -98,8 +98,8 @@ public class UserRestController {
 		if(authNum.equals(getSessionAuth.getAuthNum())) {
 			System.out.println("Before updateRole===> "+getSessionAuth);
 			userService.updateRole(getSessionAuth);
-			System.out.println("After updateRole===> "+getSessionAuth);
-			return authNum;
+			System.out.println("After updateRole===> "+getSessionAuth.getRole());
+		
 		}
 		
 		return "";
@@ -117,6 +117,28 @@ public class UserRestController {
 		
 		return "{\"positions\":[{\"lat\": 37.3733103146403,\"lng\": 127.43708794867802,\"imgsrc\": \"/resources/images/user-icon.png\"},{\"lat\": 37.1627912237388,\"lng\": 128.99580192447536,\"imgsrc\": \"/resources/images/author.png\"},{\"lat\": 36.93980515531936,\"lng\": 128.8060765485201,\"imgsrc\": \"/resources/upload_files/images/main@2x.png\"},"
 				+ "{\"lat\": 37.27943075229118,\"lng\": 127.01763998406159,\"imgsrc\": \"/resources/images/profile_test.png\"},{\"lat\": 37.55915668706214,\"lng\": 126.92536526611102,\"imgsrc\": \"/resources/images/test_2.jpg\"}]}";
+	}
+	
+	
+	//파일업로드
+	@RequestMapping(value="upload",method=RequestMethod.GET)
+	public String ProfileUpload(@RequestParam("userId") int userId,
+			@RequestBody Map<String, Object> map)throws Exception{
+		
+		
+		System.out.println("/user/ProfileUpload : GET");
+		
+		String profileImage =(String)map.get("profileImage");
+		
+		System.out.println("업로드한 파일 이름====> "+profileImage);
+		
+		User user =userService.getUser(userId);
+		
+		user.setProfileImage(profileImage);
+		
+		userService.updateUser(user);
+		
+		return profileImage;
 	}
 	
 	

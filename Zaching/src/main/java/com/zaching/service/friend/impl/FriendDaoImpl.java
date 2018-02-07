@@ -1,6 +1,8 @@
 package com.zaching.service.friend.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,8 @@ public class FriendDaoImpl implements FriendDao{
 	}
 
 	@Override
-	public Friend updateFriend(Friend status) throws Exception {
-		 sqlSession.update("FriendMapper.updateFriend", status);
+	public Friend updateFriend(Friend friend) throws Exception {
+		 sqlSession.update("FriendMapper.updateFriend", friend);
 		return null;
 		}
 
@@ -41,6 +43,12 @@ public class FriendDaoImpl implements FriendDao{
 	@Override
 	public void addFriend(Friend friend) throws Exception {
 		sqlSession.insert("FriendMapper.addFriend",friend);
+	}
+	
+	@Override
+	public void enterFriend(Friend friend) {
+		sqlSession.insert("FriendMapper.enterFriend",friend);
+		
 	}
 
 	@Override
@@ -75,6 +83,8 @@ public class FriendDaoImpl implements FriendDao{
 	public int getTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("FriendMapper.getTotalCount",search);
 	}
+
+
 	
 	
 	

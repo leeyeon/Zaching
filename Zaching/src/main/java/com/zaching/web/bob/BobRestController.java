@@ -23,7 +23,9 @@ import com.zaching.common.service.CommonService;
 import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
 import com.zaching.service.domain.Comment;
+import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.domain.Payment;
+import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.payment.PaymentService;
 
 @RestController("/bob/rest/*")
@@ -42,6 +44,10 @@ public class BobRestController {
 	@Autowired
 	@Qualifier("paymentServiceImpl")
 	private PaymentService paymentService;
+	
+	@Autowired
+	@Qualifier("newsfeedServiceImpl")
+	private NewsfeedService newsfeedService;
 	
 	@Value("#{commonProperties['pageUnit']}")
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
@@ -261,6 +267,44 @@ public class BobRestController {
 		
 		bobService.blockBob(bobId);
 		
+	}
+	
+	/* ÈÄ±â */
+	
+	@RequestMapping(value="/addReview", method=RequestMethod.POST)
+	public JSONObject addReview(@RequestBody Map<String, Object> obj) {
+		
+		System.out.println("Èì³Ä¸µ?");
+		
+		Newsfeed newsfeed = new Newsfeed();
+		newsfeed.setCategoryCode("N10:"+obj.get("bobId"));
+		newsfeed.setContent((String)obj.get("content"));
+		newsfeed.setStatus("0");
+		newsfeed.setPrivacyBound("0");
+		newsfeed.setUserId(((Integer)obj.get("userId")).intValue());
+		
+		
+		
+		System.out.println(newsfeed);
+		
+		boolean result = false;
+		
+		try {
+			newsfeedService.addNewsfeed(newsfeed);
+			result = true;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		JSONObject object = new JSONObject();
+		
+		if(result) {
+			object.put("response", "success");
+		} else {
+			object.put("response", "fail");
+		}
+		
+		return object;
 	}
 	
 }

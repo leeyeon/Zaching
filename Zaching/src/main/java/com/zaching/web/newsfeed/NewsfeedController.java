@@ -69,7 +69,7 @@ public class NewsfeedController {
 		
 		newsfeedService.addNewsfeed(newsfeed);
 		
-		return "redirect:/newsfeed/listNewsfeed";
+		return "/";
 	}
 	
 	@RequestMapping(value="deleteNewsfeed", method=RequestMethod.GET)
@@ -115,7 +115,7 @@ public class NewsfeedController {
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
-		search.setCategory("V01");
+		search.setCategory("N01");
 		search.setPageSize(pageSize);
 		Map<String, Object> map = newsfeedService.listNewsfeed(search);
 		//List<Newsfeed> list = newsfeedService.listNewsfeeds(search);
