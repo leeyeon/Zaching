@@ -58,10 +58,10 @@ $(function() {
 							else{
 								active = '<div class="item">';
 							}
-							displayValue = displayValue + active +'<h1>'+(i+1)+'</h1><div class="container"><div class="card">'+
+							displayValue = displayValue + active +'<h4><b>'+(i+1)+'</b></h4><div class="container">'+
 							'<div class="col-xs-2"><img src="'+JSONData.item[i].cover+'" width="150px"/></div>'+
 							' <div class="col-xs-8"> <h4><b>'+JSONData.item[i].title+'</b><br/></h4>'+JSONData.item[i].author+
-							'<br/><br/>'+JSONData.item[i].description+'<br/><br/><b>'+JSONData.item[i].categoryName+'</b><br/></div></div></div></div>';
+							'<br/><br/>'+JSONData.item[i].description+'<br/><br/><b>'+JSONData.item[i].categoryName+'</b><br/></div></div></div>';
 
 						}
 						

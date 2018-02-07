@@ -1,5 +1,7 @@
 $(function() {
 	 $( "#fixedbtn" ).on("click" , function() {
+		 
+		 alert("ㅎㅎ");
 		 $( document ).ready(function() {
 			    
 			    showPopup();

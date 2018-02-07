@@ -26,7 +26,7 @@
 	<div class="container">
 	<div class="page-header text-info">
 <div class="map_wrap">
-    <div id="map1" style="width:100%;height:600px;position:relative;overflow:hidden;"></div>
+    <div id="map1" style="width:100%;height:400px;position:relative;overflow:hidden;"></div>
  
 </div>
 </div>

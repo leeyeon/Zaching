@@ -23,7 +23,35 @@
 
 
 </head>
+<style>
+.mc{
 
+	color: #404372;
+	font-weight: 400;
+	font-size: 25px;
+	font-family: 'Raleway', Arial, sans-serif;
+	font-style: italic;
+	
+}
+
+.mc2{
+	font-weight: 400;
+	font-size: 15px;
+	font-style: italic;
+}
+
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    height: 35px;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+</style>
 <script>
 $(function() {
 	
@@ -39,12 +67,21 @@ $(function() {
 					success : function(JSONData , status) {
 						var displayValue = '';
 						
+						var mc = '';
+						
 
 						
 						for(var i=0; i<10; i++){
+							
+							if(i < 3){
+								mc = '<div class="mc">'+(i+1)+'</div>';
+							}else{
+								mc = '<div class="mc2">'+(i+1)+'</div>';
+							}
 							displayValue = displayValue + '<div class="container"><div class="card">'+
-							' <div class="col-xs-8"><h4><b>'+(i+1)+'.'+JSONData.melon.songs.song[i].songName+'</b> - '+JSONData.melon.songs.song[i].artists.artist[0].artistName+'</h4>'+
-							'</div></div></div>';
+							'<div class="col-xs-1"><img src="/resources/images/play-button.png" height="30px" width="30px"/></div>'+
+							'<div class="col-xs-10"><h4><b>'+JSONData.melon.songs.song[i].songName+'</b> - '+JSONData.melon.songs.song[i].artists.artist[0].artistName+'</h4>'+
+							'</div>'+mc+'</div></div>';
 
 						}
 						
@@ -65,7 +102,6 @@ $(function() {
 </script>
 
 <body>
-
 
 
 </body>
