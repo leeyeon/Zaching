@@ -1,29 +1,12 @@
 package com.zaching.service.bob.impl;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.zaching.common.domain.Search;
@@ -164,5 +147,32 @@ public class BobServiceImpl implements BobService {
 		
 		return list;
     }
+	
+
+	//@Scheduled(fixedDelay=5000, initialDelay=2*1000)
+	@Scheduled(cron="0 0 */1 * * *")
+	public void doSomething() {
+		// 한시간에 한번씩 실행
+		System.out.println("Scheduled Blockbob Check (BobServiceImpl)");
+		
+		try {
+			
+			List<Integer> list = bobDao.listBobStatusEnd();
+			if(list.size() != 0) {
+				for (Integer integer : list) {
+					System.out.println(integer.intValue());
+					bobDao.blockBob(integer);
+					System.out.println("block: "+integer);
+				}
+			} else {
+				System.out.println("Blockbob List is none");
+				return;
+			}
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 }

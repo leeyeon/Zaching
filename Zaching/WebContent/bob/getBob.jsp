@@ -526,15 +526,19 @@
 			
 			<!-- ///////////////////// 주기적으로 만나 Participant & 회비 /////////////////////  -->
 				
+			<jsp:useBean id="today" class="java.util.Date" />
+			<fmt:formatDate var="today" value="${today}" pattern="yyyyMMddHHmm"/>
+			<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
+			<fmt:formatDate value="${Date}" var="appointmentTime" pattern="yyyyMMddHHmm"/>
+				
 				<c:if test="${param.category ne 'B03'}">
 					<div class="row" style="padding: 5px;">
-						<c:if test="${bob.status eq 'Y'}">
+						<c:if test="${bob.status eq 'Y' && appointmentTime>today}">
 							<button class="btn-bob">
-								<c:set var="flag" value="true"/>
 								<c:if test="${user.userId ne bob.writtenUserId}">
 									<c:forEach var="participant" items="${participant}">
 										<c:if test="${user.userId eq participant.userId}">취소하기
-											<c:set var="flag" value="false" />
+
 										</c:if>
 									</c:forEach>
 									<c:if test="${param.category eq 'B01' && flag}">약속비 1000원으로 참여하기</c:if>
@@ -543,7 +547,7 @@
 								<c:if test="${user.userId eq bob.writtenUserId}">마감하기</c:if>
 							</button>
 						</c:if>
-						<c:if test="${bob.status eq 'E'}">
+						<c:if test="${bob.status eq 'E' || appointmentTime<=today}">
 							<div class="btn-bob" style="background-color: #FFF; color: #000;" >참여자 마감</div>
 						</c:if>
 					</div>

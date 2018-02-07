@@ -60,22 +60,39 @@ public class LoginController {
 	public String KakaoLogin(@RequestParam("code") String code, HttpSession session) throws Exception {
 
 		System.out.println("/kakaoLogin/code");
-
-		User user = commonService.getAceessToken2(code);
-		user = commonService.getUserInfo(user);
-
-		if (userService.login(user.getEmail()) == null) {
-
-			userService.addUser(user);
+		
+		User sessionUser = (User)session.getAttribute("user");
+		
+		//System.out.println(sessionUser);
+		
+		/* 카카오페이 때 로그인하는 거 때문에 만듦!!! */
+		if(sessionUser.getAccessToken() == null) { 
+			
+			//System.out.println("여기까지 왔군욤");
+			
+			sessionUser.setAccessToken("kakaoPay");
+			
+			session.setAttribute("user", sessionUser);
+			
+			return "redirect:/payment/mainPayment";
+			
+		} else {
+			User user = commonService.getAceessToken2(code);
+			user = commonService.getUserInfo(user);
+	
+			if (userService.login(user.getEmail()) == null) {
+	
+				userService.addUser(user);
+			}
+	
+			session.setAttribute("user", user);
+	
+			System.out.println("session 저장정보===>" + session.getAttribute("user"));
+			System.out.println("이메일 ==> " + user.getEmail());
+			System.out.println("프로필 이미지 ==> " + user.getProfileImage());
+	
+			return "forward:/index.jsp";
 		}
-
-		session.setAttribute("user", user);
-
-		System.out.println("session 저장정보===>" + session.getAttribute("user"));
-		System.out.println("이메일 ==> " + user.getEmail());
-		System.out.println("프로필 이미지 ==> " + user.getProfileImage());
-
-		return "forward:/index.jsp";
 	}
 
 	@RequestMapping(value = "naverLoginRequest", method = RequestMethod.GET)
