@@ -198,7 +198,7 @@ font-size: 20px;
     </div>
   </section>
   <!-- /Section: about -->
-  
+  <br/> <br/> <br/> <br/>
    <!-- Section: gallery -->
   <section id="gallery" class="home-section text-center">
 
@@ -287,7 +287,7 @@ font-size: 20px;
 
 
   </section>
- 
+  <br/> <br/> <br/>
   <section id="contact" class="home-section text-center">
    <div id="music">
   <h2><img src="/resources/images/cd.png" width="80px"> &nbsp; <img src="/resources/images/musiccharts.png"/></h2><br/><br/>
@@ -299,7 +299,7 @@ font-size: 20px;
   
   </div>
 </section>
-
+ <br/> <br/> <br/>
 
 <section id="contact" class="home-section text-center">
 <p class="wow bounceInUp" data-wow-delay="0.3s"><img src="/resources/images/moviec.png" width="80px"> &nbsp; <img src="/resources/images/moviechart.png"/></p>
