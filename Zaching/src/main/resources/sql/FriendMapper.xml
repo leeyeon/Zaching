@@ -81,23 +81,13 @@
 	
 	<select id="listFriend" parameterType="search" resultMap="friendSelectMap">
 	SELECT * 
-	FROM(SELECT inner_table.*,ROWNUM AS row_seq
-				FROM(SELECT id,friend_id,user_id,status
-					FROM friend
-					<if test="searchCondition !=null">
-					<where>
-					<if test="searchCondition == 0 and searchKeyword !='' ">
-					user_id=#{searchKeyword}
-					</if>
-					<if test="searchCondition == 1 and searchKeyword !='' ">
-					friend_id=#{searchKeyword}
-					</if>
-					</where>
-					</if>
-					ORDER BY id DESC) inner_table
-						WHERE ROWNUM &lt;=#{endRowNum})
-							WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
-	</select>
+	FROM(SELECT inner_table.*, ROWNUM AS row_seq
+		FORM (SELECT friend.friend_id, friend.user_id, users.name,
+							users.profile_image
+							FROM friend, users
+							<if test=""></if>
+							))
+							</select>
 	
 	 	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
