@@ -81,6 +81,10 @@ font-size: 20px;
 
   <!-- Section: intro -->
   <section id="intro" class="intro">
+
+    <div class="slogan">
+    <img src="/resources/images/livinglogo.png" alt="" />
+    </div>
     <div class="page-scroll">
       <a href="#about">
 				<i class="fa fa-angle-down fa-5x animated"></i>
