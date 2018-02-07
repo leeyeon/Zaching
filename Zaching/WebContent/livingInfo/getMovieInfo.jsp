@@ -7,12 +7,10 @@
 <head>
  <meta charset="utf-8">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+  
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  
    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
    
@@ -22,7 +20,11 @@
    </head>
    
        <style>
-
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+		
+		* {
+			font-family: 'Nanum Gothic', serif;
+		}
 
 .containerr {
   margin: 0 auto;
@@ -38,6 +40,7 @@
   position: absolute;
   transform-style: preserve-3d;
   transition: transform 1s;
+
   
 }
 
@@ -50,6 +53,7 @@
   font-size: 20px;
   text-align: center;
   color: #00000;
+  
  
 }
 
@@ -197,9 +201,6 @@ $(function() {
 
 <body>
 
-
-
-  
 <script  src="/resources/js/index.js"></script>
 </body>
 

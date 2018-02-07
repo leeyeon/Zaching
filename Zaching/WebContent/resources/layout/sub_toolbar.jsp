@@ -123,11 +123,6 @@
 	<script type="text/javascript">
 		$( function() {
 
-			
-			
-			
-		
-		
 		$( "#notice" ).on("click" , function() {
 			
 			
@@ -147,10 +142,8 @@
 		   	 	});
 		    }
 
-			
-			console.log($("input[name='userId']").val());
+
 			var userId = $("input[name='userId']").val();
-				
 			$.ajax( {
 							url : "/notice/rest/noticeList",
 							method : "POST",
@@ -160,9 +153,7 @@
 					        }),
 					        dataType : "json",
 					        success : function(serverData) {
-					        	
-					       
-					        	
+					         	
 					        	for(var i=0; i<serverData.list.length; i++){
 					        		
 					        		if(serverData.list[i].category == 'V'){
@@ -172,25 +163,20 @@
 					        			category = '밥친구에 초대하였습니다.';
 					        		}
 					        		
-					        		
 					        		if(serverData.list[i].status == '0'){
 					        			++status;
-					        		}
-		
+					        		}	
 
 					        		tr = tr + '<tr class="notice_list_click"><td align="left"><input type="hidden" name="noticeid" value="'+serverData.list[i].noticeId+'">'+
 					        		serverData.list[i].name+'님이 '+ category+'</td></tr>'
 					        	
 					        	}
-					        	
-									
+					        		
 									displayValue = '<div class="notice"><table class="table table-hover">'+ tr + '</table></div>';
 									
 								
 									$(".noticelist").html(displayValue);
 									$(".badge").text(status);
-									
-
 									
 									$(".notice_list_click td").on("click" , function() {
 										

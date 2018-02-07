@@ -24,11 +24,16 @@
 
 </head>
 <style>
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+		
+		* {
+			font-family: 'Nanum Gothic', serif;
+		}
 .mc{
 
 	color: #404372;
 	font-weight: 400;
-	font-size: 25px;
+	font-size: 28px;
 	font-family: 'Raleway', Arial, sans-serif;
 	font-style: italic;
 	
@@ -36,15 +41,16 @@
 
 .mc2{
 	font-weight: 400;
-	font-size: 15px;
+	font-size: 18px;
 	font-style: italic;
 }
 
 .card {
     /* Add shadows to create the "card" effect */
+    padding-top: 5px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    height: 35px;
+    height: 40px;
     background: #fff;
 }
 

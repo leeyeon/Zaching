@@ -12,7 +12,7 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
  
-  <link href="/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
   <link href="/resources/css/nivo-lightbox.css" rel="stylesheet" />
   <link href="/resources/css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
   <link href="/resources/css/owl.carousel.css" rel="stylesheet" media="screen" />
@@ -69,13 +69,18 @@ $( "#profile" ).on("click" , function() {
 });
 </script>
 <style>
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+		
+		* {
+			font-family: 'Nanum Gothic', serif;
+		}
 #music{
 background-image: url('/resources/images/musicbg.png');
 background-repeat: repeat;
 }
 body{
 background: rgba(255,255,255,1);
-padding-top: 130px;
+padding-top: 100px;
 }
 #fixedbtn{position:fixed;
 			right:50px;
