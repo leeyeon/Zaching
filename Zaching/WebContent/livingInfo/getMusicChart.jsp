@@ -19,17 +19,39 @@
 
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 
 
-<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 
 </head>
 <style>
-#fixedbtn{position:fixed;
-			right:50px;
-			bottom:50px;
-			z-index:1000}
+.mc{
+
+	color: #404372;
+	font-weight: 400;
+	font-size: 25px;
+	font-family: 'Raleway', Arial, sans-serif;
+	font-style: italic;
+	
+}
+
+.mc2{
+	font-weight: 400;
+	font-size: 15px;
+	font-style: italic;
+}
+
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    height: 35px;
+    background: #fff;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
 </style>
 <script>
 $(function() {
@@ -46,20 +68,28 @@ $(function() {
 					success : function(JSONData , status) {
 						var displayValue = '';
 						
-						console.log(JSONData.melon.songs.song[0].songName);
-						console.log(JSONData.melon.songs.song[0].artists.artist[0]);
+						var mc = '';
+						
+
 						
 						for(var i=0; i<10; i++){
+							
+							if(i < 3){
+								mc = '<div class="mc">'+(i+1)+'</div>';
+							}else{
+								mc = '<div class="mc2">'+(i+1)+'</div>';
+							}
 							displayValue = displayValue + '<div class="container"><div class="card">'+
-							' <div class="col-xs-8"><h4><b>'+(i+1)+'.'+JSONData.melon.songs.song[i].songName+'</b> - '+JSONData.melon.songs.song[i].artists.artist[0].artistName+'</h4>'+
-							'</div></div></div>';
+							'<div class="col-xs-1"><img src="/resources/images/play-button.png" height="30px" width="30px"/></div>'+
+							'<div class="col-xs-10"><h4><b>'+JSONData.melon.songs.song[i].songName+'</b> - '+JSONData.melon.songs.song[i].artists.artist[0].artistName+'</h4>'+
+							'</div>'+mc+'</div></div>';
 
 						}
 						
 
 						
 						
-						$(".container").html(displayValue);
+						$(".musicChart").html(displayValue);
 						 
 						
 						 
@@ -71,31 +101,8 @@ $(function() {
 
 
 </script>
-<style>
-.card {
-    /* Add shadows to create the "card" effect */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-}
 
-/* On mouse-over, add a deeper shadow */
-.card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-/* Add some padding inside the card container */
-.container {
-    padding: 2px 16px;
-}
-</style>
 <body>
-
-<br/>
-<br/>
-<br/>
-<div class="container" >
-
-</div>
 
 
 </body>

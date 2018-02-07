@@ -22,26 +22,14 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 
 
-<link rel="stylesheet" type="text/css" href="/resources/livingInfo/aroundsearch.css"/>
-<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
-<script src="/resources/javascript/chatbot.js"></script>
-</head>
-<style>
-#fixedbtn{position:fixed;
-			right:50px;
-			bottom:50px;
-			z-index:1000}
-</style>
-<body>
+<link rel="stylesheet" type="text/css" href="/resources/css/aroundsearch.css"/>
 
-<br/>
-<br/>
-<br/>
+</head>
+<body>
 	<div class="container">
 	<div class="page-header text-info">
 	       
 <div class="topnav">
-
   <div class="search-container">
       <input type="text" placeholder="Search.." name="search" id="selectAddress" value="" readonly>
       <button type="submit" id="selectSearch"><i class="fa fa-search"></i></button>
@@ -90,9 +78,9 @@
 </div>
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
-<script src="/resources/livingInfo/aroundsearchmap.js"></script>
+<script src="/resources/javascript/aroundsearchmap.js"></script>
 
-<img src="../resources/images/chat.png" id="fixedbtn">
+
 
 </body>
 </html>
