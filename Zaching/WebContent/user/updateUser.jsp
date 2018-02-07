@@ -67,7 +67,7 @@
 				var pw2 = $("input[name ='password2']").val();
 				
 				
-					
+				
 				alert(userId);
 				alert(name);
 				alert(email);

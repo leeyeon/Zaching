@@ -168,10 +168,17 @@
        </c:if>
 		
 		<c:if test="${user.profileImage ne null }">
-		<button class="replace">프로필사진 업로드</button> 
-		<input type="file" name="profileImage" class="upload" accept=".jpg, .jpeg, .png">
+		<div class="profileImage" align="center">
+        <figure class="default-Profile" style="">
+        	<img  class="img-circle" src="../resources/images/upload_files/${sessionScope.user.profileImage}" 
+        	width="150px" height="150px"/>
+        </figure>
+        <label class="file-chooser-button horizontal-center btn btn-border btn-primary btn-lg">
+         <input class="upload" type="file" name="profileImage" accept="image/*" > 
+        </label>
+    	</div>
        </c:if>
-        </div>
+       </div>
         
         <div class="col-xs-3" id="name" style="margin-top: 100px; margin-left: 20px">
 		<h3>${user.name}</h3>
@@ -190,9 +197,9 @@
     		<a type="button" id="listFreind">친구목록</a>
     	</div>
     	<div class="col-xs-3">
-    		<c:if test="${user.role eq '1'}">
+    		<c:if test="${sessionScope.user.role eq '1'}">
     		<a type="button" id="getUser">추가정보입력</a></c:if>
-    		<c:if test="${user.role eq '2'}">
+    		<c:if test="${sessionScope.user.role eq '2'}">
     		<a type="button" id="getUser">내정보조회</a></c:if>
     	</div>
     	<div class="col-xs-2">

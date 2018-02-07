@@ -315,7 +315,7 @@
             <li><a href="#" style="color:#000;">생활정보</a></li>
           </ul>
           <ul class="nav navbar-nav" style="float:right;">
-          	<c:if test="${user.userId ne null && user.profileImage eq null}">
+          	<c:if test="${user.userId ne null && sessionScope.user.profileImage eq null}">
 	          	<li><div style="padding-top: 10px; color:#333;">
 		       	<img src="../resources/images/profile_default.png" id="profile"
 		          	width="30px"/>&nbsp;<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
@@ -324,9 +324,9 @@
 	          	<li><a href="#" title="로그아웃">로그아웃</a></li>
           	</c:if>
           	
-          	<c:if test="${user.userId ne null && user.profileImage ne null}">
+          	<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
 	          	<li><div style="padding-top: 10px; color:#333;">
-		       	<img src="../resources/upload_files/images/${user.profileImage}" id="profile" width="30px"/>&nbsp;
+		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px"/>&nbsp;
 		        <a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
 		        &nbsp;님 환영합니다!
 		       
