@@ -89,8 +89,9 @@ public class PaymentController {
 		}
 		search.setPageSize(pageSize);
 		
+		System.out.println(search);
+		
 		Map<String, Object> map = paymentService.listPoint(search, user.getUserId());
-
 		
 		int totalPoint = paymentService.getPoint(user.getUserId());
 		int totalMileage = paymentService.getMileage(user.getUserId());
@@ -132,7 +133,7 @@ public class PaymentController {
 		payment.setPaymentCode("P01");
 		payment.setPoint((int)result.get("point"));
 		payment.setUserId(userId);
-		payment.setContent("카카오페이 충전");
+		payment.setContent("P01:none:카카오페이 충전");
 		paymentService.managePoint(payment);
 		
 		System.out.println(result);
@@ -164,7 +165,7 @@ public class PaymentController {
 			(session.getAttribute("userSeqNo") != null)) {
 			if(session.getAttribute("accountToken") != null) {
 				authType = 2;
-				System.out.println("ㅇㅅㅇ");
+				//System.out.println("ㅇㅅㅇ");
 			} else {
 				authType = 1;
 			}

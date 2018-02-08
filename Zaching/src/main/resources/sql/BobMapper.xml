@@ -166,7 +166,7 @@
 			bob.bob_id AS bob_id, title, content, background_image, trim(category_code) AS category_code,
 			users.profile_image AS profile_image, writer_id, users.name AS user_name, trim(bob.status) AS status
 					
-		<if test='category == "B01" || category == "B02" || category == "B04"'>
+		<if test='category == "B01" || category == "B02" || category == "B04" || category == "B05"'>
 			,limit_num, bob.location_name AS location_name, bob.longitude AS longitude, 
 			bob.latitude AS latitude, to_char(bob.time,'yyyy-mm-dd hh24:mi') AS time
 		</if>
@@ -180,18 +180,25 @@
 		<where>
 			bob.writer_id = users.user_id
 			AND bob.status NOT IN ('N')
-			<if test='category == "B01" || category == "B02" || category == "B03"'>
-				AND trim(category_code) = #{category}
-			</if>
-			<if test='category == "B03"'>
-				AND bob.bob_id = participant.bob_id
-				AND participant.user_id = #{searchKeyword}
-			</if>
-			<if test='category == "B04"'>
-				AND trim(category_code) IN ('B01', 'B02')
-				AND (user_lat between bob.latitude-0.019 and bob.latitude+0.019)
-			    AND (user_lng between bob.longitude-0.022 and bob.longitude+0.022)
-			</if>
+				<if test='category == "B01" || category == "B02" || category == "B03"'>
+					AND trim(category_code) = #{category}
+				</if>
+				<if test='category == "B03"'>
+					AND bob.bob_id = participant.bob_id
+					AND participant.user_id = #{searchKeyword}
+				</if>
+				<if test='category == "B04"'>
+					AND trim(category_code) IN ('B01', 'B02')
+					AND (user_lat between bob.latitude-0.019 and bob.latitude+0.029)
+				    AND (user_lng between bob.longitude-0.022 and bob.longitude+0.032)
+				</if>
+				<if test='category == "B05"'>
+					AND trim(category_code) IN ('B01', 'B02')
+					AND ( 
+						location_name LIKE '%${searchKeyword}%' 
+						OR title LIKE '%${searchKeyword}%' 
+						OR to_char(bob.time,'yyyy"년" mm"월" dd"일" hh"시" mi"분"') LIKE '%${searchKeyword}%')
+				</if>
 		</where>
 		ORDER BY
 			(

@@ -5,6 +5,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<c:if test="${empty payment}">
+	<div class="text-center" style="padding:30px;">
+		포인트 내역이 없습니다.
+	</div>
+</c:if>
+
 <c:forEach var="payment" items="${payment}">
 	<div class="row listPayment">
 		<div class="col-xs-4">
@@ -36,17 +42,19 @@
  	<p>내역 : 
  		<c:set var="content" value="${fn:split(payment.content,':')}" />
 
- 		<c:if test="${fn:indexOf(payment.content, 'B03') != -1}">
+ 		<c:if test="${fn:contains(payment.content, 'B03')}">
  			주기적으로 만나 <a href="/bob/getBob?category=B03&bobId=${content[1]}">'${content[2]}'</a> 에 회비 포인트 지출
  		</c:if>
- 		<c:if test="${fn:indexOf(payment.content, 'B03') == -1}">
+ 		<c:if test="${fn:contains(payment.content, 'B01')}">
+ 			우리지금 만나 ${content[2]} 에 약속비 지출
+ 		</c:if>
+ 		<c:if test="${!fn:contains(payment.content, 'B')}">
  			${content[2]}
  		</c:if>
  	</p>
 	</div>
 	<hr>
 </c:forEach>
-${paymentPage }
 
 <c:if test="${paymentPage.totalCount > (paymentPage.currentPage * paymentPage.pageUnit)}">
 <div class="row text-center" style="height:50px; margin: 5px; line-height: 50px;

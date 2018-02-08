@@ -176,17 +176,18 @@ public class BobController {
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
-		if(search.getCategory() == null) {
-			search.setCategory("B01");
-		}
 		search.setPageSize(pageSize);
 		
-		//System.out.println(search);
-		
-		if(search.getCategory().equals("B03")) {
+		if(search.getCategory() == null) {
+			search.setCategory("B01");
+		} else if(search.getCategory().equals("B03")) {
 			search.setSearchKeyword(((User)session.getAttribute("user")).getUserId()+"");
 		}
 		
+		//System.out.println("¼­Ä¡");
+		
+		System.out.println("???" +search);
+
 		Map<String, Object> map = bobService.listBob(search);
 		
 		Page resultPage	= 
@@ -194,7 +195,8 @@ public class BobController {
 				pageUnit, pageSize);
 		
 		model.addAllAttributes(map)
-			 .addAttribute("resultPage", resultPage);
+			 .addAttribute("resultPage", resultPage)
+			 .addAttribute("search", search);
 		
 		return "forward:/bob/listBob.jsp";
 	}

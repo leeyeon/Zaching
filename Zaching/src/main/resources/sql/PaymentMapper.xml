@@ -107,6 +107,20 @@
 		FROM PAYMENT
 		<where>
 			user_id = #{userId}
+			<if test="search.searchCondition != null and search.searchCondition != ''">
+				<if test="search.searchCondition eq 0">
+					AND time <![CDATA[>=]]> SYSDATE-7
+				</if>
+				<if test="search.searchCondition eq 1">
+					AND time <![CDATA[>=]]> add_months(SYSDATE,-1)
+				</if>
+				<if test="search.searchCondition eq 2">
+					AND time <![CDATA[>=]]> add_months(SYSDATE,-6)
+				</if>
+			</if>
+			<if test="search.searchCondition == null or search.searchCondition == ''">
+				AND time BETWEEN TRUNC (SYSDATE, 'MM') + 1/24 AND LAST_DAY (TRUNC (SYSDATE)) + 1 / 24
+			</if>
 		</where>
 		ORDER BY time DESC
 	</sql>

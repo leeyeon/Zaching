@@ -78,7 +78,7 @@ public class PaymentDaoImpl implements PaymentDao {
 		map.put("userId", userId);
 		if(isPoint) {
 			map.put("point", "point");
-			System.out.println("しさし");
+			//System.out.println("しさし");
 		}
 		return sqlSession.selectOne("PaymentMapper.getPayment", map);
 	}

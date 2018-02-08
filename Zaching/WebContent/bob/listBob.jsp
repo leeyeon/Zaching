@@ -40,7 +40,7 @@
 	
 		$(function() {
 			
-			$("html, body").animate({ scrollTop: 0 }, "slow"); 
+			
 
 			$(document).on("click",'.thumbnail > img', function(){
 				if('${user}' != '') {
@@ -79,9 +79,9 @@
 			/* 무한스크롤 */
 			$("#loader").hide();
 
-			var pageInfo = ${search.currentPage};
+			var pageInfo = ${resultPage.currentPage};
 			var totalCount = ${resultPage.totalCount};
-			var pageSize = ${search.pageSize};
+			var pageSize = ${resultPage.pageSize};
 	
 			$(window).on("scroll", function() {
 				if($(window).scrollTop() == ($(document).height() - $(window).height())) {
@@ -95,26 +95,24 @@
 			
 				$("#loader").show();
 				
-				//var html= '<div>테스트트트트트</div>';
-				
-				//$('.tab-content').append(html);
-				//alert(pageInfo+1);
-				
 				pageInfo++;
-
+				
+				// active 되어 있는 category load...
 				$.ajax({
 					url : "/bob/rest/listBob",
 					method : "POST",
 					contentType : "application/json; charset=UTF-8",
 					data : JSON.stringify({
 						currentPage : pageInfo,
-						category : "${search.category}"
+						searchKeyword: $(":text[name='searchKeyword']").val(),
+						category : $("#exTab2 li.active > a").attr('data-target').substring(1)
 					}),
 					dataType : "json",
 					success : function(serverData) {
 						$(serverData.list).each(function(index,data) {
 							
 							console.log(data);
+							var participantList = data.participantList;
 
 							var appointmentTime = moment(data.appointmentTime).format("YYYYMMDDHHmm");
 							var today = moment().format("YYYYMMDDHHmm");
@@ -132,20 +130,19 @@
 							}
 							
 							if(data.status == 'Y') {
-								html += '<div class="thumbnail-top" style="right: 40px;">'+data.participantList.length+"/"+data.limitNum+'명</div>'
+								html += '<div class="thumbnail-top" style="right: 40px;">'+participantList.length+"/"+data.limitNum+'명</div>'
 							}
+							
 							html = html + '<img src = "../resources/upload_files/images/'+data.image+'" onerror="this.src=\'../resources/images/sample_bob_background.jpg\'"'
 							+'style="cursor: pointer; width: 100%; height:270px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;"> <div class="user_thumnail" '
 							+'style="background: url(\'../resources/upload_files/images/'+data.writtenUserProfile+'}\'),'
 							+'url(\'../resources/images/user-icon.png\') center center no-repeat; background-size: cover; box-shadow: 1px #cccccc;"></div>'
-							+'<div class="caption" style="position:relative; top:-20px; font-size: 20px;"><div style="font-size:20px; font-weight: bold;">'+data.title+'</div>'
+							+'<div class="caption" style="position:relative; top:-20px; font-size: 20px;"><div style="font-size:20px; font-weight: bold;'
+							+'text-overflow: ellipsis; overflow: hidden; white-space: nowrap; ">'+data.title+'</div>'
 							+'<hr><p style="font-size: 17px;  font-weight: bold;">'+data.locationName+'<br></p>'
 							+'<p style="font-size: 16px;">';
 							
-							if(data.appointmentTime != null) {
-								html+="요기"+data.appointmentTime+":;";
-								var Date = moment(data.appointmentTime).format("YYYY-MM-DD HH:mm");
-								
+							if(data.appointmentTime != null) {								
 								<c:if test="${empty sessionScope.user}">
 									html += moment(data.appointmentTime).format("YYYY년 MM월 DD일 A");
 								</c:if>
@@ -158,8 +155,8 @@
 							
 							html += '</p></div></div></div>';
 							
-							$('#'+"${search.category}"+' > div').append(html).attr('class', 'thumbnail');
-							$("#exTab2 > div").attr('class', 'tab-content');
+							$('#'+"${search.category}"+' > div').append(html);
+							$("#exTab2 > div > div.tab-content").attr('class', 'tab-content');
 						})
 						
 					},
@@ -179,7 +176,7 @@
 <body>
 
 <div class="row">
-	
+
 		<c:if test="${empty list}">
 			목록이 없습니다. <br>
 			하단의 방만들기를 통해 친구를 만들어보세요.
@@ -216,7 +213,7 @@
 			      		url('../resources/images/user-icon.png') center center no-repeat; background-size: cover;
 			      			box-shadow: 1px #cccccc;"></div>
 			      <div class="caption" style="position:relative; top:-20px; font-size: 20px;">
-			      	<div style="font-size:20px; font-weight: bold;">${bob.title}</div>
+			      	<div style="font-size:20px; font-weight: bold; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${bob.title}</div>
 			      	<hr>
 			      	<p style="font-size: 17px;  font-weight: bold;">
 			        	${bob.locationName}<br>
@@ -238,7 +235,7 @@
 			  </div>
 			</c:forEach>
 		</c:if>
-		
+
 		<c:if test="${search.category eq 'B02' }">
 			<c:forEach var="bob" items="${list}">
 			  <input type="hidden" name="bobId" value="${bob.bobId}">
@@ -312,7 +309,9 @@
 				  <input type="hidden" name="category" value="${bob.category}">
 				  <div class="col-sm-6 col-md-4 text-center">
 				    <div class="thumbnail">
-				      <div style="position:absolute; font-weight: bold; font-size: 22px; top:20px; right: 40px;  z-index: 10;">${fn:length(bob.participantList)}/${bob.limitNum} 명</div>
+				      <c:if test="${bob.status eq 'Y'}">
+						<div class="thumbnail-top" style="right: 40px;">${fn:length(bob.participantList)}/${bob.limitNum} 명</div>
+					</c:if>
 				      <img src = "../resources/upload_files/images/${bob.image}"
 				      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
 				      	style="cursor: pointer; height:250px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;">
@@ -344,6 +343,64 @@
 				</c:forEach>
 			</c:if>
 		</c:if>
+
+		
+		<c:if test="${search.category eq 'B05'}">
+		
+			<div class="col-sm-12 text-center" style="font-size: 25px; font-weight: bold; padding: 40px;">
+				총 검색 결과 : ${fn:length(list)} 개
+			</div>
+
+			<c:forEach var="bob" items="${list}" varStatus="status">
+			  <input type="hidden" name="bobId" value="${bob.bobId}">
+			  <input type="hidden" name="category" value="${bob.category}">
+			  <input type="hidden" name="writtenUserId" value="${bob.writtenUserId}">
+			  <div class="col-sm-6 col-md-4 text-center">
+			    <div class="thumbnail">
+			    <div class="thumbnail-top" style="left: 40px;">
+			    	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
+					<fmt:formatDate value="${Date}" var="appointmentTime" pattern="yyyyMMddHHmm"/>
+					<c:if test="${bob.status eq 'Y' && (appointmentTime>today || empty appointmentTime)}">
+						참여 가능
+					</c:if>
+					<c:if test="${bob.status eq 'E' || (appointmentTime<=today)}">
+						참여 마감
+					</c:if>
+			    </div>
+			    <c:if test="${bob.status eq 'Y'}">
+					<div class="thumbnail-top" style="right: 40px;">${fn:length(bob.participantList)}/${bob.limitNum} 명</div>
+				</c:if>
+			      <img src = "../resources/upload_files/images/${bob.image}"
+			      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
+			      	style="cursor: pointer; width: 100%; height:270px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;">
+			      <div class="user_thumnail" 
+			      	style="background: url('../resources/upload_files/images/${bob.writtenUserProfile}'),
+			      		url('../resources/images/user-icon.png') center center no-repeat; background-size: cover;
+			      			box-shadow: 1px #cccccc;"></div>
+			      <div class="caption" style="position:relative; top:-20px; font-size: 20px;">
+			      	<div style="font-size:20px; font-weight: bold;">${bob.title}</div>
+			      	<hr>
+			      	<p style="font-size: 17px;  font-weight: bold;">
+			        	${bob.locationName}<br>
+			        </p>
+			        <p style="font-size: 16px;">
+			        	<c:if test="${!empty bob.appointmentTime}">
+				        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
+				        	<c:if test="${empty sessionScopr.user}">
+				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일"/>
+				        	</c:if>
+				        	<c:if test="${!empty sessionScopr.user}">
+				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
+				        	</c:if>
+			        	</c:if>
+			        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
+			        </p>
+			      </div>
+			    </div>
+			  </div>
+			</c:forEach>
+		</c:if>
+
 </div>
 
 </body>

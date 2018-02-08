@@ -36,13 +36,14 @@
   		$(function() {
 			$('#newAccount').on('click', function(){
 
-				var windowW = 400;  // 창의 가로 길이
- 		        var windowH = 500;  // 창의 세로 길이
+				var windowW = 500;  // 창의 가로 길이
+ 		        var windowH = 800;  // 창의 세로 길이
  		        var left = Math.ceil((window.screen.width - windowW)/2);
  		        var top = Math.ceil((window.screen.height - windowH)/2);
 	
-				window.open("/payment/newAccount", 
-						"l top="+top+", left="+left+", height="+windowH+", width="+windowW);
+				window.open("/payment/newAccount", "",
+						"l top="+top+", left="+left+", height="+windowH+", width="+windowW
+						+"scrollbars=no");
 				opener.location.reload(true);
 			    self.close();
   			});
