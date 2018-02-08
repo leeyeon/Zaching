@@ -111,6 +111,14 @@ public class UserDaoImpl implements UserDao{
 		
 	}
 
+	@Override
+	public int checkSignup(String email) throws Exception {
+		System.out.println(":: checkSignup :: DaoImpl");
+		
+		
+		return sqlSession.selectOne("UserMapper.checkSignup", email);
+	}
+
 	
 
 }

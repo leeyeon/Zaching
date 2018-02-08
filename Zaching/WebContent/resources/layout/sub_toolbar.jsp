@@ -211,7 +211,7 @@
 			
 		});
 
-		$("input[name='email']").focus();
+	
 
 		
 		//==>"Login"  Event 연결

@@ -205,7 +205,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value="updateUser", method = RequestMethod.POST)
-	public String updateUser(@ModelAttribute("user") User user, Model model, HttpSession session) throws Exception {
+	public String updateUser(@ModelAttribute("user") User user, 
+			HttpServletRequest request,Model model, HttpSession session) throws Exception {
 
 		System.out.println("/user/updateUser : POST");
 		// Business Logic
@@ -246,25 +247,12 @@ public class UserController {
 		return "forward:/user/listUser.jsp";
 	}
 
-	@RequestMapping(value = "checkDuplication", method = RequestMethod.POST)
-	public String checkDuplication(@RequestParam("email") String email, Model model) throws Exception {
-
-		System.out.println("/user/checkDuplication : POST");
-		// Business Logic
-		boolean result = userService.checkDuplication(email);
-		// Model °ú View ¿¬°á
-		model.addAttribute("result", new Boolean(result));
-		model.addAttribute("email", email);
-
-		return "forward:/user/checkDuplication.jsp";
-	}
-	
-
-
-	@RequestMapping(value="memoryMap")
+	@RequestMapping(value="memoryMap", method= RequestMethod.GET)
 	public String memoryMap( HttpSession session)throws Exception{
 
-	
+		System.out.println("/user/memoryMap : GET");
+		
+		
 	return "forward:/user/memoryMap.jsp";
 	}
 	
