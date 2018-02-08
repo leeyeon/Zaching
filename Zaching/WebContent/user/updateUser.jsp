@@ -21,17 +21,14 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
    	
-   	<!-- 뭔지 모르지만 추가  -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	   
+   	   
 	 <!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/resources/layout/sub_toolbar.jsp"/>
    	<!-- ToolBar End /////////////////////////////////////-->
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
-            padding-top : 80px;
+            padding-top : 130px;
         }
         
         #emailAuth,#check{
@@ -44,7 +41,42 @@
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
-		
+	//============= "취소"  Event 처리 및  연결 =============
+	$(function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("a[href='#' ]").on("click" , function() {
+			$("form")[0].reset();
+		});
+	});	
+			
+			$(function() {
+
+			//============= "수정" Event 연결 =============
+				$( "#update" ).on("click", function() {
+					alert("수정버튼클릭!");
+					fncUpdateUser();
+				});
+			});
+			
+			function fncUpdateUser() {
+				
+				var userId =$("input[name='userId']").val();
+				var name = $("input[name='name']").val();
+				var email =$("input[name='email']").val();
+				var pw = $("input[name='password']").val();
+				var pw2 = $("input[name ='password2']").val();
+				
+				
+				
+				alert(userId);
+				alert(name);
+				alert(email);
+				alert(pw);
+				
+				$("form").attr("method" , "POST").attr("action" , "/user/updateUser?userId=${sessionScope.user.userId}").submit();		
+					
+			}
+			
 			//============= "이메일 인증"  Event 연결 =============
 			$(function() {
 		
@@ -56,10 +88,10 @@
 			
 			//============= "emailAuth =============
 			 function fncEmailAuth() {
-					var email = $("#email").val(); //입력받은이메일
-				 	alert(email);
+					var inputEmail = $("#inputEmail").val(); //입력받은이메일
+				 	alert(inputEmail);
 					
-					if(email == null || email.length <1){
+					if(inputEmail == null || inputEmail.length <1){
 						alert("이메일은  반드시 입력하셔야 합니다.");
 						return false;
 					}
@@ -70,7 +102,7 @@
 						method:"POST",
 						contentType :'application/json',
 						data : JSON.stringify({
-							"email" : email
+							"inputEmail" : inputEmail
 						
 						}),
 						async : false,
@@ -94,6 +126,10 @@
 				 alert(authNum);
 				 alert("인증버노확인!");
 				 
+				 if(authNum == null || authNum.length <1){
+						alert("인증번호를 다시 입력해주세요.");
+						return false;
+					}
 				
 				 $.ajax({
 					 
@@ -148,11 +184,12 @@
 	    
 	    <!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
-		
-		  <div class="form-group ">
-				<label for="email" class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
+			<input type="hidden"  name="userId" value="${sessionScope.user.userId}"/>
+			
+		  <div class="form-group">
+				<label for="email-label" class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
 		    <div class="col-sm-4">
-		      <input type="email" class="form-control" id="email" name="email"  placeholder="${user.email }"  >
+		      <input type="email" class="form-control" id="inputEmail" name="email" value="${user.email }">
 		       
 		  </div>
 		   
@@ -176,42 +213,43 @@
 		  <div class="form-group">
 		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password" name="password" placeholder="변경비밀번호">
+		      <input type="password" class="form-control"name="password" placeholder="변경비밀번호">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password2" name="password2" placeholder="변경비밀번호 확인">
+		      <input type="password" class="form-control"  name="password2" placeholder="변경비밀번호 확인">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="name" name="name" value="${user.name}" readonly="readonly">
+		      <input type="text" class="form-control"  name="name" value="${user.name}" readonly="readonly">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="address" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="address" name="address"  value="${user.address}" placeholder="변경주소">
+		      <input type="text" class="form-control" name="address"  value="${user.address}" placeholder="변경주소">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="phone" class="col-sm-offset-1 col-sm-3 control-label">연락처</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="phone" name="phone"  value="${user.phone}" placeholder="연락처">
+		      <input type="text" class="form-control"  name="phone"  value="${user.phone}" placeholder="연락처">
 		    </div>
 		  </div>
 		
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >수 &nbsp;정</button>
-			  
+		      <button type="button" class="btn btn-primary" id="update" >수 &nbsp;정</button>
+			  	<a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
+			    
 		    </div>
 		  </div>
 		</form>

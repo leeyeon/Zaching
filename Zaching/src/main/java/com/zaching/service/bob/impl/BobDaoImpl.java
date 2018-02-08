@@ -152,5 +152,9 @@ public class BobDaoImpl implements BobDao {
 		return sqlSession.selectOne("BobMapper.getTotalCount", search);
 	}
 	
+	@Override
+	public List<Integer> listBobStatusEnd() throws Exception {
+		return sqlSession.selectList("BobMapper.checkStatus");
+	}
 
 }

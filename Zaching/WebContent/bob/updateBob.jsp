@@ -12,6 +12,7 @@
     <meta charset="utf-8">
     
     <jsp:include page="../resources/layout/sub_toolbar.jsp"/>
+    <link rel="stylesheet" href="../resources/css/bob.css">
     
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -41,7 +42,7 @@
 <style>
 	    
 	body {
-	    padding-top: 50px;
+	    padding-top: 100px;
 	}
 	    
 	.btn-bob {
@@ -143,6 +144,15 @@
 	}
 	
 	$(function() {
+		
+		function parallax(){
+   		    var scrolled = $(window).scrollTop();
+   		    $('.bg').css('height', (570-scrolled) + 'px');
+   		}
+   	
+   		$(window).scroll(function(e){
+   		    parallax();
+   		});
 		
 		$('button:contains("방 수정하기")').on('click', function(){
 			fcnUpdateBob();
@@ -326,31 +336,29 @@
     
 </head>
 
-<body>
+<body class="addBob">
+
+	<div class="bg" style="background-image: url('../resources/images/wood_background.jpg')"></div>
     
     <div class="container">
-    
-    	<div class="page-header text-center">
-			<h3 class="text-info" style="color: #4d4d4d; font-weight: bold;">[${categoryName}] 방 수정하기</h3>
+    	<div class="page-header text-center" style="margin: 180px 0 110px 0; border:none;">
+			<h3 class="text-info" style="color: #000; font-weight: bold; font-size: 30px;">[${categoryName}] 방 수정하기</h3>
 		</div>
     
-		<form class="form-horizontal" enctype="multipart/form-data">
+		<form class="form-horizontal" enctype="multipart/form-data" style="background: #FFF; padding: 40px;">
 		    <div class="form-group">
 		    	<input type="hidden" name="writtenUserId" value="${user.userId}" />
 		    	<input type="hidden" name="category" value="${param.category}" />
 		    	<input type="hidden" name="latitude" value="${bob.latitude}"/>
 		    	<input type="hidden" name="longitude" value="${bob.longitude}"/>
 		    	<input type="hidden" name="bobId" value="${bob.bobId}" />
- 		    	<div class="row">
-		    		<div class="col-sm-2 btn-bob" >제목</div>
-	            	<div class="col-sm-10" align="center">
-	            		<input type="text" name="title" class="form-control" placeholder="제목" style="font-size: 16px;" value="${bob.title}"/>
-	            		<span id="titleDuplicateCheck" class="col-sm-12 text-left" style="color: red; display: none;" >글자수는 30자로 제한됩니다.</span>
+		    	<div class="row">
+	            	<div class="col-sm-12 text-center" style="margin: 30px 0 30px 0;" >
+	            		<input type="text" name="title" placeholder="제목" style="font-size: 20px; width: 90%; height: 50px; padding-left: 20px; border: none; border-bottom: 1px solid #eee;"
+	            			value="${bob.title}"/>
 	            	</div>
 		    	</div>
-		    	
-		    	<hr/>
-		    	
+
 		    	<c:if test="${categoryName eq '우리지금만나'}">
 			    	<div class="row">
 			    		<div class="col-sm-6 btn-bob" align="center">
@@ -379,7 +387,9 @@
 	            <hr/>
 	            
 	            <div class="row">
-	            	<div class="col-sm-2 btn-bob">대표사진 설정</div>
+	            	<div class="col-sm-4 btn-bob">대표사진 설정</div>          		
+		    	</div>
+	            <div class="row text-center">
 	            	<c:if test="${!empty bob.image}">
 	            		<div class="col-sm-10 text-center" style="padding-top: 7px;">
 		            		배경화면이 설정되어 있습니다. 변경하시겠습니까?
@@ -392,7 +402,7 @@
 		            			<label><input type="checkbox" name="imageCheck" >기본배경화면</label>
 		            		</div>
 			            </div>
-		            	<div class="col-sm-8" align="center" style="padding-top: 7px;">
+		            	<div class="col-sm-10" align="center" style="padding-top: 7px;">
 		            		<input id="input-b1" name="uploadFile" type="file" class="file" style="width:80%;"/>
 		            	</div>
 	            	</c:if>	            		

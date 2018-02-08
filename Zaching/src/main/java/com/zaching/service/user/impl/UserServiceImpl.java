@@ -46,13 +46,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void addUser(User user) throws Exception {
+		
+		System.out.println("");
 			userDao.addUser(user);
 	}
 	
 
 	@Override
 	public User login(String email) throws Exception {
-		
+		System.out.println(":: userServiceImpl login::");
 		return userDao.login(email);
 	}
 

@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,10 +37,12 @@ import com.zaching.service.bob.BobService;
 import com.zaching.service.domain.Bob;
 import com.zaching.service.domain.Comment;
 import com.zaching.service.domain.Friend;
+import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.domain.Participant;
 import com.zaching.service.domain.User;
 import com.zaching.service.domain.excelView;
 import com.zaching.service.friend.FriendService;
+import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.user.UserService;
 
 @Controller
@@ -82,6 +84,9 @@ public class BobController {
 	@Qualifier("friendServiceImpl")
 	private FriendService friendService;
 	
+	@Autowired
+	@Qualifier("newsfeedServiceImpl")
+	private NewsfeedService newsfeedService;	
 	
 	public BobController() {
 		System.out.println(this.getClass());
@@ -105,6 +110,7 @@ public class BobController {
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value= "/getBob", method=RequestMethod.GET)
 	public String getBob(@RequestParam int bobId, 
 						@RequestParam String category,
@@ -128,15 +134,23 @@ public class BobController {
 		
 		Search search = new Search();
 		
-		if(search.getCurrentPage() ==0 ){
+		if(search.getCurrentPage() ==0){
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
 		search.setCategory("B00");
-
-		Calendar cal = Calendar.getInstance();
 		
 		Map<String,Object> map = (Map<String,Object>)commonService.listComment(search, "B00", bobId);
+		
+		List<Newsfeed> review = null;
+		int reviewCount = 0;
+		
+		if(!category.equals("B03")) {
+			search.setCategory("N10:"+bobId);
+			Map<String, Object> newsfeedMap = newsfeedService.listNewsfeed(search);
+			review = (List<Newsfeed>)newsfeedMap.get("list");
+			reviewCount = (int)newsfeedMap.get("totalCount");
+		}
 		
 		Page resultPage	= 
 				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
@@ -145,7 +159,9 @@ public class BobController {
 		model.addAttribute("comments", map.get("list"))
 			.addAttribute("commentPage", resultPage)
 			.addAttribute("category", category)
-			.addAttribute("currentTime", cal.getTime())
+			.addAttribute("currentTime", (Calendar.getInstance()).getTime())
+			.addAttribute("review", review)
+			.addAttribute("reviewCount", reviewCount)
 			.addAllAttributes(bob);
 
 		return "forward:/bob/getBob.jsp";

@@ -34,7 +34,7 @@ public class UserDaoImpl implements UserDao{
 	
 	@Override
 	public User login(String email) throws Exception {
-		
+		System.out.println("::UserDao login::\n"+email);
 		return sqlSession.selectOne("UserMapper.login", email);
 	}
 
@@ -107,7 +107,7 @@ public class UserDaoImpl implements UserDao{
 	public void updateRole(User user) throws Exception {
 		
 		System.out.println("::UserDao updateRole::\n"+user);
-		sqlSession.update("UserMapper.emailAuth", user);
+		sqlSession.update("UserMapper.updateRole", user);
 		
 	}
 
