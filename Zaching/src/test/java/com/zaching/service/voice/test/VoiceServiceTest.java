@@ -29,33 +29,32 @@ public class VoiceServiceTest {
 		Search search = new Search();
 	 	search.setCurrentPage(1);
 	 	search.setPageSize(3);
-	 	search.setSearchCondition("1");
-	 	search.setSearchKeyword("노래");
+	 	search.setSearchCondition("R01");
 	 	Map<String,Object> map = voiceService.listVoice(search);
 	 	
 	 	List<Object> list = (List<Object>)map.get("list");
-	 	Assert.assertEquals(1, list.size());
+	 	//Assert.assertEquals(1, list.size());
 	 	
 		//==> console 확인
-	 	//System.out.println(list);
+	 	System.out.println(list);
 	 	
 	 	Integer totalCount = (Integer)map.get("totalCount");
 	 	System.out.println(totalCount);
 	 	
 	 	System.out.println("=======================================");
 	 	
-	 	search.setSearchCondition("1");
-	 	search.setSearchKeyword(""+System.currentTimeMillis());
+	 	/*search.setSearchCondition("1");
+	 	search.setSearchKeyword("노래");
 	 	map = voiceService.listVoice(search);
 	 	
 	 	list = (List<Object>)map.get("list");
-	 	Assert.assertEquals(0, list.size());
+	 	//Assert.assertEquals(0, list.size());
 	 	
 		//==> console 확인
 	 	//System.out.println(list);
 	 	
 	 	totalCount = (Integer)map.get("totalCount");
-	 	System.out.println(totalCount);
+	 	System.out.println(totalCount);*/
 	}
 
 	

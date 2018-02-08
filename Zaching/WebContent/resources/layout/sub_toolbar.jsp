@@ -180,6 +180,10 @@
 			self.location = "/user/logout";
 		});
 		
+		$("a:contains('보이스리플')").on("click", function() {
+			self.location = "/voice/listVoice";
+		});
+		
 		$( "#profile" ).on("click" , function() {
 			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";			
 	 	});
