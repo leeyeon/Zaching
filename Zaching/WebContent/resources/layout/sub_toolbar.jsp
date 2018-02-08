@@ -402,7 +402,7 @@
             
           </button>
           <a class="navbar-brand" href="#">
-	          	<img alt="뉴스피드로 이동" src="/resources/images/temp_logo.png"  height="40px" 
+	          	<img alt="뉴스피드로 이동" src="/resources/images/zaching2.png"  height="40px" 
 	          		style="margin-top: 20px;"/>
 	        </a>
         </div>

@@ -185,10 +185,10 @@ $(function() {
 											
 							displayValue = displayValue + '<div class="itemMovie '+itemNum[i]+' " ><h1>'+(i+1)+'</h1><div class="containerr">'+
 							'<img src="'+img[i]+'" width="150px"/>'+
-							' <h4><b>'+name[i]+'</b><br/></h4>장르:'+item1[i]+'<br/>주연:'+item3[i]+'<br/>개봉일:'+item2[i]+'<br/></div></div>';
+							' <h4><b>'+name[i]+'</b><br/></h4><h7>장르:'+item1[i]+'<br/>주연:'+item3[i]+'<br/>개봉일:'+item2[i]+'<br/></h7></div></div>';
 							
 						}
-						console.log(displayValue);
+						
 						$(".carouselMovie").html(displayValue);
 						 
 					}
