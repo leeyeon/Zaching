@@ -9,7 +9,7 @@
 	<resultMap id="voiceSelectMap" type="voice">
 		<result property="voiceId" column="voice_id" jdbcType="INTEGER" />		
 		<result property="voiceName" column="title" jdbcType="VARCHAR"/>
-		<result property="voiceCategory" column="category_code" jdbcType="VARCHAR"/>
+		<result property="categoryCode" column="category_code" jdbcType="VARCHAR"/>
 		<result property="voicelyrics" column="song" jdbcType="VARCHAR"/>
 		<result property="regDate" column="created_date" jdbcType="DATE"/>
 		<result property="userID" column="user_id" jdbcType="INTEGER"/>
@@ -17,13 +17,15 @@
 		<result property="countReply" column="count_reply" jdbcType="INTEGER"/>
 		<result property="countUser" column="count_user" jdbcType="INTEGER"/>
 		<result property="status" column="status" jdbcType="CHAR"/>
+		<result property="userName" column="name" jdbcType="VARCHAR"/>
+		<result property="profileImage" column="profile_image" jdbcType="CHAR"/>
 		
 	</resultMap>
 	
 	<insert id="addVoice" parameterType="voice">
 		INSERT
 		INTO voice( voice_id, category_code, title, background_image, created_date, song, status, user_id, count_reply, count_user)
-		VALUES(seq_voice_id.nextval, #{voiceCategory}, #{voiceName}, #{backgroundImage}, SYSDATE, #{voicelyrics}, '0', #{userID}, #{countReply}, #{countUser})
+		VALUES(seq_voice_id.nextval, #{voiceCategory}, #{voiceName}, #{backgroundImage}, SYSDATE, #{voicelyrics}, '0', #{userID}, 0, 0)
 	</insert>
 	
 	<select id="getVoice" parameterType="int" resultMap="voiceSelectMap">
@@ -41,25 +43,19 @@
 	<select id="getVoiceList" parameterType="search" resultMap="voiceSelectMap">
 		SELECT *
 		FROM( SELECT inner_table.*, ROWNUM AS row_seq
-					FROM( SELECT * FROM voice
+					FROM( SELECT v.*, u.name, u.profile_image FROM voice v, users u
 					<where>
-						<if test="searchCondition != null">
-							<if test="searchCondition == 1 and searchKeyword != '' ">
-								category_code = 'V01' AND title LIKE '%#{searchKeyword}%'
-							</if>
-							<if test="searchCondition == 2 and searchKeyword != '' ">
-								category_code = 'V02' AND title LIKE '%'||#{searchKeyword}||'%'
-							</if>
-							<if test="searchCondition == 3 and searchKeyword != '' ">
-								category_code = 'V03' ANd title = #{searchKeyword}
-							</if>
-							<if test="searchCondition == 4 and searchKeyword != '' ">
-								category_code = 'V04' ANd title = #{searchKeyword}
-							</if>
-							<if test="searchCondition == 5 and searchKeyword != '' ">
-								category_code = 'V05' ANd title = #{searchKeyword}
-							</if>
+						v.user_id=u.user_id(+)
+						<if test="searchCondition != null and searchKeyword != null" >
+								AND category_code = #{searchCondition} AND title LIKE '%${searchKeyword}%'
 						</if>
+						<if test="searchCondition == null and searchKeyword != null" >
+								AND title LIKE '%${searchKeyword}%'
+						</if>
+						<if test="searchCondition != null and searchKeyword == null" >
+								AND category_code = #{searchCondition}
+						</if>
+						
 					</where>) inner_table
 					WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
@@ -68,25 +64,18 @@
 	<select id="getTotalCount" parameterType="search" resultType="int">
 		SELECT COUNT(*)
 		FROM( SELECT * FROM voice
-				<if test="searchCondition != null">
 					<where>
-						<if test="searchCondition == 1 and searchKeyword != '' ">
-							category_code = 'V01' AND title = #{searchKeyword}
+						<if test="searchCondition != null and searchKeyword != null" >
+								category_code = #{searchCondition} AND title LIKE '%${searchKeyword}%'
 						</if>
-						<if test="searchCondition == 2 and searchKeyword != '' ">
-							category_code = 'V02' AND title like '%'||#{searchKeyword}||'%'
+						<if test="searchCondition == null and searchKeyword != null" >
+								title LIKE '%${searchKeyword}%'
 						</if>
-						<if test="searchCondition == 3 and searchKeyword != '' ">
-							category_code = V03 ANd title = #{searchKeyword}
+						<if test="searchCondition != null and searchKeyword == null" >
+								category_code = #{searchCondition}
 						</if>
-						<if test="searchCondition == 4 and searchKeyword != '' ">
-							category_code = V04 ANd title = #{searchKeyword}
-						</if>
-						<if test="searchCondition == 5 and searchKeyword != '' ">
-							category_code = V05 ANd title = #{searchKeyword}
-						</if>
-					</where>
-				</if>) countTable
+						
+					</where>) countTable
 	</select>
 	
 	<update id="updateCountUser" parameterType="int">

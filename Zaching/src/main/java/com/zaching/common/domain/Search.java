@@ -63,7 +63,7 @@ public class Search {
 	}
 
 	public int getStartRowNum() {
-		if(getCategory() == null) {
+		if(getCategory() == null || !getCategory().equals("B00")) {
 			return (getCurrentPage()-1)*getPageSize()+1;
 		} else {
 			return 1;

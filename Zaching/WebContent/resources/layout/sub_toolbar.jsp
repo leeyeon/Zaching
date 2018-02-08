@@ -211,7 +211,7 @@
 			
 		});
 
-		$("input[name='email']").focus();
+	
 
 		
 		//==>"Login"  Event 연결
@@ -282,6 +282,10 @@
 		
 		$("a:contains('로그아웃')").on("click", function() {
 			self.location = "/user/logout";
+		});
+		
+		$("a:contains('보이스리플')").on("click", function() {
+			self.location = "/voice/listVoice";
 		});
 		
 		$( "#profile" ).on("click" , function() {
@@ -376,7 +380,7 @@
 		        	
 		        }
 			});
-			});
+		});
 			
 		
 		
@@ -386,7 +390,7 @@
 <title>zaching</title>
 </head>
 
-<body style="background-color: rgb(240, 239, 238);">
+<body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top" style="height: 105px; background-color: #FFF;  
     	background-image: url('/resources/images/toolbar_img.png');     background-repeat: repeat-x;
@@ -402,7 +406,7 @@
             
           </button>
           <a class="navbar-brand" href="#">
-	          	<img alt="뉴스피드로 이동" src="/resources/images/temp_logo.png"  height="40px" 
+	          	<img alt="뉴스피드로 이동" src="/resources/images/zaching2.png"  height="40px" 
 	          		style="margin-top: 20px;"/>
 	        </a>
         </div>

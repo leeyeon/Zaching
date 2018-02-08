@@ -13,7 +13,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <link href="/css/animate.min.css" rel="stylesheet">
+
 <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
@@ -75,6 +78,13 @@ height:100px;
 			background: rgba(255,224,140,1);
 			
 		}
+		
+.voiceroom{
+			 background-image: linear-gradient(to bottom,#cccccc 0,#cccccc 100%);
+			 margin-left: 150px;
+			 margin-right: 150px
+			
+}
 </style>
 <body>
 
@@ -247,12 +257,31 @@ height:100px;
 
 		
 		
-		
-<img src="../resources/images/microphone.png" id="fixedbtn">
-
+<img src="../resources/images/microphone.png" id="fixedbtn" data-toggle="modal" data-target="#myModal">
+</div>
 <footer>
     
 </footer>
   
+  
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><b>≥Ï¿Ω«œ±‚</b></h4>
+      </div>
+      <div class="modal-footer">
+       <div class="topnav">
+      <div class="search-container">
+      	 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      	</div></div>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+
 </body>
 </html>

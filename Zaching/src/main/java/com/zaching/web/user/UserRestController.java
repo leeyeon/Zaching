@@ -112,6 +112,7 @@ public class UserRestController {
 
 		System.out.println(userId);
 		
+		
 		//데이터 아래 형식으로 나타냄.
 		
 		
@@ -140,6 +141,24 @@ public class UserRestController {
 		
 		return profileImage;
 	}
+	
+	
+	//이메일 중복체크
+	@RequestMapping(value="/rest/checkSingup", method=RequestMethod.POST)
+	public boolean checkSingup(HttpServletRequest request,
+							@RequestBody Map<String , Object> map)throws Exception{
+		   
+		System.out.println("/user/rest/checkSignup");
+		String email =(String)map.get("checkEmail");
+		System.out.println("===> "+email);
+		boolean result = userService.checkSignup(email);
+	        
+		System.out.println("rowCount ===> "+result);
+		
+		return result;
+	}
+
+
 	
 	
 

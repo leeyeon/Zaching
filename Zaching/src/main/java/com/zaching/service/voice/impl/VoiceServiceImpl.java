@@ -39,7 +39,7 @@ public class VoiceServiceImpl implements VoiceService{
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Voice> list = voiceDao.listVoice(search);
 		int count = voiceDao.getTotalCount(search);
-		map.put("voiceList", list);
+		map.put("list", list);
 		map.put("totalCount", count);
 		return map;
 	}

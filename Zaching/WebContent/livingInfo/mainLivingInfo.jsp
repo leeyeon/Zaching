@@ -48,6 +48,10 @@ $("a:contains('라이브방송')").on("click", function() {
 	self.location = "/broadcast/mainBroadcast";
 });
 
+$("a:contains('보이스리플')").on("click", function() {
+	self.location = "/voice/listVoice";
+});
+
 $( "a:contains('밥친구')" ).on("click" , function() {
 	$(self.location).attr("href","/bob/mainBob");			
 });
@@ -78,6 +82,19 @@ $( "#profile" ).on("click" , function() {
 background-image: url('/resources/images/musicbg.png');
 background-repeat: repeat;
 }
+
+.bg {
+			background: url('../resources/images/simple2.png') no-repeat center center;
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			background-size: cover;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			opacity: 0.3;
+		}
+		
 body{
 background: rgba(255,255,255,1);
 padding-top: 100px;
@@ -117,6 +134,7 @@ font-size: 20px;
 </style>
 <body id="page-top" data-spy="scroll" data-target=".navbar-custom" bgcolor="red">
   <!-- Preloader -->
+  	<div class="bg"></div>
   <div id="preloader">
     <div id="load"></div>
   </div>
