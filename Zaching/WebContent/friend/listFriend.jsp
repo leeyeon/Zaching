@@ -23,12 +23,16 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="/resources/layout/sub_toolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
+
+
+
+
+
 <style>
 body {
 	padding-top: 80px;
 }
-
-
 </style>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -71,7 +75,7 @@ body {
 			<h3>친구목록조회</h3>
 		</div>
 
-		<div class="row">
+		<div class="row" >
 
 			<div class="col-md-6 text-left">
 				<p class="text-primary">전체 ${resultPage.totalCount } 건수, 현재
@@ -85,8 +89,6 @@ body {
 						<select class="form-control" name="searchCondition">
 							<option value="0"
 								${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>이름</option>
-							<option value="1"
-								${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원ID</option>
 						</select>
 					</div>
 
@@ -101,88 +103,50 @@ body {
 
 				</form>
 			</div>
+			</div>
+			
+			<div class="row">
+			
+			<c:forEach var="friend" items="${list}" varStatus="status">
+						
+				<c:if test="${friend.status eq '0'}">
+				<div class="col-md-4 ">
+				<div>
+					<button class="btn" id="btn" type="submit">
+						<img class="btn-img" style="width: 120px; height: 120px;"
+							src="../resources/upload_files/images/${friend.profileImage}">
+					</button>
+					
+				</div>
+				<div class="col-sm-4 ">${friend.name }</div>
+				<div class="col-sm-4 ">
+				
+				<select name='fruits'>
+				
+    <option value='' selected>친구</option>
+    <option value='message'>메세지</option>
+    <option value='banana'>친구삭제</option>
+    <option value='lemon'>친구차단</option>
+</select></div>
 
-
-			<hr />
-						<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>김상민</strong></div>
-			<div class="col-xs-8 col-md-4">
-			<img src="../resources/upload_files/images/main@2x.png" 
-			style="width: 120px; height: auto;" alt="image" class="img-circle"
-						onclick="clickBtn();"/>
-						</div>
-		</div>
-		<hr/>
-		
-		
-		<div class="row">
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="../resources/upload_files/images/main@2x.png" 	
-      style="width: 120px; height: auto;" alt="image" class="img-circle"
-						onclick="clickBtn();">
-      <div class="caption">
-        
-        <p>
-         <a href="#" class="btn btn-default" role="button">친구</a></p>
-         
-      </div>
-    </div>
-  </div>
+</div>
+</c:if>
+</c:forEach>
+</div>
 </div>
 
-			<div class="row">
-				<div style="width: 120px; height: 90px; overflow: hidden">
-					<a href="#"> <img
-						src="../resources/images/200505031750520100_1.jpg"
-						style="width: 120px; height: auto;" alt="유저이름${user.name}"
-						onclick="clickBtn();"></a>
-				</div>
-				<div class="col-xs-4 col-md-2 ">
-					<strong>이름</strong>
-				</div>
-				<div class="col-xs-8 col-md-4">${user.name}</div>
-			</div>
 
-			<hr />
+		
+		
+		
 			
+	
+		
 
-			<div class="row">
-				<div style="width: 120px; height: 90px; overflow: hidden">
-					<a href="#"> <img
-						src="../resources/images/IqvbWykbrkHmV4Kj6xV9c8Di-4qA.png"
-						style="width: 120px; height: auto;" alt="유저이름${user.name}"
-						onclick="clickBtn();"></a>
-				</div>
-				<div class="col-xs-4 col-md-2 ">
-					<strong>이름</strong>
-				</div>
-				<div class="col-xs-8 col-md-4"></div>
-			</div>
 
-			<hr />
 
-			<div class="row">
-				<div style="width: 120px; height: 90px; overflow: hidden">
-					<a href="#"> <img
-						src="../resources/images/naver_com_20130311_080208.jpg"
-						style="width: 120px; height: auto;" alt="유저이름${user.name}"
-						onclick="clickBtn();"></a>
-				</div>
-				<div class="col-xs-4 col-md-2 ">
-					<strong>이름</strong>
-				</div>
-				<div class="col-xs-8 col-md-4">${user.name}</div>
-			</div>
 
-			<hr />
 
-		</div>
-
-		<br />
-
-	</div>
-	<!--  화면구성 div Start /////////////////////////////////////-->
 
 </body>
 

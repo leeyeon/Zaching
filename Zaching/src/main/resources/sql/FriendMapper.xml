@@ -89,18 +89,16 @@
 							friend.user_id, users.name,
 								users.profile_image
 					FROM friend, users
+					<where>
+					friend.user_id=#{userId}
+					AND friend.friend_id=users.user_id
+					AND status='0'
+					</where>
 		<if test="searchCondition !=null">
 			<where>
 				<if test="searchCondition == 0 and searchKeyword !='' ">
-					friend.friend_id=#{searchKeyword}
+					users.user_id=#{searchKeyword}
 				</if>
-				<if test="searchCondition == 1 and searchKeyword !='' ">
-					users.name=#{searchKeyword}
-				</if>
-				<if test="searchCondition == 2 and searchKeyword !='' ">
-					users.profile_image=#{searchKeyword}
-				</if>
-				
 			</where>
 		</if>
 		ORDER BY user_id ) inner_table

@@ -27,12 +27,12 @@ public class FriendServiceTest {
 	@Qualifier("friendServiceImpl")
 	private FriendService friendService;
 	
-	private int friendId=9;
+	private int friendId=24;
 	private int id=39;
 	private int status=0;
 	private int userId=34;
 
-//	@Test
+	@Test
 	public void testAddFriend()throws Exception{
 		
 		System.out.println("addFriend«œ±‚¿¸");
@@ -94,7 +94,7 @@ public class FriendServiceTest {
 		
 	}
 	
-	@Test
+//	@Test
 	public void testlistFriend() throws Exception{
 		Search search=new Search();
 		search.setCurrentPage(1);
