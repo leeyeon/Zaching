@@ -40,7 +40,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  				myFileButton.run(); //
  			} 
         	 
-        	 $("li").on("click",function(){
+        	 $(".cell").on("click",function(){
         		 var id = $($("input[name='newsfeedId']")[$("li").index(this)-6]).val();
         		 //alert($("li").index(this)-6);
         		 //alert($($("input[name='newsfeedId']")[$("li").index(this)]).val());
@@ -313,7 +313,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			        <c:set var="i" value="0"/>
 						<c:forEach var="newsfeed" items="${list}">
 							<c:set var="i" value="${ i+1 }" />
-							<li>
+							<li class="cell">
 								<input type="hidden" value="${newsfeed.newsfeedId}" name="newsfeedId"/>
 								<c:if test="${ !empty newsfeed.fileName }"><img src="../resources/upload_files/images/${newsfeed.fileName}"/></c:if>
 								<div class="post-info">
