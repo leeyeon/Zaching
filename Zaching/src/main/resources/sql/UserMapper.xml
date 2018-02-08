@@ -49,11 +49,10 @@
 		VALUES(	seq_user_id.nextval, #{name} , #{password},
 					#{email}, #{profileImage:VARCHAR},
 					#{role} ,#{snsType:CHAR}, SYSDATE )
-	<!-- 한글이 안들어가 ㅠㅠ -->
 	</insert>
 	
 	
-	<select id="checkEmail" parameterType="string" resultMap="userSelectMap">
+	<select id="checkSignup" parameterType="String" resultType="int">
 		SELECT COUNT(*)
 		FROM users 
 		WHERE email= #{email} 
@@ -130,6 +129,7 @@
 	   	WHERE user_id = #{userId}
 	 </update>
 	 
+	 <!-- 테스트 중 -->
 	 <select  id="memoryMap"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq

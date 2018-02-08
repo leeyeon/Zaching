@@ -1,12 +1,51 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+
+<!DOCTYPE html><html lang='en' class=''>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+
+
+<style>/* reset */
+	
+	#ck-button label {
+	    float:left;
+	    width:4.0em;
+	}
+	#ck-button label span {
+	    text-align:center;
+	    padding:3px 0px;
+	    display:block;
+	}
+	#ck-button label input {
+	    position:absolute;
+	    top:-20px;
+	}
+	#ck-button input:checked + span {
+	    background-color:#aac8e4;
+	    color:#fff;
+	}
+
+
+
+</style>
 </head>
 <body>
 
-</body>
-</html>
+
+<!--기본(Default)-->
+ 
+<!--변경(Changed)-->
+<div>
+    <div id="ck-button">
+       <label>
+          <input type="radio" class="float" name="searchCondition" id="searchCondition" value="1"><span>radio_1</span>
+       </label>
+    </div>
+ 
+    <div id="ck-button">
+       <label>
+          <input type="radio" name="searchCondition" id="searchCondition" value="2"><span>radio_2</span>
+       </label>
+    </div>
+ 
+</div>
+
+</body></html>

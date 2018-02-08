@@ -19,31 +19,55 @@
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-       body > div.container{
-        	
-            margin-top: 50px;
-        }
+        
         
         div.row{
       	    padding-top: 10px;
     		padding-left: 10px;
     		padding-right: 10px;
-    		padding-bottom: 20px;	
+    		padding-bottom: 10px;
+        } 
+        
+        div.body{
+        	
+        	padding-top: 150px;
+        	height: 100%;
         }
         
-        body{
-        	background-color:rgb(253, 228, 241);
-        	padding-top: 130px;
-        }
         
-        
-        mypage > a{
-       	text-align:center;
-        display: block;
- 		margin-left: auto;
-  		margin-right: auto;
-        color: #333;
+        .btn-group > a {
+    		border-top: 2px solid #fff;
+    		margin-right : 5px;
+    		color: black; /* White text */
+    		padding: 10px 24px; /* Some padding */
+    		cursor: pointer; /* Pointer/hand icon */
+    		width: 200px;
+			height: 40px;
+		}
+		
+		#myPage.btn-group{
+			margin-left: 10px;
+			margin-top: 10px;
+			margin-bottom: 5px;
+			margin-top: 5px;
+						}
+		#myPage.btn-group>a:hover, #myPage.btn-group>a.active{
+		    border-top: 2px solid  #333;
+		}
+ 
+		
+       form.op-form, div.row.body{
+       
+        	padding-top: 10px;
+    		padding-left: 10px;
+   		 	padding-right: 10px;
+    		padding-bottom: 20px;
+    		margin-left: 10px;
+    		margin-right: 10px;
        }
+       
+       form.op-form{ margin-top:  160px;}
+       
        
        /* 프로필사진 업로드 */
      	#profile > div > label{
@@ -60,17 +84,52 @@
      
      	}
      	
+     	/* 파일업로드 버튼 투명하게함 */
      	#profile > div > label > input{
-     		opacity: 0;       /*input type="file" tag 투명하게 처리*/
+     		opacity: 1;       /*input type="file" tag 투명하게 처리*/
   			position: relative;
-  			background-color: #333;
   			width: 140px;
     		height: 25px;
      		
      	}
+     	
 		
+		.container{
+			padding-right: 30px;
+    		padding-left: 30px;
+    		margin-right: auto;
+    		margin-left: auto;
+		}
+		
+		
+		
+		.bg {
+			background: #f2b1d2;/*페이지 배경 컬러  */
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			background-size: cover;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			opacity: 0.3;
+		}
+		
+		.profile-upload{
+			height: 150px;
+    		left: 1;
+    		position: absolute;
+    		top: 0px;
+    		width: 150px;
+    		opacity: 0;
+    		}
+    		
+    		
+	
+		
+
     </style>
-    
+   
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
@@ -80,12 +139,8 @@
 			self.location = "/user/getUser?userId=${user.userId}";
 			
 	 	});
-		$( function () {
-		$( "#listFriend" ).on("click" , function() {
-			self.location = "/friend/listFriend?userId=${friend.userId}";
-			
-	 	});
-	});
+	
+	
 		
 		//추억지도 Event
 		$( "#memoryMap" ).on("click" , function() {
@@ -110,10 +165,18 @@
 			self.location = "/user/listNotice?userId=${user.userId}";
 		});
 		
-		//추가정보입력 Event
-		$("#listNotice").on("clcick", function() {
-			self.location = "/user/listNotice?userId=${user.userId}";
-		});
+		
+		//메세지함
+		$("#listMessage").on("click", function() {
+			self.location ="/message/listMessage";	
+		})
+		
+		
+		//프로필사진 변경
+		$(".profile-upload").on("click", function() {
+			self.location="";
+		})
+		
 		
 		//FOLLOW Event
 		
@@ -125,21 +188,6 @@
 	});
 	
 	
-	function upload(){
-        $("#op-form").ajaxForm({
-            url : "/user/upload",
-            enctype : "multipart/form-data",
-            dataType : "json",
-            error : function(){
-                alert("에러") ;
-            },
-            success : function(result){
-                alert("성공") ;
-            }
-        });
- 
-        $("#op-form").submit() ;
-    }
 
 
 </script>
@@ -150,62 +198,59 @@
 
 <body>
 <div class="container">
+<div class="bg"></div>
 	<form class="op-form" action="/settings/profile" method="POST" enctype="multipart/form-data">
 	
-	<div class="row" align="center">
-		<div class="col-xs-3" id="profile" align="left">
+	<div class="row header" align="center">
+		<div class="col-xs-4" id="profile" align="left">
 		<c:if test="${user.profileImage eq null }">
 	
 		<div class="profileImage" align="center">
-        <figure class="default-Profile" style="">
+         <button class="profile-upload">뀨?</button>
         	<img  class="img-circle" src="../resources/images/profile_default.png" 
-        	width="150px" height="150px"/>
-        </figure>
-        <label class="file-chooser-button horizontal-center btn btn-border btn-primary btn-lg">
-         <input class="upload" type="file" name="profileImage" accept="image/*" > 
-        </label>
-      </div>
+        	 style="width: 150px; height: 150px;"/>
+         <input class="upload_input_hidden" type="file" name="profileImage"> 
+      	</div>
+      
        </c:if>
 		
 		<c:if test="${user.profileImage ne null }">
 		<div class="profileImage" align="center">
-        <figure class="default-Profile" style="">
-        	<img  class="img-circle" src="../resources/images/upload_files/images/${sessionScope.user.profileImage}" 
-        	width="150px" height="150px"/>
-        </figure>
-        <label class="file-chooser-button horizontal-center btn btn-border btn-primary btn-lg">
-         <input class="upload" type="file" name="profileImage" accept="image/*" > 
-        </label>
+        <button class="profile-upload">뀨?</button>
+       <img  class="img-circle" alt="프로필사진변경"  style="width: 150px; height: 150px;"
+       src="../resources/images/upload_files/images/${sessionScope.user.profileImage}"/>
+       <input class="upload_input_hidden" type="file" name="profileImage"> 
     	</div>
        </c:if>
+       
+       
        </div>
         
-        <div class="col-xs-3" id="name" style="margin-top: 100px; margin-left: 20px">
+        <div class="col-xs-3" id="name" style=" margin-left: 20px">
 		<h3>${user.name}</h3>
+		
         </div>
+     
+      
+      <div class="col-xs-4 message" align="right">
+      <a><img  id="listMessage" src="../resources/images/Message_Icon.png" 
+        	width="50px" height="50px"/>
+      </a></div>
+    
     </div>
     
+    </form>
      <c:if test="${user.userId eq sessionScope.user.userId}"><!-- 세션에있는 아이디랑  -->
-    <div class="row mypage"  id="myPage" style="background-color: #ddd;">
-    	<div class="col-xs-2">
-    		<a type="button" id="memoryMap">추억지도</a>
-    	</div>
-    	<div class="col-xs-3">
-    		<a type="button" id="point">포인트관리</a>
-    	</div>
-    	<div class="col-xs-2">
-    		<a type="button" id="listFreind">친구목록</a>
-    	</div>
-    	<div class="col-xs-3">
-    		<c:if test="${sessionScope.user.role eq '1'}">
-    		<a type="button" id="getUser">추가정보입력</a></c:if>
-    		<c:if test="${sessionScope.user.role eq '2'}">
-    		<a type="button" id="getUser">내정보조회</a></c:if>
-    	</div>
-    	<div class="col-xs-2">
-    		<a type="button" id="listNotice">알림함</a>
-    	</div>
-  </div>
+    <div class="btn-group"  id="myPage">
+    	<a class="btn col-xs-2" id="memoryMap">추억지도</a>
+    	<a class="btn col-xs-2" id="point">포인트관리</a>
+    	<a class="btn col-xs-2" id="listFreind">친구목록</a>
+    	<c:if test="${sessionScope.user.role eq '1'}">
+    	<a class="btn col-xs-2" id="getUser">추가정보입력</a></c:if>
+    	<c:if test="${sessionScope.user.role eq '2'}">
+    	<a class="btn col-xs-2" id="getUser">내정보조회</a></c:if>
+    	<a class="btn col-xs-2" id="listNotice">알림함</a>
+	  </div>
   </c:if>
   
   <c:if test="${user.userId ne sessionScope.user.userId}">
@@ -224,7 +269,10 @@
     	</div>
   </div>
   </c:if>
-    </form>
+   
+    <div class="row body" align="center">
+    		<h1>여기는 뉴스피드 게시물</h1>
+    </div>
 </div>
 
 
