@@ -302,38 +302,23 @@
 		//이름으로 타임라인 이동
 		$("#navigationbar > ul:nth-child(2) > li:nth-child(1) > div > a").on("click", function() {
 			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";
-
-
 		});
 		
 
 		//카카오로그인 으로 이동
 		$("#kakaologin").on("click", function() {
-			
-			var windowW = 400;  // 창의 가로 길이
-		    var windowH = 500;  // 창의 세로 길이
-			var left = Math.ceil((window.screen.width - windowW)/2);
-		    var top = Math.ceil((window.screen.height - windowH)/2);
-		    
-			window.open("/kakaoLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
-			opener.location.reload(true);
-			    self.close();
-	
+			self.location ="/kakaoLoginRequest";
 		});
 
 		
 		//네이버 로그인
 		$("#naverLogin").on("click", function() {
 			self.location = "/naverLoginRequest";
-	
 		});
 		
 		//구글로그인
 		$("#googleLogin").on("click", function() {
-			
 			self.location = "/googleLoginRequest";
-			
-			
 		});
 		
 		
@@ -502,7 +487,7 @@
          </div>
          
          <div class="row">
-           <div class="col-sm-6">
+           <div class="col-xs-4">
            	<label for="inputlg" style="margin-left: 5px" 
            	style="margin-top: 5px">패스워드(PW)</label>
            </div>

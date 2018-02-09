@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -129,15 +131,15 @@ public class CommonServiceImpl implements CommonService {
 
 	//로그인화면
 	@Override
-	public String getAuthorizationUrl_login() {
+	public String getAuthorizationUrl_login(HttpSession session) {
 		
-		return kakaoRestDao.getAuthorizationUrl_login();
+		return kakaoRestDao.getAuthorizationUrl_login(session);
 	}
 	//토큰요청
 	@Override
-	public User getAceessToken2(String code) throws Exception {
+	public User getAceessToken2(String code,HttpSession session) throws Exception {
 		
-		return kakaoRestDao.getAceessToken2(code);
+		return kakaoRestDao.getAceessToken2(code,session);
 	}
 	
 	//앱연결

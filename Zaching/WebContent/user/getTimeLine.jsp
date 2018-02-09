@@ -123,7 +123,12 @@
     		width: 150px;
     		opacity: 0;
     		}
+    	body > div.container > div.content {
+    		background-color: #fff;
+    		margin-top: -20px;
     		
+    	
+    	}
     		
 	
 		
@@ -199,6 +204,7 @@
 <body>
 <div class="container">
 <div class="bg"></div>
+	<div class="content">
 	<form class="op-form" action="/settings/profile" method="POST" enctype="multipart/form-data">
 	
 	<div class="row header" align="center">
@@ -240,8 +246,11 @@
     </div>
     
     </form>
+    
+    <!--//////////////////// 버튼 그룹///////////////////// -->
+    
      <c:if test="${user.userId eq sessionScope.user.userId}"><!-- 세션에있는 아이디랑  -->
-    <div class="btn-group"  id="myPage">
+    <div class="row btn-group"  id="myPage">
     	<a class="btn col-xs-2" id="memoryMap">추억지도</a>
     	<a class="btn col-xs-2" id="point">포인트관리</a>
     	<a class="btn col-xs-2" id="listFreind">친구목록</a>
@@ -273,6 +282,8 @@
     <div class="row body" align="center">
     		<h1>여기는 뉴스피드 게시물</h1>
     </div>
+    
+    </div>	
 </div>
 
 
