@@ -631,6 +631,11 @@
 		      	</c:if>   	
 	      	</div>
 			
+			<c:if test="${empty review}">
+				<div class="row">
+	      			<div class="col-xs-12 text-center" style="padding:40px 0 20px 0;">현재 등록된 후기가 없습니다.</div>
+	      		</div>
+			</c:if>
 	      	<c:forEach var="review" items="${review}">
 	      		<div class="row">
 	      			<div class="col-xs-12 text-center">${review.content} // ${review.categoryCode}</div>

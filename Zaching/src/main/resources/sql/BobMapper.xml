@@ -175,7 +175,7 @@
 			<if test="category == 'B04'">
 				, (select latitude AS user_lat, longitude AS user_lng
 				from users
-				where user_id = 9)
+				where user_id = #{searchKeyword})
 			</if>
 		<where>
 			bob.writer_id = users.user_id
