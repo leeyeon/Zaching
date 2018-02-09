@@ -90,8 +90,7 @@
 								users.profile_image
 					FROM friend, users
 					<where>
-					friend.user_id=#{userId} 
-					ANDfriend.friend_id=users.user_id
+				  	friend.friend_id=users.user_id
 					AND status='0'
 					</where>
 		<if test="searchCondition !=null">
