@@ -345,7 +345,7 @@
 	
 		$(document).ready(function(){
 			
-			
+			<c:if test="${sessionScope.user.userId ne null}">
 				// userId input value 로 못 받아와서 수정함 session에서 가져오는 걸로
 				var userId = "${sessionScope.user.userId}";
 				
@@ -372,6 +372,8 @@
 			        	
 			        }
 				});
+				
+				</c:if>
 			
 		});
 			
