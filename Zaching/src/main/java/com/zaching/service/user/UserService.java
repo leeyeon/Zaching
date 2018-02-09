@@ -51,4 +51,6 @@ public interface UserService {
  	//이메일 인증시 정회원으로 등급 up
  	public void updateRole(User user)throws Exception;
 
+ 	public String updateGetAccountToken(String token, int userId) throws Exception;
+
 }

@@ -45,4 +45,8 @@ public interface UserDao {
 	
 	//이메일 중복체크
 	public int checkSignup(String email)throws Exception;
+	
+	public void updateAccountToken(String token, int userId) throws Exception;
+	
+	public String getAccountToken(int userId) throws Exception;
 }

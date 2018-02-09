@@ -355,31 +355,34 @@
 	
 		$(document).ready(function(){
 			
-			var userId = $("input[name='userId']").val();
-
-			$.ajax({
-				url : "/notice/rest/noticeList",
-				method : "POST",
-		        contentType : "application/json; charset=UTF-8",
-		        data : JSON.stringify({
-		        	"RECEIVER_ID" : userId
-		        }),
-		        dataType : "json",
-		        success : function(serverData) {
-		        	var status = 0;
-		        	
-		        
-		        	for(var i=0; i<serverData.list.length; i++){
-		        		if(serverData.list[i].status == '0'){
-	        				++status;
-	        			}
-		        	
-		        	}
-
-		        	$(".badge").text(status);
-		        	
-		        }
-			});
+			<c:if test="${!empty sessionScope}"> 
+				// userId input value 로 못 받아와서 수정함 session에서 가져오는 걸로
+				var userId = "${sessionScope.user.userId}";
+	
+				$.ajax({
+					url : "/notice/rest/noticeList",
+					method : "POST",
+			        contentType : "application/json; charset=UTF-8",
+			        data : JSON.stringify({
+			        	"RECEIVER_ID" : userId
+			        }),
+			        dataType : "json",
+			        success : function(serverData) {
+			        	var status = 0;
+			        	
+			        
+			        	for(var i=0; i<serverData.list.length; i++){
+			        		if(serverData.list[i].status == '0'){
+		        				++status;
+		        			}
+			        	
+			        	}
+	
+			        	$(".badge").text(status);
+			        	
+			        }
+				});
+			</c:if>
 		});
 			
 		

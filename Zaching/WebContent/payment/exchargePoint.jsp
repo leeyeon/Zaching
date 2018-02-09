@@ -41,9 +41,13 @@
  		        var left = Math.ceil((window.screen.width - windowW)/2);
  		        var top = Math.ceil((window.screen.height - windowH)/2);
 	
-				window.open("/payment/newAccount", "",
+				window.open("/payment/newAccount", "popup",
 						"l top="+top+", left="+left+", height="+windowH+", width="+windowW
 						+"scrollbars=no");
+				
+				$("#accountForm").attr("target", "popup")
+					.attr("method", "POST").attr("action", "/payment/newAccount").submit();
+				
 				opener.location.reload(true);
 			    self.close();
   			});
@@ -134,32 +138,44 @@
 			  </div><!-- /.col-lg-6 -->
 			</div><!-- /.row -->
 			
-			<div class="row" style="padding-top:50px;">
-				<label for="name" class="col-xs-4 control-label">
-						이름
-				</label>
-				<div class="col-xs-8">
-					<input type="text" class="form-control" name="name" />
+			<form id="accountForm" >
+				<div class="row" style="padding-top:50px;">
+					<label for="name" class="col-xs-4 control-label">
+							이름
+					</label>
+					<div class="col-xs-8">
+						<input type="text" class="form-control" name="name" value="${user.realName}" />
+					</div>
 				</div>
-			</div>
+				
+				<div class="row" style="padding-top:50px;">
+					<label for="name" class="col-xs-4 control-label">
+							은행명
+					</label>
+					<div class="col-xs-8">
+						은행이름
+					</div>
+				</div>
+				
+				<div class="row" style="padding-top:50px;">
+					<label for="name" class="col-xs-4 control-label">
+							생년월일+한자리 (ex) 9402082
+					</label>
+					<div class="col-xs-8">
+						<input type="text" class="form-control" name="accountHolderinfo" value="0"/>
+					</div>
+				</div>
+				
+				<div class="row" style="padding-top:50px;">
+					<label for="name" class="col-xs-4 control-label">
+							계좌번호
+					</label>
+					<div class="col-xs-8">
+						<input type="text" class="form-control" name="accountNum" value="${user.accountNumber}" />
+					</div>
+				</div>
 			
-			<div class="row" style="padding-top:50px;">
-				<label for="name" class="col-xs-4 control-label">
-						은행명
-				</label>
-				<div class="col-xs-8">
-					<input type="text" class="form-control" name="bankName" />
-				</div>
-			</div>
-			
-			<div class="row" style="padding-top:50px;">
-				<label for="name" class="col-xs-4 control-label">
-						계좌번호
-				</label>
-				<div class="col-xs-8">
-					<input type="text" class="form-control" name="account" />
-				</div>
-			</div>				
+			</form>				
 			
 	        <div class="input-group" align="center" style="padding-top:50px;">
 	            <button type="submit" class="btn-bob" style="margin: 10px;">충전</button>

@@ -107,6 +107,7 @@
 		FROM PAYMENT
 		<where>
 			user_id = #{userId}
+			AND substr(payment_code,0,1) = 'P'
 			<if test="search.searchCondition != null and search.searchCondition != ''">
 				<if test="search.searchCondition eq 0">
 					AND time <![CDATA[>=]]> SYSDATE-7

@@ -205,7 +205,12 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	
-
-
+	@Override
+	public String updateGetAccountToken(String token, int userId) throws Exception {
+		if(token != null) {
+			userDao.updateAccountToken(token, userId);
+		}
+		return userDao.getAccountToken(userId);
+	};
 
 }
