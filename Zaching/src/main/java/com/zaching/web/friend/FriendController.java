@@ -60,7 +60,7 @@ public class FriendController {
 		search.setPageSize(pageSize);
 
 		Map<String, Object> map = friendService.listFriend(search);
-
+		System.out.println(search);
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
 				pageSize);
 		System.out.println(resultPage);
@@ -68,6 +68,9 @@ public class FriendController {
 		model.addAttribute("list",map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		
+		
+		System.out.println("listFriend ³¡============");
 		
 		return "forward:/friend/listFriend.jsp";
 	}

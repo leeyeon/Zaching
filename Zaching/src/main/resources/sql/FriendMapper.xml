@@ -9,10 +9,11 @@
 		<result property="id" column="id" jdbcType="INTEGER" />
 		<result property="friendId" column="friend_id" jdbcType="INTEGER" />
 		<result property="userId" column="user_id" jdbcType="INTEGER" />
-		<result property="profileImage"   column="profile_image" 	jdbcType="VARCHAR"/>
-		<result property="name"   		  column="name"    	 		jdbcType="VARCHAR"/>
-		<!-- <result property="name" column="name" jdbcType="VARCHAR" />
-		<result property="profileImage"   column="profile_image" 	jdbcType="VARCHAR"/> -->
+		<result property="profileImage" column="profile_image"
+			jdbcType="VARCHAR" />
+		<result property="name" column="name" jdbcType="VARCHAR" />
+		<!-- <result property="name" column="name" jdbcType="VARCHAR" /> <result 
+			property="profileImage" column="profile_image" jdbcType="VARCHAR"/> -->
 		<result property="status" column="status" jdbcType="CHAR" />
 
 
@@ -22,7 +23,8 @@
 
 	<insert id="addFriend" parameterType="friend">
 		INSERT
-		INTO friend(id ,friend_id ,user_id ,status )
+		INTO friend(id
+		,friend_id ,user_id ,status )
 		VALUES(
 		seq_id.nextval,
 		#{userId:INTEGER},
@@ -31,12 +33,13 @@
 		#{name},
 		'1'
 		)
-		
+
 	</insert>
-	
+
 	<insert id="enterFriend" parameterType="map">
 		INSERT
-		INTO friend(id ,friend_id ,user_id ,status )
+		INTO friend(id
+		,friend_id ,user_id ,status )
 		VALUES(
 		seq_id.nextval,
 		#{userId:INTEGER},
@@ -46,75 +49,78 @@
 		'1'
 		)
 	</insert>
-	
-	
+
+
 	<select id="getFriend" parameterType="int" resultMap="friendSelectMap">
-	SELECT
-	friend.friend_id,
-	friend.status,
-	users.name,
-	users.profile_image
-	FROM
-	friend,users
-	<where>
-	friend.user_id=users.user_id
-	AND friend.status=1
-	</where>
+		SELECT
+		friend.friend_id,
+		friend.status,
+		users.name,
+		users.profile_image
+		FROM
+		friend,users
+		<where>
+			friend.user_id=users.user_id
+			AND friend.status=1
+		</where>
 	</select>
-	
+
 	<update id="updateFriend" parameterType="friend">
-	UPDATE friend
-	<set>
-	status=#{status}
-	</set>
-	<where>
-	user_id=#{userId}
-	AND friend_id=#{friendId}
-	AND status=#{status}
-	</where>
+		UPDATE friend
+		<set>
+			status=#{status}
+		</set>
+		<where>
+			user_id=#{userId}
+			AND friend_id=#{friendId}
+			AND status=#{status}
+		</where>
 	</update>
-	
+
 	<delete id="deleteFriend" parameterType="friend">
-	DELETE 
-	FROM friend WHERE friend_id=#{friendId}
+		DELETE
+		FROM friend WHERE friend_id=#{friendId}
 	</delete>
-	
-	<select id="listFriend" parameterType="search" resultMap="friendSelectMap">
-	SELECT * 
-	FROM(SELECT inner_table.*,ROWNUM AS row_seq
-				FROM(SELECT id,friend_id,user_id,status
-					FROM friend
-					<if test="searchCondition !=null">
+
+	<select id="listFriend" parameterType="map" resultMap="friendSelectMap">
+		SELECT *
+		FROM  ( SELECT inner_table.*, ROWNUM AS row_seq
+			FROM  ( SELECT friend.friend_id,
+							friend.user_id, users.name,
+								users.profile_image
+					FROM friend, users
 					<where>
-					<if test="searchCondition == 0 and searchKeyword !='' ">
-					user_id=#{searchKeyword}
-					</if>
-					<if test="searchCondition == 1 and searchKeyword !='' ">
-					friend_id=#{searchKeyword}
-					</if>
+				  	friend.friend_id=users.user_id
+					AND status='0'
 					</where>
-					</if>
-					ORDER BY id DESC) inner_table
-						WHERE ROWNUM &lt;=#{endRowNum})
-							WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+		<if test="searchCondition !=null">
+			<where>
+				<if test="searchCondition == 0 and searchKeyword !='' ">
+					friend.user_id=#{searchKeyword}
+				</if>
+			</where>
+		</if>
+		ORDER BY user_id ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	</select>
-	
-	 	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
-	  	SELECT COUNT(*)
-	  	FROM(SELECT id,friend_id,user_id,status
-					FROM friend
-					<if test="searchCondition !=null">
-					<where>
-					<if test="searchCondition == 0 and searchKeyword !='' ">
+
+	<select id="getTotalCount" parameterType="search" resultType="int">
+		SELECT COUNT(*)
+		FROM(SELECT id,friend_id,user_id,status
+		FROM friend
+		<if test="searchCondition !=null">
+			<where>
+				<if test="searchCondition == 0 and searchKeyword !='' ">
 					user_id=#{searchKeyword}
-					</if>
-					<if test="searchCondition == 1 and searchKeyword !='' ">
+				</if>
+				<if test="searchCondition == 1 and searchKeyword !='' ">
 					friend_id=#{searchKeyword}
-					</if>
-					</where>
-					</if>
-					ORDER BY id DESC)  countTable						
-	 </select>
+				</if>
+			</where>
+		</if>
+		ORDER BY id DESC) countTable
+	</select>
 
 
 
