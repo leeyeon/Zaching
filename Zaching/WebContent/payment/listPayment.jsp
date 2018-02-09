@@ -46,7 +46,7 @@
  			주기적으로 만나 <a href="/bob/getBob?category=B03&bobId=${content[1]}">'${content[2]}'</a> 에 회비 포인트 지출
  		</c:if>
  		<c:if test="${fn:contains(payment.content, 'B01')}">
- 			우리지금 만나 ${content[2]} 에 약속비 지출
+ 			우리지금 만나 <a href="/bob/getBob?category=B01&bobId=${content[1]}">'${content[2]}'</a> 에 약속비 지출
  		</c:if>
  		<c:if test="${!fn:contains(payment.content, 'B')}">
  			${content[2]}

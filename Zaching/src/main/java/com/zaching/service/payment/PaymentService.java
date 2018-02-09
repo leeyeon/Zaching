@@ -26,7 +26,11 @@ public interface PaymentService {
 	
 	public String getAuthorizationUrl(int authType) throws Exception;
 	
+	public String getAccessToken2() throws Exception;
+	
 	public JSONObject getAccessToken(String code) throws Exception;
 	
 	public String getUserCI(String accessToken, String userSeqNo) throws Exception;
+	
+	public Map<String, Object> getAccountRealName(String accessToken, String accountNum, int accountHolderinfo) throws Exception;
 }

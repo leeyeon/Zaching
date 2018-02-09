@@ -99,6 +99,11 @@ public class paymentServiceImpl implements PaymentService {
 	public String getAuthorizationUrl(int authType) throws Exception {
 		return paymentDao.getAuthorizationUrl(authType);
 	}
+	
+	@Override
+	public String getAccessToken2() throws Exception {
+		return paymentDao.getAccessToken2();
+	}
 
 	@Override
 	public JSONObject getAccessToken(String code) throws Exception {
@@ -108,6 +113,10 @@ public class paymentServiceImpl implements PaymentService {
 	@Override
 	public String getUserCI(String accessToken, String userSeqNo) throws Exception {
 		return paymentDao.getUserCI(accessToken, userSeqNo);
+	}
+	
+	public Map<String, Object> getAccountRealName(String accessToken, String accountNum, int accountHolderinfo) throws Exception {
+		return paymentDao.getAccount(accessToken, accountNum, accountHolderinfo);
 	}
 
 	//@Scheduled(fixedDelay=1000)

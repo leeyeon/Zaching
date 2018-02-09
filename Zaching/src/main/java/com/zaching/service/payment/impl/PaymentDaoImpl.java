@@ -1,5 +1,7 @@
 package com.zaching.service.payment.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,11 +94,24 @@ public class PaymentDaoImpl implements PaymentDao {
 		// 2인증생략
 		
 		String url = "redirect:https://testapi.open-platform.or.kr/oauth/2.0/authorize2?response_type=code&client_id="+CLIENT_ID
-				+"&redirect_uri="+REDIRECT_URI+"&scope=login inquiry&client_info=zaching&auth_type="+authType;
+				+"&redirect_uri="+REDIRECT_URI+"&scope=login inquiry oop&client_info=zaching&auth_type="+authType;
 
 		System.out.println(url);
 		
 		return url;
+	}
+	
+	
+	
+	@Override
+	public String getAccessToken2() throws Exception {
+		
+		String param = "client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&scope=oob&grant_type=client_credentials";
+		
+		JSONObject obj = URLConnection.getJSON_PARAM("POST", "https://testapi.open-platform.or.kr/oauth/2.0/token", param, 
+				"application/x-www-form-urlencoded;charset=UTF-8");
+		
+		return obj.get("access_token").toString();
 	}
 	
 	@Override
@@ -123,6 +138,37 @@ public class PaymentDaoImpl implements PaymentDao {
 		return obj;
 	}
 	
+	@Override
+	public Map<String, Object> getAccount(String accessToken, String accountNum, int accountHolderinfo) throws Exception {
+		
+		System.out.println("getAccessToken()");
+		
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmss");
+		
+		String dtime = fmt.format(cal.getTime());
+		
+		//String param = "bank_code_std=null&account_num="+accountNum+"&account_holder_info="+accountHolderinfo+"&tran_dtime="+dtime;
+		
+		JSONObject param = new JSONObject();
+		param.put("bank_code_std", "002");
+		param.put("account_num", accountNum);
+		param.put("account_holder_info", accountHolderinfo);
+		param.put("tran_dtime", dtime);
+		
+		System.out.println(REAL_NAME_URI+"?"+param);
+
+		JSONObject obj = URLConnection.getJSON_PARAM("POST", REAL_NAME_URI, param.toString(), 
+				"application/json; charset=UTF-8", "Authorization", "Bearer "+accessToken);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("realName", obj.get("account_holder_name").toString());
+		map.put("accountNum", obj.get("account_num").toString());
+		map.put("bankName", obj.get("bank_name").toString());
+		
+		return map;
+	}
+	
 	// DB에 저장
 	@Override
 	public String getUserCI(String accessToken, String userSeqNo) throws Exception {
@@ -133,6 +179,8 @@ public class PaymentDaoImpl implements PaymentDao {
 		
 		JSONObject obj = URLConnection.getJSON_PARAM("GET", USER_ME_URI, param, 
 				"application/x-www-form-urlencoded; charset=UTF-8", "Authorization", "Bearer "+accessToken);
+		
+		JSONObject obj2 = (JSONObject)obj.get("res_list");
 		
 		return obj.get("user_ci").toString();
 	}
