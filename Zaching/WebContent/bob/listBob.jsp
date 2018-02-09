@@ -39,8 +39,6 @@
 	<script type="text/javascript">
 	
 		$(function() {
-			
-			
 
 			$(document).on("click",'.thumbnail > img', function(){
 				if('${user}' != '') {
@@ -91,8 +89,9 @@
 				}
 			});
 			
-			function dataLoading() {
 			
+			function dataLoading() {
+				
 				$("#loader").show();
 				
 				pageInfo++;
@@ -144,10 +143,12 @@
 							
 							if(data.appointmentTime != null) {								
 								<c:if test="${empty sessionScope.user}">
-									html += moment(data.appointmentTime).format("YYYY년 MM월 DD일 A");
+									html += moment(data.appointmentTime).format("YYYY년 MM월 DD일");
 								</c:if>
 								<c:if test="${!empty sessionScope.user}">
-									html += moment(data.appointmentTime).format("YYYY년 MM월 DD일 HH:mm");
+									html += moment(data.appointmentTime).format("YYYY년 MM월 DD일")+" "+getInputDayLabel(data.appointmentTime)+" "
+										+ moment(data.appointmentTime).format("HH:mm");
+									
 								</c:if>
 							} else if(data.appointmentTime == '' || data.appointmentTime == null) {
 								html += "날짜 미정";
@@ -169,6 +170,14 @@
 			}
 			
 		});
+
+		
+		function getInputDayLabel(targetDate) { 
+			var week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'); 
+			var today = new Date(targetDate).getDay(); 
+			var todayLabel = week[today]; 
+			return todayLabel; 
+		}
 	
 	</script>
 
@@ -221,10 +230,10 @@
 			        <p style="font-size: 16px;">
 			        	<c:if test="${!empty bob.appointmentTime}">
 				        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-				        	<c:if test="${empty sessionScopr.user}">
+				        	<c:if test="${empty sessionScope.user}">
 				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일"/>
 				        	</c:if>
-				        	<c:if test="${!empty sessionScopr.user}">
+				        	<c:if test="${!empty sessionScope.user}">
 				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
 				        	</c:if>
 			        	</c:if>
@@ -260,10 +269,10 @@
 			        <p style="font-size: 16px;">
 			        	<c:if test="${!empty bob.appointmentTime}">
 				        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-				        	<c:if test="${empty sessionScopr.user}">
+				        	<c:if test="${empty sessionScope.user}">
 				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일"/>
 				        	</c:if>
-				        	<c:if test="${!empty sessionScopr.user}">
+				        	<c:if test="${!empty sessionScope.user}">
 				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
 				        	</c:if>
 			        	</c:if>
@@ -328,10 +337,10 @@
 				        <p style="font-size: 16px;">
 				        	<c:if test="${!empty bob.appointmentTime}">
 					        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-					        	<c:if test="${empty sessionScopr.user}">
+					        	<c:if test="${empty sessionScope.user}">
 					        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일"/>
 					        	</c:if>
-					        	<c:if test="${!empty sessionScopr.user}">
+					        	<c:if test="${!empty sessionScope.user}">
 					        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
 					        	</c:if>
 				        	</c:if>
@@ -386,10 +395,10 @@
 			        <p style="font-size: 16px;">
 			        	<c:if test="${!empty bob.appointmentTime}">
 				        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-				        	<c:if test="${empty sessionScopr.user}">
+				        	<c:if test="${empty sessionScope.user}">
 				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일"/>
 				        	</c:if>
-				        	<c:if test="${!empty sessionScopr.user}">
+				        	<c:if test="${!empty sessionScope.user}">
 				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
 				        	</c:if>
 			        	</c:if>

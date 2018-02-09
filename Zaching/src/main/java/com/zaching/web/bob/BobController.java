@@ -181,7 +181,7 @@ public class BobController {
 		
 		if(search.getCategory() == null) {
 			search.setCategory("B01");
-		} else if(search.getCategory().equals("B03")) {
+		} else if(search.getCategory().equals("B03") || search.getCategory().equals("B04")) {
 			search.setSearchKeyword(((User)session.getAttribute("user")).getUserId()+"");
 		}
 		
