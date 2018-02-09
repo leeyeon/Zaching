@@ -161,7 +161,7 @@
 		
 		//친구목록 Event
 		$( "#listFreind" ).on("click" , function() {
-			self.location = "/friend/listFriend?";
+			self.location = "/friend/listFriend";
 			
 	 	});
 		
