@@ -31,7 +31,7 @@
 				#{paymentCode},
 				#{point},
 				#{userId},
-				#{content})
+				#{content:VARCHAR})
 	</insert>
 	
 	<update id="updateUserPayment"
@@ -87,20 +87,44 @@
 
 		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-				FROM	( 
-					SELECT
-						payment_id, to_char(time, 'yyyy-mm-dd HH24:mi') AS time, money, trim(payment_code) AS payment_code,
-						content
-					FROM PAYMENT
-					<where>
-						user_id = #{userId}
-					</where>
-					ORDER BY time DESC
-				 ) inner_table
+				FROM	( <include refid="selectPaymentSql" /> ) inner_table
 				WHERE ROWNUM &lt;= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 			
 	</select>
+	
+	<select id="getTotalCount"
+			parameterType="search"
+			resultType="int">
+		SELECT COUNT(*)
+		FROM ( <include refid="selectPaymentSql" /> ) countTable
+	</select>
+	
+	<sql id="selectPaymentSql">
+		SELECT
+			payment_id, to_char(time, 'yyyy-mm-dd HH24:mi') AS time, money, trim(payment_code) AS payment_code,
+			content
+		FROM PAYMENT
+		<where>
+			user_id = #{userId}
+			AND substr(payment_code,0,1) = 'P'
+			<if test="search.searchCondition != null and search.searchCondition != ''">
+				<if test="search.searchCondition eq 0">
+					AND time <![CDATA[>=]]> SYSDATE-7
+				</if>
+				<if test="search.searchCondition eq 1">
+					AND time <![CDATA[>=]]> add_months(SYSDATE,-1)
+				</if>
+				<if test="search.searchCondition eq 2">
+					AND time <![CDATA[>=]]> add_months(SYSDATE,-6)
+				</if>
+			</if>
+			<if test="search.searchCondition == null or search.searchCondition == ''">
+				AND time BETWEEN TRUNC (SYSDATE, 'MM') + 1/24 AND LAST_DAY (TRUNC (SYSDATE)) + 1 / 24
+			</if>
+		</where>
+		ORDER BY time DESC
+	</sql>
 	
 	<select id="getPayment"
 			parameterType="map"

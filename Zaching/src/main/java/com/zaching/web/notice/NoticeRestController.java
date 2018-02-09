@@ -85,7 +85,7 @@ public class NoticeRestController {
 		search.setPageSize(pageSize);
 		search.setSearchKeyword(userId);
 		
-		Map<String, Object> mapp =  commonService.listNotice(search, Integer.parseInt(userId));
+		Map<String, Object> mapp =  commonService.listNotice(search, ((Integer)map.get("RECEIVER_ID")).intValue());
 		
 		
 		Page resultPage	= 

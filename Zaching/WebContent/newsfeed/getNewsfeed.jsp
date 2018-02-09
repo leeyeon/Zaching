@@ -104,8 +104,9 @@
 		   					'<br/>&nbsp;'+comment.content+'</p></td>'+
 		   				'</tr>'+
 		   				'<tr></tr>';
-		   				$('#table').prepend(displayValue);
+		   				$('#table').append(displayValue);
 		   				$('#count').innerHTML = count+1;
+		   				$("#comment").text("");
 							
 							//$("#listComment").load("/bob/listCommment?category=${param.category}&bobId=${param.bobId}");
 							//$(":text[name='inputComment']").val("");
@@ -246,7 +247,7 @@
    <div style="font-size: 12pt; line-height: 200%;">${roomUser.name}</div>&nbsp;${newsfeed.regDate}
 </div>
 	
-	<c:if test="${!empty newsfeed.fileName}"><a href="../resources/images/${newsfeed.fileName}"><img src="../resources/images/${newsfeed.fileName}"></a></c:if>
+	<c:if test="${!empty newsfeed.fileName}"><a href="../resources/upload_files/images/${newsfeed.fileName}"><img src="../resources/upload_files/images/${newsfeed.fileName}"></a></c:if>
     <p style="font-size: 20pt;">${newsfeed.content}</p>
     <br/>
 	<div id="respond">
