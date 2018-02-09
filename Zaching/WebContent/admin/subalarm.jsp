@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -118,11 +118,62 @@
 		}
 		
 
+.myAlert-bottom{
+    position: fixed;
+    bottom: 0px;
+    left:2%;
+    width: 20%;
+    height: 100px;
+    border: 2px solid;
+    border-color : black;
+   background: rgba(255,255,255,1);
+}
+
+div.fullscreen {
+  position: absolute;
+  height:960px; 
+
+}
+
+.alert{
+    display: none;
+}
 
 	</style>
 	
 	<script type="text/javascript">
+	
+	 $(document).ready(function(){
+		    playTimer = setInterval(function() {
+		    ajaxUpdate();
+		   }, 2000);
+		  });
+	 
+	 function ajaxUpdate(){
+		 
+		 alert("히히");
+			
+	    }
+
+
+	  function myAlertBottom(){
+	    $(".myAlert-bottom").show();
+	    setTimeout(function(){
+	      $(".myAlert-bottom").hide(); 
+	    }, 3000);
+	  }
+	  
 		$( function() {
+			
+			
+			var alertStart = ${alert};
+			("#alertStart").val(alertStart);
+					
+			if(alertStart == 1){
+				
+				alert("알림을 울려라~");
+			}
+			
 
 		$( "#notice" ).on("click" , function() {
 			
@@ -194,11 +245,6 @@
 
 									        success : function(serverData) {
 									        	--status;
-									        	
-									        	if(status < 0)
-									        		{
-									        		status = 0;
-									        		}
 									        	$(".badge").text(status);
 									        }									
 											
@@ -549,7 +595,21 @@
      </div><!-- Modal content-->
     </div> <!-- Modal dialog -->  
    </div> <!-- Modal Fade  --> 	
+   <br/><br/><br/><br/><br/><br/><br/>
+   <input type="hidden" name="alertStart" value="" />
+   <!-- 
+<div class="fullscreen">
 
-
+  <div class="col-sm-6">
+    <button class="form-control" onclick="myAlertBottom()">show alert bottom</button>
+  </div>
+</div>
+ -->
+<div class="myAlert-bottom alert ">
+  <a href="#" class="close" aria-label="close">&times;</a>
+  <strong>진수바보</strong> 알람와뜸
+</div>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+알~~~~~~~${alert}~~~~~~~~림
 </body>
 </html>

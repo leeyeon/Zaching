@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zaching.common.domain.Search;
 import com.zaching.service.payment.PaymentDao;
 import com.zaching.service.payment.PaymentService;
 import com.zaching.service.report.ReportService;
 import com.zaching.service.user.UserService;
+import com.zaching.service.domain.Bob;
 import com.zaching.service.domain.Payment;
 import com.zaching.service.domain.Report;
 import com.zaching.service.domain.User;
@@ -155,5 +157,26 @@ public class AdminRestController {
 		return "";
 
 	}
+	
+	@RequestMapping(value="/alert", method=RequestMethod.POST)
+	public String alert(@ModelAttribute Bob bob) throws Exception  {
+		
+		System.out.println("alert post");
+
+		return "redirect:/admin/rest/alerttest?alert=1";
+
+	}
+	
+	@RequestMapping(value="/alerttest", method=RequestMethod.GET)
+	public String alerttest(@RequestParam int alert, Model model) throws Exception  {
+		
+		System.out.println("alert GET");
+		System.out.println(alert);
+		model.addAttribute("alert", alert);
+		
+		return "forward:/admin/test2.jsp";
+
+	}
+
 
 }
