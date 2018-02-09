@@ -12,7 +12,6 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
  
-
   <link href="/resources/css/nivo-lightbox.css" rel="stylesheet" />
   <link href="/resources/css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
   <link href="/resources/css/owl.carousel.css" rel="stylesheet" media="screen" />
@@ -27,6 +26,7 @@
 </head>
 <script>
 $(function() {
+
 	 $( "#fixedbtn" ).on("click" , function() {		
 		 $( document ).ready(function() {
 			    showPopup();
@@ -71,6 +71,8 @@ $("a:contains('·Î±×¾Æ¿ô')").on("click", function() {
 $( "#profile" ).on("click" , function() {
 	self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";			
 });
+
+
 </script>
 <style>
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
@@ -132,7 +134,7 @@ font-size: 20px;
  </style>
  
 </style>
-<body id="page-top" data-spy="scroll" data-target=".navbar-custom" bgcolor="red">
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
   <!-- Preloader -->
   	<div class="bg"></div>
   <div id="preloader">
@@ -326,7 +328,7 @@ font-size: 20px;
 
 <section id="contact" class="home-section text-center">
 <p class="wow bounceInUp" data-wow-delay="0.3s"><img src="/resources/images/moviec.png" width="80px"> &nbsp; <img src="/resources/images/moviechart.png"/></p>
-    <jsp:include page="getMovieInfo.jsp"/> 
+   <!--  <jsp:include page="getMovieInfo.jsp"/> --> 
 
    <div class="containerr">
   <div class="carouselMovie">

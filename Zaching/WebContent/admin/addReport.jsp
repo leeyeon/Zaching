@@ -76,51 +76,7 @@
   padding: 0 0 10px 0;
     overflow: auto;
 }
-.topnav a {
-  float: left;
-  display: block;
-  color: black;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 15px;
-}
 
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.topnav a.active {
-  background-color: #5F4B8B;
-  color: white;
-}
-
-.topnav .search-container {
-  float: right;
-}
-
-.topnav input[type=text] {
-  padding: 6px;
-  margin-top: 8px;
-  font-size: 15px;
-  border: none;
-  width: 300px;
-  color : #000000;
-}
-
-.topnav .search-container button {
-  padding: 6px 10px;
-  margin-top: 8px;
-  margin-right: 16px;
-  font-size: 15px;
-  border: none;
-  cursor: pointer;
-}
-
-.topnav .search-container button:hover {
-  background: #ccc;
-}
 </style>
 <script type="text/javascript">
 

@@ -293,6 +293,10 @@
 			self.location = "/voice/listVoice";
 		});
 		
+		$(".ufo").on("click", function() {
+			self.location = "/newsfeed/ufo";
+		});
+		
 		$( "#profile" ).on("click" , function() {
 			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";			
 	 	});
@@ -401,8 +405,9 @@
             
           </button>
           <a class="navbar-brand" href="#">
+        	  <div class="row"><img src="/resources/images/ufo.png" class="ufo" width="25">
 	          	<img alt="뉴스피드로 이동" src="/resources/images/zaching2.png"  height="40px" 
-	          		style="margin-top: 20px;"/>
+	          		style="margin-top: 20px;"/></div>
 	        </a>
         </div>
         <div id="navigationbar" class="collapse navbar-collapse">
@@ -411,6 +416,7 @@
             <li><a href="#" style="color:#000;">라이브방송</a></li>
             <li><a href="#" style="color:#000;">보이스리플</a></li>
             <li><a href="#" style="color:#000;">생활정보</a></li>
+          
           </ul>
           <ul class="nav navbar-nav" style="float:right;">
 
