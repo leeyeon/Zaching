@@ -134,7 +134,7 @@
 			});
 			
 			$(".mainbar-menu:contains('라이브방송')").on("click", function() {
-				$(self.location).attr("href","/broadcast/mainBroadcast");
+				$(self.location).attr("href","/broadcast/listBroadcast");
 			});
 			
 			$(".mainbar-menu:contains('보이스리플')").on("click", function() {

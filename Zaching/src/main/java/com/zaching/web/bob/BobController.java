@@ -176,17 +176,18 @@ public class BobController {
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
-		if(search.getCategory() == null) {
-			search.setCategory("B01");
-		}
 		search.setPageSize(pageSize);
 		
-		//System.out.println(search);
-		
-		if(search.getCategory().equals("B03")) {
+		if(search.getCategory() == null) {
+			search.setCategory("B01");
+		} else if(search.getCategory().equals("B03")) {
 			search.setSearchKeyword(((User)session.getAttribute("user")).getUserId()+"");
 		}
 		
+		//System.out.println("서치");
+		
+		System.out.println("???" +search);
+
 		Map<String, Object> map = bobService.listBob(search);
 		
 		Page resultPage	= 
@@ -194,7 +195,8 @@ public class BobController {
 				pageUnit, pageSize);
 		
 		model.addAllAttributes(map)
-			 .addAttribute("resultPage", resultPage);
+			 .addAttribute("resultPage", resultPage)
+			 .addAttribute("search", search);
 		
 		return "forward:/bob/listBob.jsp";
 	}
@@ -256,7 +258,10 @@ public class BobController {
 		}
 		
 		/* 시간 */
-		bob.setAppointmentTime(getAppointmentTime(bob.getAppointmentTime()));
+		System.out.println("약속시간: "+bob.getAppointmentTime().length());
+		if(bob.getAppointmentTime().length() != 0) {
+			bob.setAppointmentTime(this.getAppointmentTime(bob.getAppointmentTime()));
+		}
 		
 		bobService.addBob(bob);		
 		System.out.println(bob);
@@ -403,13 +408,15 @@ public class BobController {
     	int index = date.indexOf("오후");
     	String result = "";
     	
-    	if(date.indexOf("오후") == -1) {
-    		index = date.indexOf("오전");
-    		result = date.substring(0, index)+date.substring(index+3);
-    	} else if(date.indexOf("오전") == -1) {
+    	System.out.println("예에에에: "+date);
+    	
+    	if(date.contains("오후")) {
     		result = date.substring(0, index)
     				+(Integer.parseInt(date.substring(index+3 , index+5)) + 12)
     				+date.substring(index+5);
+    	} else if(date.contains("오전")) {
+    		index = date.indexOf("오전");
+    		result = date.substring(0, index)+date.substring(index+3);
     	} else {
     		result = date;
     	}

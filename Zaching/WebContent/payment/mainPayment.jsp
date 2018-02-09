@@ -8,6 +8,17 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
+	<script type="text/javascript" src="../resources/javascript/masonry.pkgd.min.js"></script>
+	<script type="text/javascript" src="../resources/javascript/moment.js"></script>
+	<script type="text/javascript" src="../resources/javascript/moment-ko.js"></script>
+	
+	    
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+	
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+	
 	
 	<style>
         
@@ -15,6 +26,14 @@
        		padding-top: 50px;
        		padding-bottom: 50px;
        	}
+       	
+       	.jumbotron {
+		    margin-bottom: 0px;
+		    margin-top:50px;
+		    padding-top: 150px;
+		    height: 550px;
+		    background: transparent;
+		}
  
        	.btn-bob {
        		background: #5F4B8B; 
@@ -147,6 +166,12 @@
 			margin-top: 30px;
 			border: 1px solid #FFF;
 		}
+		
+		@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+			#Title {
+				max-width: 100%;
+			}
+		}
 
        	
     </style>
@@ -154,10 +179,20 @@
     <script type="text/javascript">
     
   		$(function() {
-			//$('.btn-bob:contains("충전")').on('click', function() {
-			//	$(self.location).attr("href","/payment/chargePoint");
-			//});
-			
+  			
+  			//alert();
+  			
+  			var titleText = moment().format('M')+" 월 포인트 내역";
+  			
+  			//alert($("option:selected").text());
+
+  			if($("option:selected").text() != '기간설정') {					
+  				//alert("??");
+  				titleText = $("option:selected").text()+"간 포인트 내역";
+  			}
+  			
+  			$("body > div.container > div > div:nth-child(1) > div").text(titleText);
+
 			$('.btn-bob:contains("반환신청")').on('click', function() {
 				$(self.location).attr("href","/payment/exchargePoint");
 			});
@@ -178,8 +213,9 @@
   	  		        var left = Math.ceil((window.screen.width - windowW)/2);
   	  		        var top = Math.ceil((window.screen.height - windowH)/2);
 
-  					window.open("/payment/kakaoPay?userId="+userId+"&point="+point, 'popup', 
-  							"l top="+top+", left="+left+", height="+windowH+", width="+windowW);
+  					window.open("/payment/kakaoPay?userId="+userId+"&point="+point, '', 
+  							"l top="+top+", left="+left+", height="+windowH+", width="+windowW,
+  							"resizable=no");
   					opener.location.reload(true);
   				    self.close();
   				}
@@ -216,6 +252,10 @@
 					$('#exchargeMileage').modal('toggle');
 				}
 			});
+			
+			$('.selectpicker').on('change', function() {
+				$(self.location).attr("href","/payment/mainPayment?searchCondition="+$('option:selected').val());
+			});
 
 		});
 
@@ -224,43 +264,53 @@
 </head>
 <body style="background:#fffafa;">
 
+	<div class="jumbotron text-center"
+			style="background-image: url('../resources/images/340.jpg');
+			background-size: cover;
+			background-repeat: no-repeat, no-repeat;
+			background-position: center center;">
+		<img id="Title" src="../resources/images/title_point.png"/>
 		
-	<div class="container">
-		
-		<div class="page-header text-center" style="padding-top: 50px;">
-		  <h1 style="font-weight: bold;">내 포인트 조회</h1>
-		</div>
-		
-		<div class="row" style="border:1px solid #000; background-color:#FFF;">
-			
-			<div class="row text-center" style="padding-top:50px;">
+		<div class="row text-center" style="padding: 30px; background: rgba(0, 0, 0, 0.7); margin-top: 50px; color: #FFF;">
+			<div class="col-xs-12">
 				<p style="font-size:20px;">${user.name}님의 잔여 포인트 : <fmt:formatNumber type="currency" value="${totalPoint}" pattern="###,###" /> Point</p>
 				<h4>( 마일리지 : <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" />점 )</h4>
 			</div>
-			<div class="row text-center"  style="padding-top:50px;">
-				
-	            <button class="btn-bob" style="margin: 10px;" >마일리지 전환</button>
+			
+			<div class="col-xs-12">
+				<button class="btn-bob" style="margin: 10px;" >마일리지 전환</button>
 	            <button class="btn-bob" style="margin: 10px;" data-toggle="modal">충전</button>
 	            <button class="btn-bob" style="margin: 10px;">반환신청</button>
+	        </div>				
+		</div>
+		<div class="row text-center"  style="padding-top:50px; padding-bottom:30px;">
+				
+	           
 	            
-	        </div>
-	        
-	        <div class="row">
-	        	<div class="col-xs-12" style="padding-left:30px;">
-		        	<div class="dropdown">
-					  <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					    기간설정
-					    <span class="caret"></span>
-					  </button>
-					  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" align="center">
-					    <li><a href="#">일주일</a></li>
-					    <li><a href="#">한달</a></li>
-					    <li><a href="#">6개월</a></li>
-					  </ul>
-					</div>
+	    </div>
+	</div>
+
+	
+	<div class="container" style="padding-top: 50px;">
+
+		<div class="row" style="border:1px solid #000; background-color:#FFF; padding-top:15px;">
+		
+			 <div class="row">
+	        	<div class="col-xs-12 text-center" style="font-size:20px; font-weight:bold; padding:20px;">
 				</div>
 	        </div>
-	
+
+	        <div class="row" align="right">
+	        	<div class="col-xs-12" style="padding-right:30px;">
+					<select name="term" class="selectpicker">
+					  <option value="" selected disabled hidden>기간설정</option>
+					  <option value="0" ${param.searchCondition eq 0? "selected":""}>일주일</option>
+					  <option value="1" ${param.searchCondition eq 1? "selected":""}>한달</option>
+					  <option value="2" ${param.searchCondition eq 2? "selected":""}>6개월</option>
+					</select>
+										
+				</div>
+	        </div>
 	        
 	        <div class="row text-center" style="padding-top:15px; margin: 10px;">
 
@@ -278,47 +328,8 @@
 		        	
 		        <hr style="border: 1px solid #bababa;">
 		       
-	        	<c:forEach var="payment" items="${payment}">
-		        	<div class="row listPayment">
-		        		<div class="col-xs-4">
-			        		<fmt:parseDate value="${payment.createdDate}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-		      				<fmt:formatDate value="${Date}" pattern="yyyy.MM.dd"/>
-			        	</div>
-			        	<div class="col-xs-4">
-			        		<c:if test="${payment.paymentCode eq 'P01'}">포인트 충전</c:if>
-			        		<c:if test="${payment.paymentCode eq 'P02'}">포인트 사용</c:if>
-			        		<c:if test="${payment.paymentCode eq 'P03'}">포인트 반환 신청</c:if>
-			        		<c:if test="${payment.paymentCode eq 'P04'}">포인트 반환 완료</c:if>
-			        		<c:if test="${payment.paymentCode eq 'P05'}">포인트 반환 신청 취소</c:if>
-			        		<c:if test="${payment.paymentCode eq 'P06'}">포인트 사용 취소</c:if>
-			        	</div>
-			        	<div class="col-xs-4">
-			        		<c:if test="${payment.paymentCode eq 'P01' || payment.paymentCode eq 'P05' || payment.paymentCode eq 'P06'}">+</c:if>
-			        		<c:if test="${payment.paymentCode eq 'P02' || payment.paymentCode eq 'P03' || payment.paymentCode eq 'P04'}">-</c:if>
-			        		<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /> p
-			        	</div>
-		        	</div>
-		        	
-		        	<div class="row text-left listExplain" style="background: #ccc; margin:10px; padding: 15px 10px 10px 10px; display: none;">
-		        		<p>거래일시 : ${payment.createdDate}</p>
-		        		<p>적립/포인트 : 
-		        			<span style="font-weight: bold;"> 
-				        		<c:if test="${payment.paymentCode eq 'P02' || payment.paymentCode eq 'P03' || payment.paymentCode eq 'P04'}">-</c:if>
-			        			<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /> p
-		        			</span></p>
-			        	<p>내역 : 
-			        		<c:set var="content" value="${fn:split(payment.content,':')}" />
-	
-			        		<c:if test="${fn:indexOf(payment.content, 'B03') != -1}">
-			        			주기적으로 만나 <a href="/bob/getBob?category=B03&bobId=${content[1]}">'${content[2]}'</a> 에 회비 포인트 지출
-			        		</c:if>
-			        		<c:if test="${fn:indexOf(payment.content, 'B03') == -1}">
-			        			${content[2]}
-			        		</c:if>
-			        	</p>
-		        	</div>
-		        	<hr>
-	        	</c:forEach>
+	        	<jsp:include page="./listPayment.jsp" />
+	        	
 	        </div>
         
         </div>

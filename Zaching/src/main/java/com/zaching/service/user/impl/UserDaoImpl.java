@@ -118,7 +118,19 @@ public class UserDaoImpl implements UserDao{
 		
 		return sqlSession.selectOne("UserMapper.checkSignup", email);
 	}
-
 	
+	@Override
+	public void updateAccountToken(String token, int userId) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("token", token);
+		map.put("userId", userId);
+		
+		sqlSession.update("UserMapper.updateAccountToken", map);
+	}
+	
+	@Override
+	public String getAccountToken(int userId) throws Exception {
+		return sqlSession.selectOne("UserMapper.getAccountToken", userId);
+	}
 
 }
