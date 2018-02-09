@@ -43,11 +43,11 @@ public interface CommonService {
 	
 	public String getAuthorizationUrl();
 	
-	public String getAuthorizationUrl_login();
+	public String getAuthorizationUrl_login(HttpSession session);
 	
 	public Map<String, Object> getAceessToken(String code) throws Exception;
 	
-	public User getAceessToken2(String code) throws Exception;
+	public User getAceessToken2(String code,HttpSession session) throws Exception;
 	
 	public String getPaymentReady(String token, int point) throws Exception;
 	

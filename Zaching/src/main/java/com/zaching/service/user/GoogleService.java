@@ -6,7 +6,7 @@ import com.zaching.service.domain.User;
 
 public interface GoogleService {
 	
-	public String getAuthorizationUrl();
+	public String getAuthorizationUrl(HttpSession session);
 	
 	public User getAccessToken(HttpSession session,String code)throws Exception;
 	

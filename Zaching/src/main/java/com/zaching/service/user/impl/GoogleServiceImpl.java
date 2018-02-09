@@ -18,18 +18,19 @@ public class GoogleServiceImpl implements GoogleService {
 	private GoogleDao gooleDao;
 	
 	@Override
-	public String getAuthorizationUrl() {
-		return gooleDao.getAuthorizationUrl();
+	public String getAuthorizationUrl(HttpSession session) {
+		return gooleDao.getAuthorizationUrl(session);
 	}
 
 	@Override
 	public User getAccessToken(HttpSession session,String code) throws Exception {
+		System.out.println(":: googleServiceImpl  ::"+session.getAttribute("user"));
 		return gooleDao.getAccessToken(session, code);
 	}
 
 	@Override
 	public User getUserProfile(User user) throws Exception {
-	
+		System.out.println(":: googleServiceImpl UserInfo ::" +user);
 		return gooleDao.getUserProfile(user);
 	}
 

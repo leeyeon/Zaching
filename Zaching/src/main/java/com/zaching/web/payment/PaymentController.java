@@ -155,31 +155,28 @@ public class PaymentController {
 	}
 	
 	@RequestMapping("newAccount")
-	public String tftcAccount(HttpSession session) throws Exception {
+	public String tftcAccount(HttpSession session,
+							@RequestParam String accountNum,
+							@RequestParam int accountHolderinfo) throws Exception {
 		
 		System.out.println("이얍");
 		
-		int authType = 1;
-		
-		if((session.getAttribute("userCI") != null) &&
-			(session.getAttribute("userSeqNo") != null)) {
-			if(session.getAttribute("accountToken") != null) {
-				authType = 2;
-				//System.out.println("ㅇㅅㅇ");
-			} else {
-				authType = 1;
-			}
-		}
-		
 		/*
-		 * header에 추가,,,
-		 * 필수: Kftc-Bfop-UserSeqNo , Kftc-Bfop-UserSeqNo
-		 * 선택: Kftc-Bfop-UserName , Kftc-Bfop-UserInfo
-		 * Kftc-Bfop-UserCellNo, Kftc-Bfop-UserEmail
-		 * Kftc-Bfop-BankCodeStd, Kftc-Bfop-AccountNum
-		 */
-
-		return paymentService.getAuthorizationUrl(authType);
+		User user = (User)session.getAttribute("user");
+		
+		String token = userService.updateGetAccountToken(null, user.getUserId());
+		if(token==null || "".equals(token)) {
+			return paymentService.getAuthorizationUrl(1);
+		} else {
+			return "redirect:/payment/getRealName?token="+token+"&accountNum="+accountNum
+					+"&accountHolderinfo="+accountHolderinfo;
+		}
+		*/
+		
+		String token = paymentService.getAccessToken2();
+		
+		return "redirect:/payment/getRealName?token="+token+"&accountNum="+accountNum
+				+"&accountHolderinfo="+accountHolderinfo;
 	}
 	
 	@RequestMapping("/payment/oauthAccount")
@@ -194,6 +191,30 @@ public class PaymentController {
 		
 		String accessToken = json.get("access_token").toString();
 		String userSeqNo = json.get("user_seq_no").toString();
+		
+		User sessionUser = (User)session.getAttribute("user");
+		
+		// 토큰 DB에 저장
+		userService.updateGetAccountToken(accessToken, sessionUser.getUserId());
+		
+		String userCI = paymentService.getUserCI(accessToken, userSeqNo);
+		
+		// DB 저장,,
+		session.setAttribute("userCI", userCI);
+		session.setAttribute("userSeqNo", userSeqNo);
+
+		// 성공페이지로 이동
+		return "redirect:/payment/getAccessToken?accessToken="+accessToken+"&userSeqNo="+userSeqNo;
+		
+	}
+	
+	@RequestMapping("/payment/getUserNe")
+	public String getUserNe(@RequestParam String accessToken,
+									@RequestParam String userSeqNo,
+									HttpSession session) throws Exception {
+
+
+		//String userSeqNo = json.get("user_seq_no").toString();
 		String userCI = paymentService.getUserCI(accessToken, userSeqNo);
 		
 		session.setAttribute("accountToken", accessToken);
@@ -204,6 +225,33 @@ public class PaymentController {
 
 		// 성공페이지로 이동
 		return "redirect:/payment/getAccessToken?accessToken="+accessToken+"&userCI="+userCI;
+		
+	}
+	
+	
+	@RequestMapping("/payment/getRealName")
+	public String getRealName(@RequestParam String token,
+							@RequestParam String accountNum,
+							@RequestParam int accountHolderinfo,
+							HttpSession session,
+							Model model) throws Exception {
+		
+		User sessionUser = (User)session.getAttribute("user");
+		
+		Map<String, Object> map = paymentService.getAccountRealName(token, accountNum, accountHolderinfo);
+		sessionUser.setAccountNumber((String)map.get("accountNum"));
+		sessionUser.setRealName((String)map.get("realName"));
+		sessionUser.setBankName((String)map.get("bankName"));
+		
+		if(sessionUser.getAccountNumber() != null) {
+			userService.updateUser(sessionUser);
+			model.addAttribute("result", "success");
+		} else {
+			model.addAttribute("result", "fail");
+		}
+
+		// 성공페이지로 이동
+		return "redirect:/payment/registerAccount.jsp";
 		
 	}
 }
