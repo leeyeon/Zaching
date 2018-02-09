@@ -91,7 +91,7 @@
 					var title = $($("input[name=title]")[index]).val();
 					var detail = $($("input[name=detail]")[index]).val();
 			
-					window.open("http://localhost:9001/?title="+title, title, "width=1800, height=950, toolbar=no, location=no, menubar=no, scrollbars=no, resizable=yes")
+					window.open("http://192.168.0.31:9001/?title="+title, title, "width=1800, height=950, toolbar=no, location=no, menubar=no, scrollbars=no, resizable=yes")
 				});	
 		 });
 		 

@@ -248,7 +248,7 @@ public class LivingInfoRestController {
 		BufferedReader br = null;
 		String locationCode = null;
 		
-		File file = new File("C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\src\\main\\resources\\config\\rentcharge.txt");
+		File file = new File("C:\\Users\\¼ÒÇöÅÂ\\git\\Zaching\\Zaching\\src\\main\\resources\\config\\rentcharge.txt");
 		
 		br = new BufferedReader(new FileReader(file));
 		
