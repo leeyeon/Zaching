@@ -5,6 +5,8 @@
 <html>
 <head>
 	<title>La Casa - Real Estate HTML5 Home Page Template</title>
+	
+	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 	<meta charset="utf-8">
 	<meta name="author" content="pixelhint.com">
 	<meta name="description" content="La casa free real state fully responsive html5/css3 home page website template"/>
@@ -63,11 +65,19 @@
 														'<h1>'+
 															'<a href="#" style="vertical-align: bottom;"><img src="../resources/images/'+serverData[i].profileImage+'" id="profile">&nbsp;'+serverData[i].userName+'</a>'+
 														'</h1>'+
-														'<h1>'+
+														'<h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'+
 															'<a href="#">'+serverData[i].voiceName+'</a>'+
 														'</h1>'+
 														'<h2>';
-														if(serverData[i].categoryCode == 'R01')
+														if(serverData[i].categoryCode == 'R02')
+															display += '노래이어부르기&nbsp;';
+														if(serverData[i].categoryCode == 'R03')
+															display += '글 읽어주기&nbsp;';
+														if(serverData[i].categoryCode == 'R04')
+															display += 'ASMR&nbsp;';
+														if(serverData[i].categoryCode == 'R05')
+															display += '알림음 만들기&nbsp;';
+														if(serverData[i].categoryCode == 'R06')
 															display += '프리토킹&nbsp;';
 														display = display + '<span class="property_size">'+serverData[i].voicelyrics+'</span></h2>'+
 													'</div>'+
@@ -179,10 +189,10 @@
 											<a href="#" style="vertical-align: bottom;"><img src="../resources/images/${voice.profileImage}" id="profile">&nbsp;${voice.userName}</a>
 										</h1>
 										
-										<h1>
+										<h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
 											<a href="#">${voice.voiceName}</a>
 										</h1>
-										<h2><c:if test="${voice.categoryCode == 'R01'}">프리토킹&nbsp;</c:if><span class="property_size">${voice.voicelyrics}</span></h2>
+										<h2><c:if test="${voice.categoryCode == 'R06'}">프리토킹&nbsp;</c:if><span class="property_size">${voice.voicelyrics}</span></h2>
 									</div>
 								</li>
 			   				</c:forEach>

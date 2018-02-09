@@ -61,7 +61,7 @@ public class UserServiceTest {
 	}
 	
 	
-	@Test
+//	@Test
 	public void testgetTimeLine() throws Exception {
 
 		User user = new User();
@@ -72,7 +72,7 @@ public class UserServiceTest {
 
 	}
 	
-	//@Test
+	@Test
 		public void testGetUserListAll() throws Exception {
 
 			Search search = new Search();
