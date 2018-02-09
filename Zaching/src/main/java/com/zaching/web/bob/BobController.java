@@ -88,6 +88,7 @@ public class BobController {
 	@Qualifier("newsfeedServiceImpl")
 	private NewsfeedService newsfeedService;	
 	
+	
 	public BobController() {
 		System.out.println(this.getClass());
 	}
@@ -146,7 +147,7 @@ public class BobController {
 		int reviewCount = 0;
 		
 		if(!category.equals("B03")) {
-			search.setCategory("N10:"+bobId);
+			search.setSearchCondition("N10:"+bobId);
 			Map<String, Object> newsfeedMap = newsfeedService.listNewsfeed(search);
 			review = (List<Newsfeed>)newsfeedMap.get("list");
 			reviewCount = (int)newsfeedMap.get("totalCount");

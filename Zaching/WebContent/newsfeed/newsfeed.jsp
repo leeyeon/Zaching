@@ -47,7 +47,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         		 //alert($($("input[name='newsfeedId']")[$("li").index(this)-6]).val());
         		 
         		 self.location="/newsfeed/getNewsfeed?newsfeedId="+id;
+        		 
         	 });
+        	 
+				
+			$("#main > div > header > nav > a:nth-child(1)").on('click', function() {
+				
+				alert();
+				
+				var condition = $(this).attr("href");
+				
+				$("#newsfeed").load("/newsfeed/listNewsfeed?searchCondition="+condition);
+				
+			});
+			
         	 
          });
         	 function addNewsfeed(){
@@ -91,6 +104,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						
 					}
 				});
+
+
 			}
 			
 			/*var $ = jQuery.noConflict();
@@ -242,11 +257,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			 <div class="container">
 				<header>
 					<nav class="codrops-demos">
-						<a href="index.html">자취지식인</a>
-						<a class="current-demo" href="index2.html">전체보기</a>
-						<a href="index3.html">밥친구 후기</a>
-						<a href="index4.html">꿀팁</a>
-						<a href="index5.html">중고거래</a>
+						<c:if test="${search.searchCondition == 'N01'}"><a class="current-demo" href="N01">자취지식인</a></c:if>
+						<c:if test="${search.searchCondition != 'N01'}"><a href="/newsfeed/listNewsfeed?searchCondition=N01">자취지식인</a></c:if>
+						<c:if test="${search.searchCondition == 'N06'}"><a class="current-demo" href="N06">전체보기</a></c:if>
+						<c:if test="${search.searchCondition != 'N06'}"><a href="/newsfeed/listNewsfeed?searchCondition=N06">전체보기</a></c:if>
+						<c:if test="${search.searchCondition == 'N10'}"><a class="current-demo" href="N10">밥친구 후기</a></c:if>
+						<c:if test="${search.searchCondition != 'N10'}"><a href="/newsfeed/listNewsfeed?searchCondition=N10">밥친구 후기</a></c:if>
+						<c:if test="${search.searchCondition == 'N04'}"><a class="current-demo"href="N04">꿀팁</a></c:if>
+						<c:if test="${search.searchCondition != 'N04'}"><a href="/newsfeed/listNewsfeed?searchCondition=N04">꿀팁</a></c:if>
+						<c:if test="${search.searchCondition == 'N02'}"><a class="current-demo" href="N02">중고거래</a></c:if>
+						<c:if test="${search.searchCondition != 'N02'}"><a href="/newsfeed/listNewsfeed?searchCondition=N02">중고거래</a></c:if>
 						<a href="index6.html">친구글만</a>
 						<a href="index7.html">팔로워글만</a>
 					</nav>
@@ -289,7 +309,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<table border="1">
 						<tr>
 						<td  style="table-layout:fixed">
-							<div class="form-group" style="max-height:1px; hi">
+							<div class="form-group" style="max-height:1px;">
 								<input type="file" name="file" imageswap="true" imagesrc="../resources/images/imageButton.PNG"/>
 							</div>
 						</td>	
@@ -598,7 +618,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		  <script src="../resources/javascript/jquery.imagesloaded.js"></script>
 		  <script src="../resources/javascript/jquery.wookmark.js"></script>
 		  <script type="text/javascript">
-		   var page = 1;
+		  	var page = ${search.currentPage};
+			var pageSize = ${search.pageSize};
+			var searchCondition = '${search.searchCondition}';
+				
 		    (function ($){
 		      var $tiles = $('#tiles'),
 		          $handler = $('li', $tiles),
@@ -648,7 +671,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							dataType : "json" ,
 							data : {
 								resultPage : page,
-								category : "${category}"
+								category : searchCondition
 							},
 							headers : {
 								"Accept" : "application/json",

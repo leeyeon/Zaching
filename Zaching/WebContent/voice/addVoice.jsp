@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -25,10 +25,14 @@
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 </head>
 
+<script type="text/javascript" src="../resources/javascript/FileButton.js"></script>
+
 <script>
 	$(function() {
-
-		
+		var myFileButton = new FileButton("imageswap", "imagesrc"); //new FileButton
+		window.onload = function () { 
+			myFileButton.run(); 
+		}
 		$("select").change(function() {
 			
 			if($("select option:selected").val() != '1'){
@@ -40,7 +44,19 @@
 
 			
 		});
+		$(".makevoiceroom").on('click', function(){
+			addVoice();
+		});
 		
+		function addVoice(){
+			var title = document.Form.voiceName.value;
+			if (title == null || title.length < 1) {
+				alert("ë°© ì œëª©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”!");
+				return;
+			}
+			$("form").attr("method", "POST").attr("action", "/voice/addVoice")
+			.submit();
+		}
 		$("#search").on('click',function() {
 
 							var keyword = $("input[name=searchsong]").val();
@@ -70,7 +86,7 @@
 											}
 
 											var displayValue = '<div class="list"><table class="table table-hover table-striped"><tr><thead>'
-													+ '<td class="th" align="left">³ë·¡Á¦¸ñ</td><td class="th" align="left">°¡¼ö¸í</td></tr><tbody>'
+													+ '<td class="th" align="left">ë…¸ë˜ì œëª©</td><td class="th" align="left">ê°€ìˆ˜ëª…</td></tr><tbody>'
 													+ name
 													+ '</tbody></table></div>';
 
@@ -229,63 +245,146 @@ background: #fff;
 	vertical-align: middle;
 	align : center;
 }
+
+.makevoiceroom {
+	-moz-box-shadow:inset 0px 1px 0px 0px #cae3fc;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #cae3fc;
+	box-shadow:inset 0px 1px 0px 0px #cae3fc;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #4197ee) );
+	background:-moz-linear-gradient( center top, #79bbff 5%, #4197ee 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#4197ee');
+	background-color:#79bbff;
+	-webkit-border-top-left-radius:0px;
+	-moz-border-radius-topleft:0px;
+	border-top-left-radius:0px;
+	-webkit-border-top-right-radius:0px;
+	-moz-border-radius-topright:0px;
+	border-top-right-radius:0px;
+	-webkit-border-bottom-right-radius:0px;
+	-moz-border-radius-bottomright:0px;
+	border-bottom-right-radius:0px;
+	-webkit-border-bottom-left-radius:0px;
+	-moz-border-radius-bottomleft:0px;
+	border-bottom-left-radius:0px;
+	text-indent:0;
+	border:1px solid #469df5;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+	height:40px;
+	line-height:40px;
+	width:100px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 5px #287ace;
+}
+.makevoiceroom:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #4197ee), color-stop(1, #79bbff) );
+	background:-moz-linear-gradient( center top, #4197ee 5%, #79bbff 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#4197ee', endColorstr='#79bbff');
+	background-color:#4197ee;
+}.makevoiceroom:active {
+	position:relative;
+	top:1px;
+}
+
+.songSelectButton {
+	-moz-box-shadow:inset 0px 0px 50px -1px #97c4fe;
+	-webkit-box-shadow:inset 0px 0px 50px -1px #97c4fe;
+	box-shadow:inset 0px 0px 50px -1px #97c4fe;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3d94f6), color-stop(1, #1e62d0) );
+	background:-moz-linear-gradient( center top, #3d94f6 5%, #1e62d0 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3d94f6', endColorstr='#1e62d0');
+	background-color:#3d94f6;
+	-webkit-border-top-left-radius:0px;
+	-moz-border-radius-topleft:0px;
+	border-top-left-radius:0px;
+	-webkit-border-top-right-radius:0px;
+	-moz-border-radius-topright:0px;
+	border-top-right-radius:0px;
+	-webkit-border-bottom-right-radius:0px;
+	-moz-border-radius-bottomright:0px;
+	border-bottom-right-radius:0px;
+	-webkit-border-bottom-left-radius:0px;
+	-moz-border-radius-bottomleft:0px;
+	border-bottom-left-radius:0px;
+	text-indent:0;
+	border:1px solid #337fed;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Comic Sans MS;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+	height:40px;
+	line-height:40px;
+	width:100px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:0px 1px 0px #1570cd;
+}
+.songSelectButton:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #1e62d0), color-stop(1, #3d94f6) );
+	background:-moz-linear-gradient( center top, #1e62d0 5%, #3d94f6 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#1e62d0', endColorstr='#3d94f6');
+	background-color:#1e62d0;
+}.songSelectButton:active {
+	position:relative;
+	top:1px;
+}
 </style>
 <body>
 
 
 <div class="container">
 <div class="songSelect">
-	<form name='Form' class="form-vertical">
-
-		
+	<form name='Form' class="form-vertical" enctype="multipart/form-data">
+		<input type="hidden" name="userId" value="${user.userId}">
 		
 			<div class="row">
-				<div class="form-group">
-					<br/>
-					<div class="col-sm-3 text-center" style="margin: 30px 0 30px 0;">
-					<input type='file' name='txtProductFile' size="15"
-						style='display: none'> <input type="Text"
-						style="display: none" name="txtProductFileName" class='input'
-						readOnly> <img width="200" style='cursor: hand' alt="ÆÄÀÏÃ£±â"
-						src="/resources/images/imageButton.PNG" align="absMiddle"
-						border="0" onclick="fncProductFile()" id="imgInput">
-						</div>
+				<div class="form-group" >
+					<br/><div></div>
+					<div class="col-sm-3 text-center" style="margin: 30px 0 30px 60px;">
+						<input type="file" name="uploadFile" imageswap="true" imagesrc="../resources/images/imageButton.PNG"/>
+					</div>
 					<div class="col-sm-8 text-center" style="margin: 30px 0 30px 0;">
-						<input type="text" name="title" placeholder="¹æ Á¦¸ñÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä"
-							style="font-size: 20px; width: 100%; height: 50px; padding-left: 20px; border: none; border-bottom: 1px solid #eee;" /><br/>
+						<input type="text" name=voiceName placeholder="ë°© ì œëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”"
+							style="font-size: 20px; width: 100%; height: 50px; padding-left: 20px; border: none; border-bottom: 1px solid #eee;" maxlength="30"/><br/>
 							<div class="form-group" align="left">
-						   <strong style="font-size: 15px">Ä«Å×°í¸®</strong> <select 	name="categoryCode"	id="categoryCode" class="form-control" 
+						   <strong style="font-size: 15px">ì¹´í…Œê³ ë¦¬</strong> <select 	name="categoryCode"	id="categoryCode" class="form-control" 
 							style="height: 40px" maxLength="20">
-						<option value="1" selected="selected">³ë·¡ ÀÌ¾î ºÎ¸£±â</option>
-						<option value="2">±Û ÀĞ¾îÁÖ±â</option>
-						<option value="3">ASMR</option>
-						<option value="4">ÇÁ¸®ÅäÅ·</option>
-						<option value="5">¾Ë¸²À½ ¸¸µé±â</option>
+						<option value="R02" selected="selected">ë…¸ë˜ ì´ì–´ ë¶€ë¥´ê¸°</option>
+						<option value="R03">ê¸€ ì½ì–´ì£¼ê¸°</option>
+						<option value="R04">ASMR</option>
+						<option value="R05">ì•Œë¦¼ìŒ ë§Œë“¤ê¸°</option>
+						<option value="R06">í”„ë¦¬í† í‚¹</option>
 					</select>
 					<br/>
 					<div class="category1">
-					<input type="text" name="ok" id="ok" placeholder="¹«½¼ ³ë·¡ÀÎ°¡¿ä?"
+					<input type="text" name="ok" id="ok" placeholder="ë¬´ìŠ¨ ë…¸ë˜ì¸ê°€ìš”?"
 							style="font-size: 20px; width: 80%; height: 50px; padding-left: 20px; border: none; border-bottom: 1px solid #eee;" readonly/>
-							<button type="button" class="songSelectButton" data-toggle="modal"data-target="#myModal">³ë·¡ °Ë»ö</button>
+							<button type="button" class="songSelectButton" data-toggle="modal"data-target="#myModal">ë…¸ë˜ ê²€ìƒ‰</button>
 						  </div></div>
 					</div>
 				</div>
 			</div>
 			<div class="makevoice">
 			<center>
-		<button type="button" class="makevoiceroom" >¿Ï·á</button>
+		<button type="button" class="makevoiceroom">ì™„ë£Œ</button>
 		</center>
 		</div>
 	</form>
-
 </div>
 </div>
 
 	<div class="col-xs-12">
 		
 	<!-- 
-	<input type="text" placeholder="¼±ÅÃµÈ³ë·¡" name="selectsong"id="selectsong" value=""> 
-	<input type="text"placeholder="°¡¼öÀÌ¸§" name="selectsinger" id="selectsinger" value="">
+	<input type="text" placeholder="ì„ íƒëœë…¸ë˜" name="selectsong"id="selectsong" value=""> 
+	<input type="text"placeholder="ê°€ìˆ˜ì´ë¦„" name="selectsinger" id="selectsinger" value="">
 	-->	
 	</div>
 
@@ -306,16 +405,16 @@ background: #fff;
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">
-						<b>³ë·¡¸¦ °Ë»öÇÏ¼¼¿ä!</b>
+						<b>ë…¸ë˜ë¥¼ ê²€ìƒ‰í•˜ì„¸ìš”!</b>
 					</h4>
 				</div>
 				<div class="modal-body">
 					<div class="topnav">
 						<div class="search-container">
-							<input type="text" placeholder="Á¦¸ñÀÌ³ª °¡¼ö¸íÀ» ÀÔ·ÂÇÏ¼¼¿ä"
+							<input type="text" placeholder="ì œëª©ì´ë‚˜ ê°€ìˆ˜ëª…ì„ ì…ë ¥í•˜ì„¸ìš”"
 								name="searchsong" id="searchsong" value="">
-							<button type="button" class="btn btn-primary" id="search">°Ë»ö</button>
-							<button type="submit" class="btn btn-primary" data-dismiss="modal" id="select">¼±ÅÃ</button>
+							<button type="button" class="btn btn-primary" id="search">ê²€ìƒ‰</button>
+							<button type="submit" class="btn btn-primary" data-dismiss="modal" id="select">ì„ íƒ</button>
 							<br />
 							<div class="viewlist"></div>
 						</div>
