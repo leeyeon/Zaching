@@ -53,7 +53,7 @@
 		#footer {
 		   position:fixed;
 		   left:0px;
-		   bottom:-50px;
+		   bottom:-10px;
 		   width:100%;
 				}
 		
@@ -63,7 +63,7 @@
 			-moz-border-radius: 70px;
 			-khtml-border-radius: 70px;
 			-webkit-border-radius: 70px;
-			 background: #D4F4FA;
+			 background: #585858;
 			 width: 100px;
 			 height: 100px;
 			 line-height: 100px;
@@ -71,7 +71,7 @@
 			 float:right;
 			 margin-right: auto;
 			 cursor: pointer;
-			 color: #00000;
+			 color: rgb(255, 255, 255);
 			 box-shadow: 0 5px 15px -5px #666;
        	}		
 		
@@ -93,8 +93,15 @@
 			
 					window.open("http://localhost:9001/?title="+title, title, "width=1800, height=950, toolbar=no, location=no, menubar=no, scrollbars=no, resizable=yes")
 				});	
-			 
-		 });	
+		 });
+		 
+		$(function(){
+			 $(document).on('click','.btn-add-broads', function(){
+				 alert("방만들러 가즈아~");
+				 $(self.location).attr("href","/broadcast/addBroadcast");
+			 });
+		 });
+		 
 		 
 	</script>
 </head>
@@ -109,16 +116,20 @@
 			background-repeat: no-repeat, no-repeat;
 			background-position: center center;">
 			
+			<form id="searchForm">
+			<div class="row" style="margin: 10px; padding:290px 200px;">
+				<div class="col-xs-12">
+					<input type="text" class="form-control" name="searchKeyword" placeholder="검색 내용을 입력하세요." 
+					style="height:45px; font-size: 16px; padding: 10px; outline:none; border:none;"/>
+					
+		      	</div>
+	      	</div>
+      	</form>
 
 		</div>
 	    
 	    <div class="container">
-	    <ul class="nav nav-tabs tabs-up">
-	    <li class="pull-right">
-			<input type="text" name="searchKeyword" class="form-control" placeholder="검색 내용을 입력하세요." 
-      			style="width: 360px; height:45px;"/>
-	    </li>
-	      		</ul>
+	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	    <div class="row">
 	    	<c:forEach var="obj" items="${list}" varStatus="status">
@@ -126,7 +137,7 @@
 			  <input type="hidden" name ="title" value ="${obj.title}">
 			  <div class="col-sm-6 col-md-4 text-center">
 			    <div class="thumbnail">
-			      <div style="position:absolute; font-weight: bold; font-size: 22px; top:20px; right: 40px;  z-index: 10;">구현중</div>
+			      <div style="position:absolute; font-weight: bold; font-size: 22px; top:20px; right: 40px;  z-index: 10;"></div>
 			       <img src = "../resources/upload_files/images/${obj.image}"
 			      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
 			      	style="cursor: pointer; height:250px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;"> 
@@ -151,13 +162,8 @@
 		   	<div id="footer" align="right" style="z-index: 1500;">
 		   	  <div class="container">
 			  	<div class="btn-add-broads text-center">방 만들기</div>
-			  	<div class="dialog-add-bob text-center">
-			  		<div class="list-group" style="float: right; visibility: hidden;">
-					  <a class="list-group-item" style="background: #5F4B8B; color: #FFFFFF;"> 카테고리선택 </a>
-					  <a class="list-group-item" style="cursor: pointer;" id="add-B01">우리지금만나</a>
-					  <a class="list-group-item" style="cursor: pointer;" id="add-B02">당장만나</a>
-					  <a class="list-group-item" style="cursor: pointer;" id="add-B03">주기적으로만나</a>
-					</div>
+			  	<div class="dialog-add-broads text-center">
+			  		
 			  	</div>
 			  </div>
 			</div>

@@ -9,7 +9,7 @@ public class Broadcast {
 	private User broadcaster; //방송하는 사람 정보 
 	private String title; // 제목
 	private String detail; // 방송 내용
-	//private MultipartFile image; //대표 이미지
+	private MultipartFile image; //대표 이미지
 	private String forbidden; //금지어 
 	private Date date; // 날짜 
 	private String fileName;
@@ -31,6 +31,12 @@ public class Broadcast {
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}
+	public MultipartFile getImage() {
+		return image;
+	}
+	public void setImage(MultipartFile image) {
+		this.image = image;
+	}
 	public String getForbidden() {
 		return forbidden;
 	}
@@ -51,8 +57,8 @@ public class Broadcast {
 	}
 	@Override
 	public String toString() {
-		return "Broadcast [broadcaster=" + broadcaster + ", title=" + title + ", detail=" + detail + ", forbidden="
-				+ forbidden + ", date=" + date + ", fileName=" + fileName + "]";
-	}	
-
+		return "Broadcast [broadcaster=" + broadcaster + ", title=" + title + ", detail=" + detail + ", image=" + image
+				+ ", forbidden=" + forbidden + ", date=" + date + ", fileName=" + fileName + "]";
+	}
+		
 }
