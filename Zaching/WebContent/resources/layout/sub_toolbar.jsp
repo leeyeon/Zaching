@@ -114,6 +114,7 @@
   	 width: 300px;
   	 height: 150px;
   	 overflow-y: scroll;
+  	 background: #fff;
 		}
 		
 
@@ -123,13 +124,7 @@
 	<script type="text/javascript">
 		$( function() {
 
-			
-			
-			
-		
-		
 		$( "#notice" ).on("click" , function() {
-			
 			
         	var displayValue = '';
 			var tr = '';
@@ -147,10 +142,8 @@
 		   	 	});
 		    }
 
-			
-			console.log($("input[name='userId']").val());
+
 			var userId = $("input[name='userId']").val();
-				
 			$.ajax( {
 							url : "/notice/rest/noticeList",
 							method : "POST",
@@ -160,9 +153,7 @@
 					        }),
 					        dataType : "json",
 					        success : function(serverData) {
-					        	
-					       
-					        	
+					         	
 					        	for(var i=0; i<serverData.list.length; i++){
 					        		
 					        		if(serverData.list[i].category == 'V'){
@@ -172,25 +163,20 @@
 					        			category = '밥친구에 초대하였습니다.';
 					        		}
 					        		
-					        		
 					        		if(serverData.list[i].status == '0'){
 					        			++status;
-					        		}
-		
+					        		}	
 
 					        		tr = tr + '<tr class="notice_list_click"><td align="left"><input type="hidden" name="noticeid" value="'+serverData.list[i].noticeId+'">'+
 					        		serverData.list[i].name+'님이 '+ category+'</td></tr>'
 					        	
 					        	}
-					        	
-									
+					        		
 									displayValue = '<div class="notice"><table class="table table-hover">'+ tr + '</table></div>';
 									
 								
 									$(".noticelist").html(displayValue);
 									$(".badge").text(status);
-									
-
 									
 									$(".notice_list_click td").on("click" , function() {
 										
@@ -225,7 +211,7 @@
 			
 		});
 
-		$("input[name='email']").focus();
+	
 
 		
 		//==>"Login"  Event 연결
@@ -268,6 +254,7 @@
 		
 		$('body > nav > div.container > div > div:nth-child(3)').addClass('active');
 		
+		
 		$('.mainbar-menu').on('click', function(){
 			 $('.active').removeClass('active');
 			 $(this).addClass('active');
@@ -297,6 +284,10 @@
 			self.location = "/user/logout";
 		});
 		
+		$("a:contains('보이스리플')").on("click", function() {
+			self.location = "/voice/listVoice";
+		});
+		
 		$( "#profile" ).on("click" , function() {
 			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";			
 	 	});
@@ -318,6 +309,7 @@
 
 		//카카오로그인 으로 이동
 		$("#kakaologin").on("click", function() {
+			
 			var windowW = 400;  // 창의 가로 길이
 		    var windowH = 500;  // 창의 세로 길이
 			var left = Math.ceil((window.screen.width - windowW)/2);
@@ -332,28 +324,16 @@
 		
 		//네이버 로그인
 		$("#naverLogin").on("click", function() {
-			var windowW = 400;  // 창의 가로 길이
-		    var windowH = 500;  // 창의 세로 길이
-			var left = Math.ceil((window.screen.width - windowW)/2);
-		    var top = Math.ceil((window.screen.height - windowH)/2);
-		    
-			window.open("/naverLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
-			opener.location.reload(true);
-			    self.close();
+			self.location = "/naverLoginRequest";
 	
 		});
 		
 		//구글로그인
 		$("#googleLogin").on("click", function() {
-			var windowW = 400;  // 창의 가로 길이
-		    var windowH = 500;  // 창의 세로 길이
-			var left = Math.ceil((window.screen.width - windowW)/2);
-		    var top = Math.ceil((window.screen.height - windowH)/2);
-		    
-			window.open("/googleLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
-			opener.location.reload(true);
-			    self.close();
-	
+			
+			self.location = "/googleLoginRequest";
+			
+			
 		});
 		
 		
@@ -400,7 +380,7 @@
 		        	
 		        }
 			});
-			});
+		});
 			
 		
 		
@@ -410,7 +390,7 @@
 <title>zaching</title>
 </head>
 
-<body style="background-color: rgb(240, 239, 238);">
+<body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top" style="height: 105px; background-color: #FFF;  
     	background-image: url('/resources/images/toolbar_img.png');     background-repeat: repeat-x;
@@ -426,7 +406,7 @@
             
           </button>
           <a class="navbar-brand" href="#">
-	          	<img alt="뉴스피드로 이동" src="/resources/images/temp_logo.png"  height="40px" 
+	          	<img alt="뉴스피드로 이동" src="/resources/images/zaching2.png"  height="40px" 
 	          		style="margin-top: 20px;"/>
 	        </a>
         </div>
@@ -441,9 +421,10 @@
 
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage eq null}">
 	          	<li><div style="padding-top: 10px; color:#333;">
-				<a href="#"><img src="../resources/images/paper-plane.png" id="notice"
-		          	width="30px"/></a><div class="badge   badge-primary"></div>&nbsp;&nbsp;
-		       	<img src="../resources/images/profile_default.png" id="profile"
+	         <!-- 여기부터 --> 	<img src="../resources/images/paper-plane.png" id="notice"
+		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
+		          	 <!-- 여기까지 알림임ㅜㅠㅠ 지우지마셈 --> 
+	          	<img src="../resources/images/profile_default.png" id="profile"
 
 		          	width="30px"/>&nbsp;<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
 
@@ -456,8 +437,9 @@
           
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
 	          	<li><div style="padding-top: 10px; color:#333;">
-	          	<a href="#"><img src="../resources/images/paper-plane.png" id="notice"
-		          	width="30px"/></a><div class="badge   badge-primary"></div>&nbsp;&nbsp;
+	           <!-- 여기부터 -->	<img src="../resources/images/paper-plane.png" id="notice"
+		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
+		          		 <!-- 여기까지 알림임ㅜㅠㅠ 지우지마셈 --> 
 		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px"/>&nbsp;
 		        <a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
 		        &nbsp;님 환영합니다!

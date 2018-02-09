@@ -51,12 +51,15 @@ public class VoiceController {
 		return "forward:/voice/listVoice.jsp";
 	}
 	
-	@RequestMapping(value="listVoice", method=RequestMethod.GET)
-	public String listVoice(@ModelAttribute("search") Search search, @RequestParam("categoryCode") String categoryCode, Model model) throws Exception{
-		System.out.println("listNewsfeed");
-		String sorting = null;
+	@RequestMapping(value="listVoice")
+	public String listVoice(@ModelAttribute("search") Search search, Model model) throws Exception{
+		System.out.println("listVoice");
+		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
+		}
+		if(search.getCategory() == null) {
+			search.setCategory("R01");
 		}
 		search.setPageSize(pageSize);
 		
@@ -65,7 +68,7 @@ public class VoiceController {
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
-		
+		System.out.println("list :: "+map.get("list"));
 		// Model °ú View ¿¬°á
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);

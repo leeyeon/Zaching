@@ -14,7 +14,11 @@
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 	
 	<style>
-
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+		
+		* {
+			font-family: 'Nanum Gothic', serif;
+		}
 	
 		body {
 			padding-top:50px;
@@ -47,8 +51,9 @@
 		
 		.jumbotron {
 		    margin-bottom: 0px;
+		    margin-top:50px;
 		    padding-top: 150px;
-		    height: 350px;
+		    height: 400px;
 		    background: transparent;
 		}
 		
@@ -116,21 +121,29 @@
 		    width: 70px;
 		    height: 70px;
 		    margin: 5px;
+		    overflow: hidden;
 		}
 		
-		#exTab2 > ul > li> a {
-			height: 70px;
-		    border: 1px solid #ddd;
-		    line-height: 45px;
-		    border-radius: 15px 15px 0 0;
+		#exTab2 > div > ul > li> a {
+			height: 80px;
+		    line-height: 50px;
 		    color: #000;
 		    font-size: 17px;
 		    font-weight: bold;
-		    background-color: #eee;
 		}
 		
 		#exTab2 > ul > li .active > a {
 			background-color: #FFF;
+		}
+		
+		@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+			#bobTitle {
+				max-width: 100%;
+			}
+			
+			body > div.jumbotron.text-center > form > div > div {
+				max-width: 100%;
+			}
 		}
 	
 	</style>
@@ -138,6 +151,8 @@
 	<script type="text/javascript">
     
 		$(function(){
+			
+			$("html, body").animate({ scrollTop: 0 }, "slow");
 			
 			$(document).on('click','.btn-add-bob', function(){
 				if($('.list-group').css('visibility') =='visible') {
@@ -158,9 +173,29 @@
 			// 검색했을 때 tooltip
 
 			$(":text[name='searchKeyword']").on("keydown", function(e) {
-				
+
 				if(e.keyCode == 13) {
-					alert();
+					//$(self.location).attr("href","/bob/listBob?category=B05");
+					
+					var $form = $("#searchForm");
+					
+					var posting = $.post("/bob/listBob",{
+								category: "B05",
+								searchKeyword : $(":text[name='searchKeyword']").val()});
+					
+					posting.done(function(data) {
+
+						$("#B05").html(data);
+						
+						$($('[data-toggle="tabajax"]')[4]).tab('show');
+
+						$('#exTab2 a').css('color', '#000');
+						$('#exTab2 a').css('background', '#ede8f7');						
+						$($('a:contains("검색")')[1]).css('color', '#000').css('background', '#FFF')
+					});
+					
+					return false;
+					
 				} else {
 					/*
 					$(this).autocomplete({
@@ -181,9 +216,6 @@
 					});
 					*/
 				}
-			});
-			$('#exTab2 > ul > li > a').on("click", function() {
-				//alert($(this).attr('href'));
 			});
 			
 			/* addBob */
@@ -212,6 +244,8 @@
 			    var $this = $(this),
 			        loadurl = $this.attr('href'),
 			        targ = $this.attr('data-target');
+			    
+			    $(":text[name='searchKeyword']").val("");
 
 			    if('${user}' == '' && (targ == "#B03" || targ == "#B04")) {
 					alert("로그인 후 사용하실 수 있습니다. \n"
@@ -219,18 +253,56 @@
 					$('#loginModal').modal('toggle');
 					//$(self.location).attr("href","/user/addUser");
 				} else {
-				    
-				    $.get(loadurl, function(data) {
-				        $(targ).html(data);
-				    });
-				    
-				    $this.tab('show');
+					
+					if(targ == "#B05") {
+						
+						var posting = $.post("/bob/listBob",{
+									category: "B05",
+									searchKeyword : $(":text[name='searchKeyword']").val()});
+						
+						posting.done(function(data) {
+							$(targ).html(data);
+						});
+						
+						$this.tab('show');
+
+					} else {
+					    $.get(loadurl, function(data) {
+					        $(targ).html(data);
+					    });
+					    
+					    $this.tab('show');
+					}
 				}
 
 			    return false;
 			});
 			/* tab Event End */
 			
+			$('#exTab2 a').on({
+				'mouseover' : function () {
+					if(!$(this).parent().hasClass("active")) {
+						$(this).css('color', '#FFF');
+						$(this).css('background', '#5F4B8B');
+					}
+				},
+				'mouseout' : function () {
+					if(!$(this).parent().hasClass("active")) {
+						$(this).css('color', '#000');
+						$(this).css('background', '#ede8f7');
+					}
+				}
+				
+			});
+
+			  $('#exTab2 a').click(function(){   // sBtn에 속해 있는  a 찾아 클릭 하면.
+				  $('#exTab2 a').css('color', '#000');
+				  $('#exTab2 a').css('background', '#ede8f7');
+				  $(this).css('background', '#FFF');
+				  $(this).css('color', '#000');
+			  })
+			
+
 		});		
 
     </script>
@@ -242,40 +314,52 @@
 
 	<div class="cover"></div>
 	<div class="bg"></div>
-	<div class="jumbotron">
-		<h1 class="text-center">밥친구 찾기</h1>
+	<div class="jumbotron text-center" style="background-image: url('../resources/images/bob_background.jpg');
+			background-size: cover;
+			background-repeat: no-repeat, no-repeat;
+			background-position: center center;">
+		<img id="bobTitle" src="../resources/images/bob_title.png"/>
+		<form id="searchForm">
+			<div class="row" style="margin: 10px; padding:60px 40px 0 40px;">
+				<div class="col-xs-12">
+					<input type="text" class="form-control" name="searchKeyword" placeholder="검색 내용을 입력하세요." 
+					style="height:45px; font-size: 16px; padding: 10px; outline:none; border:none;"/>
+					
+		      	</div>
+	      	</div>
+      	</form>
 	</div>
 
 	<div class="container" style="font-size: 17px;"> 
 		
 		<div class="form-group">
-			<form>
-				<div class="row" align="right" style="margin: 10px;">
-					<input type="text" name="searchKeyword" class="form-control" placeholder="검색 내용을 입력하세요." 
-			      					style="height:45px; font-size: 16px;"/>
-		      	</div>
-	      	</form>
 		<form class="form-horizontal" id="mainBob">
 			<!-- Tab 시작 -->
-			<div id="exTab2" style="padding:0; margin-top: 10px;">
-				<ul class="nav nav-tabs nav-justified" style="border: none;">
-					<li class="active" ><a href="/bob/listBob?category=B01" data-target="#B01" data-toggle="tabajax">우리지금만나</a></li>
-					<li><a href="/bob/listBob?category=B02" data-target="#B02" data-toggle="tabajax">당장만나</a>
-					</li>
-					<li><a href="/bob/listBob?category=B03" data-target="#B03"  data-toggle="tabajax">주기적으로만나</a>
-					</li>
-					<li><a href="/bob/listBob?category=B04" data-target="#B04"  data-toggle="tabajax" style="select-bob">내 주소로 검색하기</a></li>
-				</ul>
+			<div id="exTab2" style="padding:0;">
+				<div >
+					<ul class="nav nav-tabs nav-justified" style="border: none; background: #ede8f7">
+						<li class="active" ><a href="/bob/listBob?category=B01" data-target="#B01" data-toggle="tabajax">우리지금만나</a></li>
+						<li><a href="/bob/listBob?category=B02" data-target="#B02" data-toggle="tabajax">당장만나</a></li>
+						<li><a href="/bob/listBob?category=B03" data-target="#B03"  data-toggle="tabajax">주기적으로만나</a></li>
+						<li><a href="/bob/listBob?category=B04" data-target="#B04"  data-toggle="tabajax">내 주소로 검색하기</a></li>
+						<li style="display: none;"><a href="/bob/listBob?category=B05" data-target="#B05"  data-toggle="tabajax">키워드로 검색하기</a></li>
+					</ul>
+				</div>
 				
 				<!-- Tab 끝 -->
 						
 				<!-- 데이터 들어갈 것들,,, -->
-				<div class="tab-content" style="padding:20px; background: #FFF; box-shadow: 0 0 0 1px #ddd; border: 1px solid #ddd;">
+				<div class="tab-content" style="padding:20px; background: #FFF;overflow: hidden; border-right: 1px solid #ddd; border-left: 1px solid #ddd; border-bottom: 1px solid #ddd;">
 					<div class="tab-pane active" id="B01"> </div>
 					<div class="tab-pane" id="B02"> </div>
 					<div class="tab-pane" id="B03"> </div>
 					<div class="tab-pane" id="B04"> </div>
+					<div class="tab-pane" id="B05"> </div>
 					<!-- 데이터 끝... -->
+					    	
+		    	<div id="loader" class="text-center" style="margin: 50px;">
+					<img src = "../resources/images/ajax-loader.gif"/>
+				</div>
 				</div>
 			</div>
 		</form>

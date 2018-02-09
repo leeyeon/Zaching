@@ -46,6 +46,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void addUser(User user) throws Exception {
+		
+		System.out.println("");
 			userDao.addUser(user);
 	}
 	
@@ -129,14 +131,6 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	
-	public boolean checkDuplication(String email) throws Exception {
-		boolean result=true;
-		User user=userDao.login(email);
-		if(user != null) {
-			result=false; //중복
-		}
-		return result;
-	}
 	
 	// 이메일 발송 메소드
 	public void sendMail(String email, String authNum)throws Exception {
@@ -189,6 +183,25 @@ public class UserServiceImpl implements UserService {
 	public void updateRole(User user) throws Exception {
 		System.out.println(":: updateRole:: ");
 		userDao.updateRole(user);		
+	}
+
+
+	public boolean checkSignup(String email) throws Exception {
+		
+		System.out.println("::checkSignup Service::" +email);
+		
+		int check=userDao.checkSignup(email);
+		boolean result= false;
+		
+		if(check == 0) {
+		
+			result = true; //사용가능
+		}else {
+			result =false; //이메일 중복 ==사용불가능
+		}
+		
+		System.out.println("=====> "+result);
+		return result;
 	}
 	
 	

@@ -2,6 +2,8 @@ package com.zaching.common.service;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 
 import com.zaching.service.domain.User;

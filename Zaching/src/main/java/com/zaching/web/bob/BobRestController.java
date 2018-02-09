@@ -84,23 +84,32 @@ public class BobRestController {
 	}
 	
 	@RequestMapping(value="/listBob", method=RequestMethod.POST)
-	public JSONObject listBob(@ModelAttribute Search search) throws Exception {
+	public JSONObject listBob(@RequestBody Map<String, Object> map) throws Exception {
 		
-		if(search.getCurrentPage() ==0 ){
+		System.out.println(this.getClass()+"/lisbBob");
+		System.out.println((String)map.get("category"));
+		System.out.println((String)map.get("searchKeyword"));
+		
+		Search search = new Search();
+		search.setCategory((String)map.get("category"));
+		
+		if(((Integer)map.get("currentPage")).intValue() ==0 ){
 			search.setCurrentPage(1);
+		} else {
+			search.setCurrentPage(((Integer)map.get("currentPage")).intValue());
 		}
 		
 		search.setPageSize(pageSize);
 		
 		System.out.println(search);
 		
-		Map<String, Object> map = bobService.listBob(search);
+		Map<String, Object> map1 = bobService.listBob(search);
 		
 		Page resultPage	= 
-				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), 
+				new Page( search.getCurrentPage(), ((Integer)map1.get("totalCount")).intValue(), 
 				pageUnit, pageSize);
 		
-		List<Bob> list = (List<Bob>)map.get("list");
+		List<Bob> list = (List<Bob>)map1.get("list");
 		
 		JSONObject obj = new JSONObject();
 		obj.put("list", list);
@@ -119,8 +128,7 @@ public class BobRestController {
 	public JSONObject enterBob(@RequestBody Map<String, Object> obj) throws Exception {
 		
 		System.out.println(this.getClass()+"/enterBob");
-		
-		System.out.println("돈나갑니다?");
+
 		String category = (String)obj.get("category");
 		int userId = (int)obj.get("userId");
 		int bobId = (int)obj.get("bobId");
@@ -137,7 +145,7 @@ public class BobRestController {
 			if(userPoint >= 1000) {
 				Bob bob = bobService.getBobInfo(bobId, category);
 				/* 약속비 1000원 차감 */
-				System.out.println("돈 진짜 나갑니다 2");
+				System.out.println("userPoint >= 1000 이상으로 약속비 지출");
 				Payment payment = new Payment();
 				payment.setUserId(userId);
 				payment.setPoint(1000);
@@ -154,7 +162,7 @@ public class BobRestController {
 				
 				System.out.println("result1111");
 			} else {
-				System.out.println("result2222");
+				System.out.println("userPoint < 1000");
 				result = false;
 			}
 		}

@@ -42,8 +42,9 @@ public interface UserService {
     public  void updateNotice(User user)throws Exception;
     
     // 이매일 ID 중복 확인
- 	public boolean checkDuplication(String email) throws Exception;
-    
+ 	public boolean checkSignup(String email) throws Exception;
+
+
     //이메일 전송
  	public void sendMail(String email, String authNum)throws Exception;
  	

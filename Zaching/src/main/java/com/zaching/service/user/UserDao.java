@@ -43,4 +43,6 @@ public interface UserDao {
 	//이메일 인증성공시 정회원으로 업데이트
 	public void updateRole(User user)throws Exception;
 	
+	//이메일 중복체크
+	public int checkSignup(String email)throws Exception;
 }

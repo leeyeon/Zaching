@@ -11,6 +11,7 @@ public class User {
 	private int userId;//유저ID시퀀스
 	private String email;//이메일ID
 	private String password;//패스워드
+	private String password2;//패스워드 일치
 	private String name;//이름
 	private String address;//주소
 	private String longitude;//경도
@@ -401,6 +402,16 @@ public class User {
 				+ ", setRentCharge=" + setRentCharge + ", setNews=" + setNews + ", setNewsFeed=" + setNewsFeed
 				+ ", setBroadcast=" + setBroadcast + ", setFriend=" + setFriend + ", setBob=" + setBob + ", snsType="
 				+ snsType + ", accessToken=" + accessToken + ", refreshToken=" + refreshToken + "]";
+	}
+
+
+	public String getPassword2() {
+		return password2;
+	}
+
+
+	public void setPassword2(String password2) {
+		this.password2 = password2;
 	}
 	
 }
