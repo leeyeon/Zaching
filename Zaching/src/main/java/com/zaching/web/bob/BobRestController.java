@@ -156,7 +156,7 @@ public class BobRestController {
 				/* 마일리지 적립 */
 				payment.setPoint(500);
 				payment.setPaymentCode("M01");
-				paymentService.managePoint(payment);
+				paymentService.manageMileage(payment);
 				
 				bobService.enterBob(userId, bobId);
 				
@@ -201,7 +201,7 @@ public class BobRestController {
 			/* 마일리지 적립취소 */
 			payment.setPoint(500);
 			payment.setPaymentCode("M03");
-			paymentService.managePoint(payment);
+			paymentService.manageMileage(payment);
 		}
 		
 		// 참가중이 아닐때 참가됨

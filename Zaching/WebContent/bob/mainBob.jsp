@@ -229,6 +229,9 @@
 				</c:if>
 				<c:if test="${empty user}">
 					alert("로그인을 해주세요.");
+					$('.list-group').css('visibility','hidden');
+					$('.cover').css('visibility','hidden');
+					$('#loginModal').modal('toggle');
 				</c:if>
 			});
 

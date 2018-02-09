@@ -184,10 +184,11 @@
   			
   			var titleText = moment().format('M')+" 월 포인트 내역";
   			
-  			alert($("#selectBox option:selected").val());
-  			
-  			if($("#selectBox option:selected")) {
-  				titleText = $("#selectBox option:selected").val()="간 포인트 내역";
+  			//alert($("option:selected").text());
+
+  			if($("option:selected").text() != '기간설정') {					
+  				//alert("??");
+  				titleText = $("option:selected").text()+"간 포인트 내역";
   			}
   			
   			$("body > div.container > div > div:nth-child(1) > div").text(titleText);
@@ -253,7 +254,7 @@
 			});
 			
 			$('.selectpicker').on('change', function() {
-				$(self.location).attr("href","/payment/mainPayment?searchCondition="+$('.selectpicker option:selected').val());
+				$(self.location).attr("href","/payment/mainPayment?searchCondition="+$('option:selected').val());
 			});
 
 		});
@@ -302,10 +303,10 @@
 	        <div class="row" align="right">
 	        	<div class="col-xs-12" style="padding-right:30px;">
 					<select name="term" class="selectpicker">
-					  <option>기간설정</option>
+					  <option value="" selected disabled hidden>기간설정</option>
 					  <option value="0" ${param.searchCondition eq 0? "selected":""}>일주일</option>
 					  <option value="1" ${param.searchCondition eq 1? "selected":""}>한달</option>
-					  <option value="2" ${param.searchCondition eq 1? "selected":""}>6개월</option>
+					  <option value="2" ${param.searchCondition eq 2? "selected":""}>6개월</option>
 					</select>
 										
 				</div>

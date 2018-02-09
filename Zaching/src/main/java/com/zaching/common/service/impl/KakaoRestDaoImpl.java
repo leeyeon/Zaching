@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Repository;
@@ -158,16 +160,18 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 	
 	//카카오 로그인
 	@Override
-	public String getAuthorizationUrl_login() {
+	public String getAuthorizationUrl_login(HttpSession session) {
 		String url = "redirect:https://kauth.kakao.com/oauth/authorize?client_id="+this.REST_API_KEY
 				+"&redirect_uri="+this.REDIRECT_URI_Login+"&response_type=code";
+		
+		
 		
 		return url;
 	}
 	
 	//사용자 토큰 생성
 	@Override
-	public User getAceessToken2(String code) throws Exception {
+	public User getAceessToken2(String code,HttpSession session) throws Exception {
 		
 		System.out.println("KakaoR.getAccessToken()");
 		
@@ -188,8 +192,9 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 	       
 	        this.accessToken = obj.get("access_token").toString();
 	        this.refreshToken = obj.get("refresh_token").toString();
-       
-        
+	        
+	        session.setAttribute("user", user);
+	        
         return user;
 	}
 
