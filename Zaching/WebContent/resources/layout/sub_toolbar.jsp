@@ -278,7 +278,7 @@
 	 	});
 
 		$("a:contains('라이브방송')").on("click", function() {
-			self.location = "/broadcast/mainBroadcast";
+			self.location = "/broadcast/listBroadcast";
 		});
 		
 	 	$( "a:contains('밥친구')" ).on("click" , function() {
