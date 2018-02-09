@@ -32,7 +32,7 @@ public class FriendServiceTest {
 	private int status=0;
 	private int userId=34;
 
-	@Test
+//	@Test
 	public void testAddFriend()throws Exception{
 		
 		System.out.println("addFriendÇÏ±âÀü");

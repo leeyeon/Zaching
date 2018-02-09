@@ -82,7 +82,7 @@
 		FROM friend WHERE friend_id=#{friendId}
 	</delete>
 
-	<select id="listFriend" parameterType="search" resultMap="friendSelectMap">
+	<select id="listFriend" parameterType="map" resultMap="friendSelectMap">
 		SELECT *
 		FROM  ( SELECT inner_table.*, ROWNUM AS row_seq
 			FROM  ( SELECT friend.friend_id,
@@ -90,14 +90,14 @@
 								users.profile_image
 					FROM friend, users
 					<where>
-					friend.user_id=#{userId}
-					AND friend.friend_id=users.user_id
+					friend.user_id=#{userId} 
+					ANDfriend.friend_id=users.user_id
 					AND status='0'
 					</where>
 		<if test="searchCondition !=null">
 			<where>
 				<if test="searchCondition == 0 and searchKeyword !='' ">
-					users.user_id=#{searchKeyword}
+					friend.user_id=#{searchKeyword}
 				</if>
 			</where>
 		</if>

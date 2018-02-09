@@ -50,10 +50,10 @@ body {
 
 			fncGetUserList(1);
 		});
-
+//프로필 사진 클릭시 타임라인 이동
 		$(function() {
-			$("#image").on("click", function() {
-				self.location = "/user/getUser?userId=${user.userId}";
+			$("#btn").on("click", function() {
+				self.location = "";
 
 			});
 		});
@@ -75,7 +75,7 @@ body {
 			<h3>친구목록조회</h3>
 		</div>
 
-		<div class="row" >
+		<div class="row">
 
 			<div class="col-md-6 text-left">
 				<p class="text-primary">전체 ${resultPage.totalCount } 건수, 현재
@@ -103,45 +103,43 @@ body {
 
 				</form>
 			</div>
-			</div>
-			
-			<div class="row">
-			
+		</div>
+
+		<div class="row">
+
 			<c:forEach var="friend" items="${list}" varStatus="status">
-						
+
 				<c:if test="${friend.status eq '0'}">
-				<div class="col-md-4 ">
-				<div>
-					<button class="btn" id="btn" type="submit">
-						<img class="btn-img" style="width: 120px; height: 120px;"
-							src="../resources/upload_files/images/${friend.profileImage}">
-					</button>
-					
-				</div>
-				<div class="col-sm-4 ">${friend.name }</div>
-				<div class="col-sm-4 ">
-				
-				<select name='fruits'>
-				
-    <option value='' selected>친구</option>
-    <option value='message'>메세지</option>
-    <option value='banana'>친구삭제</option>
-    <option value='lemon'>친구차단</option>
-</select></div>
+					<div class="col-md-4 ">
+						<div>
+							<button class="btn" id="btn" type="submit">
+								<img class="btn-img" style="width: 120px; height: 120px;"
+									src="../resources/upload_files/images/${friend.profileImage}">
+							</button>
+						</div>
+						<div class="col-sm-4 ">${friend.name }</div>
+						<div class="col-sm-4 ">
+							<select name='fruits'>
+								<option value='' selected>친구</option>
+								<option value='message'>메세지</option>
+								<option value='banana'>친구삭제</option>
+								<option value='lemon'>친구차단</option>
+							</select>
+						</div>
 
-</div>
-</c:if>
-</c:forEach>
-</div>
-</div>
+					</div>
+				</c:if>
+			</c:forEach>
+		</div>
+	</div>
 
 
-		
-		
-		
-			
-	
-		
+
+
+
+
+
+
 
 
 
