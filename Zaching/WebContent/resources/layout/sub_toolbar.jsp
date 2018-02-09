@@ -345,10 +345,10 @@
 	
 		$(document).ready(function(){
 			
-			<c:if test="${!empty sessionScope}"> 
+			
 				// userId input value 로 못 받아와서 수정함 session에서 가져오는 걸로
 				var userId = "${sessionScope.user.userId}";
-	
+				
 				$.ajax({
 					url : "/notice/rest/noticeList",
 					method : "POST",
@@ -372,7 +372,7 @@
 			        	
 			        }
 				});
-			</c:if>
+			
 		});
 			
 		
@@ -414,7 +414,7 @@
 
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage eq null}">
 	          	<li><div style="padding-top: 10px; color:#333;">
-	         <!-- 여기부터 --> 	<img src="../resources/images/paper-plane.png" id="notice"
+	         <!-- 여기부터 --><img src="../resources/images/paper-plane.png" id="notice"
 		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
 		          	 <!-- 여기까지 알림임ㅜㅠㅠ 지우지마셈 --> 
 	          	<img src="../resources/images/profile_default.png" id="profile"
@@ -430,7 +430,7 @@
           
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
 	          	<li><div style="padding-top: 10px; color:#333;">
-	           <!-- 여기부터 -->	<img src="../resources/images/paper-plane.png" id="notice"
+	           <!-- 여기부터 --><img src="../resources/images/paper-plane.png" id="notice"
 		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
 		          		 <!-- 여기까지 알림임ㅜㅠㅠ 지우지마셈 --> 
 		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px"/>&nbsp;

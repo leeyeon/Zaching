@@ -82,20 +82,20 @@ public class NoticeRestController {
 			search.setCurrentPage(1);
 		}
 		
+		
 		search.setPageSize(pageSize);
-		search.setSearchKeyword(userId);
+
+		Map<String, Object> mapp =  commonService.listNotice(search, Integer.parseInt(userId));
 		
-		Map<String, Object> mapp =  commonService.listNotice(search, ((Integer)map.get("RECEIVER_ID")).intValue());
-		
-		
+
 		Page resultPage	= 
 				new Page( search.getCurrentPage(), ((Integer)mapp.get("totalCount")).intValue(), 
 				pageUnit, pageSize);
-		
+	
 		Gson gson = new Gson(); 
 		String json = gson.toJson(mapp); 
 		
-
+		
 	
 		
 		return json;
