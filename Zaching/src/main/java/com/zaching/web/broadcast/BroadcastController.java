@@ -24,6 +24,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.WriteConcern;
 import com.zaching.common.domain.Search;
+import com.zaching.common.service.CommonService;
 import com.zaching.service.broadcast.BroadcastDao;
 import com.zaching.service.domain.Broadcast;
 import com.zaching.service.domain.User;
@@ -37,6 +38,10 @@ public class BroadcastController {
 	@Qualifier("broadcastDaoImpl")
 	private BroadcastDao broadcastDao;
 		
+	@Autowired
+	@Qualifier("commonServiceImpl")
+	private CommonService commonService;
+	
 	public BroadcastController(){
 		System.out.println(this.getClass());
 	}
@@ -78,7 +83,10 @@ public class BroadcastController {
 		//broadcast.setBroadcaster(user);
 		//System.out.println("user Á¤º¸ : "+user);
 		broadcast.setBroadcaster(user);
+		String fileDirectory = "C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images";
+		String fileName = commonService.addFile(fileDirectory, broadcast.getImage());
 		//System.out.println("broadcast end ==>"+ broadcast);
+		broadcast.setFileName(fileName);
 		broadcastDao.addBroadcast(broadcast);
 		
 		model.addAttribute("broadcast",broadcast);
@@ -87,7 +95,7 @@ public class BroadcastController {
 		
 		//http://127.0.0.1:9001/send?id=°ª&...
 		
-		return "redirect:http://127.0.0.1:9001?broadcaster="+broadcast.getTitle();
+		return "redirect:http://192.168.0.31:3000?/broadcast/broadcaster="+broadcast.getTitle();
 		//return "forward:/chat/broadcast.jsp";
 	}
 	

@@ -61,7 +61,7 @@ public class UserServiceTest {
 	}
 	
 	
-	@Test
+//	@Test
 	public void testgetTimeLine() throws Exception {
 
 		User user = new User();
@@ -72,7 +72,7 @@ public class UserServiceTest {
 
 	}
 	
-	//@Test
+	@Test
 		public void testGetUserListAll() throws Exception {
 
 			Search search = new Search();
@@ -122,10 +122,10 @@ public class UserServiceTest {
 			user.setPassword("a1a2w4d");
 			user.setProfileImage("사진이름.jpg");
 			user.setRealName("이정은");
-			user.setBankCode(013);
-			user.setAccountCi(11111);
+			//user.setBankCode(013);
+			//user.setAccountCi(11111);
 			user.setAccountNumber("02480204255200");
-			user.setAccountSeqNo(1234);
+			//user.setAccountSeqNo(1234);
 			user.setTotalMileage(5000);
 			user.setTotalPoint(500);
 
@@ -145,10 +145,10 @@ public class UserServiceTest {
 		System.out.println("UpdateAccountUser::" + user);
 
 		user.setRealName("이정은");
-		user.setBankCode(011);
-		user.setAccountCi(11111);
+		//user.setBankCode(011);
+		//user.setAccountCi(11111);
 		user.setAccountNumber("02480204255200");
-		user.setAccountSeqNo(1234);
+		//user.setAccountSeqNo(1234);
 		user.setTotalMileage(5000);
 		user.setTotalPoint(500);
 

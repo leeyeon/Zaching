@@ -194,6 +194,11 @@
 
 									        success : function(serverData) {
 									        	--status;
+									        	
+									        	if(status < 0)
+									        		{
+									        		status = 0;
+									        		}
 									        	$(".badge").text(status);
 									        }									
 											
@@ -211,7 +216,7 @@
 			
 		});
 
-		$("input[name='email']").focus();
+	
 
 		
 		//==>"Login"  Event 연결
@@ -265,7 +270,7 @@
 	 	});
 
 		$("a:contains('라이브방송')").on("click", function() {
-			self.location = "/broadcast/mainBroadcast";
+			self.location = "/broadcast/listBroadcast";
 		});
 		
 	 	$( "a:contains('밥친구')" ).on("click" , function() {
@@ -302,38 +307,23 @@
 		//이름으로 타임라인 이동
 		$("#navigationbar > ul:nth-child(2) > li:nth-child(1) > div > a").on("click", function() {
 			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";
-
-
 		});
 		
 
 		//카카오로그인 으로 이동
 		$("#kakaologin").on("click", function() {
-			
-			var windowW = 400;  // 창의 가로 길이
-		    var windowH = 500;  // 창의 세로 길이
-			var left = Math.ceil((window.screen.width - windowW)/2);
-		    var top = Math.ceil((window.screen.height - windowH)/2);
-		    
-			window.open("/kakaoLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
-			opener.location.reload(true);
-			    self.close();
-	
+			self.location ="/kakaoLoginRequest";
 		});
 
 		
 		//네이버 로그인
 		$("#naverLogin").on("click", function() {
 			self.location = "/naverLoginRequest";
-	
 		});
 		
 		//구글로그인
 		$("#googleLogin").on("click", function() {
-			
 			self.location = "/googleLoginRequest";
-			
-			
 		});
 		
 		
@@ -355,32 +345,35 @@
 	
 		$(document).ready(function(){
 			
-			var userId = $("input[name='userId']").val();
-
-			$.ajax({
-				url : "/notice/rest/noticeList",
-				method : "POST",
-		        contentType : "application/json; charset=UTF-8",
-		        data : JSON.stringify({
-		        	"RECEIVER_ID" : userId
-		        }),
-		        dataType : "json",
-		        success : function(serverData) {
-		        	var status = 0;
-		        	
-		        
-		        	for(var i=0; i<serverData.list.length; i++){
-		        		if(serverData.list[i].status == '0'){
-	        				++status;
-	        			}
-		        	
-		        	}
-
-		        	$(".badge").text(status);
-		        	
-		        }
-			});
-			});
+			
+				// userId input value 로 못 받아와서 수정함 session에서 가져오는 걸로
+				var userId = "${sessionScope.user.userId}";
+				
+				$.ajax({
+					url : "/notice/rest/noticeList",
+					method : "POST",
+			        contentType : "application/json; charset=UTF-8",
+			        data : JSON.stringify({
+			        	"RECEIVER_ID" : userId
+			        }),
+			        dataType : "json",
+			        success : function(serverData) {
+			        	var status = 0;
+			        	
+			        
+			        	for(var i=0; i<serverData.list.length; i++){
+			        		if(serverData.list[i].status == '0'){
+		        				++status;
+		        			}
+			        	
+			        	}
+	
+			        	$(".badge").text(status);
+			        	
+			        }
+				});
+			
+		});
 			
 		
 		
@@ -390,7 +383,7 @@
 <title>zaching</title>
 </head>
 
-<body style="background-color: rgb(240, 239, 238);">
+<body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top" style="height: 105px; background-color: #FFF;  
     	background-image: url('/resources/images/toolbar_img.png');     background-repeat: repeat-x;
@@ -421,7 +414,7 @@
 
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage eq null}">
 	          	<li><div style="padding-top: 10px; color:#333;">
-	         <!-- 여기부터 --> 	<img src="../resources/images/paper-plane.png" id="notice"
+	         <!-- 여기부터 --><img src="../resources/images/paper-plane.png" id="notice"
 		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
 		          	 <!-- 여기까지 알림임ㅜㅠㅠ 지우지마셈 --> 
 	          	<img src="../resources/images/profile_default.png" id="profile"
@@ -437,7 +430,7 @@
           
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
 	          	<li><div style="padding-top: 10px; color:#333;">
-	           <!-- 여기부터 -->	<img src="../resources/images/paper-plane.png" id="notice"
+	           <!-- 여기부터 --><img src="../resources/images/paper-plane.png" id="notice"
 		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
 		          		 <!-- 여기까지 알림임ㅜㅠㅠ 지우지마셈 --> 
 		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px"/>&nbsp;
@@ -502,7 +495,7 @@
          </div>
          
          <div class="row">
-           <div class="col-sm-6">
+           <div class="col-xs-4">
            	<label for="inputlg" style="margin-left: 5px" 
            	style="margin-top: 5px">패스워드(PW)</label>
            </div>

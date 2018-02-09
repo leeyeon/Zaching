@@ -76,9 +76,11 @@
 		if(imageCheck.is(":checked") == true) {
 			uploadFile.val("");
 		} else {
-			uploadFile.focus();
-			makeToast("대표사진을 선택해주세요.");
-			return false;
+			if(uploadFile.val() ==""){
+				uploadFile.focus();
+				makeToast("대표사진을 선택해주세요.");
+				return false;
+			}
 		}
 		
 		if(category.val() == "B01" ) {
@@ -119,13 +121,13 @@
 				makeToast("회비 납부일을 지정해주세요.");
 				return false;
 			} else {
-				alert(feeDate.val().subString);
+				//alert(feeDate.val().subString);
 			}
 
 		}
 		
 
-		//$("form").attr("method", "POST").attr("action", "/bob/addBob").submit();
+		$("form").attr("method", "POST").attr("action", "/bob/addBob").submit();
 
 	}
 	

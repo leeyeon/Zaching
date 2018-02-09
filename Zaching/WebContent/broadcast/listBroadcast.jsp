@@ -18,11 +18,68 @@
 			left: 0;
 			top: 0;
 			height: 65px;
-			background-color: rgba(0,0,0, 0.6);
+			background-color: #D4F4FA;
 		}
+		.cover {
+			background-color: #000;
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			z-index: 1500;
+			opacity: 0.5;
+			visibility: hidden;
+		}
+		
+		.bg {
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			background-size: cover;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			opacity: 0.3;
+		}
+		
+		.jumbotron {
+		    margin-bottom: 0px;
+		    padding-top: 150px;
+		    height: 500px;
+		    background: transparent;
+		}
+		
+		#footer {
+		   position:fixed;
+		   left:0px;
+		   bottom:-10px;
+		   width:100%;
+				}
+		
+		.btn-add-broads {
+       		border: 1px solid #FFFFF;
+			border-radius: 70px;
+			-moz-border-radius: 70px;
+			-khtml-border-radius: 70px;
+			-webkit-border-radius: 70px;
+			 background: #585858;
+			 width: 100px;
+			 height: 100px;
+			 line-height: 100px;
+			 font-size: 17px;
+			 float:right;
+			 margin-right: auto;
+			 cursor: pointer;
+			 color: rgb(255, 255, 255);
+			 box-shadow: 0 5px 15px -5px #666;
+       	}		
+		
     </style>
     
-     <!--  ///////////////////////// JavaScript ////////////////////////// -->
+     <!--  ///////////////////////// JavaScript ////////////////////////// 
+     	$(self.location).attr("href","http://192.168.0.31:3000/broadcast?title="+title);
+     	-->
 	<script type="text/javascript">
 	
 		 $(function() {			 
@@ -33,27 +90,46 @@
 					var broadcaster = $($("input[name=broadcaster]")[index]).val();
 					var title = $($("input[name=title]")[index]).val();
 					var detail = $($("input[name=detail]")[index]).val();
-					//alert(index+"//"+bobId+"//"+category);
-					$(self.location).attr("href","http://127.0.0.1:9001?title="+title);
-				});
-			 
-		 });	
+			
+					window.open("http://localhost:9001/?title="+title, title, "width=1800, height=950, toolbar=no, location=no, menubar=no, scrollbars=no, resizable=yes")
+				});	
+		 });
+		 
+		$(function(){
+			 $(document).on('click','.btn-add-broads', function(){
+				 alert("방만들러 가즈아~");
+				 $(self.location).attr("href","/broadcast/addBroadcast");
+			 });
+		 });
+		 
 		 
 	</script>
 </head>
 
 <body>	
-		<div class="text-center">
-	       <h3>자췽 방송</h3>
-	    </div>
+		<div class="cover"></div>
+		<div class="bg">
+			
+		</div>
+		<div class="jumbotron text-center" style="background-image: url('../resources/images/broadcast-bg.png');
+			background-size: cover;
+			background-repeat: no-repeat, no-repeat;
+			background-position: center center;">
+			
+			<form id="searchForm">
+			<div class="row" style="margin: 10px; padding:290px 200px;">
+				<div class="col-xs-12">
+					<input type="text" class="form-control" name="searchKeyword" placeholder="검색 내용을 입력하세요." 
+					style="height:45px; font-size: 16px; padding: 10px; outline:none; border:none;"/>
+					
+		      	</div>
+	      	</div>
+      	</form>
+
+		</div>
 	    
 	    <div class="container">
-	    <ul class="nav nav-tabs tabs-up">
-	    <li class="pull-right">
-			<input type="text" name="searchKeyword" class="form-control" placeholder="검색 내용을 입력하세요." 
-      			style="width: 360px; height:45px;"/>
-	    </li>
-	      		</ul>
+	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	    <div class="row">
 	    	<c:forEach var="obj" items="${list}" varStatus="status">
@@ -61,7 +137,7 @@
 			  <input type="hidden" name ="title" value ="${obj.title}">
 			  <div class="col-sm-6 col-md-4 text-center">
 			    <div class="thumbnail">
-			      <div style="position:absolute; font-weight: bold; font-size: 22px; top:20px; right: 40px;  z-index: 10;">구현중</div>
+			      <div style="position:absolute; font-weight: bold; font-size: 22px; top:20px; right: 40px;  z-index: 10;"></div>
 			       <img src = "../resources/upload_files/images/${obj.image}"
 			      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
 			      	style="cursor: pointer; height:250px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;"> 
@@ -80,6 +156,19 @@
 			  </div>
 			</c:forEach>
 	    	</div>
+	    	
+	    		<!-- 방만들기 버튼 시작 -->
+	
+		   	<div id="footer" align="right" style="z-index: 1500;">
+		   	  <div class="container">
+			  	<div class="btn-add-broads text-center">방 만들기</div>
+			  	<div class="dialog-add-broads text-center">
+			  		
+			  	</div>
+			  </div>
+			</div>
+	
+	<!--  방만들기 버튼 끝 -->
 	    	
 		</div>
 </body>

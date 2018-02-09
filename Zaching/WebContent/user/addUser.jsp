@@ -29,44 +29,35 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
-	//==>"ID중복확인" Event 처리 및 연결
-	 $(function() {
-		 $("button.btn.btn-info").on("click" , function() {
-			popWin 
-			= window.open("/user/checkDuplication.jsp",
-										"popWin", 
-										"left=300,top=200,width=780,height=130,marginwidth=0,marginheight=0,"+
-										"scrollbars=no,scrolling=no,menubar=no,resizable=no");
-		});
-	});	
-	
+
 	
 	//==>"회원가입" Event 처리 및 연결
 	 $(function() {
 			
 		 $( "#signUp" ).on("click" , function() {
 				fncAddUser();
+				alert("회원가입이 완료되었습니당 !!");
 			});
 		});	
 	//이메일형식 검사 필요!!
 		
 		function fncAddUser() {
 			
-			var email = $("input[name='email']").val();
-			var pw = $("input[name='password']").val();
-			var pw2 = $("input[name='password2']").val();
-			var name = $("input[name='name']").val();
+			var email = $("#checkEmail").val();
+			var pw = $("#pw").val();
+			var pw2 = $("#pw2").val();
+			var name = $("#userName").val();
 			
 			
 			if(email == null || email.length <1){
 				alert("이메일은 반드시 입력하셔야 합니다.");
 				return;
 			}
-			if(pw == null || pw.length <1){
-				alert("패스워드는  반드시 입력하셔야 합니다.");
+			if(pw == null || pw.length <4){
+				alert("패스워드는  3자리 이상 입력하셔야 합니다.");
 				return;
 			}
-			if(pw2 == null || pw2.length <1){
+			if(pw2 == null || pw2.length <4){
 				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
 				return;
 			}
@@ -77,7 +68,7 @@
 			
 			if( pw != pw2 ) {				
 				alert("비밀번호 확인이 일치하지 않습니다.");
-				$("input:text[name='password2']").focus();
+				$("#pw2").focus();
 				return;
 			}
 			
@@ -91,6 +82,46 @@
 				$("form")[0].reset();
 			});
 		});	
+		
+		//이메일 중복체크
+			$(function() {
+				  $('#checkbtn').on('click', function(){
+			        	alert("버튼클릭!");
+			        	fncCheckSingup();
+				});
+			});
+			
+		function fncCheckSingup(){
+			 var checkEmail = $("#checkEmail").val();
+			 alert(checkEmail);
+			 
+		      
+		            $.ajax({
+		            	url: "/user/rest/checkSingup",
+		            	method:"POST",
+						contentType :'application/json',
+						data : JSON.stringify({
+							"checkEmail" : checkEmail
+						
+						}),
+						async : false,
+						dataType : "json",
+		                success: function(data){
+		                	console.log(data);
+		                    if(data == true){
+		                    	console.log("데이터 값==> "+data);
+		                        $('#checkMsg').html('<p style="color:blue">사용가능</p>');
+		                    }
+		                    else{
+		                        $('#checkMsg').html('<p style="color:red">사용불가능</p>');
+		                    }
+		                }
+		            
+		            
+		            });    //end ajax    
+		            //end on    
+		    }
+
 	</script>		
     
 </head>
@@ -110,21 +141,19 @@
 		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
 		    <div class="col-sm-4">
 		    	<c:if test="${sessionScope.user.snsType  ne null }">
-		      		<input type="text" class="form-control" name="email" placeholder="중복확인하세요" value="${sessionScope.user.email}">
+		      		<input type="text" class="form-control" id="checkEmail" name="email" value="${sessionScope.user.email}">
+		      		<div id="checkMsg"></div>
+		      		<button type="button" id="checkbtn" class="btn btn-default">중복확인</button>
 		      	</c:if>
 		      	
 		      	<c:if test="${sessionScope.user.snsType  eq null }">
-		      		<input type="email" class="form-control" name="email" placeholder="중복확인하세요" readonly>
+		      		<input type="text" class="form-control" id="checkEmail" name="email"  >
+		      		<div id="checkMsg"></div>
+		      		<button type="button" id="checkbtn" class="btn btn-default">중복확인</button>
 		      	</c:if>
 		      
 		      
-		      <span id="helpBlock" class="help-block">
-		      	<strong class="text-danger">입력전 중복확인 부터..</strong>
-		      </span>
-		      
-   			 <div class="col-sm-3">
-		      <button type="button" class="btn btn-info">중복확인</button>
-		    </div>
+   			
 		    
 		    </div>
 		   
@@ -133,21 +162,21 @@
 		  <div class="form-group">
 		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" name="password" placeholder="비밀번호">
+		      <input type="password" class="form-control" name="password" id="pw" placeholder="비밀번호">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" name="password2" placeholder="비밀번호 확인" >
+		      <input type="password" class="form-control" name="password2" id="pw2"placeholder="비밀번호 확인" >
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="name" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" name="name" placeholder="회원이름">
+		      <input type="text" class="form-control" name="name" id="userName" placeholder="회원이름">
 		    </div>
 		  </div>
 		  

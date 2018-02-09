@@ -45,7 +45,7 @@ $( ".navbar-brand img" ).on("click" , function() {
 });
 
 $("a:contains('라이브방송')").on("click", function() {
-	self.location = "/broadcast/mainBroadcast";
+	self.location = "/broadcast/listBroadcast";
 });
 
 $("a:contains('보이스리플')").on("click", function() {
