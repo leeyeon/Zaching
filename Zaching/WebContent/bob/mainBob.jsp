@@ -257,6 +257,23 @@
 					//$(self.location).attr("href","/user/addUser");
 				} else {
 					
+					if(targ == "#B04") {
+						if(navigator.geolocation) {
+							navigator.geolocation.getCurrentPosition(function(position) {
+				                    var lat = position.coords.latitude;
+				                    var lng = position.coords.longitude;
+
+				                    var location ={
+				                    		"lat" : lat,
+				                    		"lng" : lng
+				                    };
+				                    
+				                    //alert(lat +"/"+lng);
+								}
+							)
+						};
+					}
+					
 					if(targ == "#B05") {
 						
 						var posting = $.post("/bob/listBob",{

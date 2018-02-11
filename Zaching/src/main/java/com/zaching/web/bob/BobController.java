@@ -88,6 +88,7 @@ public class BobController {
 	@Qualifier("newsfeedServiceImpl")
 	private NewsfeedService newsfeedService;	
 	
+	
 	public BobController() {
 		System.out.println(this.getClass());
 	}
@@ -146,7 +147,7 @@ public class BobController {
 		int reviewCount = 0;
 		
 		if(!category.equals("B03")) {
-			search.setCategory("N10:"+bobId);
+			search.setSearchCondition("N10:"+bobId);
 			Map<String, Object> newsfeedMap = newsfeedService.listNewsfeed(search);
 			review = (List<Newsfeed>)newsfeedMap.get("list");
 			reviewCount = (int)newsfeedMap.get("totalCount");
@@ -180,7 +181,7 @@ public class BobController {
 		
 		if(search.getCategory() == null) {
 			search.setCategory("B01");
-		} else if(search.getCategory().equals("B03")) {
+		} else if(search.getCategory().equals("B03") || search.getCategory().equals("B04")) {
 			search.setSearchKeyword(((User)session.getAttribute("user")).getUserId()+"");
 		}
 		

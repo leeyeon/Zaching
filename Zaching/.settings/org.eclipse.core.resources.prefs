@@ -2,6 +2,7 @@
 <<<<<<<=HEAD
 >>>>>>>=refs/remotes/origin/master
 eclipse.preferences.version=1
+encoding//WebContent/livingInfo/XmainLivingInfo.jsp=UTF-8
 encoding//WebContent/newsfeed/NewFile.jsp=UTF-8
 encoding//WebContent/newsfeed/checkBlindNewfeed.jsp=ISO-8859-1
 encoding//WebContent/newsfeed/checkDeleteNewfeed.jsp=UTF-8

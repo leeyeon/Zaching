@@ -1,5 +1,9 @@
 package com.zaching.service.domain;
 
+import java.io.File;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class Voice {
 	
 	private int voiceId ;
@@ -7,18 +11,27 @@ public class Voice {
 	private String categoryCode;
 	private String voicelyrics;
 	private String regDate;
-	private int userID;
+	private int userId;
 	private String backgroundImage;
 	private int countReply;
 	private int countUser;
 	private String status;
 	private String userName;
 	private String profileImage;
+	private MultipartFile uploadFile;
 	
 	
 
 	public Voice() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
 	}
 
 	public String getUserName() {
@@ -109,20 +122,21 @@ public class Voice {
 		this.regDate = regDate;
 	}
 
-	public int getUserID() {
-		return userID;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setUserID(int userID) {
-		this.userID = userID;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	@Override
 	public String toString() {
 		return "Voice [voiceId=" + voiceId + ", voiceName=" + voiceName + ", categoryCode=" + categoryCode
-				+ ", voicelyrics=" + voicelyrics + ", regDate=" + regDate + ", userID=" + userID + ", backgroundImage="
+				+ ", voicelyrics=" + voicelyrics + ", regDate=" + regDate + ", userId=" + userId + ", backgroundImage="
 				+ backgroundImage + ", countReply=" + countReply + ", countUser=" + countUser + ", status=" + status
-				+ ", userName=" + userName + ", profileImage=" + profileImage + "]";
+				+ ", userName=" + userName + ", profileImage=" + profileImage + ", uploadFile=" + uploadFile + "]";
 	}
+
 
 }

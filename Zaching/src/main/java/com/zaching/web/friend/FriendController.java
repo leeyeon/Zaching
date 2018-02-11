@@ -53,19 +53,19 @@ public class FriendController {
 
 	@RequestMapping(value = "listFriend",method=RequestMethod.GET)
 	public String listFriend(@ModelAttribute("search") Search search,HttpSession session, Model model) throws Exception {
+
+		
 		System.out.println("friend/listFriend : GET");
 		
-		System.out.println("요기까지 왔습니다");
+		//System.out.println("요기까지 왔습니다");
 
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
 		
-		if (search.getSearchKeyword() == null) {
-			search.setSearchKeyword(((User)session.getAttribute("user")).getUserId()+"");
-			
-		}
+
+		search.setSearchKeyword(String.valueOf(((User)session.getAttribute("user")).getUserId()));
 
 		Map<String, Object> map = friendService.listFriend(search);
 		System.out.println(search);

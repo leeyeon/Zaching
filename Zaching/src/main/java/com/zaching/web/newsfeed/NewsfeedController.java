@@ -86,6 +86,13 @@ public class NewsfeedController {
 		return "forward:/newsfeed/getNewsfeed.jsp";
 	}
 	
+	@RequestMapping(value="ufo", method=RequestMethod.GET)
+	public String ufo(Model model) throws Exception{
+		System.out.println("updateNewsfeed()");
+
+		return "forward:/newsfeed/ufo.jsp";
+	}
+	
 	@RequestMapping(value="getNewsfeed")
 	public String getNewsfeed(@RequestParam int newsfeedId, Model model, HttpSession session, @ModelAttribute("search") Search search) throws Exception{
 		System.out.println("getNewsfeed()");
@@ -111,11 +118,12 @@ public class NewsfeedController {
 	public String listNewsfeed( @ModelAttribute("search") Search search,  Model model, HttpServletRequest request) throws Exception{
 		System.out.println("listNewsfeed");
 		
-		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
-		search.setCategory("N01");
+		if(search.getSearchCondition() == null) {
+			search.setSearchCondition("N06");
+		}
 		search.setPageSize(pageSize);
 		Map<String, Object> map = newsfeedService.listNewsfeed(search);
 		//List<Newsfeed> list = newsfeedService.listNewsfeeds(search);
@@ -131,7 +139,6 @@ public class NewsfeedController {
 		//model.addAttribute("list", map.get("list"));
 		//model.addAttribute("resultPage", resultPage);
 		//System.out.println(list);
-		model.addAttribute("category", search.getCategory());
 		model.addAttribute("search", search);
 		model.addAttribute("list",map.get("list"));
 		model.addAttribute("resultPage", resultPage);

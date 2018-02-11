@@ -12,7 +12,7 @@
 		<result property="categoryCode" column="category_code" jdbcType="VARCHAR"/>
 		<result property="voicelyrics" column="song" jdbcType="VARCHAR"/>
 		<result property="regDate" column="created_date" jdbcType="DATE"/>
-		<result property="userID" column="user_id" jdbcType="INTEGER"/>
+		<result property="userId" column="user_id" jdbcType="INTEGER"/>
 		<result property="backgroundImage" column="background_image" jdbcType="VARCHAR"/>
 		<result property="countReply" column="count_reply" jdbcType="INTEGER"/>
 		<result property="countUser" column="count_user" jdbcType="INTEGER"/>
@@ -25,7 +25,10 @@
 	<insert id="addVoice" parameterType="voice">
 		INSERT
 		INTO voice( voice_id, category_code, title, background_image, created_date, song, status, user_id, count_reply, count_user)
-		VALUES(seq_voice_id.nextval, #{voiceCategory}, #{voiceName}, #{backgroundImage}, SYSDATE, #{voicelyrics}, '0', #{userID}, 0, 0)
+		VALUES(seq_voice_id.nextval, #{categoryCode}, #{voiceName}, #{backgroundImage:VARCHAR}, SYSDATE, #{voicelyrics:VARCHAR}, '0', #{userId}, 0, 0)
+		<selectKey keyProperty="voiceId" resultType="Integer" order="AFTER"> 
+			SELECT seq_voice_id.currval FROM dual
+		</selectKey>
 	</insert>
 	
 	<select id="getVoice" parameterType="int" resultMap="voiceSelectMap">

@@ -9,30 +9,25 @@
 		<result property="id" column="id" jdbcType="INTEGER" />
 		<result property="friendId" column="friend_id" jdbcType="INTEGER" />
 		<result property="userId" column="user_id" jdbcType="INTEGER" />
-		<result property="profileImage" column="profile_image"
-			jdbcType="VARCHAR" />
+		<result property="profileImage" column="profile_image" jdbcType="VARCHAR" />
 		<result property="name" column="name" jdbcType="VARCHAR" />
 		<!-- <result property="name" column="name" jdbcType="VARCHAR" /> <result 
 			property="profileImage" column="profile_image" jdbcType="VARCHAR"/> -->
 		<result property="status" column="status" jdbcType="CHAR" />
 
-
+	<!-- 한쪽만 follow 0 / 친구 신청 1 / 친구 차단 2 &&&& 친구상태 서로 0-->
 
 
 	</resultMap>
 
 	<insert id="addFriend" parameterType="friend">
 		INSERT
-		INTO friend(id
-		,friend_id ,user_id ,status )
-		VALUES(
-		seq_id.nextval,
-		#{userId:INTEGER},
-		#{friendId:INTEGER},
-		#{profileImage:VARCHAR},
-		#{name},
-		'1'
-		)
+		INTO FRIEND ( id,friend_id ,user_id ,status, created_date )
+		VALUES( seq_id.nextval,
+				#{userId:INTEGER},
+				#{friendId:INTEGER},
+				'1',
+				SYSDATE)
 
 	</insert>
 
@@ -82,46 +77,29 @@
 		FROM friend WHERE friend_id=#{friendId}
 	</delete>
 
-	<select id="listFriend" parameterType="map" resultMap="friendSelectMap">
+	<select id="listFriend" parameterType="search" resultMap="friendSelectMap">
 		SELECT *
 		FROM  ( SELECT inner_table.*, ROWNUM AS row_seq
-			FROM  ( SELECT friend.friend_id,
-							friend.user_id, users.name,
-								users.profile_image
-					FROM friend, users
-					<where>
-				  	friend.friend_id=users.user_id
-					AND status='0'
-					</where>
-		<if test="searchCondition !=null">
-			<where>
-				<if test="searchCondition == 0 and searchKeyword !='' ">
-					friend.user_id=#{searchKeyword}
-				</if>
-			</where>
-		</if>
-		ORDER BY user_id ) inner_table
+			FROM  ( <include refid="listFriendSql"/> ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	</select>
 
 	<select id="getTotalCount" parameterType="search" resultType="int">
 		SELECT COUNT(*)
-		FROM(SELECT id,friend_id,user_id,status
-		FROM friend
-		<if test="searchCondition !=null">
-			<where>
-				<if test="searchCondition == 0 and searchKeyword !='' ">
-					user_id=#{searchKeyword}
-				</if>
-				<if test="searchCondition == 1 and searchKeyword !='' ">
-					friend_id=#{searchKeyword}
-				</if>
-			</where>
-		</if>
-		ORDER BY id DESC) countTable
+		FROM( <include refid="listFriendSql"/> ) countTable
 	</select>
-
-
+	
+	<sql id="listFriendSql">
+		SELECT f1.user_id, f1.friend_id, f1.status, USERS.name, USERS.profile_image
+		FROM FRIEND f1, FRIEND f2, USERS
+		<where>
+			f1.user_id = f2.friend_id AND f1.friend_id = f2.user_id
+			AND f1.friend_id = users.user_id
+			AND (f1.status = '0' AND f2.status = '0')
+			AND f1.user_id = #{searchKeyword}
+		</where>
+		ORDER BY users.name
+	</sql>
 
 </mapper>
