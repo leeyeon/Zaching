@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -150,10 +150,28 @@ div.fullscreen {
 		  });
 	 
 	 function ajaxUpdate(){
+		 <c:if test="${sessionScope.user.userId ne null}">
+		 var userId = ${sessionScope.user.userId};
+		 $.ajax( {
+				
+				url : "/notice/rest/noticeSend",
+				method : "POST",
+		        contentType : "application/json; charset=UTF-8",
+		        data : JSON.stringify({
+		        	"userId" : userId
+		        }),
+		        dataType : "text",
+		        success : function(serverData) {
+		        	
+		        	alert(serverData);
+		        }									
+				
+			});
 		 
-		 alert("히히");
+		 </c:if>
 			
 	    }
+		 
 
 
 	  function myAlertBottom(){
@@ -165,14 +183,6 @@ div.fullscreen {
 	  
 		$( function() {
 			
-			
-			var alertStart = ${alert};
-			("#alertStart").val(alertStart);
-					
-			if(alertStart == 1){
-				
-				alert("알림을 울려라~");
-			}
 			
 
 		$( "#notice" ).on("click" , function() {

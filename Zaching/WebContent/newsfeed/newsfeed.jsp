@@ -15,7 +15,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >	
 		<link rel="stylesheet" type="text/css" href="../resources/css/newsfeedStyle.css" />
+		
+		
 		<link href="../resources/css/style.css" rel='stylesheet' type='text/css' />
+		
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" type="image/x-icon" href="../resources/images/newsfeedImages/fav-icon.png" />
 		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>

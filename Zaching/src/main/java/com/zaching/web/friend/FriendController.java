@@ -1,6 +1,9 @@
 package com.zaching.web.friend;
 
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Friend;
+import com.zaching.service.domain.User;
 import com.zaching.service.friend.FriendService;
 
 @Controller
@@ -49,15 +53,20 @@ public class FriendController {
 	}
 
 	@RequestMapping(value = "listFriend",method=RequestMethod.GET)
-	public String listFriend(@ModelAttribute("search") Search search, Model model) throws Exception {
+	public String listFriend(@ModelAttribute("search") Search search,HttpSession session, Model model) throws Exception {
+
+		
 		System.out.println("friend/listFriend : GET");
 		
-		System.out.println("요기까지 왔습니다");
+		//System.out.println("요기까지 왔습니다");
 
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
+		
+
+		search.setSearchKeyword(String.valueOf(((User)session.getAttribute("user")).getUserId()));
 
 		Map<String, Object> map = friendService.listFriend(search);
 		System.out.println(search);
@@ -65,6 +74,7 @@ public class FriendController {
 				pageSize);
 		System.out.println(resultPage);
 		
+
 		model.addAttribute("list",map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);

@@ -75,7 +75,7 @@
 	
 	<select id="getUser"	parameterType="int"	resultMap="userSelectMap">
 		SELECT
-		user_id , name , email , role, password, address, gender, phone,
+		user_id , name , email , role, password, address, gender, phone, longitude,latitude,
 		birth, profile_image, real_name, account_number, created_date 		
 		FROM users 
 		WHERE user_id = #{value}

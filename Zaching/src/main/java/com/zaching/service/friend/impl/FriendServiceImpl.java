@@ -61,8 +61,12 @@ public class FriendServiceImpl implements FriendService{
 
 	@Override
 	public Map<String, Object> listFriend(Search search) throws Exception {
+		
+		System.out.println(search);
 		List<Friend> list=friendDao.listFriend(search);
 		int totalCount=friendDao.getTotalCount(search);
+		
+		System.out.println(list);
 		
 		Map<String, Object> map=new HashMap<String,Object>();
 		map.put("list", list);
