@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommentDao;
 import com.zaching.common.service.CommonService;
+import com.zaching.common.service.FacebookRestDao;
 import com.zaching.common.service.FileDao;
 import com.zaching.common.service.KakaoRestDao;
 import com.zaching.service.domain.Comment;
@@ -45,6 +46,11 @@ public class CommonServiceImpl implements CommonService {
 	@Autowired
 	@Qualifier("kakaoRestDaoImpl")
 	private KakaoRestDao kakaoRestDao;
+	
+	
+	@Autowired
+	@Qualifier("facebookRestDaoImpl")
+	private FacebookRestDao facebookRestDao;
 
 	public CommonServiceImpl() {
 		System.out.println(this.getClass());
@@ -189,5 +195,23 @@ public class CommonServiceImpl implements CommonService {
 	}
 	
 
+	//////∆‰¿ÃΩ∫∫œ
+	@Override
+	public String getAuthorizationUrl_facebook(HttpSession session) {
+		
+		return facebookRestDao.getAuthorizationUrl_facebook(session);
+	}
+
+	@Override
+	public String getAccessToken_facebook(HttpSession session,String code) throws Exception {
+		
+		return facebookRestDao.getAccesstoken(session,code);
+	}
+
+	@Override
+	public void getUserProfile(String accesstoken, HttpSession session) throws Exception {
+		
+		facebookRestDao.getUserProfile(accesstoken, session);
+	}
 
 }

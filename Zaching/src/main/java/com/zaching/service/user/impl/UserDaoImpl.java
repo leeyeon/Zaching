@@ -65,9 +65,9 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public void updateUser(User user) throws Exception {
-		System.out.println("IMp"+user);
+		System.out.println(":: DaoImpl UpdateUser ::"+user);
 		sqlSession.update("UserMapper.updateUser", user);
-		System.out.println("12222222");
+		
 		
 	}
 
