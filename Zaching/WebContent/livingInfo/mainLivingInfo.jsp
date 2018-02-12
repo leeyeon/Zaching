@@ -38,8 +38,9 @@ $(function() {
 $('.mainbar-menu').on('click', function(){
 	 $('.active').removeClass('active');
 	 $(this).addClass('active');
-})
-
+});
+	
+	
 $( ".navbar-brand img" ).on("click" , function() {
 	$(self.location).attr("href","/");			
 });
@@ -131,8 +132,37 @@ background: rgba(255,255,255,1);
 font-size: 20px;
  text-align: left;
 }
+
+.sticky {
+  position: fixed;
+  top: 100px;
+  width: 100%;
+  opacity: 0.7;
+}
+
+.sticky + .about {
+  padding-top: 503px;
+}
+
  </style>
+ <script>
+ $(function() {
+ window.onscroll = function() {myFunction()};
+
+ var header =  document.getElementById("navigation2");
+ var sticky = header.offsetTop;
+
+ function myFunction() {
+	
+   if (window.pageYOffset >= sticky - 95) {
+     header.classList.add("sticky");
+   } else {
+     header.classList.remove("sticky");
+   }
+ }
  
+ });
+ </script>
 </style>
 <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
   <!-- Preloader -->

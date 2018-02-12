@@ -92,14 +92,13 @@
 					<where>
 				  	friend.friend_id=users.user_id
 					AND status='0'
-					</where>
-		<if test="searchCondition !=null">
-			<where>
-				<if test="searchCondition == 0 and searchKeyword !='' ">
-					friend.user_id=#{searchKeyword}
+				<if test="searchCondition !=null">
+					<if test="searchCondition == 0 and searchKeyword !='' ">
+					AND friend.user_id=#{searchKeyword}
+						</if>		
 				</if>
-			</where>
-		</if>
+					</where>
+		
 		ORDER BY user_id ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 

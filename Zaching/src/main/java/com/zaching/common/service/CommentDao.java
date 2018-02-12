@@ -30,7 +30,7 @@ public interface CommentDao {
 	
 	public int getNoticeTotalCount(Search search, int userId) throws Exception;
 	
-	public void addNotice(Notice notice) throws Exception;
+	public Notice addNotice(Notice notice) throws Exception;
 	
 	public void addNoticeTarget(Notice notice) throws Exception;
 	

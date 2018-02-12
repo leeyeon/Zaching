@@ -5,7 +5,7 @@ import java.util.Date;
 public class Notice {
 	
 	private int noticeId; 
-	private char category;
+	private String category;
 	private Date date;
 	private int bobId;
 	private int senderId;
@@ -44,7 +44,7 @@ public class Notice {
 
 
 
-	public char getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
@@ -90,7 +90,7 @@ public class Notice {
 
 
 
-	public void setCategory(char category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 

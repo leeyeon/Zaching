@@ -1,5 +1,6 @@
 package com.zaching.web.friend;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,7 @@ public class FriendController {
 				pageSize);
 		System.out.println(resultPage);
 		
+
 		model.addAttribute("list",map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);

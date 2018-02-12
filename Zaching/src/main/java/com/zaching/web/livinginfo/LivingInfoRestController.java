@@ -13,16 +13,27 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.zaching.common.domain.Page;
+import com.zaching.common.domain.Search;
+import com.zaching.service.domain.Notice;
+import com.zaching.service.domain.User;
+import com.zaching.service.user.UserService;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -39,6 +50,10 @@ import org.json.simple.parser.JSONParser;
 @RestController
 @RequestMapping("/livingInfo/*")
 public class LivingInfoRestController {
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 	
 
 	public LivingInfoRestController() {
@@ -141,7 +156,7 @@ public class LivingInfoRestController {
 			sb.append((char) c);
 		}
 		
-		
+		System.out.println(sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString());
 		return sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString();
 		
 	}
@@ -342,6 +357,20 @@ public class LivingInfoRestController {
 		
 		return mMoney+" "+dMoney+" "+yMoney+" ";
 		
+	}
+	
+	@RequestMapping(value="rest/useraddress", method=RequestMethod.POST)
+	public String useraddress(@RequestBody Map<String, Object> map,  @ModelAttribute("user") User user) throws Exception {
+
+		
+		String userId = ((String)map.get("useraddress"));		
+		user = userService.getUser(Integer.parseInt(userId));
+		System.out.println(user);
+		String getLatitude = user.getLatitude();
+		String getLongitude = user.getLongitude();
+		
+		return getLongitude+","+getLatitude;
+
 	}
 
 }

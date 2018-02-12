@@ -23,12 +23,49 @@
 
 
 <link rel="stylesheet" type="text/css" href="/resources/css/aroundsearch.css"/>
+<script>
 
+	$(function() {
+		
+		
+		$(".myadressSearch").on("click", function() {
+			<c:if test="${sessionScope.user.userId ne null}">
+			
+			var userId = "${sessionScope.user.userId}";
+			
+			$.ajax({
+				url : "/livingInfo/rest/useraddress",
+				method : "POST",
+		        contentType : "application/json; charset=UTF-8",
+		        data : JSON.stringify({
+		        	"useraddress" : userId
+		        }),
+		        dataType : "text",
+		        success : function(successData) {
+		        	var address = successData;
+		        	var result = new Array();	        	
+		        	result = address.split(",");
+		        	      	
+		        	 var coords = new daum.maps.LatLng(result[1], result[0]);
+         	        var marker = new daum.maps.Marker({
+         	            map: map,
+         	            position: coords
+         	        });
+         	        map.setCenter(coords);
+         	        
+		        	
+		        }
+			});
+			</c:if>
+		});
+});
+
+</script>
 </head>
 <body>
 	<div class="container">
 	<div class="page-header text-info">
-	       
+	       <div class="myadressSearch" align="right">내주소로 검색</div>
 <div class="topnav">
   <div class="search-container">
       <input type="text" placeholder="Search.." name="search" id="selectAddress" value="" readonly>
