@@ -50,7 +50,7 @@ body {
 
 			fncGetUserList(1);
 		});
-//프로필 사진 클릭시 타임라인 이동
+		//프로필 사진 클릭시 타임라인 이동
 		$(function() {
 			$("#btn").on("click", function() {
 				self.location = "";
@@ -106,6 +106,7 @@ body {
 		</div>
 
 		<div class="row">
+		
 
 			<c:forEach var="friend" items="${list}" varStatus="status">
 
@@ -130,6 +131,12 @@ body {
 			</c:forEach>
 		</div>
 	</div>
+
+
+
+
+
+
 
 
 </body>
