@@ -9,6 +9,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 	
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+	
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+	
 	<style>
         
        	body {
@@ -27,6 +33,116 @@
        		width: 200px;
        		text-decoration: none;
        	}
+       	
+       	     	
+       	.modal {
+		  overflow: inherit;
+		  overflow-y: inherit;
+		  text-align: center;
+		  padding: 0;
+		}
+		
+		.modal:before {
+		  content: '';
+		  display: inline-block;
+		  height: 100%;
+		  vertical-align: middle;
+		  margin-right: -4px;
+		}
+		
+		.modal-dialog {
+		  max-width: 600px;
+		  padding: 0;
+		  display: inline-block;
+		  text-align: left;
+		  vertical-align: middle;
+		}
+		
+		.modal-content {
+		
+		  border: 0;
+		  border-radius: 0;
+		
+		}
+		
+		.modal-header {
+		  border: 0;
+		  padding 0;
+		  position: relative;
+		}
+		
+		.modal-header .close {
+		  margin: 0;
+		  position: absolute;
+		  top: -10px;
+		  right: -10px;
+		  width: 23px;
+		  height: 23px;
+		  border-radius: 23px;
+		  background-color: #00aeef;
+		  color: #ffe300;
+		  font-size: 9px;
+		  opacity: 1;
+		  z-index: 10;
+		}
+		
+		.modal-content p {
+		  padding: 0 20px;
+		}
+		
+		.modal-body {
+			padding: 0 0 10px 0;
+			height: 300px;
+		}
+		.topnav a {
+		  float: left;
+		  display: block;
+		  color: black;
+		  text-align: center;
+		  padding: 14px 16px;
+		  text-decoration: none;
+		  font-size: 15px;
+		}
+		
+		.topnav a:hover {
+		  background-color: #ddd;
+		  color: black;
+		}
+		
+		.topnav a.active {
+		  background-color: #5F4B8B;
+		  color: white;
+		}
+		
+		.topnav .search-container {
+		  float: right;
+		}
+		
+		.topnav input[type=text] {
+		  padding: 6px;
+		  margin-top: 8px;
+		  font-size: 15px;
+		  border: none;
+		  width: 300px;
+		  color : #000000;
+		}
+		
+		.topnav .search-container button {
+		  padding: 6px 10px;
+		  margin-top: 8px;
+		  margin-right: 16px;
+		  font-size: 15px;
+		  border: none;
+		  cursor: pointer;
+		}
+		
+		.topnav .search-container button:hover {
+		  background: #ccc;
+		}
+		
+		.active {
+			display: block;
+		}
 
        	
     </style>
@@ -86,6 +202,7 @@
 
 				}
 			});
+			
   		});
 
     </script>
@@ -101,6 +218,8 @@
 			<div class="page-header" style="padding-bottom: 30px;">
 			  <h1 style="font-weight: bold;">포인트 반환 신청</h1>
 			</div>
+			
+			<div class="col-xs-1" data-toggle="modal" data-target="#exchargePoint">신고</div>
 		
 			<div class="row" style="padding-top:50px;">
 				<label for="point" class="col-xs-4 control-label">
@@ -110,7 +229,7 @@
 					<div class="input-group">
 						<input type="text" class="form-control text-right" aria-describedby="basic-addon2" id="point" name="point" />
 						<span class="input-group-addon" id="basic-addon2" style="background: #FFF;"> 
-						/<fmt:formatNumber type="currency" value="${user.totalPoint}" pattern="###,###" />Point</span>
+						<fmt:formatNumber type="currency" value="${user.totalPoint}" pattern="###,###" />Point</span>
 					</div>
 				</div>
 			</div>
@@ -178,6 +297,7 @@
 				</div>
 			
 			</form>				
+			</div><!-- /.row -->		
 			
 	        <div class="input-group" align="center" style="padding-top:50px;">
 	            <button type="submit" class="btn-bob" style="margin: 10px;">충전</button>
@@ -187,5 +307,68 @@
         </div>
 
     </div><!-- /.container -->
+    
+	<div class="modal fade" id="exchargePoint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title text-center" id="myModalLabel"><b>새로운 계좌 사용</b></h4>
+	        <hr>
+	      </div>
+		      <div class="modal-body text-center"> 
+		      		등록할 계좌정보를 입력해주세요.
+			    <form id="accountForm" >
+					<div class="row" style="padding-top:40px;">
+						<label for="name" class="col-xs-4 control-label">
+								이름
+						</label>
+						<div class="col-xs-7">
+							<input type="text" class="form-control" name="name" value="${user.realName}" />
+						</div>
+					</div>
+					
+					<div class="row" style="padding-top:20px;">
+						<label for="name" class="col-xs-4 control-label">
+								은행명
+						</label>
+						<div class="col-xs-7">
+							${bank}
+							<select name="limitNum" class="selectpicker show-tick" title="제한 인원수"  >
+					    	  <c:forEach var="i" begin="2" end="20" step="1">
+					    	  	<option >${i}</option>
+					    	  </c:forEach>
+							</select>
+						</div>
+					</div>
+					
+					<div class="row" style="padding-top:20px;">
+						<label for="name" class="col-xs-4 control-label">
+								생년월일+한자리 (ex) 9402082
+						</label>
+						<div class="col-xs-7">
+							<input type="text" class="form-control" name="accountHolderinfo" value=""/>
+						</div>
+					</div>
+					
+					<div class="row" style="padding-top:20px;">
+						<label for="name" class="col-xs-4 control-label">
+								계좌번호
+						</label>
+						<div class="col-xs-7">
+							<input type="text" class="form-control" name="accountNum" value="${user.accountNumber}" />
+						</div>
+					</div>
+				
+				</form>	
+		      </div>
+		      <div class="modal-footer">
+		      <div class="search-container text-center" align="center" style="margin: 0 auto;">
+		      	 <a href="#" id="exchargePoint"><img src="../resources/images/payment_icon_yellow_medium.png" ></a>
+		      </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </body>
 </html>
