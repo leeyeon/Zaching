@@ -70,45 +70,11 @@ body {
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-
-		<div class="page-header text-info">
-			<h3>친구목록조회</h3>
-		</div>
-
-		<div class="row">
-
-			<div class="col-md-6 text-left">
-				<p class="text-primary">전체 ${resultPage.totalCount } 건수, 현재
-					${resultPage.currentPage} 페이지</p>
-			</div>
-
-			<div class="col-md-6 text-right">
-				<form class="form-inline" name="detailForm">
-
-					<div class="form-group">
-						<select class="form-control" name="searchCondition">
-							<option value="0"
-								${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>이름</option>
-						</select>
-					</div>
-
-					<div class="form-group">
-						<label class="sr-only" for="searchKeyword">검색어</label> <input
-							type="text" class="form-control" id="searchKeyword"
-							name="searchKeyword" placeholder="검색어"
-							value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
-					</div>
-
-					<button type="button" class="btn btn-default">검색</button>
-
-				</form>
-			</div>
-		</div>
+		
 
 		<div class="row">
 		
-
-			<c:forEach var="friend" items="${list}" varStatus="status">
+		<c:forEach var="friend" items="${list}" varStatus="status">
 
 				<div class="col-md-4">
 					<div>
