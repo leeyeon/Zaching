@@ -11,13 +11,10 @@
 <!--   jQuery , Bootstrap CDN  -->
 
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://sdk.accountkit.com/en_US/sdk.js"></script>
 <style>
 
@@ -40,6 +37,7 @@
 }
 
 #navbar>ul>li>a {
+	margin :5px 5px 5px 5px;
 	color: #FFFFFF;
 }
 
@@ -100,12 +98,6 @@
 	padding: 0;
 }
 
-img.img-rounded {
-	margin-top: 10px;
-	margin-left: 10px;
-	margin-right: 10px;
-	margin-bottom: 10px;
-}
 
 .notice {
 	overflow: inherit;
@@ -120,6 +112,7 @@ img.img-rounded {
 }
 
 .sns-login>ul {
+	
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -131,6 +124,8 @@ img.img-rounded {
 	border: 0;
 	float: left;
 }
+
+#loginModal > div > div > div.modal-body > form > div.row.social-login { margin: 5px;}
 </style>
 
 <script type="text/javascript">
@@ -414,7 +409,8 @@ img.img-rounded {
             
           </button>
           <a class="navbar-brand" href="#">
-        	  <div class="row"><img src="/resources/images/ufo.png" class="ufo" width="25">
+        	  <div class="row">
+        	  <img src="/resources/images/ufo.png" class="ufo" width="25">
 	          	<img alt="뉴스피드로 이동" src="/resources/images/zaching2.png"  height="40px" 
 	          		style="margin-top: 20px;"/></div>
 	        </a>
@@ -450,7 +446,8 @@ img.img-rounded {
 	           <!-- 여기부터 --><img src="../resources/images/paper-plane.png" id="notice"
 		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
 		          		 <!-- 여기까지 알림임ㅜㅠㅠ 지우지마셈 --> 
-		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px"/>&nbsp;
+		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px"
+		       	style="border-radius: 50%"/>&nbsp;
 		        <a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
 		        &nbsp;님 환영합니다!
 
@@ -473,13 +470,12 @@ img.img-rounded {
 
 	<div class="container" style="color: #000">
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#navigationbar"
-				aria-expanded="false" aria-controls="navbar"
-				style="margin-top: 35px;">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigationbar"
+				aria-expanded="false" aria-controls="navbar" style="margin-top: 35px;">
+				<span class="sr-only">Toggle navigation</span> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span>
 
 			</button>
 			<a class="navbar-brand" href="#"> <img alt="뉴스피드로 이동"
@@ -496,8 +492,7 @@ img.img-rounded {
 			</ul>
 			<ul class="nav navbar-nav" style="float: right;">
 
-				<c:if
-					test="${user.userId ne null && sessionScope.user.profileImage eq null}">
+				<c:if test="${user.userId ne null && sessionScope.user.profileImage eq null}">
 					<li><div style="padding-top: 10px; color: #333;">
 							<!-- 여기부터 -->
 							<img src="../resources/images/paper-plane.png" id="notice"
@@ -506,7 +501,7 @@ img.img-rounded {
 							&nbsp;&nbsp;
 							<!-- 여기까지 알림임ㅜㅠㅠ 지우지마셈 -->
 							<img src="../resources/images/profile_default.png" id="profile"
-								width="30px" />&nbsp;<a href="#profile" style="color: #f0ad4e;"
+								width="30px" class="img-circle"/>&nbsp;<a href="#profile" style="color: #f0ad4e;"
 								title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
 
 
@@ -516,8 +511,7 @@ img.img-rounded {
 
 
 
-				<c:if
-					test="${user.userId ne null && sessionScope.user.profileImage ne null}">
+				<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
 					<li><div style="padding-top: 10px; color: #333;">
 							<!-- 여기부터 -->
 							<img src="../resources/images/paper-plane.png" id="notice"
@@ -525,16 +519,12 @@ img.img-rounded {
 							<div class="badge   badge-primary"></div>
 							&nbsp;&nbsp;
 							<!-- 여기까지 알림임ㅜㅠㅠ 지우지마셈 -->
-							<img
-								src="../resources/upload_files/images/${sessionScope.user.profileImage}"
-								id="profile" width="30px" />&nbsp; <a href="#profile"
-								style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
+							<img class="img-circle" src="../resources/upload_files/images/${sessionScope.user.profileImage}" 
+								id="profile" width="30px" />
+						<a href="#profile"style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
 							&nbsp;님 환영합니다!
-
-
-						</div></li>
+					</div></li>
 					<li><a href="#">로그아웃</a></li>
-
 				</c:if>
 
 
@@ -612,7 +602,7 @@ img.img-rounded {
 
 
 
-						<div class="social-login">
+						<div class="row social-login">
 							<ul class="sns-login">
 								<li><a href="#kakaoLogin" id="kakaoLogin"> <img
 										src="/resources/images/KakaoTalk_lcon.png" class="img-rounded"
@@ -632,13 +622,9 @@ img.img-rounded {
 							</ul>
 						</div>
 
-
-					</form>
-
 					<div class="row">
 						<div class="col-sm-offset-4 col-sm-6 text-center">
-							<button type="submit" class="btn btn-primary" id="login">로
-								&nbsp;그 &nbsp;인</button>
+							<button type="submit" class="btn btn-primary" id="login">로&nbsp;그 &nbsp;인</button>
 							<a class="btn btn-primary btn" href="#" role="button">패스워드찾기</a>
 						</div>
 					</div>
