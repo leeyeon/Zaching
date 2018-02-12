@@ -80,16 +80,7 @@
 	<select id="listFriend" parameterType="search" resultMap="friendSelectMap">
 		SELECT *
 		FROM  ( SELECT inner_table.*, ROWNUM AS row_seq
-			FROM  ( SELECT friend.friend_id,
-							friend.user_id, users.name,
-								users.profile_image
-					FROM friend, users
-					<where>
-				  	friend.friend_id=users.user_id
-					AND status='0'
-					</where>
-		
-		ORDER BY user_id ) inner_table
+
 			FROM  ( <include refid="listFriendSql"/> ) inner_table
 
 						WHERE ROWNUM &lt;= #{endRowNum} )

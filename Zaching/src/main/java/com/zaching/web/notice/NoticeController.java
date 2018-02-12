@@ -27,6 +27,7 @@ import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.Friend;
 import com.zaching.service.domain.LivingInfo;
 import com.zaching.service.domain.Notice;
+import com.zaching.service.domain.User;
 import com.zaching.service.friend.FriendService;
 import com.zaching.service.domain.Notice;
 
@@ -63,11 +64,11 @@ public class NoticeController {
 		commonService.addNotice(notice);
 		
 		System.out.println(notice);
-		System.out.println(String.valueOf(notice.getSenderId()));
+		System.out.println("유저 아이디~~"+String.valueOf(notice.getSenderId()));
 		//search 키워드(userId)로 친구 목록 가지고 오기
-		search.setSearchCondition("0");
+		//search.setSearchKeyword(String.valueOf(((User)session.getAttribute("user")).getUserId()));
 		search.setSearchKeyword(String.valueOf(notice.getSenderId()));
-		
+		System.out.println(search);
 		Map<String, Object> map = friendService.listFriend(search);
 		System.out.println("칭구:"+map);
 		
