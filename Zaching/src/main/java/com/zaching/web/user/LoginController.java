@@ -173,15 +173,22 @@ public class LoginController {
 	
 	
 	@RequestMapping(value = "facebookLogin", method = {RequestMethod.GET,RequestMethod.POST})
-	public String facebookLogin(@RequestParam("code") String code,
+	public String facebookLogin(@RequestParam("code") String code,Model model,
 								HttpSession session, String state)throws Exception {
 
 		System.out.println("[ facebookLogin 토큰/사용자정보 받기!! ]");
-		String accesstoken = commonService.getAccessToken_facebook(session, code);
+		//String accesstoken = commonService.getAccessToken_facebook(session, code);
+		//		commonService.getUserProfile(accesstoken, session);
 		
-		System.out.println(":: 토큰 ::"+accesstoken);
+		User user =commonService.getAccessToken_facebook(session, code);
+		user =commonService.getUserProfile(user);
 		
-		commonService.getUserProfile(accesstoken, session);
+		session.setAttribute("user", user);
+		
+		System.out.println("session==> "+session.getAttribute("user"));
+		System.out.println("facebook 이메일 ==> " + user.getEmail());
+		System.out.println("프로필 이미지 ==> " + user.getProfileImage());
+	
 
 		return "redirect:/index.jsp";
 
