@@ -12,6 +12,7 @@
 	<title>mainBob</title>
 	
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
+	<link rel="stylesheet" type="text/css" href="../resources/css/bob.css">
 	
 	<style>
 		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
@@ -38,7 +39,6 @@
 		}
 		
 		.bg {
-			background: url('../resources/images/simple.jpg') no-repeat center center;
 			position: fixed;
 			width: 100%;
 			height: 100%;
@@ -47,14 +47,6 @@
 			left: 0;
 			z-index: -1;
 			opacity: 0.3;
-		}
-		
-		.jumbotron {
-		    margin-bottom: 0px;
-		    margin-top:50px;
-		    padding-top: 150px;
-		    height: 400px;
-		    background: transparent;
 		}
 		
 		.select-bob {
@@ -73,6 +65,14 @@
        		padding: 0 10px 0 10px;
        	}
        	
+       	.img-cover{
+	         position: absolute;
+	         height: 100%;
+	         width: 100%;
+	         background-color: rgba(0, 0, 0, 0.3);                                                                 
+	         z-index:1;
+     	 }
+      
 		#footer {
 		   position:fixed;
 		   left:0px;
@@ -86,34 +86,35 @@
 			-moz-border-radius: 70px;
 			-khtml-border-radius: 70px;
 			-webkit-border-radius: 70px;
-			 background: #5F4B8B;
-			 width: 100px;
-			 height: 100px;
-			 line-height: 100px;
-			 font-size: 17px;
-			 float:right;
-			 margin-right: 20px;
-			 cursor: pointer;
-			 color: #FFFFFF;
-			 box-shadow: 0 5px 15px -5px #666;
+			background: #5F4B8B;
+			width: 80px;
+			height: 80px;
+			line-height: 80px;
+			font-size: 25px;
+			float:right;
+			margin-right: 20px;
+			cursor: pointer;
+			color: #FFFFFF;
+			box-shadow: 0 5px 15px -5px #666;
        	}
        	
        	.dialog-add-bob {
        		background: #ccc;
        		position: relative;
        		width: 200px;
-       		left: -100px;
-       		top: -230px;
+       		left: -80px;
+       		top: -200px;
        		box-shadow: 0 5px 15px -5px #666;
        	}
        	
 		.user_thumnail {
-		    position: relative;
+		    position: absolute;
 		    display: inline-block;
 		    border-radius: 50%;
-		    top: -50px;
-		    width: 100px;
-		    height: 100px;
+		    width: 90px;
+		    height: 90px;
+		    top: 220px;
+		    left: 38%;
 		}
 		
 		.thumnail {
@@ -124,16 +125,21 @@
 		    overflow: hidden;
 		}
 		
-		#exTab2 > div > ul > li> a {
-			height: 80px;
+		#exTab2 > ul > li> a {
 		    line-height: 50px;
 		    color: #000;
-		    font-size: 17px;
+		    font-size: 15px;
 		    font-weight: bold;
+		    border: none;
 		}
 		
-		#exTab2 > ul > li .active > a {
-			background-color: #FFF;
+		#exTab2 > ul > li> a:hover {
+			background-color: #f2dede;
+		}
+		
+		#exTab2 > ul > li.active > a {
+			background-color: #f2dede;
+			cursor: pointer;
 		}
 		
 		@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
@@ -144,6 +150,10 @@
 			body > div.jumbotron.text-center > form > div > div {
 				max-width: 100%;
 			}
+		}
+		
+		.hero {
+			background: url('../resources/images/202991-OZ1TED-507.jpg') no-repeat bottom center;
 		}
 	
 	</style>
@@ -299,6 +309,7 @@
 			});
 			/* tab Event End */
 			
+			/*
 			$('#exTab2 a').on({
 				'mouseover' : function () {
 					if(!$(this).parent().hasClass("active")) {
@@ -315,13 +326,34 @@
 				
 			});
 
-			  $('#exTab2 a').click(function(){   // sBtn에 속해 있는  a 찾아 클릭 하면.
-				  $('#exTab2 a').css('color', '#000');
-				  $('#exTab2 a').css('background', '#ede8f7');
-				  $(this).css('background', '#FFF');
-				  $(this).css('color', '#000');
-			  })
+			$('#exTab2 a').click(function(){   // sBtn에 속해 있는  a 찾아 클릭 하면.
+				 $('#exTab2 a').css('color', '#000');
+				 $('#exTab2 a').css('background', '#ede8f7');
+				 $(this).css('background', '#FFF');
+				 $(this).css('color', '#000');
+			});
 			
+			*/
+			
+			/*  Advanced search form & Icon  */
+			$('#advanced_search_btn').on("click", function(e){
+				e.preventDefault();
+
+				var ads_box =$('.advanced_search');
+				
+				if(!ads_box.hasClass('advanced_displayed')){
+
+					$(this).addClass('active');
+					ads_box.stop().fadeIn(200).addClass('advanced_displayed');
+
+				}else{
+
+					$(this).removeClass('active');
+					ads_box.stop().fadeOut(200).removeClass('advanced_displayed');
+
+				}
+
+			});
 
 		});		
 
@@ -334,30 +366,31 @@
 
 	<div class="cover"></div>
 	<div class="bg"></div>
-	<div class="jumbotron text-center" style="background-image: url('../resources/images/bob_background.jpg');
+
+	<section class="hero" style="background-image: url('../resources/images/202991-OZ1TED-507.jpg');
 			background-size: cover;
 			background-repeat: no-repeat, no-repeat;
-			background-position: center center;">
-		<img id="bobTitle" src="../resources/images/bob_title.png"/>
-		<form id="searchForm">
-			<div class="row" style="margin: 10px; padding:60px 40px 0 40px;">
-				<div class="col-xs-12">
-					<input type="text" class="form-control" name="searchKeyword" placeholder="검색 내용을 입력하세요." 
-					style="height:45px; font-size: 16px; padding: 10px; outline:none; border:none;"/>
-					
-		      	</div>
-	      	</div>
-      	</form>
-	</div>
-
-	<div class="container" style="font-size: 17px;"> 
+			background-position: center center; height:700px; ">
+		<div class="img-cover"></div>
+		<section class="caption" style="padding-top: 70px;">
+			<h2 class="caption">Let's eat Together</h2>
+		</section>
+	</section>
+	
+	<section class="search" style="background: #f77e7e;">
+		<div class="wrapper">
+			<form id="searchForm">
+				<input type="text" id="search" name="searchKeyword" placeholder="What are you looking for?"  autocomplete="off"
+					style="background: none;"/>
+				<a href="#" class="advanced_search_icon" id="advanced_search_btn"></a>
+			</form>
+		</div>
 		
-		<div class="form-group">
-		<form class="form-horizontal" id="mainBob">
-			<!-- Tab 시작 -->
-			<div id="exTab2" style="padding:0;">
-				<div >
-					<ul class="nav nav-tabs nav-justified" style="border: none; background: #ede8f7">
+		<div class="advanced_search" style="z-index: 50;">
+			<div class="wrapper">
+				<span class="arrow"></span>
+					<div id="exTab2" style="padding:0;">
+					<ul class="nav nav-tabs nav-justified" style="border: none;">
 						<li class="active" ><a href="/bob/listBob?category=B01" data-target="#B01" data-toggle="tabajax">우리지금만나</a></li>
 						<li><a href="/bob/listBob?category=B02" data-target="#B02" data-toggle="tabajax">당장만나</a></li>
 						<li><a href="/bob/listBob?category=B03" data-target="#B03"  data-toggle="tabajax">주기적으로만나</a></li>
@@ -365,9 +398,15 @@
 						<li style="display: none;"><a href="/bob/listBob?category=B05" data-target="#B05"  data-toggle="tabajax">키워드로 검색하기</a></li>
 					</ul>
 				</div>
-				
-				<!-- Tab 끝 -->
-						
+			</div>
+		</div><!--  end advanced search section  -->
+	</section><!--  end search section  -->
+
+	<div class="container" style="font-size: 17px; padding:0;"> 
+		
+		<div class="form-group">
+		<form class="form-horizontal" id="mainBob">
+
 				<!-- 데이터 들어갈 것들,,, -->
 				<div class="tab-content" style="padding:20px; background: #FFF;overflow: hidden; border-right: 1px solid #ddd; border-left: 1px solid #ddd; border-bottom: 1px solid #ddd;">
 					<div class="tab-pane active" id="B01"> </div>
@@ -380,7 +419,6 @@
 		    	<div id="loader" class="text-center" style="margin: 50px;">
 					<img src = "../resources/images/ajax-loader.gif"/>
 				</div>
-				</div>
 			</div>
 		</form>
 		</div>
@@ -391,7 +429,9 @@
 	
    	<div id="footer" align="right" style="z-index: 1500;">
    	  <div class="container">
-	  	<div class="btn-add-bob text-center">방 만들기</div>
+	  	<div class="btn-add-bob text-center" style="font-size:20px;
+	  	background: url('../resources/images/ic_add_circle_black_36px.svg') center center no-repeat; background-size: cover;">
+	  	</div>
 	  	<div class="dialog-add-bob text-center">
 	  		<div class="list-group" style="float: right; visibility: hidden;">
 			  <a class="list-group-item" style="background: #5F4B8B; color: #FFFFFF;"> 카테고리선택 </a>
