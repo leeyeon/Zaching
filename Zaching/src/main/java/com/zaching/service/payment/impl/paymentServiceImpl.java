@@ -115,8 +115,32 @@ public class paymentServiceImpl implements PaymentService {
 		return paymentDao.getUserCI(accessToken, userSeqNo);
 	}
 	
+	@Override
 	public Map<String, Object> getAccountRealName(String accessToken, String accountNum, int accountHolderinfo) throws Exception {
 		return paymentDao.getAccount(accessToken, accountNum, accountHolderinfo);
+	}
+	
+	@Override
+	public Map<String, Object> listBackCode() throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("002", "산업은행");
+		map.put("003", "기업은행");
+		map.put("004", "국민은행");
+		map.put("007", "수협중앙회");
+		map.put("011", "농협중앙회");
+		map.put("020", "우리은행");
+		map.put("023", "SC제일은행");
+		map.put("027", "시티은행");
+		map.put("031", "대구은행");
+		map.put("032", "부산은행");
+		map.put("034", "광주은행");
+		map.put("035", "제주은행");
+		map.put("037", "전북은행");
+		map.put("039", "경남은행");
+		map.put("081", "하나은행");
+		map.put("088", "신한은행");
+		
+		return map;
 	}
 
 	//@Scheduled(fixedDelay=1000)
