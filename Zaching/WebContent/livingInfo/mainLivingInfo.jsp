@@ -108,11 +108,49 @@ font-size: 20px;
  }
  
  });
+ $('.mainbar-menu').on('click', function(){
+	 $('.active').removeClass('active');
+	 $(this).addClass('active');
+});
+	
+	
+$( ".navbar-brand img" ).on("click" , function() {
+	$(self.location).attr("href","/");			
+});
+
+$("a:contains('라이브방송')").on("click", function() {
+	self.location = "/broadcast/listBroadcast";
+});
+
+$("a:contains('보이스리플')").on("click", function() {
+	self.location = "/voice/listVoice";
+});
+
+$( "a:contains('밥친구')" ).on("click" , function() {
+	$(self.location).attr("href","/bob/mainBob");			
+});
+
+$("a:contains('생활정보')").on("click", function() {
+	self.location = "/livingInfo/mainLivingInfo";
+});
+
+$("a:contains('회원가입')").on("click", function() {
+	self.location = "/user/addUser";
+});
+
+$("a:contains('로그아웃')").on("click", function() {
+	self.location = "/user/logout";
+});
+
+$( "#profile" ).on("click" , function() {
+	self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";			
+});
  </script>
 <style>
 	.hero{
 		background: url(/resources/images/arno-smit-83025.jpg) no-repeat bottom center;
 		background-size: 100% 100%;
+		height: 700px;
 	}
 	.img-cover{
          position: absolute;
