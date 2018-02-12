@@ -13,6 +13,8 @@
 	
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 	<link rel="stylesheet" type="text/css" href="../resources/css/bob.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
 	
 	<style>
 		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		

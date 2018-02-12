@@ -14,8 +14,6 @@
 	<script type="text/javascript" src="../resources/javascript/masonry.pkgd.min.js"></script>
 	<script type="text/javascript" src="../resources/javascript/moment.js"></script>
 	<script type="text/javascript" src="../resources/javascript/moment-ko.js"></script>
-	<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
 
 	<style>
 	
