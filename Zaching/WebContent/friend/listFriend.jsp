@@ -109,41 +109,27 @@ body {
 
 			<c:forEach var="friend" items="${list}" varStatus="status">
 
-				<c:if test="${friend.status eq '0'}">
-					<div class="col-md-4 ">
-						<div>
-							<button class="btn" id="btn" type="submit">
-								<img class="btn-img" style="width: 120px; height: 120px;"
-									src="../resources/upload_files/images/${friend.profileImage}">
-							</button>
-						</div>
-						<div class="col-sm-4 ">${friend.name }</div>
-						<div class="col-sm-4 ">
-							<select name='fruits'>
-								<option value='' selected>친구</option>
-								<option value='message'>메세지</option>
-								<option value='banana'>친구삭제</option>
-								<option value='lemon'>친구차단</option>
-							</select>
-						</div>
-
+				<div class="col-md-4">
+					<div>
+						<button class="btn" id="btn" type="submit">
+							<img class="btn-img" style="width: 120px; height: 120px;"
+								src="../resources/upload_files/images/${friend.profileImage}">
+						</button>
 					</div>
-				</c:if>
+					<div class="col-sm-4 ">${friend.name }</div>
+					<div class="col-sm-4 ">
+						<select name='fruits'>
+							<option value='' selected>친구</option>
+							<option value='message'>메세지</option>
+							<option value='banana'>친구삭제</option>
+							<option value='lemon'>친구차단</option>
+						</select>
+					</div>
+
+				</div>
 			</c:forEach>
 		</div>
 	</div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </body>
