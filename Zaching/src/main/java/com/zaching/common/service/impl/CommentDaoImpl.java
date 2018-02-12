@@ -60,13 +60,16 @@ public class CommentDaoImpl implements CommentDao {
 	}
 	
 	@Override
-	public void addNotice(Notice notice) throws Exception{
-		sqlSession.insert("CommentMapper.addNotice", notice);
+	public Notice addNotice(Notice notice) throws Exception{
+		sqlSession.insert("NoticeMapper.addNotice", notice);
+		return notice;
 	}
+	
+
 	
 	@Override
 	public void addNoticeTarget(Notice notice) throws Exception{
-		sqlSession.insert("CommentMapper.addNoticeTarget", notice);
+		sqlSession.insert("NoticeMapper.addNoticeTarget", notice);
 	}
 	
 

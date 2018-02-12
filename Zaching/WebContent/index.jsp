@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-	<jsp:include page="./resources/layout/sub_toolbar.jsp"/>
+	<jsp:include page="./resources/layout/toolbar.jsp"/>
 	
 	<style>
 	
@@ -24,7 +24,7 @@
 <body>
 
 
-	<div class="container" id="newsfeed">
+	<div class="container">
 
 		<c:import url="/newsfeed/listNewsfeed"></c:import>
 

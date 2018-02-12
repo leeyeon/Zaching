@@ -60,7 +60,10 @@
 }
 </style>
 <script>
+
+
 $(function() {
+	var cdval = new Array();
 	
 			 $.ajax({
 					url : "/livingInfo/rest/getMusicChart",
@@ -79,25 +82,31 @@ $(function() {
 
 						
 						for(var i=0; i<10; i++){
+							cdval[i] = JSONData.melon.songs.song[i].songId;
 							
 							if(i < 3){
 								mc = '<div class="mc">'+(i+1)+'</div>';
 							}else{
 								mc = '<div class="mc2">'+(i+1)+'</div>';
 							}
-							displayValue = displayValue + '<div class="container"><div class="card">'+
-							'<div class="col-xs-1"><img src="/resources/images/play-button.png" height="30px" width="30px"/></div>'+
+							displayValue = displayValue + '<div class="container"><div class="card" >'+
+							'<div class="col-xs-1"><div class="cd"><input type="hidden" name="cdName" val="fffff"><img src="/resources/images/play-button.png" height="30px" width="30px"/></div></div>'+
 							'<div class="col-xs-10"><h4><b>'+JSONData.melon.songs.song[i].songName+'</b> - '+JSONData.melon.songs.song[i].artists.artist[0].artistName+'</h4>'+
 							'</div>'+mc+'</div></div>';
-
+						
 						}
 						
-
+						
 						
 						
 						$(".musicChart").html(displayValue);
 						 
-						
+						$( ".cd" ).on("click" , function() {
+							var avoid = ($("div").index(this)-4)/6;
+							showPopup();
+						    function showPopup() { window.open("http://www.melon.com/webplayer/mini.htm?contsIds="+cdval[avoid]+"&contsType=S", "a", "width=410px, height=700px, left=1000, top=50"); }
+						    
+						});
 						 
 					}
 		});

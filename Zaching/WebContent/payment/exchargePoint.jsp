@@ -138,6 +138,8 @@
 			  </div><!-- /.col-lg-6 -->
 			</div><!-- /.row -->
 			
+			ȫ�浿 / 8801011 / 1234567890123450
+			
 			<form id="accountForm" >
 				<div class="row" style="padding-top:50px;">
 					<label for="name" class="col-xs-4 control-label">

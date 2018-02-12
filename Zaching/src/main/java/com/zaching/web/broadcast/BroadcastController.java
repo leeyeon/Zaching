@@ -51,13 +51,17 @@ public class BroadcastController {
 	//@Value("#{commonProperties['pageSize']}")
 	int pageSize = 9;
 	
-	@RequestMapping(value = "mainBroadcast", method=RequestMethod.GET)
-	public String mainBroadcast() throws Exception {
-
-		System.out.println("/broadcast/BroadcastMain : GET");
+	@RequestMapping(value = "addBcpoint", method=RequestMethod.GET)
+	public String addBcpoint() throws Exception {
 		
-		return "redirect:/broadcast/mainBroadcast.jsp";
+		//Business Logic
+		
+		System.out.println("/broadcast/addBroadcast : GET");
+		
+		
+		return "redirect:/broadcast/addBroadcast.jsp";
 	}
+	
 	
 	@RequestMapping(value = "addBroadcast", method=RequestMethod.GET)
 	public String addBroadcast() throws Exception {
@@ -83,7 +87,7 @@ public class BroadcastController {
 		//broadcast.setBroadcaster(user);
 		//System.out.println("user 정보 : "+user);
 		broadcast.setBroadcaster(user);
-		String fileDirectory = "C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images";
+		String fileDirectory = "C:\\Users\\소현태\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files";
 		String fileName = commonService.addFile(fileDirectory, broadcast.getImage());
 		//System.out.println("broadcast end ==>"+ broadcast);
 		broadcast.setFileName(fileName);
@@ -95,7 +99,7 @@ public class BroadcastController {
 		
 		//http://127.0.0.1:9001/send?id=값&...
 		
-		return "redirect:http://192.168.0.31:3000?/broadcast/broadcaster="+broadcast.getTitle();
+		return "redirect:http://localhost:3000/broadcast?broadcaster="+broadcast.getBroadcaster().getUserId();
 		//return "forward:/chat/broadcast.jsp";
 	}
 	
