@@ -157,16 +157,7 @@
 		.active {
 			display: block;
 		}
-		
-		.listCondition {
-			cursor: pointer;
-			padding: 10px;
-			background: #ccc;
-			font-size: 17px;
-			margin-top: 30px;
-			border: 1px solid #FFF;
-		}
-		
+
 		@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 			#Title {
 				max-width: 100%;

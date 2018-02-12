@@ -20,12 +20,6 @@
 
 */
 
-
-
-
-
-
-
 /*  Fonts  */
 @font-face {
     font-family: 'lato-bold';
@@ -59,15 +53,6 @@
     font-weight: normal;
     font-style: normal;
 }
-
-
-
-
-
-
-
-
-
 
 
 /*  General CSS  */
@@ -320,9 +305,9 @@ header nav .login_btn:hover{
     position: absolute;
     top: 100px;
     left: 0;
-    background: #cbe0f4;
-    border-top: 1px solid #aac8e4;
-    border-bottom: 1px solid #aac8e4;
+    background: rgba(255, 255, 255, 0.71);
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
     z-index: 9999;
     display: none;
 }
@@ -447,7 +432,7 @@ header nav .login_btn:hover{
 
 /*  listings section  */
 .listings{
-    padding: 100px 0;
+	
 }
 
 .listings ul.properties_list{
@@ -476,14 +461,14 @@ header nav .login_btn:hover{
     top: 10px;
     left: 10px;
     padding: 15px 20px;
-    background: #ffffff;
-    color: #514d4d;
     font-family: "lato-bold", Helvetica, Arial, sans-serif;
     font-size: 16px;
     font-weight: bold;
+    color:#FFF;
     letter-spacing: 1px;
-
+	font-weight: bold;
     border-radius: 2px;
+    text-shadow: 0 0 5px #000;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     -o-border-radius: 2px;
@@ -499,7 +484,6 @@ header nav .login_btn:hover{
     border-bottom: 1px solid #f2f1f1;
     border-left: 1px solid #f2f1f1;
     border-right: 1px solid #f2f1f1;
-
     transition: all .2s linear;
     -webkit-transition: all .2s linear;
     -moz-transition: all .2s linear;
@@ -717,7 +701,6 @@ footer .copyrights a.ph_link{
 
 @media (max-width: 1150px){
     .wrapper{
-        padding: 0 40px;
         max-width: 1020px;
     }
     .search .advanced_search .arrow{
