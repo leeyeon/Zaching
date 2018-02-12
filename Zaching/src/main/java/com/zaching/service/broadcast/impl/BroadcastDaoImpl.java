@@ -55,12 +55,14 @@ public class BroadcastDaoImpl implements BroadcastDao {
         
         BasicDBObject addObject = new BasicDBObject();
  
-        addObject.put("broadcaster",broadcast.getBroadcaster().getUserId());
+        //addObject.put("broadcasterId",broadcast.getBroadcaster().getUserId());        
+        addObject.put("broadcaster",broadcast.getBroadcaster().getName());
         addObject.put("title",broadcast.getTitle());
         addObject.put("detail",broadcast.getDetail());        
         addObject.put("image",broadcast.getFileName());
         addObject.put("forbidden",broadcast.getForbidden());
         addObject.put("date", year);
+        //System.out.println("¤¾¤·¤·"+addObject);
         System.out.println("¸ù°ídbÀúÀå.");
         dbcoll.insert(addObject);
         mongoClient.close();       

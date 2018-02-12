@@ -91,17 +91,21 @@
 					var title = $($("input[name=title]")[index]).val();
 					var detail = $($("input[name=detail]")[index]).val();
 			
-					window.open("http://192.168.0.31:9001/?title="+title, title, "width=1800, height=950, toolbar=no, location=no, menubar=no, scrollbars=no, resizable=yes")
+					window.open("http://192.168.0.31:3000/broadcast?title="+title, title, "width=1800, height=950, toolbar=no, location=no, menubar=no, scrollbars=no, resizable=yes")
 				});	
 		 });
-		 
+	
+		function openWin(){  
+		    window.open("http://192.168.0.31:8080/broadcast/addBroadcast.jsp", "broadcast-add", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+		}
+			
 		$(function(){
 			 $(document).on('click','.btn-add-broads', function(){
 				 alert("방만들러 가즈아~");
-				 $(self.location).attr("href","/broadcast/addBroadcast");
+				 openWin();
+				 //$(self.location).attr("href","/broadcast/addBroadcast");
 			 });
 		 });
-		 
 		 
 	</script>
 </head>
