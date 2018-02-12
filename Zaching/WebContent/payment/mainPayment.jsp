@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
@@ -11,6 +11,8 @@
 	<script type="text/javascript" src="../resources/javascript/masonry.pkgd.min.js"></script>
 	<script type="text/javascript" src="../resources/javascript/moment.js"></script>
 	<script type="text/javascript" src="../resources/javascript/moment-ko.js"></script>
+	<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
 	
 	    
     <!-- Latest compiled and minified CSS -->
@@ -157,21 +159,20 @@
 		.active {
 			display: block;
 		}
-		
-		.listCondition {
-			cursor: pointer;
-			padding: 10px;
-			background: #ccc;
-			font-size: 17px;
-			margin-top: 30px;
-			border: 1px solid #FFF;
-		}
-		
+
 		@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 			#Title {
 				max-width: 100%;
 			}
 		}
+		
+		.img-cover{
+	         position: absolute;
+	         height: 100%;
+	         width: 100%;
+	         background-color: rgba(0, 0, 0, 0.3);                                                                 
+	         z-index:1;
+     	}
 
        	
     </style>
@@ -256,6 +257,26 @@
 			$('.selectpicker').on('change', function() {
 				$(self.location).attr("href","/payment/mainPayment?searchCondition="+$('option:selected').val());
 			});
+			
+			/*  Advanced search form & Icon  */
+			$('#advanced_search_btn').on("click", function(e){
+				e.preventDefault();
+
+				var ads_box =$('.advanced_search');
+				
+				if(!ads_box.hasClass('advanced_displayed')){
+
+					$(this).addClass('active');
+					ads_box.stop().fadeIn(200).addClass('advanced_displayed');
+
+				}else{
+
+					$(this).removeClass('active');
+					ads_box.stop().fadeOut(200).removeClass('advanced_displayed');
+
+				}
+
+			});
 
 		});
 
@@ -264,14 +285,14 @@
 </head>
 <body style="background:#fffafa;">
 
-	<div class="jumbotron text-center"
-			style="background-image: url('../resources/images/340.jpg');
+	<section class="hero" style="background-image: url('../resources/images/igor-ovsyannykov-494256.jpg');
 			background-size: cover;
 			background-repeat: no-repeat, no-repeat;
-			background-position: center center;">
-		<img id="Title" src="../resources/images/title_point.png"/>
-		
-		<div class="row text-center" style="padding: 30px; background: rgba(0, 0, 0, 0.7); margin-top: 50px; color: #FFF;">
+			background-position: center center; height:700px; ">
+		<div class="img-cover"></div>
+		<section class="caption" style="padding-top: 70px;">
+			<h2 class="caption">My Point</h2>
+			<div class="row text-center" style="padding: 30px; background: rgba(0, 0, 0, 0.7); margin-top: 50px; color: #FFF;">
 			<div class="col-xs-12">
 				<p style="font-size:20px;">${user.name}님의 잔여 포인트 : <fmt:formatNumber type="currency" value="${totalPoint}" pattern="###,###" /> Point</p>
 				<h4>( 마일리지 : <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" />점 )</h4>
@@ -282,14 +303,34 @@
 	            <button class="btn-bob" style="margin: 10px;" data-toggle="modal">충전</button>
 	            <button class="btn-bob" style="margin: 10px;">반환신청</button>
 	        </div>				
+			</div>
+		</section>
+	</section>
+	
+	<section class="search" style="background: #f77e7e;">
+		<div class="wrapper">
+			<form id="searchForm">
+				<input type="text" id="search" name="searchKeyword" placeholder="What are you looking for?"  autocomplete="off"
+					style="background: none;"/>
+				<a href="#" class="advanced_search_icon" id="advanced_search_btn"></a>
+			</form>
 		</div>
-		<div class="row text-center"  style="padding-top:50px; padding-bottom:30px;">
-				
-	           
-	            
-	    </div>
-	</div>
-
+		
+		<div class="advanced_search" style="z-index: 50;">
+			<div class="wrapper">
+				<span class="arrow"></span>
+					<div id="exTab2" style="padding:0;">
+					<ul class="nav nav-tabs nav-justified" style="border: none;">
+						<li class="active" ><a href="/bob/listBob?category=B01" data-target="#B01" data-toggle="tabajax">우리지금만나</a></li>
+						<li><a href="/bob/listBob?category=B02" data-target="#B02" data-toggle="tabajax">당장만나</a></li>
+						<li><a href="/bob/listBob?category=B03" data-target="#B03"  data-toggle="tabajax">주기적으로만나</a></li>
+						<li><a href="/bob/listBob?category=B04" data-target="#B04"  data-toggle="tabajax">내 주소로 검색하기</a></li>
+						<li style="display: none;"><a href="/bob/listBob?category=B05" data-target="#B05"  data-toggle="tabajax">키워드로 검색하기</a></li>
+					</ul>
+				</div>
+			</div>
+		</div><!--  end advanced search section  -->
+	</section><!--  end search section  -->
 	
 	<div class="container" style="padding-top: 50px;">
 
