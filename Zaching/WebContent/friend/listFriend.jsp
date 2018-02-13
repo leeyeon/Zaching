@@ -29,9 +29,30 @@
 
 
 
+
+
 <style>
 body {
 	padding-top: 80px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 </style>
 
@@ -52,8 +73,8 @@ body {
 		});
 		//프로필 사진 클릭시 타임라인 이동
 		$(function() {
-			$("#btn").on("click", function() {
-				self.location = "";
+			$("friendImage").on("click", function() {
+				self.location = "/user/getTimeLine?userId=${user.userId}";
 
 			});
 		});
@@ -114,21 +135,29 @@ body {
 
 			<c:forEach var="friend" items="${list}" varStatus="status">
 
-				<div class="col-md-4">
+				<div class="col-xs-6 col-md-4">
 					<div>
-						<button class="btn" id="btn" type="submit">
+						<button type="button" class="btn"  id="friendImage" >
 							<img class="btn-img" style="width: 120px; height: 120px;"
 								src="../resources/upload_files/images/${friend.profileImage}">
 						</button>
 					</div>
-					<div class="col-sm-4 ">${friend.name }</div>
-					<div class="col-sm-4 ">
-						<select name='fruits'>
+					<div class="col-xs-6 col-sm-4 ">${friend.name }</div>
+					<div class="col-xs-6 col-sm-4 ">
+					<div class="dropdown">
+  <span> 친구 </span>
+  <div class="dropdown-content">
+    <p> Hello World! </p>
+  </div>
+</div>
+					
+				
+						<!--  <select name='fruits'>
 							<option value='' selected>친구</option>
 							<option value='message'>메세지</option>
 							<option value='banana'>친구삭제</option>
 							<option value='lemon'>친구차단</option>
-						</select>
+						</select>-->
 					</div>
 
 				</div>

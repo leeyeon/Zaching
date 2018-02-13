@@ -68,8 +68,6 @@ public class FriendController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		User user = userService.getUser(32);
-		session.setAttribute("user", user);
 		search.setSearchKeyword(String.valueOf(((User)session.getAttribute("user")).getUserId()));
 
 		Map<String, Object> map = friendService.listFriend(search);
