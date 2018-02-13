@@ -95,7 +95,7 @@ public class BroadcastDaoImpl implements BroadcastDao {
 			WriteConcern w = new WriteConcern(1,2000);//쓰게 락 갯수, 연결 시간 2000 //쓰레드 쓰게되면 2개 동시에 쓸 경우도 생기니까
 	        mongoClient.setWriteConcern(w);
 	        
-	        DBCursor cursor = dbcoll.find();	
+	        DBCursor cursor = dbcoll.find().limit(search.getPageSize());	
 	        while(cursor.hasNext()){
 	            //커서의 이름 내용 전체 출력 
 	        	
