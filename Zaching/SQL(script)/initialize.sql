@@ -25,16 +25,16 @@ CREATE SEQUENCE seq_notice_target_id	 INCREMENT BY 1 START WITH 1;
 CREATE TABLE USERS ( 
 	user_id      		number	 NOT NULL,
 	email  	 VARCHAR2(50)	 NOT NULL,
-	password  		 VARCHAR2(16)	  NOT NULL,
+	password  		 VARCHAR2(16) IS NULL,//수정했지롱 ~~
 	role  				 CHAR(2) 		DEFAULT 0  NOT NULL   ,
 	name  				 	 VARCHAR2(20)  	   NOT NULL,
 	address  		 	VARCHAR2(50),
 	longitude  		 		number(15,10),
 	latitude  		 		number(15,10),
 	gender  		  char(2),
-	phone 		  varchar2(12),
+	phone 		  varchar2(15),//수정했지롱 ~~ 
 	birth 		  varchar2(8),
-	profile_image varchar2(100),
+	profile_image varchar2(300),  //수정했지롱 ~~ 
 	real_name varchar2(10),
 	bank_code number,
 	account_number varchar2(20),

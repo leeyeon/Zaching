@@ -10,34 +10,36 @@
 <head>
     <meta charset="utf-8">
 <!--   jQuery , Bootstrap CDN  -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<meta name="author" content="pixelhint.com">
+	<meta name="description" content="La casa free real state fully responsive html5/css3 home page website template"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+	<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
+	<jsp:include page="/resources/layout/sub_toolbar.jsp"/>
+
 
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-<jsp:include page="/resources/layout/sub_toolbar.jsp"/>
+
 <style>
-body{
-	margin: 100px;
-}
-.bg {
-			background: #f2b1d2;/*페이지 배경 컬러  */
-			position: fixed;
-			width: 100%;
-			height: 100%;
+
+		
+
+/* 템플릿적용 */
+.hero {
+			background: url('../resources/images/memoryMAP.jpg') no-repeat bottom center;
 			background-size: cover;
-			top: 0;
-			left: 0;
-			z-index: -1;
-			opacity: 0.3;
+			background-repeat: no-repeat, no-repeat;
+			background-position: center center; height:700px;
 		}
 		
-.jumbotron{
-
-	background-color: #fff;
+#map{
+    margin-left: 10px;
+    margin-top: 100px;
+    padding-bottom: 100px;
 }
+
 
 
 .customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
@@ -50,15 +52,17 @@ body{
 </head>
 
 <body>
-<div class="jumbotron" align="center">
-<div class="bg"></div>
-<div class="page-header">
-	<h1>Memory MAP</h1>
-</div>
 
-<div  class="page-body" id="map" style="width:50%;height:350px;"></div>
-<div class="page- footer"></div>
-</div>
+	<section class="hero">
+		<section class="caption">
+				<h2 class="caption">Memory Map</h2>
+		</section>
+	</section><!--  end hero section  -->
+
+
+<div  class="page-body" id="map" style="width:70%; height:350px;" align="center"></div>
+
+
 
 
 <script type="text/javascript" 
@@ -135,7 +139,7 @@ $(function() {
 					"Accept" : "application/json",
 					"Content-Type" : "application/json"
 				},success : function(jsonData , status) {
-				        var markers = $(jsonData.positions).map(function(i, position) {
+				       		var markers = $(jsonData.positions).map(function(i, position) {
 				        	var imageSrc = jsonData.positions[i].imgsrc, // 마커이미지의 주소입니다    
 				            imageSize = new daum.maps.Size(64, 69), // 마커이미지의 크기입니다
 				            imageOprion = {offset: new daum.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 

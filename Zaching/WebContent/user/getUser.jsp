@@ -73,6 +73,14 @@
 		<hr/>
 		
 		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>성 별</strong></div>
+	  		<c:if test="${user.gender.trim() eq '1' }">&nbsp;남</c:if>
+			<c:if test="${user.gender.trim() eq '2' }">&nbsp;여</c:if>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>주소</strong></div>
 			<div class="col-xs-8 col-md-4">${user.address}</div>
 		</div>
@@ -81,7 +89,7 @@
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>휴대전화번호</strong></div>
-			<div class="col-xs-8 col-md-4"></div>
+			<div class="col-xs-8 col-md-4">${user.phone}</div>
 		</div>
 		
 		<hr/>
@@ -89,6 +97,13 @@
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>가입일자</strong></div>
 			<div class="col-xs-8 col-md-4">${user.createdDate}</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>계좌번호</strong></div>
+			<div class="col-xs-8 col-md-4">${user.accountNumber}</div>
 		</div>
 		
 		<hr/>
