@@ -24,12 +24,7 @@
 <body>
 
 
-	<div class="container">
-
 		<c:import url="/newsfeed/listNewsfeed"></c:import>
-
-	</div>
-
 
   
 </body>
