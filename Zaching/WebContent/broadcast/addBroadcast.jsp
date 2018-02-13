@@ -82,11 +82,6 @@
 	<script type='text/javascript'>
   
 function fncAddBroadcast(){
-	//Form 유효성 검증
- 	//var name = document.detailForm.prodName.value;
-	//var detail = document.detailForm.prodDetail.value;
-	//var manuDate = document.detailForm.manuDate.value;
-	//var price = document.detailForm.price.value; 
 	
 	var name = $("input[name='title']").val();
 	var detail = $("input[name='detail']").val();
@@ -100,15 +95,13 @@ function fncAddBroadcast(){
 		return;
 	}
 
-	//document.detailForm.action='/addProduct.do';
-	//document.detailForm.action='/product/addProduct';
-	//document.detailForm.submit();
 	
 	$("form").attr("method","POST").attr("action","/broadcast/addBroadcast").submit();
 }
 	
 	$(function() {
 		 $( "button.btn.btn-primary" ).on("click" , function() {
+			 window.open('about:blank','_self').self.close();
 			 fncAddBroadcast();
 		});
 	});	
@@ -125,11 +118,39 @@ function fncAddBroadcast(){
 		});
 	});		
 	
-	function makeToast(title) {
-		$('#toastMessage').text(title).fadeIn(400).delay(3000).fadeOut(400);
+	var oTbl;
+	//Row 추가
+	function insRow() {
+	  oTbl = document.getElementById("addForbidden");
+	  var oRow = oTbl.insertRow();
+	  oRow.onmouseover=function(){oTbl.clickedRowIndex=this.rowIndex}; //clickedRowIndex - 클릭한 Row의 위치를 확인;
+	  var oCell = oRow.insertCell();
+
+	  //삽입될 Form Tag
+	  var frmTag = "<input type= text class= text name= forbidden style= font-size: 20px; width: 50%;> ";
+	  frmTag += "<input type= button value='삭제' onClick='removeRow()' style='cursor:hand'>";
+	  oCell.innerHTML = frmTag;
 	}
-	
-	
+	//Row 삭제
+	function removeRow() {
+	  oTbl.deleteRow(oTbl.clickedRowIndex);
+	}
+
+	function frmCheck()
+	{
+	  var frm = document.form;
+	  
+	  for( var i = 0; i <= frm.elements.length - 1; i++ ){
+	     if( frm.elements[i].name == "forbidden" )
+	     {
+	         if( !frm.elements[i].value ){
+	             alert("텍스트박스에 값을 입력하세요!");
+	             frm.elements[i].focus();
+	             return;
+	          }
+	      }
+	   }
+	 }
 </script>
 </head>
 <body>
@@ -177,7 +198,10 @@ function fncAddBroadcast(){
 	            	<div class="col-sm-3 btn-broad" >금지어</div>
 	            	
 	            	<div class="col-sm-9">
-	            		<input id="forbidden" name="forbidden" type="text" class="text" style="font-size: 20px; width: 15%; "/>
+	            	<table id="addForbidden" >
+	            	<tr><td><input name="forbidden" type="text" class="text" style="font-size: 20px; width: 50%; "/></td></tr>
+	            	</table>
+	            		<input name="addButton" type="button" style="cursor:hand" onClick="insRow()" value="추가">
 	            	</div>
 		 </div>
 
@@ -191,8 +215,6 @@ function fncAddBroadcast(){
 		</form>
 		<!-- form Start /////////////////////////////////////-->		
  	</div>
-	<!--  화면구성 div end /////////////////////////////////////-->
-	<div id="toastMessage" class='toastMessage' style='display:none'>Toast</div>
 </body>
 
 </html>
