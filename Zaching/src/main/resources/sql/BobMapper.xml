@@ -320,9 +320,9 @@
 		TRIM(setting_fee) AS setting_fee, participated_date, writer_id,
 		(CASE 
 			WHEN to_char(paid_date, 'yyyymmdd') 
-				 <![CDATA[>=]]> to_char(ADD_MONTHS(LAST_DAY(SYSDATE)+1,-1-${month}) + extract(day from bob.fee_date) -1, 'yyyymmdd') 
+				 <![CDATA[>=]]> to_char(ADD_MONTHS(LAST_DAY(SYSDATE)+1,-1-#{month}) + extract(day from bob.fee_date) -1, 'yyyymmdd') 
 				 AND to_char(paid_date, 'yyyymmdd')
-				 <![CDATA[<]]> to_char( add_months(bob.fee_date, extract(month from SYSDATE)-1-${month}), 'yyyymmdd')
+				 <![CDATA[<]]> to_char( add_months(bob.fee_date, extract(month from SYSDATE)-1-#{month}), 'yyyymmdd')
 				 THEN paid_fee
 			ELSE 0
 			END) AS paid_fee

@@ -24,7 +24,6 @@
 		}
 	
 		body {
-			padding-top:50px;
 			padding-bottom: 50px;
 		}
 		
@@ -199,8 +198,9 @@
 
 						$("#B05").html(data);
 						
-						$($('[data-toggle="tabajax"]')[4]).tab('show');
+						$("#mainBob > .tab-content").html(data);
 
+						/* css 색 변경하기 */
 						$('#exTab2 a').css('color', '#000');
 						$('#exTab2 a').css('background', '#ede8f7');						
 						$($('a:contains("검색")')[1]).css('color', '#000').css('background', '#FFF')
@@ -250,7 +250,7 @@
 			
 			/* tab Event Start */
 		    $.get($($('[data-toggle="tabajax"]')[0]).attr('href'), function(data) {
-		        $($($('[data-toggle="tabajax"]')[0]).attr('data-target')).html(data);
+		        $("#mainBob > .tab-content").html(data);
 		    });
 
 		    $($('[data-toggle="tabajax"]')[0]).tab('show');
@@ -293,14 +293,14 @@
 									searchKeyword : $(":text[name='searchKeyword']").val()});
 						
 						posting.done(function(data) {
-							$(targ).html(data);
+							$("#mainBob > .tab-content").html(data);
 						});
 						
 						$this.tab('show');
 
 					} else {
 					    $.get(loadurl, function(data) {
-					        $(targ).html(data);
+					    	$("#mainBob > .tab-content").html(data);
 					    });
 					    
 					    $this.tab('show');
@@ -309,33 +309,6 @@
 
 			    return false;
 			});
-			/* tab Event End */
-			
-			/*
-			$('#exTab2 a').on({
-				'mouseover' : function () {
-					if(!$(this).parent().hasClass("active")) {
-						$(this).css('color', '#FFF');
-						$(this).css('background', '#5F4B8B');
-					}
-				},
-				'mouseout' : function () {
-					if(!$(this).parent().hasClass("active")) {
-						$(this).css('color', '#000');
-						$(this).css('background', '#ede8f7');
-					}
-				}
-				
-			});
-
-			$('#exTab2 a').click(function(){   // sBtn에 속해 있는  a 찾아 클릭 하면.
-				 $('#exTab2 a').css('color', '#000');
-				 $('#exTab2 a').css('background', '#ede8f7');
-				 $(this).css('background', '#FFF');
-				 $(this).css('color', '#000');
-			});
-			
-			*/
 			
 			/*  Advanced search form & Icon  */
 			$('#advanced_search_btn').on("click", function(e){
@@ -396,7 +369,7 @@
 						<li class="active" ><a href="/bob/listBob?category=B01" data-target="#B01" data-toggle="tabajax">우리지금만나</a></li>
 						<li><a href="/bob/listBob?category=B02" data-target="#B02" data-toggle="tabajax">당장만나</a></li>
 						<li><a href="/bob/listBob?category=B03" data-target="#B03"  data-toggle="tabajax">주기적으로만나</a></li>
-						<li><a href="/bob/listBob?category=B04" data-target="#B04"  data-toggle="tabajax">내 주소로 검색하기</a></li>
+						<li><a href="/bob/listBob?category=B04" data-target="#B04" 	data-toggle="tabajax">내 주소로 검색하기</a></li>
 						<li style="display: none;"><a href="/bob/listBob?category=B05" data-target="#B05"  data-toggle="tabajax">키워드로 검색하기</a></li>
 					</ul>
 				</div>
@@ -411,11 +384,8 @@
 
 				<!-- 데이터 들어갈 것들,,, -->
 				<div class="tab-content" style="padding:20px; background: #FFF;overflow: hidden; border-right: 1px solid #ddd; border-left: 1px solid #ddd; border-bottom: 1px solid #ddd;">
-					<div class="tab-pane active" id="B01"> </div>
-					<div class="tab-pane" id="B02"> </div>
-					<div class="tab-pane" id="B03"> </div>
-					<div class="tab-pane" id="B04"> </div>
-					<div class="tab-pane" id="B05"> </div>
+					<c:import url="/bob/listBobd"></c:import>
+					
 					<!-- 데이터 끝... -->
 					    	
 		    	<div id="loader" class="text-center" style="margin: 50px;">
