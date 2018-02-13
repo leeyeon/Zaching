@@ -257,8 +257,6 @@
 			  </div><!-- /.col-lg-6 -->
 			</div><!-- /.row -->
 			
-			홍길동 / 8801011 / 1234567890123450
-			
 			<form id="accountForm" >
 				<div class="row" style="padding-top:50px;">
 					<label for="name" class="col-xs-4 control-label">
@@ -296,8 +294,10 @@
 					</div>
 				</div>
 			
+
 			</form>				
-			</div><!-- /.row -->		
+	
+
 			
 	        <div class="input-group" align="center" style="padding-top:50px;">
 	            <button type="submit" class="btn-bob" style="margin: 10px;">충전</button>

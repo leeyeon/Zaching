@@ -51,18 +51,6 @@ public class BroadcastController {
 	//@Value("#{commonProperties['pageSize']}")
 	int pageSize = 9;
 	
-	@RequestMapping(value = "addBcpoint", method=RequestMethod.GET)
-	public String addBcpoint() throws Exception {
-		
-		//Business Logic
-		
-		System.out.println("/broadcast/addBroadcast : GET");
-		
-		
-		return "redirect:/broadcast/addBroadcast.jsp";
-	}
-	
-	
 	@RequestMapping(value = "addBroadcast", method=RequestMethod.GET)
 	public String addBroadcast() throws Exception {
 		
@@ -84,10 +72,11 @@ public class BroadcastController {
 		
 		User user = (User)session.getAttribute("user");
 		
-		//broadcast.setBroadcaster(user);
-		//System.out.println("user 정보 : "+user);
-		broadcast.setBroadcaster(user);
-		String fileDirectory = "C:\\Users\\소현태\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files";
+		broadcast.setUserId(user.getUserId());
+		broadcast.setUserName(user.getName());
+		broadcast.setProfileImage(user.getProfileImage());
+		
+		String fileDirectory = "C:\\Users\\소현태\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
 		String fileName = commonService.addFile(fileDirectory, broadcast.getImage());
 		//System.out.println("broadcast end ==>"+ broadcast);
 		broadcast.setFileName(fileName);
@@ -95,11 +84,9 @@ public class BroadcastController {
 		
 		model.addAttribute("broadcast",broadcast);
 		
-		System.out.println("이름 :"+broadcast.getBroadcaster().getUserId());
+		System.out.println("잘한다 :"+broadcast);
 		
-		//http://127.0.0.1:9001/send?id=값&...
-		
-		return "redirect:http://localhost:3000/broadcast?broadcaster="+broadcast.getBroadcaster().getUserId();
+		return "redirect:http://localhost:3000/broadcast?broadcaster="+broadcast.getUserId();
 		//return "forward:/chat/broadcast.jsp";
 	}
 	
@@ -148,8 +135,8 @@ public class BroadcastController {
 	        for(String str:list) {
 		        obj = (JSONObject)parser.parse(str);
 		        
-		        System.out.println(obj);
-		        System.out.println(((JSONObject)obj.get("date")).get("$date"));
+		        System.out.println("오비제이 값 : "+obj);
+		        //System.out.println(((JSONObject)obj.get("date")).get("$date"));
 		        list2.add(obj);
 	        }
 	        
