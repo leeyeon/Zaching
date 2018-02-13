@@ -161,6 +161,31 @@ public class LoginController {
 		
 		return "forward:/index.jsp";
 	}
+	
+	@RequestMapping(value = "facebookLoginRequest", method = {RequestMethod.GET,RequestMethod.POST})
+	public String facebookLoginRequest(HttpSession session) {
+
+		System.out.println("[ facebookLogin Request!! ]");
+
+		return commonService.getAuthorizationUrl_facebook(session);
+
+	}
+	
+	
+	@RequestMapping(value = "facebookLogin", method = {RequestMethod.GET,RequestMethod.POST})
+	public String facebookLogin(@RequestParam("code") String code,
+								HttpSession session, String state)throws Exception {
+
+		System.out.println("[ facebookLogin 토큰/사용자정보 받기!! ]");
+		String accesstoken = commonService.getAccessToken_facebook(session, code);
+		
+		System.out.println(":: 토큰 ::"+accesstoken);
+		
+		commonService.getUserProfile(accesstoken, session);
+
+		return "redirect:/index.jsp";
+
+	}
 
 
 }
