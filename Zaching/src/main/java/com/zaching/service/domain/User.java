@@ -42,7 +42,7 @@ public class User {
 	private String setBroadcast;//라이브방송알림설정
 	private String setFriend;//친구알림설정
 	private String setBob;//밥친구 알림설정
-	private String snsType;//sns계정 연동된 정보
+	private String snsType;//sns계정 연동된 정보====> kakao '1'/ facebook'2' / naver '3' / google '4'
 	
 	private String accessToken;//토큰저장?
 	private String refreshToken;//토큰갱신

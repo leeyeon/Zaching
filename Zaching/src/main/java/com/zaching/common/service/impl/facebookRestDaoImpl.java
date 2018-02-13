@@ -92,7 +92,8 @@ public class facebookRestDaoImpl implements FacebookRestDao {
 		    user.setEmail(obj.get("email").toString());
 		    user.setName(obj.get("name").toString());
 		    user.setProfileImage(obj.get("picture").toString());
-		    user.setSnsType("facebook");
+		    
+		    user.setSnsType("2"); //facebook
 		    user.setRole("1");
 		    
 		    
