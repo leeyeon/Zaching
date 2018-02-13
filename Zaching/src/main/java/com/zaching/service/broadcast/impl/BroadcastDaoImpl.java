@@ -56,7 +56,9 @@ public class BroadcastDaoImpl implements BroadcastDao {
         BasicDBObject addObject = new BasicDBObject();
  
         //addObject.put("broadcasterId",broadcast.getBroadcaster().getUserId());        
-        addObject.put("broadcaster",broadcast.getBroadcaster().getName());
+        addObject.put("broadcastId",broadcast.getUserId());
+        addObject.put("broadcaster",broadcast.getUserName());
+        addObject.put("profileImage",broadcast.getProfileImage());
         addObject.put("title",broadcast.getTitle());
         addObject.put("detail",broadcast.getDetail());        
         addObject.put("image",broadcast.getFileName());

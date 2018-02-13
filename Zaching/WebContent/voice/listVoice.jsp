@@ -14,8 +14,7 @@
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 	<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
-	<script type="text/javascript" src="../resources/javascript/jquery.js"></script>
-	<script type="text/javascript" src="../resources/javascript/main.js"></script>
+
 	
 	<script>
 		$(function(){
