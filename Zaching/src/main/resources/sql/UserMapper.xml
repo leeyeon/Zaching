@@ -50,6 +50,16 @@
 	</insert>
 	
 	
+	<insert id="snsAddUser" parameterType="user" >
+	INSERT
+		INTO users(user_id , name, email, 
+		profile_image, role, sns_type,  created_date) 
+		VALUES(	seq_user_id.nextval, #{name} ,
+					#{email}, #{profileImage:VARCHAR},
+					#{role} ,#{snsType}, SYSDATE )
+	</insert>
+	
+	
 	<select id="checkSignup" parameterType="String" resultType="int">
 		SELECT COUNT(*)
 		FROM users 

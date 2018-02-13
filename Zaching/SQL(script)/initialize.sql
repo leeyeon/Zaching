@@ -34,7 +34,7 @@ CREATE TABLE USERS (
 	gender  		  char(2),
 	phone 		  varchar2(12),
 	birth 		  varchar2(8),
-	profile_image varchar2(100),
+	profile_image varchar2(300),  //수정했지롱 ~~ 
 	real_name varchar2(10),
 	bank_code number,
 	account_number varchar2(20),

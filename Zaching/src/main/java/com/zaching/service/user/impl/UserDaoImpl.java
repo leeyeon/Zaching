@@ -133,4 +133,11 @@ public class UserDaoImpl implements UserDao{
 		return sqlSession.selectOne("UserMapper.getAccountToken", userId);
 	}
 
+	@Override
+	public void snsAddUser(User user) throws Exception {
+		
+		sqlSession.insert("UserMapper.snsAddUser", user);
+	}
+	
+	
 }

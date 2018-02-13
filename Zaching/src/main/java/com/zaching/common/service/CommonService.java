@@ -74,7 +74,7 @@ public interface CommonService {
 	//∆‰¿ÃΩ∫∫œ
 	public String getAuthorizationUrl_facebook(HttpSession session);
 	
-	public String getAccessToken_facebook(HttpSession session,String code)throws Exception;
+	public User getAccessToken_facebook(HttpSession session,String code)throws Exception;
 	
-	public void getUserProfile(String accesstoken,HttpSession session)throws Exception;
+	public User getUserProfile(User user)throws Exception;
 }

@@ -46,6 +46,9 @@ public interface UserDao {
 	//이메일 중복체크
 	public int checkSignup(String email)throws Exception;
 	
+	//sns계정 로그인 정보 DB로 슝슝
+	public void snsAddUser(User user)throws Exception;
+	
 	public void updateAccountToken(String token, int userId) throws Exception;
 	
 	public String getAccountToken(int userId) throws Exception;
