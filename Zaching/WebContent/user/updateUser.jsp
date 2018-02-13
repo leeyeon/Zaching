@@ -16,17 +16,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <!-- 다음 주소검색 -->
-<script
-	src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
+<script	src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="/resources/layout/sub_toolbar.jsp" />
@@ -82,64 +78,20 @@ body {
 
 	$(function() {
 
-		$("input[name='address']")
-				.on(
-						"click",
-						function() {
-							daum.postcode
-									.load(function() {
-										new daum.Postcode(
-												{
-													oncomplete : function(data) {
-
-														jQuery(
-																"input[name='address']")
-																.val(
-																		data.address);
-														var geocoder = new daum.maps.services.Geocoder();
-														geocoder
-																.addressSearch(
-																		$(
-																				"input[name='address']")
-																				.val(),
-																		function(
-																				result,
-																				status) {
-																			if (status === daum.maps.services.Status.OK) {
-																				var coords = new daum.maps.LatLng(
-																						result[0].y,
-																						result[0].x);
-																				var marker = new daum.maps.Marker(
-																						{
-																							map : map,
-																							position : coords
-																						});
-																				map
-																						.setCenter(coords);
-
-																				console
-																						.log(coords
-																								.getLat());
-																				console
-																						.log(coords
-																								.getLng());
-
-																				$(
-																						"input[name=latitude]")
-																						.val(
-																								coords
-																										.getLat());
-																				$(
-																						"input[name=longitude]")
-																						.val(
-																								coords
-																										.getLng());
-																			}
-																		});
+		$("input[name='address']").on("click",function() {
+			daum.postcode.load(function() {	
+				new daum.Postcode({
+					oncomplete :function(data){	
+						jQuery("input[name='address']").val(data.address);
+						
+						
 													}
-												}).open();
-									});
-						});
+				
+										}).open();
+						
+			});
+			
+		});
 
 	});
 
@@ -354,11 +306,11 @@ body {
 			</div>
 
 			<div class="form-group">
-				<label for="address" class="col-sm-offset-1 col-sm-3 control-label">성별</label>
+				<label for="gender" class="col-sm-offset-1 col-sm-3 control-label">성별</label>
 				<div class="col-sm-4">
 					<label> 
-						<input type="radio" name="gender" id="" value="1" >남
-						<input type="radio" name="gender" id="" value="2">여
+						<input type="radio" name="gender" id="male" value="1" >남
+						<input type="radio" name="gender" id="female" value="2">여
 					</label>
 				</div>
 			</div>
@@ -375,16 +327,20 @@ body {
 			<div class="form-group">
 				<label for="birth" class="col-sm-offset-1 col-sm-3 control-label">생년월일</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="birth" name="birth"
-						size="12" />
-
+					<input type="text" class="form-control" id="birth" name="birth"	size="12" />
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="accountNumber" class="col-sm-offset-1 col-sm-3 control-label">계좌번호</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="accountNumber" name="accountNumber" />
 				</div>
 			</div>
 
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" class="btn btn-primary" id="update">수
-						&nbsp;정</button>
+					<button type="button" class="btn btn-primary" id="update">수	&nbsp;정</button>
 					<a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
 
 				</div>

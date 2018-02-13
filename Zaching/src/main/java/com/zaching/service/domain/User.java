@@ -165,7 +165,7 @@ public class User {
 		this.gender = gender;
 	}
 	public String getPhone() {
-		return phone;
+		return phone.trim();
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
