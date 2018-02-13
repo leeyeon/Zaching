@@ -229,7 +229,7 @@
 					<div class="input-group">
 						<input type="text" class="form-control text-right" aria-describedby="basic-addon2" id="point" name="point" />
 						<span class="input-group-addon" id="basic-addon2" style="background: #FFF;"> 
-						/<fmt:formatNumber type="currency" value="${user.totalPoint}" pattern="###,###" />Point</span>
+						<fmt:formatNumber type="currency" value="${user.totalPoint}" pattern="###,###" />Point</span>
 					</div>
 				</div>
 			</div>
@@ -255,7 +255,49 @@
 			      <div class="form-control">새로운계좌사용</div>
 			    </div><!-- /input-group -->
 			  </div><!-- /.col-lg-6 -->
-			</div><!-- /.row -->		
+			</div><!-- /.row -->
+			
+			<form id="accountForm" >
+				<div class="row" style="padding-top:50px;">
+					<label for="name" class="col-xs-4 control-label">
+							이름
+					</label>
+					<div class="col-xs-8">
+						<input type="text" class="form-control" name="name" value="${user.realName}" />
+					</div>
+				</div>
+				
+				<div class="row" style="padding-top:50px;">
+					<label for="name" class="col-xs-4 control-label">
+							은행명
+					</label>
+					<div class="col-xs-8">
+						은행이름
+					</div>
+				</div>
+				
+				<div class="row" style="padding-top:50px;">
+					<label for="name" class="col-xs-4 control-label">
+							생년월일+한자리 (ex) 9402082
+					</label>
+					<div class="col-xs-8">
+						<input type="text" class="form-control" name="accountHolderinfo" value="0"/>
+					</div>
+				</div>
+				
+				<div class="row" style="padding-top:50px;">
+					<label for="name" class="col-xs-4 control-label">
+							계좌번호
+					</label>
+					<div class="col-xs-8">
+						<input type="text" class="form-control" name="accountNum" value="${user.accountNumber}" />
+					</div>
+				</div>
+			
+
+			</form>				
+	
+
 			
 	        <div class="input-group" align="center" style="padding-top:50px;">
 	            <button type="submit" class="btn-bob" style="margin: 10px;">충전</button>

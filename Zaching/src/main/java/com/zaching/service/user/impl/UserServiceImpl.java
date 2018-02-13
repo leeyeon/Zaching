@@ -211,6 +211,15 @@ public class UserServiceImpl implements UserService {
 			userDao.updateAccountToken(token, userId);
 		}
 		return userDao.getAccountToken(userId);
-	};
+	}
+
+	@Override
+	public void snsAddUser(User user) throws Exception {
+		
+		userDao.snsAddUser(user);
+	}
+	
+	
+	
 
 }

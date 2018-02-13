@@ -91,7 +91,10 @@ public class LoginController {
 			user = commonService.getUserInfo(user);
 	
 			session.setAttribute("user", user);
-	
+			
+			/*if(user.getEmail() != sessionUser.getEmail()) {
+				userService.snsAddUser(user); //세션정보 DB에 저장
+			}*/
 			System.out.println("session 저장정보===>" + session.getAttribute("user"));
 			System.out.println("이메일 ==> " + user.getEmail());
 			System.out.println("프로필 이미지 ==> " + user.getProfileImage());
@@ -123,6 +126,7 @@ public class LoginController {
 		User user = naverService.getAccessToken(session, code, state);
 		user = naverService.getUserProfile(user);
 		
+		//userService.snsAddUser(user);
 		System.out.println("code ==>"+code);
 		System.out.println("state  ==>"+state);
 		System.out.println("user정보 ==>"+user);
@@ -154,12 +158,44 @@ public class LoginController {
 		user = googleService.getUserProfile(user);
 		
 		session.setAttribute("user", user);
-		
-		System.out.println("session==> "+session.getAttribute("user"));
+	/*	userService.snsAddUser(user);
+*/		System.out.println("session==> "+session.getAttribute("user"));
 		System.out.println("google 이메일 ==> " + user.getEmail());
 		System.out.println("프로필 이미지 ==> " + user.getProfileImage());
 		
 		return "forward:/index.jsp";
+	}
+	
+	@RequestMapping(value = "facebookLoginRequest", method = {RequestMethod.GET,RequestMethod.POST})
+	public String facebookLoginRequest(HttpSession session) {
+
+		System.out.println("[ facebookLogin Request!! ]");
+
+		return commonService.getAuthorizationUrl_facebook(session);
+
+	}
+	
+	
+	@RequestMapping(value = "facebookLogin", method = {RequestMethod.GET,RequestMethod.POST})
+	public String facebookLogin(@RequestParam("code") String code,Model model,
+								HttpSession session, String state)throws Exception {
+
+		System.out.println("[ facebookLogin 토큰/사용자정보 받기!! ]");
+		//String accesstoken = commonService.getAccessToken_facebook(session, code);
+		//		commonService.getUserProfile(accesstoken, session);
+		
+		User user =commonService.getAccessToken_facebook(session, code);
+		user =commonService.getUserProfile(user);
+		
+		session.setAttribute("user", user);
+		userService.snsAddUser(user);
+		System.out.println("session==> "+session.getAttribute("user"));
+		System.out.println("facebook 이메일 ==> " + user.getEmail());
+		System.out.println("프로필 이미지 ==> " + user.getProfileImage());
+	
+
+		return "redirect:/index.jsp";
+
 	}
 
 

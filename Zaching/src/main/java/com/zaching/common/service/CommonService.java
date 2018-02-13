@@ -45,6 +45,8 @@ public interface CommonService {
 	
 	public String getAuthorizationUrl_login(HttpSession session);
 	
+	
+	
 	public Map<String, Object> getAceessToken(String code) throws Exception;
 	
 	public User getAceessToken2(String code,HttpSession session) throws Exception;
@@ -69,5 +71,10 @@ public interface CommonService {
 	
 	public void noticeUpdate(int noticeId) throws Exception;
 
-
+	//∆‰¿ÃΩ∫∫œ
+	public String getAuthorizationUrl_facebook(HttpSession session);
+	
+	public User getAccessToken_facebook(HttpSession session,String code)throws Exception;
+	
+	public User getUserProfile(User user)throws Exception;
 }

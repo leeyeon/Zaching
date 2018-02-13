@@ -50,6 +50,16 @@
 	</insert>
 	
 	
+	<insert id="snsAddUser" parameterType="user" >
+	INSERT
+		INTO users(user_id , name, email, 
+		profile_image, role, sns_type,  created_date) 
+		VALUES(	seq_user_id.nextval, #{name} ,
+					#{email}, #{profileImage:VARCHAR},
+					#{role} ,#{snsType}, SYSDATE )
+	</insert>
+	
+	
 	<select id="checkSignup" parameterType="String" resultType="int">
 		SELECT COUNT(*)
 		FROM users 
@@ -76,7 +86,7 @@
 	<select id="getUser"	parameterType="int"	resultMap="userSelectMap">
 		SELECT
 		user_id , name , email , role, password, address, gender, phone, longitude,latitude,
-		birth, profile_image, real_name, account_number, created_date 		
+		birth, profile_image, real_name, account_number,  TO_DATE(created_date, 'yyyy-mm-dd')		
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
@@ -102,7 +112,7 @@
 	<update id="updateRole" parameterType="user">
 		UPDATE users
 		<set>
-			role ='2'
+			role = #{value}
 		</set>
 		WHERE user_id = #{userId}
 	</update>
@@ -111,13 +121,13 @@
 	   	UPDATE users
 	   	<set>
 	   		<if test="accountNumber == ''">
-	   			birth 	= #{birth:VARCHAR},
-				phone	= #{phone:VARCHAR},
-				address	= #{address:VARCHAR},
-				gender	= #{gender:CHAR},
+	   			role 	= #{role:CHAR}, <!-- 이메일 인증시 ROLE 2로 UPDATE -->
 				email	= #{email},
-				role 	= #{role:CHAR}, <!-- 이메일 인증시 ROLE 2로 UPDATE -->
-				password = #{password},
+	   			password = #{password},
+	   			address	= #{address:VARCHAR},
+	   			gender	= #{gender:CHAR},
+	   			phone	= #{phone:VARCHAR},
+	   			birth 	= #{birth:VARCHAR},
 				profile_image = #{profileImage:VARCHAR}
 	   		</if>
 	   		<if test="accountNumber != ''">

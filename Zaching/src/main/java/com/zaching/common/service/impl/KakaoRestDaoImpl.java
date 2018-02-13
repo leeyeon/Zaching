@@ -228,7 +228,7 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
         user.setEmail(obj.get("kaccount_email").toString());
         user.setProfileImage(properties.get("profile_image").toString());
         user.setName(properties.get("nickname").toString());
-        user.setSnsType("kakao");
+        user.setSnsType("1");//kakao
         user.setRole("1");
 		
 		return user;
