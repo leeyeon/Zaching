@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zaching.service.domain.User;
-import com.zaching.service.user.UserDao;
+import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.user.UserService;
 
 @RestController
@@ -28,6 +27,11 @@ public class UserRestController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	
+	@Autowired
+	@Qualifier("newsfeedServiceImpl")
+	private NewsfeedService newsfeedService;
 
 	public UserRestController() {
 		System.out.println(this.getClass());
@@ -111,7 +115,9 @@ public class UserRestController {
 	public String memoryMap( @PathVariable int userId, HttpSession session)throws Exception{
 
 		System.out.println(userId);
+		//뉴스피드 게시물 가져오기 .게시물의 위도 경도 가져오기
 		
+		//게시물 이미지 경로 가져오기
 		
 		//데이터 아래 형식으로 나타냄.
 		

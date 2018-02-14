@@ -203,15 +203,15 @@ public class CommonServiceImpl implements CommonService {
 	}
 
 	@Override
-	public String getAccessToken_facebook(HttpSession session,String code) throws Exception {
+	public User getAccessToken_facebook(HttpSession session,String code) throws Exception {
 		
 		return facebookRestDao.getAccesstoken(session,code);
 	}
 
 	@Override
-	public void getUserProfile(String accesstoken, HttpSession session) throws Exception {
+	public User getUserProfile(User user) throws Exception {
 		
-		facebookRestDao.getUserProfile(accesstoken, session);
+		return facebookRestDao.getUserProfile(user);
 	}
 
 }

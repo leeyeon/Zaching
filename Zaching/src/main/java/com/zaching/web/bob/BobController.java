@@ -115,6 +115,7 @@ public class BobController {
 	@RequestMapping(value= "/getBob", method=RequestMethod.GET)
 	public String getBob(@RequestParam int bobId, 
 						@RequestParam String category,
+						HttpSession session,
 						Model model) throws Exception {
 		System.out.println(this.getClass()+"/getBob");
 		
@@ -151,6 +152,12 @@ public class BobController {
 			Map<String, Object> newsfeedMap = newsfeedService.listNewsfeed(search);
 			review = (List<Newsfeed>)newsfeedMap.get("list");
 			reviewCount = (int)newsfeedMap.get("totalCount");
+		} else if(category.equals("B03")) {
+			search.setSearchKeyword(((User)session.getAttribute("user")).getUserId()+"");
+			Map<String,Object> friendMap = friendService.listFriend(search);
+			List<Friend> listFriend = (List<Friend>)friendMap.get("list");
+			System.out.println(search);
+			model.addAttribute("listFriend", listFriend);
 		}
 		
 		Page resultPage	= 

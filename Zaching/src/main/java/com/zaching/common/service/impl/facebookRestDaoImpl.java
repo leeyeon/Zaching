@@ -29,16 +29,19 @@ public class facebookRestDaoImpl implements FacebookRestDao {
 	@Override
 	public String getAuthorizationUrl_facebook(HttpSession session) {
 		
+		
 		System.out.println(":: facebookRestDao getAuthorizationUrl_facebook ::");
 		
-		String url = "redirect:https://www.facebook.com/dialog/oauth?client_id=" + FACEBOOK_CLIENT_ID + 
-				"&redirect_uri="+REDIRECT_URI+"&scope=email,public_profile";
+		String url = "redirect:https://www.facebook.com/dialog/oauth?client_id=" + this.FACEBOOK_CLIENT_ID + 
+				"&redirect_uri="+this.REDIRECT_URI+"&scope=email,public_profile";
+		
+		System.out.println("getAuthorizationUrl :: "+url);
 
 		return url;
 	}
 
 	@Override
-	public String getAccesstoken(HttpSession session,String code) throws Exception {
+	public User getAccesstoken(HttpSession session,String code) throws Exception {
 		
 		System.out.println(":: facebookRestDao getAccesstoken ::");
 		
@@ -53,22 +56,26 @@ public class facebookRestDaoImpl implements FacebookRestDao {
 		System.out.println("facebookAccessToken / raw json : "+JsonData);
 		
 		JSONParser jsonParser = new JSONParser();
-		JSONObject jsonObject = (JSONObject) jsonParser.parse(JsonData);
-		String AccessToken = (String) jsonObject.get("access_token");
-		System.out.println("facebookAccessToken / accessToken : "+AccessToken);
+		JSONObject obj = (JSONObject) jsonParser.parse(JsonData.toString());
+		String accessToken = (String) obj.get("access_token");
 		
-		session.setAttribute("AccessToken", AccessToken);
+		System.out.println("facebookAccessToken / accessToken : "+accessToken);
 		
-		return AccessToken;
+		User user = new User();
+		user.setAccessToken(obj.get("access_token").toString());
+		
+		//session.setAttribute("access_token", accessToken);
+		
+		return user;
 	}
 
 	@Override
-	public void getUserProfile(String accesstoken, HttpSession session) throws Exception {
+	public User getUserProfile(User user) throws Exception {
 			
 			System.out.println(":: facebookRestDao getUserProfile ::");
 			
 			String url = "https://graph.facebook.com/me?"+
-		            "access_token="+accesstoken+
+		            "access_token="+user.getAccessToken()+
 		            "&fields=id,name,email,picture";
 			
 			
@@ -79,10 +86,18 @@ public class facebookRestDaoImpl implements FacebookRestDao {
 		    System.out.println("facebookAccessToken / jsonData! : "+jsonData);
 
 		    JSONParser jsonParser = new JSONParser();
-		    JSONObject jsonObject = (JSONObject) jsonParser.parse(jsonData);
-		    System.out.println("facebookUserDataLoadAndSave / jsonData : "+jsonObject);
-
-	
+		    JSONObject obj = (JSONObject) jsonParser.parse(jsonData.toString());
+		    System.out.println("facebookUserDataLoadAndSave / jsonData : "+obj);
+		    
+		    user.setEmail(obj.get("email").toString());
+		    user.setName(obj.get("name").toString());
+		    user.setProfileImage(obj.get("picture").toString());
+		    
+		    user.setSnsType("2"); //facebook
+		    user.setRole("1");
+		    
+		    
+		    return user;
 	}
 
 	

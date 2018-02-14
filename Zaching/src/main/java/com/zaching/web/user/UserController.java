@@ -206,17 +206,14 @@ public class UserController {
 
 	@RequestMapping(value="updateUser", method = RequestMethod.POST)
 	public String updateUser(@ModelAttribute("user") User user, 
-			HttpServletRequest request,Model model, HttpSession session) throws Exception {
+			Model model, HttpSession session) throws Exception {
 
 		System.out.println("/user/updateUser : POST");
 		// Business Logic
 		user.setRole("2");
 		userService.updateUser(user);
-
-		int sessionId = ((User) session.getAttribute("user")).getUserId();
-		if (sessionId == (user.getUserId())) {
-			session.setAttribute("user", user);
-		}
+		
+		System.out.println("update user ====>"+user);
 
 		return "redirect:/user/getUser?userId=" + user.getUserId();
 	}
@@ -255,8 +252,5 @@ public class UserController {
 		
 	return "forward:/user/memoryMap.jsp";
 	}
-	
-	
-
 	
 }

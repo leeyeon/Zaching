@@ -50,6 +50,9 @@ public interface UserService {
  	
  	//이메일 인증시 정회원으로 등급 up
  	public void updateRole(User user)throws Exception;
+ 	
+ 	//sns로그인 정보 DB로 슝슝
+ 	public void snsAddUser(User user)throws Exception;
 
  	public String updateGetAccountToken(String token, int userId) throws Exception;
 

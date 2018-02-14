@@ -1,6 +1,5 @@
 package com.zaching.web.friend;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +19,7 @@ import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Friend;
 import com.zaching.service.domain.User;
 import com.zaching.service.friend.FriendService;
+import com.zaching.service.user.UserService;
 
 @Controller
 @RequestMapping("/friend/*")
@@ -29,6 +29,10 @@ public class FriendController {
 	@Qualifier("friendServiceImpl")
 
 	private FriendService friendService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 
 	public FriendController() {
 		System.out.println(this.getClass());
@@ -64,8 +68,6 @@ public class FriendController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		
-
 		search.setSearchKeyword(String.valueOf(((User)session.getAttribute("user")).getUserId()));
 
 		Map<String, Object> map = friendService.listFriend(search);

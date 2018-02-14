@@ -22,12 +22,12 @@
 
 	<insert id="addFriend" parameterType="friend">
 		INSERT
-		INTO FRIEND ( id,friend_id ,user_id ,status, created_date )
+		INTO FRIEND ( id,friend_id ,user_id ,status )
 		VALUES( seq_id.nextval,
 				#{userId:INTEGER},
 				#{friendId:INTEGER},
 				'1',
-				SYSDATE)
+			)
 
 	</insert>
 

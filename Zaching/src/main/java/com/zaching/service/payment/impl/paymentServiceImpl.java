@@ -74,10 +74,11 @@ public class paymentServiceImpl implements PaymentService {
 		
 	}
 
+	// P07
 	@Override
 	public void presentPoint(Payment payment) throws Exception {
 		// point column insert
-		paymentDao.managePayment(payment);
+		paymentDao.presentPoint(payment);
 		// 보내는 사람 포인트 차감
 		paymentDao.updateUserPayment(payment);
 		// 받는 사람 포인트 증가

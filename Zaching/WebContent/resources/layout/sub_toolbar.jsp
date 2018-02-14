@@ -111,7 +111,7 @@
 	background: #fff;
 }
 
-.sns-login>ul {
+.sns-login > ul {
 	
 	list-style: none;
 	margin: 0;
