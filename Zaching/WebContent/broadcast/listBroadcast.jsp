@@ -19,8 +19,6 @@
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 	<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
-
-	
 	
 	<style type="text/css">
 		.listings ul.properties_list li a #profile{
@@ -93,8 +91,31 @@
 		
 	</style>
 	<script type="text/javascript">
-	
+		
 		$(function() {
+			
+			$(document).on("click",'body > section.listings > div > ul > li > img', function(){
+				var index = $("body > section.listings > div > ul > li > img").index(this);
+				var broadcastId = $($("input[name=broadcastId]")[index]).val();
+				alert("sad");
+					$(self.location).attr("href","http://localhost:3000/broadcast?broadcaster="+broadcastId);			
+			});
+			
+			$(document).on("click",".user_thumnail", function(){
+				if('${user}' != '') {
+					var index = $(".user_thumnail").index(this);
+					var broadcastId = $($("input[name=broadcastId]")[index]).val();
+					//alert(index+"//"+bobId+"//"+category);
+					$(self.location).attr("href","/user/getTimeLine?userId="+broadcastId);
+				} else {
+					alert("로그인 후에 친구의 타임라인을 들어가실 수 있습니다.\n"
+							+ "간편회원가입을 통해서 자췽 서비스를 이용해보세요.");
+					$('#loginModal').modal('toggle');
+					//$(self.location).attr("href","/user/addUser");
+				}				
+			});
+			
+			
 			var page = ${search.currentPage};
 			var pageSize = ${search.pageSize};
 			if('${search.searchCondition}' == '')
@@ -110,11 +131,11 @@
 				fnc_listing();
 			});
 			
+			
 			function fnc_listing(){
 				page++;
-				
 				$.ajax({
-					url : "/voice/json/listBroadcast",
+					url : "/broadcast/json/listBroadcast",
 					method : "POST",
 					contentType : "application/json; charset=UTF-8",
 					data : JSON.stringify({
@@ -126,37 +147,24 @@
 					async : false,
 					dataType : "json",
 					success : function(serverData){
+						/*
+						$(serverData).each(function(index,data) {
+							data.title;
+						)};
+						*/
 						var display = '';
 						for(var i=0; i<serverData.length; i++){
-							display = display + '<li>'+
-													'<a href="#">';
-													if( serverData[i].backgroundImage != null)
-														display += '<img src="../resources/images/voiceImages/'+serverData[i].backgroundImage+'" alt="" title="" class="property_img"/>';
-													else
-														display += '<img src="../resources/images/voiceImages/default.jpg" alt="" title="" class="property_img"/>';
-													display = display + '</a>'+
-													'<span class="price"><i class="fas fa-play-circle"></i>&nbsp;'+serverData[i].countReply+'</span>'+
-													'<div class="property_details">'+
-														'<h1>'+
-															'<a href="#" style="vertical-align: bottom;"><img src="../resources/images/'+serverData[i].profileImage+'" id="profile">&nbsp;'+serverData[i].userName+'</a>'+
-														'</h1>'+
-														'<h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'+
-															'<a href="#">'+serverData[i].voiceName+'</a>'+
-														'</h1>'+
-														'<h2>';
-														if(serverData[i].categoryCode == 'R02')
-															display += '노래이어부르기&nbsp;';
-														if(serverData[i].categoryCode == 'R03')
-															display += '글 읽어주기&nbsp;';
-														if(serverData[i].categoryCode == 'R04')
-															display += 'ASMR&nbsp;';
-														if(serverData[i].categoryCode == 'R05')
-															display += '알림음 만들기&nbsp;';
-														if(serverData[i].categoryCode == 'R06')
-															display += '프리토킹&nbsp;';
-														display = display + '<span class="property_size">'+serverData[i].voicelyrics+'</span></h2>'+
-													'</div>'+
-												'</li>';
+													
+							display += '<li> <img src = "../resources/upload_files/images/'+serverData[i].image+'" onerror="this.src=\'../resources/images/broadcast_default.jpg\'" />';
+							'<div class="property_details" style="width: 100%" >'+
+								'<h1>'+
+									'<a href="#" style="vertical-align: bottom;"><img src="../resources/images/'+serverData[i].profileImage+'" id="profile" onerror="this.src=\'../resources/images/20160916_190916.jpg\'">&nbsp; [BJ] '+serverData[i].broadcaster+'</a>'+
+								'</h1>'+
+								'<h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'+
+									'<a href="#">'+serverData[i].title+'</a>'+
+								'</h1>'+
+							'</div>'+
+						'</li>';
 						}
 						$(".properties_list").append(display);
 					}
@@ -168,9 +176,14 @@
 		$(function(){
 			$(document).on('click','.btn-add-broads', function(){
 				alert("ㅎㅇ");
-				$(self.location).attr("href","/broadcast,addBroadcast");
+				winOpen();
 			});
 		});
+		
+		function winOpen() {
+			window.open("/broadcast/addBroadcast.jsp","addBroadcast","width=500,height=700,toolbar=no")
+
+			}
 		
 	</script>
 </head>
@@ -214,20 +227,19 @@
 				<c:set var="i" value="0"/>
 							<c:forEach var="obj" items="${list}">
 							<c:set var="i" value="${ i+1 }" />
-							<input type="hidden" name="writtenUserId" value="${bob.writtenUserId}">
+							<input type="hidden" name="broadcastId" value="${obj.broadcastId}">
 								<li>
-									<a href="#">
-										<img src = "../resources/upload_files/images/${obj.image}"
-								      	onerror="this.src='../resources/images/broadcast_default.jpg'" >
-									</a>
+									<img src = "../resources/upload_files/images/${obj.image}"
+								      onerror="this.src='../resources/images/broadcast_default.jpg'" >
 									<!-- <span class="price"><i class="fas fa-play-circle"></i>&nbsp;${voice.countReply}</span> -->
 									<div class="property_details" style="width: 100%">
+										<div class ="user_thumnail">
 										<h1>
 											<a href="#" style="vertical-align: bottom;"><img src="../resources/images/${obj.profileImage}" id="profile" onerror="this.src='../resources/images/20160916_190916.jpg'">&nbsp;[BJ]&nbsp;${obj.broadcaster}</a>
 										</h1>
-										
+										</div>
 										<h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-											<a href="#">${obj.title}</a>
+											${obj.title}
 										</h1>
 
 									</div>

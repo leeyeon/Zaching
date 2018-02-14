@@ -143,7 +143,7 @@ public class GoogleDaoImpl  implements GoogleDao{
 		        user.setEmail(obj.get("email").toString());       
 		        user.setName(obj.get("name").toString());
 		        user.setProfileImage(obj.get("picture").toString());
-		        user.setSnsType("google");
+		        user.setSnsType("4");//google!
 				user.setRole("1");
 				return user;
 			}

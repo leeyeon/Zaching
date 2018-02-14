@@ -9,7 +9,7 @@ public interface FacebookRestDao {
 	
 	public String getAuthorizationUrl_facebook(HttpSession httpSession);//로그인 화면 
 	
-	public String getAccesstoken(HttpSession session,String code)throws Exception;//토큰
+	public User getAccesstoken(HttpSession session,String code)throws Exception;//토큰
 	
-	public void getUserProfile(String accesstoken, HttpSession session)throws Exception; //사용자정보가져오기
+	public User getUserProfile(User user)throws Exception; //사용자정보가져오기
 }

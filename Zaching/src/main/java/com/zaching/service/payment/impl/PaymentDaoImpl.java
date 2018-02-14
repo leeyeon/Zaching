@@ -85,6 +85,12 @@ public class PaymentDaoImpl implements PaymentDao {
 		return sqlSession.selectOne("PaymentMapper.getPayment", map);
 	}
 	
+	
+	@Override
+	public void presentPoint(Payment payment) throws Exception {
+		sqlSession.insert("PaymentMapper.presentPoint", payment);
+	}
+	
 	/* getAuthorizationUrl  */
 	@Override
 	public String getAuthorizationUrl(int authType) {
@@ -168,6 +174,7 @@ public class PaymentDaoImpl implements PaymentDao {
 		
 		return map;
 	}
+
 	
 	// DBø° ¿˙¿Â
 	@Override

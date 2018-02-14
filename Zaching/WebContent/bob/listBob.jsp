@@ -50,7 +50,7 @@
 			width: 100%;
 		}
 		
-		.listings ul li:hover .property_details{
+		.listings ul li:hover .property_details {
 		    border-bottom: 1px solid #7a68a6;
 		    border-left: 1px solid #7a68a6;
 		    border-right: 1px solid #7a68a6;
@@ -178,7 +178,7 @@
 							
 							html += '</p></div></div></div>';
 							
-							$('#'+"${search.category}"+' > div').append(html);
+							$("#mainBob > .tab-content").append(html);
 							$("#exTab2 > div > div.tab-content").attr('class', 'tab-content');
 						})
 						
@@ -269,7 +269,7 @@
 						</span>
 					</c:if>
 					
-					<div class="property_details text-center" style="padding-top: ${search.category ne 'B03'? '40px':'0'}">
+					<div class="property_details text-center" style="padding-top: ${search.category ne 'B03'? '40px':'none'}">
 						<h1>${bob.title}</h1><hr>
 						<c:if test="${search.category ne 'B03'}">
 							<h2>${bob.locationName}</h2>

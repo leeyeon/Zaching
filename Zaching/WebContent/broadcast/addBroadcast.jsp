@@ -1,15 +1,26 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 
+<!--  ///////////////////////// JSTL  ////////////////////////// -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri = "http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt2" uri="http://java.sun.com/jstl/fmt_rt" %>
 <html>
 <head>
-	<meta charset="utf-8">
+	<title>addBroadcast</title>
 	
-	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
+	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>	
+	<meta charset="utf-8">
+	<meta name="author" content="pixelhint.com">
+	<meta name="description" content="La casa free real state fully responsive html5/css3 home page website template"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 	
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
     
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
@@ -23,10 +34,6 @@
 	<jsp:include page="../resources/javascript/fileUploadCDN.jsp"/>
 	
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-
-	<link rel="stylesheet" href="../resources/css/bootstrap-datetimepicker.min.css">
-	<script src="../resources/javascript/bootstrap-datetimepicker.min.js"></script>
-	<script src="../resources/javascript/bootstrap-datetimepicker.ko.js"></script> 
 
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
   	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
@@ -48,7 +55,7 @@
 		}
 		
 		.bg {
-			background: url('../resources/images/bg_add_broads.jpg') no-repeat center center;
+			background: url('../resources/images/main_broadcast.jpg') no-repeat center center;
 			position: fixed;
 			width: 100%;
 			height: 100%;
@@ -158,12 +165,15 @@ function fncAddBroadcast(){
 	<div class="cover"></div>
 	<div class="bg"></div>
 			<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="jumbotron text-center" style= "background-image: url('../resources/images/bg_add_broads.jpg');
-			background-size: cover;
-			background-repeat: no-repeat, no-repeat;
-			background-position: center center;">
-			
-	</div>
+	<section class="hero" style="background-image: url('../resources/images/main_broadcast.jpg');
+				background-size: cover;
+				background-repeat: no-repeat, no-repeat;
+				background-position: center center; height:700px; ">
+			<div class="img-cover"></div>
+			<section class="caption" style="padding-top: 70px;">
+				<h2 class="caption">Room Produce</h2>
+			</section>
+		</section>
 	
 	<div class="container">
 	
@@ -199,9 +209,9 @@ function fncAddBroadcast(){
 	            	
 	            	<div class="col-sm-9">
 	            	<table id="addForbidden" >
-	            	<tr><td><input name="forbidden" type="text" class="text" style="font-size: 20px; width: 50%; "/></td></tr>
+	            	<tr></tr>
 	            	</table>
-	            		<input name="addButton" type="button" style="cursor:hand" onClick="insRow()" value="추가">
+	            		<input name="addButton" type="button" class='btn-broad' style="cursor:hand" onClick="insRow()" value="추가">
 	            	</div>
 		 </div>
 

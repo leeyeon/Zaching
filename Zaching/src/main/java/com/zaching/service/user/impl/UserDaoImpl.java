@@ -65,7 +65,7 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public void updateUser(User user) throws Exception {
-		System.out.println(":: DaoImpl UpdateUser ::"+user);
+		System.out.println(":: UserDaoImpl UpdateUser ::"+user);
 		sqlSession.update("UserMapper.updateUser", user);
 		
 		
@@ -133,4 +133,11 @@ public class UserDaoImpl implements UserDao{
 		return sqlSession.selectOne("UserMapper.getAccountToken", userId);
 	}
 
+	@Override
+	public void snsAddUser(User user) throws Exception {
+		
+		sqlSession.insert("UserMapper.snsAddUser", user);
+	}
+	
+	
 }
