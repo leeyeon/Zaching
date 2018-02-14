@@ -26,6 +26,7 @@ public class User {
 	private String phone3;//연락처
 	
 	private String birth;//생일
+	
 	private String profileImage;//프로필사진
 	private String role;//회원등급 정회원 준회원 ========> 계정정지'0' 준회원 '1' 정회원 '2'
 	private String realName;//실명

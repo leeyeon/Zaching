@@ -32,6 +32,12 @@
 				});
 		});
 		
+		
+		$(function () {
+			var birth = new Date($("#birth").val());
+			var date_format = new Date(birth).toDateString("yyyy-MM-dd");
+		})
+		
 	</script>
 	
 </head>
@@ -95,15 +101,15 @@
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>가입일자</strong></div>
-			<div class="col-xs-8 col-md-4">${user.createdDate}</div>
+	  		<div class="col-xs-4 col-md-2 "><strong>생년월일</strong></div>
+			<div class="col-xs-8 col-md-4" id="birth">${user.birth}</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>계좌번호</strong></div>
-			<div class="col-xs-8 col-md-4">${user.accountNumber}</div>
+			<div class="col-xs-8 col-md-4" >${user.accountNumber}</div>
 		</div>
 		
 		<hr/>
