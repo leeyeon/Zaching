@@ -24,8 +24,8 @@
 <body>
 
 
+
 		<c:import url="/newsfeed/listNewsfeed"></c:import>
 
-  
 </body>
 </html>

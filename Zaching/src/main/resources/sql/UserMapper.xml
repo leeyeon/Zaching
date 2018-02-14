@@ -216,6 +216,12 @@
 	 	WHERE user_id = #{userId}
 	 </select>
 	 
+	 <select id="getPassword" parameterType="string" resultType="string">
+	 	SELECT password
+	 	FROM users
+	 	WHERE email=#{value}
+	 </select>
+	 
 </mapper>
 
 	

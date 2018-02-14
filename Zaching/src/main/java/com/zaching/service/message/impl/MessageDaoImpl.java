@@ -1,6 +1,8 @@
 package com.zaching.service.message.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,16 @@ public class MessageDaoImpl implements MessageDao{
 		return sqlSession.selectOne("MessageMapper.getMessage",messageId);
 	}
 	
+	@Override
+	public int checkRoom(int userId, int friendId) throws Exception {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("friendId", friendId);
+		
+		int result = sqlSession.selectOne("MessageMapper.checkRoom", map);
+		
+		return result;
 	
-
+	}
 }

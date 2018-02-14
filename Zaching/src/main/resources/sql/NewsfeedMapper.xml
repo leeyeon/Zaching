@@ -127,5 +127,11 @@
 		FROM like_blind 
 		WHERE newsfeed_id=#{newsfeedId} AND trim(status)=#{status} AND user_id=#{userId}
 	</select>
+	
+	<select id="timeline" parameterType="int" resultMap="NewsfeedSelectMap">
+		SELECT *
+		FROM newsfeed
+		WHERE user_id=#{value}
+	</select>
 
 </mapper>

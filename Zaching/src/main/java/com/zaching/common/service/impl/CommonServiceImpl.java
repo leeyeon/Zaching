@@ -59,17 +59,20 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public Map<String, Object> listComment(Search search, String categoryCode, int roomId) throws Exception {
 		Map<String, Object> map = new HashMap<String,Object>();
-		
+		System.out.println("listServiceComment()=======================================================");
+		System.out.println(search+"/////////"+categoryCode+"//////////"+roomId);
+	
 		int totalCount = commentDao.getTotalCount(search, categoryCode, roomId);
-		
+				
 		int pageSize = totalCount / search.getPageSize();
-		System.out.println(totalCount);
+		System.out.println(totalCount+","+pageSize);
+
 		
 		List<Comment> list = (List<Comment>) commentDao.listComment(search, categoryCode, roomId);
 		//for (Comment comment : list) {
 		//	System.out.println(comment);
 		//}
-		System.out.println(list);
+
 		
 		map.put("list", commentDao.listComment(search, categoryCode, roomId));
 		map.put("totalCount", commentDao.getTotalCount(search, categoryCode, roomId));

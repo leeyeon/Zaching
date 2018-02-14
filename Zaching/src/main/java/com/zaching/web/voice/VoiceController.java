@@ -4,16 +4,19 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import org.apache.jasper.tagplugins.jstl.core.Out;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,6 +59,7 @@ public class VoiceController {
 		System.out.println(voice);
 		String path = "";
 		//voiceService.addVoice(voice);
+		System.out.println(voice.getUploadFile());
 		if(voice.getUploadFile() != null) {
 			try {
 				path = commonService.addFile(fileDirectory, voice.getUploadFile());
@@ -105,9 +109,7 @@ public class VoiceController {
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
-		if(search.getCategory() == null) {
-			search.setCategory("R01");
-		}
+		
 		search.setPageSize(pageSize);
 		
 		Map<String, Object> map = voiceService.listVoice(search);
@@ -123,6 +125,35 @@ public class VoiceController {
 		model.addAttribute("search", search);
 		
 		return "forward:/voice/listVoice.jsp";
+	}
+	
+	@RequestMapping(value="getVoice")
+	public String getVoice(@ModelAttribute("search") Search search, @RequestParam int voiceId, Model model) throws Exception {
+		System.out.println("getVoice()");
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		Voice voice = voiceService.getVoice(voiceId);
+		search.setPageSize(pageSize);
+		
+		Map<String, Object> map = voiceService.listVoice(search);
+		// Business logic ผ๖วเ
+		System.out.println("voiceId :: "+voiceId);
+		System.out.println("search :: "+search);
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		System.out.println("list :: "+map.get("list"));
+		System.out.println("category :: "+voice.getCategoryCode());
+		System.out.println("22222"+(List)(commonService.listComment(search, voice.getCategoryCode(), voiceId).get("list")));
+	
+		model.addAttribute("comment", (List)(commonService.listComment(search, voice.getCategoryCode(), voiceId).get("list")));
+		model.addAttribute("voice", voiceService.getVoice(voiceId));
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		
+		
+		return "forward:/voice/finalVoice.jsp";
 	}
 
 }

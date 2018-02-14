@@ -338,7 +338,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<c:set var="i" value="${ i+1 }" />
 							<li class="cell">
 								<input type="hidden" value="${newsfeed.newsfeedId}" name="newsfeedId"/>
-								<c:if test="${ !empty newsfeed.fileName }"><img src="../resources/upload_files/images/${newsfeed.fileName}"/></c:if>
+								<c:if test="${ !empty newsfeed.fileName }"><img src="../resources/upload_files/images/${newsfeed.fileName}" style="width: 100%"/></c:if>
 								<div class="post-info">
 									<div class="post-basic-info">
 										<span><a href="#"><label> </label><c:if test="${newsfeed.categoryCode.equals('N01')}">뉴스피드</c:if></a></span>
@@ -717,7 +717,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!----//wookmark-scripts---->
 		<!----start-footer--->
 		<div class="footer">
-			<p>Design by <a href="#">����</a></p>
+			<p>Design by <a href="#">자췽</a></p>
 		</div>
 		<!----//End-footer--->
 		<!---//End-wrap---->

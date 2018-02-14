@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -125,6 +126,8 @@ public class UserRestController {
 				+ "{\"lat\": 37.27943075229118,\"lng\": 127.01763998406159,\"imgsrc\": \"/resources/images/profile_test.png\"},{\"lat\": 37.55915668706214,\"lng\": 126.92536526611102,\"imgsrc\": \"/resources/images/test_2.jpg\"}]}";
 	}
 	
+
+	
 	
 	//파일업로드
 	@RequestMapping(value="upload",method=RequestMethod.GET)
@@ -165,7 +168,57 @@ public class UserRestController {
 
 
 	
+	@RequestMapping(value="/rest/androidLogin")
+	public String androidLogin( @RequestBody String loginInfomation, HttpSession session)throws Exception{
 	
+		String loginInfo[] = loginInfomation.split("&");
+		
+		String email = loginInfo[0];
+		String password = loginInfo[1];
+				
+		User dbUser = userService.login(email);
+		
+
+		if (password.equals(dbUser.getPassword()) && email.equals(dbUser.getEmail())) {
+			session.setAttribute("user", dbUser);
+			return "{\"status\":\"yes\",\"userId\":\""+dbUser.getUserId()+"\"}";
+		}
+		else {
+			return "{\"status\":\"no\"}";
+		}			
+		
+	}
+	
+	@RequestMapping(value="/rest/androidAddUser")
+	public String androidAddUser( @RequestBody String joinInfomation, @ModelAttribute("user") User user)throws Exception{
+		System.out.println("와떠용");
+		String loginInfo[] = joinInfomation.split("&");
+		
+		String email = loginInfo[0].trim();
+		String password = loginInfo[1].trim();
+		String password2 = loginInfo[2].trim();
+		String name = loginInfo[3].trim();
+		
+		System.out.println(password);
+		System.out.println(password2);
+		
+		if(password.equals(password2)) {
+
+			user.setEmail(email);
+			user.setName(name);
+			user.setPassword(password);
+			user.setRole("1");
+			userService.addUser(user);
+			
+			return "{\"status\":\"yes\"}";
+		}
+		else {
+		
+			return "{\"status\":\"no\"}";
+		}
+				
+	
+	}
 
 
 }
