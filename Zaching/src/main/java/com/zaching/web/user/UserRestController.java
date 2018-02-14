@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sun.javafx.sg.prism.NGShape.Mode;
 import com.zaching.service.domain.User;
 import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.user.UserService;
@@ -242,10 +244,10 @@ public class UserRestController {
 	}	
 	
 
-	@RequestMapping(value="addUser", method=RequestMethod.POST)
+	@RequestMapping(value="/rest/addUser", method=RequestMethod.POST)
 	public String addUser(HttpServletRequest request,
 						@RequestBody Map<String, Object> map,
-						@ModelAttribute("user")User user)throws Exception{
+						@ModelAttribute("user")User user, Model model)throws Exception{
 		
 		System.out.println("/user/rest/addUser : POST ");
 		
@@ -254,9 +256,17 @@ public class UserRestController {
 		String password =(String)map.get("password");
 		
 		
+		
+		user.setEmail(email);
+		user.setName(name);
+		user.setPassword(password);
 		user.setRole("1");
 		userService.addUser(user);
+		
+		System.out.println("name : " + user.getEmail());
+		System.out.println("name : " + user.getPassword());
 		System.out.println("name : " + user.getName());
+		
 		
 	return "redirect:/index.jsp";
 

@@ -36,6 +36,7 @@ import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.User;
+import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.user.UserService;
 
 @Controller
@@ -50,6 +51,10 @@ public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("newsfeedServiceImpl")
+	private NewsfeedService newsfeedService;
 
 	// setter Method ���� ����
 
@@ -62,15 +67,7 @@ public class UserController {
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 	
-	/*	���â���� ����
-	
-	@RequestMapping(value = "addUser", method = RequestMethod.GET)
-	public String addUser() throws Exception {
 
-		System.out.println("/user/addUser : GET ��?");
-
-		return "redirect:/user/addUser.jsp";
-	}*/
 
 	// �̸��� ����
 	@RequestMapping(value = "emailAuth", method = RequestMethod.POST)
@@ -133,7 +130,7 @@ public class UserController {
 		
 		System.out.println("��===>" + user.getEmail() + " = " + dbUser.getEmail());
 		System.out.println("��===>" + user.getPassword() + " = " + dbUser.getPassword());
-		System.out.println("��===>" + user.getName() + " = " + dbUser.getName());
+	
 
 		return "redirect:/index.jsp";
 	}
@@ -144,7 +141,6 @@ public class UserController {
 		System.out.println("/user/logout : POST");
 		
 		
-
 		session.invalidate();
 
 		return "redirect:/index.jsp";
@@ -176,6 +172,11 @@ public class UserController {
 		System.out.println("/user/getTimeLine : GET");
 		// Business Logic
 		User user = userService.getUser(userId);
+		
+		newsfeedService.timeline(userId);
+		System.out.println("===>");
+		
+		System.out.println("뀨규뀨===>"+userId);
 		// Model �� View ����
 		model.addAttribute("user", user);
 		
