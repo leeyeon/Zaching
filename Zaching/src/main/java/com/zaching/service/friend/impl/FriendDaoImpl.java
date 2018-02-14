@@ -58,9 +58,8 @@ public class FriendDaoImpl implements FriendDao{
 	}
 
 	@Override
-	public void recommendFriend(Friend friend) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public List<Friend> recommendFriend(Search search) throws Exception {
+		return sqlSession.selectList("FriendMapper.recommendFriend",search);
 	}
 
 	@Override

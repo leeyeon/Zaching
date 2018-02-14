@@ -64,16 +64,9 @@ body {
 				.submit();
 	}
 
-	$(function() {
-		$("td.ct_btn01:contains('검색')").on("click", function() {
 
-			alert($("td.ct_btn01:contains('검색')").html());
-
-			fncGetUserList(1);
-		});
 		//프로필 사진 클릭시 타임라인 이동
-		$(function() {
-			$("friendImage").on("click", function() {
+			$("friend_img").on("click", function() {
 				self.location = "/user/getTimeLine?userId=${user.name}";
 
 				//메세지함
@@ -81,7 +74,7 @@ body {
 					self.location = "/message/listMessage";
 				})
 
-			});
+		});
 		});
 	});
 </script>
@@ -101,7 +94,6 @@ body {
 			<h3>친구목록조회</h3>
 		</div>
 
-		<div class="row">
 
 
 
@@ -176,13 +168,6 @@ body {
 								</div>
 							</div>
 
-
-							<!--  <select name='fruits'>
-							<option value='' selected>친구</option>
-							<option value='message'>메세지</option>
-							<option value='banana'>친구삭제</option>
-							<option value='lemon'>친구차단</option>
-						</select>-->
 						</div>
 
 					</div>
