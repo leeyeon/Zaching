@@ -80,7 +80,7 @@ public class VoiceRestController {
 			sb.append((char) c);
 		}
 
-	
+			System.out.println(sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString());
 		return sb.append((char) c).delete(sb.append((char) c).length()-2, sb.append((char) c).length()).toString();
 	}
 	

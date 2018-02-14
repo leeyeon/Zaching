@@ -186,7 +186,6 @@ $( "#profile" ).on("click" , function() {
 	font-weight: 700;
 }
 
-
 .navbar-custom .nav2 li a {
     -webkit-transition: background .3s ease-in-out;
     -moz-transition: background .3s ease-in-out;
@@ -218,9 +217,7 @@ $( "#profile" ).on("click" , function() {
 
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
-                                                <i class="fa fa-bars"></i>
-                                                </button>
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu"><i class="fa fa-bars"></i> </button>
             </div>
             <br/>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -370,7 +367,7 @@ $( "#profile" ).on("click" , function() {
  
  <section id="contact" class="home-section text-center">
 <p class="wow bounceInUp" data-wow-delay="0.3s"><img src="/resources/images/moviec.png" width="80px"> &nbsp; <img src="/resources/images/moviechart.png"/></p>
-    <jsp:include page="getMovieInfo.jsp"/> 
+ <!--   <jsp:include page="getMovieInfo.jsp"/> -->  
 
    <div class="containerr">
   <div class="carouselMovie">
@@ -384,7 +381,7 @@ $( "#profile" ).on("click" , function() {
 <br/><br/><br/><br/><br/><br/>
 <br/><br/><br/><br/><br/><br/><br/><br/><br/>
 <br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/>
 
 <section id="job" class="home-section text-center">
     <div class="heading-contact">
