@@ -1,127 +1,134 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	
-	<!--   jQuery , Bootstrap CDN  -->
-	
-  
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
-	<style>
-	
-		/* 글꼴 수정 */
-		
-		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
-		
-		* {
-			font-family: 'Nanum Gothic', serif;
-		}
-		
-		.navbar-fixed-top {
-		    background: #ffffff;
-		    border-color: #ffffff;
-		}
-		
-		#navigationbar {
-			margin-top: 10px;
-			padding-top: 20px;
-			background: #FFFFFF;
-		}
-		
-		#navbar > ul> li> a {
-			color:#FFFFFF;
-		}
-		
-		.navbar-inverse .navbar-brand {
-		    color: #FFFFFF;
-		}
-		
-		.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.open>a {
-		    background-image: linear-gradient(to bottom,#cccccc 0,#cccccc 100%);
-		}
-		
-		.mainbar {
-			padding: 0px;
-			height: 150px;
-			width: 100%;
-			text-align: center;			
-		}
-		
-		.mainbar-menu {
-			display: inline-block;
-			cursor: pointer;
-			width: 20%;
-			height: 130px;
-			line-height: 140px;
-			padding: 10px;
-			font-size: 20px;
-			background: none;
-			color: #000000;
-			font-weight: bold;
-			float: left;
-			padding: 5px;
-		}
-		
-		.mainbar-menu:hover, .mainbar-menu .active{
-		    border-bottom: 4px solid RGB(237,125,49);
-		}
-		
-		/* //////////////// main css */
-		
-		/* 모달 크기조정 */
-		.social-login{
-			margin-left: 20px;
-		}
-		
-		.modal-dialog.login{
-	 		width: 300px;
-	  		height: 200px;
-	  		margin: 0;
-	  		padding: 0;
-		}
-		
-		/* ////////////////////로그인 모달 창 style/////////////////////// */
-		.modal-dialog.modal{
-	 		 width: 50%;
-	 		 height: 50%;
-	 		 margin: 0;
-	 		 padding: 0;
-
-		}
-		
-		img.img-rounded{
-			margin-top: 10px;
-			margin-left: 10px;
-			margin-right: 10px;
-			margin-bottom: 10px;
-		}
-		
-		.notice{
-		 overflow: inherit;
-  	overflow-y: inherit;
- 	 text-align: center;
-  	display: inline-block;
-  	vertical-align: right;
-  	 width: 300px;
-  	 height: 150px;
-  	 overflow-y: scroll;
-  	 background: #fff;
-		}
-		
+<!--   jQuery , Bootstrap CDN  -->
 
 
-	</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://sdk.accountkit.com/en_US/sdk.js"></script>
+<style>
+
+/* 글꼴 수정 */
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+* {
+	font-family: 'Nanum Gothic', serif;
+}
+
+.navbar-fixed-top {
+	background: #ffffff;
+	border-color: #ffffff;
+}
+
+#navigationbar {
+	margin-top: 10px;
+	padding-top: 20px;
+	background: #FFFFFF;
+}
+
+#navbar>ul>li>a {
+	margin :5px 5px 5px 5px;
+	color: #FFFFFF;
+}
+
+.navbar-inverse .navbar-brand {
+	color: #FFFFFF;
+}
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.open>a
+	{
+	background-image: linear-gradient(to bottom, #cccccc 0, #cccccc 100%);
+}
+
+.mainbar {
+	padding: 0px;
+	height: 150px;
+	width: 100%;
+	text-align: center;
+}
+
+.mainbar-menu {
+	display: inline-block;
+	cursor: pointer;
+	width: 20%;
+	height: 130px;
+	line-height: 140px;
+	padding: 10px;
+	font-size: 20px;
+	background: none;
+	color: #000000;
+	font-weight: bold;
+	float: left;
+	padding: 5px;
+}
+
+.mainbar-menu:hover, .mainbar-menu .active {
+	border-bottom: 4px solid RGB(237, 125, 49);
+}
+
+/* //////////////// main css */
+
+/* 모달 크기조정 */
+.social-login {
+	margin-left: 20px;
+}
+
+.modal-dialog.login {
+	width: 300px;
+	height: 200px;
+	margin: 0;
+	padding: 0;
+}
+
+/* ////////////////////로그인 모달 창 style/////////////////////// */
+.modal-dialog.modal {
+	width: 50%;
+	height: 50%;
+	margin: 0;
+	padding: 0;
+}
+
+
+.notice {
+	overflow: inherit;
+	overflow-y: inherit;
+	text-align: center;
+	display: inline-block;
+	vertical-align: right;
+	width: 300px;
+	height: 150px;
+	overflow-y: scroll;
+	background: #fff;
+}
+
+.sns-login > ul {
 	
-	<script type="text/javascript">
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.sns-login>li {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	border: 0;
+	float: left;
+}
+
+#loginModal > div > div > div.modal-body > form > div.row.social-login { margin: 5px;}
+</style>
+
+<script type="text/javascript">
 		$( function() {
 
 		$( "#notice" ).on("click" , function() {
@@ -293,6 +300,10 @@
 			self.location = "/voice/listVoice";
 		});
 		
+		$(".ufo").on("click", function() {
+			self.location = "/newsfeed/ufo";
+		});
+		
 		$( "#profile" ).on("click" , function() {
 			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";			
 	 	});
@@ -329,23 +340,18 @@
 		
 		//페이스북로그인
 		$("#facebookLogin").on("click", function() {
-			var windowW = 400;  // 창의 가로 길이
-		    var windowH = 500;  // 창의 세로 길이
-			var left = Math.ceil((window.screen.width - windowW)/2);
-		    var top = Math.ceil((window.screen.height - windowH)/2);
-		    
-			window.open("/facebookLoginRequest",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
-			opener.location.reload(true);
-			    self.close();
+			 self.location = "/facebookLoginRequest";
 	
 		});
 
 	});
 		
-	
+		
+		
+		
 		$(document).ready(function(){
 			
-			
+			<c:if test="${sessionScope.user.userId ne null}">
 				// userId input value 로 못 받아와서 수정함 session에서 가져오는 걸로
 				var userId = "${sessionScope.user.userId}";
 				
@@ -372,6 +378,8 @@
 			        	
 			        }
 				});
+				
+				</c:if>
 			
 		});
 			
@@ -385,9 +393,11 @@
 
 <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top" style="height: 105px; background-color: #FFF;  
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		style="height: 105px; background-color: #FFF;  
     	background-image: url('/resources/images/toolbar_img.png');     background-repeat: repeat-x;
     	border-bottom: 1px solid rgba(214, 213, 212, 0.64);">
+
       <div class="container" style="color:#000">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigationbar" aria-expanded="false" aria-controls="navbar"
@@ -399,8 +409,10 @@
             
           </button>
           <a class="navbar-brand" href="#">
+        	  <div class="row">
+        	  <img src="/resources/images/ufo.png" class="ufo" width="25">
 	          	<img alt="뉴스피드로 이동" src="/resources/images/zaching2.png"  height="40px" 
-	          		style="margin-top: 20px;"/>
+	          		style="margin-top: 20px;"/></div>
 	        </a>
         </div>
         <div id="navigationbar" class="collapse navbar-collapse">
@@ -409,6 +421,7 @@
             <li><a href="#" style="color:#000;">라이브방송</a></li>
             <li><a href="#" style="color:#000;">보이스리플</a></li>
             <li><a href="#" style="color:#000;">생활정보</a></li>
+          
           </ul>
           <ul class="nav navbar-nav" style="float:right;">
 
@@ -433,7 +446,8 @@
 	           <!-- 여기부터 --><img src="../resources/images/paper-plane.png" id="notice"
 		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
 		          		 <!-- 여기까지 알림임ㅜㅠㅠ 지우지마셈 --> 
-		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px"/>&nbsp;
+		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px"
+		       	style="border-radius: 50%"/>&nbsp;
 		        <a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
 		        &nbsp;님 환영합니다!
 
@@ -453,94 +467,181 @@
         </div><!--/.nav-collapse -->
         <div class="noticelist" align="right" style="display:none;">
 						
+
+	<div class="container" style="color: #000">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigationbar"
+				aria-expanded="false" aria-controls="navbar" style="margin-top: 35px;">
+				<span class="sr-only">Toggle navigation</span> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span>
+
+			</button>
+			<a class="navbar-brand" href="#"> <img alt="뉴스피드로 이동"
+				src="/resources/images/zaching2.png" height="40px"
+				style="margin-top: 20px;" />
+			</a>
+		</div>
+		<div id="navigationbar" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="#" style="color: #000;">밥친구</a></li>
+				<li><a href="#" style="color: #000;">라이브방송</a></li>
+				<li><a href="#" style="color: #000;">보이스리플</a></li>
+				<li><a href="#" style="color: #000;">생활정보</a></li>
+			</ul>
+			<ul class="nav navbar-nav" style="float: right;">
+
+				<c:if test="${user.userId ne null && sessionScope.user.profileImage eq null}">
+					<li><div style="padding-top: 10px; color: #333;">
+							<!-- 여기부터 -->
+							<img src="../resources/images/paper-plane.png" id="notice"
+								width="30px" />
+							<div class="badge   badge-primary"></div>
+							&nbsp;&nbsp;
+							<!-- 여기까지 알림임ㅜㅠㅠ 지우지마셈 -->
+							<img src="../resources/images/profile_default.png" id="profile"
+								width="30px" class="img-circle"/>&nbsp;<a href="#profile" style="color: #f0ad4e;"
+								title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
+
+
+						</div></li>
+					<li><a href="#">로그아웃</a></li>
+				</c:if>
+
+
+
+				<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
+					<li><div style="padding-top: 10px; color: #333;">
+							<!-- 여기부터 -->
+							<img src="../resources/images/paper-plane.png" id="notice"
+								width="30px" />
+							<div class="badge   badge-primary"></div>
+							&nbsp;&nbsp;
+							<!-- 여기까지 알림임ㅜㅠㅠ 지우지마셈 -->
+							<img class="img-circle" src="../resources/upload_files/images/${sessionScope.user.profileImage}" 
+								id="profile" width="30px" />
+						<a href="#profile"style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
+							&nbsp;님 환영합니다!
+					</div></li>
+					<li><a href="#">로그아웃</a></li>
+				</c:if>
+
+
+				<c:if test="${user.userId eq null}">
+					<li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
+					<li><a href="#">회원가입</a></li>
+				</c:if>
+			</ul>
+
+		</div>
+		<!--/.nav-collapse -->
+		<div class="noticelist" align="right" style="display: none;"></div>
+	</div>
+
+
+
+	</nav>
+
+
+	<!-- Modal -->
+	<div id="loginModal" class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+
+				<!-- Modal Header start-->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<div class="modal-title" align="center"
+						style="margin-bottom: 15px;">
+						<!-- 자췽로고 -->
+						<img src="/resources/images/temp_logo.png" class="img-logo"
+							width="50" height="50">
 					</div>
-	  </div>
-		
+				</div>
+				<!-- Modal Header end -->
 
-		
-    </nav>
-   
+				<!-- Modal Body start-->
+				<div class="modal-body" align="left">
 
-	 <!-- Modal -->
-  <div  id="loginModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  
-  <div class="modal-dialog">
-    
-  <!-- Modal content-->
-      <div class="modal-content">
-      
-      <!-- Modal Header start-->
-       <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <div class="modal-title" align="center" style="margin-bottom:15px;"><!-- 자췽로고 -->
-          <img src="/resources/images/temp_logo.png" class="img-logo" width="50" height="50" ></div> 
-       </div><!-- Modal Header end -->  
+					<form>
+						<div class="row">
+							<div class="col-xs-4">
+								<label for="inputlg" style="margin-left: 5px">이메일(ID)</label>
+							</div>
+						</div>
 
-       <!-- Modal Body start-->
-       <div class="modal-body" align="left">
-       	
-       	<form>
-       	<div class="row">
-          <div class="col-xs-4">
-           	<label for="inputlg" style="margin-left: 5px">이메일(ID)</label>
-          </div>
-        </div>
-        
-         <div class="row">
-           <div class="col-sm-6">
-   			<input type="email" class="form-control input-lg" name="email"
-				placeholder="이메일을입력하세요"	style="margin-left: 5px"/>
-   			
-           </div>
-         </div>
-         
-         <div class="row">
-           <div class="col-xs-4">
-           	<label for="inputlg" style="margin-left: 5px" 
-           	style="margin-top: 5px">패스워드(PW)</label>
-           </div>
-         </div>
-       
-       
-         <div class="row">
-           <div class="col-sm-6">
-   			 <input type="password" class="form-control input-lg" name="password"
-   				placeholder="패스워드를입력하세요"	 style="margin-left: 5px">
-           </div>
+						<div class="row">
+							<div class="col-sm-6">
+								<input type="email" class="form-control input-lg" name="email"
+									placeholder="이메일을입력하세요" style="margin-left: 5px" />
+
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-4">
+								<label for="inputlg" style="margin-left: 5px"
+									style="margin-top: 5px">패스워드(PW)</label>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class="col-sm-6">
+								<input type="password" class="form-control input-lg"
+									name="password" placeholder="패스워드를입력하세요"
+									style="margin-left: 5px">
+							</div>
+						</div>
+
+
+
+						<div class="row social-login">
+							<ul class="sns-login">
+								<li><a href="#kakaoLogin" id="kakaoLogin"> <img
+										src="/resources/images/KakaoTalk_lcon.png" class="img-rounded"
+										width="50" height="50" type="button" id="kakaologin" /></a></li>
+
+								<li><a href="#facebookLogin" id="facebookLogin"> <img
+										src="/resources/images/facebook_Icon.png" class="img-rounded"
+										width="50" height="50" type="button" id="facebooklogin"></a></li>
+
+								<li><a href="#naverLogin" id="naverLogin"> <img
+										src="/resources/images/Naver_Icon.png" class="img-rounded"
+										width="50" height="50" type="button" id="naverlogin" /></a></li>
+
+								<li><a href="#googleLogin" id="googleLogin"> <img
+										src="/resources/images/Google_Icon.jpg" class="img-rounded"
+										width="50" height="50" type="button" id="googlelogin" /></a></li>
+							</ul>
+						</div>
+
+					<div class="row">
+						<div class="col-sm-offset-4 col-sm-6 text-center">
+							<button type="submit" class="btn btn-primary" id="login">로&nbsp;그 &nbsp;인</button>
+							<a class="btn btn-primary btn" href="#" role="button">패스워드찾기</a>
+						</div>
+					</div>
+					</form>
+				</div>
+				<!--Modal Body  -->
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+			<!-- Modal content-->
 		</div>
-		
-		
-		<div class="row">
-              <div class="social-login" align="left">
-
-   			 	<a href="#kakaoLogin" id="kakaoLogin">
-   			 	<img src="/resources/images/KakaoTalk_lcon.png" class="img-rounded" width="50" height="50" type="button" id="kakaologin"/></a>
-   			 	<a href="#facebookLogin" id="facebookLogin">
-   			 	<img src="/resources/images/facebook_Icon.png" class="img-rounded" width="50" height="50"  type="button" id="facebooklogin"></a>
-   			 	<a href="#naverLogin" id="naverLogin">
-   			 	<img src="/resources/images/Naver_Icon.png"  class="img-rounded" width="50" height="50"  	type="button" id="naverlogin"/></a>
-   			 	<a href="#googleLogin" id="googleLogin">
-   			 	<img src="/resources/images/Google_Icon.jpg" class="img-rounded" width="50" height="50" 	type="button" id="googlelogin"/></a>
-
-             </div>  
-        </div>
-        
-        <div class="row">
-			  <div class="col-sm-offset-4 col-sm-6 text-center">
-		      <button type="submit" class="btn btn-primary" id="login" >로 &nbsp;그 &nbsp;인</button>
-			  <a class="btn btn-primary btn" href="#" role="button">패스워드찾기</a>
-			  </div>
-		</div>
-		</form>
-      </div><!--Modal Body  -->
-      
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-      
-     </div><!-- Modal content-->
-    </div> <!-- Modal dialog -->  
-   </div> <!-- Modal Fade  --> 	
+		<!-- Modal dialog -->
+	</div>
+	<!-- Modal Fade  -->
 
 
 </body>

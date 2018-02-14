@@ -1,5 +1,38 @@
 @charset "EUC-KR";
 
+.img-cover{
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   background-color: rgba(0, 0, 0, 0.3);                                                                 
+   z-index:1;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
 /*getBob.css*/
 
 .getBob {
@@ -21,8 +54,7 @@
 }
 
 .getBob .jumbotron {
-    margin-bottom: 0px;
-    margin-top: -2px;
+    margin-bottom: 0;
     height: 600px;
     background: transparent;
 }
@@ -37,8 +69,8 @@
 	padding: 10px;
 	position: absolute;
  	width: 100%;
- 	top: 290px;
- 	background-color: rgba(221, 215, 224, 0.9);
+    top: 300px;
+    color: #FFF;
 }
 
 .getBob .blog-sidebar .textBold, .textBold {
@@ -56,7 +88,7 @@
 }
 
 .getBob .btn-bob {
-	background: #5F4B8B; 
+	background: #7a68a6; 
 	border: none; 
 	display: inline-block;
 	color: rgb(255, 255, 255); 
@@ -74,18 +106,17 @@
 	border: none; 
 	display: inline-block;
 	color: #000000;
-	font-size: 18px; 
-	font-weight: bold;
+	font-size: 16px;
 	text-align: center;
-	height: 70px;
-	line-height: 70px;
+	height: 60px;
+    line-height: 60px;
 	text-decoration: none;
 	border: 2px solid #FFFFFF;
 	cursor: pointer;
 }
      	
 .getBob .select-bob:hover, .select-bob.active{
-    background: #5F4B8B;
+    background: #7a68a6;
     color: #FFFFFF;
 }
      	
@@ -99,7 +130,7 @@
 	-moz-border-radius: 40px;
 	-khtml-border-radius: 40px;
 	-webkit-border-radius: 40px;
-	 background: #FFFFFF;
+	 background: #ffffffe6;
 	 width: 70px;
 	 height: 70px;
 	 line-height: 70px;
@@ -160,7 +191,7 @@
 }
 
 .addBob .btn-bob {
-	background: #5F4B8B; 
+	background: #7a68a6; 
 	border: none; 
 	color: rgb(255, 255, 255); 
 	font-size: 15px; 

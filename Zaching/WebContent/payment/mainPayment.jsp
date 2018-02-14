@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
@@ -11,6 +11,8 @@
 	<script type="text/javascript" src="../resources/javascript/masonry.pkgd.min.js"></script>
 	<script type="text/javascript" src="../resources/javascript/moment.js"></script>
 	<script type="text/javascript" src="../resources/javascript/moment-ko.js"></script>
+	<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
 	
 	    
     <!-- Latest compiled and minified CSS -->
@@ -104,9 +106,8 @@
 		}
 		
 		.modal-body {
-		  padding: 0 0 10px 0;
-		    height: 180px;
-		    overflow: auto;
+		   padding: 0 0 10px 0;
+		   height: 180px;
 		}
 		.topnav a {
 		  float: left;
@@ -157,20 +158,29 @@
 		.active {
 			display: block;
 		}
-		
-		.listCondition {
-			cursor: pointer;
-			padding: 10px;
-			background: #ccc;
-			font-size: 17px;
-			margin-top: 30px;
-			border: 1px solid #FFF;
-		}
-		
+
 		@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 			#Title {
 				max-width: 100%;
 			}
+		}
+		
+		.img-cover{
+	         position: absolute;
+	         height: 100%;
+	         width: 100%;
+	         background-color: rgba(0, 0, 0, 0.3);                                                                 
+	         z-index:1;
+     	}
+     	
+     	.listings ul.properties_list li {
+		    border: 1px solid #f2f1f1;
+		    color: #000;
+		}
+		
+
+		section.search > div.advanced_search > div > ul > li > a {
+		    color: #000;
 		}
 
        	
@@ -180,24 +190,20 @@
     
   		$(function() {
   			
-  			//alert();
+  			$("html, body").animate({ scrollTop: 0 }, "slow"); 
   			
   			var titleText = moment().format('M')+" 월 포인트 내역";
   			
   			//alert($("option:selected").text());
 
-  			if($("option:selected").text() != '기간설정') {					
+  			if($("div.container > div > div:nth-child(2) > div > div > select > option:selected").text() != '기간설정') {					
   				//alert("??");
-  				titleText = $("option:selected").text()+"간 포인트 내역";
+  				titleText = $("div.container > div > div:nth-child(2) > div > div > select > option:selected").text()+"간 포인트 내역";
   			}
   			
   			$("body > div.container > div > div:nth-child(1) > div").text(titleText);
-
-			$('.btn-bob:contains("반환신청")').on('click', function() {
-				$(self.location).attr("href","/payment/exchargePoint");
-			});
 			
-			$('#exchargePoint > img').on('click', function(){
+			$('#chargePoint > img').on('click', function(){
   				//$("form").attr("method", "POST").attr("action", "/payment/kakaoPay").submit();
   				var userId = $("input[name=userId]").val();
   				var point = $("input[name=point]").val();
@@ -234,18 +240,22 @@
 					
 				});				
 			});
+
+			$('li:contains("반환신청")').on('click', function() {
+				$("#exchargePoint").modal("show");
+			});
 			
-			$('.btn-bob:contains("충전")').on('click', function() {
+			$('li:contains("충전")').on('click', function() {
 				<c:if test="${empty user.accessToken}">
 					$(self.location).attr("href","/payment/kakaoLoginRequest");
 				</c:if>
 				<c:if test="${!empty user.accessToken}">
-					$("#exchargePoint").modal("show");
+					$("#chargePoint").modal("show");
 				</c:if>
 			});
 			
 			
-			$(".btn-bob:contains('마일리지 전환')").on('click', function() {
+			$("li:contains('마일리지 전환')").on('click', function() {
 				if(${totalMileage} < 1000) {
 					alert("마일리지 전환이 불가능합니다.");
 				} else {
@@ -256,40 +266,102 @@
 			$('.selectpicker').on('change', function() {
 				$(self.location).attr("href","/payment/mainPayment?searchCondition="+$('option:selected').val());
 			});
+			
+			/*  Advanced search form & Icon  */
+			$('#advanced_search_btn').on("click", function(e){
+				e.preventDefault();
+
+				var ads_box =$('.advanced_search');
+				
+				if(!ads_box.hasClass('advanced_displayed')){
+
+					$(this).addClass('active');
+					ads_box.stop().fadeIn(200).addClass('advanced_displayed');
+
+				}else{
+
+					$(this).removeClass('active');
+					ads_box.stop().fadeOut(200).removeClass('advanced_displayed');
+
+				}
+
+			});
+			
+			$("input[name=exchargePoint]").on('keyup', function() {
+				$(this).val($(this).val().replace(/[^0-9]/g,""));
+				
+				if($(this).val().charAt(0) == 0) {
+					$(this).val("");
+				}
+				
+			});
+			
+			$("input[name=exchargePoint]").on({'focusout': function() {
+				if($(this).val() == "") {
+					$("#pointCheck").show();
+					$("#pointCheck").text("* 5,000 Point 이상 출금이 가능합니다.");
+				}
+				
+				if($(this).val() > ${user.totalPoint}) {
+					$(this).val(${user.totalPoint});
+					$("#pointCheck").show();
+					$(this).css("background", "#ff8c8c");
+					$("#pointCheck").text("* 가지고 계신 Point 까지만 출금이 가능합니다.");
+				}
+				
+				if($(this).val() < 5000) {
+					$("#pointCheck").show();
+					$(this).css("background", "#ff8c8c");
+					$("#pointCheck").text("* 5,000 Point 이상 출금이 가능합니다.");
+				}
+				},
+				'focusin' : function() {
+					$(this).css("background", "#FFF");
+					$("#pointCheck").hide();
+
+				}
+			});
 
 		});
 
     </script>
     
 </head>
-<body style="background:#fffafa;">
+<body>
+<input type="hidden" name="userId" value="${sessionScope.user.userId}" />
 
-	<div class="jumbotron text-center"
-			style="background-image: url('../resources/images/340.jpg');
+	<section class="hero" style="background-image: url('../resources/images/igor-ovsyannykov-494256.jpg');
 			background-size: cover;
 			background-repeat: no-repeat, no-repeat;
-			background-position: center center;">
-		<img id="Title" src="../resources/images/title_point.png"/>
-		
-		<div class="row text-center" style="padding: 30px; background: rgba(0, 0, 0, 0.7); margin-top: 50px; color: #FFF;">
-			<div class="col-xs-12">
-				<p style="font-size:20px;">${user.name}님의 잔여 포인트 : <fmt:formatNumber type="currency" value="${totalPoint}" pattern="###,###" /> Point</p>
-				<h4>( 마일리지 : <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" />점 )</h4>
-			</div>
-			
-			<div class="col-xs-12">
-				<button class="btn-bob" style="margin: 10px;" >마일리지 전환</button>
-	            <button class="btn-bob" style="margin: 10px;" data-toggle="modal">충전</button>
-	            <button class="btn-bob" style="margin: 10px;">반환신청</button>
-	        </div>				
+			background-position: center center; height:700px; ">
+		<div class="img-cover"></div>
+		<section class="caption" style="padding-top: 70px;">
+			<h2 class="caption">My Point</h2>
+		</section>
+	</section>
+	
+	<section class="search" style="background: #000000;">
+		<div class="wrapper">
+			<form id="searchForm">
+				<div id="search" class="text-center" style="position: absolute; background: none; color:#FFF; left: 5%;">
+					<h1 style="font-size:20px;">${user.name}님의 잔여 포인트 : <fmt:formatNumber type="currency" value="${totalPoint}" pattern="###,###" /> Point</h1>
+					<h4>( 마일리지 : <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" />점 )</h4>
+				</div>
+				<a href="#" class="advanced_search_icon" id="advanced_search_btn"></a>
+			</form>
 		</div>
-		<div class="row text-center"  style="padding-top:50px; padding-bottom:30px;">
-				
-	           
-	            
-	    </div>
-	</div>
-
+		
+		<div class="advanced_search" style="z-index: 50;">
+			<div class="wrapper">
+				<span class="arrow"></span>
+            	<ul class="nav nav-tabs nav-justified" style="border: none;">
+					<li class="active" ><a>마일리지 전환</a></li>
+					<li><a>충전</a></li>
+					<li><a>반환신청</a></li>
+				</ul>
+			</div>
+		</div><!--  end advanced search section  -->
+	</section><!--  end search section  -->
 	
 	<div class="container" style="padding-top: 50px;">
 
@@ -338,7 +410,7 @@
     </div><!-- /.container -->
 	
 	<!-- Modal -->
-	<div class="modal fade" id="exchargePoint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="chargePoint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -349,14 +421,13 @@
 		      <div class="modal-body text-center"> 
 		      	충전할 포인트를 입력해주세요. <br>
 		      	충전은 1번 당 1,000원부터 10,0000원까지 가능합니다.
-			      <form>
-					<input type="hidden" name="userId" value="${sessionScope.user.userId}" />
-					<input type="text" placeholder="충전할 포인트를 입력하세요" name="point" style="width: 400px; height:40px; margin-top: 40px;">
+			      <form style="padding-top: 50px;">
+					<input type="text" placeholder="충전할 포인트를 입력하세요" name="point" style="width: 400px; height:40px;">
 				</form>
 		      </div>
 		      <div class="modal-footer">
 		      <div class="search-container text-center" align="center" style="margin: 0 auto;">
-		      	 <a href="#" id="exchargePoint"><img src="../resources/images/payment_icon_yellow_medium.png" ></a>
+		      	 <a href="#" id="chargePoint"><img src="../resources/images/payment_icon_yellow_medium.png" ></a>
 		      </div>
 	      </div>
 	    </div>
@@ -376,7 +447,6 @@
 				포인트로 전환할 마일리지를 입력해주세요. <br>
 				5,000점 이상부터 1,000점 당 1000포인트로 전환됩니다.
 			      <form>
-					<input type="hidden" name="userId" value="${sessionScope.user.userId}" />
 					<input type="text" placeholder="마일리지를 입력해주세요." name="point" style="width: 200px; height:40px; margin-top: 60px; margin-left: 30px;">
 					/ <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" />점
 				</form>
@@ -384,6 +454,92 @@
 		      <div class="modal-footer">
 		      <div class="search-container text-center" align="center" style="margin: 0 auto;">
 		      	 <button class="btn btn-primary" type="submit">마일리지 전환하기</button>
+		      </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="modal fade" id="exchargePoint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document" style="max-width: 700px;">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title text-center" id="myModalLabel"><b>포인트 반환 신청</b></h4>
+	        <hr>
+	      </div>
+		      <div class="modal-body text-center" style="height: 500px;">
+			      <form name="exchargePointForm" style="padding-top: 20px;">
+					<input type="text" placeholder="반환받을 포인트를 입력하세요." name="exchargePoint" 
+							style="width: 200px; height:40px; margin-left: 30px;">
+					/ <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" /> Point
+					
+					<div id="pointCheck" class="text-center" style="padding: 10px 10px 20px 0; color:red; display: none;">
+						* 5,000 Point 이상 출금이 가능합니다.
+					</div>
+				</form>
+
+				    <div class="input-group">
+				      <span class="input-group-addon">
+				        <input type="radio" name="account" checked>
+				      </span>
+				      <div class="form-control">기존계좌사용</div>
+				    </div><!-- /input-group -->
+				    <div class="input-group" id="newAccount">
+				      <span class="input-group-addon">
+				        <input type="radio" name="account">
+				      </span>
+				      <div class="form-control">새로운계좌사용</div>
+				      
+				    </div><!-- /input-group -->
+		      		
+				    <form id="accountForm"  style="display: none;">
+				    	등록할 계좌정보를 입력해주세요.
+						<div class="row" style="padding-top:40px;">
+							<label for="name" class="col-xs-4 control-label">
+									이름
+							</label>
+							<div class="col-xs-7">
+								<input type="text" class="form-control" name="name" value="${user.realName}" />
+							</div>
+						</div>
+						
+						<div class="row" style="padding-top:20px;">
+							<label for="name" class="col-xs-4 control-label">
+									은행명
+							</label>
+							<div class="col-xs-7">
+								${bank}
+								<select name="limitNum" class="selectpicker show-tick" title="제한 인원수"  >
+						    	  <c:forEach var="i" begin="2" end="20" step="1">
+						    	  	<option >${i}</option>
+						    	  </c:forEach>
+								</select>
+							</div>
+						</div>
+						
+						<div class="row" style="padding-top:20px;">
+							<label for="name" class="col-xs-4 control-label">
+									생년월일+한자리 (ex) 9402082
+							</label>
+							<div class="col-xs-7">
+								<input type="text" class="form-control" name="accountHolderinfo" value=""/>
+							</div>
+						</div>
+						
+						<div class="row" style="padding-top:20px;">
+							<label for="name" class="col-xs-4 control-label">
+									계좌번호
+							</label>
+							<div class="col-xs-7">
+								<input type="text" class="form-control" name="accountNum" value="${user.accountNumber}" />
+							</div>
+						</div>
+					</form>
+		      </div>
+		      <div class="modal-footer">
+		      <div class="search-container text-center" align="center" style="margin: 0 auto;">
+		      	 <button class="btn btn-primary" type="submit">반환 신청하기</button>
 		      </div>
 	      </div>
 	    </div>

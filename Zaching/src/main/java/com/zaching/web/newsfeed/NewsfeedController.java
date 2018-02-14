@@ -87,6 +87,13 @@ public class NewsfeedController {
 		return "forward:/newsfeed/getNewsfeed.jsp";
 	}
 	
+	@RequestMapping(value="ufo", method=RequestMethod.GET)
+	public String ufo(Model model) throws Exception{
+		System.out.println("updateNewsfeed()");
+
+		return "forward:/newsfeed/ufo.jsp";
+	}
+	
 	@RequestMapping(value="getNewsfeed")
 	public String getNewsfeed(@RequestParam int newsfeedId, Model model, HttpSession session, @ModelAttribute("search") Search search) throws Exception{
 		System.out.println("getNewsfeed()");

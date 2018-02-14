@@ -11,7 +11,7 @@
 
       <c:if test="${empty comments}">
       	<div class="text-center" style="padding: 10px;">
-      		등록된 댓글이 없습니다 T.T <br>첫번째 댓글을 달아보세요!
+      		등록된 댓글이 없습니다. <br>첫번째 댓글을 달아보세요!
       	</div>
       </c:if>
     	<c:forEach var="comment" items="${comments}">
@@ -84,6 +84,9 @@
    <c:if test="${commentPage.totalCount > (commentPage.currentPage * commentPage.pageUnit)}">
    <div class="row text-center" style="height:50px; margin: 5px; line-height: 50px;
    			    border-bottom: 2px solid #ccc; cursor: pointer;">더 보기</div>
+	<div class="more_listing">
+		<a href="#" class="more_listing_btn">View More Listings</a>
+	</div>
    </c:if>
    
    

@@ -10,12 +10,12 @@
 function testbutton(){
 	
  	alert("²ó");
- 	$("form").attr("method", "POST").attr("action", "/admin/rest/alert").submit();
+ 	self.location = "/notice/makeNotice";
   }
   
 </script>
 <body>
-<jsp:include page="subalarm.jsp"/>
+
 <form></form>
  <button class="form-control" onclick="testbutton()">show alert bottom</button>
  

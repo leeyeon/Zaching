@@ -47,12 +47,46 @@
    		});
    	 	
    	 	$('.col-xs-1:contains("수정")').on('click', function() {
-   			//alert('수정');
    			$(self.location).attr("href","/bob/updateBob?category=${category}&bobId=${bob.bobId}");
    		});
+
+   		$("input:checkbox[name=inviteFriend]").change(function(){
+   	        $("#checkFriend").text($("input:checkbox[name=inviteFriend]:checked").length);
+   	    });
    	 	
    	 	$('.btn-ico:contains("초대하기")').on('click', function() {
    			alert('초대하기');
+   			var lists = [];
+			$("input[name='inviteFriend']:checked").each(function(i){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+				lists.push($(this).val());
+			});
+			
+   			$.ajax({
+   				url : "/bob/rest/inviteBob",
+   				method : "POST",
+   				contentType : "application/json; charset=UTF-8",
+   				data : JSON.stringify({
+   					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />,
+   					"list" : lists
+   				}),
+   				async : false,
+   				dataType : "json",
+   				success : function(serverData) {
+   					
+   					if(serverData.response == "success") {
+						alert("친구를 성공적으로 초대하였습니다.");
+						location.reload();
+					} else {
+						alert("친구를 초대하지 못하였습니다. \n 다시 시도해주세요.");
+					}
+   					
+   					location.reload();
+   				},
+   				error:function(request,status,error){
+   				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+   				}
+   				
+   			});
    		});
    	 	
    	 	$('.btn-bob:contains("엑셀 다운로드")').on('click', function() {
@@ -62,7 +96,6 @@
    	 	
    		$(document).on('click','#ListParticipant .userProfile', function() {
 	 		var participantUserId = $($("input[name=getUserTimeLine]")[$('#ListParticipant .userProfile').index(this)]).val();
-	 		alert(participantUserId);
 	 		$(self.location).attr("href","/user/getTimeLine?userId="+participantUserId);
 	 	});
    	 	
@@ -151,7 +184,27 @@
    	 	}
 
    	 	$('.deleteComment').on('click', function() {
-   	 		alert();
+	   	 	if (confirm("댓글을 삭제하시겠어요?") == true){
+	   	 		/*
+		   	 	$.ajax({
+	   				url : "/bob/rest/blockBob",
+	   				method : "POST",
+	   				contentType : "application/json; charset=UTF-8",
+	   				data : JSON.stringify({
+	   					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />
+	   				}),
+	   				async : false,
+	   				success : function(serverData) {
+	   					location.reload();
+	   				},
+	   				error:function(request,status,error){
+	   				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	   				}
+	   			});
+	   	 		*/
+		   	}else{
+		   	    return;
+		   	}
    	 	});
    	 	
    	 	$('div .row .text-center:contains("더 보기")').on("click", function() {
@@ -213,7 +266,7 @@
    	 	});
    	 	
    	 	$('button:contains("마감하기")').on('click', function() {
-   	 		console.log("${bob.bobId}");
+   	 		//console.log("${bob.bobId}");
    	 		//확인
 	   	 	if (confirm("참여자 신청을 마감하시겠어요? \n마감 시, 참여자를 더 이상 받으 실 수 없습니다.") == true){
 		   	 	$.ajax({
@@ -280,7 +333,8 @@
    		
    	 	
    	 	$('button:contains("회비 내기")').on('click', function() {
-   	 		alert("회비 냅니다아아앙");
+   	 		
+   	 		alert("${user.userId} / "+ $("input[name='participantId']").val() + "${bob.fee} / ${bob.bobId}");
    	 		
    	 		$.ajax({
    				url : "/bob/rest/payFeebob",
@@ -367,9 +421,7 @@
    	 	
    			 // 이미지 지도에 표시할 마커입니다
    			 // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
-   			 var markers = 
-   			    
-   			     {
+   			 var markers = {
    			         position: new daum.maps.LatLng(<c:out value="${bob.latitude}" escapeXml="false" />,
    			        		 <c:out value="${bob.longitude}" escapeXml="false" />), 
    			         text: '<c:out value="${bob.locationName}" escapeXml="false" />' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
@@ -380,13 +432,21 @@
    			         center: new daum.maps.LatLng(<c:out value="${bob.latitude}" escapeXml="false" />,
    			        		 <c:out value="${bob.longitude}" escapeXml="false" />), // 이미지 지도의 중심좌표
    			         level: 2, // 이미지 지도의 확대 레벨
-   			         marker: markers // 이미지 지도에 표시할 마커 
    			     };    
    		
    			 // 이미지 지도를 생성합니다
-   			 var staticMap = new daum.maps.StaticMap(staticMapContainer, staticMapOption);
+   			var map = new daum.maps.Map(staticMapContainer, staticMapOption);
+   			 
+   			var marker = new daum.maps.Marker({
+   				map: map,
+   			    position: new daum.maps.LatLng(<c:out value="${bob.latitude}" escapeXml="false" />,
+		        		 <c:out value="${bob.longitude}" escapeXml="false" />),
+		        title : '<c:out value="${bob.locationName}" escapeXml="false" />'
+   			});
+   			
    	 	
    		</c:if>
+
    	});
 
 </script>
@@ -396,52 +456,50 @@
 
 	<c:set var="frontImage" value="${fn:substring(bob.image, 0, 6)}"/>
 	<c:set var="endImage" value="${fn:substring(bob.image, 7, fn:length(bob.image))}"/>
-	<div class="bg" style="background-image: url('../resources/upload_files/images/${frontImage}/${endImage}'), url('../resources/upload_files/images/download.jpg') "></div>
+	<div class="bg" style="background-image: url('../resources/upload_files/images/${frontImage}/${endImage}'), url('../resources/upload_files/images/download.jpg') ">
+		<div class="img-cover"></div>
+	</div>
 	<div class="jumbotron">
-		
 		<div class="container" align="center">
-		
-			<div class="row" >
+			<div class="row">
 				<div class="col-xs-1" data-toggle="modal" data-target="#addReport">신고</div>
 				<c:if test="${user.userId eq bob.writtenUserId}">
 					<div class="col-xs-1">수정</div>
 				</c:if>
 			</div>
-			
-			<div class="textStyle text-center" style="padding-top: 210px;">
-				<div class="overlay"><h1 style="font-weight: bold;">${bob.title}</h1>
-					<c:if test="${category ne 'B03'}">
-						<h3>
-							<c:if test="${category eq 'B01'}">
-								<c:if test="${!empty bob.appointmentTime}">
-						        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-									<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 (E) HH시 mm분"/>
-					        	</c:if>
-					        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
-							</c:if>
-							<c:if test="${category eq 'B02'}">오늘</c:if>
-							/ ${bob.locationName}
-						</h3>
-					</c:if>
-				</div>
+		</div>
+		<div class="textStyle text-center" style="padding-top: 210px;">
+			<div class="overlay">
+				<h2 style="font-weight: bold; font-size: 50px;">${bob.title}</h2>
+				<c:if test="${category ne 'B03'}">
+					<h4 style="padding-top: 22px; font-size: 25px;">
+						<c:if test="${category eq 'B01'}">
+							<c:if test="${!empty bob.appointmentTime}">
+					        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
+								<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 (E) HH시 mm분"/>
+				        	</c:if>
+				        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
+						</c:if>
+						<c:if test="${category eq 'B02'}">오늘</c:if>
+						/ ${bob.locationName}
+					</h4>
+				</c:if>
 			</div>
-
 		</div>
 
 	</div>
 	
-	<div class="container" style="font-size: 17px;">
+	<div class="container" style="font-size: 1em;">
 
       <div class="row">
 
         <div class="col-sm-8 blog-main custumRow">
 
-          <div class="blog-post" style="min-height:350px">
+          <div class="blog-post" style="min-height:350px;">
             ${bob.content}
-            
             <c:if test="${!empty bob.longitude}">
-            	<hr>
-	            <div class="text-center textBold" style="font-size: 35px;">약속장소<br/></div>            
+            	<hr style="margin-top: 50px;">
+	            <div class="text-center textBold" style="font-size: 25px; padding-bottom: 30px;">약속장소<br/></div>            
 	            <div id="staticMap" style="height:350px;"></div>
             </c:if>          
           </div><!-- /.blog-post -->
@@ -496,16 +554,14 @@
 					<input type="hidden" name="getUserTimeLine" value="${bob.writtenUserId}" />
 					
 					<c:forEach var="participant" items="${participant}">
-						
 						<c:if test="${participant.userId eq user.userId}">
-							<input type="hidden" name="participantId" value="${bob.writtenUserId}" />
+							<input type="hidden" name="participantId" value="${participant.participantId}" />
 							<input type="hidden" name="isAutoFee" value="${participant.isAutoFee}" />
 							<c:set var="isAutoFee" value="${participant.isAutoFee}" />
 							<c:set var="paidFee" value="${participant.paidFee}"/>
 						</c:if>
 						<c:if test="${!participant.isWriter}">
 							<input type="hidden" name="getUserTimeLine" value="${participant.userId}" />
-							<input type="hidden" name="participantId" value="${participant.participantId}" />
 							<div class="col-xs-4 text-center" align="left" style="margin-top:20px; padding-right:15px;">
 								<img class="userProfile" width="55px" height="55px"
 									style=" border-radius: 40px;
@@ -587,7 +643,7 @@
       </div><!-- /.row -->
       
       <!-- ///////////////////////////////// 댓글 시작 /////////////////////////////////  -->
-      <div class="row custumRow" style="margin-top:20px; padding: 50px;">
+      <div class="row custumRow" style="margin-top:20px; padding: 30px 10px 20px 10px;">
       	
       	<div class="text-center textBold" style="font-size: 20px;">친구들과 대화를 나누세요 :)</div>
         <hr>
@@ -613,7 +669,7 @@
       <!-- ///////////////////////////////// 후기 시작 /////////////////////////////////  -->
       
       <c:if test="${param.category ne 'B03'}">
-	      <div class="row custumRow" style="margin-top:20px; padding: 50px;">
+	      <div class="row custumRow" style="margin-top:20px; padding: 30px 10px 20px 10px;">
 	      
 	      	<div class="text-center textBold" style="font-size: 20px;">
 	      		${sessionScope.user.name} 님, 이번 밥친구모임은 어떠셨나요?
@@ -631,6 +687,11 @@
 		      	</c:if>   	
 	      	</div>
 			
+			<c:if test="${empty review}">
+				<div class="row">
+	      			<div class="col-xs-12 text-center" style="padding:40px 0 20px 0;">등록된 후기가 없습니다.</div>
+	      		</div>
+			</c:if>
 	      	<c:forEach var="review" items="${review}">
 	      		<div class="row">
 	      			<div class="col-xs-12 text-center">${review.content} // ${review.categoryCode}</div>
@@ -646,7 +707,7 @@
 
 	  <c:if test="${param.category eq 'B03'}">
 	      <div class="row custumRow" style="margin-top:20px; padding-top: 30px;">
-		    <div class="text-center textBold" style="font-size: 35px;">회비 장부</div>
+		    <div class="text-center textBold" style="font-size: 20px;">회비 장부</div>
 	      	<hr>
 	      	
 	      	<div class="row" style="padding: 10px;">
@@ -658,8 +719,7 @@
 	      	<div class="row text-center textBold" style="padding-top:25px; padding-botton:30px;">
 	      		<fmt:parseDate value="${bob.feeDate}" var="Date" pattern="yyyy-MM-dd HH:mm:ss.S"/>
 	      		<fmt:formatDate var="feeDate" value="${Date}" pattern="d"/><br>
-	      		<h1 style="font-size: 20px">회비 내는 날 : 매 월 ${feeDate}일</h1>
-	      		
+	      		<h1 style="font-size: 17px">회비 내는 날 : 매 월 ${feeDate}일</h1>
 	      		이 달의 회비는 <fmt:formatNumber type="currency" value="${bob.fee}" pattern="###,###" />원입니다.
 	      	</div>
 	      	
@@ -691,19 +751,24 @@
         <div class="modal-dialog"> 
                <div class="modal-content"> 
                     <div class="modal-header"> 
-                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
-                             <h4 class="modal-title" style="text-align: center;" id="myModalLabel">내 친구 초대</h4> 
-                     </div> 
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+                        <h4 class="modal-title" style="text-align: center;" id="myModalLabel">내 친구 초대</h4> 
+                     </div>
                      <div class="modal-body" align="center">
-	                    <c:forEach var="i" begin="0" end="6" step="1">
+                     선택한 친구 <span id="checkFriend">0</span> / ${fn:length(listFriend)} 명
+                     
+	                    <c:forEach var="friend" items="${listFriend}" varStatus="status" >
 	                        <div class="row" style="padding: 5px 10px 5px 10px;">
 	                            <div class="input-group">
-							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="...">
-							      </span>
-							      <input type="text" class="form-control" style="width:400px;" value="친구이름">
-							      <br>
-							    </div>
+							      <input type="checkbox" id="friend${status.index}" name="inviteFriend" value="${friend.friendId}">
+							      <label for="friend${status.index}">
+							      <img class="userProfile" width="30px" height="30px"
+									style=" border-radius: 30px; box-shadow: 1px #cccccc;"
+									src = "../resources/upload_files/images/ ${friend.profileImage}"
+									onerror="this.src='../resources/images/user-icon.png'" />  ${friend.name}
+								</label>
+							    <br>
+							   </div>
 					    	</div>
 					    </c:forEach>
                     </div>

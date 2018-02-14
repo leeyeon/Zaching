@@ -1,15 +1,26 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 
+<!--  ///////////////////////// JSTL  ////////////////////////// -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri = "http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt2" uri="http://java.sun.com/jstl/fmt_rt" %>
 <html>
 <head>
-	<meta charset="utf-8">
+	<title>addBroadcast</title>
 	
-	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
+	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>	
+	<meta charset="utf-8">
+	<meta name="author" content="pixelhint.com">
+	<meta name="description" content="La casa free real state fully responsive html5/css3 home page website template"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 	
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
     
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
@@ -23,10 +34,6 @@
 	<jsp:include page="../resources/javascript/fileUploadCDN.jsp"/>
 	
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-
-	<link rel="stylesheet" href="../resources/css/bootstrap-datetimepicker.min.css">
-	<script src="../resources/javascript/bootstrap-datetimepicker.min.js"></script>
-	<script src="../resources/javascript/bootstrap-datetimepicker.ko.js"></script> 
 
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
   	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
@@ -48,7 +55,7 @@
 		}
 		
 		.bg {
-			background: url('../resources/images/bg_add_broads.jpg') no-repeat center center;
+			background: url('../resources/images/main_broadcast.jpg') no-repeat center center;
 			position: fixed;
 			width: 100%;
 			height: 100%;
@@ -82,11 +89,6 @@
 	<script type='text/javascript'>
   
 function fncAddBroadcast(){
-	//Form 유효성 검증
- 	//var name = document.detailForm.prodName.value;
-	//var detail = document.detailForm.prodDetail.value;
-	//var manuDate = document.detailForm.manuDate.value;
-	//var price = document.detailForm.price.value; 
 	
 	var name = $("input[name='title']").val();
 	var detail = $("input[name='detail']").val();
@@ -100,15 +102,13 @@ function fncAddBroadcast(){
 		return;
 	}
 
-	//document.detailForm.action='/addProduct.do';
-	//document.detailForm.action='/product/addProduct';
-	//document.detailForm.submit();
 	
 	$("form").attr("method","POST").attr("action","/broadcast/addBroadcast").submit();
 }
 	
 	$(function() {
 		 $( "button.btn.btn-primary" ).on("click" , function() {
+			 window.open('about:blank','_self').self.close();
 			 fncAddBroadcast();
 		});
 	});	
@@ -125,11 +125,39 @@ function fncAddBroadcast(){
 		});
 	});		
 	
-	function makeToast(title) {
-		$('#toastMessage').text(title).fadeIn(400).delay(3000).fadeOut(400);
+	var oTbl;
+	//Row 추가
+	function insRow() {
+	  oTbl = document.getElementById("addForbidden");
+	  var oRow = oTbl.insertRow();
+	  oRow.onmouseover=function(){oTbl.clickedRowIndex=this.rowIndex}; //clickedRowIndex - 클릭한 Row의 위치를 확인;
+	  var oCell = oRow.insertCell();
+
+	  //삽입될 Form Tag
+	  var frmTag = "<input type= text class= text name= forbidden style= font-size: 20px; width: 50%;> ";
+	  frmTag += "<input type= button value='삭제' onClick='removeRow()' style='cursor:hand'>";
+	  oCell.innerHTML = frmTag;
 	}
-	
-	
+	//Row 삭제
+	function removeRow() {
+	  oTbl.deleteRow(oTbl.clickedRowIndex);
+	}
+
+	function frmCheck()
+	{
+	  var frm = document.form;
+	  
+	  for( var i = 0; i <= frm.elements.length - 1; i++ ){
+	     if( frm.elements[i].name == "forbidden" )
+	     {
+	         if( !frm.elements[i].value ){
+	             alert("텍스트박스에 값을 입력하세요!");
+	             frm.elements[i].focus();
+	             return;
+	          }
+	      }
+	   }
+	 }
 </script>
 </head>
 <body>
@@ -137,12 +165,15 @@ function fncAddBroadcast(){
 	<div class="cover"></div>
 	<div class="bg"></div>
 			<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="jumbotron text-center" style= "background-image: url('../resources/images/bg_add_broads.jpg');
-			background-size: cover;
-			background-repeat: no-repeat, no-repeat;
-			background-position: center center;">
-			
-	</div>
+	<section class="hero" style="background-image: url('../resources/images/main_broadcast.jpg');
+				background-size: cover;
+				background-repeat: no-repeat, no-repeat;
+				background-position: center center; height:700px; ">
+			<div class="img-cover"></div>
+			<section class="caption" style="padding-top: 70px;">
+				<h2 class="caption">Room Produce</h2>
+			</section>
+		</section>
 	
 	<div class="container">
 	
@@ -177,7 +208,10 @@ function fncAddBroadcast(){
 	            	<div class="col-sm-3 btn-broad" >금지어</div>
 	            	
 	            	<div class="col-sm-9">
-	            		<input id="forbidden" name="forbidden" type="text" class="text" style="font-size: 20px; width: 15%; "/>
+	            	<table id="addForbidden" >
+	            	<tr></tr>
+	            	</table>
+	            		<input name="addButton" type="button" class='btn-broad' style="cursor:hand" onClick="insRow()" value="추가">
 	            	</div>
 		 </div>
 
@@ -191,8 +225,6 @@ function fncAddBroadcast(){
 		</form>
 		<!-- form Start /////////////////////////////////////-->		
  	</div>
-	<!--  화면구성 div end /////////////////////////////////////-->
-	<div id="toastMessage" class='toastMessage' style='display:none'>Toast</div>
 </body>
 
 </html>

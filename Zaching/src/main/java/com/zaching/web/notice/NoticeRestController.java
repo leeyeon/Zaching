@@ -118,7 +118,19 @@ public class NoticeRestController {
 		
 	}
 	
-	
+	@RequestMapping(value = "rest/noticeSend", method = RequestMethod.POST)
+	public String noticeSend(@RequestBody Map<String, Object> map, @ModelAttribute("notice") Notice notice) throws Exception {
+		String noticeId = ((String)map.get("userId"));
+		
+		if(Integer.parseInt(noticeId) == 31) {
+			return "yes";
+		}
+		else {
+			
+			return "no";
+		}
+				
+	}
 	
 
 }

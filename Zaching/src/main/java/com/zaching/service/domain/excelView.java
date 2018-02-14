@@ -74,7 +74,9 @@ public class excelView extends AbstractExcelView {
         cell = row.createCell(3);
         cell.setCellValue("¿Ã∏ß");
         
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, list.size()+2));
+        System.out.println(list.size());
+        
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, list.size()+3));
         cell.setCellStyle(cellStyle);
         
         row = sheet.createRow(1);

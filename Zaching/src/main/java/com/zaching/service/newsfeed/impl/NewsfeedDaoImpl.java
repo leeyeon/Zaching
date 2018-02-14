@@ -121,4 +121,9 @@ public class NewsfeedDaoImpl implements NewsfeedDao{
 		return (int)sqlSession.selectOne("NewsfeedMapper.getLikeUser", map);
 	}
 
+	@Override
+	public List<Newsfeed> timeline(int userId) throws Exception {
+		return sqlSession.selectList("NewsfeedMapper.timeline", userId);
+	}
+
 }

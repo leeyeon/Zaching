@@ -1,104 +1,43 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="pixelhint.com">
+	<meta name="description" content="La casa free real state fully responsive html5/css3 home page website template"/>
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
- 
-
+	
+	<link rel="stylesheet" type="text/css" href="/resources/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/resources/css/responsive.css">
+	
+	
   <link href="/resources/css/nivo-lightbox.css" rel="stylesheet" />
   <link href="/resources/css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
   <link href="/resources/css/owl.carousel.css" rel="stylesheet" media="screen" />
   <link href="/resources/css/owl.theme.css" rel="stylesheet" media="screen" />
   <link href="/resources/css/animate.css" rel="stylesheet" />
   <link href="/resources/css/livingStyle.css" rel="stylesheet">
-  <link href="/resources/color/default.css" rel="stylesheet">
-  
-<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
-  <script src="/resources/javascript/chatbot.js"></script>
 
+	<script type="text/javascript" src="/resources/javascript/jquery.js"></script>
+	<script type="text/javascript" src="/resources/javascript/main.js"></script>
+	  <script src="/resources/javascript/chatbot.js"></script>
+	  <jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 </head>
-<script>
-$(function() {
-	 $( "#fixedbtn" ).on("click" , function() {		
-		 $( document ).ready(function() {
-			    showPopup();
-			    function showPopup() { window.open("/livingInfo/getChatbot.jsp", "a", "width=370px, height=470px, left=1000, top=50"); }
-			});
-		});
-});
-
-$('.mainbar-menu').on('click', function(){
-	 $('.active').removeClass('active');
-	 $(this).addClass('active');
-})
-
-$( ".navbar-brand img" ).on("click" , function() {
-	$(self.location).attr("href","/");			
-});
-
-$("a:contains('¶óÀÌºê¹æ¼Û')").on("click", function() {
-	self.location = "/broadcast/listBroadcast";
-});
-
-$("a:contains('º¸ÀÌ½º¸®ÇÃ')").on("click", function() {
-	self.location = "/voice/listVoice";
-});
-
-$( "a:contains('¹äÄ£±¸')" ).on("click" , function() {
-	$(self.location).attr("href","/bob/mainBob");			
-});
-
-$("a:contains('»ıÈ°Á¤º¸')").on("click", function() {
-	self.location = "/livingInfo/mainLivingInfo";
-});
-
-$("a:contains('È¸¿ø°¡ÀÔ')").on("click", function() {
-	self.location = "/user/addUser";
-});
-
-$("a:contains('·Î±×¾Æ¿ô')").on("click", function() {
-	self.location = "/user/logout";
-});
-
-$( "#profile" ).on("click" , function() {
-	self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";			
-});
-</script>
 <style>
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
-		
-		* {
-			font-family: 'Nanum Gothic', serif;
-		}
+
 #music{
 background-image: url('/resources/images/musicbg.png');
 background-repeat: repeat;
 }
 
-.bg {
-			background: url('../resources/images/simple2.png') no-repeat center center;
-			position: fixed;
-			width: 100%;
-			height: 100%;
-			background-size: cover;
-			top: 0;
-			left: 0;
-			z-index: -1;
-			opacity: 0.3;
-		}
-		
-body{
-background: rgba(255,255,255,1);
-padding-top: 100px;
-}
+
 #fixedbtn{position:fixed;
 			right:50px;
 			bottom:50px;
@@ -129,32 +68,149 @@ background: rgba(255,255,255,1);
 font-size: 20px;
  text-align: left;
 }
+
+.sticky {
+  position: fixed;
+  top: 100px;
+  width: 100%;
+  opacity: 0.7;
+}
+
+.sticky + .about {
+  padding-top: 503px;
+}
+
  </style>
+ <script>
+ $(function() {
+
+	 $( "#fixedbtn" ).on("click" , function() {		
+		 $( document ).ready(function() {
+			    showPopup();
+			    function showPopup() { window.open("/livingInfo/getChatbot.jsp", "a", "width=370px, height=470px, left=1000, top=50"); }
+			});
+		});
+});
  
+ $(function() {
+ window.onscroll = function() {myFunction()};
+
+ var header =  document.getElementById("navigation2");
+ var sticky = header.offsetTop;
+
+ function myFunction() {
+	
+   if (window.pageYOffset >= sticky - 95) {
+     header.classList.add("sticky");
+   } else {
+     header.classList.remove("sticky");
+   }
+ }
+ 
+ });
+ $('.mainbar-menu').on('click', function(){
+	 $('.active').removeClass('active');
+	 $(this).addClass('active');
+});
+	
+	
+$( ".navbar-brand img" ).on("click" , function() {
+	$(self.location).attr("href","/");			
+});
+
+$("a:contains('ë¼ì´ë¸Œë°©ì†¡')").on("click", function() {
+	self.location = "/broadcast/listBroadcast";
+});
+
+$("a:contains('ë³´ì´ìŠ¤ë¦¬í”Œ')").on("click", function() {
+	self.location = "/voice/listVoice";
+});
+
+$( "a:contains('ë°¥ì¹œêµ¬')" ).on("click" , function() {
+	$(self.location).attr("href","/bob/mainBob");			
+});
+
+$("a:contains('ìƒí™œì •ë³´')").on("click", function() {
+	self.location = "/livingInfo/mainLivingInfo";
+});
+
+$("a:contains('íšŒì›ê°€ì…')").on("click", function() {
+	self.location = "/user/addUser";
+});
+
+$("a:contains('ë¡œê·¸ì•„ì›ƒ')").on("click", function() {
+	self.location = "/user/logout";
+});
+
+$( "#profile" ).on("click" , function() {
+	self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";			
+});
+ </script>
+<style>
+	.hero{
+		background: url(/resources/images/arno-smit-83025.jpg) no-repeat bottom center;
+		background-size: 100% 100%;
+		height: 700px;
+	}
+	.img-cover{
+         position: absolute;
+         height: 100%;
+         width: 100%;
+         background-color: rgba(0, 0, 0, 0.3);                                                                 
+         z-index:1;
+      }
+    #navigation2{
+    background: #bfd9f2;
+    height: 100px;
+    z-index: 1000;
+    }
+    
+    #menu > ul{
+    	background: #bfd9f2;
+    }
+    .navbar-custom ul.nav2 {
+	text-align: center;
+	float: none;
+	margin: 0 auto;
+}
+.navbar-custom ul.nav2 li {
+	float: none;
+	display: inline-block;
+	text-align: center;
+}
+.navbar-custom ul.nav2 li a {
+	font-size: 14px;
+	letter-spacing: 1px;
+    color: #444;
+	text-transform: uppercase;
+	font-weight: 700;
+}
+
+
+.navbar-custom .nav2 li a {
+    -webkit-transition: background .3s ease-in-out;
+    -moz-transition: background .3s ease-in-out;
+    transition: background .3s ease-in-out;
+}
 </style>
-<body id="page-top" data-spy="scroll" data-target=".navbar-custom" bgcolor="red">
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
   <!-- Preloader -->
   	<div class="bg"></div>
   <div id="preloader">
     <div id="load"></div>
   </div>
 
-  <!-- Section: intro -->
-  <section id="intro" class="intro">
+	<section class="hero" id="intro">
+		<div class="img-cover"></div>
 
-    <div class="slogan">
-    <img src="/resources/images/livinglogo.png" alt="" />
-    </div>
-    <div class="page-scroll">
-      <a href="#about">
-				<i class="fa fa-angle-down fa-5x animated"></i>
-			</a>
-    </div>
-  </section>
-  <!-- /Section: intro -->
+			<section class="caption">
+				<h2 class="caption">Living Information</h2>
+				<h3 class="properties">Map - Culture - Job</h3>
+			</section>
+	</section><!--  end hero section  -->
 
-  <!-- Navigation -->
-  <div id="navigation2">
+
+	<div id="navigation2">
     <nav class="navbar navbar-custom" role="navigation2">
       <div class="container">
         <div class="row">
@@ -171,10 +227,10 @@ font-size: 20px;
             <div class="collapse navbar-collapse" id="menu">
               <ul class="nav2 navbar-nav">
                 <li class="active"><a href="#intro">HOME</a></li>&nbsp;&nbsp;
-                <li><a href="#about">ÆíÀÇ½Ã¼³°Ë»ö</a></li>&nbsp;&nbsp;
-                <li><a href="#gallery">Àü¿ù¼¼Á¤º¸</a></li>&nbsp;&nbsp;
-                <li><a href="#contact">¹®È­Á¤º¸</a></li>&nbsp;&nbsp;
-                <li><a href="#job">°øÃ¤Á¤º¸</a></li>
+                <li><a href="#about">í¸ì˜ì‹œì„¤ê²€ìƒ‰</a></li>&nbsp;&nbsp;
+                <li><a href="#gallery">ì „ì›”ì„¸ì •ë³´</a></li>&nbsp;&nbsp;
+                <li><a href="#contact">ë¬¸í™”ì •ë³´</a></li>&nbsp;&nbsp;
+                <li><a href="#job">ê³µì±„ì •ë³´</a></li>
               </ul>
             </div>
             <!-- /.Navbar-collapse -->
@@ -185,25 +241,17 @@ font-size: 20px;
       <!-- /.container -->
     </nav>
   </div>
-  <!-- /Navigation -->
 
- 
-
-  
-
-
- 
-   <!-- Section: about -->
-  <section id="about" class="home-section">
+<section id="about" class="home-section">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
 
           <div class="section-heading text-center">
             <div class="wow bounceInDown" data-wow-delay="0.2s">
-              <h2><img src="/resources/images/conmap.png" width="80px"> ÆíÀÇ½Ã¼³°Ë»ö</h2>
+              <h2><img src="/resources/images/conmap.png" width="80px"> í¸ì˜ì‹œì„¤ê²€ìƒ‰</h2>
             </div>
-            <p class="wow bounceInUp" data-wow-delay="0.3s">ÁÖ¼Ò ÁÖº¯ÀÇ ÆíÀÇ ½Ã¼³À» °Ë»öÇØº¸¼¼¿ä!</p>
+            <p class="wow bounceInUp" data-wow-delay="0.3s">ì£¼ì†Œ ì£¼ë³€ì˜ í¸ì˜ ì‹œì„¤ì„ ê²€ìƒ‰í•´ë³´ì„¸ìš”!</p>
           </div>
 
         </div>
@@ -220,8 +268,8 @@ font-size: 20px;
       </div>
     </div>
   </section>
-  <!-- /Section: about -->
-  <br/> <br/> <br/> <br/>
+  
+   <br/> <br/> <br/> <br/>
    <!-- Section: gallery -->
   <section id="gallery" class="home-section text-center">
 
@@ -230,8 +278,8 @@ font-size: 20px;
         <div class="col-lg-8 col-lg-offset-2">
           <div class="wow bounceInDown" data-wow-delay="0.4s">
             <div class="section-heading">
-              <h2><img src="/resources/images/mortgage.png" width="80px"> Àü¿ù¼¼Á¤º¸</h2>
-              <p>Áö¿ªº°(½Ã/µ¿ ±âÁØ) Æò±Õ ¿ù¼¼¸¦ ³ªÅ¸³À´Ï´Ù.</p>
+              <h2><img src="/resources/images/mortgage.png" width="80px"> ì „ì›”ì„¸ì •ë³´</h2>
+              <p>ì§€ì—­ë³„(ì‹œ/ë™ ê¸°ì¤€) í‰ê·  ì›”ì„¸ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.</p>
             </div>
           </div>
         </div>
@@ -249,15 +297,7 @@ font-size: 20px;
       </div>
     </div>
   </section>
-  <!-- /Section: services -->
   
-  
-  
-
-<br/><br/><br/>
-
-
-  <!-- Section: contact -->
   <section id="contact" class="home-section text-center">
     <div class="heading-contact">
       <div class="container">
@@ -266,9 +306,9 @@ font-size: 20px;
 
             <div class="section-heading">
               <div class="wow bounceInDown" data-wow-delay="0.4s">
-                <h2>¹®È­Á¤º¸</h2>
+                <h2>ë¬¸í™”ì •ë³´</h2>
               </div>
-              <p class="wow lightSpeedIn" data-wow-delay="0.3s">¿µÈ­ ÀÎ±â¼øÀ§, º£½ºÆ® ¼¿·¯, ÇöÀç ¸á·Ğ ³ë·¡ ¼øÀ§ÀÔ´Ï´Ù.</p>
+              <p class="wow lightSpeedIn" data-wow-delay="0.3s">ì˜í™” ì¸ê¸°ìˆœìœ„, ë² ìŠ¤íŠ¸ ì…€ëŸ¬, í˜„ì¬ ë©œë¡  ë…¸ë˜ ìˆœìœ„ì…ë‹ˆë‹¤.</p>
             </div>
 
           </div>
@@ -310,11 +350,13 @@ font-size: 20px;
 
 
   </section>
+  
+  
   <br/> <br/> <br/>
   <section id="contact" class="home-section text-center">
    <div id="music">
   <h2><img src="/resources/images/cd.png" width="80px"> &nbsp; <img src="/resources/images/musiccharts.png"/></h2><br/><br/>
-              <p>ÇöÀç ¸á·Ğ À½¾Ç Â÷Æ® ¼øÀ§ÀÔ´Ï´Ù. </p><br/><br/>
+              <p>í˜„ì¬ ë©œë¡  ìŒì•… ì°¨íŠ¸ ìˆœìœ„ì…ë‹ˆë‹¤. </p><br/><br/>
   <jsp:include page="getMusicChart.jsp"/>
               <center>
     <div class="musicChart">
@@ -323,8 +365,10 @@ font-size: 20px;
   </div>
 </section>
  <br/> <br/> <br/>
-
-<section id="contact" class="home-section text-center">
+ 
+ 
+ 
+ <section id="contact" class="home-section text-center">
 <p class="wow bounceInUp" data-wow-delay="0.3s"><img src="/resources/images/moviec.png" width="80px"> &nbsp; <img src="/resources/images/moviechart.png"/></p>
     <jsp:include page="getMovieInfo.jsp"/> 
 
@@ -350,9 +394,9 @@ font-size: 20px;
 
             <div class="section-heading">
               <div class="wow bounceInDown" data-wow-delay="0.4s">
-                <h2><b>°ø°³ Ã¤¿ë Á¤º¸</b></h2>
+                <h2><b>ê³µê°œ ì±„ìš© ì •ë³´</b></h2>
               </div>
-              <p class="wow lightSpeedIn" data-wow-delay="0.3s">ÀÌ¹ø ´Ş °øÃ¤ Á¤º¸ ´Ş·ÂÀÔ´Ï´Ù.</p>
+              <p class="wow lightSpeedIn" data-wow-delay="0.3s">ì´ë²ˆ ë‹¬ ê³µì±„ ì •ë³´ ë‹¬ë ¥ì…ë‹ˆë‹¤.</p>
             </div>
 
           </div>
@@ -363,22 +407,16 @@ font-size: 20px;
 width="80%" height="1200px" scrolling="auto"></iframe><div class="container"></div>
 </div>
 </section>
-
-<footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 col-lg-12">
-        <br/>
-        <br/>
-          <p>&copy; ZACHING. All Rights Reserved</p>
-          <br/>
-          <br/>
-        </div>
-      </div>
-    </div>
-  </footer>
   
 
+	<footer>
+		<div class="wrapper footer">
+	</div>
+
+		<div class="copyrights wrapper">
+			Copyright Â© 2015 <a href="http://pixelhint.com" target="_blank" class="ph_link" title="Download more free Templates">Pixelhint.com</a>. All Rights Reserved.
+		</div>
+	</footer><!--  end footer  -->
 <script  src="/resources/js/index.js"></script>
    
   <script src="/resources/js/jquery.min.js"></script>
@@ -395,6 +433,6 @@ width="80%" height="1200px" scrolling="auto"></iframe><div class="container"></d
   <script src="/resources/js/contactform.js"></script>
   
 	<img src="../resources/images/chat.png" id="fixedbtn">
+ 
 </body>
-
 </html>

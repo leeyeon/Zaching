@@ -72,7 +72,8 @@ public class PaymentController {
 	public String exchargePoint(HttpSession session, Model model) throws Exception {
 		
 		User user = userService.getAccountUser(((User)session.getAttribute("user")).getUserId());
-		model.addAttribute("user", user);
+		model.addAttribute("user", user)
+			 .addAttribute("bank", paymentService.listBackCode());
 		
 		return "forward:/payment/exchargePoint.jsp";
 	}
@@ -102,7 +103,8 @@ public class PaymentController {
 		model.addAttribute("payment", map.get("list"))
 			 .addAttribute("totalPoint", totalPoint)
 			 .addAttribute("totalMileage", totalMileage)
-			 .addAttribute("paymentPage", resultPage);
+			 .addAttribute("paymentPage", resultPage)
+			 .addAttribute("bank", paymentService.listBackCode());
 		
 		return "forward:/payment/mainPayment.jsp";
 	}

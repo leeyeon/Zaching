@@ -34,17 +34,37 @@
 			text-shadow: 0 0 5px #000;
 		}
 		
+		.user_thumnail {
+			background: black;
+		}
+		
+		.wrapper {
+   			max-width: 1200px;
+   		}
+		
+		.listings ul.properties_list li{
+		    border: 1px solid #f2f1f1;
+		}
+		
+		.listings ul li .property_details {
+			width: 100%;
+		}
+		
+		.listings ul li:hover .property_details {
+		    border-bottom: 1px solid #7a68a6;
+		    border-left: 1px solid #7a68a6;
+		    border-right: 1px solid #7a68a6;
+		}
+		
 	</style>
 
 	<script type="text/javascript">
 	
 		$(function() {
-			
-			
 
-			$(document).on("click",'.thumbnail > img', function(){
+			$(document).on("click",'.listings .properties_list li > img', function(){
 				if('${user}' != '') {
-					var index = $(".thumbnail > img").index(this);	
+					var index = $(".listings .properties_list li > img").index(this);	
 					var bobId = $($("input[name=bobId]")[index]).val();
 					var category = $($("input[name=category]")[index]).val();
 					//alert(index+"//"+bobId+"//"+category);
@@ -91,8 +111,9 @@
 				}
 			});
 			
-			function dataLoading() {
 			
+			function dataLoading() {
+				
 				$("#loader").show();
 				
 				pageInfo++;
@@ -144,10 +165,12 @@
 							
 							if(data.appointmentTime != null) {								
 								<c:if test="${empty sessionScope.user}">
-									html += moment(data.appointmentTime).format("YYYY년 MM월 DD일 A");
+									html += moment(data.appointmentTime).format("YYYY년 MM월 DD일");
 								</c:if>
 								<c:if test="${!empty sessionScope.user}">
-									html += moment(data.appointmentTime).format("YYYY년 MM월 DD일 HH:mm");
+									html += moment(data.appointmentTime).format("YYYY년 MM월 DD일")+" "+getInputDayLabel(data.appointmentTime)+" "
+										+ moment(data.appointmentTime).format("HH:mm");
+									
 								</c:if>
 							} else if(data.appointmentTime == '' || data.appointmentTime == null) {
 								html += "날짜 미정";
@@ -155,7 +178,7 @@
 							
 							html += '</p></div></div></div>';
 							
-							$('#'+"${search.category}"+' > div').append(html);
+							$("#mainBob > .tab-content").append(html);
 							$("#exTab2 > div > div.tab-content").attr('class', 'tab-content');
 						})
 						
@@ -169,239 +192,118 @@
 			}
 			
 		});
+
+		
+		function getInputDayLabel(targetDate) { 
+			var week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'); 
+			var today = new Date(targetDate).getDay(); 
+			var todayLabel = week[today]; 
+			return todayLabel; 
+		}
 	
 	</script>
 
 </head>
 <body>
 
-<div class="row">
+<c:if test="${empty list}">
+	목록이 없습니다. <br>
+	하단의 방만들기를 통해 친구를 만들어보세요.
+</c:if>
 
-		<c:if test="${empty list}">
-			목록이 없습니다. <br>
-			하단의 방만들기를 통해 친구를 만들어보세요.
-		</c:if>
+<jsp:useBean id="today" class="java.util.Date" />
+<fmt:formatDate var="today" value="${today}" pattern="yyyyMMddHHmm"/>
+
+<c:if test="${search.category eq 'B04'}">
+	<div class="text-center" style="padding: 40px;">
+			${user.name}님이 살고 계시는 
+			<span style="font-size: 22px; font-weight: bold; ">${user.address}</span> 근처에 열린 총 
+			<span style="font-size: 22px; font-weight: bold; ">${fn:length(list)}</span> 개의 모임이 검색되었습니다.
+	</div>
 	
-		<jsp:useBean id="today" class="java.util.Date" />
-		<fmt:formatDate var="today" value="${today}" pattern="yyyyMMddHHmm"/>
+	
+</c:if>
+
+<c:if test="${search.category eq 'B05'}">
+	<div class="text-center" style="font-size: 25px; font-weight: bold; padding: 40px;">
+			총 검색 결과 : ${fn:length(list)} 개
+	</div>
+</c:if>
 		
-		<c:if test="${search.category eq 'B01'}">
+<section class="listings">
+	<div class="wrapper">
+		<ul class="properties_list">
 			<c:forEach var="bob" items="${list}" varStatus="status">
 			  <input type="hidden" name="bobId" value="${bob.bobId}">
 			  <input type="hidden" name="category" value="${bob.category}">
 			  <input type="hidden" name="writtenUserId" value="${bob.writtenUserId}">
-			  <div class="col-sm-6 col-md-4 text-center">
-			    <div class="thumbnail">
-			    <div class="thumbnail-top" style="left: 40px;">
-			    	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-					<fmt:formatDate value="${Date}" var="appointmentTime" pattern="yyyyMMddHHmm"/>
-					<c:if test="${bob.status eq 'Y' && (appointmentTime>today || empty appointmentTime)}">
-						참여 가능
-					</c:if>
-					<c:if test="${bob.status eq 'E' || (appointmentTime<=today)}">
-						참여 마감
-					</c:if>
-			    </div>
-			    <c:if test="${bob.status eq 'Y'}">
-					<div class="thumbnail-top" style="right: 40px;">${fn:length(bob.participantList)}/${bob.limitNum} 명</div>
-				</c:if>
-			      <img src = "../resources/upload_files/images/${bob.image}"
+				<li>
+					<img src = "../resources/upload_files/images/${bob.image}"
 			      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
-			      	style="cursor: pointer; width: 100%; height:270px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;">
-			      <div class="user_thumnail" 
-			      	style="background: url('../resources/upload_files/images/${bob.writtenUserProfile}'),
-			      		url('../resources/images/user-icon.png') center center no-repeat; background-size: cover;
-			      			box-shadow: 1px #cccccc;"></div>
-			      <div class="caption" style="position:relative; top:-20px; font-size: 20px;">
-			      	<div style="font-size:20px; font-weight: bold; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${bob.title}</div>
-			      	<hr>
-			      	<p style="font-size: 17px;  font-weight: bold;">
-			        	${bob.locationName}<br>
-			        </p>
-			        <p style="font-size: 16px;">
-			        	<c:if test="${!empty bob.appointmentTime}">
-				        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-				        	<c:if test="${empty sessionScopr.user}">
-				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일"/>
-				        	</c:if>
-				        	<c:if test="${!empty sessionScopr.user}">
-				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
-				        	</c:if>
-			        	</c:if>
-			        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
-			        </p>
-			      </div>
-			    </div>
-			  </div>
-			</c:forEach>
-		</c:if>
-
-		<c:if test="${search.category eq 'B02' }">
-			<c:forEach var="bob" items="${list}">
-			  <input type="hidden" name="bobId" value="${bob.bobId}">
-			  <input type="hidden" name="category" value="${bob.category}">
-			  <input type="hidden" name="writtenUserId" value="${bob.writtenUserId}">
-			  <div class="col-sm-6 col-md-4 text-center">
-			    <div class="thumbnail">
-			    	<div class="thumbnail-top" style="right: 40px;">${fn:length(bob.participantList)}명 참여 중</div>
-			      <img src = "../resources/upload_files/images/${bob.image}"
-			      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
-			      	style="cursor: pointer; height:250px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;">
-			      <div class="user_thumnail" 
-			      	style="background: url('../resources/upload_files/images/${bob.writtenUserProfile}'),
-			      		url('../resources/images/user-icon.png') center center no-repeat; background-size: cover;
-			      			box-shadow: 1px #cccccc;"></div>
-			      <div class="caption" style="position:relative; top:-20px; font-size: 20px;">
-			      	<div style="font-size:22px; font-weight: bold;">${bob.title}</div>
-			      	<hr>
-			      	<p style="font-size: 17px;  font-weight: bold;">
-			        	${bob.locationName}<br>
-			        </p>
-			        <p style="font-size: 16px;">
-			        	<c:if test="${!empty bob.appointmentTime}">
-				        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-				        	<c:if test="${empty sessionScopr.user}">
-				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일"/>
-				        	</c:if>
-				        	<c:if test="${!empty sessionScopr.user}">
-				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
-				        	</c:if>
-			        	</c:if>
-			        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
-			        </p>
-			      </div>
-			    </div>
-			  </div>
-			</c:forEach>
-		</c:if>
-		
-		<c:if test="${search.category eq 'B03' }">
-			<c:forEach var="bob" items="${list}">
-			  <input type="hidden" name="bobId" value="${bob.bobId}">
-			  <input type="hidden" name="category" value="${bob.category}">
-			  <div class="col-sm-6 col-md-4">
-			    <div class="thumbnail">
-			      <img src = "../resources/upload_files/images/${bob.image}"
-			      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
-			      	style="cursor: pointer; height:250px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;">
-				  <div class="caption text-center" style="font-size: 20px; font-weight: bold; position: absolute; top: 25%; z-index: 10; width: 100%; margin-left: -20px;">
-			      	${bob.title}</div>
-			      <hr>
-			      <h4 style="padding:10px; font-weight: bold;">참여하고 있는 친구 (${fn:length(bob.participantList)}명)</h4>
-			      <div class="row">
-			      	<c:forEach var="participant" items="${bob.participantList}">
-			      		<div class="col-sm-6 col-md-4 text-center">
-							<img class="thumnail" src = "../resources/upload_files/images/${participant.participantProfile}" 
-								onerror="this.src='../resources/images/user-icon.png'"/>
-							<p style="font-size: 17px;">${participant.participantName}</p>
-						</div>
-					</c:forEach>
-				  </div>
-			    </div>
-			  </div>
-			</c:forEach>
-		</c:if>
-		
-		<c:if test="${search.category eq 'B04' }">
-			<c:if test="${!empty user}">
-				<c:forEach var="bob" items="${list}">
-				  <input type="hidden" name="bobId" value="${bob.bobId}">
-				  <input type="hidden" name="category" value="${bob.category}">
-				  <div class="col-sm-6 col-md-4 text-center">
-				    <div class="thumbnail">
-				      <c:if test="${bob.status eq 'Y'}">
-						<div class="thumbnail-top" style="right: 40px;">${fn:length(bob.participantList)}/${bob.limitNum} 명</div>
-					</c:if>
-				      <img src = "../resources/upload_files/images/${bob.image}"
-				      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
-				      	style="cursor: pointer; height:250px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;">
-				      <div class="user_thumnail" 
+			      	style="cursor: pointer; width: 100%; height:270px; opacity: 0.8;">
+			      	<c:if test="${search.category ne 'B03'}">
+				      	<div class="user_thumnail" 
 				      	style="background: url('../resources/upload_files/images/${bob.writtenUserProfile}'),
-				      	url('../resources/images/user-icon.png') center center no-repeat; background-size: cover;
-				      	box-shadow: 1px #cccccc;"></div>
-				      <div class="caption" style="position:relative; top:-20px; font-size: 20px;">
-				      	<div style="font-size:20px; font-weight: bold;">${bob.title}</div>
-				      	<hr>
-				        <p style="font-size: 17px;  font-weight: bold;">
-			        		${bob.locationName}<br>
-				        </p>
-				        <p style="font-size: 16px;">
-				        	<c:if test="${!empty bob.appointmentTime}">
+				      		url('../resources/images/user-icon.png') center center no-repeat; background-size: cover;
+				      			box-shadow: 1px #cccccc;"></div>
+			      	</c:if>
+					<span class="price">
+						<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
+						<fmt:formatDate value="${Date}" var="appointmentTime" pattern="yyyyMMddHHmm"/>
+						<c:if test="${bob.status eq 'Y' && (appointmentTime>today || empty appointmentTime)}">
+							참여 가능
+						</c:if>
+						<c:if test="${bob.status eq 'E' || (appointmentTime<=today)}">
+							참여 마감
+						</c:if>
+					</span>
+					<c:if test="${bob.status eq 'Y'}">
+						<span class="price" style="left:auto; right:10px;">
+							<c:if test="${search.category eq 'B01'}">
+								${fn:length(bob.participantList)}/${bob.limitNum} 명
+								
+							</c:if>
+							<c:if test="${search.category eq 'B02'}">
+								${fn:length(bob.participantList)}명 참여 중
+							</c:if>
+						</span>
+					</c:if>
+					
+					<div class="property_details text-center" style="padding-top: ${search.category ne 'B03'? '40px':'none'}">
+						<h1>${bob.title}</h1><hr>
+						<c:if test="${search.category ne 'B03'}">
+							<h2>${bob.locationName}</h2>
+							<h2>
+							<c:if test="${!empty bob.appointmentTime}">
 					        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-					        	<c:if test="${empty sessionScopr.user}">
+					        	<c:if test="${empty sessionScope.user}">
 					        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일"/>
 					        	</c:if>
-					        	<c:if test="${!empty sessionScopr.user}">
+					        	<c:if test="${!empty sessionScope.user}">
 					        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
 					        	</c:if>
 				        	</c:if>
 				        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
-				        </p>
-				      </div>
-				    </div>
-				  </div>
-				</c:forEach>
-			</c:if>
-		</c:if>
-
-		
-		<c:if test="${search.category eq 'B05'}">
-		
-			<div class="col-sm-12 text-center" style="font-size: 25px; font-weight: bold; padding: 40px;">
-				총 검색 결과 : ${fn:length(list)} 개
-			</div>
-
-			<c:forEach var="bob" items="${list}" varStatus="status">
-			  <input type="hidden" name="bobId" value="${bob.bobId}">
-			  <input type="hidden" name="category" value="${bob.category}">
-			  <input type="hidden" name="writtenUserId" value="${bob.writtenUserId}">
-			  <div class="col-sm-6 col-md-4 text-center">
-			    <div class="thumbnail">
-			    <div class="thumbnail-top" style="left: 40px;">
-			    	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-					<fmt:formatDate value="${Date}" var="appointmentTime" pattern="yyyyMMddHHmm"/>
-					<c:if test="${bob.status eq 'Y' && (appointmentTime>today || empty appointmentTime)}">
-						참여 가능
-					</c:if>
-					<c:if test="${bob.status eq 'E' || (appointmentTime<=today)}">
-						참여 마감
-					</c:if>
-			    </div>
-			    <c:if test="${bob.status eq 'Y'}">
-					<div class="thumbnail-top" style="right: 40px;">${fn:length(bob.participantList)}/${bob.limitNum} 명</div>
-				</c:if>
-			      <img src = "../resources/upload_files/images/${bob.image}"
-			      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
-			      	style="cursor: pointer; width: 100%; height:270px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;">
-			      <div class="user_thumnail" 
-			      	style="background: url('../resources/upload_files/images/${bob.writtenUserProfile}'),
-			      		url('../resources/images/user-icon.png') center center no-repeat; background-size: cover;
-			      			box-shadow: 1px #cccccc;"></div>
-			      <div class="caption" style="position:relative; top:-20px; font-size: 20px;">
-			      	<div style="font-size:20px; font-weight: bold;">${bob.title}</div>
-			      	<hr>
-			      	<p style="font-size: 17px;  font-weight: bold;">
-			        	${bob.locationName}<br>
-			        </p>
-			        <p style="font-size: 16px;">
-			        	<c:if test="${!empty bob.appointmentTime}">
-				        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-				        	<c:if test="${empty sessionScopr.user}">
-				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일"/>
-				        	</c:if>
-				        	<c:if test="${!empty sessionScopr.user}">
-				        		<fmt:formatDate value="${Date}" pattern="yyyy년 MM월 dd일 E요일 HH:mm"/>
-				        	</c:if>
-			        	</c:if>
-			        	<c:if test="${empty bob.appointmentTime}">날짜 미정</c:if>
-			        </p>
-			      </div>
-			    </div>
-			  </div>
+							</h2>
+						</c:if>
+						<c:if test="${search.category eq 'B03'}">
+							<h1 class="text-left">참여하고 있는 친구 (${fn:length(bob.participantList)}명)</h1>
+							<div class="row">
+					      	<c:forEach var="participant" items="${bob.participantList}">
+					      		<div class="col-sm-6 col-md-4 text-center">
+									<img class="thumnail" src = "../resources/upload_files/images/${participant.participantProfile}" 
+										onerror="this.src='../resources/images/user-icon.png'"/>
+									<p style="font-size: 17px;">${participant.participantName}</p>
+								</div>
+							</c:forEach>
+						  </div>
+						</c:if>
+					</div>
+				</li>
 			</c:forEach>
-		</c:if>
-
-</div>
+		</ul>
+	</div>
+</section>
 
 </body>
 </html>
