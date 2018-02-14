@@ -66,7 +66,7 @@
 															'<a href="#" style="vertical-align: bottom;"><img src="../resources/images/'+serverData[i].profileImage+'" id="profile">&nbsp;'+serverData[i].userName+'</a>'+
 														'</h1>'+
 														'<h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'+
-															'<a href="#">'+serverData[i].voiceName+'</a>'+
+															'<a href="/voice/getVoice?voiceId='+serverData[i].voiceId+'">'+serverData[i].voiceName+'</a>'+
 														'</h1>'+
 														'<h2>';
 														if(serverData[i].categoryCode == 'R02')
@@ -190,7 +190,7 @@
 										</h1>
 										
 										<h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-											<a href="#">${voice.voiceName}</a>
+											<a href="/voice/getVoice?voiceId=${voice.voiceId}">${voice.voiceName}</a>
 										</h1>
 										<h2><c:if test="${voice.categoryCode == 'R06'}">프리토킹&nbsp;</c:if><span class="property_size">${voice.voicelyrics}</span></h2>
 									</div>

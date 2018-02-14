@@ -57,8 +57,9 @@ public class NewsfeedController {
 	@RequestMapping(value="addNewsfeed", method=RequestMethod.POST)
 	public String addNewsfeed(@ModelAttribute("newsfeed") Newsfeed newsfeed, Model model, HttpServletRequest request) throws Exception{
 		System.out.println("addNewsfeed()");
+		System.out.println(newsfeed);
 		
-		if(newsfeed.getFile() != null) {
+		if(newsfeed.getFile().getOriginalFilename() != null) {
 			String fileName = newsfeed.getFile().getOriginalFilename();
 			newsfeed.setFileName(fileName);
 			
@@ -95,7 +96,7 @@ public class NewsfeedController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		
+		System.out.println("newsfeed search :: "+search);
 		Newsfeed newsfeed = newsfeedService.getNewsfeed(newsfeedId);
 		model.addAttribute("newsfeed", newsfeed);
 		model.addAttribute("roomUser", userService.getUser(newsfeed.getUserId()));
@@ -110,6 +111,7 @@ public class NewsfeedController {
 	@RequestMapping(value="listNewsfeed")
 	public String listNewsfeed( @ModelAttribute("search") Search search,  Model model, HttpServletRequest request) throws Exception{
 		System.out.println("listNewsfeed");
+		
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);

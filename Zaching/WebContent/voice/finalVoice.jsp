@@ -1,0 +1,419 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%out.clear();%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title></title>
+
+    <!-- Bootstrap core CSS --><!-- 합쳐지고 최소화된 최신 CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		
+		
+		<!-- 부가적인 테마 -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+		
+		<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+   		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+   		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+   		
+   		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+    	$(function(){
+    		var music = document.getElementById('music'); // id for audio element
+    		var duration = music.duration; // Duration of audio clip, calculated here for embedding purposes
+    		var pButton = document.getElementById('pButton'); // play button
+    		var playhead = document.getElementById('playhead'); // playhead
+    		var timeline = document.getElementById('timeline'); // timeline
+
+    		// timeline width adjusted for playhead
+    		var timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
+
+    		// play button event listenter
+    		pButton.addEventListener("click", play);
+
+    		// timeupdate event listener
+    		music.addEventListener("timeupdate", timeUpdate, false);
+
+    		// makes timeline clickable
+    		timeline.addEventListener("click", function(event) {
+    		    moveplayhead(event);
+    		    music.currentTime = duration * clickPercent(event);
+    		}, false);
+
+    		// returns click as decimal (.77) of the total timelineWidth
+    		function clickPercent(event) {
+    		    return (event.clientX - getPosition(timeline)) / timelineWidth;
+    		}
+
+    		// makes playhead draggable
+    		playhead.addEventListener('mousedown', mouseDown, false);
+    		window.addEventListener('mouseup', mouseUp, false);
+
+    		// Boolean value so that audio position is updated only when the playhead is released
+    		var onplayhead = false;
+
+    		// mouseDown EventListener
+    		function mouseDown() {
+    		    onplayhead = true;
+    		    window.addEventListener('mousemove', moveplayhead, true);
+    		    music.removeEventListener('timeupdate', timeUpdate, false);
+    		}
+
+    		// mouseUp EventListener
+    		// getting input from all mouse clicks
+    		function mouseUp(event) {
+    		    if (onplayhead == true) {
+    		        moveplayhead(event);
+    		        window.removeEventListener('mousemove', moveplayhead, true);
+    		        // change current time
+    		        music.currentTime = duration * clickPercent(event);
+    		        music.addEventListener('timeupdate', timeUpdate, false);
+    		    }
+    		    onplayhead = false;
+    		}
+    		// mousemove EventListener
+    		// Moves playhead as user drags
+    		function moveplayhead(event) {
+    		    var newMargLeft = event.clientX - getPosition(timeline);
+
+    		    if (newMargLeft >= 0 && newMargLeft <= timelineWidth) {
+    		        playhead.style.marginLeft = newMargLeft + "px";
+    		    }
+    		    if (newMargLeft < 0) {
+    		        playhead.style.marginLeft = "0px";
+    		    }
+    		    if (newMargLeft > timelineWidth) {
+    		        playhead.style.marginLeft = timelineWidth + "px";
+    		    }
+    		}
+
+    		// timeUpdate
+    		// Synchronizes playhead position with current point in audio
+    		function timeUpdate() {
+    		    var playPercent = timelineWidth * (music.currentTime / duration);
+    		    playhead.style.marginLeft = playPercent + "px";
+    		    if (music.currentTime == duration) {
+    		        pButton.className = "";
+    		        pButton.className = "play";
+    		    }
+    		}
+
+    		//Play and Pause
+    		function play() {
+    		    // start music
+    		    if (music.paused) {
+    		        music.play();
+    		        // remove play, add pause
+    		        pButton.className = "";
+    		        pButton.className = "pause";
+    		    } else { // pause music
+    		        music.pause();
+    		        // remove pause, add play
+    		        pButton.className = "";
+    		        pButton.className = "play";
+    		    }
+    		}
+
+    		// Gets audio file duration
+    		music.addEventListener("canplaythrough", function() {
+    		    duration = music.duration;
+    		}, false);
+
+    		// getPosition
+    		// Returns elements left position relative to top-left of viewport
+    		function getPosition(el) {
+    		    return el.getBoundingClientRect().left;
+    		}
+    		
+    		$("#inside").scroll( function() {
+    			  var elem = $("#inside");
+					//alert(elem);
+    			  if ( elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight())
+    			    {
+    			        alert("End of Yellow");
+    			    }
+    			});
+    	})
+    </script>
+    <style>
+    	::-webkit-scrollbar {width: 8px; height: 8px; border: 3px solid #fff; }
+		 ::-webkit-scrollbar-button:start:decrement, ::-webkit-scrollbar-button:end:increment {display: block; height: 10px; background: url('./images/bg.png') #efefef}
+		  ::-webkit-scrollbar-track {background: #efefef; -webkit-border-radius: 10px; border-radius:10px; -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.2)}
+		  ::-webkit-scrollbar-thumb {height: 50px; width: 50px; background: rgba(0,0,0,.2); -webkit-border-radius: 8px; border-radius: 8px; -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.1)}
+		.img-cover{
+		   position: absolute;
+		   height: 100%;
+		   width: 100%;
+		   background-color: rgba(0, 0, 0, 0.3);                                                                 
+		   z-index:1;
+		}
+	
+		.blog-post{
+			 position: absolute;
+		     color: white;
+		     z-index: 2;
+		}
+		
+		#audioplayer{
+			width: 480px;
+			height: 60px;
+		}
+		
+		#pButton{
+		    height:60px; 
+		    width: 60px;
+		    border: none;
+		    background-size: 50% 50%;
+		    background-repeat: no-repeat;
+		    background-position: center;
+		    float:left;
+		    outline:none;
+		}
+		
+		.play{background: url('http://www.alexkatz.me/codepen/img/play.png');}
+		.pause{background: url('http://www.alexkatz.me/codepen/img/pause.png') ;}
+		
+		#timeline{
+			width: 400px;
+			height: 20px;
+			margin-top: 20px;
+			float: left;
+			border-radius: 15px;
+			background: rgba(0,0,0,.3);
+		  
+		}
+		#playhead{
+			width: 18px;
+			height: 18px;
+			border-radius: 50%;
+			margin-top: 1px;
+			background: rgba(0, 0, 0,1);
+		
+		}
+		
+		#fixedbtn{position:fixed;
+			right:100px;
+			bottom:50px;
+			z-index:1000}
+			
+    </style>
+  </head>
+
+
+  <body>
+
+
+    <div class="container">
+
+      <div class="blog-header">
+        <h1 class="blog-title">자췽 라디오</h1>
+        <p class="lead blog-description">음성을 녹음해보세요!</p>
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-8 blog-main" style="overflow-x:hidden; height:700px; background: url('../resources/images/suzi.jpg'); background-size: 100% 100%; padding-right:0px; padding-left:0px;" >
+			<div class="img-cover"></div>
+	          <div class="blog-post">
+	            <h3 class="blog-post-title">&nbsp;소주한잔 이어불러요</h3>
+	            <p class="blog-post-meta" style="background-color: black; opacity: 0.5;">사진사진 <a href="#">소간지</a></p>
+				<div style="padding-right:15px; padding-left:15px;">
+		            <p>술이한잔 생각나는밤 같이 있는것 같아요.
+					그 좋았던 시절들 이젠 모두 한숨만 되네요.
+					떠나는 그대 얼굴이 혹시 울지나 않을까 나 먼저 돌아섰죠.
+					그때부터 그리워요.사랑이 변하는걸요.다시 전보다 그댈 원해요.
+					이렇게 취할때면 꺼져버린 전화를 붙잡고.
+					여보세요 나야 거기 잘지내니.
+					여보세요 왜 말 안하니
+					울고있니 내가 오랜만이라서 사랑하는 사람이라서
+					그대 소중한 마음 밀쳐낸 이기적인 그때의
+					나에게 그대를 다시 불러오라고 미친듯이 외쳤어.
+					
+					떠나는 그대 얼굴이 마치 처음과 같아서 나 눈물이 났어요.
+					그때부터 그리워요.사랑이 변하는걸요.다시 전보다 그댈 원해요.
+					이렇게 취할때면 바껴버린 전화번호 누르고
+					여보세요 나야 거기 잘지내니.
+					오랜만이야 내 사랑아.
+					그대를 다시 불러오라고 미친듯이 울었어..
+					
+					여보세요 나야 정말 미안해.
+					이기적인 그때의 나에게 그대를 다시 불러오라고 미친듯이 외쳤어..</p>
+		            <hr>
+		          
+		          	<c:set var="i" value="0"/>
+							<c:forEach var="reply" items="${comment}">
+							<c:set var="i" value="${ i+1 }" />
+								 <blockquote style="vertical-align:middle;">
+						              <div style="display: -webkit-inline-box; vertical-align:middle;"><img alt="" src="../resources/images/${reply.userImage}" width="40" height="40">${reply.userName}&nbsp;
+						              <audio id="music" preload="none" style="display:hidden;"><source src="../resources/upload_files/record/${reply.content}" type="audio/mpeg"></audio>
+						              	
+						              	<div id="audioplayer">
+												<button id="pButton" class="play" onclick="play()"></button>
+												<div id="timeline">
+													<div id="playhead"></div>
+												</div>
+											</div>
+						              	
+						              </div>
+						            </blockquote>
+			   				</c:forEach>
+		            <blockquote style="vertical-align:middle;">
+		              <div style="display: -webkit-inline-box; vertical-align:middle;"><img alt="" src="../resources/images/suzi.jpg" width="40" height="40">수지&nbsp;
+		              <audio id="music" preload="true" style="display:hidden;"><source src="../resources/upload_files/record/Ailee.mp3" type="audio/mpeg"></audio>
+		              	
+		              	<div id="audioplayer">
+								<button id="pButton" class="play" onclick="play()"></button>
+								<div id="timeline">
+									<div id="playhead"></div>
+								</div>
+							</div>
+		              	
+		              </div>
+		            </blockquote>
+		            <blockquote style="align:middle;">
+		              <div><img alt="" src="../resources/images/suzi.jpg" width="40" height="40">수지&nbsp;
+		              	<audio controls="controls"><source src="../resources/upload_files/record/Ailee.mp3" type="audio/mpeg"></audio>
+		              </div>
+		            </blockquote>
+		            <blockquote style="align:middle;">
+		              <div><img alt="" src="../resources/images/suzi.jpg" width="40" height="40">수지&nbsp;
+		              	<audio controls="controls"><source src="../resources/upload_files/record/Ailee.mp3" type="audio/mpeg"></audio>
+		              </div>
+		            </blockquote>
+		            <blockquote style="align:middle;">
+		              <div><img alt="" src="../resources/images/suzi.jpg" width="40" height="40">수지&nbsp;
+		              	<audio controls="controls"><source src="../resources/upload_files/record/Ailee.mp3" type="audio/mpeg"></audio>
+		              </div>
+		            </blockquote>
+		            <blockquote style="align:middle;">
+		              <div><img alt="" src="../resources/images/suzi.jpg" width="40" height="40">수지&nbsp;
+		              	<audio controls="controls"><source src="../resources/upload_files/record/Ailee.mp3" type="audio/mpeg"></audio>
+		              </div>
+		            </blockquote>
+		            <blockquote style="align:middle;">
+		              <div><img alt="" src="../resources/images/suzi.jpg" width="40" height="40">수지&nbsp;
+		              	<audio controls="controls"><source src="../resources/upload_files/record/Ailee.mp3" type="audio/mpeg"></audio>
+		              </div>
+		            </blockquote>
+		            <blockquote style="align:middle;">
+		              <div><img alt="" src="../resources/images/suzi.jpg" width="40" height="40">수지&nbsp;
+		              	<audio controls="controls"><source src="../resources/upload_files/record/Ailee.mp3" type="audio/mpeg"></audio>
+		              </div>
+		            </blockquote>
+	            
+				</div>
+			  </div>
+        </div><!-- /.blog-main -->
+	<div class="hidden-xs">
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar" style=" height:700px; border: 1px solid #A4A4A4; margin-left: 1%; width: 31%;">
+        
+          <div style="border: 1px solid #A4A4A4; padding: 10pt; margin-top:-1pt; margin-right:-16px; margin-left:-16px; vertical-align:middle;"><strong style="padding-left:5px; font-size:15pt">
+            최신 글 보기</strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<a href="#" style="color:gray; font-size:12px;"><i class="glyphicon glyphicon-refresh"></i>새로고침</a></div>
+          <div style="overflow-x:hidden; height:623px; margin-right:-15px; padding-top:10pt;"  id="inside">
+          <div class="col-xs-12 col-sm-12">
+			<div class="row">
+				<c:set var="i" value="0"/>
+							<c:forEach var="voice" items="${list}">
+							<c:set var="i" value="${ i+1 }" />
+								<div class="col-xs-6 col-lg-5" style="padding-left: 0pt; padding-right: 0pt"><c:if test="${!empty voice.backgroundImage}"><img src="../resources/images/voiceImages/${voice.backgroundImage}" width="100%" height="90pt"></c:if>
+								<c:if test="${empty voice.backgroundImage}"><img src="../resources/images/voiceImages/default.jpg" width="100%" height="90pt"></c:if></div>
+								<div class="col-xs-6 col-lg-7" style="padding-top: 7pt; line-height: 1.5em; height: 80pt;"><a href="#" style="color: black; font-size:12pt;"><strong>${voice.voiceName}</strong></a><br><a href="#" style="color:gray;">${voice.userName}<br></a>
+								<p5 style="color: gray;"><i class="fas fa-play-circle"></i>&nbsp;${voice.countReply}</p5><br></div>
+			   				</c:forEach>
+				
+				
+				
+			</div>
+          <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+          </div>
+        </div><!-- /.blog-sidebar -->
+		</div>
+		</div>
+		</div>
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <footer>
+    
+</footer>
+      
+  <img src="../resources/images/microphone.png" id="fixedbtn" data-toggle="modal" data-target="#myModal">
+
+  
+  
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><b>녹음하기</b></h4>
+      </div>
+      <div class="modal-footer">
+       <div class="topnav">
+      <div class="search-container">
+      	 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      	</div></div>
+       
+      </div>
+    </div>
+  </div>
+</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+  </body>
+</html>
