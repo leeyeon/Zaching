@@ -9,17 +9,17 @@ public class Message {
 	private int friendId;// 친구ID 시퀀스
 	private Date createdDate ;//작성날짜
 	private String content;//메세지 내용
-//	private String name;
-//	
-//	
-//	
-//	public String getName() {
-//		return name;
-//	}
-//
-//	public void setName(String name) {
-//		this.name = name;
-//	}
+	private String name;
+	
+	
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public Message() {
 		
