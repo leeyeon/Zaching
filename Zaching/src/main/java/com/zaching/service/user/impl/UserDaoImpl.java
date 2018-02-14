@@ -132,5 +132,9 @@ public class UserDaoImpl implements UserDao{
 	public String getAccountToken(int userId) throws Exception {
 		return sqlSession.selectOne("UserMapper.getAccountToken", userId);
 	}
+	
+	public String getPWD(String id) throws Exception{
+		return sqlSession.selectOne("UserMapper.getPassword", id);
+	}
 
 }
