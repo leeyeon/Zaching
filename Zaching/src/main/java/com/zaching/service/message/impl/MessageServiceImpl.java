@@ -31,6 +31,13 @@ public class MessageServiceImpl implements MessageService{
 
 	@Override
 	public void addMessage(Message message) throws Exception {
+		
+		int roomId = messageDao.checkRoom(message.getUserId(), message.getFriendId());
+		
+		if(roomId > 0) {
+			message.setRoomId(roomId);
+		}
+		
 		messageDao.addMessage(message);
 	}
 

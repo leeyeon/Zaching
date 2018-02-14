@@ -97,8 +97,7 @@
 	</select>
 
 	<sql id="listFriendSql">
-		SELECT f1.user_id, f1.friend_id, f1.status, USERS.name,
-		USERS.profile_image
+		SELECT DISTINCT f1.user_id, f1.friend_id, f1.status, USERS.name, USERS.profile_image
 		FROM FRIEND f1, FRIEND f2, USERS
 		<where>
 			f1.user_id = f2.friend_id AND f1.friend_id = f2.user_id

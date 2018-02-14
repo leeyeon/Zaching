@@ -6,51 +6,96 @@
 <mapper namespace="MessageMapper">
 
 	<resultMap type="message" id="messageSelectMap">
-	<result property="messageId" column="message_id" jdbcType="INTEGER"/>
-	 <result property="userId" column="user_id" jdbcType="INTEGER"/>
-	 <result property="friendId" column="friend_id" jdbcType="INTEGER"/>
-	<result property="content" column="content" jdbcType="VARCHAR"/>
-	<result property="name" column="name" jdbcType="VARCHAR" />
-	<result property="createdDate" column="created_date" jdbcType="DATE"/>
+		<result property="roomId" column="room_id" jdbcType="INTEGER"/>
+		<result property="messageId" column="message_id" jdbcType="INTEGER"/>
+		<result property="userId" column="user_id" jdbcType="INTEGER"/>
+		<result property="friendId" column="friend_id" jdbcType="INTEGER"/>
+		<result property="content" column="content" jdbcType="VARCHAR"/>
+		<result property="createdDate" column="created_date" jdbcType="DATE"/>
+		<result property="friendProfileImage" column="friend_profile_image" jdbcType="VARCHAR"/>
+		<result property="friendName" column="friend_name" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	
 	
 	<insert id="addMessage" parameterType="message">
-	INSERT
-	INTO MESSAGE(message_id , content , created_date,user_id,friend_id  )
-	VALUES(
-	seq_message_id.nextval, 
-	#{content:VARCHAR} , 
-	SYSDATE ,
-	#{userId:INTEGER},
-	#{friendId:INTEGER}
+		INSERT
+		INTO MESSAGE(message_id, content, created_date, user_id, friend_id, room_id)
+		VALUES(
+		seq_message_id.nextval, 
+		#{content:VARCHAR} , 
+		SYSDATE ,
+		#{userId:INTEGER},
+		#{friendId:INTEGER},
+		<if test="roomId == null">
+			#{roomId:INTEGER}
+		</if>
+		<if test="roomId == null">
+			seq_message_room_id.nextval
+		</if>
 	)
-	
 	</insert>
 	
+	<update id="updateMessageRoomId"
+			parameterType="map">
+		UPDATE message
+		SET room_id = #{roomId}
+		<where>
+			message_id = #{messageId}
+		</where>
+	</update>
+	
 	<delete id="deleteMessage" parameterType="message">
-	DELETE
-	FROM message WHERE message_id=#{messageId}
-	
-	
+		DELETE
+		FROM message WHERE message_id=#{messageId}
+
 	</delete>
 	
 	<select id="getMessage" parameterType="int" resultMap="messageSelectMap">
-	SELECT
-	message_id,user_id,friend_id,content,created_date
-	FROM message
-	WHERE message_id=#{messageId}
+		SELECT
+			message_id,user_id,friend_id,content,created_date
+		FROM message
+		WHERE message_id=#{messageId}
+	</select>
 	
-	</select>	
+	<select id="checkRoom" 
+			parameterType="map" 
+			resultType="int">
+		SELECT
+			DISTINCT room_id
+		FROM message
+		WHERE ( user_id = #{userId} AND friend_id = #{friendId} ) 
+				OR ( user_id = #{friendId} AND friend_id = #{userId} )
+	</select>
+	<select id="listMessage" parameterType="search" resultMap="messageSelectMap">
+	SELECT *
+	FROM 	(SELECT inner_table.*,ROWNUM AS row_seq
+				FROM ( <include refid="messageSql" /> ) inner_table
+						WHERE ROWNUM &lt;=#{endRowNum})
+							WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	
+	</select>
+	
+	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM( <include refid="messageSql" /> ) countTable						
+	</select>
 
-	
-	
-	
-	
-	
-	
+	<sql id="messageSql">
+		SELECT to_char(vt.created_date,'yyyy-mm-dd hh24:mi') AS created_date, message.user_id, friend_id, 
+		users.profile_image AS friend_profile_image, users.name AS friend_name, message.content, message.room_id
+		FROM message, users, ( SELECT MAX(message.created_date) AS created_date, message.room_id
+					FROM message, users
+					<where>
+						message.friend_id = users.user_id
+					</where>
+					GROUP BY message.room_id ) vt
+		<where>
+			message.friend_id = users.user_id
+			AND (message.user_id = #{searchKeyword} OR message.friend_id = #{searchKeyword} )
+			AND vt.created_date = message.created_date
+		</where>
+	</sql>
 	
 	
 	</mapper>
