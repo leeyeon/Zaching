@@ -30,9 +30,24 @@ public class FriendServiceTest {
 	private int friendId=9;
 	private int id=39;
 	private int status=0;
-	private int userId=24;
+	private int userId=31;
 
-	@Test
+	
+	
+//	@Test
+	public void testrecommendFriend() throws Exception{
+		System.out.println("recommendFriend 하기전");
+		
+		Friend friend=new Friend();
+		friend = friendService.getFriend(31);
+		
+		
+		
+		System.out.println(friend);
+		
+		System.out.println("recommendFriend  끝====");
+	}
+//	@Test
 	public void testAddFriend()throws Exception{
 		
 		System.out.println("addFriend하기전");
@@ -109,7 +124,7 @@ public class FriendServiceTest {
 		
 	}
 	
-//	@Test
+	@Test
 	public void testlistFriend() throws Exception{
 		Search search=new Search();
 		search.setCurrentPage(1);

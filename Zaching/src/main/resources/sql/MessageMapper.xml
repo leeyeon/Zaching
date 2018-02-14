@@ -10,10 +10,11 @@
 	 <result property="userId" column="user_id" jdbcType="INTEGER"/>
 	 <result property="friendId" column="friend_id" jdbcType="INTEGER"/>
 	<result property="content" column="content" jdbcType="VARCHAR"/>
+	<result property="name" column="name" jdbcType="VARCHAR" />
 	<result property="createdDate" column="created_date" jdbcType="DATE"/>
-	
-	
 	</resultMap>
+	
+	
 	
 	<insert id="addMessage" parameterType="message">
 	INSERT
@@ -43,32 +44,8 @@
 	
 	</select>	
 	
-	<select id="listMessage" parameterType="search" resultMap="messageSelectMap">
-	SELECT *
-	FROM 	(SELECT inner_table.*,ROWNUM AS row_seq
-				FROM (SELECT message_id,user_id,friend_id,content,created_date
-						FROM message
-						<if test="searchCondition !=null">
-						<where>
-						<if test="searchCondition == 0 and searchKeyword !='' ">
-							message_id=#{searchKeyword}
-						</if>
-						<if test="searchCondition == 1 and searchKeyword !='' ">
-						friend_id=#{searchKeyword}
-						</if>
-						</where>
-						</if>
-						ORDER BY message_id DESC) inner_table
-						WHERE ROWNUM &lt;=#{endRowNum})
-							WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+
 	
-	</select>
-	
-	 	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
-	  	SELECT COUNT(*)
-	  	FROM( SELECT message_id ,user_id,friend_id, created_date 
-	  			FROM message ) countTable						
-	 </select>
 	
 	
 	
@@ -77,3 +54,4 @@
 	
 	
 	</mapper>
+	
