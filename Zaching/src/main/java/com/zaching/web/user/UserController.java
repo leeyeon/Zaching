@@ -36,6 +36,7 @@ import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.User;
+import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.user.UserService;
 
 @Controller
@@ -50,8 +51,12 @@ public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("newsfeedServiceImpl")
+	private NewsfeedService newsfeedService;
 
-	// setter Method ±¸Çö ¾ÊÀ½
+	// setter Method ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 	public UserController() {
 		System.out.println(this.getClass());
@@ -63,23 +68,15 @@ public class UserController {
 	int pageSize;
 	
 
-	
-	@RequestMapping(value = "addUser", method = RequestMethod.GET)
-	public String addUser() throws Exception {
 
-		System.out.println("/user/addUser : GET ²ó?");
-
-		return "redirect:/user/addUser.jsp";
-	}
-
-	// ÀÌ¸ÞÀÏ ÀÎÁõ
+	// ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "emailAuth", method = RequestMethod.POST)
 	public String emailAuth(HttpServletRequest request, HttpSession session) throws Exception {
 
 		System.out.println("/user/emailAuth : POST");
 
 		String email = request.getParameter("email");
-		String authNum = "";// º¸³» ÀÎÁõ¹øÈ£
+		String authNum = "";// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£
 
 		authNum = RandomNum();
 
@@ -87,13 +84,13 @@ public class UserController {
 
 		System.out.println("getSessionUser :: " + getSessionUser);
 
-		System.out.println("¹Þ´Â»ç¶÷ email Á¤º¸==>" + email);
-		System.out.println("»õ·Î»ý¼ºÇÑ ÀÎÁõ¹øÈ£==> " + authNum);
+		System.out.println("ï¿½Þ´Â»ï¿½ï¿½ email ï¿½ï¿½ï¿½ï¿½==>" + email);
+		System.out.println("ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£==> " + authNum);
 
 		getSessionUser.setAuthNum(authNum);
 		userService.sendMail(email, authNum);
 
-		System.out.println("DBÀÎÁõ¹øÈ£ ===> " + getSessionUser.getAuthNum());
+		System.out.println("DBï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ ===> " + getSessionUser.getAuthNum());
 
 		session.setAttribute("user", getSessionUser);
 
@@ -102,7 +99,7 @@ public class UserController {
 		return "forward:/user/emailAuth.jsp";
 	}
 
-	// ³­¼ö¹ß»ý ¸Þ¼Òµå
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ß»ï¿½ ï¿½Þ¼Òµï¿½
 	public String RandomNum() {
 
 		StringBuffer buffer = new StringBuffer();
@@ -111,18 +108,6 @@ public class UserController {
 			buffer.append(n);
 		}
 		return buffer.toString();
-	}
-
-	@RequestMapping(value = "addUser", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute("user") User user) throws Exception {
-
-		System.out.println("/user/addUser : POST");
-		// Business Logic
-		user.setRole("1");
-		userService.addUser(user);
-		System.out.println("name : " + user.getName());
-
-		return "redirect:/index.jsp";
 	}
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
@@ -139,11 +124,13 @@ public class UserController {
 			session.setAttribute("user", dbUser);
 		}
 		if (session.getAttribute("user") == null) {
-
+					
 		}
 		System.out.println("=====>  " + session.getAttribute("user"));
-		System.out.println("ºñ±³===>" + user.getEmail() + " = " + dbUser.getEmail());
-		System.out.println("ºñ±³===>" + user.getPassword() + " = " + dbUser.getPassword());
+		
+		System.out.println("ï¿½ï¿½===>" + user.getEmail() + " = " + dbUser.getEmail());
+		System.out.println("ï¿½ï¿½===>" + user.getPassword() + " = " + dbUser.getPassword());
+	
 
 		return "redirect:/index.jsp";
 	}
@@ -154,7 +141,6 @@ public class UserController {
 		System.out.println("/user/logout : POST");
 		
 		
-
 		session.invalidate();
 
 		return "redirect:/index.jsp";
@@ -174,9 +160,9 @@ public class UserController {
 		System.out.println("/user/getUser : GET");
 		// Business Logic
 		User user = userService.getUser(userId);
-		// Model °ú View ¿¬°á
+		// Model ï¿½ï¿½ View ï¿½ï¿½ï¿½ï¿½
 		model.addAttribute("user", user);
-
+		
 		return "forward:/user/getUser.jsp";
 	}
 
@@ -186,8 +172,14 @@ public class UserController {
 		System.out.println("/user/getTimeLine : GET");
 		// Business Logic
 		User user = userService.getUser(userId);
-		// Model °ú View ¿¬°á
+		
+		newsfeedService.timeline(userId);
+		System.out.println("===>");
+		
+		System.out.println("ë€¨ê·œë€¨===>"+userId);
+		// Model ï¿½ï¿½ View ï¿½ï¿½ï¿½ï¿½
 		model.addAttribute("user", user);
+		
 
 		return "forward:/user/getTimeLine.jsp";
 	}
@@ -198,7 +190,7 @@ public class UserController {
 		System.out.println("/user/updateUser : GET");
 		// Business Logic
 		User user = userService.getUser(userId);
-		// Model °ú View ¿¬°á
+		// Model ï¿½ï¿½ View ï¿½ï¿½ï¿½ï¿½
 		model.addAttribute("user", user);
 
 		return "forward:/user/updateUser.jsp";
@@ -229,14 +221,14 @@ public class UserController {
 		}
 		search.setPageSize(pageSize);
 
-		// Business logic ¼öÇà
+		// Business logic ï¿½ï¿½ï¿½ï¿½
 		Map<String, Object> map = userService.listUser(search);
 
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
 				pageSize);
 		System.out.println(resultPage);
 		
-		// Model °ú View ¿¬°á
+		// Model ï¿½ï¿½ View ï¿½ï¿½ï¿½ï¿½
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
@@ -251,6 +243,19 @@ public class UserController {
 		
 		
 	return "forward:/user/memoryMap.jsp";
+	}
+	
+	@RequestMapping(value="deleteUser", method=RequestMethod.GET)
+	public String deleteUser(@RequestParam("userId") int userId, 
+			Model model)throws Exception{
+		
+		System.out.println("/user/deleteUser : GET");
+		
+		User user=userService.getUser(userId);
+		
+		model.addAttribute("user", user);
+		
+		return"forward:/user/deleteUser.jsp";
 	}
 	
 }

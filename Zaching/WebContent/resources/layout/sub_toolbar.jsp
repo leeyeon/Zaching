@@ -1,8 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@page import="com.zaching.service.domain.User"%>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html lang="ko">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
@@ -15,7 +16,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://sdk.accountkit.com/en_US/sdk.js"></script>
+
 <style>
 
 /* 글꼴 수정 */
@@ -222,7 +223,16 @@
 			
 			
 		});
-
+		
+		//모달창 닫기 버튼 이벤트
+		$(function() {
+				  $('#close,#endclose').on('click', function(){
+			        	
+			        	$("#loginemail").val('');
+			        	$("#loginpassword").val('');
+				});
+			});
+		
 	
 
 		
@@ -288,9 +298,6 @@
 			self.location = "/livingInfo/mainLivingInfo";
 		});
 	
-		$("a:contains('회원가입')").on("click", function() {
-			self.location = "/user/addUser";
-		});
 		
 		$("a:contains('로그아웃')").on("click", function() {
 			self.location = "/user/logout";
@@ -380,10 +387,151 @@
 				});
 				
 				</c:if>
+				
 			
 		});
 			
+//===============================회원가입===========================================
+	
+	//회원가입 모달창 닫기 이벤트
+	$(function() {
+				  $('#addclose,#addclose2').on('click', function(){
+					  $("#addUserform")[0].reset();
+				});
+			});
 		
+	
+	//==>"회원가입" Event 처리 및 연결
+	 $(function() {
+		
+			
+		 $( "#signUp" ).on("click" , function() {
+				alert("회원가입 버튼클릭");
+				fncAddUser();
+				alert("회원가입이");
+			});
+		});	
+	//이메일형식 검사 필요!!
+		
+		function fncAddUser() {
+			alert(name);
+			alert(email);
+			
+			var email = $("#checkEmail").val();
+			var pw = $("#pw").val();
+			var pw2 = $("#pw2").val();
+			var name = $("input[name='name']").val();
+			
+			
+			if(email == null || email.length <1){
+				alert("이메일은 반드시 입력하셔야 합니다.");
+				return false;
+			}
+			if(pw == null || pw.length <4){
+				alert("패스워드는  3자리 이상 입력하셔야 합니다.");
+				return;
+			}
+			if(pw2 == null || pw2.length <4){
+				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
+				return;
+			}
+			if(name == null || name.length <1){
+				alert("이름은  반드시 입력하셔야 합니다.");
+				return;
+			}
+			
+			if( pw != pw2 ) {				
+				alert("비밀번호 확인이 일치하지 않습니다.");
+				$("#pw2").focus();
+				return;
+			}
+
+            $.ajax({
+            	url: "/user/rest/addUser",
+            	method:"POST",
+				contentType :'application/json',
+				data : JSON.stringify({
+					"email" : checkEmail
+				
+				}),
+				async : false,
+				dataType : "json",
+                success: function(data){
+                	console.log(data);
+                    if(data == true){
+                    	console.log("데이터 값==> "+data);
+                        $('#checkMsg').html('<p style="color:blue">사용가능</p>');
+                    }
+                    else{
+                        $('#checkMsg').html('<p style="color:red">사용불가능</p>');
+                        $("form")[0].reset();
+                    }
+                }
+            
+            
+            });    //end ajax    
+            //end on    
+			 
+			 //$("#addUserform").attr("method","POST").attr("action","/user/addUser").attr("target","_parent").submit();
+			 
+	}
+			
+			
+		//==>"취소?" Event 처리 및 연결	
+		$(function() {
+			$("a[href='#' ]").on("click" , function() {
+				$("form")[0].reset();
+			});
+		});	
+		
+	
+		//이메일 중복체크
+		
+		
+		
+			$(function() {
+				  $('#checkbtn').on('click', function(){
+			        	alert("버튼클릭!");
+			        	fncCheckSingup();
+				});
+			});
+			
+		function fncCheckSingup(){
+			 var checkEmail = $("#checkEmail").val();
+			 alert(checkEmail);
+			 
+		      
+		            $.ajax({
+		            	url: "/user/rest/checkSingup",
+		            	method:"POST",
+						contentType :'application/json',
+						data : JSON.stringify({
+							"checkEmail" : checkEmail
+						
+						}),
+						async : false,
+						dataType : "json",
+		                success: function(data){
+		                	console.log(data);
+		                    if(data == true){
+		                    	console.log("데이터 값==> "+data);
+		                        $('#checkMsg').html('<p style="color:blue">사용가능</p>');
+		                    }
+		                    else if(data == false){
+		                        $('#checkMsg').html('<p style="color:red">사용불가능</p>');
+		                        alert("이메일을 다시 입력 해주세요");
+		                        return $("#checkEmail").val('');
+
+		                 
+		                    }
+		                }
+		            
+		            
+		            });    //end ajax    
+		            //end on    
+		    }
+	
+			
 		
 	
 </script>
@@ -460,7 +608,8 @@
           	 
             <c:if test="${user.userId eq null}">
             <li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
-            <li><a href="#">회원가입</a></li>
+            <li><a data-toggle="modal" data-target="#AddUserModal">회원가입</a></li>
+            <!-- <li><a href="#">회원가입</a></li> -->
           </c:if>
           </ul>
           			
@@ -530,7 +679,7 @@
 
 				<c:if test="${user.userId eq null}">
 					<li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
-					<li><a href="#">회원가입</a></li>
+					<li><a data-toggle="modal" data-target="#AddUserModal">회원가입</a></li>
 				</c:if>
 			</ul>
 
@@ -556,7 +705,7 @@
 				<!-- Modal Header start-->
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
+						aria-hidden="true" id="close">&times;</button>
 					<div class="modal-title" align="center"
 						style="margin-bottom: 15px;">
 						<!-- 자췽로고 -->
@@ -579,7 +728,7 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<input type="email" class="form-control input-lg" name="email"
-									placeholder="이메일을입력하세요" style="margin-left: 5px" />
+									placeholder="이메일을입력하세요" style="margin-left: 5px" id="loginemail" />
 
 							</div>
 						</div>
@@ -595,7 +744,7 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<input type="password" class="form-control input-lg"
-									name="password" placeholder="패스워드를입력하세요"
+									name="password" placeholder="패스워드를입력하세요" id="loginpassword"
 									style="margin-left: 5px">
 							</div>
 						</div>
@@ -633,7 +782,7 @@
 				<!--Modal Body  -->
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal" id="endclose">Close</button>
 				</div>
 
 			</div>
@@ -642,6 +791,104 @@
 		<!-- Modal dialog -->
 	</div>
 	<!-- Modal Fade  -->
+	
+	<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<!-- 회원가입 Modal -->
+	<div id="AddUserModal" class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+
+		<div class="modal-dialog">
+
+			<!-- 회원가입Modal content-->
+			<div class="modal-content">
+
+				<!-- 회원가입Modal Header start-->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true" id="addclose">&times;</button>
+					<div class="modal-title" align="center"
+						style="margin-bottom: 15px;">
+						<!-- 자췽로고 -->
+						<img src="/resources/images/temp_logo.png" class="img-logo"
+							width="50" height="50">
+					</div>
+				</div>
+				<!-- 회원가입Modal Header end -->
+
+				<!-- 회원가입Modal Body start-->
+				<div class="modal-body" align="left">
+				<form class="form-horizontal" id="addUserform">
+		
+		  <div class="form-group">
+		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
+		    <div class="col-sm-4">
+		    	<c:if test="${sessionScope.user.snsType  ne null }">
+		      		<input type="text" class="form-control" id="checkEmail" name="email" value="${sessionScope.user.email}">
+		      		<div id="checkMsg"></div>
+		      		<button type="button" id="checkbtn" class="btn btn-default">중복확인</button>
+		      	</c:if>
+		      	
+		      	<c:if test="${sessionScope.user.snsType  eq null }">
+		      		<input type="text" class="form-control" id="checkEmail" name="email"  >
+		      		<div id="checkMsg"></div>
+		      		<button type="button" id="checkbtn" class="btn btn-default">중복확인</button>
+		      	</c:if>
+		      
+		      
+   			
+		    
+		    </div>
+		   
+		  </div>
+		   
+		  <div class="form-group">
+		    <label for="name" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" name="name" id="name" placeholder="회원이름">
+		    </div>
+		  </div>
+		  
+		  
+		  <div class="form-group">
+		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
+		    <div class="col-sm-4">
+		      <input type="password" class="form-control" name="password" id="pw" placeholder="비밀번호">
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
+		    <div class="col-sm-4">
+		      <input type="password" class="form-control" name="password2" id="pw2"placeholder="비밀번호 확인" >
+		    </div>
+		  </div>
+		 
+		  
+		  <div class="form-group">
+		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button type="button" class="btn btn-primary" id="signUp" >가 &nbsp;입</button>
+			  <a class="btn btn-primary cancelbtn" href="#" role="button">취&nbsp;소</a>
+		    </div>
+		  </div>
+		</form>
+
+					
+	</div>
+	<!--Modal Body  -->
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" id="addclose2">Close</button>
+				</div>
+
+			</div>
+			<!-- Modal content-->
+		</div>
+		<!-- Modal dialog -->
+	</div>
+	<!-- Modal Fade  -->
+	
+	
 
 
 </body>

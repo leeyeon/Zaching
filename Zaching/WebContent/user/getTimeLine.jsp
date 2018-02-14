@@ -182,6 +182,17 @@
 			self.location="";
 		})
 		
+		//회원탈퇴
+		$("#deleteUser").on("click", function() {
+			var windowW = 400;  // 창의 가로 길이
+		    var windowH = 500;  // 창의 세로 길이
+			var left = Math.ceil((window.screen.width - windowW)/2);
+		    var top = Math.ceil((window.screen.height - windowH)/2);
+		    
+			window.open("/user/deleteUser?userId=${sessionScope.user.userId}",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
+			opener.location.reload(true);
+			    self.close();
+		})
 		
 		//FOLLOW Event
 		
@@ -242,7 +253,7 @@
       <a><img  id="listMessage" src="../resources/images/Message_Icon.png" 
         	width="50px" height="50px"/>
       </a></div>
-    
+    	<button type="button" class="btn btn-primary" id="deleteUser">회원탈퇴</button>
     </div>
     
     </form>
@@ -259,6 +270,7 @@
     	<c:if test="${sessionScope.user.role eq '2'}">
     	<a class="btn col-xs-2" id="getUser">내정보조회</a></c:if>
     	<a class="btn col-xs-2" id="listNotice">알림함</a>
+    	
 	  </div>
   </c:if>
   
@@ -281,6 +293,7 @@
    
     <div class="row body" align="center">
     		<h1>여기는 뉴스피드 게시물</h1>
+    		<jsp:include page="/newsfeed/newsfeed.jsp"/>
     </div>
     
     </div>	
