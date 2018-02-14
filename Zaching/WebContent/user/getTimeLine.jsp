@@ -293,6 +293,7 @@
    
     <div class="row body" align="center">
     		<h1>여기는 뉴스피드 게시물</h1>
+    		<jsp:include page="/newsfeed/newsfeed.jsp"/>
     </div>
     
     </div>	

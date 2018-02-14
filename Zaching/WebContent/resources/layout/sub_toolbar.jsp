@@ -445,7 +445,32 @@
 				$("#pw2").focus();
 				return;
 			}
-			
+
+            $.ajax({
+            	url: "/user/rest/addUser",
+            	method:"POST",
+				contentType :'application/json',
+				data : JSON.stringify({
+					"email" : checkEmail
+				
+				}),
+				async : false,
+				dataType : "json",
+                success: function(data){
+                	console.log(data);
+                    if(data == true){
+                    	console.log("데이터 값==> "+data);
+                        $('#checkMsg').html('<p style="color:blue">사용가능</p>');
+                    }
+                    else{
+                        $('#checkMsg').html('<p style="color:red">사용불가능</p>');
+                        $("form")[0].reset();
+                    }
+                }
+            
+            
+            });    //end ajax    
+            //end on    
 			 
 			 //$("#addUserform").attr("method","POST").attr("action","/user/addUser").attr("target","_parent").submit();
 			 
