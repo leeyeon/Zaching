@@ -166,8 +166,31 @@ public class UserRestController {
 		return result;
 	}
 
-
+	//회원탈퇴 role '0'으로 업데이트
+	@RequestMapping(value="/rest/deleteUser",method=RequestMethod.POST)
+	public String deleteUser(HttpServletRequest request, 
+			@RequestBody Map<String, Object> map, 
+			HttpSession session)throws Exception{
+		
+		System.out.println("/user/rest/deleteUser :POST");
+		
+		String password =(String)map.get("password");
+		System.out.println("입력받은 password ===>" +password);
+		
+		User getSession = (User)session.getAttribute("user");//세션에 있는 정보
+		System.out.println("세션정보 ==> "+getSession);
+		
+		if(password.equals(getSession.getPassword())) {
+			System.out.println("Before updateRole===> "+getSession.getRole());
+			getSession.setRole("0");
+			userService.updateRole(getSession);
+			System.out.println("After updateRole===> "+getSession.getRole());
+		
+		}
+		return"";
+	}
 	
+
 	@RequestMapping(value="/rest/androidLogin")
 	public String androidLogin( @RequestBody String loginInfomation, HttpSession session)throws Exception{
 	
@@ -216,8 +239,27 @@ public class UserRestController {
 		
 			return "{\"status\":\"no\"}";
 		}
-				
+	}	
 	
+
+	@RequestMapping(value="addUser", method=RequestMethod.POST)
+	public String addUser(HttpServletRequest request,
+						@RequestBody Map<String, Object> map,
+						@ModelAttribute("user")User user)throws Exception{
+		
+		System.out.println("/user/rest/addUser : POST ");
+		
+		String email =(String)map.get("email");
+		String name = (String)map.get("name");
+		String password =(String)map.get("password");
+		
+		
+		user.setRole("1");
+		userService.addUser(user);
+		System.out.println("name : " + user.getName());
+		
+	return "redirect:/index.jsp";
+
 	}
 
 
