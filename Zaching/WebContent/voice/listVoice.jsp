@@ -123,7 +123,28 @@
 		    background-color:#a2dfe5;
 		    color:#fff;
 		}
-		
+		.btn-add-bob {
+       		border: 1px solid #FFFFF;
+			border-radius: 70px;
+			-moz-border-radius: 70px;
+			-khtml-border-radius: 70px;
+			-webkit-border-radius: 70px;
+			 background: #a2dfe5;
+			 width: 100px;
+			 height: 100px;
+			 line-height: 100px;
+			 font-size: 17px;
+			 float:right;
+			 margin-right: 20px;
+			 cursor: pointer;
+			 color: #FFFFFF;
+			 box-shadow: 0 5px 15px -5px #666;
+       	}
+       	#fixedbtn{position:fixed;
+			right:100px;
+			bottom:50px;
+			z-index:1000}
+
 		
 	</style>
 </head>
@@ -203,50 +224,17 @@
 		</div>
 	</section>	<!--  end listing section  -->
 
+<div id="fixedbtn" align="right" style="z-index: 1500;">
+   	  <div class="container">
+	  	<div class="btn-add-bob text-center">방 만들기</div>
+
+	  	</div>
+	  </div>
+	</div>
+	
 	<footer>
-		<div class="wrapper footer">
-			<ul>
-				<li class="links">
-					<ul>
-						<li><a href="#">About</a></li>
-						<li><a href="#">Support</a></li>
-						<li><a href="#">Terms</a></li>
-						<li><a href="#">Policy</a></li>
-						<li><a href="#">Contact</a></li>
-					</ul>
-				</li>
-
-				<li class="links">
-					<ul>
-						<li><a href="#">Appartements</a></li>
-						<li><a href="#">Houses</a></li>
-						<li><a href="#">Villas</a></li>
-						<li><a href="#">Mansions</a></li>
-						<li><a href="#">...</a></li>
-					</ul>
-				</li>
-
-				<li class="links">
-					<ul>
-						<li><a href="#">New York</a></li>
-						<li><a href="#">Los Anglos</a></li>
-						<li><a href="#">Miami</a></li>
-						<li><a href="#">Washington</a></li>
-						<li><a href="#">...</a></li>
-					</ul>
-				</li>
-
-				<li class="about">
-					<p>La Casa is real estate minimal html5 website template, designed and coded by pixelhint, tellus varius, dictum erat vel, maximus tellus. Sed vitae auctor ipsum</p>
-					<ul>
-						<li><a href="http://facebook.com/pixelhint" class="facebook" target="_blank"></a></li>
-						<li><a href="http://twitter.com/pixelhint" class="twitter" target="_blank"></a></li>
-						<li><a href="http://plus.google.com/+Pixelhint" class="google" target="_blank"></a></li>
-						<li><a href="#" class="skype"></a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
+	
+	
 
 		<div class="copyrights wrapper">
 			Copyright © 2015 <a href="http://pixelhint.com" target="_blank" class="ph_link" title="Download more free Templates">Pixelhint.com</a>. All Rights Reserved.

@@ -23,14 +23,8 @@
 </head>
 <body>
 
-
-	<div class="container" id="newsfeed">
-
 		<c:import url="/newsfeed/listNewsfeed"></c:import>
 
-	</div>
 
-
-  
 </body>
 </html>
