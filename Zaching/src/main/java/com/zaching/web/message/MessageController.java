@@ -2,6 +2,8 @@ package com.zaching.web.message;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Message;
+import com.zaching.service.domain.User;
 import com.zaching.service.message.MessageService;
 
 @Controller
@@ -47,7 +50,10 @@ public class MessageController {
 	}
 	
 	@RequestMapping(value="listMessage")
-	public String listFriend(@ModelAttribute("search")Search search,Model model)throws Exception{
+	public String listMessage(@ModelAttribute("search")Search search, 
+							HttpSession session, 
+							Model model)throws Exception{
+		
 		System.out.println("message/listMessage:GET");
 		
 		if (search.getCurrentPage() == 0) {
@@ -55,7 +61,7 @@ public class MessageController {
 		}
 		search.setPageSize(pageSize);
 		
-		
+		search.setSearchKeyword(((User)session.getAttribute("user")).getUserId()+"");
 		
 		Map<String , Object> map=messageService.listMessage(search);
 		
