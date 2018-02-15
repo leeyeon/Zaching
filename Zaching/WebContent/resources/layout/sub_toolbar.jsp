@@ -408,14 +408,15 @@
 		 $( "#signUp" ).on("click" , function() {
 				alert("회원가입 버튼클릭");
 				fncAddUser();
-				alert("회원가입이");
+				if(result == true){
+					alert("회원가입이 완료되었습니다.");
+				}
+				
 			});
 		});	
-	//이메일형식 검사 필요!!
 		
 		function fncAddUser() {
-			alert(name);
-			alert(email);
+			
 			
 			var email = $("#checkEmail").val();
 			var pw = $("#pw").val();
@@ -449,31 +450,28 @@
             $.ajax({
             	url: "/user/rest/addUser",
             	method:"POST",
-				contentType :'application/json',
+            	contentType : "application/json; charset=UTF-8",
 				data : JSON.stringify({
-					"email" : checkEmail
+					
+					"email" : email,
+					"password": pw,
+					"name": name
 				
 				}),
 				async : false,
 				dataType : "json",
                 success: function(data){
+                	
                 	console.log(data);
-                    if(data == true){
-                    	console.log("데이터 값==> "+data);
-                        $('#checkMsg').html('<p style="color:blue">사용가능</p>');
-                    }
-                    else{
-                        $('#checkMsg').html('<p style="color:red">사용불가능</p>');
-                        $("form")[0].reset();
-                    }
-                }
+                    
+                	}
+                
             
             
             });    //end ajax    
             //end on    
-			 
-			 //$("#addUserform").attr("method","POST").attr("action","/user/addUser").attr("target","_parent").submit();
-			 
+            alert(name);
+			alert(email);
 	}
 			
 			
@@ -493,18 +491,30 @@
 				  $('#checkbtn').on('click', function(){
 			        	alert("버튼클릭!");
 			        	fncCheckSingup();
+			        	
+			        	
 				});
 			});
 			
 		function fncCheckSingup(){
 			 var checkEmail = $("#checkEmail").val();
-			 alert(checkEmail);
+			 var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+			 if(checkEmail == null|| checkEmail.length <1){
+				 $('#checkMsg').html('<p style="color:red">이메일을 입력해주세요.</p>');
+	        		
+	        		return false
+
+			 }else if(exptext.test(checkEmail) == false){
+	        		$("#checkEmail").val('');
+	        		$('#checkMsg').html('<p style="color:red">이메일형식으로 입력해주세요.</p>');
+	        		return false
+			 }
 			 
-		      
 		            $.ajax({
 		            	url: "/user/rest/checkSingup",
 		            	method:"POST",
-						contentType :'application/json',
+		            	contentType : "application/json; charset=UTF-8",
 						data : JSON.stringify({
 							"checkEmail" : checkEmail
 						
