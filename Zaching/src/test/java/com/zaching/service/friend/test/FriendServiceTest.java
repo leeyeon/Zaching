@@ -30,8 +30,23 @@ public class FriendServiceTest {
 	private int friendId=9;
 	private int id=39;
 	private int status=0;
-	private int userId=34;
+	private int userId=31;
 
+	
+	
+//	@Test
+	public void testrecommendFriend() throws Exception{
+		System.out.println("recommendFriend 하기전");
+		
+		Friend friend=new Friend();
+		friend = friendService.getFriend(31);
+		
+		
+		
+		System.out.println(friend);
+		
+		System.out.println("recommendFriend  끝====");
+	}
 //	@Test
 	public void testAddFriend()throws Exception{
 		
@@ -52,15 +67,31 @@ public class FriendServiceTest {
 		
 		
 	}
+//	@Test
+	public void testenterFriend() throws Exception{
+		System.out.println("enterFriend하기전========");
+		Friend friend=new Friend();
+		
+		friend.setUserId(userId);
+		friend.setFriendId(friendId);
+		
+		friendService.enterFriend(friend);
+		
+		System.out.println(friend);
+		
+		System.out.println("enterFriend끝=========");
+		
+	}
 	
 	
 //	@Test
 	public void testGetFreind() throws Exception{
 		
 		Friend friend=new Friend();
+		System.out.println("getFriend하기전");
 		
 		friend = friendService.getFriend(34);
-		friend=friendService.getFriend(1);
+		friend = friendService.getFriend(9);
 		
 		
 		
@@ -111,26 +142,26 @@ public class FriendServiceTest {
 		
 		System.out.println("=================listFriend=============");
 	}
-//	@Test
-	public void testenterFriend() throws Exception{
-		System.out.println("enterFriend하기전========");
-		Friend friend=new Friend();
-		
-		friend.setUserId(userId);
-		friend.setFriendId(friendId);
-		
-		friendService.enterFriend(friend);
-		
-		System.out.println(friend);
-		
-		System.out.println("enterFriend끝=========");
-		
-	}
 	
+	
+
 	
 //	@Test
 	public void testacceptFriend() throws Exception{
 		
+	}
+	
+//	@Test
+	public void testblockFriend() throws Exception{
+Friend friend=friendService.getFriend(userId);
+		
+		System.out.println(""+friend);
+		
+		friend.setStatus(status);
+		
+		friendService.updateFriend(friend);
+		
+		System.out.println("update 완료");
 	}
 	
 

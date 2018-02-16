@@ -20,10 +20,8 @@
 		<result property="birth" 		  column="birth" 	 		jdbcType="VARCHAR"/>
 		<result property="profileImage"   column="profile_image" 	jdbcType="VARCHAR"/>
 		<result property="realName" 	  column="real_name" 		jdbcType="VARCHAR"/>
-		<result property="bankCode" 	  column="bank_code" 		jdbcType="INTEGER"/>
+		<result property="bankName" 	  column="bank_name" 		jdbcType="VARCHAR"/>
 		<result property="accountNumber"  column="account_number" 	jdbcType="VARCHAR"/>
-		<result property="accountCi" 	  column="account_ci" 		jdbcType="INTEGER"/>
-		<result property="accountSeqNo"   column="account_seq_no" 	jdbcType="INTEGER"/>
 		<result property="totalPoint" 	  column="total_point" 		jdbcType="INTEGER"/>
 		<result property="totalMileage"   column="total_mileage" 	jdbcType="INTEGER"/>
 		<result property="totalRecommend" column="total_recommend" 	jdbcType="INTEGER"/>
@@ -44,15 +42,25 @@
 	
 	<insert id="addUser" parameterType="user" >
 	INSERT
-		INTO users(user_id , name, password, email,
+		INTO users(user_id ,email, name, password, 
 		profile_image, role, sns_type,  created_date) 
-		VALUES(	seq_user_id.nextval, #{name} , #{password},
-					#{email}, #{profileImage:VARCHAR},
-					#{role} ,#{snsType:CHAR}, SYSDATE )
+		VALUES(	seq_user_id.nextval, #{email},#{name} , #{password},
+					 #{profileImage:VARCHAR},
+					#{role} ,#{snsType:CHAR}, TO_CHAR(SYSDATE , 'YYYY-MM-DD') )
 	</insert>
 	
 	
-	<select id="checkEmail" parameterType="string" resultMap="userSelectMap">
+	<insert id="snsAddUser" parameterType="user" >
+	INSERT
+		INTO users(user_id , name, email, 
+		profile_image, role, sns_type,  created_date) 
+		VALUES(	seq_user_id.nextval, #{name} ,
+					#{email}, #{profileImage:VARCHAR},
+					#{role} ,#{snsType}, TO_CHAR(SYSDATE , 'YYYY-MM-DD') )
+	</insert>
+	
+	
+	<select id="checkSignup" parameterType="String" resultType="int">
 		SELECT COUNT(*)
 		FROM users 
 		WHERE email= #{email} 
@@ -77,8 +85,8 @@
 	
 	<select id="getUser"	parameterType="int"	resultMap="userSelectMap">
 		SELECT
-		user_id , name , email , role, password, address, gender, phone,
-		birth, profile_image, real_name, account_number, created_date 		
+		user_id , name , email , role, password, address, gender, phone, longitude,latitude,
+		birth, profile_image, real_name, account_number,  TO_CHAR(created_date , 'YYYY-MM-DD')		
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
@@ -95,7 +103,7 @@
 	 <select id="getAccountUser"	parameterType="int"	resultMap="userSelectMap">
 		SELECT
 		user_id, name, email, role, password,  gender, phone,
-		birth,  real_name, bank_code, account_number,  account_ci, account_seq_no,
+		birth,  real_name, bank_name, account_number,
 		total_point, total_mileage		
 		FROM users 
 		WHERE user_id = #{value}
@@ -104,7 +112,7 @@
 	<update id="updateRole" parameterType="user">
 		UPDATE users
 		<set>
-			role ='2'
+			role = #{value}
 		</set>
 		WHERE user_id = #{userId}
 	</update>
@@ -112,23 +120,26 @@
 	<update	id="updateUser"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
-	   		birth 	= #{birth:VARCHAR},
-			phone	= #{phone:VARCHAR},
-			address	= #{address:VARCHAR},
-			gender	= #{gender:CHAR},
-			email	= #{email},
-			role 	= #{role:CHAR}, <!-- 이메일 인증시 ROLE 2로 UPDATE -->
-			password = #{password},
-			profile_image = #{profileImage:VARCHAR}
-			<!-- real_name = #{realName:VARCHAR},
-			bank_code = #{bankCode:INTEGER},
-			account_number = #{accountNumber:VARCHAR},
-			account_ci = #{accountCi:INTEGER}
-			 -->	
+	   		<if test="accountNumber == ''">
+	   			role 	= #{role:CHAR}, <!-- 이메일 인증시 ROLE 2로 UPDATE -->
+				email	= #{email},
+	   			password = #{password},
+	   			address	= #{address:VARCHAR},
+	   			gender	= #{gender:CHAR},
+	   			phone	= #{phone:VARCHAR},
+	   			birth 	= #{birth:VARCHAR},
+				profile_image = #{profileImage:VARCHAR}
+	   		</if>
+	   		<if test="accountNumber != ''">
+				real_name = #{realName:VARCHAR},
+				bank_name = #{bankName:VARCHAR},
+				account_number = #{accountNumber:VARCHAR}
+	   		</if>
 	   	</set>
 	   	WHERE user_id = #{userId}
 	 </update>
 	 
+	 <!-- 테스트 중 -->
 	 <select  id="memoryMap"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
@@ -145,7 +156,7 @@
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT user_id, email, name, phone, address
-	  										total_point, total_mileage, real_name, bank_code,
+	  										total_point, total_mileage, real_name, bank_name,
 	  										account_number, role
 											FROM users
 											<if test="searchCondition != null">
@@ -190,6 +201,26 @@
 	   	</set>
 	   	WHERE user_id = #{userId}
 	 </update>
+	 
+	 <update id="updateAccountToken" parameterType="map" >
+	   	UPDATE users
+	   	<set>
+	   		account_token = ${token}
+	   	</set>
+	   	WHERE user_id = #{userId}
+	 </update>
+	 
+	 <select id="getAccountToken" parameterType="int" resultType="string">
+	 	SELECT account_token
+	 	FROM users
+	 	WHERE user_id = #{userId}
+	 </select>
+	 
+	 <select id="getPassword" parameterType="string" resultType="string">
+	 	SELECT password
+	 	FROM users
+	 	WHERE email=#{value}
+	 </select>
 	 
 </mapper>
 

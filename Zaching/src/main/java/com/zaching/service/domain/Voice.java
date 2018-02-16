@@ -1,20 +1,77 @@
 package com.zaching.service.domain;
 
+import java.io.File;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class Voice {
 	
 	private int voiceId ;
 	private String voiceName;
-	private int categoryCode;
-	private String voiceIyrics;
+	private String categoryCode;
+	private String voicelyrics;
 	private String regDate;
-	private int userID;
+	private int userId;
 	private String backgroundImage;
-	private String countReply;
-	private String countUser;
+	private int countReply;
+	private int countUser;
 	private String status;
+	private String userName;
+	private String profileImage;
+	private MultipartFile uploadFile;
 	
+	
+
 	public Voice() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
+	public int getCountReply() {
+		return countReply;
+	}
+
+	public void setCountReply(int countReply) {
+		this.countReply = countReply;
+	}
+
+	public int getCountUser() {
+		return countUser;
+	}
+
+	public void setCountUser(int countUser) {
+		this.countUser = countUser;
+	}
+	
+	public String getCategoryCode() {
+		return categoryCode;
+	}
+
+	public void setCategoryCode(String categoryCode) {
+		this.categoryCode = categoryCode;
 	}
 
 	public int getVoiceId() {
@@ -33,36 +90,12 @@ public class Voice {
 		this.backgroundImage = backgroundImage;
 	}
 
-	public String getCountReply() {
-		return countReply;
-	}
-
-	public void setCountReply(String countReply) {
-		this.countReply = countReply;
-	}
-
-	public String getCountUser() {
-		return countUser;
-	}
-
-	public void setCountUser(String countUser) {
-		this.countUser = countUser;
-	}
-
 	public String getStatus() {
 		return status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public int getvoiceId() {
-		return voiceId;
-	}
-
-	public void setvoiceId(int voiceId) {
-		this.voiceId = voiceId;
 	}
 
 	public String getVoiceName() {
@@ -73,20 +106,12 @@ public class Voice {
 		this.voiceName = voiceName;
 	}
 
-	public int getcategoryCode() {
-		return categoryCode;
+	public String getVoicelyrics() {
+		return voicelyrics;
 	}
 
-	public void setcategoryCode(int categoryCode) {
-		this.categoryCode = categoryCode;
-	}
-
-	public String getVoiceIyrics() {
-		return voiceIyrics;
-	}
-
-	public void setVoiceIyrics(String voiceIyrics) {
-		this.voiceIyrics = voiceIyrics;
+	public void setVoicelyrics(String voicelyrics) {
+		this.voicelyrics = voicelyrics;
 	}
 
 	public String getRegDate() {
@@ -97,22 +122,21 @@ public class Voice {
 		this.regDate = regDate;
 	}
 
-	public int getUserID() {
-		return userID;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setUserID(int userID) {
-		this.userID = userID;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	@Override
 	public String toString() {
 		return "Voice [voiceId=" + voiceId + ", voiceName=" + voiceName + ", categoryCode=" + categoryCode
-				+ ", voiceIyrics=" + voiceIyrics + ", regDate=" + regDate + ", userID=" + userID + "]";
+				+ ", voicelyrics=" + voicelyrics + ", regDate=" + regDate + ", userId=" + userId + ", backgroundImage="
+				+ backgroundImage + ", countReply=" + countReply + ", countUser=" + countUser + ", status=" + status
+				+ ", userName=" + userName + ", profileImage=" + profileImage + ", uploadFile=" + uploadFile + "]";
 	}
 
-
-	
-	
 
 }

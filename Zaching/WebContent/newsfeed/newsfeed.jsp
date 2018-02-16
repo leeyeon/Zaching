@@ -4,21 +4,26 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html lang="ko">
 	<head>
-		<title>Pinball Website Template | Home :: w3layouts</title>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >	
+		<link rel="stylesheet" type="text/css" href="../resources/css/newsfeedStyle.css" />
+		
+		
 		<link href="../resources/css/style.css" rel='stylesheet' type='text/css' />
+		
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" type="image/x-icon" href="../resources/images/newsfeedImages/fav-icon.png" />
 		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-		
+		<link rel="stylesheet" type="text/css" href="../resources/css/default.css" />
+		<link rel="stylesheet" type="text/css" href="../resources/css/component.css" />
 		<script type="text/javascript" src="../resources/javascript/FileButton.js"></script> 
 		<!----webfonts---->
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -28,16 +33,94 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   		<!-- //Global CSS for the page and tiles -->
 		<!---start-click-drop-down-menu----->
 		<script src="../resources/javascript/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <!----start-dropdown--->
+        <jsp:include page="/resources/layout/toolbar.jsp"/>
          <script type="text/javascript">
-         var myFileButton = new FileButton("imageswap", "imagesrc"); //new FileButton("true °ªÀ» Áà¾ß ÇÏ´Â »ç¿ëÀÚ ¼³Á¤ attribute name", "²Ù¸çÁú ÀÌ¹ÌÁö url") 
-			window.onload = function () { 
-				myFileButton.run(); //¹®¼­·Îµù ÈÄ ÇÑ²¨¹ø¿¡ ¹Ù²Ş 
-			} 
-			function addNewsfeed(){
+         
+         $(function(){
+        	 
+        	 
+	
+        		var myFileButton = new FileButton("imageswap", "imagesrc"); //new FileButton
+ 				window.onload = function () { 
+ 				myFileButton.run(); //
+ 			} 
+        	 
+        	 $(".cell").on("click",function(){
+        		 var id = $($("input[name='newsfeedId']")[$("li").index(this)-6]).val();
+        		 //alert($("li").index(this)-6);
+        		 //alert($($("input[name='newsfeedId']")[$("li").index(this)]).val());
+        		 //alert($($("input[name='newsfeedId']")[$("li").index(this)-6]).val());
+        		 
+        		 self.location="/newsfeed/getNewsfeed?newsfeedId="+id;
+        		 
+        	 });
+        	 
+        	 $(".ufo").on("click", function() {
+     			self.location = "/newsfeed/ufo";
+     		});
+        	 
+				
+			$("#main > div > header > nav > a:nth-child(1)").on('click', function() {
+				
+				alert();
+				
+				var condition = $(this).attr("href");
+				
+				$("#newsfeed").load("/newsfeed/listNewsfeed?searchCondition="+condition);
+				
+			});
+			
+        	 
+         });
+        	 function addNewsfeed(){
 				$("form").attr("method", "POST").attr("action", "/newsfeed/addNewsfeed").submit();
 			}
-		/*	var $ = jQuery.noConflict();
+        	 
+         
+			
+			
+			function fnc_addLikey(newsfeedId){
+				//alert(e);
+				//alert($(v).text());
+				
+				//alert($($("li")[$("#likey").index(this)]).val());
+				//var finalLikey = $("input[name='countLikey']").val();
+				//$(".likeit").effect("bounce", {times:3}, 300);
+				//alert(newsfeedId);
+				var countLikey= $("#like"+newsfeedId).text();
+				alert(countLikey);
+				$.ajax({
+					url : "/newsfeed/json/updateLikey/"+${user.userId}+"/0",
+					method : "POST",
+					contentType : "application/json; charset=UTF-8",
+					data : JSON.stringify({
+						"newsfeedId" : newsfeedId,
+						"countLikey" : countLikey
+					}),
+					async : false,
+					dataType : "json",
+					success : function(serverData){
+						$(".likeit-wrap .likeit")
+							.css("color","#E26F6A");
+						$("#like"+newsfeedId).text(serverData);
+						if(countLikey < serverData){
+							$("#like"+newsfeedId).css("color","#ff5b4e");
+						}
+						
+						else{
+							$("#like"+newsfeedId).css("color","#aaaaaa");
+						}
+							//.css("text-decoration", "none");
+						
+					}
+				});
+
+
+			}
+			
+			/*var $ = jQuery.noConflict();
 				$(function() {
 					$('#activator').click(function(){
 						$('#box').animate({'top':'0px'},500);
@@ -61,11 +144,62 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!---//End-click-drop-down-menu----->
 		
 		<style>
+		.modal {
+	overflow: inherit;
+	overflow-y: inherit;
+	text-align: center;
+	padding: 0;
+	
+}
+
+.modal:before {
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	margin-right: -4px;
+}
+
+.modal-dialog {
+	
+	padding: 0;
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
+}
+
+	body{
+	padding-top: 110px;}
+
+
+		.btn-add-bob {
+       		border: 1px solid #FFFFF;
+			border-radius: 70px;
+			-moz-border-radius: 70px;
+			-khtml-border-radius: 70px;
+			-webkit-border-radius: 70px;
+			 background: #bfd9f2;
+			 width: 100px;
+			 height: 100px;
+			 line-height: 100px;
+			 font-size: 17px;
+			 float:right;
+			 margin-right: 20px;
+			 cursor: pointer;
+			 color: #FFFFFF;
+			 box-shadow: 0 5px 15px -5px #666;
+       	}
+       	
+			#fixedbtn{position:fixed;
+			right:100px;
+			bottom:50px;
+			z-index:1000}
+			
 			.thumb{
 		    	display: block;
 		    	overflow: hidden;
-		    	height: 40px;
-		    	width: 40px;
+		    	height: 35px;
+		    	width: 35px;
 		    }
 		    
 		    .thumb img{
@@ -119,9 +253,83 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				position:relative;
 				top:1px;
 			}
+			
+			article, aside, footer, header, hgroup, main, nav, section {
+			    display: block;
+			}
+			
+			 #navigation2{
+    height: 70px;
+    z-index: 1000;
+    background: #fff;
+    }
+
+    .navbar-custom ul.nav2 {
+	text-align: center;
+	float: none;
+	margin: 0 auto;
+}
+.navbar-custom ul.nav2 li {
+	float: none;
+	display: inline-block;
+	text-align: center;
+}
+.navbar-custom ul.nav2 li a {
+	font-size: 14px;
+	letter-spacing: 1px;
+    color: #444;
+	text-transform: uppercase;
+	font-weight: 700;
+}
+
+
+.navbar-custom .nav2 li a {
+    -webkit-transition: background .3s ease-in-out;
+    -moz-transition: background .3s ease-in-out;
+    transition: background .3s ease-in-out;
+}
+
+.sticky {
+  position: fixed;
+  top: 100px;
+  width: 100%;
+  opacity: 0.7;
+}
+
+.sticky + .about {
+  padding-top: 503px;
+}
+
+
 		</style>
+		
+		<script>
+		 $(function() {
+			 window.onscroll = function() {myFunction()};
+
+			 var header =  document.getElementById("navigation2");
+			 var sticky = header.offsetTop;
+
+			 function myFunction() {
+				
+			   if (window.pageYOffset >= sticky - 95) {
+			     header.classList.add("sticky");
+			   } else {
+			     header.classList.remove("sticky");
+			   }
+			 }
+			 
+			 });
+			 $('.mainbar-menu').on('click', function(){
+				 $('.active').removeClass('active');
+				 $(this).addClass('active');
+			});
+		</script>
 	</head>
 	<body>
+	
+	
+  
 		<!---start-wrap---->
 			<!---start-header---->
 		<!-- 	<div class="header">
@@ -169,80 +377,91 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		</div> -->
 		<!---//End-header---->
 		<!---start-content---->
+		<div id="navigation2">
+    <nav class="navbar navbar-custom" role="navigation2">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="collapse navbar-collapse" id="menu"><br/>
+              <ul class="nav2 navbar-nav">
+                <li><img src="/resources/images/ufo.png" class="ufo" width="25"></li>
+                <li class="active"><c:if test="${search.searchCondition == 'N06'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N06">ì „ì²´ë³´ê¸°</a></c:if>
+						<c:if test="${search.searchCondition != 'N06'}"><a href="/newsfeed/listNewsfeed?searchCondition=N06">ì „ì²´ë³´ê¸°</a></c:if></li>&nbsp;&nbsp;
+                <li><c:if test="${search.searchCondition == 'N01'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N01">ìì·¨ì§€ì‹ì¸</a></c:if>
+						<c:if test="${search.searchCondition != 'N01'}"><a href="/newsfeed/listNewsfeed?searchCondition=N01">ìì·¨ì§€ì‹ì¸</a></c:if></li>&nbsp;&nbsp;
+                <li><c:if test="${search.searchCondition == 'N10'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N10">ë°¥ì¹œêµ¬ í›„ê¸°</a></c:if>
+						<c:if test="${search.searchCondition != 'N10'}"><a href="/newsfeed/listNewsfeed?searchCondition=N10">ë°¥ì¹œêµ¬ í›„ê¸°</a></c:if>
+					</li>&nbsp;&nbsp;
+                <li><c:if test="${search.searchCondition == 'N04'}"><a class="current-demo"href="/newsfeed/listNewsfeed?searchCondition=N04">ê¿€íŒ</a></c:if>
+						<c:if test="${search.searchCondition != 'N04'}"><a href="/newsfeed/listNewsfeed?searchCondition=N04">ê¿€íŒ</a></c:if>
+					</li>&nbsp;&nbsp;
+                <li>	<c:if test="${search.searchCondition == 'N02'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N02">ì¤‘ê³ ê±°ë˜</a></c:if>
+						<c:if test="${search.searchCondition != 'N02'}"><a href="/newsfeed/listNewsfeed?searchCondition=N02">ì¤‘ê³ ê±°ë˜</a></c:if>
+					</li>&nbsp;&nbsp;
+				<li><a href="index6.html">ì¹œêµ¬ê¸€ë§Œ</a></li>&nbsp;&nbsp;
+						<li><a href="index7.html">íŒ”ë¡œì›Œê¸€ë§Œ</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+		
 		<div class="content">
 			<div class="wrap">
-			 <div id="main" role="main">
-			 <form name='Form' class="form-vertical" enctype="multipart/form-data">
-			<input type="hidden" value="${user.userId}" name="userId" id="userId"/>
-			<div class="container">
-				<div class="row">
-				<table border="1">
-					 <tr>
-					 <td width="300">
-						  <div class="form-group" align="left">
-						   <strong style="font-size: 12px">Ä«Å×°í¸®</strong> <select 	name="categoryCode"	id="categoryCode" class="form-control" 
-							style="height: 40px" maxLength="20">
-						<option value="1" selected="selected">ÀÚÃëÁö½ÄÀÎ</option>
-						<option value="2">Áß°í°Å·¡</option>
-						<option value="3">¹äÄ£±¸ÈÄ±â</option>
-						<option value="4">²ÜÆÁ</option>
-					</select>
-						  </div>
-					</td>
-						  
-					<td width="300">
-						  <div class="form-group">
-						    <strong style="font-size: 12px">°ø°³¹üÀ§</strong> <select 	name="privacyBound"	id="privacyBound" class="form-control" 
-							style=" height: 40px" maxLength="20">
-						<option value="1" selected="selected">ÀüÃ¼°ø°³</option>
-						<option value="2">Ä£±¸°ø°³</option>
-						<option value="3">ºñ°ø°³</option>
-					</select>
-						   </div>
-					</td>
+			 <div id="main" role="main">	
+			 		
 					
-					<td width="250" style="text-align: right; vertical-align: middle;">
-						<a href="#" onclick="addNewsfeed();" class="addNewsfeed">µî·Ï</a>
-					</td>
-					</tr> 
-					   </table>
-					<table border="1">
-						<tr>
-						<td  style="table-layout:fixed">
-							<div class="form-group" style="max-height:1px; hi">
-								<input type="file" name="file" imageswap="true" imagesrc="../resources/images/imageButton.PNG"/>
-							</div>
-						</td>	
-					
-					  <td width=650 style="vertical-align: top; style="table-layout:fixed">
-					  <p style="font-size: 30px; color: #00D1CD;"><i class="glyphicon glyphicon-map-marker" id="iconMarker"></i></p><br>
-						   <textarea class="form-control" rows="7" placeholder="»óÅÂ ¾÷µ¥ÀÌÆ® ÇÏ¼¼¿ä." class="span1" cols="40" name="content" id=" content"></textarea>
-						      <!--  <input type="text" class="form-control" id="statement" name="statement" placeholder="»óÅÂ ¾÷µ¥ÀÌÆ® ÇÏ¼¼¿ä."> -->
-						   
-						    </td>
-					    </tr>
-					</table>
-					  
-					 
-				   </div>
-			   </div>
 
-		</form>
+		
+			
+			 
 		<br>
 			      <ul id="tiles">
 			        <c:set var="i" value="0"/>
 						<c:forEach var="newsfeed" items="${list}">
 							<c:set var="i" value="${ i+1 }" />
-							<li onclick="location.href='/newsfeed/getNewsfeed?newsfeedId=${newsfeed.newsfeedId}';" >
-								<img src="../resources/images/${newsfeed.fileName}"/>
+							<li class="cell">
+								<input type="hidden" value="${newsfeed.newsfeedId}" name="newsfeedId"/>
+								<c:if test="${ !empty newsfeed.fileName }"><img src="../resources/upload_files/images/${newsfeed.fileName}" style="width: 100%"/></c:if>
 								<div class="post-info">
 									<div class="post-basic-info">
-										<span><a href="#"><label> </label><c:if test="${newsfeed.categoryCode.equals('N01')}">´º½ºÇÇµå</c:if></a></span>
+										<span><a href="#"><label> </label><c:if test="${newsfeed.categoryCode.equals('N01')}">ë‰´ìŠ¤í”¼ë“œ</c:if></a></span>
 										<p></p>
-										<div class="thumb"><img alt="" src="../resources/images/${newsfeed.profileImage}" style="align: left;">${newsfeed.userName}</div>
-									
-										<p>${newsfeed.content}</p>
+										<table border="0">
+											<tr>
+												<td>
+													<div class="thumb"><img alt="" src="../resources/images/${newsfeed.profileImage}"></div>
+												</td>
+												<td style="vertical-align: middle;">
+													<p>${newsfeed.userName}</p>
+												</td>
+											</tr>
+										</table>
+										<p style="font-size: 13pt">${newsfeed.content}</p>
+										
+										<div class="likeit-wrap" id="item" onClick="fnc_addLikey(${newsfeed.newsfeedId})">
+											<div class="likeit" data-postid="4" id="countLikey" >
+												<span class="like-text">Like</span>
+												<ins class="like-count" id="like${newsfeed.newsfeedId}">${newsfeed.countLikey}</ins>
+											</div>
+											<span class="newliker">Thanks!</span>
+											<span class="isliker">You've already liked this</span>
+										</div>
+										<span class="post-comment">
+										<a href="/newsfeed/getNewsfeed?newsfeedId=${newsfeed.newsfeedId}"><c:if test="${newsfeed.countReply == 0 }">No comments</c:if><c:if test="${newsfeed.countReply > 0}">${newsfeed.countReply}</c:if> </a></span>
 									</div>
+									<!-- <div class="post-info-rate-share">
+					        			<div class="rateit">
+					        				<span> </span>
+					        			</div>
+					        			<div class="post-share">
+					        				<span> </span>
+					        			</div>
+					        			<div class="clear"> </div>
+					        		</div> -->
+									
 								</div>
 								
 							
@@ -488,7 +707,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		  <script src="../resources/javascript/jquery.imagesloaded.js"></script>
 		  <script src="../resources/javascript/jquery.wookmark.js"></script>
 		  <script type="text/javascript">
-		   var page = 1;
+		  	var page = ${search.currentPage};
+			var pageSize = ${search.pageSize};
+			var searchCondition = '${search.searchCondition}';
+				
 		    (function ($){
 		      var $tiles = $('#tiles'),
 		          $handler = $('li', $tiles),
@@ -538,7 +760,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							dataType : "json" ,
 							data : {
 								resultPage : page,
-								category : "${category}"
+								category : searchCondition
 							},
 							headers : {
 								"Accept" : "application/json",
@@ -548,13 +770,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								
 								for(var i=0; i<JSONData.length;i++){
 									var displayValue = '<li onclick="location.href=\'/newsfeed/getNewsfeed?newsfeedId='+JSONData[i].newsfeedId+'\';" >'+
-									'<img src="../resources/images/'+JSONData[i].fileName+'"/>'+
+									'<img src="../resources/upload_files/images/'+JSONData[i].fileName+'"/>'+
 										'<div class="post-info">'+
 											'<div class="post-basic-info">'+
-												'<span><a href="#"><label> </label><c:if test="${'+JSONData[i].categoryCode+'.equals(\'N01\')}">´º½ºÇÇµå</c:if></a></span>'+
-												'<p></p>'+
+												'<span><a href="#"><label> </label>';
+												
+										if(JSONData[i].categoryCode =='N01') 
+											displayValue +='ìì·¨ì§€ì‹ì¸</a></span>';
+											
+											displayValue += '<p></p>'+
 												'<div class="thumb"><img alt="" src="../resources/images/'+JSONData[i].profileImage+'" style="align: left;">'+JSONData[i].userName+'</div>'+
-												'<p>'+JSONData[i].content+'</p>'+
+												'<p style="font-size: 13pt">'+JSONData[i].content+'</p>'+
 											'</div>'+
 										'</div>'+
 										'</li>';
@@ -575,12 +801,80 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		    })(jQuery);
 		  </script>
 		<!----//wookmark-scripts---->
-		<!----start-footer--->
-		<div class="footer">
-			<p>Design by <a href="http://w3layouts.com/">W3layouts</a></p>
+	 	<!----start-footer--->
+	 	<div class="footer">
+			<div id="fixedbtn" align="right" style="z-index: 1500;">
+   			  <div class="container">
+	  			<div class="btn-add-bob text-center" data-toggle="modal" data-target="#myModal3" style="font-size:20px; 
+	  			background: url('../resources/images/ic_add_circle_black_36px.svg') center center no-repeat; background-size: cover;">
+	  		</div>
+	 	 </div>
+			</div>
 		</div>
-		<!----//End-footer--->
-		<!---//End-wrap---->
+	
+		
+		<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+  <div class="modal-dialog" role="document" style="width: 900px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><b>ê²Œì‹œê¸€ ì‘ì„±</b></h4>
+         <form name='Form' class="form-vertical" enctype="multipart/form-data" style="padding-left: 30px;">
+			<input type="hidden" value="${user.userId}" name="userId" id="userId"/>
+			<div class="container">
+				<div class="row">
+				<table border="1">
+					 <tr>
+					 <td width="300">
+						  <div class="form-group" align="left">
+						   <strong style="font-size: 12px">ì¹´í…Œê³ ë¦¬</strong> <select 	name="categoryCode"	id="categoryCode" class="form-control" 
+							style="height: 40px" maxLength="20">
+						<option value="N01" selected="selected">ìì·¨ì§€ì‹ì¸</option>
+						<option value="N02">ì¤‘ê³ ê±°ë˜</option>
+						<option value="N03">ë°¥ì¹œêµ¬í›„ê¸°</option>
+						<option value="N04">ê¿€íŒ</option>
+					</select>
+						  </div>
+					</td>						  
+					<td width="300">
+						  <div class="form-group">
+						    <strong style="font-size: 12px">ê³µê°œë²”ìœ„</strong> <select 	name="privacyBound"	id="privacyBound" class="form-control" 
+							style=" height: 40px" maxLength="20">
+						<option value="1" selected="selected">ì „ì²´ê³µê°œ</option>
+						<option value="2">ì¹œêµ¬ê³µê°œ</option>
+						<option value="3">ë¹„ê³µê°œ</option>
+					</select>
+						   </div>
+					</td>					
+					<td width="200" style="text-align: right; vertical-align: middle;">
+						<a href="#" onclick="addNewsfeed();" class="addNewsfeed" data-dismiss="modal">ë“±ë¡</a>
+					</td>
+					</tr> 
+					   </table>
+					<table border="1">
+						<tr>
+						<td  style="table-layout:fixed">
+							<div class="form-group" style="max-height:1px;">
+								<input type="file" name="file" imageswap="true" imagesrc="../resources/images/imageButton.PNG"/>
+							</div>
+						</td>						
+					  <td width=450 style="vertical-align: top; style="table-layout:fixed">
+					  <p style="font-size: 30px; color: #00D1CD;"><i class="glyphicon glyphicon-map-marker" id="iconMarker"></i></p><br>
+						   <textarea class="form-control" rows="7" placeholder="ìƒíƒœë¥¼ ì—…ë°ì´íŠ¸ í•˜ì„¸ìš”." class="span1" cols="40" name="content" id=" content"></textarea>
+						      </td>
+					    </tr>
+					</table>
+					</div>
+			   </div>
+		</form>
+      	</center>
+	</div>
+	</div>
+      </div>
+      	</div>
+      	</div>
+      		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	</body>
 </html>
 

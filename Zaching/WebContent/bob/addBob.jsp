@@ -76,9 +76,11 @@
 		if(imageCheck.is(":checked") == true) {
 			uploadFile.val("");
 		} else {
-			uploadFile.focus();
-			makeToast("대표사진을 선택해주세요.");
-			return false;
+			if(uploadFile.val() ==""){
+				uploadFile.focus();
+				makeToast("대표사진을 선택해주세요.");
+				return false;
+			}
 		}
 		
 		if(category.val() == "B01" ) {
@@ -119,13 +121,13 @@
 				makeToast("회비 납부일을 지정해주세요.");
 				return false;
 			} else {
-				alert(feeDate.val().subString);
+				//alert(feeDate.val().subString);
 			}
 
 		}
 		
 
-		//$("form").attr("method", "POST").attr("action", "/bob/addBob").submit();
+		$("form").attr("method", "POST").attr("action", "/bob/addBob").submit();
 
 	}
 	
@@ -337,7 +339,7 @@
 			<h3 class="text-info" style="color: #000; font-weight: bold; font-size: 30px;">[${categoryName}] 방만들기</h3>
 		</div>
     
-		<form class="form-horizontal" enctype="multipart/form-data" style="background: #FFF; padding: 40px;">
+		<form class="form-horizontal" enctype="multipart/form-data" style="background: #FFF; padding: 10px;">
 		    <div class="form-group">
 		    	<input type="hidden" name="writtenUserId" value="${user.userId}" />
 		    	<input type="hidden" name="category" value="${param.category}" />
@@ -363,13 +365,15 @@
 			    		<div class="col-sm-6 btn-bob" align="center">
 			    			제한인원수
 			    		</div>
-		            	<div class="col-sm-6" align="left" style="padding-top: 8px;">
-					    	<select name="limitNum" class="selectpicker show-tick" title="제한 인원수" >
+		            	<div class="col-sm-3 text-center" style="padding-top: 8px; ">
+					    	<select name="limitNum" class="selectpicker show-tick" title="제한 인원수"  >
 					    	  <c:forEach var="i" begin="2" end="20" step="1">
 					    	  	<option >${i}</option>
 					    	  </c:forEach>
 							</select>
-							<span id="limitNumDuplicateCheck" style="color: red;" > * 인원수는 20명 제한입니다.</span>
+		            	</div>
+		            	<div class="col-sm-3 text-center" style="line-height: 50px;">
+		            		<span id="limitNumDuplicateCheck" style="color: red;" > * 인원수는 20명 제한입니다.</span>
 		            	</div>
 			    	</div>
 			    	
@@ -457,7 +461,8 @@
 						  <c:forEach var="friend" items="${friend.list}">
 							  <li class="ui-state-default">
 							  	<div class="draggable_area">
-							  		${friend.friendId}
+							  		<input type="hidden" name="friendId" value="${friend.friendId}">
+							  		${friend.name}
 							  	</div></li>
 						  </c:forEach>
 						</ul>		            	

@@ -12,6 +12,9 @@
 	<title>mainBob</title>
 	
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
+	<link rel="stylesheet" type="text/css" href="../resources/css/bob.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
 	
 	<style>
 		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
@@ -21,7 +24,6 @@
 		}
 	
 		body {
-			padding-top:50px;
 			padding-bottom: 50px;
 		}
 		
@@ -38,7 +40,6 @@
 		}
 		
 		.bg {
-			background: url('../resources/images/simple.jpg') no-repeat center center;
 			position: fixed;
 			width: 100%;
 			height: 100%;
@@ -47,13 +48,6 @@
 			left: 0;
 			z-index: -1;
 			opacity: 0.3;
-		}
-		
-		.jumbotron {
-		    margin-bottom: 0px;
-		    padding-top: 150px;
-		    height: 350px;
-		    background: transparent;
 		}
 		
 		.select-bob {
@@ -72,6 +66,14 @@
        		padding: 0 10px 0 10px;
        	}
        	
+       	.img-cover{
+	         position: absolute;
+	         height: 100%;
+	         width: 100%;
+	         background-color: rgba(0, 0, 0, 0.3);                                                                 
+	         z-index:1;
+     	 }
+      
 		#footer {
 		   position:fixed;
 		   left:0px;
@@ -85,34 +87,35 @@
 			-moz-border-radius: 70px;
 			-khtml-border-radius: 70px;
 			-webkit-border-radius: 70px;
-			 background: #5F4B8B;
-			 width: 100px;
-			 height: 100px;
-			 line-height: 100px;
-			 font-size: 17px;
-			 float:right;
-			 margin-right: 20px;
-			 cursor: pointer;
-			 color: #FFFFFF;
-			 box-shadow: 0 5px 15px -5px #666;
+			background: #5F4B8B;
+			width: 80px;
+			height: 80px;
+			line-height: 80px;
+			font-size: 25px;
+			float:right;
+			margin-right: 20px;
+			cursor: pointer;
+			color: #FFFFFF;
+			box-shadow: 0 5px 15px -5px #666;
        	}
        	
        	.dialog-add-bob {
        		background: #ccc;
        		position: relative;
        		width: 200px;
-       		left: -100px;
-       		top: -230px;
+       		left: -80px;
+       		top: -200px;
        		box-shadow: 0 5px 15px -5px #666;
        	}
        	
 		.user_thumnail {
-		    position: relative;
+		    position: absolute;
 		    display: inline-block;
 		    border-radius: 50%;
-		    top: -50px;
-		    width: 100px;
-		    height: 100px;
+		    width: 90px;
+		    height: 90px;
+		    top: 220px;
+		    left: 38%;
 		}
 		
 		.thumnail {
@@ -120,21 +123,38 @@
 		    width: 70px;
 		    height: 70px;
 		    margin: 5px;
+		    overflow: hidden;
 		}
 		
 		#exTab2 > ul > li> a {
-			height: 70px;
-		    border: 1px solid #ddd;
-		    line-height: 45px;
-		    border-radius: 15px 15px 0 0;
+		    line-height: 50px;
 		    color: #000;
-		    font-size: 17px;
+		    font-size: 15px;
 		    font-weight: bold;
-		    background-color: #eee;
+		    border: none;
 		}
 		
-		#exTab2 > ul > li .active > a {
-			background-color: #FFF;
+		#exTab2 > ul > li> a:hover {
+			background-color: #f2dede;
+		}
+		
+		#exTab2 > ul > li.active > a {
+			background-color: #f2dede;
+			cursor: pointer;
+		}
+		
+		@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+			#bobTitle {
+				max-width: 100%;
+			}
+			
+			body > div.jumbotron.text-center > form > div > div {
+				max-width: 100%;
+			}
+		}
+		
+		.hero {
+			background: url('../resources/images/202991-OZ1TED-507.jpg') no-repeat bottom center;
 		}
 	
 	</style>
@@ -142,6 +162,8 @@
 	<script type="text/javascript">
     
 		$(function(){
+			
+			$("html, body").animate({ scrollTop: 0 }, "slow");
 			
 			$(document).on('click','.btn-add-bob', function(){
 				if($('.list-group').css('visibility') =='visible') {
@@ -162,9 +184,30 @@
 			// 검색했을 때 tooltip
 
 			$(":text[name='searchKeyword']").on("keydown", function(e) {
-				
+
 				if(e.keyCode == 13) {
-					alert();
+					//$(self.location).attr("href","/bob/listBob?category=B05");
+					
+					var $form = $("#searchForm");
+					
+					var posting = $.post("/bob/listBob",{
+								category: "B05",
+								searchKeyword : $(":text[name='searchKeyword']").val()});
+					
+					posting.done(function(data) {
+
+						$("#B05").html(data);
+						
+						$("#mainBob > .tab-content").html(data);
+
+						/* css 색 변경하기 */
+						$('#exTab2 a').css('color', '#000');
+						$('#exTab2 a').css('background', '#ede8f7');						
+						$($('a:contains("검색")')[1]).css('color', '#000').css('background', '#FFF')
+					});
+					
+					return false;
+					
 				} else {
 					/*
 					$(this).autocomplete({
@@ -186,9 +229,6 @@
 					*/
 				}
 			});
-			$('#exTab2 > ul > li > a').on("click", function() {
-				//alert($(this).attr('href'));
-			});
 			
 			/* addBob */
 			
@@ -201,13 +241,16 @@
 				</c:if>
 				<c:if test="${empty user}">
 					alert("로그인을 해주세요.");
+					$('.list-group').css('visibility','hidden');
+					$('.cover').css('visibility','hidden');
+					$('#loginModal').modal('toggle');
 				</c:if>
 			});
 
 			
 			/* tab Event Start */
 		    $.get($($('[data-toggle="tabajax"]')[0]).attr('href'), function(data) {
-		        $($($('[data-toggle="tabajax"]')[0]).attr('data-target')).html(data);
+		        $("#mainBob > .tab-content").html(data);
 		    });
 
 		    $($('[data-toggle="tabajax"]')[0]).tab('show');
@@ -216,6 +259,8 @@
 			    var $this = $(this),
 			        loadurl = $this.attr('href'),
 			        targ = $this.attr('data-target');
+			    
+			    $(":text[name='searchKeyword']").val("");
 
 			    if('${user}' == '' && (targ == "#B03" || targ == "#B04")) {
 					alert("로그인 후 사용하실 수 있습니다. \n"
@@ -223,18 +268,68 @@
 					$('#loginModal').modal('toggle');
 					//$(self.location).attr("href","/user/addUser");
 				} else {
-				    
-				    $.get(loadurl, function(data) {
-				        $(targ).html(data);
-				    });
-				    
-				    $this.tab('show');
+					
+					if(targ == "#B04") {
+						if(navigator.geolocation) {
+							navigator.geolocation.getCurrentPosition(function(position) {
+				                    var lat = position.coords.latitude;
+				                    var lng = position.coords.longitude;
+
+				                    var location ={
+				                    		"lat" : lat,
+				                    		"lng" : lng
+				                    };
+				                    
+				                    //alert(lat +"/"+lng);
+								}
+							)
+						};
+					}
+					
+					if(targ == "#B05") {
+						
+						var posting = $.post("/bob/listBob",{
+									category: "B05",
+									searchKeyword : $(":text[name='searchKeyword']").val()});
+						
+						posting.done(function(data) {
+							$("#mainBob > .tab-content").html(data);
+						});
+						
+						$this.tab('show');
+
+					} else {
+					    $.get(loadurl, function(data) {
+					    	$("#mainBob > .tab-content").html(data);
+					    });
+					    
+					    $this.tab('show');
+					}
 				}
 
 			    return false;
 			});
-			/* tab Event End */
 			
+			/*  Advanced search form & Icon  */
+			$('#advanced_search_btn').on("click", function(e){
+				e.preventDefault();
+
+				var ads_box =$('.advanced_search');
+				
+				if(!ads_box.hasClass('advanced_displayed')){
+
+					$(this).addClass('active');
+					ads_box.stop().fadeIn(200).addClass('advanced_displayed');
+
+				}else{
+
+					$(this).removeClass('active');
+					ads_box.stop().fadeOut(200).removeClass('advanced_displayed');
+
+				}
+
+			});
+
 		});		
 
     </script>
@@ -246,40 +341,55 @@
 
 	<div class="cover"></div>
 	<div class="bg"></div>
-	<div class="jumbotron">
-		<h1 class="text-center">밥친구 찾기</h1>
-	</div>
 
-	<div class="container" style="font-size: 17px;"> 
+	<section class="hero" style="background-image: url('../resources/images/202991-OZ1TED-507.jpg');
+			background-size: cover;
+			background-repeat: no-repeat, no-repeat;
+			background-position: center center; height:700px; ">
+		<div class="img-cover"></div>
+		<section class="caption" style="padding-top: 70px;">
+			<h2 class="caption">Let's eat Together</h2>
+		</section>
+	</section>
+	
+	<section class="search" style="background: #f77e7e;">
+		<div class="wrapper">
+			<form id="searchForm">
+				<input type="text" id="search" name="searchKeyword" placeholder="What are you looking for?"  autocomplete="off"
+					style="background: none;"/>
+				<a href="#" class="advanced_search_icon" id="advanced_search_btn"></a>
+			</form>
+		</div>
+		
+		<div class="advanced_search" style="z-index: 50;">
+			<div class="wrapper">
+				<span class="arrow"></span>
+					<div id="exTab2" style="padding:0;">
+					<ul class="nav nav-tabs nav-justified" style="border: none;">
+						<li class="active" ><a href="/bob/listBob?category=B01" data-target="#B01" data-toggle="tabajax">우리지금만나</a></li>
+						<li><a href="/bob/listBob?category=B02" data-target="#B02" data-toggle="tabajax">당장만나</a></li>
+						<li><a href="/bob/listBob?category=B03" data-target="#B03"  data-toggle="tabajax">주기적으로만나</a></li>
+						<li><a href="/bob/listBob?category=B04" data-target="#B04" 	data-toggle="tabajax">내 주소로 검색하기</a></li>
+						<li style="display: none;"><a href="/bob/listBob?category=B05" data-target="#B05"  data-toggle="tabajax">키워드로 검색하기</a></li>
+					</ul>
+				</div>
+			</div>
+		</div><!--  end advanced search section  -->
+	</section><!--  end search section  -->
+
+	<div class="container" style="font-size: 17px; padding:0;"> 
 		
 		<div class="form-group">
-			<form>
-				<div class="row" align="right" style="margin: 10px;">
-					<input type="text" name="searchKeyword" class="form-control" placeholder="검색 내용을 입력하세요." 
-			      					style="height:45px; font-size: 16px;"/>
-		      	</div>
-	      	</form>
 		<form class="form-horizontal" id="mainBob">
-			<!-- Tab 시작 -->
-			<div id="exTab2" style="padding:0; margin-top: 10px;">
-				<ul class="nav nav-tabs nav-justified" style="border: none;">
-					<li class="active" ><a href="/bob/listBob?category=B01" data-target="#B01" data-toggle="tabajax">우리지금만나</a></li>
-					<li><a href="/bob/listBob?category=B02" data-target="#B02" data-toggle="tabajax">당장만나</a>
-					</li>
-					<li><a href="/bob/listBob?category=B03" data-target="#B03"  data-toggle="tabajax">주기적으로만나</a>
-					</li>
-					<li><a href="/bob/listBob?category=B04" data-target="#B04"  data-toggle="tabajax" style="select-bob">내 주소로 검색하기</a></li>
-				</ul>
-				
-				<!-- Tab 끝 -->
-						
+
 				<!-- 데이터 들어갈 것들,,, -->
-				<div class="tab-content" style="padding:20px; background: #FFF; box-shadow: 0 0 0 1px #ddd; border: 1px solid #ddd;">
-					<div class="tab-pane active" id="B01"> </div>
-					<div class="tab-pane" id="B02"> </div>
-					<div class="tab-pane" id="B03"> </div>
-					<div class="tab-pane" id="B04"> </div>
+				<div class="tab-content" style="padding:20px; background: #FFF;overflow: hidden; border-right: 1px solid #ddd; border-left: 1px solid #ddd; border-bottom: 1px solid #ddd;">
+					<c:import url="/bob/listBobd"></c:import>
+					
 					<!-- 데이터 끝... -->
+					    	
+		    	<div id="loader" class="text-center" style="margin: 50px;">
+					<img src = "../resources/images/ajax-loader.gif"/>
 				</div>
 			</div>
 		</form>
@@ -291,7 +401,9 @@
 	
    	<div id="footer" align="right" style="z-index: 1500;">
    	  <div class="container">
-	  	<div class="btn-add-bob text-center">방 만들기</div>
+	  	<div class="btn-add-bob text-center" style="font-size:20px;
+	  	background: url('../resources/images/ic_add_circle_black_36px.svg') center center no-repeat; background-size: cover;">
+	  	</div>
 	  	<div class="dialog-add-bob text-center">
 	  		<div class="list-group" style="float: right; visibility: hidden;">
 			  <a class="list-group-item" style="background: #5F4B8B; color: #FFFFFF;"> 카테고리선택 </a>

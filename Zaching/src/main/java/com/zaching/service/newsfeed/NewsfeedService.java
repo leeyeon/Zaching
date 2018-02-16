@@ -34,4 +34,6 @@ public interface NewsfeedService {
 	public void cancelCountLike(int newsfeedId) throws Exception;
 	
 	public int getLikeUser(int newsfeedId, int userId, String status) throws Exception;
+	
+	public List<Newsfeed> timeline(int userId) throws Exception;
 }

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommentDao;
 import com.zaching.common.service.CommonService;
+import com.zaching.common.service.FacebookRestDao;
 import com.zaching.common.service.FileDao;
 import com.zaching.common.service.KakaoRestDao;
 import com.zaching.service.domain.Comment;
@@ -43,6 +46,11 @@ public class CommonServiceImpl implements CommonService {
 	@Autowired
 	@Qualifier("kakaoRestDaoImpl")
 	private KakaoRestDao kakaoRestDao;
+	
+	
+	@Autowired
+	@Qualifier("facebookRestDaoImpl")
+	private FacebookRestDao facebookRestDao;
 
 	public CommonServiceImpl() {
 		System.out.println(this.getClass());
@@ -51,17 +59,20 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public Map<String, Object> listComment(Search search, String categoryCode, int roomId) throws Exception {
 		Map<String, Object> map = new HashMap<String,Object>();
-		
+		System.out.println("listServiceComment()=======================================================");
+		System.out.println(search+"/////////"+categoryCode+"//////////"+roomId);
+	
 		int totalCount = commentDao.getTotalCount(search, categoryCode, roomId);
-		
+				
 		int pageSize = totalCount / search.getPageSize();
-		System.out.println(totalCount);
+		System.out.println(totalCount+","+pageSize);
+
 		
 		List<Comment> list = (List<Comment>) commentDao.listComment(search, categoryCode, roomId);
 		//for (Comment comment : list) {
 		//	System.out.println(comment);
 		//}
-		System.out.println(list);
+
 		
 		map.put("list", commentDao.listComment(search, categoryCode, roomId));
 		map.put("totalCount", commentDao.getTotalCount(search, categoryCode, roomId));
@@ -129,15 +140,15 @@ public class CommonServiceImpl implements CommonService {
 
 	//로그인화면
 	@Override
-	public String getAuthorizationUrl_login() {
+	public String getAuthorizationUrl_login(HttpSession session) {
 		
-		return kakaoRestDao.getAuthorizationUrl_login();
+		return kakaoRestDao.getAuthorizationUrl_login(session);
 	}
 	//토큰요청
 	@Override
-	public User getAceessToken2(String code) throws Exception {
+	public User getAceessToken2(String code,HttpSession session) throws Exception {
 		
-		return kakaoRestDao.getAceessToken2(code);
+		return kakaoRestDao.getAceessToken2(code,session);
 	}
 	
 	//앱연결
@@ -184,6 +195,26 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public void noticeUpdate(int noticeId) throws Exception{
 		commentDao.noticeUpdate(noticeId);
+	}
+	
+
+	//////페이스북
+	@Override
+	public String getAuthorizationUrl_facebook(HttpSession session) {
+		
+		return facebookRestDao.getAuthorizationUrl_facebook(session);
+	}
+
+	@Override
+	public User getAccessToken_facebook(HttpSession session,String code) throws Exception {
+		
+		return facebookRestDao.getAccesstoken(session,code);
+	}
+
+	@Override
+	public User getUserProfile(User user) throws Exception {
+		
+		return facebookRestDao.getUserProfile(user);
 	}
 
 }

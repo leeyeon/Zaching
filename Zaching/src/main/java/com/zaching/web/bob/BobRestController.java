@@ -50,12 +50,10 @@ public class BobRestController {
 	private NewsfeedService newsfeedService;
 	
 	@Value("#{commonProperties['pageUnit']}")
-	// @Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
 
-	//@Value("#{commonProperties['pageSize']}")
-	// @Value("#{commonProperties['pageSize'] ?: 2}")
-	int pageSize = 9;
+	@Value("#{commonProperties['pageSize']}")
+	int pageSize;
 
 	public BobRestController() {
 		// TODO Auto-generated constructor stub
@@ -84,23 +82,32 @@ public class BobRestController {
 	}
 	
 	@RequestMapping(value="/listBob", method=RequestMethod.POST)
-	public JSONObject listBob(@ModelAttribute Search search) throws Exception {
+	public JSONObject listBob(@RequestBody Map<String, Object> map) throws Exception {
 		
-		if(search.getCurrentPage() ==0 ){
+		System.out.println(this.getClass()+"/lisbBob");
+		System.out.println((String)map.get("category"));
+		System.out.println((String)map.get("searchKeyword"));
+		
+		Search search = new Search();
+		search.setCategory((String)map.get("category"));
+		
+		if(((Integer)map.get("currentPage")).intValue() ==0 ){
 			search.setCurrentPage(1);
+		} else {
+			search.setCurrentPage(((Integer)map.get("currentPage")).intValue());
 		}
 		
 		search.setPageSize(pageSize);
 		
 		System.out.println(search);
 		
-		Map<String, Object> map = bobService.listBob(search);
+		Map<String, Object> map1 = bobService.listBob(search);
 		
 		Page resultPage	= 
-				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), 
+				new Page( search.getCurrentPage(), ((Integer)map1.get("totalCount")).intValue(), 
 				pageUnit, pageSize);
 		
-		List<Bob> list = (List<Bob>)map.get("list");
+		List<Bob> list = (List<Bob>)map1.get("list");
 		
 		JSONObject obj = new JSONObject();
 		obj.put("list", list);
@@ -119,8 +126,7 @@ public class BobRestController {
 	public JSONObject enterBob(@RequestBody Map<String, Object> obj) throws Exception {
 		
 		System.out.println(this.getClass()+"/enterBob");
-		
-		System.out.println("돈나갑니다?");
+
 		String category = (String)obj.get("category");
 		int userId = (int)obj.get("userId");
 		int bobId = (int)obj.get("bobId");
@@ -137,7 +143,7 @@ public class BobRestController {
 			if(userPoint >= 1000) {
 				Bob bob = bobService.getBobInfo(bobId, category);
 				/* 약속비 1000원 차감 */
-				System.out.println("돈 진짜 나갑니다 2");
+				System.out.println("userPoint >= 1000 이상으로 약속비 지출");
 				Payment payment = new Payment();
 				payment.setUserId(userId);
 				payment.setPoint(1000);
@@ -148,13 +154,13 @@ public class BobRestController {
 				/* 마일리지 적립 */
 				payment.setPoint(500);
 				payment.setPaymentCode("M01");
-				paymentService.managePoint(payment);
+				paymentService.manageMileage(payment);
 				
 				bobService.enterBob(userId, bobId);
 				
 				System.out.println("result1111");
 			} else {
-				System.out.println("result2222");
+				System.out.println("userPoint < 1000");
 				result = false;
 			}
 		}
@@ -193,7 +199,7 @@ public class BobRestController {
 			/* 마일리지 적립취소 */
 			payment.setPoint(500);
 			payment.setPaymentCode("M03");
-			paymentService.managePoint(payment);
+			paymentService.manageMileage(payment);
 		}
 		
 		// 참가중이 아닐때 참가됨
@@ -239,6 +245,8 @@ public class BobRestController {
 		
 		JSONObject object = new JSONObject();
 		
+		System.out.println(userPoint +"::" +fee);
+		
 		if(userPoint >= fee) {
 			Bob bob = bobService.getBobInfo(bobId, "B03");
 			bobService.payFeeBob(Integer.valueOf(obj.get("participantId").toString()), fee);
@@ -269,12 +277,39 @@ public class BobRestController {
 		
 	}
 	
+	@RequestMapping(value="/inviteBob", method=RequestMethod.POST)
+	@ResponseBody
+	public JSONObject inviteBob(@RequestBody Map<String, Object> obj) {
+		
+		int bobId = Integer.valueOf(obj.get("bobId").toString());
+		List<Integer> listUser = (List<Integer>)obj.get("list");
+		
+		boolean result = false;
+		
+		try {
+			bobService.inviteBob(listUser, bobId);
+			result = true;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		JSONObject object = new JSONObject();
+		
+		if(result) {
+			object.put("response", "success");
+		} else {
+			object.put("response", "fail");
+		}
+		
+		return object;
+	}
+	
 	/* 후기 */
 	
 	@RequestMapping(value="/addReview", method=RequestMethod.POST)
 	public JSONObject addReview(@RequestBody Map<String, Object> obj) {
 		
-		System.out.println("흠냐링?");
+		//System.out.println("흠냐링?");
 		
 		Newsfeed newsfeed = new Newsfeed();
 		newsfeed.setCategoryCode("N10:"+obj.get("bobId"));
@@ -282,9 +317,7 @@ public class BobRestController {
 		newsfeed.setStatus("0");
 		newsfeed.setPrivacyBound("0");
 		newsfeed.setUserId(((Integer)obj.get("userId")).intValue());
-		
-		
-		
+
 		System.out.println(newsfeed);
 		
 		boolean result = false;

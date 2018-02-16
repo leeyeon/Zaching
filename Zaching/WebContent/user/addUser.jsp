@@ -1,12 +1,12 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ page pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=euc-kr"%>
+<%@ page pageEncoding="euc-kr"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="ko">
 <head>
 
-	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
+	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -29,55 +29,50 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
-	//==>"IDì¤‘ë³µí™•ì¸" Event ì²˜ë¦¬ ë° ì—°ê²°
-	 $(function() {
-		 $("button.btn.btn-info").on("click" , function() {
-			popWin 
-			= window.open("/user/checkDuplication.jsp",
-										"popWin", 
-										"left=300,top=200,width=780,height=130,marginwidth=0,marginheight=0,"+
-										"scrollbars=no,scrolling=no,menubar=no,resizable=no");
-		});
-	});	
+
 	
+	//==>"È¸¿ø°¡ÀÔ" Event Ã³¸® ¹× ¿¬°á
 	
-	//==>"íšŒì›ê°€ì…" Event ì²˜ë¦¬ ë° ì—°ê²°
-	 $(function() {
+	$("#checkEmail").focus();
+	
+	$(function() {
 			
 		 $( "#signUp" ).on("click" , function() {
-				fncAddUser();
+				alert("È¸¿ø°¡ÀÔ ¹öÆ°Å¬¸¯");
+			 	fncAddUser();
+				alert("fncAddUser() ¿Ï·á");
 			});
 		});	
-	//ì´ë©”ì¼í˜•ì‹ ê²€ì‚¬ í•„ìš”!!
+	//ÀÌ¸ŞÀÏÇü½Ä °Ë»ç ÇÊ¿ä!!
 		
 		function fncAddUser() {
 			
-			var email = $("input[name='email']").val();
-			var pw = $("input[name='password']").val();
-			var pw2 = $("input[name='password2']").val();
-			var name = $("input[name='name']").val();
+			var email = $("#checkEmail").val();
+			var pw = $("#pw").val();
+			var pw2 = $("#pw2").val();
+			var name = $("#userName").val();
 			
 			
 			if(email == null || email.length <1){
-				alert("ì´ë©”ì¼ì€ ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+				alert("ÀÌ¸ŞÀÏÀº ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
 				return;
 			}
-			if(pw == null || pw.length <1){
-				alert("íŒ¨ìŠ¤ì›Œë“œëŠ”  ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+			if(pw == null || pw.length <4){
+				alert("ÆĞ½º¿öµå´Â  3ÀÚ¸® ÀÌ»ó ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
 				return;
 			}
-			if(pw2 == null || pw2.length <1){
-				alert("íŒ¨ìŠ¤ì›Œë“œ í™•ì¸ì€  ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+			if(pw2 == null || pw2.length <4){
+				alert("ÆĞ½º¿öµå È®ÀÎÀº  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
 				return;
 			}
 			if(name == null || name.length <1){
-				alert("ì´ë¦„ì€  ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+				alert("ÀÌ¸§Àº  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
 				return;
 			}
 			
 			if( pw != pw2 ) {				
-				alert("ë¹„ë°€ë²ˆí˜¸ í™•ì¸ì´ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
-				$("input:text[name='password2']").focus();
+				alert("ºñ¹Ğ¹øÈ£ È®ÀÎÀÌ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+				$("#pw2").focus();
 				return;
 			}
 			
@@ -85,12 +80,53 @@
 		}
 			
 			
-		//==>"ì·¨ì†Œ?" Event ì²˜ë¦¬ ë° ì—°ê²°	
+		//==>"Ãë¼Ò?" Event Ã³¸® ¹× ¿¬°á	
 		$(function() {
 			$("a[href='#' ]").on("click" , function() {
 				$("form")[0].reset();
 			});
 		});	
+		
+		//ÀÌ¸ŞÀÏ Áßº¹Ã¼Å©
+			$(function() {
+				  $('#checkbtn').on('click', function(){
+			        	alert("¹öÆ°Å¬¸¯!");
+			        	fncCheckSingup();
+				});
+			});
+			
+		function fncCheckSingup(){
+			 var checkEmail = $("#checkEmail").val();
+			 alert(checkEmail);
+			 
+		      
+		            $.ajax({
+		            	url: "/user/rest/checkSingup",
+		            	method:"POST",
+						contentType :'application/json',
+						data : JSON.stringify({
+							"checkEmail" : checkEmail
+						
+						}),
+						async : false,
+						dataType : "json",
+		                success: function(data){
+		                	console.log(data);
+		                    if(data == true){
+		                    	console.log("µ¥ÀÌÅÍ °ª==> "+data);
+		                        $('#checkMsg').html('<p style="color:blue">»ç¿ë°¡´É</p>');
+		                    }
+		                    else{
+		                        $('#checkMsg').html('<p style="color:red">»ç¿ëºÒ°¡´É</p>');
+		                        $("form")[0].reset();
+		                    }
+		                }
+		            
+		            
+		            });    //end ajax    
+		            //end on    
+		    }
+
 	</script>		
     
 </head>
@@ -98,71 +134,69 @@
 <body>
 
 	
-	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
+	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="text-center">íšŒ ì› ê°€ ì…</h1>
+		<h1 class="text-center">È¸ ¿ø °¡ ÀÔ</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
 		
 		  <div class="form-group">
-		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">ì´ ë©” ì¼</label>
+		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ ¸Ş ÀÏ</label>
 		    <div class="col-sm-4">
 		    	<c:if test="${sessionScope.user.snsType  ne null }">
-		      		<input type="text" class="form-control" name="email" placeholder="ì¤‘ë³µí™•ì¸í•˜ì„¸ìš”" value="${sessionScope.user.email}">
+		      		<input type="text" class="form-control" id="checkEmail" name="email" value="${sessionScope.user.email}">
+		      		<div id="checkMsg"></div>
+		      		<button type="button" id="checkbtn" class="btn btn-default">Áßº¹È®ÀÎ</button>
 		      	</c:if>
 		      	
 		      	<c:if test="${sessionScope.user.snsType  eq null }">
-		      		<input type="email" class="form-control" name="email" placeholder="ì¤‘ë³µí™•ì¸í•˜ì„¸ìš”" readonly>
+		      		<input type="text" class="form-control" id="checkEmail" name="email"  >
+		      		<div id="checkMsg"></div>
+		      		<button type="button" id="checkbtn" class="btn btn-default">Áßº¹È®ÀÎ</button>
 		      	</c:if>
 		      
 		      
-		      <span id="helpBlock" class="help-block">
-		      	<strong class="text-danger">ì…ë ¥ì „ ì¤‘ë³µí™•ì¸ ë¶€í„°..</strong>
-		      </span>
-		      
-   			 <div class="col-sm-3">
-		      <button type="button" class="btn btn-info">ì¤‘ë³µí™•ì¸</button>
-		    </div>
+   			
 		    
 		    </div>
 		   
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">ë¹„ë°€ë²ˆí˜¸</label>
+		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">ºñ¹Ğ¹øÈ£</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" name="password" placeholder="ë¹„ë°€ë²ˆí˜¸">
+		      <input type="password" class="form-control" name="password" id="pw" placeholder="ºñ¹Ğ¹øÈ£">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">ë¹„ë°€ë²ˆí˜¸ í™•ì¸</label>
+		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">ºñ¹Ğ¹øÈ£ È®ÀÎ</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" name="password2" placeholder="ë¹„ë°€ë²ˆí˜¸ í™•ì¸" >
+		      <input type="password" class="form-control" name="password2" id="pw2"placeholder="ºñ¹Ğ¹øÈ£ È®ÀÎ" >
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="name" class="col-sm-offset-1 col-sm-3 control-label">ì´ë¦„</label>
+		    <label for="name" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸§</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" name="name" placeholder="íšŒì›ì´ë¦„">
+		      <input type="text" class="form-control" name="name" id="userName" placeholder="È¸¿øÀÌ¸§">
 		    </div>
 		  </div>
 		  
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary" id="signUp" >ê°€ &nbsp;ì…</button>
-			  <a class="btn btn-primary cancelbtn" href="#" role="button">ì·¨&nbsp;ì†Œ</a>
+		      <button type="button" class="btn btn-primary" id="signUp" >°¡ &nbsp;ÀÔ</button>
+			  <a class="btn btn-primary cancelbtn" href="#" role="button">Ãë&nbsp;¼Ò</a>
 		    </div>
 		  </div>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 		
  	</div>
-	<!--  í™”ë©´êµ¬ì„± div end /////////////////////////////////////-->
+	<!--  È­¸é±¸¼º div end /////////////////////////////////////-->
 	
 </body>
 

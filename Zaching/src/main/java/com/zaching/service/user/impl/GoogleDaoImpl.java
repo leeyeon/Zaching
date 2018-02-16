@@ -1,10 +1,12 @@
 package com.zaching.service.user.impl;
 
 import java.io.BufferedReader;
+
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,7 +23,7 @@ public class GoogleDaoImpl  implements GoogleDao{
 			private final static String CLIENT_SECRET ="pUaplMqOape-IaZggWA37A53"; //"hytvs3HK7nWaMe0bHqlp8jct";
 			private final static String SCOPE = "https://www.googleapis.com/auth/plus.login";
 			private final static String REDIRECT_URI = "http://127.0.0.1:8080/googleLogin";
-			
+			private final static String SESSION_STATE = "oauth_state";
 			
 			private final static String GET_TOKEN_API_URL = "https://accounts.google.com/o/oauth2/token";
 			private final static String PROFILE_API_URL = "https://www.googleapis.com/oauth2/v1/userinfo";
@@ -32,7 +34,11 @@ public class GoogleDaoImpl  implements GoogleDao{
 				this.parser = new JSONParser();
 			}
 			
-			public String getAuthorizationUrl() {
+			public String getAuthorizationUrl(HttpSession session) {
+				
+				String state = generateRandomString();
+				
+				this.setSession(session, state);
 				
 				String scope = "https://www.googleapis.com/auth/plus.login "+
 					"https://www.googleapis.com/auth/userinfo.email "+
@@ -137,11 +143,23 @@ public class GoogleDaoImpl  implements GoogleDao{
 		        user.setEmail(obj.get("email").toString());       
 		        user.setName(obj.get("name").toString());
 		        user.setProfileImage(obj.get("picture").toString());
-		        user.setSnsType("google");
+		        user.setSnsType("4");//google!
 				user.setRole("1");
 				return user;
 			}
-
 			
+			/* http session set */
+			private void setSession(HttpSession session,String state){
+				session.setAttribute(SESSION_STATE, state);	
+			}
 
+			/* http session get */
+			private String getSession(HttpSession session){
+				return (String) session.getAttribute(SESSION_STATE);
+			}
+			
+			/* generateRandomString */
+			public  String generateRandomString() {
+				return UUID.randomUUID().toString();
+			}
 }

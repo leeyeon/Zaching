@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,41 +9,81 @@
 <html>
 <head>
     <meta charset="utf-8">
+<!--   jQuery , Bootstrap CDN  -->
+	<meta name="author" content="pixelhint.com">
+	<meta name="description" content="La casa free real state fully responsive html5/css3 home page website template"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+	<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
+	<jsp:include page="/resources/layout/sub_toolbar.jsp"/>
 
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-    <style>
+
+<style>
+
+		
+
+/* í…œí”Œë¦¿ì ìš© */
+.hero {
+			background: url('../resources/images/memoryMAP.jpg') no-repeat bottom center;
+			background-size: cover;
+			background-repeat: no-repeat, no-repeat;
+			background-position: center center; height:700px;
+		}
+		
+#map{
+    margin-left: 10px;
+    margin-top: 100px;
+    padding-bottom: 100px;
+}
+
+
+
 .customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
 .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
 .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
 .customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
 .customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
 </style>
+
 </head>
 
 <body>
-<div id="map" style="width:50%;height:350px;"></div>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=clusterer"></script>
+	<section class="hero">
+		<section class="caption">
+				<h2 class="caption">Memory Map</h2>
+		</section>
+	</section><!--  end hero section  -->
+
+
+<div  class="page-body" id="map" style="width:70%; height:350px;" align="center"></div>
+
+
+
+
+<script type="text/javascript" 
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=clusterer"></script>
 <script>
 
-var mapContainer = document.getElementById('map'), // Áöµµ¸¦ Ç¥½ÃÇÒ div  
+var mapContainer = document.getElementById('map'), // ì§€ë„ë¥¼ í‘œì‹œí•  div  
 mapOption = { 
-    center: new daum.maps.LatLng(36.566826, 126.9786567), // ÁöµµÀÇ Áß½ÉÁÂÇ¥
-    level: 15// ÁöµµÀÇ È®´ë ·¹º§
+    center: new daum.maps.LatLng(36.566826, 126.9786567), // ì§€ë„ì˜ ì¤‘ì‹¬ì¢Œí‘œ
+    level: 15// ì§€ë„ì˜ í™•ëŒ€ ë ˆë²¨
 };
 
-var map = new daum.maps.Map(mapContainer, mapOption); // Áöµµ¸¦ »ı¼ºÇÕ´Ï´Ù
+var map = new daum.maps.Map(mapContainer, mapOption); // ì§€ë„ë¥¼ ìƒì„±í•©ë‹ˆë‹¤
 
 var clusterer = new daum.maps.MarkerClusterer({
 	
-    map: map, // ¸¶Ä¿µéÀ» Å¬·¯½ºÅÍ·Î °ü¸®ÇÏ°í Ç¥½ÃÇÒ Áöµµ °´Ã¼ 
-    averageCenter: true, // Å¬·¯½ºÅÍ¿¡ Æ÷ÇÔµÈ ¸¶Ä¿µéÀÇ Æò±Õ À§Ä¡¸¦ Å¬·¯½ºÅÍ ¸¶Ä¿ À§Ä¡·Î ¼³Á¤ 
+    map: map, // ë§ˆì»¤ë“¤ì„ í´ëŸ¬ìŠ¤í„°ë¡œ ê´€ë¦¬í•˜ê³  í‘œì‹œí•  ì§€ë„ ê°ì²´ 
+    averageCenter: true, // í´ëŸ¬ìŠ¤í„°ì— í¬í•¨ëœ ë§ˆì»¤ë“¤ì˜ í‰ê·  ìœ„ì¹˜ë¥¼ í´ëŸ¬ìŠ¤í„° ë§ˆì»¤ ìœ„ì¹˜ë¡œ ì„¤ì • 
     minLevel: 5,
     calculator: [3, 5, 10, 20],
-    styles: [{ // calculator °¢ »çÀÌ °ª ¸¶´Ù Àû¿ëµÉ ½ºÅ¸ÀÏÀ» ÁöÁ¤ÇÑ´Ù
+    styles: [{ // calculator ê° ì‚¬ì´ ê°’ ë§ˆë‹¤ ì ìš©ë  ìŠ¤íƒ€ì¼ì„ ì§€ì •í•œë‹¤
         width : '20px', height : '20px',
         background: 'rgba(255, 178, 217, .8)',
         borderRadius: '15px',
@@ -87,7 +127,7 @@ var clusterer = new daum.maps.MarkerClusterer({
 });
 
 
-var userId = "3";
+var userId = "${sessionScope.user.userId}"; //"3";
 
 $(function() {	
 	
@@ -99,10 +139,11 @@ $(function() {
 					"Accept" : "application/json",
 					"Content-Type" : "application/json"
 				},success : function(jsonData , status) {
-				        var markers = $(jsonData.positions).map(function(i, position) {
-				        	var imageSrc = jsonData.positions[i].imgsrc, // ¸¶Ä¿ÀÌ¹ÌÁöÀÇ ÁÖ¼ÒÀÔ´Ï´Ù    
-				            imageSize = new daum.maps.Size(64, 69), // ¸¶Ä¿ÀÌ¹ÌÁöÀÇ Å©±âÀÔ´Ï´Ù
-				            imageOprion = {offset: new daum.maps.Point(27, 69)}; // ¸¶Ä¿ÀÌ¹ÌÁöÀÇ ¿É¼ÇÀÔ´Ï´Ù. ¸¶Ä¿ÀÇ ÁÂÇ¥¿Í ÀÏÄ¡½ÃÅ³ ÀÌ¹ÌÁö ¾È¿¡¼­ÀÇ ÁÂÇ¥¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+				       		var markers = $(jsonData.positions).map(function(i, position) {
+				        	var imageSrc = jsonData.positions[i].imgsrc, // ë§ˆì»¤ì´ë¯¸ì§€ì˜ ì£¼ì†Œì…ë‹ˆë‹¤    
+				            imageSize = new daum.maps.Size(64, 69), // ë§ˆì»¤ì´ë¯¸ì§€ì˜ í¬ê¸°ì…ë‹ˆë‹¤
+				            imageOprion = {offset: new daum.maps.Point(27, 69)}; // ë§ˆì»¤ì´ë¯¸ì§€ì˜ ì˜µì…˜ì…ë‹ˆë‹¤. 
+				            //ë§ˆì»¤ì˜ ì¢Œí‘œì™€ ì¼ì¹˜ì‹œí‚¬ ì´ë¯¸ì§€ ì•ˆì—ì„œì˜ ì¢Œí‘œë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
 								
 				            console.log(imageSrc); 
 				        	var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize, imageOprion);
@@ -111,10 +152,10 @@ $(function() {
 				        	
 				            return new daum.maps.Marker({
 				            	position : new daum.maps.LatLng(position.lat, position.lng),
-				                image : markerImage // ¸¶Ä¿ ÀÌ¹ÌÁö 
+				                image : markerImage // ë§ˆì»¤ ì´ë¯¸ì§€ 
 				            });
 
-				        // Å¬·¯½ºÅÍ·¯¿¡ ¸¶Ä¿µéÀ» Ãß°¡ÇÕ´Ï´Ù
+				        // í´ëŸ¬ìŠ¤í„°ëŸ¬ì— ë§ˆì»¤ë“¤ì„ ì¶”ê°€í•©ë‹ˆë‹¤
 				        
 				    });
 				        clusterer.addMarkers(markers);
@@ -126,5 +167,9 @@ $(function() {
 
 
 </script>
+
+
+
+
 </body>
 </html>

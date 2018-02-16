@@ -42,12 +42,18 @@ public interface UserService {
     public  void updateNotice(User user)throws Exception;
     
     // 이매일 ID 중복 확인
- 	public boolean checkDuplication(String email) throws Exception;
-    
+ 	public boolean checkSignup(String email) throws Exception;
+
+
     //이메일 전송
  	public void sendMail(String email, String authNum)throws Exception;
  	
  	//이메일 인증시 정회원으로 등급 up
  	public void updateRole(User user)throws Exception;
+ 	
+ 	//sns로그인 정보 DB로 슝슝
+ 	public void snsAddUser(User user)throws Exception;
+
+ 	public String updateGetAccountToken(String token, int userId) throws Exception;
 
 }

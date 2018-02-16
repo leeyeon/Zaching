@@ -18,8 +18,6 @@
  
  $(function() {
 
-
-
  
  window.addEventListener('load', function () {
 	  // At first, let's check if we have permission for notification

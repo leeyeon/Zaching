@@ -30,7 +30,9 @@
 			#{bobId:INTEGER},
 			#{senderId:INTEGER}
 			)
-
+			<selectKey keyProperty="noticeId" resultType="Integer" order="AFTER"> 
+			SELECT seq_notice_id.currval FROM dual
+		</selectKey>
 	</insert>
 	
 	<update id="updateNotice" parameterType="int">
@@ -57,6 +59,8 @@
 			)
 
 	</insert>
+	
+	
 	
 	
 	<select id="listNotice" 

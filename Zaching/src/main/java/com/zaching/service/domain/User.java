@@ -2,6 +2,8 @@ package com.zaching.service.domain;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class User {
 	
 	///Field
@@ -11,6 +13,7 @@ public class User {
 	private int userId;//유저ID시퀀스
 	private String email;//이메일ID
 	private String password;//패스워드
+	private String password2;//패스워드 일치
 	private String name;//이름
 	private String address;//주소
 	private String longitude;//경도
@@ -23,13 +26,12 @@ public class User {
 	private String phone3;//연락처
 	
 	private String birth;//생일
+	
 	private String profileImage;//프로필사진
 	private String role;//회원등급 정회원 준회원 ========> 계정정지'0' 준회원 '1' 정회원 '2'
 	private String realName;//실명
-	private int bankCode;//은행코드
+	private String bankName;//은행명
 	private String accountNumber;//계좌번호
-	private int accountCi;//
-	private int accountSeqNo;//
 	private int totalPoint;//포인트합계
 	private int totalMileage;//마일리지합계
 	private int totalRecommend;//추천합계
@@ -41,7 +43,7 @@ public class User {
 	private String setBroadcast;//라이브방송알림설정
 	private String setFriend;//친구알림설정
 	private String setBob;//밥친구 알림설정
-	private String snsType;//sns계정 연동된 정보
+	private String snsType;//sns계정 연동된 정보====> kakao '1'/ facebook'2' / naver '3' / google '4'
 	
 	private String accessToken;//토큰저장?
 	private String refreshToken;//토큰갱신
@@ -51,6 +53,11 @@ public class User {
 	}
 	
 	
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+
+
 	public String getAccessToken() {
 		return accessToken;
 	}
@@ -159,7 +166,7 @@ public class User {
 		this.gender = gender;
 	}
 	public String getPhone() {
-		return phone;
+		return phone.trim();
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
@@ -219,22 +226,16 @@ public class User {
 
 
 	public String getRealName() {
-		return realName.trim();
+		if(realName != null) {
+			return realName.trim();
+		} else {
+			return realName;
+		}		
 	}
 
 
 	public void setRealName(String realName) {
 		this.realName = realName;
-	}
-
-
-	public int getBankCode() {
-		return bankCode;
-	}
-
-
-	public void setBankCode(int bankCode) {
-		this.bankCode = bankCode;
 	}
 
 
@@ -246,27 +247,6 @@ public class User {
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
-
-
-	public int getAccountCi() {
-		return accountCi;
-	}
-
-
-	public void setAccountCi(int accountCi) {
-		this.accountCi = accountCi;
-	}
-
-
-	public int getAccountSeqNo() {
-		return accountSeqNo;
-	}
-
-
-	public void setAccountSeqNo(int accountSeqNo) {
-		this.accountSeqNo = accountSeqNo;
-	}
-
 
 	public int getTotalPoint() {
 		return totalPoint;
@@ -392,15 +372,25 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [authNum=" + authNum + ", userId=" + userId + ", email=" + email + ", password=" + password
-				+ ", name=" + name + ", address=" + address + ", longitude=" + longitude + ", latitude=" + latitude
-				+ ", gender=" + gender + ", phone=" + phone + ", phone1=" + phone1 + ", phone2=" + phone2 + ", phone3="
-				+ phone3 + ", birth=" + birth + ", profileImage=" + profileImage + ", role=" + role + ", realName="
-				+ realName + ", bankCode=" + bankCode + ", accountNumber=" + accountNumber + ", accountCi=" + accountCi
-				+ ", accountSeqNo=" + accountSeqNo + ", totalPoint=" + totalPoint + ", totalMileage=" + totalMileage
-				+ ", totalRecommend=" + totalRecommend + ", latestDate=" + latestDate + ", createdDate=" + createdDate
-				+ ", setRentCharge=" + setRentCharge + ", setNews=" + setNews + ", setNewsFeed=" + setNewsFeed
-				+ ", setBroadcast=" + setBroadcast + ", setFriend=" + setFriend + ", setBob=" + setBob + ", snsType="
-				+ snsType + ", accessToken=" + accessToken + ", refreshToken=" + refreshToken + "]";
+				+ ", password2=" + password2 + ", name=" + name + ", address=" + address + ", longitude=" + longitude
+				+ ", latitude=" + latitude + ", gender=" + gender + ", phone=" + phone + ", phone1=" + phone1
+				+ ", phone2=" + phone2 + ", phone3=" + phone3 + ", birth=" + birth + ", profileImage=" + profileImage
+				+ ", role=" + role + ", realName=" + realName + ", bankName=" + bankName + ", accountNumber="
+				+ accountNumber + ", totalPoint=" + totalPoint + ", totalMileage=" + totalMileage + ", totalRecommend="
+				+ totalRecommend + ", latestDate=" + latestDate + ", createdDate=" + createdDate + ", setRentCharge="
+				+ setRentCharge + ", setNews=" + setNews + ", setNewsFeed=" + setNewsFeed + ", setBroadcast="
+				+ setBroadcast + ", setFriend=" + setFriend + ", setBob=" + setBob + ", snsType=" + snsType
+				+ ", accessToken=" + accessToken + ", refreshToken=" + refreshToken + "]";
+	}
+
+
+	public String getPassword2() {
+		return password2;
+	}
+
+
+	public void setPassword2(String password2) {
+		this.password2 = password2;
 	}
 	
 }

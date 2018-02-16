@@ -61,8 +61,12 @@ public class FriendServiceImpl implements FriendService{
 
 	@Override
 	public Map<String, Object> listFriend(Search search) throws Exception {
+		
+		System.out.println(search);
 		List<Friend> list=friendDao.listFriend(search);
 		int totalCount=friendDao.getTotalCount(search);
+		
+		System.out.println(list);
 		
 		Map<String, Object> map=new HashMap<String,Object>();
 		map.put("list", list);
@@ -79,8 +83,17 @@ public class FriendServiceImpl implements FriendService{
 
 	@Override
 	public Map<String, Object> recommendFriend(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println(search);
+		List<Friend> list=friendDao.listFriend(search);
+		int totalCount=friendDao.getTotalCount(search);
+		
+		System.out.println(list);
+		
+		Map<String, Object> map=new HashMap<String,Object>();
+		map.put("list", list);
+		map.put("totalCount", totalCount);
+		
+		return map;
 	}
 
 	

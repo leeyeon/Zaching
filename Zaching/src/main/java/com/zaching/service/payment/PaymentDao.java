@@ -1,6 +1,7 @@
 package com.zaching.service.payment;
 
 import java.util.List;
+import java.util.Map;
 
 import org.json.simple.JSONObject;
 
@@ -25,7 +26,16 @@ public interface PaymentDao {
 	
 	public String getAuthorizationUrl(int authType);
 	
+	public String getAccessToken2() throws Exception;
+	
 	public JSONObject getAccessToken(String code) throws Exception;
 	
+	public int getTotalCount(Search search, int userId) throws Exception;
+	
 	public String getUserCI(String accessToken, String userSeqNo) throws Exception;
+	
+	public void presentPoint(Payment payment) throws Exception;
+	
+	public Map<String, Object> getAccount(String accessToken, String accountNum, int accountHolderinfo) throws Exception;
+	
 }

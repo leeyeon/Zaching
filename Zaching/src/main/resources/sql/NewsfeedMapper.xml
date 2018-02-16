@@ -72,16 +72,8 @@
 	  			FROM newsfeed n, users u 
 	  			<where>
 	  			n.user_id=u.user_id(+)
-				<if test="category != null">
-					<if test="category != ''">
-			 			AND category_code = #{category}
-					</if>
-					<if test="searchCondition == 1 and searchKeyword !='' ">
-			 			AND category_code = #{searchKeyword}
-					</if>
-					<if test="searchCondition == 2 and searchKeyword !='' ">
-			 			AND category_code = #{searchKeyword}
-					</if>
+				<if test="searchCondition != 'N06'">
+			 			AND category_code LIKE '${searchCondition}%'
 				</if>
 				</where>
 	</sql>
@@ -134,6 +126,12 @@
 		SELECT count(*)
 		FROM like_blind 
 		WHERE newsfeed_id=#{newsfeedId} AND trim(status)=#{status} AND user_id=#{userId}
+	</select>
+	
+	<select id="timeline" parameterType="int" resultMap="NewsfeedSelectMap">
+		SELECT n.*, u.name, u.profile_image
+		FROM newsfeed n, users u
+		WHERE n.user_id=u.user_id(+) AND u.user_id=#{value}
 	</select>
 
 </mapper>

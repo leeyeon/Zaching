@@ -60,13 +60,16 @@ public class CommentDaoImpl implements CommentDao {
 	}
 	
 	@Override
-	public void addNotice(Notice notice) throws Exception{
-		sqlSession.insert("CommentMapper.addNotice", notice);
+	public Notice addNotice(Notice notice) throws Exception{
+		sqlSession.insert("NoticeMapper.addNotice", notice);
+		return notice;
 	}
+	
+
 	
 	@Override
 	public void addNoticeTarget(Notice notice) throws Exception{
-		sqlSession.insert("CommentMapper.addNoticeTarget", notice);
+		sqlSession.insert("NoticeMapper.addNoticeTarget", notice);
 	}
 	
 
@@ -94,6 +97,7 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public List<Comment> listComment(Search search, String categoryCode, int roomId) throws Exception {
 		Map<String, Object> map = new HashMap<String,Object>();
+		System.out.println(categoryCode+" // "+roomId);
 		map.put("categoryCode", categoryCode);
 		map.put("roomId", roomId);
 		map.put("search", search);
@@ -112,6 +116,8 @@ public class CommentDaoImpl implements CommentDao {
 		map.put("categoryCode", categoryCode);
 		map.put("roomId", roomId);
 		map.put("search", search);
+		
+		System.out.println("totalCount ::"+map);
 		
 		return sqlSession.selectOne("CommentMapper.getTotalCount", map);
 	}

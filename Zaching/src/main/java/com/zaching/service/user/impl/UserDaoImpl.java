@@ -65,9 +65,9 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public void updateUser(User user) throws Exception {
-		System.out.println("IMp"+user);
+		System.out.println(":: UserDaoImpl UpdateUser ::"+user);
 		sqlSession.update("UserMapper.updateUser", user);
-		System.out.println("12222222");
+		
 		
 	}
 
@@ -111,6 +111,37 @@ public class UserDaoImpl implements UserDao{
 		
 	}
 
+	@Override
+	public int checkSignup(String email) throws Exception {
+		System.out.println(":: checkSignup :: DaoImpl");
+		
+		
+		return sqlSession.selectOne("UserMapper.checkSignup", email);
+	}
 	
+	@Override
+	public void updateAccountToken(String token, int userId) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("token", token);
+		map.put("userId", userId);
+		
+		sqlSession.update("UserMapper.updateAccountToken", map);
+	}
+	
+	@Override
+	public String getAccountToken(int userId) throws Exception {
+		return sqlSession.selectOne("UserMapper.getAccountToken", userId);
+	}
+	
+	public String getPWD(String id) throws Exception{
+		return sqlSession.selectOne("UserMapper.getPassword", id);
+	}
 
+	@Override
+	public void snsAddUser(User user) throws Exception {
+		
+		sqlSession.insert("UserMapper.snsAddUser", user);
+	}
+	
+	
 }

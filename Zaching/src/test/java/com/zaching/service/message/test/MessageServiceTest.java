@@ -29,6 +29,7 @@ public class MessageServiceTest {
 
 	private int friendId = 9;
 	private int messageId = 28;
+	private int userId=31;
 
 	 @Test
 	public void testAddMessage() throws Exception {
@@ -36,7 +37,7 @@ public class MessageServiceTest {
 //		System.out.println("여기까지 왔어요");
 
 		Message message = new Message();
-		message.setUserId(7);
+		message.setUserId(userId);
 		message.setFriendId(friendId);
 		message.setContent("HI");
 

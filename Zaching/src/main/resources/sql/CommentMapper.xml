@@ -91,7 +91,7 @@
 		FROM COMMENTS, USERS 
 		<where>
 			COMMENTS.user_id = USERS.user_id
-			AND comments.category_code = '${categoryCode}'
+			AND trim(comments.category_code) = '${categoryCode}'
 			AND comments.room_id = #{roomId}
 			AND comments.status = 'Y'
 		</where>

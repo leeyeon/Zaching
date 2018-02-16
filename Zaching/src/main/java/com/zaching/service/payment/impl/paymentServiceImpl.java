@@ -1,8 +1,10 @@
 package com.zaching.service.payment.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -26,8 +28,12 @@ public class paymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public List<Payment> listPoint(Search search, int userId) throws Exception {
-		return paymentDao.listPoint(search, userId);
+	public Map<String, Object> listPoint(Search search, int userId) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", paymentDao.listPoint(search, userId));
+		map.put("totalCount", paymentDao.getTotalCount(search, userId));
+		
+		return map;
 	}
 	
 	@Override
@@ -68,10 +74,11 @@ public class paymentServiceImpl implements PaymentService {
 		
 	}
 
+	// P07
 	@Override
 	public void presentPoint(Payment payment) throws Exception {
 		// point column insert
-		paymentDao.managePayment(payment);
+		paymentDao.presentPoint(payment);
 		// 보내는 사람 포인트 차감
 		paymentDao.updateUserPayment(payment);
 		// 받는 사람 포인트 증가
@@ -87,7 +94,56 @@ public class paymentServiceImpl implements PaymentService {
 	public int getPoint(int userId) throws Exception {
 		return paymentDao.getPayment(userId, true);
 	}
+
 	
+	@Override
+	public String getAuthorizationUrl(int authType) throws Exception {
+		return paymentDao.getAuthorizationUrl(authType);
+	}
+	
+	@Override
+	public String getAccessToken2() throws Exception {
+		return paymentDao.getAccessToken2();
+	}
+
+	@Override
+	public JSONObject getAccessToken(String code) throws Exception {
+		return paymentDao.getAccessToken(code);
+	}
+
+	@Override
+	public String getUserCI(String accessToken, String userSeqNo) throws Exception {
+		return paymentDao.getUserCI(accessToken, userSeqNo);
+	}
+	
+	@Override
+	public Map<String, Object> getAccountRealName(String accessToken, String accountNum, int accountHolderinfo) throws Exception {
+		return paymentDao.getAccount(accessToken, accountNum, accountHolderinfo);
+	}
+	
+	@Override
+	public Map<String, Object> listBackCode() throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("002", "산업은행");
+		map.put("003", "기업은행");
+		map.put("004", "국민은행");
+		map.put("007", "수협중앙회");
+		map.put("011", "농협중앙회");
+		map.put("020", "우리은행");
+		map.put("023", "SC제일은행");
+		map.put("027", "시티은행");
+		map.put("031", "대구은행");
+		map.put("032", "부산은행");
+		map.put("034", "광주은행");
+		map.put("035", "제주은행");
+		map.put("037", "전북은행");
+		map.put("039", "경남은행");
+		map.put("081", "하나은행");
+		map.put("088", "신한은행");
+		
+		return map;
+	}
+
 	//@Scheduled(fixedDelay=1000)
 	@Scheduled(cron="0 0 12 * * *")
 	public void doSomething() {

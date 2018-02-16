@@ -57,8 +57,9 @@ public class NewsfeedController {
 	@RequestMapping(value="addNewsfeed", method=RequestMethod.POST)
 	public String addNewsfeed(@ModelAttribute("newsfeed") Newsfeed newsfeed, Model model, HttpServletRequest request) throws Exception{
 		System.out.println("addNewsfeed()");
+		System.out.println(newsfeed);
 		
-		if(newsfeed.getFile() != null) {
+		if(newsfeed.getFile().getOriginalFilename() != null) {
 			String fileName = newsfeed.getFile().getOriginalFilename();
 			newsfeed.setFileName(fileName);
 			
@@ -69,7 +70,7 @@ public class NewsfeedController {
 		
 		newsfeedService.addNewsfeed(newsfeed);
 		
-		return "/";
+		return "redirect:/index.jsp";
 	}
 	
 	@RequestMapping(value="deleteNewsfeed", method=RequestMethod.GET)
@@ -86,6 +87,13 @@ public class NewsfeedController {
 		return "forward:/newsfeed/getNewsfeed.jsp";
 	}
 	
+	@RequestMapping(value="ufo", method=RequestMethod.GET)
+	public String ufo(Model model) throws Exception{
+		System.out.println("updateNewsfeed()");
+
+		return "forward:/newsfeed/ufo.jsp";
+	}
+	
 	@RequestMapping(value="getNewsfeed")
 	public String getNewsfeed(@RequestParam int newsfeedId, Model model, HttpSession session, @ModelAttribute("search") Search search) throws Exception{
 		System.out.println("getNewsfeed()");
@@ -95,7 +103,7 @@ public class NewsfeedController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		
+		System.out.println("newsfeed search :: "+search);
 		Newsfeed newsfeed = newsfeedService.getNewsfeed(newsfeedId);
 		model.addAttribute("newsfeed", newsfeed);
 		model.addAttribute("roomUser", userService.getUser(newsfeed.getUserId()));
@@ -115,7 +123,9 @@ public class NewsfeedController {
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
-		search.setCategory("N01");
+		if(search.getSearchCondition() == null) {
+			search.setSearchCondition("N06");
+		}
 		search.setPageSize(pageSize);
 		Map<String, Object> map = newsfeedService.listNewsfeed(search);
 		//List<Newsfeed> list = newsfeedService.listNewsfeeds(search);
@@ -131,7 +141,6 @@ public class NewsfeedController {
 		//model.addAttribute("list", map.get("list"));
 		//model.addAttribute("resultPage", resultPage);
 		//System.out.println(list);
-		model.addAttribute("category", search.getCategory());
 		model.addAttribute("search", search);
 		model.addAttribute("list",map.get("list"));
 		model.addAttribute("resultPage", resultPage);

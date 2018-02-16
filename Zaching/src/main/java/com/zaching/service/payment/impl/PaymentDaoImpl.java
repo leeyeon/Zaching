@@ -1,5 +1,7 @@
 package com.zaching.service.payment.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,9 +80,15 @@ public class PaymentDaoImpl implements PaymentDao {
 		map.put("userId", userId);
 		if(isPoint) {
 			map.put("point", "point");
-			System.out.println("ㅇㅅㅇ");
+			//System.out.println("ㅇㅅㅇ");
 		}
 		return sqlSession.selectOne("PaymentMapper.getPayment", map);
+	}
+	
+	
+	@Override
+	public void presentPoint(Payment payment) throws Exception {
+		sqlSession.insert("PaymentMapper.presentPoint", payment);
 	}
 	
 	/* getAuthorizationUrl  */
@@ -92,11 +100,24 @@ public class PaymentDaoImpl implements PaymentDao {
 		// 2인증생략
 		
 		String url = "redirect:https://testapi.open-platform.or.kr/oauth/2.0/authorize2?response_type=code&client_id="+CLIENT_ID
-				+"&redirect_uri="+REDIRECT_URI+"&scope=login inquiry&client_info=zaching&auth_type="+authType;
+				+"&redirect_uri="+REDIRECT_URI+"&scope=login inquiry oop&client_info=zaching&auth_type="+authType;
 
 		System.out.println(url);
 		
 		return url;
+	}
+	
+	
+	
+	@Override
+	public String getAccessToken2() throws Exception {
+		
+		String param = "client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&scope=oob&grant_type=client_credentials";
+		
+		JSONObject obj = URLConnection.getJSON_PARAM("POST", "https://testapi.open-platform.or.kr/oauth/2.0/token", param, 
+				"application/x-www-form-urlencoded;charset=UTF-8");
+		
+		return obj.get("access_token").toString();
 	}
 	
 	@Override
@@ -123,25 +144,37 @@ public class PaymentDaoImpl implements PaymentDao {
 		return obj;
 	}
 	
-	/*
-	public String getRealName(String accessToken, String bankCode, String accountNum, String accountHolderInfo,
-			String tranDtime) throws Exception {
+	@Override
+	public Map<String, Object> getAccount(String accessToken, String accountNum, int accountHolderinfo) throws Exception {
 		
-		System.out.println("getRealName()");
+		System.out.println("getAccessToken()");
 		
-		String param = "bank_code_std="+bankCode+"&account_num="+accountNum
-				+"&account_holder_info="+accountHolderInfo+"&tran_dtime="+tranDtime;
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmss");
 		
-		JSONObject obj = JSON.getJSON_PARAM("POST", REAL_NAME_URI, param, 
+		String dtime = fmt.format(cal.getTime());
+		
+		//String param = "bank_code_std=null&account_num="+accountNum+"&account_holder_info="+accountHolderinfo+"&tran_dtime="+dtime;
+		
+		JSONObject param = new JSONObject();
+		param.put("bank_code_std", "002");
+		param.put("account_num", accountNum);
+		param.put("account_holder_info", accountHolderinfo);
+		param.put("tran_dtime", dtime);
+		
+		System.out.println(REAL_NAME_URI+"?"+param);
+
+		JSONObject obj = URLConnection.getJSON_PARAM("POST", REAL_NAME_URI, param.toString(), 
 				"application/json; charset=UTF-8", "Authorization", "Bearer "+accessToken);
 		
-		String bankName = obj.get("bank_name").toString();
-		String accountHodlerName = obj.get("account_holder_name").toString();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("realName", obj.get("account_holder_name").toString());
+		map.put("accountNum", obj.get("account_num").toString());
+		map.put("bankName", obj.get("bank_name").toString());
 		
-		return accountHodlerName+"/"+accountHolderInfo+"/"+bankName+"/"+accountNum;
-		
+		return map;
 	}
-	*/
+
 	
 	// DB에 저장
 	@Override
@@ -154,7 +187,18 @@ public class PaymentDaoImpl implements PaymentDao {
 		JSONObject obj = URLConnection.getJSON_PARAM("GET", USER_ME_URI, param, 
 				"application/x-www-form-urlencoded; charset=UTF-8", "Authorization", "Bearer "+accessToken);
 		
+		JSONObject obj2 = (JSONObject)obj.get("res_list");
+		
 		return obj.get("user_ci").toString();
+	}
+	
+	public int getTotalCount(Search search, int userId) throws Exception {
+		
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("search", search);
+		map.put("userId", userId);
+		
+		return sqlSession.selectOne("PaymentMapper.getTotalCount", map);
 	}
 
 }
