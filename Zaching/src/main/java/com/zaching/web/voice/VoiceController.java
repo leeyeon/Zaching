@@ -1,5 +1,10 @@
 package com.zaching.web.voice;
 
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.jcraft.jsch.ChannelSftp;
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
@@ -30,6 +36,7 @@ import com.zaching.service.voice.VoiceService;
 @Controller
 @RequestMapping("/voice/*")
 public class VoiceController {
+	private ChannelSftp channelSftp = null;
 	@Autowired
 	@Qualifier("voiceServiceImpl")
 	private VoiceService voiceService;
@@ -125,6 +132,41 @@ public class VoiceController {
 		model.addAttribute("search", search);
 		
 		return "forward:/voice/listVoice.jsp";
+	}
+	
+	@RequestMapping(value="testUpload")
+	public String testUpload(@RequestParam String link, @RequestParam String fileName) throws Exception{
+		System.out.println(link);
+		System.out.println(fileName);
+		
+		boolean result = false;
+		
+		FileInputStream inputStream = null;
+		FileOutputStream outputStream = null;
+		
+		inputStream = new FileInputStream(link);
+		outputStream = new FileOutputStream("C:\\Users\\jiwon\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\audio");
+		
+		FileChannel fcin = inputStream.getChannel();
+		FileChannel fcout = outputStream.getChannel();
+		
+		long size = 0;
+		
+		size = fcin.size();
+		fcin.transferTo(0, size, fcout);
+		
+		fcout.close();
+		fcin.close();
+		outputStream.close();
+		inputStream.close();
+		result = true;
+		
+		File file = new File(link);
+		if(file.delete()) {
+			result = true;
+		}
+		
+		return "newsfeed/listNewsfeed";
 	}
 	
 	@RequestMapping(value="getVoice")
