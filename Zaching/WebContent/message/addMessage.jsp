@@ -226,7 +226,7 @@ function addMsg(people, msg) {
 
   <div class="row">
     <div class="col-xs-12">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">각자 버튼 해쥬세요(아니면각자버튼에data-toggle="modal" data-target="#myModal"츄가점)</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">메세지</button>
       </div>
   </div>
 </div>
@@ -241,21 +241,30 @@ function addMsg(people, msg) {
 		<div class="phone-containter">
 			<div id="phone" class="phone">
 				<div class="message left">
-					<div class="message-text">Hello!</div>
+					<div class="message-text">안녕</div>
 				</div>
 				<div class="message right">
-					<div class="message-text">Hi!</div>
-					<div class="message-text">Where are you now?</div>
+					<div class="message-text">오랜만이네</div>
+					<div class="message-text">잘지내냐?</div>
 				</div>
 				<div class="message left">
-					<div class="message-text">I'm at a party of Clara</div>
+					<div class="message-text">그렇지뭐 오늘 시간괜찮으면 밥이나 먹자</div>
+				</div>
+					<div class="message right">
+					<div class="message-text">좋지 어디서먹을까 강남?</div>
+				</div>
+				<div class="message left">
+					<div class="message-text">그래 그럼 5시까지 보자</div>
+				</div>
+				<div class="message right">
+					<div class="message-text">오케이 있다봐</div>
 				</div>
 			</div>
 			
 			<!-- 메세지 작성 -->
 			<div class="send-container">
 				<form id="send">
-					<input type="text" id="msgInput" class="send-input" placeholder="Message">
+					<input type="text" id="msgInput" class="send-input" placeholder="메세지내용">
 					<input type="submit" class="send-btn" value="Send">
 				</form>
 			</div>
