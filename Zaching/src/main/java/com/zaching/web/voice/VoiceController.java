@@ -195,7 +195,7 @@ public class VoiceController {
 		model.addAttribute("search", search);
 		
 		
-		return "forward:/voice/finalVoice.jsp";
+		return "forward:/voice/jPlayer.jsp";
 	}
 
 }

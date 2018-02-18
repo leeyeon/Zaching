@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -19,6 +20,7 @@
 		<script type="text/javascript">
 		$(document).ready(function(){
 			var myCirclePlayer = new Array();
+			alert(${comment.size()});
 			/*
 			 * Instance CirclePlayer inside jQuery doc ready
 			 *
@@ -29,7 +31,8 @@
 			 *
 			 * Multiple instances must set the cssSelectorAncestor in the jPlayer options. Defaults to "#cp_container_1" in CirclePlayer.
 			 */
-			for(var i=1; i<3; i++){
+			 
+			for(i=1; i<${comment.size()}+1; i++){
 				myCirclePlayer[i] = new CirclePlayer('#jquery_jplayer_'+i,
 						{
 							m4a: "http://www.jplayer.org/audio/m4a/Miaow-07-Bubble.m4a",
@@ -69,11 +72,15 @@
 	</head>
 	<body>
 
-		<!-- The jPlayer div must not be hidden. Keep it at the root of the body element to avoid any such problems. -->
-		<div id="jquery_jplayer_1" class="cp-jplayer"></div>
+		<c:set var="i" value="0" />
+				<c:forEach var="reply" items="${comment}">
+					<c:set var="i" value="${ i+1 }" />
+					<div id="jquery_jplayer_${i}" class="cp-jplayer"></div>
+					
+				</c:forEach>
+		<!-- <div id="jquery_jplayer_1" class="cp-jplayer"></div>
 
-		<!-- This is the 2nd instance's jPlayer div -->
-		<div id="jquery_jplayer_2" class="cp-jplayer"></div>
+		<div id="jquery_jplayer_2" class="cp-jplayer"></div>-->
 		
 		
 
@@ -81,24 +88,42 @@
 
 
 			<!-- The container for the interface can go where you want to display it. Show and hide it as you need. -->
-
-			<div id="cp_container_1" class="cp-container">
-				<div class="cp-buffer-holder"> <!-- .cp-gt50 only needed when buffer is > than 50% -->
+			<c:set var="i" value="0" />
+						<c:forEach var="reply" items="${comment}">
+							<c:set var="i" value="${ i+1 }" />
+							<div id="cp_container_${i}" class="cp-container">
+								<div class="cp-buffer-holder"> <!-- .cp-gt50 only needed when buffer is > than 50% -->
+									<div class="cp-buffer-1"></div>
+									<div class="cp-buffer-2"></div>
+								</div>
+								<div class="cp-progress-holder"> <!-- .cp-gt50 only needed when progress is > than 50% -->
+									<div class="cp-progress-1"></div>
+									<div class="cp-progress-2"></div>
+								</div>
+								<div class="cp-circle-control"></div>
+								<ul class="cp-controls">
+									<li><a class="cp-play" tabindex="1">play</a></li>
+									<li><a class="cp-pause" style="display:none;" tabindex="1">pause</a></li> <!-- Needs the inline style here, or jQuery.show() uses display:inline instead of display:block -->
+								</ul>
+							</div>
+							
+							
+						</c:forEach>
+			<!-- <div id="cp_container_1" class="cp-container">
+				<div class="cp-buffer-holder">
 					<div class="cp-buffer-1"></div>
 					<div class="cp-buffer-2"></div>
 				</div>
-				<div class="cp-progress-holder"> <!-- .cp-gt50 only needed when progress is > than 50% -->
+				<div class="cp-progress-holder">
 					<div class="cp-progress-1"></div>
 					<div class="cp-progress-2"></div>
 				</div>
 				<div class="cp-circle-control"></div>
 				<ul class="cp-controls">
 					<li><a class="cp-play" tabindex="1">play</a></li>
-					<li><a class="cp-pause" style="display:none;" tabindex="1">pause</a></li> <!-- Needs the inline style here, or jQuery.show() uses display:inline instead of display:block -->
+					<li><a class="cp-pause" style="display:none;" tabindex="1">pause</a></li> 
 				</ul>
-			</div>
-
-			<!-- This is the 2nd instance HTML -->
+			</div> 
 
 			<div id="cp_container_2" class="cp-container">
 				<div class="cp-buffer-holder">
@@ -115,7 +140,7 @@
 					<li><a class="cp-pause" style="display:none;" tabindex="1">pause</a></li>
 				</ul>
 			</div>
-			
+			-->
 			
 
 		</div>
