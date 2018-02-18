@@ -2,6 +2,7 @@
 <<<<<<<=HEAD
 >>>>>>>=refs/remotes/origin/master
 eclipse.preferences.version=1
+encoding//WebContent/index.jsp=UTF-8
 encoding//WebContent/livingInfo/XmainLivingInfo.jsp=UTF-8
 encoding//WebContent/message/addMessage.jsp=UTF-8
 encoding//WebContent/newsfeed/NewFile.jsp=UTF-8
@@ -16,6 +17,7 @@ encoding//WebContent/voice/listVoice.jsp=UTF-8
 encoding//WebContent/voice/test.jsp=UTF-8
 encoding//src/main/java/com/zaching/common/service/impl/KakaoRestDaoImpl.java=UTF-8
 encoding//src/main/java/com/zaching/service/user/impl/GoogleDaoImpl.java=UTF-8
+encoding//src/main/java/com/zaching/web/user/UserController.java=UTF-8
 encoding//src/main/java/com/zaching/web/voice/VoiceController.java=EUC_KR
 encoding//src/main/resources/config/bankCode.properties=UTF-8
 encoding//src/main/resources/config/category.properties=UTF-8
