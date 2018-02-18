@@ -539,7 +539,11 @@ width:100%;}
 										<h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
 											<a href="/voice/getVoice?voiceId=${voice.voiceId}">${voice.voiceName}</a>
 										</h1>
-										<h2><c:if test="${voice.categoryCode == 'R06'}">프리토킹&nbsp;</c:if><span class="property_size">${voice.voicelyrics}</span></h2>
+										<h2><c:if test="${voice.categoryCode == 'R06'}">프리토킹&nbsp;</c:if></h2>
+										<h2><c:if test="${voice.categoryCode == 'R02'}">노래이어부르기&nbsp;</c:if></h2>
+										<h2><c:if test="${voice.categoryCode == 'R03'}">글 읽어주기&nbsp;</c:if></h2>
+										<h2><c:if test="${voice.categoryCode == 'R04'}">ASMR&nbsp;</c:if></h2>
+										<h2><c:if test="${voice.categoryCode == 'R05'}">알림음 만들기&nbsp;</c:if></h2>
 									</div>
 								</li>
 			   				</c:forEach>
