@@ -129,9 +129,9 @@
 	</select>
 	
 	<select id="timeline" parameterType="int" resultMap="NewsfeedSelectMap">
-		SELECT *
-		FROM newsfeed
-		WHERE user_id=#{value}
+		SELECT newsfeed.*, u.name, u.profileImage
+		FROM newsfeed n, users u
+		WHERE newsfeed.user_id=users.user_id(+) AND user_id=#{value}
 	</select>
 
 </mapper>
