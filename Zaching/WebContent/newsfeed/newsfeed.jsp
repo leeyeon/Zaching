@@ -769,21 +769,60 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								success : function(JSONData , status) {
 								
 								for(var i=0; i<JSONData.length;i++){
-									var displayValue = '<li onclick="location.href=\'/newsfeed/getNewsfeed?newsfeedId='+JSONData[i].newsfeedId+'\';" >'+
-									'<img src="../resources/upload_files/images/'+JSONData[i].fileName+'"/>'+
-										'<div class="post-info">'+
+									var displayValue = '<li class="cell">'+
+									'<input type="hidden" value="'+JSONData[i]+'" name="newsfeedId"/>';
+										if(JSONData[i].fileName)
+											displayValue += '<img src="../resources/upload_files/images/'+JSONData[i].fileName+'" style="width: 100%"/>';
+										else
+											displayValue += '<img src="../resources/upload_files/images/profile_default.png" style="width: 100%"/>';
+										displayValue = displayValue + '<div class="post-info">'+
 											'<div class="post-basic-info">'+
 												'<span><a href="#"><label> </label>';
+												if(JSONData[i] == 'N01')
+													displayValue += '자취지식인';
+												if(JSONData[i] == 'N10')
+													displayValue += '밥친구 후기';
+												if(JSONData[i] == 'N02')
+													displayValue += '중고거래';
+												if(JSONData[i] == 'N04')
+													displayValue += '꿀팁';
 												
-										if(JSONData[i].categoryCode =='N01') 
-											displayValue +='자취지식인</a></span>';
-											
-											displayValue += '<p></p>'+
-												'<div class="thumb"><img alt="" src="../resources/images/'+JSONData[i].profileImage+'" style="align: left;">'+JSONData[i].userName+'</div>'+
+													displayValue = displayValue+'</a></span>'+
+												'<p></p>'+
+												'<table border="0">'+
+													'<tr>'+
+														'<td>'+
+															'<div class="thumb">';
+															if(!JSONData[i].profileImage)
+																displayValue += '<img alt="" src="../resources/images/profile_default.png"></div>';
+															else
+																displayValue += '<img alt="" src="../resources/images/'+JSONData[i].profileImage+'"></div>';
+														displayValue = displayValue+'</td>'+
+														'<td style="vertical-align: middle;">'+
+															'<p>'+JSONData[i].userName+'</p>'+
+														'</td>'+
+													'</tr>'+
+												'</table>'+
 												'<p style="font-size: 13pt">'+JSONData[i].content+'</p>'+
+												
+												'<div class="likeit-wrap" id="item" onClick="fnc_addLikey('+JSONData[i].newsfeedId+')">'+
+													'<div class="likeit" data-postid="4" id="countLikey" >'+
+														'<span class="like-text">Like</span>'+
+														'<ins class="like-count" id="like'+JSONData[i].newsfeedId+'">'+JSONData[i].countLikey+'</ins>'+
+													'</div>'+
+													'<span class="newliker">Thanks!</span>'+
+													'<span class="isliker">You\'ve already liked this</span>'+
+												'</div>'+
+												'<span class="post-comment">'+
+												'<a href="/newsfeed/getNewsfeed?newsfeedId='+JSONData[i].newsfeedId+'">';
+												if(JSONData[i].countReply == 0)
+													displayValue += 'No comments';
+												else
+													displayValue += JSONData[i].countReply;
+												displayValue = displayValue +'</a></span>'+
 											'</div>'+
 										'</div>'+
-										'</li>';
+									'</li>';
 									$tiles.append(displayValue);
 								}
 								applyLayout();
@@ -831,7 +870,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							style="height: 40px" maxLength="20">
 						<option value="N01" selected="selected">자취지식인</option>
 						<option value="N02">중고거래</option>
-						<option value="N03">밥친구후기</option>
+						<option value="N10">밥친구후기</option>
 						<option value="N04">꿀팁</option>
 					</select>
 						  </div>
