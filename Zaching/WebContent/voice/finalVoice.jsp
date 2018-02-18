@@ -34,6 +34,16 @@
     <![endif]-->
 <script>
 	$(function() {
+		
+		$("a:contains('가사보기')").on("click",function() {
+			var songId = ${voice.voicelyrics};
+			showPopup();
+			function showPopup() {
+				window.open("http://www.melon.com/webplayer/mini.htm?contsIds="	+ songId + "&contsType=S", "a","width=410px, height=700px, left=1000, top=50");
+			}
+			
+		});
+		      
 		var music = document.getElementById('music'); // id for audio element
 		var duration = music.duration; // Duration of audio clip, calculated here for embedding purposes
 		var pButton = document.getElementById('pButton'); // play button
@@ -200,25 +210,7 @@
 						});
 	})
 
-	$("a:contains('가사보기')").on(
-			"click",
-			function() {
-				alert("하이하이");
-				var songId = $
-				{
-					voice.voicelyrics
-				}
-				;
-
-				showPopup();
-				function showPopup() {
-					window.open(
-							"http://www.melon.com/webplayer/mini.htm?contsIds="
-									+ songId + "&contsType=S", "a",
-							"width=410px, height=700px, left=1000, top=50");
-				}
-
-			});
+	
 </script>
 <style>
 ::-webkit-scrollbar {
@@ -412,66 +404,7 @@
 
 							</div>
 						</blockquote>
-						<blockquote style="align: middle;">
-							<div>
-								<img alt="" src="../resources/images/suzi.jpg" width="40"
-									height="40">수지&nbsp;
-								<audio controls="controls">
-									<source src="../resources/upload_files/record/Ailee.mp3"
-										type="audio/mpeg">
-								</audio>
-							</div>
-						</blockquote>
-						<blockquote style="align: middle;">
-							<div>
-								<img alt="" src="../resources/images/suzi.jpg" width="40"
-									height="40">수지&nbsp;
-								<audio controls="controls">
-									<source src="../resources/upload_files/record/Ailee.mp3"
-										type="audio/mpeg">
-								</audio>
-							</div>
-						</blockquote>
-						<blockquote style="align: middle;">
-							<div>
-								<img alt="" src="../resources/images/suzi.jpg" width="40"
-									height="40">수지&nbsp;
-								<audio controls="controls">
-									<source src="../resources/upload_files/record/Ailee.mp3"
-										type="audio/mpeg">
-								</audio>
-							</div>
-						</blockquote>
-						<blockquote style="align: middle;">
-							<div>
-								<img alt="" src="../resources/images/suzi.jpg" width="40"
-									height="40">수지&nbsp;
-								<audio controls="controls">
-									<source src="../resources/upload_files/record/Ailee.mp3"
-										type="audio/mpeg">
-								</audio>
-							</div>
-						</blockquote>
-						<blockquote style="align: middle;">
-							<div>
-								<img alt="" src="../resources/images/suzi.jpg" width="40"
-									height="40">수지&nbsp;
-								<audio controls="controls">
-									<source src="../resources/upload_files/record/Ailee.mp3"
-										type="audio/mpeg">
-								</audio>
-							</div>
-						</blockquote>
-						<blockquote style="align: middle;">
-							<div>
-								<img alt="" src="../resources/images/suzi.jpg" width="40"
-									height="40">수지&nbsp;
-								<audio controls="controls">
-									<source src="../resources/upload_files/record/Ailee.mp3"
-										type="audio/mpeg">
-								</audio>
-							</div>
-						</blockquote>
+						
 
 					</div>
 				</div>
@@ -568,6 +501,7 @@
 
 						<h2>Log</h2>
 						<pre id="log"></pre>
+						
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -709,7 +643,7 @@
 						+ (navigator.getUserMedia ? 'available.'
 								: 'not present!'));
 			} catch (e) {
-				alert('No web audio support in this browser!');
+				alert('보이스리플을 이용하시려면 크롬으로 이동해주세요.');
 			}
 
 			navigator.getUserMedia({
