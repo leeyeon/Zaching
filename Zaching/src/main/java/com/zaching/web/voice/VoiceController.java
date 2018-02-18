@@ -91,7 +91,7 @@ public class VoiceController {
 		System.out.println("id::"+voice.getVoiceId());
 		model.addAttribute(voice);
 		
-		return "forward:/voice/listVoice.jsp";
+		return "forward:/voice/getVoice?voiceId="+voice.getVoiceId();
 	}
 	
 	@RequestMapping(value="deleteVoice", method=RequestMethod.GET)

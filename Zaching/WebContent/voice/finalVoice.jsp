@@ -16,23 +16,12 @@
     <title></title>
 <jsp:include page="../resources/layout/sub_toolbar.jsp"/>
     <!-- Bootstrap core CSS --><!-- 합쳐지고 최소화된 최신 CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-		
-		
 		<!-- 부가적인 테마 -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-		
-		<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
    		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
    		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
    		
-   		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-	
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -156,6 +145,17 @@
     			    }
     			});
     	})
+    	
+    	$("a:contains('가사보기')").on("click", function() {
+    		alert("하이하이");
+    		var songId = ${voice.voicelyrics};
+    		
+    		showPopup();
+		    function showPopup() { window.open("http://www.melon.com/webplayer/mini.htm?contsIds="+songId+"&contsType=S", "a", "width=410px, height=700px, left=1000, top=50"); }
+		
+		});
+    	
+   
     </script>
     <style>
     	::-webkit-scrollbar {width: 8px; height: 8px; border: 3px solid #fff; }
@@ -261,10 +261,12 @@
         <div class="col-sm-8 blog-main" style="overflow-x:hidden; height:700px; background: url('../resources/images/suzi.jpg'); background-size: 100% 100%; padding-right:0px; padding-left:0px;" >
 			<div class="img-cover"></div>
 	          <div class="blog-post">
-	            <h3 class="blog-post-title">&nbsp;소주한잔 이어불러요</h3>
-	            <p class="blog-post-meta" style="background-color: black; opacity: 0.5;">사진사진 <a href="#">소간지</a></p>
+	            <h3 class="blog-post-title">&nbsp;${voice.voiceName}</h3>
+	            <p class="blog-post-meta" style="background-color: black; opacity: 0.5;">사진사진 <a href="#">이름</a></p>
 				<div style="padding-right:15px; padding-left:15px;">
-		           <a href="#" class="lyrics">가사보기</a>
+				<c:if test="${voice.categoryCode == 'R02'}">
+		           <a href='#' class="lyrics">가사보기</a>
+		           </c:if>
 		            <hr>
 		          
 		          	<c:set var="i" value="0"/>

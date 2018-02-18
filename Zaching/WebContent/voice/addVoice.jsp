@@ -71,22 +71,24 @@
 										async : false,
 										dataType : "json",
 										success : function(serverData) {
-
 											var name = "";
 
 											//'<tr><td align="left">'+song.song[i].songName+'</td><td align="left">${user.email}</td></tr>'+
-
-											for (var i = 0; i < 50; i++) {
+									console.log(serverData.size);
+											for (var i = 0; i < 30; i++) {
+											
 												name = name
-														+ '<tr><td align="left"><input type="hidden" id="name" name="name" value="'+serverData.melon.songs.song[i].artists.artist[0].artistName+'" /><input type="hidden" id="title" name="title" value="'+serverData.melon.songs.song[i].songName+'" />'
+														+ '<tr><td align="left"><input type="hidden" id="songId" name="songId" value="'+serverData.melon.songs.song[i].songId+'" /><input type="hidden" id="name" name="name" value="'+serverData.melon.songs.song[i].artists.artist[0].artistName+'" /><input type="hidden" id="title" name="title" value="'+serverData.melon.songs.song[i].songName+'" />'
 														+ serverData.melon.songs.song[i].songName
 														+ '</td><td align="left">'
 														+ serverData.melon.songs.song[i].artists.artist[0].artistName
 														+ '</td></tr>';
+														
+												
 											}
 
 											var displayValue = '<div class="list"><table class="table table-hover table-striped"><tr><thead>'
-													+ '<td class="th" align="left">노래제목</td><td class="th" align="left">가수명</td></tr><tbody>'
+													+ '<tr class="th" align="left">노래제목</tr><tr class="th" align="left">가수명</tr></tr><tbody>'
 													+ name
 													+ '</tbody></table></div>';
 
@@ -95,12 +97,17 @@
 											$(".viewlist td")
 													.click(
 															function() {
-																var title = $($("input[name='title']")[$('.viewlist td:nth-child(1)').index(this) - 1]).val();
-																var name = $($("input[name='name']")[$('.viewlist td:nth-child(1)').index(this) - 1]).val();
+																var title = $($("input[name='title']")[$('.viewlist td:nth-child(1)').index(this)]-1).val();
+																var name = $($("input[name='name']")[$('.viewlist td:nth-child(1)').index(this)]-1).val();
+																var songId = $($("input[name='songId']")[$('.viewlist td:nth-child(1)').index(this)]-1).val();
 
 																$("input[name='selectsong']").val(title);
 																$("input[name='selectsinger']").val(name);
-
+																$("input:hidden[name='voicelyrics']").val(songId+"/"+title+"/"+name);
+																
+																
+																
+																
 																$("input[name='ok']").val(title+ " - "+ name);
 																});
 										}
@@ -343,7 +350,7 @@ background: #fff;
 <div class="songSelect">
 	<form name='Form' class="form-vertical" enctype="multipart/form-data">
 		<input type="hidden" name="userId" value="${user.userId}">
-		
+		<input type="hidden" name="voicelyrics" value="">
 			<div class="row">
 				<div class="form-group" >
 					<br/><div></div>
