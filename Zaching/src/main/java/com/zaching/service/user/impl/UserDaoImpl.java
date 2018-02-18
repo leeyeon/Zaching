@@ -35,7 +35,10 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public User login(String email) throws Exception {
 		System.out.println("::UserDao login::\n"+email);
+		
+		
 		return sqlSession.selectOne("UserMapper.login", email);
+		
 	}
 
 	@Override

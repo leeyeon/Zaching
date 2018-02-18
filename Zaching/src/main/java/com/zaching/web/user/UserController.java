@@ -1,4 +1,4 @@
-
+			
 package com.zaching.web.user;
 
 import java.util.Date;
@@ -68,7 +68,6 @@ public class UserController {
 	int pageSize;
 	
 
-
 	// �̸��� ����
 	@RequestMapping(value = "emailAuth", method = RequestMethod.POST)
 	public String emailAuth(HttpServletRequest request, HttpSession session) throws Exception {
@@ -122,6 +121,7 @@ public class UserController {
 
 		if (user.getPassword().equals(dbUser.getPassword()) && user.getEmail().equals(dbUser.getEmail())) {
 			session.setAttribute("user", dbUser);
+			//세션에 저장하는 시간(=로그인시간 기록남기기) DB에 저장 OR 업데이트
 		}
 		if (session.getAttribute("user") == null) {
 					
