@@ -35,7 +35,10 @@
     		var pButton = document.getElementById('pButton'); // play button
     		var playhead = document.getElementById('playhead'); // playhead
     		var timeline = document.getElementById('timeline'); // timeline
-
+    		
+			var page = ${search.currentPage};
+			var pageSize = ${search.pageSize};
+			
     		// timeline width adjusted for playhead
     		var timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
 
@@ -141,7 +144,33 @@
 					//alert(elem);
     			  if ( elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight())
     			    {
-    			        alert("End of Yellow");
+    				  	page++;
+    				  	$.ajax({
+    				  		url : "/voice/json/listVoice",
+    						method : "POST",
+    						contentType : "application/json; charset=UTF-8",
+    						data : JSON.stringify({
+    							"currentPage" : page,
+    							"pageSize" : pageSize
+    						}),
+    						async : false,
+    						dataType : "json",
+    						success : function(serverData){
+    							var display = '';
+    							for(var i=0; i<serverData.length; i++){
+    								display = display + '<div class="col-xs-6 col-lg-5" style="padding-left: 0pt; padding-right: 0pt">';
+    								if(serverData[i].backgroundImage)
+    									display += '<img src="../resources/images/voiceImages/'+serverData[i].backgroundImage+'" width="100%" height="90pt">';
+    								else
+    									display += '<img src="../resources/images/voiceImages/default.jpg" width="100%" height="90pt">';
+    								display = display + '</div>'+
+    								'<div class="col-xs-6 col-lg-7" style="padding-top: 7pt; line-height: 1.5em; height: 80pt;"><a href="#" style="color: black; font-size:12pt;"><strong>'+serverData[i].voiceName+'</strong></a>'+
+    								'<br><a href="#" style="color:gray;">'+serverData[i].userName+'<br></a>'+
+    								'<p5 style="color: gray;"><i class="fas fa-play-circle"></i>&nbsp;'+serverData[i].countReply+'</p5><br></div>';
+    							}
+    							$("#voiceList").append(display);
+    						}
+    				  	})
     			    }
     			});
     	})
@@ -240,6 +269,7 @@
 	position:relative;
 	top:1px;
 }
+
 			
 			
     </style>
@@ -274,7 +304,7 @@
 							<c:set var="i" value="${ i+1 }" />
 								 <blockquote style="vertical-align:middle;">
 						              <div style="display: -webkit-inline-box; vertical-align:middle;"><img alt="" src="../resources/images/${reply.userImage}" width="40" height="40">${reply.userName}&nbsp;
-						              <audio id="music" preload="none" style="display:hidden;"><source src="../resources/upload_files/record/${reply.content}" type="audio/mpeg"></audio>
+						              <audio id="music" style="display:hidden;"><source src="../resources/upload_files/record/${reply.content}" type="audio/mpeg"></audio>
 						              	
 						              	<div id="audioplayer">
 												<button id="pButton" class="play" onclick="play()"></button>
@@ -340,7 +370,7 @@
             최신 글 보기</strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<a href="#" style="color:gray; font-size:12px;"><i class="glyphicon glyphicon-refresh"></i>새로고침</a></div>
           <div style="overflow-x:hidden; height:623px; margin-right:-15px; padding-top:10pt;"  id="inside">
           <div class="col-xs-12 col-sm-12">
-			<div class="row">
+			<div class="row" id="voiceList">
 				<c:set var="i" value="0"/>
 							<c:forEach var="voice" items="${list}">
 							<c:set var="i" value="${ i+1 }" />
@@ -353,34 +383,7 @@
 				
 				
 			</div>
-          <div class="sidebar-module">
-            <h4>Elsewhere</h4>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ol>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ol>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ol>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ol>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ol>
-          </div>
+          
         </div><!-- /.blog-sidebar -->
 		</div>
 		</div>
