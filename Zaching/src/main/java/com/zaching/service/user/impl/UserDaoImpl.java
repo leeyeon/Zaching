@@ -35,7 +35,10 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public User login(String email) throws Exception {
 		System.out.println("::UserDao login::\n"+email);
+		
+		
 		return sqlSession.selectOne("UserMapper.login", email);
+		
 	}
 
 	@Override
@@ -131,6 +134,10 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public String getAccountToken(int userId) throws Exception {
 		return sqlSession.selectOne("UserMapper.getAccountToken", userId);
+	}
+	
+	public String getPWD(String id) throws Exception{
+		return sqlSession.selectOne("UserMapper.getPassword", id);
 	}
 
 	@Override

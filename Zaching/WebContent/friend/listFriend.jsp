@@ -29,9 +29,30 @@
 
 
 
+
+
 <style>
 body {
 	padding-top: 80px;
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	padding: 12px 16px;
+	z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
 }
 </style>
 
@@ -39,23 +60,21 @@ body {
 <script type="text/javascript">
 	function fncGetUserList(currentPage) {
 		$("#currentPage").val(currentPage)
-		$("form").attr("method", "POST").attr("action", "/friend/listFriend")
+		$("form").attr("method", "GET").attr("action", "/friend/listFriend")
 				.submit();
 	}
 
-	$(function() {
-		$("td.ct_btn01:contains('검색')").on("click", function() {
 
-			alert($("td.ct_btn01:contains('검색')").html());
-
-			fncGetUserList(1);
-		});
 		//프로필 사진 클릭시 타임라인 이동
-		$(function() {
-			$("#btn").on("click", function() {
-				self.location = "";
+			$("friend_img").on("click", function() {
+				self.location = "/user/getTimeLine?userId=${user.name}";
 
-			});
+				//메세지함
+				$("#listMessage").on("click", function() {
+					self.location = "/message/listMessage";
+				})
+
+		});
 		});
 	});
 </script>
@@ -70,37 +89,106 @@ body {
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-		
 
-		<div class="row">
-		
-		<c:forEach var="friend" items="${list}" varStatus="status">
+		<div class="page-header text-info">
+			<h3>친구목록조회</h3>
+		</div>
 
-				<div class="col-md-4">
-					<div>
-						<button class="btn" id="btn" type="submit">
-							<img class="btn-img" style="width: 120px; height: 120px;"
-								src="../resources/upload_files/images/${friend.profileImage}">
-						</button>
-					</div>
-					<div class="col-sm-4 ">${friend.name }</div>
-					<div class="col-sm-4 ">
-						<select name='fruits'>
-							<option value='' selected>친구</option>
-							<option value='message'>메세지</option>
-							<option value='banana'>친구삭제</option>
-							<option value='lemon'>친구차단</option>
+
+
+
+
+			<!--  <div class="col-md-6 text-left">
+				<p class="text-primary">전체 ${resultPage.totalCount } 건수, 현재
+					${resultPage.currentPage} 페이지</p>
+			</div>
+
+			<div class="col-md-6 text-right">
+				<form class="form-inline" name="detailForm">
+
+					<div class="form-group">
+						<select class="form-control" name="searchCondition">
+							<option value="0"
+								${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>이름</option>
 						</select>
 					</div>
 
-				</div>
-			</c:forEach>
+					<div class="form-group">
+						<label class="sr-only" for="searchKeyword">검색어</label> <input
+							type="text" class="form-control" id="searchKeyword"
+							name="searchKeyword" placeholder="검색어"
+							value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+					</div>
+
+					<button type="button" class="btn btn-default">검색</button>
+
+				</form>
+			</div>
+		</div>-->
+
+
+
+			<div class="row">
+
+
+				<c:forEach var="friend" items="${list}" varStatus="status">
+
+					<div class="col-xs-6 col-md-4">
+						<div>
+							<c:if test="${user.profileImage ne null }">
+								<button type="button" class="btn btn-default" id="friendImage">
+									<img class="friend_img" style="width: 120px; height: 120px;"
+										src="../resources/upload_files/images/${friend.profileImage}">
+								</button>
+							</c:if>
+
+							<c:if test="${user.profileImage eq null }">
+
+
+								<button type="button" class="btn btn-default" id="friendImage">
+									<img class="friend_img" style="width: 120px; height: 120px;"
+										src="../resources/images/profile_default.png">
+								</button>
+
+
+
+							</c:if>
+						</div>
+						<input type="hidden" name="friendId" value="${friend.name}">
+						<div class="col-xs-6 col-sm-4 ">${friend.name }</div>
+						<div class="col-xs-6 col-sm-4 ">
+							<div class="dropdown">
+								<span> 친구 </span>
+								<div class="dropdown-content">
+									<ul>
+										<li><a href="#">메세지</a></li>
+										<li><a href="#">친구삭제</a></li>
+										<li><a href="#">친구차단</a></li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</c:forEach>
+			</div>
 		</div>
-	</div>
 
 
 
 
+
+
+
+		<!-- PageNavigation Start... -->
+		<jsp:include page="../common/pageNavigator.jsp" />
+		<!-- PageNavigation End... -->
+		
+		
+		
+
+		
 
 
 

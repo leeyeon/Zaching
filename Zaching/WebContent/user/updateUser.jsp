@@ -119,6 +119,7 @@ body {
 		var address = $("input[name='address']").val();
 		var pw = $("#updatepw").val();
 		var pw2 = $("#updatepw2").val();
+		var gender =$("input[name='gender']").val();
 
 		if (pw != pw2) {
 
@@ -331,18 +332,13 @@ body {
 				</div>
 			</div>
 			
-			<div class="form-group">
-				<label for="accountNumber" class="col-sm-offset-1 col-sm-3 control-label">계좌번호</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="accountNumber" name="accountNumber" />
-				</div>
-			</div>
+			
 
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 					<button type="button" class="btn btn-primary" id="update">수	&nbsp;정</button>
 					<a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
-
+					
 				</div>
 			</div>
 		</form>

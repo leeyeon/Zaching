@@ -108,6 +108,11 @@ public class NewsfeedServiceImpl implements NewsfeedService{
 	public int getLikeUser(int newsfeedId, int userId, String status) throws Exception {
 		return newsfeedDao.getLikeUser(newsfeedId, userId, status);
 	}
+
+	@Override
+	public List<Newsfeed> timeline(int userId) throws Exception {
+		return newsfeedDao.timeline(userId);
+	}
 	
 	
 	

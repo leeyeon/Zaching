@@ -50,12 +50,10 @@ public class BobRestController {
 	private NewsfeedService newsfeedService;
 	
 	@Value("#{commonProperties['pageUnit']}")
-	// @Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
 
-	//@Value("#{commonProperties['pageSize']}")
-	// @Value("#{commonProperties['pageSize'] ?: 2}")
-	int pageSize = 9;
+	@Value("#{commonProperties['pageSize']}")
+	int pageSize;
 
 	public BobRestController() {
 		// TODO Auto-generated constructor stub
@@ -247,6 +245,8 @@ public class BobRestController {
 		
 		JSONObject object = new JSONObject();
 		
+		System.out.println(userPoint +"::" +fee);
+		
 		if(userPoint >= fee) {
 			Bob bob = bobService.getBobInfo(bobId, "B03");
 			bobService.payFeeBob(Integer.valueOf(obj.get("participantId").toString()), fee);
@@ -277,12 +277,39 @@ public class BobRestController {
 		
 	}
 	
+	@RequestMapping(value="/inviteBob", method=RequestMethod.POST)
+	@ResponseBody
+	public JSONObject inviteBob(@RequestBody Map<String, Object> obj) {
+		
+		int bobId = Integer.valueOf(obj.get("bobId").toString());
+		List<Integer> listUser = (List<Integer>)obj.get("list");
+		
+		boolean result = false;
+		
+		try {
+			bobService.inviteBob(listUser, bobId);
+			result = true;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		JSONObject object = new JSONObject();
+		
+		if(result) {
+			object.put("response", "success");
+		} else {
+			object.put("response", "fail");
+		}
+		
+		return object;
+	}
+	
 	/* ÈÄ±â */
 	
 	@RequestMapping(value="/addReview", method=RequestMethod.POST)
 	public JSONObject addReview(@RequestBody Map<String, Object> obj) {
 		
-		System.out.println("Èì³Ä¸µ?");
+		//System.out.println("Èì³Ä¸µ?");
 		
 		Newsfeed newsfeed = new Newsfeed();
 		newsfeed.setCategoryCode("N10:"+obj.get("bobId"));
@@ -290,9 +317,7 @@ public class BobRestController {
 		newsfeed.setStatus("0");
 		newsfeed.setPrivacyBound("0");
 		newsfeed.setUserId(((Integer)obj.get("userId")).intValue());
-		
-		
-		
+
 		System.out.println(newsfeed);
 		
 		boolean result = false;

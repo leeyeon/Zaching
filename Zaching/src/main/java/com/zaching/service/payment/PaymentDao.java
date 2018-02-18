@@ -34,6 +34,8 @@ public interface PaymentDao {
 	
 	public String getUserCI(String accessToken, String userSeqNo) throws Exception;
 	
+	public void presentPoint(Payment payment) throws Exception;
+	
 	public Map<String, Object> getAccount(String accessToken, String accountNum, int accountHolderinfo) throws Exception;
 	
 }

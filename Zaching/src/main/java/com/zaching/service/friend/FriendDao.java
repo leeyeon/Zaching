@@ -14,7 +14,7 @@ public interface FriendDao {
 	public void acceptFriend(Friend friend) throws Exception;
 	
 	//친구추천(알수도있는친구)
-	public void recommendFriend(Friend friend) throws Exception;
+	public List<Friend> recommendFriend(Search search) throws Exception;
 	
 	//친구끊기
 	public void deleteFriend(int friendId) throws Exception;
