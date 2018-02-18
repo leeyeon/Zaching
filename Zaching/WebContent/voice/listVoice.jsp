@@ -4,7 +4,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>La Casa - Real Estate HTML5 Home Page Template</title>
 	
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 	<meta charset="utf-8">
