@@ -4,7 +4,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>La Casa - Real Estate HTML5 Home Page Template</title>
 	
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 	<meta charset="utf-8">
@@ -14,8 +13,8 @@
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 	<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
-	
-
+	<script type="text/javascript" src="../resources/javascript/jquery.js"></script>
+	<script type="text/javascript" src="../resources/javascript/main.js"></script>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="../resources/javascript/FileButton.js"></script>
 
@@ -471,6 +470,29 @@ width:100%;}
 		.hero{
 		height: 700px;
 		}
+		
+		.listings ul.properties_list li .price{
+		    position: absolute;
+		    top: 10px;
+		    left: 10px;
+		    padding: 15px 20px;
+		    background: #ffffff;
+		    color: #514d4d;
+		    font-family: "lato-bold", Helvetica, Arial, sans-serif;
+		    font-size: 16px;
+		    font-weight: bold;
+		    letter-spacing: 1px;
+		
+		    border-radius: 2px;
+		    -webkit-border-radius: 2px;
+		    -moz-border-radius: 2px;
+		    -o-border-radius: 2px;
+		    text-shadow: none;
+		}
+		
+		.listings{
+    padding: 100px 0;
+}
 	</style>
 </head>
 
@@ -533,13 +555,18 @@ width:100%;}
 									<span class="price"><i class="fas fa-play-circle"></i>&nbsp;${voice.countReply}</span>
 									<div class="property_details">
 										<h1>
-											<a href="#" style="vertical-align: bottom;"><img src="../resources/images/${voice.profileImage}" id="profile">&nbsp;${voice.userName}</a>
+											<a href="#" style="vertical-align: bottom;"><c:if test="${!empty voice.profileImage}"><img src="../resources/images/${voice.profileImage}" id="profile"></c:if>
+											<c:if test="${empty voice.profileImage}"><img src="../resources/images/profile_default.png" id="profile"></c:if>&nbsp;${voice.userName}</a>
 										</h1>
 										
 										<h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
 											<a href="/voice/getVoice?voiceId=${voice.voiceId}">${voice.voiceName}</a>
 										</h1>
-										<h2><c:if test="${voice.categoryCode == 'R06'}">프리토킹&nbsp;</c:if><span class="property_size">${voice.voicelyrics}</span></h2>
+										<h2><c:if test="${voice.categoryCode == 'R06'}">프리토킹&nbsp;</c:if></h2>
+										<h2><c:if test="${voice.categoryCode == 'R02'}">노래이어부르기&nbsp;</c:if></h2>
+										<h2><c:if test="${voice.categoryCode == 'R03'}">글 읽어주기&nbsp;</c:if></h2>
+										<h2><c:if test="${voice.categoryCode == 'R04'}">ASMR&nbsp;</c:if></h2>
+										<h2><c:if test="${voice.categoryCode == 'R05'}">알림음 만들기&nbsp;</c:if></h2>
 									</div>
 								</li>
 			   				</c:forEach>
@@ -557,7 +584,6 @@ width:100%;}
 	  	</div>
 	  </div>
 	</div>
-	<br/><br/><br/><br/><br/><br/>
 	<footer>
 		<div class="copyrights wrapper">
 			Copyright © 2015 <a href="http://pixelhint.com" target="_blank" class="ph_link" title="Download more free Templates">Pixelhint.com</a>. All Rights Reserved.

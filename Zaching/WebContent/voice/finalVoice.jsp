@@ -16,23 +16,12 @@
     <title></title>
 <jsp:include page="../resources/layout/sub_toolbar.jsp"/>
     <!-- Bootstrap core CSS --><!-- 합쳐지고 최소화된 최신 CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-		
-		
 		<!-- 부가적인 테마 -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-		
-		<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
    		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
    		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
    		
-   		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-	
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -46,7 +35,10 @@
     		var pButton = document.getElementById('pButton'); // play button
     		var playhead = document.getElementById('playhead'); // playhead
     		var timeline = document.getElementById('timeline'); // timeline
-
+    		
+			var page = ${search.currentPage};
+			var pageSize = ${search.pageSize};
+			
     		// timeline width adjusted for playhead
     		var timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
 
@@ -152,10 +144,47 @@
 					//alert(elem);
     			  if ( elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight())
     			    {
-    			        alert("End of Yellow");
+    				  	page++;
+    				  	$.ajax({
+    				  		url : "/voice/json/listVoice",
+    						method : "POST",
+    						contentType : "application/json; charset=UTF-8",
+    						data : JSON.stringify({
+    							"currentPage" : page,
+    							"pageSize" : pageSize
+    						}),
+    						async : false,
+    						dataType : "json",
+    						success : function(serverData){
+    							var display = '';
+    							for(var i=0; i<serverData.length; i++){
+    								display = display + '<div class="col-xs-6 col-lg-5" style="padding-left: 0pt; padding-right: 0pt">';
+    								if(serverData[i].backgroundImage)
+    									display += '<img src="../resources/images/voiceImages/'+serverData[i].backgroundImage+'" width="100%" height="90pt">';
+    								else
+    									display += '<img src="../resources/images/voiceImages/default.jpg" width="100%" height="90pt">';
+    								display = display + '</div>'+
+    								'<div class="col-xs-6 col-lg-7" style="padding-top: 7pt; line-height: 1.5em; height: 80pt;"><a href="#" style="color: black; font-size:12pt;"><strong>'+serverData[i].voiceName+'</strong></a>'+
+    								'<br><a href="#" style="color:gray;">'+serverData[i].userName+'<br></a>'+
+    								'<p5 style="color: gray;"><i class="fas fa-play-circle"></i>&nbsp;'+serverData[i].countReply+'</p5><br></div>';
+    							}
+    							$("#voiceList").append(display);
+    						}
+    				  	})
     			    }
     			});
     	})
+    	
+    	$("a:contains('가사보기')").on("click", function() {
+    		alert("하이하이");
+    		var songId = ${voice.voicelyrics};
+    		
+    		showPopup();
+		    function showPopup() { window.open("http://www.melon.com/webplayer/mini.htm?contsIds="+songId+"&contsType=S", "a", "width=410px, height=700px, left=1000, top=50"); }
+		
+		});
+    	
+   
     </script>
     <style>
     	::-webkit-scrollbar {width: 8px; height: 8px; border: 3px solid #fff; }
@@ -240,6 +269,7 @@
 	position:relative;
 	top:1px;
 }
+
 			
 			
     </style>
@@ -261,10 +291,12 @@
         <div class="col-sm-8 blog-main" style="overflow-x:hidden; height:700px; background: url('../resources/images/suzi.jpg'); background-size: 100% 100%; padding-right:0px; padding-left:0px;" >
 			<div class="img-cover"></div>
 	          <div class="blog-post">
-	            <h3 class="blog-post-title">&nbsp;소주한잔 이어불러요</h3>
-	            <p class="blog-post-meta" style="background-color: black; opacity: 0.5;">사진사진 <a href="#">소간지</a></p>
+	            <h3 class="blog-post-title">&nbsp;${voice.voiceName}</h3>
+	            <p class="blog-post-meta" style="background-color: black; opacity: 0.5;">사진사진 <a href="#">이름</a></p>
 				<div style="padding-right:15px; padding-left:15px;">
-		           <a href="#" class="lyrics">가사보기</a>
+				<c:if test="${voice.categoryCode == 'R02'}">
+		           <a href='#' class="lyrics">가사보기</a>
+		           </c:if>
 		            <hr>
 		          
 		          	<c:set var="i" value="0"/>
@@ -272,7 +304,7 @@
 							<c:set var="i" value="${ i+1 }" />
 								 <blockquote style="vertical-align:middle;">
 						              <div style="display: -webkit-inline-box; vertical-align:middle;"><img alt="" src="../resources/images/${reply.userImage}" width="40" height="40">${reply.userName}&nbsp;
-						              <audio id="music" preload="none" style="display:hidden;"><source src="../resources/upload_files/record/${reply.content}" type="audio/mpeg"></audio>
+						              <audio id="music" style="display:hidden;"><source src="../resources/upload_files/record/${reply.content}" type="audio/mpeg"></audio>
 						              	
 						              	<div id="audioplayer">
 												<button id="pButton" class="play" onclick="play()"></button>
@@ -338,7 +370,7 @@
             최신 글 보기</strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<a href="#" style="color:gray; font-size:12px;"><i class="glyphicon glyphicon-refresh"></i>새로고침</a></div>
           <div style="overflow-x:hidden; height:623px; margin-right:-15px; padding-top:10pt;"  id="inside">
           <div class="col-xs-12 col-sm-12">
-			<div class="row">
+			<div class="row" id="voiceList">
 				<c:set var="i" value="0"/>
 							<c:forEach var="voice" items="${list}">
 							<c:set var="i" value="${ i+1 }" />
@@ -351,34 +383,7 @@
 				
 				
 			</div>
-          <div class="sidebar-module">
-            <h4>Elsewhere</h4>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ol>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ol>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ol>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ol>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ol>
-          </div>
+          
         </div><!-- /.blog-sidebar -->
 		</div>
 		</div>

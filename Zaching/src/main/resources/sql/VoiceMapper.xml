@@ -59,7 +59,7 @@
 								AND category_code = #{searchCondition}
 						</if>
 						
-					</where>) inner_table
+					</where> ORDER BY voice_id desc) inner_table
 					WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>

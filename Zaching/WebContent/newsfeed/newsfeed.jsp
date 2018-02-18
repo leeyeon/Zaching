@@ -36,9 +36,52 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <!----start-dropdown--->
         <jsp:include page="/resources/layout/toolbar.jsp"/>
+        
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
          <script type="text/javascript">
          
          $(function(){
+        	 var placeOverlay = new daum.maps.CustomOverlay({zIndex:1}), 
+		        contentNode = document.createElement('div');
+		     
+		    var mapContainer = document.getElementById('map'), 
+		        mapOption = {
+		            center: new daum.maps.LatLng(37.566826, 126.9786567), 
+		            level: 5 
+		        };  
+		    var map = new daum.maps.Map(mapContainer, mapOption); 
+		    
+        	 $( "#iconMarker" ).on("click" , function() {
+		    		daum.postcode.load(function(){
+		    	        new daum.Postcode({
+		    	            oncomplete: function(data) {
+		    	            	
+	    	                    jQuery("#iconMarker").val(data.address);
+	    	                    $("input[name=ok]").val(data.address);
+	    	                    
+	    	                    console.log(data);
+	    	                    var geocoder = new daum.maps.services.Geocoder();
+	    	                	geocoder.addressSearch($("input[name=ok]").val(), function(result, status) {
+
+	    	                	     if (status === daum.maps.services.Status.OK) {
+	    	                	        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+	    	                	        var marker = new daum.maps.Marker({
+	    	                	            map: map,
+	    	                	            position: coords
+	    	                	        });
+
+	    	                	        
+	    	                	        $("input:hidden[name='locationX']").val(coords.getLat());
+	    	                	        $("input:hidden[name='locationY']").val(coords.getLng());
+	    	                	      
+
+	    	                	    } 
+	    	                	});
+		    	            }
+		    	        }).open();
+		    	    });
+		    	});
+        	 
         	 
         	 
 	
@@ -300,10 +343,40 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   padding-top: 503px;
 }
 
-
+.filebox label {
+    display: inline-block;
+    padding: .5em .75em;
+    color: #999;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+}
+ 
+.filebox input[type="file"] {  
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
 		</style>
 		
 		<script>
+		function getThumbnailPrivew(html, $target) {
+		    if (html.files && html.files[0]) {
+		        var reader = new FileReader();
+		        reader.onload = function (e) {
+		            $target.css('display', '');
+		            //$target.css('background-image', 'url(\"' + e.target.result + '\")'); // 배경으로 지정시
+		            $target.html('<img src="' + e.target.result + '" border="0" alt="" />');
+		        }
+		        reader.readAsDataURL(html.files[0]);
+		    }
+		}
+		
 		 $(function() {
 			 window.onscroll = function() {myFunction()};
 
@@ -707,6 +780,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		  <script src="../resources/javascript/jquery.imagesloaded.js"></script>
 		  <script src="../resources/javascript/jquery.wookmark.js"></script>
 		  <script type="text/javascript">
+		  
+ 
+		
+		  
 		  	var page = ${search.currentPage};
 			var pageSize = ${search.pageSize};
 			var searchCondition = '${search.searchCondition}';
@@ -769,21 +846,60 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								success : function(JSONData , status) {
 								
 								for(var i=0; i<JSONData.length;i++){
-									var displayValue = '<li onclick="location.href=\'/newsfeed/getNewsfeed?newsfeedId='+JSONData[i].newsfeedId+'\';" >'+
-									'<img src="../resources/upload_files/images/'+JSONData[i].fileName+'"/>'+
-										'<div class="post-info">'+
+									var displayValue = '<li class="cell">'+
+									'<input type="hidden" value="'+JSONData[i]+'" name="newsfeedId"/>';
+										if(JSONData[i].fileName)
+											displayValue += '<img src="../resources/upload_files/images/'+JSONData[i].fileName+'" style="width: 100%"/>';
+										else
+											displayValue += '<img src="../resources/upload_files/images/profile_default.png" style="width: 100%"/>';
+										displayValue = displayValue + '<div class="post-info">'+
 											'<div class="post-basic-info">'+
 												'<span><a href="#"><label> </label>';
+												if(JSONData[i] == 'N01')
+													displayValue += '자취지식인';
+												if(JSONData[i] == 'N10')
+													displayValue += '밥친구 후기';
+												if(JSONData[i] == 'N02')
+													displayValue += '중고거래';
+												if(JSONData[i] == 'N04')
+													displayValue += '꿀팁';
 												
-										if(JSONData[i].categoryCode =='N01') 
-											displayValue +='자취지식인</a></span>';
-											
-											displayValue += '<p></p>'+
-												'<div class="thumb"><img alt="" src="../resources/images/'+JSONData[i].profileImage+'" style="align: left;">'+JSONData[i].userName+'</div>'+
+													displayValue = displayValue+'</a></span>'+
+												'<p></p>'+
+												'<table border="0">'+
+													'<tr>'+
+														'<td>'+
+															'<div class="thumb">';
+															if(!JSONData[i].profileImage)
+																displayValue += '<img alt="" src="../resources/images/profile_default.png"></div>';
+															else
+																displayValue += '<img alt="" src="../resources/images/'+JSONData[i].profileImage+'"></div>';
+														displayValue = displayValue+'</td>'+
+														'<td style="vertical-align: middle;">'+
+															'<p>'+JSONData[i].userName+'</p>'+
+														'</td>'+
+													'</tr>'+
+												'</table>'+
 												'<p style="font-size: 13pt">'+JSONData[i].content+'</p>'+
+												
+												'<div class="likeit-wrap" id="item" onClick="fnc_addLikey('+JSONData[i].newsfeedId+')">'+
+													'<div class="likeit" data-postid="4" id="countLikey" >'+
+														'<span class="like-text">Like</span>'+
+														'<ins class="like-count" id="like'+JSONData[i].newsfeedId+'">'+JSONData[i].countLikey+'</ins>'+
+													'</div>'+
+													'<span class="newliker">Thanks!</span>'+
+													'<span class="isliker">You\'ve already liked this</span>'+
+												'</div>'+
+												'<span class="post-comment">'+
+												'<a href="/newsfeed/getNewsfeed?newsfeedId='+JSONData[i].newsfeedId+'">';
+												if(JSONData[i].countReply == 0)
+													displayValue += 'No comments';
+												else
+													displayValue += JSONData[i].countReply;
+												displayValue = displayValue +'</a></span>'+
 											'</div>'+
 										'</div>'+
-										'</li>';
+									'</li>';
 									$tiles.append(displayValue);
 								}
 								applyLayout();
@@ -803,6 +919,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!----//wookmark-scripts---->
 	 	<!----start-footer--->
 	 	<div class="footer">
+	 	
+	 	<c:if test="${user.userId ne null}">
 			<div id="fixedbtn" align="right" style="z-index: 1500;">
    			  <div class="container">
 	  			<div class="btn-add-bob text-center" data-toggle="modal" data-target="#myModal3" style="font-size:20px; 
@@ -810,6 +928,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	  		</div>
 	 	 </div>
 			</div>
+			</c:if>
 		</div>
 	
 		
@@ -821,6 +940,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <h4 class="modal-title" id="myModalLabel"><b>게시글 작성</b></h4>
          <form name='Form' class="form-vertical" enctype="multipart/form-data" style="padding-left: 30px;">
 			<input type="hidden" value="${user.userId}" name="userId" id="userId"/>
+			
+			<input type="hidden"  name="locationX" value=""/>
+			<input type="hidden" name="locationY" value="" />
+			
 			<div class="container">
 				<div class="row">
 				<table border="1">
@@ -831,7 +954,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							style="height: 40px" maxLength="20">
 						<option value="N01" selected="selected">자취지식인</option>
 						<option value="N02">중고거래</option>
-						<option value="N03">밥친구후기</option>
+						<option value="N10">밥친구후기</option>
 						<option value="N04">꿀팁</option>
 					</select>
 						  </div>
@@ -847,6 +970,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						   </div>
 					</td>					
 					<td width="200" style="text-align: right; vertical-align: middle;">
+						
 						<a href="#" onclick="addNewsfeed();" class="addNewsfeed" data-dismiss="modal">등록</a>
 					</td>
 					</tr> 
@@ -854,13 +978,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<table border="1">
 						<tr>
 						<td  style="table-layout:fixed">
-							<div class="form-group" style="max-height:1px;">
-								<input type="file" name="file" imageswap="true" imagesrc="../resources/images/imageButton.PNG"/>
-							</div>
+							<div class="filebox">
+        <label for="cma_file">사진 인증샷 업로드</label>
+		<input type="file" name="file" id="cma_file" imageswap="true" accept="image/*" capture="camera" onchange="getThumbnailPrivew(this,$('#cma_image'))"/>
+        <div id="cma_image" style="width:200px;max-width:200px;display:none;"></div>
+    </div>
 						</td>						
 					  <td width=450 style="vertical-align: top; style="table-layout:fixed">
-					  <p style="font-size: 30px; color: #00D1CD;"><i class="glyphicon glyphicon-map-marker" id="iconMarker"></i></p><br>
-						   <textarea class="form-control" rows="7" placeholder="상태를 업데이트 하세요." class="span1" cols="40" name="content" id=" content"></textarea>
+					
+					  <p style="font-size: 30px; color: #00D1CD;"><i class="glyphicon glyphicon-map-marker" id="iconMarker"></i><input type="text" name="ok" id="ok" placeholder="위치를 지정해주세요"
+							style="font-size: 16px; width: 80%; height: 30px; padding-left: 20px; border: none;" readonly/> <div id="map"overflow:hidden;"></div></p>
+								<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>	            		
+		            	   <textarea class="form-control" rows="7" placeholder="상태를 업데이트 하세요." class="span1" cols="40" name="content" id=" content"></textarea>
+						   
 						      </td>
 					    </tr>
 					</table>
