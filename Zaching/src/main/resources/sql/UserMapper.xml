@@ -42,11 +42,11 @@
 	
 	<insert id="addUser" parameterType="user" >
 	INSERT
-		INTO users(user_id , name, password, email,
+		INTO users(user_id ,email, name, password, 
 		profile_image, role, sns_type,  created_date) 
-		VALUES(	seq_user_id.nextval, #{name} , #{password},
-					#{email}, #{profileImage:VARCHAR},
-					#{role} ,#{snsType:CHAR}, SYSDATE )
+		VALUES(	seq_user_id.nextval, #{email},#{name} , #{password},
+					 #{profileImage:VARCHAR},
+					#{role} ,#{snsType:CHAR}, TO_CHAR(SYSDATE , 'YYYY-MM-DD') )
 	</insert>
 	
 	
@@ -56,7 +56,7 @@
 		profile_image, role, sns_type,  created_date) 
 		VALUES(	seq_user_id.nextval, #{name} ,
 					#{email}, #{profileImage:VARCHAR},
-					#{role} ,#{snsType}, SYSDATE )
+					#{role} ,#{snsType}, TO_CHAR(SYSDATE , 'YYYY-MM-DD') )
 	</insert>
 	
 	
@@ -86,7 +86,7 @@
 	<select id="getUser"	parameterType="int"	resultMap="userSelectMap">
 		SELECT
 		user_id , name , email , role, password, address, gender, phone, longitude,latitude,
-		birth, profile_image, real_name, account_number,  TO_DATE(created_date, 'yyyy-mm-dd')		
+		birth, profile_image, real_name, account_number,  to_char(created_date,'yyyy-mm-dd') created_date		
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
@@ -94,11 +94,13 @@
 	 <select id="login"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
 		user_id , name , email , role, password, address, gender, phone,
-		birth, profile_image, real_name, account_number, created_date 		
+		birth, profile_image, real_name, account_number, created_date,
+		sns_type	
 		FROM users 
 		WHERE email = #{value}
 	 </select>
 	 
+	
 	 
 	 <select id="getAccountUser"	parameterType="int"	resultMap="userSelectMap">
 		SELECT
@@ -183,7 +185,6 @@
 	  	FROM( SELECT user_id , name , email, role 
 	  			FROM users ) countTable						
 	 </select>
-	 
 	 
 	 
 	 <update	id="updateNotice"	parameterType="user" >

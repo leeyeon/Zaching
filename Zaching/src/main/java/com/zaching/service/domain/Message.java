@@ -13,6 +13,11 @@ public class Message {
 	private String friendProfileImage;
 	private String friendName;
 	
+	
+	
+
+
+
 	public Message() {
 		
 	}

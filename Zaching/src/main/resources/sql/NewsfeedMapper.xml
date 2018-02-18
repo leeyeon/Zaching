@@ -76,6 +76,7 @@
 			 			AND category_code LIKE '${searchCondition}%'
 				</if>
 				</where>
+				ORDER BY newsfeed_id desc
 	</sql>
 	
 	<select id="getCountLike" parameterType="int" resultType="int">
@@ -129,9 +130,9 @@
 	</select>
 	
 	<select id="timeline" parameterType="int" resultMap="NewsfeedSelectMap">
-		SELECT *
-		FROM newsfeed
-		WHERE user_id=#{value}
+		SELECT n.*, u.name, u.profile_image
+		FROM newsfeed n, users u
+		WHERE n.user_id=u.user_id(+) AND u.user_id=#{value}
 	</select>
 
 </mapper>

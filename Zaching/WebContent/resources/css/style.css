@@ -22,9 +22,8 @@ nav.vertical ul li{	display:block;}/* vertical menu */
 nav.horizontal ul li{	display: inline-block;}/* horizontal menu */
 img{max-width:100%;}
 /*end reset*/
-body{
-	font-family: 'Open Sans', sans-serif;
-	background:#F0EFEE;
+* {
+	font-family: 'Nanum Gothic', serif;
 }
 /*---start-wrap----*/
 .wrap{
@@ -79,7 +78,6 @@ body{
 	-moz-border-radius: 0.3em;
 	-o-border-radius: 0.3em;
 	-webkit-appearance: none;
-	font-family: 'Open Sans', sans-serif;
 	color:#777;
 	position:relative;
 }
@@ -411,7 +409,6 @@ p.para {
 	color:#363636;
 	line-height: 1.8em;
 	padding: 2px 0;
-	font-family: 'Open Sans', sans-serif;
 	transition:0.5s all;
 	-webkit-transition:0.5s all;
 	-moz-transition:0.5s all;
@@ -437,7 +434,6 @@ p.para {
 	margin: 0em auto;
 }
 .table-form form input[type="text"]{
-	font-family: 'Open Sans', sans-serif;
 	border: 1px solid rgba(192, 192, 192, 0.61);
 	outline: none;
 	padding: 12px;
@@ -461,7 +457,6 @@ p.para {
 	-o-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.05);
 }
 .table-form textarea{
-	font-family: 'Open Sans', sans-serif;
 	padding: 8px;
 	outline:none;
 	color: #333333;
@@ -488,7 +483,6 @@ p.para {
 	border: 1px solid #B9CB41;
 }
 .table-form input[type="submit"]{
-	font-family: 'Open Sans', sans-serif;
 	color: #5a5a5a;
 	padding: 0.8em 1.5em;
 	background: #fff;
@@ -516,7 +510,6 @@ p.para {
 .table-form label{
 	display: block;
 	margin: 0.4em 0 0.5em;
-	font-family: 'Open Sans', sans-serif;
 	color:#363636;
 	font-weight:100;
 }
@@ -533,9 +526,6 @@ p.para {
 	padding: 2% 2% 3% 2%;
 	background: #fff;
 }
-.contact form{
-	font-family: 'Open Sans', sans-serif;
-}
 .map{
 	margin-bottom:30px;
 }
@@ -551,7 +541,6 @@ p.para {
 	line-height: 1.8em;
 	font-size: 0.85em;
 	margin-bottom: 5px;
-	font-family: 'Open Sans', sans-serif;
 }
 span.mail a {
 	color:#B9CB41;
@@ -562,7 +551,6 @@ span.mail a:hover{
 .contact-to input[type="text"] {
 	padding: 12px 10px;
 	width: 30.66%;
-	font-family: 'Open Sans', sans-serif;
 	margin: 12px 0;
 	border: 1px solid rgba(192, 192, 192, 0.61);
 	color: #626262;
@@ -592,7 +580,6 @@ span.mail a:hover{
 	margin: 12px 0;
 	border: 1px solid rgba(192, 192, 192, 0.61);
 	color: #626262;
-	font-family: 'Open Sans', sans-serif;
 	outline: none;
 	margin-bottom: 25px;
 	height: 100px;
@@ -619,7 +606,6 @@ span.mail a:hover{
 	border: 1px solid #B9CB41;
 }
 .contact-form input[type="submit"] {
-	font-family: 'Open Sans', sans-serif;
 	color: #5a5a5a;
 	padding: 0.8em 1.5em;
 	background: #fff;
@@ -652,7 +638,6 @@ span.mail a:hover{
 	-webkit-transition: 0.5s all;
 	-moz-transition: 0.5s all;
 	-o-transition: 0.5s all;
-	font-family: 'Open Sans', sans-serif;
 	margin-bottom: 0.6em;
 }
 .span_1_of_first1 {
