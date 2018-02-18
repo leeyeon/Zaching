@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sun.javafx.sg.prism.NGShape.Mode;
+import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.User;
 import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.user.UserService;
@@ -32,16 +33,21 @@ public class UserRestController {
 	
 	
 	@Autowired
+	@Qualifier("commonServiceImpl")
+	private CommonService commonService;
+	
+	@Autowired
 	@Qualifier("newsfeedServiceImpl")
 	private NewsfeedService newsfeedService;
 
 	public UserRestController() {
 		System.out.println(this.getClass());
 	}
+	//"C:\\Users\\301-6\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\"
 
+	private String fileDirectory = "C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
 
-
-	//ÀÌ¸ŞÀÏ ÀÎÁõ
+	//ì´ë©”ì¼ì¸ì¦
 	@RequestMapping(value = "json/emailAuth", method = RequestMethod.POST )
 	public User emailAuth(@RequestBody Map<String, Object> map,
 			HttpServletRequest request, HttpSession session) throws Exception {
@@ -50,7 +56,7 @@ public class UserRestController {
 
 
 		String inputEmail = (String)map.get("inputEmail");
-		String authNum = "";// º¸³» ÀÎÁõ¹øÈ£
+		String authNum = "";// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£
 
 		authNum = RandomNum();
 
@@ -58,16 +64,16 @@ public class UserRestController {
 
 		System.out.println("getSessionUser :: " + getSessionUser);
 
-		System.out.println("¹Ş´Â»ç¶÷ email Á¤º¸==>" + inputEmail);
-		System.out.println("»õ·Î»ı¼ºÇÑ ÀÎÁõ¹øÈ£==> " + authNum);
+		System.out.println("ï¿½Ş´Â»ï¿½ï¿½ email ï¿½ï¿½ï¿½ï¿½==>" + inputEmail);
+		System.out.println("ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£==> " + authNum);
 
 		getSessionUser.setAuthNum(authNum);
 		getSessionUser.setEmail(inputEmail);
 
 		userService.sendMail(inputEmail, authNum);
 
-		System.out.println("DBÀÎÁõ¹øÈ£ ===> " + getSessionUser.getAuthNum());
-		System.out.println("DBÀÌ¸ŞÀÏ ===> " + getSessionUser.getEmail());
+		System.out.println("DBï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ ===> " + getSessionUser.getAuthNum());
+		System.out.println("DBï¿½Ì¸ï¿½ï¿½ï¿½ ===> " + getSessionUser.getEmail());
 
 		session.setAttribute("user", getSessionUser);
 
@@ -76,7 +82,7 @@ public class UserRestController {
 		return getSessionUser;
 	}
 
-	// ³­¼ö¹ß»ı ¸Ş¼Òµå
+	// ë‚œìˆ˜ìƒì„±
 	public String RandomNum() {
 
 		StringBuffer buffer = new StringBuffer();
@@ -94,12 +100,12 @@ public class UserRestController {
 		
 		System.out.println("/user/json/authNum : POST");
 		
-		String authNum=(String)map.get("authNum");//ÀÔ·Â¹ŞÀº ÀÎÁõ¹øÈ£
+		String authNum=(String)map.get("authNum");//ï¿½Ô·Â¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£
 		
-		System.out.println("ÀÔ·Â¹ŞÀº ÀÎÁõ¹øÈ£ ==> "+authNum);
+		System.out.println("ï¿½Ô·Â¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ ==> "+authNum);
 		
-		User getSessionAuth = (User)session.getAttribute("user");//¼¼¼Ç¿¡ ÀÖ´Â Á¤º¸
-		System.out.println("¼¼¼ÇÁ¤º¸ ==> "+getSessionAuth);
+		User getSessionAuth = (User)session.getAttribute("user");//ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ==> "+getSessionAuth);
 		
 		if(authNum.equals(getSessionAuth.getAuthNum())) {
 			System.out.println("Before updateRole===> "+getSessionAuth);
@@ -112,16 +118,12 @@ public class UserRestController {
 	}
 	
 
-	
+	//ì¶”ì–µì§€ë„
 	@RequestMapping(value="/rest/memoryMap/{userId}", method=RequestMethod.GET)
 	public String memoryMap( @PathVariable int userId, HttpSession session)throws Exception{
 
 		System.out.println(userId);
-		//´º½ºÇÇµå °Ô½Ã¹° °¡Á®¿À±â .°Ô½Ã¹°ÀÇ À§µµ °æµµ °¡Á®¿À±â
 		
-		//°Ô½Ã¹° ÀÌ¹ÌÁö °æ·Î °¡Á®¿À±â
-		
-		//µ¥ÀÌÅÍ ¾Æ·¡ Çü½ÄÀ¸·Î ³ªÅ¸³¿.
 		
 		
 		return "{\"positions\":[{\"lat\": 37.3733103146403,\"lng\": 127.43708794867802,\"imgsrc\": \"/resources/images/user-icon.png\"},{\"lat\": 37.1627912237388,\"lng\": 128.99580192447536,\"imgsrc\": \"/resources/images/author.png\"},{\"lat\": 36.93980515531936,\"lng\": 128.8060765485201,\"imgsrc\": \"/resources/upload_files/images/main@2x.png\"},"
@@ -131,29 +133,30 @@ public class UserRestController {
 
 	
 	
-	//ÆÄÀÏ¾÷·Îµå
-	@RequestMapping(value="upload",method=RequestMethod.GET)
+	//í”„ë¡œí•„ì‚¬ì§„ ì—…ë°ì´íŠ¸
+	@RequestMapping(value="/fileupload",method=RequestMethod.POST)
 	public String ProfileUpload(@RequestParam("userId") int userId,
 			@RequestBody Map<String, Object> map)throws Exception{
 		
 		
-		System.out.println("/user/ProfileUpload : GET");
+		System.out.println("/user/fileupload : GET");
 		
-		String profileImage =(String)map.get("profileImage");
+		String profileImage =(String)map.get("formdata");
 		
-		System.out.println("¾÷·ÎµåÇÑ ÆÄÀÏ ÀÌ¸§====> "+profileImage);
+		System.out.println("ì—…ë¡œë“œí•œ í”„ë¡œí•„ì‚¬ì§„ ì´ë¦„====> "+profileImage);
 		
 		User user =userService.getUser(userId);
-		
+/*
+		commonService.addFile(fileDirectory, uploadFile);
 		user.setProfileImage(profileImage);
-		
+*/		
 		userService.updateUser(user);
 		
 		return profileImage;
 	}
 	
 	
-	//ÀÌ¸ŞÀÏ Áßº¹Ã¼Å©
+	//íšŒì›ê°€ì… ì´ë©”ì¼ ì¤‘ë³µì³Œã…¡
 	@RequestMapping(value="/rest/checkSingup", method=RequestMethod.POST)
 	public boolean checkSingup(HttpServletRequest request,
 							@RequestBody Map<String , Object> map)throws Exception{
@@ -162,13 +165,11 @@ public class UserRestController {
 		String email =(String)map.get("checkEmail");
 		System.out.println("===> "+email);
 		boolean result = userService.checkSignup(email);
-	        
-		System.out.println("rowCount ===> "+result);
-		
-		return result;
+	    System.out.println("rowCount ===> "+result);
+	    return result;
 	}
 
-	//È¸¿øÅ»Åğ role '0'À¸·Î ¾÷µ¥ÀÌÆ®
+	//íšŒì›íƒˆí‡´
 	@RequestMapping(value="/rest/deleteUser",method=RequestMethod.POST)
 	public String deleteUser(HttpServletRequest request, 
 			@RequestBody Map<String, Object> map, 
@@ -177,10 +178,10 @@ public class UserRestController {
 		System.out.println("/user/rest/deleteUser :POST");
 		
 		String password =(String)map.get("password");
-		System.out.println("ÀÔ·Â¹ŞÀº password ===>" +password);
+		System.out.println("ï¿½Ô·Â¹ï¿½ï¿½ï¿½ password ===>" +password);
 		
-		User getSession = (User)session.getAttribute("user");//¼¼¼Ç¿¡ ÀÖ´Â Á¤º¸
-		System.out.println("¼¼¼ÇÁ¤º¸ ==> "+getSession);
+		User getSession = (User)session.getAttribute("user");//ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ==> "+getSession);
 		
 		if(password.equals(getSession.getPassword())) {
 			System.out.println("Before updateRole===> "+getSession.getRole());
@@ -216,7 +217,7 @@ public class UserRestController {
 	
 	@RequestMapping(value="/rest/androidAddUser")
 	public String androidAddUser( @RequestBody String joinInfomation, @ModelAttribute("user") User user)throws Exception{
-		System.out.println("¿Í¶°¿ë");
+		System.out.println("ï¿½Í¶ï¿½ï¿½ï¿½");
 		String loginInfo[] = joinInfomation.split("&");
 		
 		String email = loginInfo[0].trim();
@@ -245,11 +246,12 @@ public class UserRestController {
 	
 
 	@RequestMapping(value="/rest/addUser", method=RequestMethod.POST)
-	public String addUser(HttpServletRequest request,
+	public boolean addUser(HttpServletRequest request,
 						@RequestBody Map<String, Object> map,
 						@ModelAttribute("user")User user, Model model)throws Exception{
 		
 		System.out.println("/user/rest/addUser : POST ");
+		boolean result ;
 		
 		String email =(String)map.get("email");
 		String name = (String)map.get("name");
@@ -268,7 +270,15 @@ public class UserRestController {
 		System.out.println("name : " + user.getName());
 		
 		
-	return "redirect:/index.jsp";
+		if(user.getEmail() ==null && user.getName()== null
+					&& user.getPassword() ==null) {
+			
+			result = false;
+			return result;
+			
+		}else {
+			return true;
+		}
 
 	}
 

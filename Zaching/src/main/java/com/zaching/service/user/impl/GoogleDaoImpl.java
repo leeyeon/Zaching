@@ -145,6 +145,7 @@ public class GoogleDaoImpl  implements GoogleDao{
 		        user.setProfileImage(obj.get("picture").toString());
 		        user.setSnsType("4");//google!
 				user.setRole("1");
+				System.out.println("Google DAOImpl getUserProfile ====>"+user);
 				return user;
 			}
 			

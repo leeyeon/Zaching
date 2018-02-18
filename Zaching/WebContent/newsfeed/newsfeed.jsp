@@ -505,7 +505,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 										<table border="0">
 											<tr>
 												<td>
-													<div class="thumb"><img alt="" src="../resources/images/${newsfeed.profileImage}"></div>
+													<div class="thumb">
+													<c:if test="${!empty newsfeed.profileImage }">
+													<img alt="" src="../resources/images/${newsfeed.profileImage}">
+													</c:if>
+													<c:if test="${empty newsfeed.profileImage }">
+													<img alt="" src="../resources/images/profile_default.png">
+													</c:if>
+													</div>
 												</td>
 												<td style="vertical-align: middle;">
 													<p>${newsfeed.userName}</p>
@@ -844,8 +851,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								"Content-Type" : "application/json"
 								},
 								success : function(JSONData , status) {
-								
+									
 								for(var i=0; i<JSONData.length;i++){
+									
 									var displayValue = '<li class="cell">'+
 									'<input type="hidden" value="'+JSONData[i]+'" name="newsfeedId"/>';
 										if(JSONData[i].fileName)
@@ -870,10 +878,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 													'<tr>'+
 														'<td>'+
 															'<div class="thumb">';
-															if(!JSONData[i].profileImage)
+															
+															if(!JSONData[i].profileImage){
 																displayValue += '<img alt="" src="../resources/images/profile_default.png"></div>';
-															else
+															}
+															else{
 																displayValue += '<img alt="" src="../resources/images/'+JSONData[i].profileImage+'"></div>';
+															}
 														displayValue = displayValue+'</td>'+
 														'<td style="vertical-align: middle;">'+
 															'<p>'+JSONData[i].userName+'</p>'+
@@ -892,6 +903,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 												'</div>'+
 												'<span class="post-comment">'+
 												'<a href="/newsfeed/getNewsfeed?newsfeedId='+JSONData[i].newsfeedId+'">';
+												
+															
 												if(JSONData[i].countReply == 0)
 													displayValue += 'No comments';
 												else
