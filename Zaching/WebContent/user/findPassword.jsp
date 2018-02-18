@@ -84,7 +84,7 @@
 		<div class="form-group" style="margin-left: 82%">
 			<!-- Button -->
 
-			<div class="col-md-offset-10 col-md-10">
+			<div class="col-md-offset-8 col-md-8">
 				<button id="btn-signup" type="submit" class="btn btn-warning">임시비밀번호전송</button>
 			</div>
 		</div>

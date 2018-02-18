@@ -316,7 +316,17 @@
 	 	});
 		
 		$("a:contains('패스워드찾기')").on("click", function() {
-			self.location = "/user/findPassword";
+			
+				var windowW = 500;  // 창의 가로 길이
+		        var windowH = 500;  // 창의 세로 길이
+		        var left = Math.ceil((window.screen.width - windowW)/2);
+		        var top = Math.ceil((window.screen.height - windowH)/2);
+
+				window.open("/user/findPassword", '', 
+						"l top="+top+", left="+left+", height="+windowH+", width="+windowW,
+						"resizable=no");
+				opener.location.reload(true);
+			    self.close();
 
 		});
 		

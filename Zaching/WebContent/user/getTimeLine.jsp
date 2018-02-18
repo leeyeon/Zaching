@@ -179,8 +179,9 @@
 	//프로필사진 업데이트
 	$(function(){
      $("#uploadbutton").click(function(){
-         var form = $('form')[0];
-         var formData = new FormData(form);
+         
+         var form = new FormData(form);
+         form.append("uploadFile",file);
              $.ajax({
                 url: '/user/fileupload',
                 method: 'POST',
@@ -217,6 +218,7 @@
 	
 		<div class="profileImage" align="center">
 		<input type="file" name="uploadfile" />
+		<input type="hidden" name="userId"/>
          <button class="uploadbutton">데이터전송</button>
         	<img  class="img-circle" src="../resources/images/profile_default.png" 
         	 style="width: 150px; height: 150px;"/>
