@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -105,6 +106,11 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public String addFile(String fileDirectory, MultipartFile uploadFile) {
 		return fileDao.addFile(fileDirectory, uploadFile);
+	}
+	
+	@Override
+	public String addFileImage(HttpServletRequest request, MultipartFile uploadFile) {
+		return fileDao.addFile(request, uploadFile);
 	}
 
 	@Override

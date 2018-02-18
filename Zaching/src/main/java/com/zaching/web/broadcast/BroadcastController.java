@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
@@ -74,6 +77,8 @@ public class BroadcastController {
 		broadcast.setFileName(fileName);
 		broadcastService.addBroadcast(broadcast);
 		
+		System.out.println(broadcast);
+		
 		model.addAttribute("broadcast",broadcast);
 		
 		//System.out.println("ÀßÇÑ´Ù :"+broadcast);
@@ -106,6 +111,45 @@ public class BroadcastController {
 		//model.addAttribute("list", list2);		
 		
 		return "forward:/broadcast/listBroadcast.jsp";
-	}	
+	}
+	
+	
+	/*
+	@RequestMapping("addBroadcast")
+	public JSONObject addBroadcast(MultipartHttpServletRequest request, HttpSession session) throws Exception {
+
+		User sessionUser = (User)session.getAttribute("user");
+		
+		Broadcast broadcast = new Broadcast();
+		broadcast.setTitle(request.getParameter("title"));
+		broadcast.setDetail("detail");
+		broadcast.setForbidden(request.getParameter("forbidden"));
+		broadcast.setUserId(sessionUser.getUserId());
+		broadcast.setUserName(sessionUser.getName());
+		broadcast.setProfileImage(sessionUser.getProfileImage());
+		
+		System.out.println(broadcast);
+		
+		boolean isSuccess = false;
+		try {
+			MultipartFile file = request.getFile("image");
+			String fileName = commonService.addFileImage(request, file);
+			broadcast.setFileName(fileName);
+			broadcastService.addBroadcast(broadcast);
+			isSuccess = true;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		JSONObject result = new JSONObject();
+		if(isSuccess) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
+		
+		return result;
+	}
+	*/
 }
 
