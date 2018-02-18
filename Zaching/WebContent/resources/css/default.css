@@ -22,7 +22,8 @@ body, html { font-size: 100%; padding: 0; margin: 0;}
 body {
 	font-family: 'Lato', Calibri, Arial, sans-serif;
 	color: #6b7381;
-	background: #f2f2f2;
+	background : #fff;
+
 }
 
 a {
@@ -41,9 +42,6 @@ a:active {
 	padding: 2em;
 }
 
-.container > header {
-	background: rgba(0,0,0,0.01);
-}
 
 .container > header h1 {
 	font-size: 2.625em;

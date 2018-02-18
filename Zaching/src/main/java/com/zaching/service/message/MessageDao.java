@@ -1,6 +1,7 @@
 package com.zaching.service.message;
 
 import java.util.List;
+import java.util.Map;
 
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Message;
@@ -22,5 +23,7 @@ public interface MessageDao {
 	//totalCount
 	public int getTotalCount(Search search) throws Exception;
 	
+	// return roomId
+	public int checkRoom(int userId, int friendId) throws Exception;	
 
 }

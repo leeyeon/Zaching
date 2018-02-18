@@ -14,7 +14,7 @@
     <link rel="icon" href="../../favicon.ico">
 
     <title></title>
-
+<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
     <!-- Bootstrap core CSS --><!-- 합쳐지고 최소화된 최신 CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		
@@ -218,6 +218,30 @@
 			bottom:50px;
 			z-index:1000}
 			
+	.lyrics {
+	background-color:#ffffff;
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:28px;
+	border:1px solid #a8a3a8;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:13px;
+	padding:4px 12px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+.lyrics:hover {
+	background-color:#f6f6f6;
+}
+.lyrics:active {
+	position:relative;
+	top:1px;
+}
+			
+			
     </style>
   </head>
 
@@ -240,26 +264,7 @@
 	            <h3 class="blog-post-title">&nbsp;소주한잔 이어불러요</h3>
 	            <p class="blog-post-meta" style="background-color: black; opacity: 0.5;">사진사진 <a href="#">소간지</a></p>
 				<div style="padding-right:15px; padding-left:15px;">
-		            <p>술이한잔 생각나는밤 같이 있는것 같아요.
-					그 좋았던 시절들 이젠 모두 한숨만 되네요.
-					떠나는 그대 얼굴이 혹시 울지나 않을까 나 먼저 돌아섰죠.
-					그때부터 그리워요.사랑이 변하는걸요.다시 전보다 그댈 원해요.
-					이렇게 취할때면 꺼져버린 전화를 붙잡고.
-					여보세요 나야 거기 잘지내니.
-					여보세요 왜 말 안하니
-					울고있니 내가 오랜만이라서 사랑하는 사람이라서
-					그대 소중한 마음 밀쳐낸 이기적인 그때의
-					나에게 그대를 다시 불러오라고 미친듯이 외쳤어.
-					
-					떠나는 그대 얼굴이 마치 처음과 같아서 나 눈물이 났어요.
-					그때부터 그리워요.사랑이 변하는걸요.다시 전보다 그댈 원해요.
-					이렇게 취할때면 바껴버린 전화번호 누르고
-					여보세요 나야 거기 잘지내니.
-					오랜만이야 내 사랑아.
-					그대를 다시 불러오라고 미친듯이 울었어..
-					
-					여보세요 나야 정말 미안해.
-					이기적인 그때의 나에게 그대를 다시 불러오라고 미친듯이 외쳤어..</p>
+		           <a href="#" class="lyrics">가사보기</a>
 		            <hr>
 		          
 		          	<c:set var="i" value="0"/>
@@ -413,6 +418,8 @@
     </div>
   </div>
 </div>
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     
   </body>

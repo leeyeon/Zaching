@@ -42,13 +42,13 @@
 	<br>
 	
 <div class="page-header text-info">
-	       <h3>메세지 목록</h3>
+	       <h3>硫��몄� 紐⑸�</h3>
 	    </div>
 	    <div class="row">
 	    
 	    <div class="col-md-6 text-left">
 		    	<p class="text-primary">
-		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+		    		��泥�  ${resultPage.totalCount } 嫄댁��, ���� ${resultPage.currentPage}  ���댁�
 		    	</p>
 		    </div>
 		    
@@ -58,8 +58,8 @@
         <thead>
           <tr>
             <th align="center">No</th>
-            <th align="left">보낸사람</th>
-            <th align="left">메세지내용</th>
+            <th align="left">蹂대�몄�щ��</th>
+            <th align="left">硫��몄��댁��</th>
           </tr>
         </thead>
        
@@ -70,7 +70,7 @@
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td align="center">${ i }</td>
-			  <td align="left"  title="Click : 메세지정보 확인">${message.userId}</td>
+			  <td align="left"  title="Click : 硫��몄���蹂� ����">${message.userId}</td>
 			  <td align="left">${message.name}</td>
 			  <td align="left">${message.content}</td>
 			  <td align="left">
@@ -86,7 +86,7 @@
 	  <!--  table End /////////////////////////////////////-->
 	  
  	</div>
- 	<!--  화면구성 div End /////////////////////////////////////-->
+ 	<!--  ��硫닿뎄�� div End /////////////////////////////////////-->
  	
  	
  	<!-- PageNavigation Start... -->
@@ -95,3 +95,4 @@
 
 </body>
 </html>
+

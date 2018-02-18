@@ -23,6 +23,17 @@
 <jsp:include page="/resources/layout/sub_toolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
 
+
+<script language="javascript" type="text/javascript">  
+
+function openWin(){  
+    window.open("http://www.naver.com", "네이버새창", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+}  
+ 
+</script>  
+  
+
+
         
         <style>
         
@@ -30,73 +41,30 @@
         		padding-top: 50px;
         	}
         
+        .btn btn-primary{
+        
+        
+        }
         
         </style>
         
         </head>
         <body>
+        
+        <input type=button value="새창띄우기" onclick="javascript:openWin();">  
+        
+        
         <div class="container">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Message</button>
+      </div>
+  </div>
+</div>
         
-        
-        <button type="button" class="btn btn-login btn-lg" data-toggle="modal"
-			data-target="#myModal">메세지 보내기</button>
+        </body>
 
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" role="dialog">
 
-			<div class="modal-dialog modal-center">
 
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-body">
-						<div class=row>
-							<h3>메세지보내기</h3>
-							<p>
-							<div class="row friendName">
-								<div class="col-xs-4">
-									<label for="inputlg" style="margin-left: 5px">받는사람</label> <input
-										type="text" class="form-control" placeholder="받는사람">
-										<br>
-									<div class="row">
-										<div class="col-sm-6">
-											<label for="inputlg" style="margin-left: 5px"
-												style="margin-top: 5px">메세지내용</label>
-											<textarea class="form-control" rows="5"
-												style="margin: 0px -521.344px 0px 0px; width: 595px; height: 126px;"></textarea>
-												<br>
-											<input class="btn btn-default" type="button" align="right"
-												value="전송">
-
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
