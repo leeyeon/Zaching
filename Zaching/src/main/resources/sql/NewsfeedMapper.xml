@@ -76,6 +76,7 @@
 			 			AND category_code LIKE '${searchCondition}%'
 				</if>
 				</where>
+				ORDER BY newsfeed_id desc
 	</sql>
 	
 	<select id="getCountLike" parameterType="int" resultType="int">
