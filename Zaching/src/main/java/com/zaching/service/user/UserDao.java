@@ -52,4 +52,9 @@ public interface UserDao {
 	public void updateAccountToken(String token, int userId) throws Exception;
 	
 	public String getAccountToken(int userId) throws Exception;
+	
+	// 안드로이드 알람 토큰 get. set
+	public String getFCMToken(int userId) throws Exception;
+
+	public void updateFCMToken(int userId, String fcmToken) throws Exception;
 }

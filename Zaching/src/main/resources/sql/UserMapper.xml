@@ -222,6 +222,17 @@
 	 	WHERE email=#{value}
 	 </select>
 	 
+	 <select id="getFCMToken" parameterType="int" resultType="string">
+	 	SELECT fcm_token
+	 	FROM users
+	 	WHERE user_id = #{userId}
+	 </select>
+	 
+	 <update id="updateFCMToken" parameterType="map">
+	 	UPDATE users
+	 	SET fcm_token = #{fcmToken}
+	 	WHERE user_id = #{userId}
+	 </update>
 </mapper>
 
 	

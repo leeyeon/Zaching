@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zaching.service.domain.User;
@@ -191,7 +192,7 @@ public class UserRestController {
 	
 	@RequestMapping(value="/rest/androidAddUser")
 	public String androidAddUser( @RequestBody String joinInfomation, @ModelAttribute("user") User user)throws Exception{
-		System.out.println("¿Í¶°¿ë");
+		System.out.println(this.getClass()+"/rest/androidAddUser");
 		String loginInfo[] = joinInfomation.split("&");
 		
 		String email = loginInfo[0].trim();
@@ -210,13 +211,32 @@ public class UserRestController {
 			user.setRole("1");
 			userService.addUser(user);
 			
-			return "{\"status\":\"yes\"}";
+			return "{\"status\":\"yes\",\"userId\":\"userId\"}";
 		}
 		else {
 		
 			return "{\"status\":\"no\"}";
 		}
-				
+	}
+	
+	@RequestMapping(value="/rest/androidSetFCMToken", method=RequestMethod.POST)
+	@ResponseBody
+	public User androidSetFCMToken(@RequestBody Map<String, Object> map) throws Exception{
+		System.out.println(this.getClass()+"/rest/androidSetFCMToken");
+		//System.out.println(str);
+		System.out.println(map.get("userId")+"//"+map.get("fcmToken"));
+		
+		int userId = Integer.parseInt(map.get("userId").toString());
+		
+		//System.out.println(userId);
+		
+		User user = userService.getUser(userId);
+		
+		//System.out.println(user);
+		
+		userService.setFCMToekn(user.getUserId(), map.get("fcmToken").toString());	
+
+		return user;
 	
 	}
 

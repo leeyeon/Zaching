@@ -219,7 +219,12 @@ public class UserServiceImpl implements UserService {
 		userDao.snsAddUser(user);
 	}
 	
-	
-	
+	@Override
+	public void setFCMToekn(int userId, String fcmToken) throws Exception {
+		String currentToken = userDao.getFCMToken(userId);
+		if(currentToken == null || currentToken.equals("") || !currentToken.equals(fcmToken)) {
+			userDao.updateFCMToken(userId, fcmToken);
+		}
+	}
 
 }
