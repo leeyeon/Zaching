@@ -59,7 +59,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	    	                    jQuery("#iconMarker").val(data.address);
 	    	                    $("input[name=ok]").val(data.address);
 	    	                    
-	    	                    console.log(data);
+	    	                 
 	    	                    var geocoder = new daum.maps.services.Geocoder();
 	    	                	geocoder.addressSearch($("input[name=ok]").val(), function(result, status) {
 
@@ -977,7 +977,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					   </table>
 					<table border="1">
 						<tr>
-						<td  style="table-layout:fixed">
+						<td  style="table-layout:fixed" width="220px">
 							<div class="filebox">
         <label for="cma_file">사진 인증샷 업로드</label>
 		<input type="file" name="file" id="cma_file" imageswap="true" accept="image/*" capture="camera" onchange="getThumbnailPrivew(this,$('#cma_image'))"/>
@@ -985,11 +985,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
 						</td>						
 					  <td width=450 style="vertical-align: top; style="table-layout:fixed">
-					
+					&nbsp;&nbsp;&nbsp;&nbsp;
 					  <p style="font-size: 30px; color: #00D1CD;"><i class="glyphicon glyphicon-map-marker" id="iconMarker"></i><input type="text" name="ok" id="ok" placeholder="위치를 지정해주세요"
 							style="font-size: 16px; width: 80%; height: 30px; padding-left: 20px; border: none;" readonly/> <div id="map"overflow:hidden;"></div></p>
 								<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>	            		
-		            	   <textarea class="form-control" rows="7" placeholder="상태를 업데이트 하세요." class="span1" cols="40" name="content" id=" content"></textarea>
+		            	 &nbsp;&nbsp;&nbsp;&nbsp;  <textarea class="form-control" rows="7" placeholder="상태를 업데이트 하세요." class="span1" cols="40" name="content" id=" content"></textarea>
 						   
 						      </td>
 					    </tr>
