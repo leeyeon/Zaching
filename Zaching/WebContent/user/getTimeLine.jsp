@@ -99,6 +99,7 @@
     		width: 150px;
     		opacity: 0;
     		}
+    		
     	body > div.container > div.content {
     		background-color: #fff;
     		margin-top: -20px;
@@ -106,8 +107,19 @@
     	
     	}
     		
+    	/* 게시물 스타일 */
+    	.cell{
+    	list-style: none;
+		margin: 0;
+		padding: 0;
+    	}
 	
-		
+		hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #333;
+}
 
     </style>
    
@@ -155,6 +167,10 @@
 		
 		
 		
+		
+		
+		
+		
 		//회원탈퇴
 		$("#deleteUser").on("click", function() {
 			var windowW = 400;  // 창의 가로 길이
@@ -178,6 +194,91 @@
 	
 	//프로필사진 업데이트
 	$(function(){
+		
+		
+		
+		var keyword = ${sessionScope.user.userId};
+		var userId = ${user.userId};
+	
+		$.ajax({
+			url : "/friend/rest/listFriend",
+			method : "POST",
+			contentType : "application/json; charset=UTF-8",
+			data : JSON.stringify({
+				"keyword" : keyword
+			}),
+			async : false,
+			dataType : "json",
+			success : function(serverData) {
+				
+				var display = "";
+				
+					for(var i=0; i<serverData.list.length; i++){
+						
+						if(serverData.list[i].friendId == userId){
+						
+							if(status == 0){								
+								display = '<a type="button" >친구끊기</a>';							
+							}else if(status == 1){
+								display = '<a type="button" >친구신청</a>';								
+							}else{
+								display = '<a type="button" >차단한 친구</a>';
+							}							
+						}
+						else{
+							display = '<a type="button" >친구신청</a>';
+						}
+					}
+					
+					$("#friendSttusInput").html(display);
+					
+					$("a:contains('친구끊기')").on("click", function() {
+						
+						if(confirm("친구 상태, 삭제하시겠습니까")){
+							
+							$.ajax({
+								url : "/friend/rest/delectFriend",
+								method : "POST",
+								contentType : "application/json; charset=UTF-8",
+								data : JSON.stringify({
+									"keyword" : keyword
+								}),
+								async : false,
+								dataType : "json",
+								success : function(serverData) {
+									
+								}
+									});
+								
+							
+						}else{
+							
+						}
+						
+					});
+					
+					$("a:contains('친구신청')").on("click", function() {
+						
+						if(confirm("친구 신청")){
+							
+						}else{
+							
+						}
+					});
+					
+					$("a:contains('차단한 친구')").on("click", function() {
+						
+						if(confirm("차단을 푸시겠습니까?")){
+							
+						}else{
+							
+						}
+					});
+					
+			}
+			
+		});
+		
      $("#uploadbutton").click(function(){
          
          var form = new FormData(form);
@@ -231,10 +332,11 @@
 		<c:if test="${user.profileImage ne null }">
 		<div class="profileImage" align="center">
         <input type="file" name="uploadfile" />
+        <input type="hidden" name="userId"/>
          <button class="uploadbutton">데이터전송</button>
         
        <img  class="img-circle" alt="프로필사진변경"  style="width: 150px; height: 150px;"
-       src="../resources/upload_files/images/${sessionScope.user.profileImage}"/>
+       src="../resources/upload_files/images/${user.profileImage}"/>
          
        </div>
        </c:if>
@@ -252,7 +354,9 @@
       <a><img  id="listMessage" src="../resources/images/Message_Icon.png" 
         	width="50px" height="50px"/>
       </a></div>
+      <c:if test="${sessionScope.user.userId eq user.userId}">
     	<button type="button" class="btn btn-primary" id="deleteUser">회원탈퇴</button>
+    	</c:if>
     </div>
     
     </form>
@@ -275,9 +379,9 @@
   
   <c:if test="${user.userId ne sessionScope.user.userId}">
   <div class="row" id="friendPage">
-    	<div class="col-xs-3">
-    		<a type="button" >친구신청</a>
-    	</div>
+    	<div class="col-xs-3" id="friendSttusInput">
+    	
+  		</div>
     	<div class="col-xs-3">
     		<a type="button" >FOLLOW</a>
     	</div>
@@ -291,9 +395,61 @@
   </c:if>
    
     <div class="row body" align="center">
-    		<h1>여기는 뉴스피드 게시물</h1>
     		
+    		 <c:set var="i" value="0"/>
+			 <c:forEach var="newsfeed" items="${list}">
+				<c:set var="i" value="${ i+1 }" />
+				<li class="cell">
+								<input type="hidden" value="${newsfeed.newsfeedId}" name="newsfeedId"/>
+								<c:if test="${ !empty newsfeed.fileName }"><img src="../resources/upload_files/images/${newsfeed.fileName}" style="width: 100%"/></c:if>
+								<div class="post-info">
+									<div class="post-basic-info">
+										<span><a href="#"><label> </label><c:if test="${newsfeed.categoryCode.equals('N01')}">자취지식인</c:if>
+																			<c:if test="${newsfeed.categoryCode.equals('N10')}">밥친구 후기</c:if>
+																			<c:if test="${newsfeed.categoryCode.equals('N02')}">중고거래</c:if>
+																			<c:if test="${newsfeed.categoryCode.equals('N04')}">꿀팁</c:if>
+										</a></span>
+										<p></p>
+										<table border="0">
+											<tr>
+												<td>
+													<div class="thumb">
+													<c:if test="${!empty newsfeed.profileImage }">
+													<img alt="" src="../resources/images/${newsfeed.profileImage}">
+													</c:if>
+													<c:if test="${empty newsfeed.profileImage }">
+													<img alt="" src="../resources/images/profile_default.png">
+													</c:if>
+													</div>
+												</td>
+												<td style="vertical-align: middle;">
+													<p>${newsfeed.userName}</p>
+												</td>
+											</tr>
+										</table>
+										<p style="font-size: 13pt">${newsfeed.content}</p>
+										
+										<div class="likeit-wrap" id="item" onClick="fnc_addLikey(${newsfeed.newsfeedId})">
+											<div class="likeit" data-postid="4" id="countLikey" >
+												<span class="like-text">Like</span>
+												<ins class="like-count" id="like${newsfeed.newsfeedId}">${newsfeed.countLikey}</ins>
+											</div>
+											<span class="newliker">Thanks!</span>
+											<span class="isliker">You've already liked this</span>
+										</div>
+										<span class="post-comment">
+										<a href="/newsfeed/getNewsfeed?newsfeedId=${newsfeed.newsfeedId}"><c:if test="${newsfeed.countReply == 0 }">No comments</c:if><c:if test="${newsfeed.countReply > 0}">${newsfeed.countReply}</c:if> </a></span>
+									</div>
+								
+								</div>
+								
+							
+							</li><hr>
+			</c:forEach>
+										
     </div>
+    
+   
     
     </div>	
 </div>

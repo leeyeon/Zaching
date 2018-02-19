@@ -367,6 +367,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     clip:rect(0,0,0,0);
     border: 0;
 }
+a:link, a:visited { 
+    color: #00000;
+ }
+  a:link:active, a:visited:active { 
+    color: #00000;
+ } 
 		</style>
 		
 		<script>
@@ -524,7 +530,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 													</div>
 												</td>
 												<td style="vertical-align: middle;">
-													<p>${newsfeed.userName}</p>
+													<p><a href="/user/getTimeLine?userId=${newsfeed.userId}" style="text-decoration:none; color:#00000;">${newsfeed.userName}</a></p>
 												</td>
 											</tr>
 										</table>
@@ -686,7 +692,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 															}
 														displayValue = displayValue+'</td>'+
 														'<td style="vertical-align: middle;">'+
-															'<p>'+JSONData[i].userName+'</p>'+
+															'<p><a href="/user/getTimeLine?userId='+JSONData[i].userId+'" style="text-decoration:none; color:#00000;">'+JSONData[i].userName+'</a></p>'+
 														'</td>'+
 													'</tr>'+
 												'</table>'+

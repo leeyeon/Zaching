@@ -60,6 +60,13 @@
 	</insert>
 	
 	
+	<select id="snsCheck" parameterType="String" resultType="int">
+		SELECT 	COUNT(*)	
+		FROM users 
+		WHERE email = #{value}
+		AND sns_type = #{value} 
+	</select>
+	
 	<select id="checkSignup" parameterType="String" resultType="int">
 		SELECT COUNT(*)
 		FROM users 

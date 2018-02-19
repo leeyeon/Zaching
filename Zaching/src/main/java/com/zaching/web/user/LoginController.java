@@ -70,18 +70,18 @@ public class LoginController {
 		User user = commonService.getAceessToken2(code, session);
 		user = commonService.getUserInfo(user);
 
-		boolean dbUser = userService.checkSignup(user.getEmail());
+		boolean result = userService.snsCheck(user.getEmail(), user.getSnsType());
 
-		System.out.println("DB user ===>" + dbUser);
-		if (dbUser == true) {//이메일중복아님
-			System.out.println("들어왓니");
+		// System.out.println("받아온정보"+user.getSnsType());
+		if (result == true) {// 이메일정보가 db에 없을경우
+
 			session.setAttribute("user", user);
-			user.setSnsType("1");
-			userService.snsAddUser(user);//snstype으로 회원가입
+			userService.snsAddUser(user);// snstype으로 회원가입
+
 			System.out.println("카카오계정으로 회원가입");
-		} else {//이메일 중복이면
+		} else{
 			session.setAttribute("user", user);
-			userService.login(user.getEmail());
+
 			System.out.println("카카오계정으로 로그인");
 		}
 
@@ -129,14 +129,18 @@ public class LoginController {
 		User user = naverService.getAccessToken(session, code, state);
 		user = naverService.getUserProfile(user);
 
-		boolean dbUser = userService.checkSignup(user.getEmail());
-		if (dbUser == true) {//이메일정보가  db에 없을경우 
+		boolean result = userService.snsCheck(user.getEmail(), user.getSnsType());
+
+		// System.out.println("받아온정보"+user.getSnsType());
+		if (result == true) {// 이메일정보가 db에 없을경우
+
 			session.setAttribute("user", user);
-			userService.snsAddUser(user);//snstype으로 회원가입
+			userService.snsAddUser(user);// snstype으로 회원가입
+
 			System.out.println("네이버계정으로 회원가입");
-		} else {
+		} else  {
 			session.setAttribute("user", user);
-			
+
 			System.out.println("네이버계정으로 로그인");
 		}
 
@@ -168,17 +172,21 @@ public class LoginController {
 		User user = googleService.getAccessToken(session, code);
 		user = googleService.getUserProfile(user);
 
-		boolean dbUser = userService.checkSignup(user.getEmail());
+		boolean result = userService.snsCheck(user.getEmail(), user.getSnsType());
 
-		if (dbUser == true) {
+		// System.out.println("받아온정보"+user.getSnsType());
+		if (result == true) {// 이메일정보가 db에 없을경우
+
 			session.setAttribute("user", user);
-			userService.snsAddUser(user);//snstype으로 회원가입
+			userService.snsAddUser(user);// snstype으로 회원가입
+
 			System.out.println("구글계정으로 회원가입");
-		} else {
+		} else{
 			session.setAttribute("user", user);
-			
+
 			System.out.println("구글계정으로 로그인");
 		}
+		
 		System.out.println("session==> " + session.getAttribute("user"));
 		System.out.println("google 이메일 ==> " + user.getEmail());
 		System.out.println("프로필 이미지 ==> " + user.getProfileImage());
@@ -200,19 +208,22 @@ public class LoginController {
 			throws Exception {
 
 		System.out.println("[ facebookLogin 토큰/사용자정보 받기!! ]");
-		
+
 		User user = commonService.getAccessToken_facebook(session, code);
 		user = commonService.getUserProfile(user);
 
-		boolean dbUser = userService.checkSignup(user.getEmail());
-			//이메일주소같음 sns_type 다름
-		if (dbUser == true) {
+		boolean result = userService.snsCheck(user.getEmail(), user.getSnsType());
+
+		// System.out.println("받아온정보"+user.getSnsType());
+		if (result == true) {// 이메일정보가 db에 없을경우
+
 			session.setAttribute("user", user);
-			userService.snsAddUser(user);//snstype으로 회원가입
+			userService.snsAddUser(user);// snstype으로 회원가입
+
 			System.out.println("페이스북계정으로 회원가입");
 		} else {
 			session.setAttribute("user", user);
-			
+
 			System.out.println("페이스북계정으로 로그인");
 		}
 		System.out.println("session==> " + session.getAttribute("user"));
