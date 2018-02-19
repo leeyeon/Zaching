@@ -145,6 +145,12 @@ public class UserDaoImpl implements UserDao{
 		
 		sqlSession.insert("UserMapper.snsAddUser", user);
 	}
+
+	@Override
+	public int snsCheck(String email, String snsType) throws Exception {
+		
+		return sqlSession.selectOne("UserMapper.snsCheck", email);
+	}
 	
 	
 }
