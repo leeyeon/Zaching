@@ -148,6 +148,7 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public int snsCheck(String email, String snsType) throws Exception {
+		System.out.println("전달받은값 :"+email+" , "+snsType);
 		
 		return sqlSession.selectOne("UserMapper.snsCheck", email);
 	}
