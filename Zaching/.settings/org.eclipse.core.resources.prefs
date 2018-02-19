@@ -28,3 +28,4 @@ encoding//src/main/resources/config/bankCode.properties=UTF-8
 encoding//src/main/resources/config/category.properties=UTF-8
 encoding//src/main/resources/config/rentCharge.properties=UTF-8
 encoding//src/main/resources/config/restapi.properties=UTF-8
+encoding//src/main/resources/sql/MessageMapper.xml=UTF-8
