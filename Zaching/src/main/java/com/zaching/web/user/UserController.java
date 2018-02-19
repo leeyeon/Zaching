@@ -1,33 +1,17 @@
 			
 package com.zaching.web.user;
 
-import java.util.Date;
 import java.util.Map;
-import java.util.Properties;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeUtility;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
+import com.zaching.service.domain.Friend;
 import com.zaching.service.domain.User;
+import com.zaching.service.friend.FriendService;
 import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.user.UserService;
 
@@ -56,6 +42,9 @@ public class UserController {
 	@Qualifier("newsfeedServiceImpl")
 	private NewsfeedService newsfeedService;
 
+	@Autowired
+	@Qualifier("friendServiceImpl")
+	private FriendService friendService;
 	// setter Method ���� ����
 
 	public UserController() {
@@ -98,7 +87,7 @@ public class UserController {
 		return "forward:/user/emailAuth.jsp";
 	}
 
-	// �����߻� �޼ҵ�
+
 	public String RandomNum() {
 
 		StringBuffer buffer = new StringBuffer();
@@ -167,7 +156,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "getTimeLine", method = RequestMethod.GET)
-	public String getTimeLine(@RequestParam("userId") int userId, Model model) throws Exception {
+	public String getTimeLine(@RequestParam("userId") int userId, Model model, HttpSession session) throws Exception {
 
 		System.out.println("/user/getTimeLine : GET");
 		// Business Logic
@@ -178,7 +167,37 @@ public class UserController {
 		
 		System.out.println("뀨규뀨===>"+userId);
 		// Model �� View ����
+		
+		int id = ((User)session.getAttribute("user")).getUserId();
+		int count = friendService.checkFriend(id, userId, 0);
+		int count2 = friendService.checkFriend(userId, id, 0);
+		int count3 = friendService.checkFollow(id, userId, 1);
+		
+		int code=0;
+		
+		if(count != 0) {
+			if(count2 != 0) {
+				code = 2;
+			}
+			else
+				code = 1;
+		} 
+		if(count2 != 0) {
+			if(count == 0) {
+				code = 3;
+			}
+		}
+		
+		if(count3 != 0) {
+			count3 = 1;
+		}
+		// 아무상태도 아님 : 0, 친구신청중 : 1, 친구상태 : 2, 친구신청 온 상태 : 3
+		System.out.println("code :: "+code);
+		model.addAttribute("followCode", count3);
+		model.addAttribute("code", code);
 		model.addAttribute("user", user);
+		
+		
 		
 
 		return "forward:/user/getTimeLine.jsp";

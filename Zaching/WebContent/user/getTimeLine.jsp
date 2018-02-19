@@ -184,73 +184,98 @@
 	$(function(){
 		
 		
+		var status = 0 ;
 		
 		var keyword = ${sessionScope.user.userId};
 		var userId = ${user.userId};
-	
-		$.ajax({
-			url : "/friend/rest/listFriend",
-			method : "POST",
-			contentType : "application/json; charset=UTF-8",
-			data : JSON.stringify({
-				"keyword" : keyword
-			}),
-			async : false,
-			dataType : "json",
-			success : function(serverData) {
-				
-				var display = "";
-				
-					for(var i=0; i<serverData.list.length; i++){
-						
-						if(serverData.list[i].friendId == userId){
-						
-							if(status == 0){								
-								display = '<a type="button" >친구끊기</a>';							
-							}else if(status == 1){
-								display = '<a type="button" >친구신청</a>';								
-							}else{
-								display = '<a type="button" >차단한 친구</a>';
-							}							
-						}
-						else{
-							display = '<a type="button" >친구신청</a>';
-						}
-					}
-					
-					$("#friendSttusInput").html(display);
+		
 					
 					$("a:contains('친구끊기')").on("click", function() {
+						var friendId = ${user.userId};
+						var userId4 = ${sessionScope.user.userId};
+						var username = "${user.name}";
 						
 						if(confirm("친구 상태, 삭제하시겠습니까")){
 							
 							$.ajax({
-								url : "/friend/rest/delectFriend",
+								url : "/friend/rest/cutFriend",
 								method : "POST",
 								contentType : "application/json; charset=UTF-8",
 								data : JSON.stringify({
-									"keyword" : keyword
+									"friendId" : friendId,
+									"userId" : userId4,
+									"userName" : username
 								}),
 								async : false,
 								dataType : "json",
 								success : function(serverData) {
-									
+									$("#friendStatus").text("친구신청");
 								}
-									});
+							});
 								
 							
 						}else{
-							
 						}
 						
 					});
 					
+					
 					$("a:contains('친구신청')").on("click", function() {
 						
-						if(confirm("친구 신청")){
+						var friendId = ${user.userId};
+						var userId2 = ${sessionScope.user.userId};
+						var username = "${user.name}";
+						
+						if(status != 0){
+							var friendId = ${user.userId};
+							var userId3 = ${sessionScope.user.userId};
+							var username = "${user.name}";
+							
+							
+							$.ajax({
+								url : "/friend/rest/cancelFriend",
+								method : "POST",
+								contentType : "application/json; charset=UTF-8",
+								data : JSON.stringify({
+									"friendId" : friendId,
+									"userId" : userId3,
+									"userName" : username
+								}),
+								async : false,
+								dataType : "json",
+								success : function(serverData2) {	
+									$("#friendStatus").text("친구신청");
+									
+									}
+								});
+							
+							--status;
 							
 						}else{
+				
+						if(confirm("친구 신청을 하겠습니까")){
+							$("#friendStatus").text("친구 요청 중");
+							$.ajax({
+								url : "/friend/rest/addFriend",
+								method : "POST",
+								contentType : "application/json; charset=UTF-8",
+								data : JSON.stringify({
+									"friendId" : friendId,
+									"userId" : userId2,
+									"userName" : username
+								}),
+								async : false,
+								dataType : "json",
+								success : function(serverData2) {
+									$("#friendStatus").text("친구 요청 중");
+									status++;
+									
+									}
+								});
+						}else{
 							
+						}
+						
 						}
 					});
 					
@@ -263,9 +288,152 @@
 						}
 					});
 					
-			}
+					$("a:contains('친구수락')").on("click", function() {
+						
+						
+					if(status != 0){
+						alert("현재 친구끊기가 불가능합니다.");
+					}else{
+						
+						if(confirm("친구요청을 수락하시겠습니까?")){
+							var friendId = ${user.userId};
+							var userId2 = ${sessionScope.user.userId};
+							var username = "${user.name}";
+					
+								$.ajax({
+									url : "/friend/rest/addFriend",
+									method : "POST",
+									contentType : "application/json; charset=UTF-8",
+									data : JSON.stringify({
+										"friendId" : friendId,
+										"userId" : userId2,
+										"userName" : username
+									}),
+									async : false,
+									dataType : "json",
+									success : function(serverData2) {
+										$("#friendStatus").text("친구 (친구끊기)");										
+											++status;
+										}
+									});
+								
+							
+						}else{
+							
+						}
+					}
+						
+						
+					});
+					
+					$("a:contains('친구 요청 중')").on("click", function() {
+						var friendId = ${user.userId};
+						var userId3 = ${sessionScope.user.userId};
+						var username = "${user.name}";
+						alert(status);
+						
+						if(status != 0){
+							var friendId = ${user.userId};
+							var userId2 = ${sessionScope.user.userId};
+							var username = "${user.name}";
+							
+							if(confirm("친구 신청을 하겠습니까")){
+								
+								$.ajax({
+									url : "/friend/rest/addFriend",
+									method : "POST",
+									contentType : "application/json; charset=UTF-8",
+									data : JSON.stringify({
+										"friendId" : friendId,
+										"userId" : userId2,
+										"userName" : username
+									}),
+									async : false,
+									dataType : "json",
+									success : function(serverData2) {
+										$("#friendStatus").text("친구 요청 중");
+										}
+									});
+								--status;
+							}else{
+								
+							}
+							
+						}else{
+						$.ajax({
+							url : "/friend/rest/cancelFriend",
+							method : "POST",
+							contentType : "application/json; charset=UTF-8",
+							data : JSON.stringify({
+								"friendId" : friendId,
+								"userId" : userId3,
+								"userName" : username
+							}),
+							async : false,
+							dataType : "json",
+							success : function(serverData2) {
+								
+								$("#friendStatus").text("친구신청");
+								status++;
+								}
+							});
+						
+						}
+						
+						
+					});
+					
+					$("a:contains('팔로우하기')").on("click", function() {
+						var friendId = ${user.userId};
+						var userId4 = ${sessionScope.user.userId};
+						var username = "${user.name}";
+						
+							$.ajax({
+								url : "/friend/rest/addFollow",
+								method : "POST",
+								contentType : "application/json; charset=UTF-8",
+								data : JSON.stringify({
+									"friendId" : friendId,
+									"userId" : userId4,
+									"userName" : username
+								}),
+								async : false,
+								dataType : "json",
+								success : function(serverData) {
+									$("#followStatus").text("팔로우끊기");
+								}
+							});
+								
+							
+					});
+					
+					$("a:contains('팔로우끊기')").on("click", function() {
+						var friendId = ${user.userId};
+						var userId4 = ${sessionScope.user.userId};
+						var username = "${user.name}";
+						
+						
+							
+							$.ajax({
+								url : "/friend/rest/cancelFollow",
+								method : "POST",
+								contentType : "application/json; charset=UTF-8",
+								data : JSON.stringify({
+									"friendId" : friendId,
+									"userId" : userId4,
+									"userName" : username
+								}),
+								async : false,
+								dataType : "json",
+								success : function(serverData) {
+									$("#followStatus").text("팔로우신청");
+								}
+							});
+								
+						
+					});
+					
 			
-		});
 		
      $("#uploadbutton").click(function(){
          
@@ -365,10 +533,14 @@
   <c:if test="${user.userId ne sessionScope.user.userId}">
   <div class="row" id="friendPage">
     	<div class="col-xs-3" id="friendSttusInput">
-    	
+    		<c:if test="${code==0}"><a type="button" id="friendStatus">친구신청</a></c:if>
+    		<c:if test="${code==1}"><a type="button" id="friendStatus">친구 요청 중</a></c:if>
+    		<c:if test="${code==2}"><a type="button" id="friendStatus">친구 (친구끊기)</a></c:if>
+    		<c:if test="${code==3}"><a type="button" id="friendStatus">친구수락</a></c:if>
   		</div>
     	<div class="col-xs-3">
-    		<a type="button" >FOLLOW</a>
+    		<c:if test="${followCode==0}"><a type="button" id="followStatus">팔로우하기</a></c:if>
+    		<c:if test="${followCode==1}"><a type="button" id="followStatus">팔로우끊기</a></c:if>
     	</div>
     	<div class="col-xs-3">
     		<a type="button" >메세지전송</a>

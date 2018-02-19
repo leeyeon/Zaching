@@ -45,7 +45,7 @@
 		INTO users(user_id ,email, name, password, 
 		profile_image, role, sns_type,  created_date) 
 		VALUES(	seq_user_id.nextval, #{email},#{name} , #{password},
-					 #{profileImage:VARCHAR},
+					 'profile_default.png',
 					#{role} ,#{snsType:CHAR}, TO_CHAR(SYSDATE , 'YYYY-MM-DD') )
 	</insert>
 	
@@ -55,7 +55,7 @@
 		INTO users(user_id , name, email, 
 		profile_image, role, sns_type,  created_date) 
 		VALUES(	seq_user_id.nextval, #{name} ,
-					#{email}, #{profileImage:VARCHAR},
+					#{email}, 'profile_default.png',
 					#{role} ,#{snsType}, TO_CHAR(SYSDATE , 'YYYY-MM-DD') )
 	</insert>
 	

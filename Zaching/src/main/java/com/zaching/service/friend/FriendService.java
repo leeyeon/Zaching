@@ -9,7 +9,7 @@ import com.zaching.service.domain.Friend;
 public interface FriendService {
 	
 	//친구맺기
-	public void addFriend(Friend friend) throws Exception;
+	public void addFriend(Friend friend, String status) throws Exception;
 	
 	//친구 리스트 
 	public Map<String , Object> listFriend(Search search) throws Exception;
@@ -18,7 +18,7 @@ public interface FriendService {
 	public Map<String , Object > acceptFriend(Search search) throws Exception;
 	
 	//친구추천(알수도있는친구)
-	public Map<String, Object> recommendFriend(Search search ) throws Exception;
+	public List<Friend> recommendFriend(int userId) throws Exception;
 
 	//친구확인 
 	public Friend getFriend (int friendId) throws Exception;
@@ -30,5 +30,11 @@ public interface FriendService {
 	
 	public void  enterFriend(Friend friend) throws Exception;
 
+	public int checkFriend(int userId, int friendId, int status) throws Exception;
+	
+	public void cancelFriend(int userId, int friednId, int status) throws Exception;
 
+	public void updateStatus(int userId, int friednId, int status) throws Exception;
+	
+	public int checkFollow(int userId, int friendId, int status) throws Exception;
 }
