@@ -2,6 +2,7 @@
 package com.zaching.web.user;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -35,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
+import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.domain.User;
 import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.user.UserService;
@@ -167,21 +169,48 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "getTimeLine", method = RequestMethod.GET)
-	public String getTimeLine(@RequestParam("userId") int userId, Model model) throws Exception {
+	public String getTimeLine(@RequestParam("userId") int userId,
+							@ModelAttribute("userId") int userId2,
+								Model model, HttpServletRequest request) throws Exception {
 
 		System.out.println("/user/getTimeLine : GET");
 		// Business Logic
 		User user = userService.getUser(userId);
+		List<Newsfeed> list = newsfeedService.timeline(userId2);
 		
-		newsfeedService.timeline(userId);
-		System.out.println("===>");
-		
+		System.out.println("내 게시물===>"+newsfeedService.timeline(userId));
 		System.out.println("뀨규뀨===>"+userId);
 		// Model �� View ����
 		model.addAttribute("user", user);
+		model.addAttribute("list", list);
 		
 
 		return "forward:/user/getTimeLine.jsp";
+	}
+	@RequestMapping(value = "listUser")
+	public String listUser(@ModelAttribute("search") Search search, Model model, HttpServletRequest request)
+			throws Exception {
+
+		System.out.println("/user/listUser : GET / POST");
+
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+
+		// Business logic ����
+		Map<String, Object> map = userService.listUser(search);
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+				pageSize);
+		System.out.println(resultPage);
+		
+		// Model �� View ����
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+
+		return "forward:/user/listUser.jsp";
 	}
 
 	@RequestMapping(value="updateUser", method = RequestMethod.GET)
@@ -210,31 +239,7 @@ public class UserController {
 		return "redirect:/user/getUser?userId=" + user.getUserId();
 	}
 
-	@RequestMapping(value = "listUser")
-	public String listUser(@ModelAttribute("search") Search search, Model model, HttpServletRequest request)
-			throws Exception {
-
-		System.out.println("/user/listUser : GET / POST");
-
-		if (search.getCurrentPage() == 0) {
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-
-		// Business logic ����
-		Map<String, Object> map = userService.listUser(search);
-
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-				pageSize);
-		System.out.println(resultPage);
-		
-		// Model �� View ����
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);
-
-		return "forward:/user/listUser.jsp";
-	}
+	
 
 	@RequestMapping(value="memoryMap", method= RequestMethod.GET)
 	public String memoryMap( HttpSession session)throws Exception{
