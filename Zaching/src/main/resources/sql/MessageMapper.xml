@@ -78,7 +78,15 @@
 	
 	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM( <include refid="messageSql" /> ) countTable						
+	  	FROM( 
+	  		<if test="searchCondition == null || searchCondition == ''">
+	  			<include refid="messageSql" />
+	  		</if>
+	  		<if test="searchCondition != null || searchCondition == 'roomId'">
+	  			<include refid="messagebyRoomIdSql" />
+	  		</if>
+	  		
+	  		 ) countTable						
 	</select>
 
 	<sql id="messageSql">
@@ -95,6 +103,26 @@
 			AND (message.user_id = #{searchKeyword} OR message.friend_id = #{searchKeyword} )
 			AND vt.created_date = message.created_date
 		</where>
+	</sql>
+	
+	<select id="listMessagebyRoomId" 
+			parameterType="search" 
+			resultMap="messageSelectMap">
+		SELECT *
+		FROM 	(SELECT inner_table.*,ROWNUM AS row_seq
+					FROM ( <include refid="messagebyRoomIdSql" /> ) inner_table
+							WHERE ROWNUM &lt;=#{endRowNum})
+								WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+	
+	<sql id="messagebyRoomIdSql">
+		SELECT to_char(message.created_date,'yyyy-mm-dd hh24:mi') AS created_date, message.user_id, friend_id, 
+				users.profile_image AS friend_profile_image, users.name AS friend_name, message.content, message.room_id
+				FROM message, users
+		where message.friend_id = users.user_id
+		and message.room_id = #{searchKeyword}
+		order by message.created_date
+	
 	</sql>
 	
 	

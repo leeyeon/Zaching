@@ -24,6 +24,8 @@ public interface MessageDao {
 	public int getTotalCount(Search search) throws Exception;
 	
 	// return roomId
-	public int checkRoom(int userId, int friendId) throws Exception;	
+	public int checkRoom(int userId, int friendId) throws Exception;
+	
+	public List<Message> listMessagebyRoomId(Search search) throws Exception;
 
 }
