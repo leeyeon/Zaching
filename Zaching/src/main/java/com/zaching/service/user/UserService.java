@@ -58,5 +58,7 @@ public interface UserService {
  	public boolean snsCheck(String email, String snsType)throws Exception;
 
  	public String updateGetAccountToken(String token, int userId) throws Exception;
+ 	
+ 	public void setFCMToekn(int userId, String fcmToken) throws Exception;
 
 }

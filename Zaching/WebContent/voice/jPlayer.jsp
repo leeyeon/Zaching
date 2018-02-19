@@ -18,7 +18,7 @@
 
 		<script type="text/javascript">
 		$(document).ready(function(){
-
+			var myCirclePlayer = new Array();
 			/*
 			 * Instance CirclePlayer inside jQuery doc ready
 			 *
@@ -29,8 +29,17 @@
 			 *
 			 * Multiple instances must set the cssSelectorAncestor in the jPlayer options. Defaults to "#cp_container_1" in CirclePlayer.
 			 */
-
-			var myCirclePlayer = new CirclePlayer("#jquery_jplayer_1",
+			for(var i=1; i<3; i++){
+				myCirclePlayer[i] = new CirclePlayer('#jquery_jplayer_'+i,
+						{
+							m4a: "http://www.jplayer.org/audio/m4a/Miaow-07-Bubble.m4a",
+							oga: "http://www.jplayer.org/audio/ogg/Miaow-07-Bubble.ogg"
+						}, {
+							cssSelectorAncestor: '#cp_container_'+i
+						});
+			}
+		
+			/*var myCirclePlayer = new CirclePlayer("#jquery_jplayer_1",
 			{
 				m4a: "http://www.jplayer.org/audio/m4a/Miaow-07-Bubble.m4a",
 				oga: "http://www.jplayer.org/audio/ogg/Miaow-07-Bubble.ogg"
@@ -47,6 +56,14 @@
 			}, {
 				cssSelectorAncestor: "#cp_container_2"
 			});
+			
+			var myOtherOne2 = new CirclePlayer("#jquery_jplayer_3",
+					{
+						m4a:"http://www.jplayer.org/audio/m4a/Miaow-04-Lismore.m4a",
+						oga:"http://www.jplayer.org/audio/ogg/Miaow-04-Lismore.ogg"
+					}, {
+						cssSelectorAncestor: "#cp_container_3"
+					});*/
 		});
 		</script>
 	</head>
@@ -57,6 +74,8 @@
 
 		<!-- This is the 2nd instance's jPlayer div -->
 		<div id="jquery_jplayer_2" class="cp-jplayer"></div>
+		
+		
 
 		<div class="prototype-wrapper"> <!-- A wrapper to emulate use in a webpage and center align -->
 
@@ -96,6 +115,8 @@
 					<li><a class="cp-pause" style="display:none;" tabindex="1">pause</a></li>
 				</ul>
 			</div>
+			
+			
 
 		</div>
 	</body>

@@ -2,6 +2,7 @@ package com.zaching.common.service;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -36,6 +37,10 @@ public interface CommonService {
 	 * (ex) C:\\Users\\301-6\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\
 	 * */
 	public String addFile(String fileDirectory, MultipartFile uploadFile);
+	
+	// 요거 상대 경로인듯...
+	
+	public String addFileImage(HttpServletRequest request, MultipartFile uploadFile);
 	
 	/* KakaoDao 사용
 	 * getAuto / getToken / kakaoPay
