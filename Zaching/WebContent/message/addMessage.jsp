@@ -61,6 +61,14 @@ function addMsg(people, msg) {
 	}
 }
 
+$(function(){  
+$("#messageSend").on('click',function(){
+	
+	alert("보내기완료");
+});
+
+});
+
 </script>  
   
 
@@ -265,7 +273,7 @@ function addMsg(people, msg) {
 			<div class="send-container">
 				<form id="send">
 					<input type="text" id="msgInput" class="send-input" placeholder="메세지내용">
-					<input type="submit" class="send-btn" value="Send">
+					<input type="submit" class="send-btn" id="messageSend"value="Send">
 				</form>
 			</div>
 		</div>
