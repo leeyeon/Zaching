@@ -50,16 +50,8 @@
 		var playhead = document.getElementById('playhead'); // playhead
 		var timeline = document.getElementById('timeline'); // timeline
 
-		var page = $
-		{
-			search.currentPage
-		}
-		;
-		var pageSize = $
-		{
-			search.pageSize
-		}
-		;
+		var page = ${search.currentPage};
+		var pageSize = ${search.pageSize};
 
 		// timeline width adjusted for playhead
 		var timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
@@ -161,16 +153,12 @@
 			return el.getBoundingClientRect().left;
 		}
 
-		$("#inside")
-				.scroll(
-						function() {
+		$("#inside").scroll(function() {
 							var elem = $("#inside");
 							//alert(elem);
-							if (elem[0].scrollHeight - elem.scrollTop() == elem
-									.outerHeight()) {
+							if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
 								page++;
-								$
-										.ajax({
+								$.ajax({
 											url : "/voice/json/listVoice",
 											method : "POST",
 											contentType : "application/json; charset=UTF-8",
@@ -353,8 +341,8 @@
 				<div class="blog-post">
 					<h3 class="blog-post-title">&nbsp;${voice.voiceName}</h3>
 					<p class="blog-post-meta"
-						style="background-color: black; opacity: 0.5;">
-						사진사진 <a href="#">이름</a>
+						style="background-color: black; opacity: 0.5; width:100%">
+						<a href="#">소간지</a>
 					</p>
 					<div style="padding-right: 15px; padding-left: 15px;">
 						<c:if test="${voice.categoryCode == 'R02'}">
@@ -493,8 +481,8 @@
 						<b>녹음하기</b>
 					</h4>
 					<div class="modal-body">
-						<button onclick="startRecording(this);">record</button>
-						<button onclick="stopRecording(this);" disabled>stop</button>
+						<button onclick="startRecording(this);">녹음하기</button>
+						<button onclick="stopRecording(this);" disabled>정지</button>
 
 						<h2>Recordings</h2>
 						<ul id="recordingslist"></ul>
@@ -545,7 +533,7 @@
 			recorder && recorder.record();
 			button.disabled = true;
 			button.nextElementSibling.disabled = false;
-			__log('Recording...');
+			__log('녹음중입니다...');
 		}
 
 		function stopRecording(button) {
@@ -649,7 +637,7 @@
 			navigator.getUserMedia({
 				audio : true
 			}, startUserMedia, function(e) {
-				__log('No live audio input: ' + e);
+				__log('마이크 장치가 없습니다: ' + e);
 			});
 		};
 	</script>

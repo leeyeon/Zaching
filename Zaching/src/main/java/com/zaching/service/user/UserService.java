@@ -53,6 +53,9 @@ public interface UserService {
  	
  	//sns로그인 정보 DB로 슝슝
  	public void snsAddUser(User user)throws Exception;
+ 	
+ 	//sns로그인 회원가입
+ 	public boolean snsCheck(String email, String snsType)throws Exception;
 
  	public String updateGetAccountToken(String token, int userId) throws Exception;
  	
