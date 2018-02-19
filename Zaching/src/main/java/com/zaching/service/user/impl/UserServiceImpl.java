@@ -206,6 +206,27 @@ public class UserServiceImpl implements UserService {
 	
 	
 	@Override
+	public boolean snsCheck(String email, String snsType) throws Exception {
+		
+		System.out.println(":: UserServiceImpl snsCheck ::");
+		
+		int check = userDao.snsCheck(email, snsType);
+		boolean result = false;
+		
+		if(check == 0) {//회원가입처리
+			System.out.println("check1 :"+check);
+			result = true;
+		}else {//로그인처리
+			System.out.println("check2 :"+check);
+			result =false;
+		}
+		
+		System.out.println("true=회원가입, false=로그인====>"+result);
+		return result;
+		
+	}
+
+	@Override
 	public String updateGetAccountToken(String token, int userId) throws Exception {
 		if(token != null) {
 			userDao.updateAccountToken(token, userId);
@@ -219,7 +240,12 @@ public class UserServiceImpl implements UserService {
 		userDao.snsAddUser(user);
 	}
 	
-	
-	
+	@Override
+	public void setFCMToekn(int userId, String fcmToken) throws Exception {
+		String currentToken = userDao.getFCMToken(userId);
+		if(currentToken == null || currentToken.equals("") || !currentToken.equals(fcmToken)) {
+			userDao.updateFCMToken(userId, fcmToken);
+		}
+	}
 
 }

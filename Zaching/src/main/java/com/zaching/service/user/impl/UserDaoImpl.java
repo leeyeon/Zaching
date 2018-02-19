@@ -145,6 +145,25 @@ public class UserDaoImpl implements UserDao{
 		
 		sqlSession.insert("UserMapper.snsAddUser", user);
 	}
+
+	@Override
+	public int snsCheck(String email, String snsType) throws Exception {
+		System.out.println("전달받은값 :"+email+" , "+snsType);
+		
+		return sqlSession.selectOne("UserMapper.snsCheck", email);
+	}
 	
+	@Override
+	public String getFCMToken(int userId) throws Exception {
+		return sqlSession.selectOne("UserMapper.getFCMToken", userId);
+	}
+	
+	@Override
+	public void updateFCMToken(int userId, String fcmToken) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("fcmToken", fcmToken);
+		sqlSession.selectOne("UserMapper.updateFCMToken", map);
+	}
 	
 }
