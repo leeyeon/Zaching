@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.zaching.common.URLConnection;
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
@@ -36,6 +37,7 @@ import com.zaching.service.domain.Notice;
 import com.zaching.service.domain.Report;
 import com.zaching.service.domain.User;
 import com.zaching.service.payment.PaymentService;
+import com.zaching.service.user.UserService;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -57,14 +59,17 @@ public class NoticeRestController {
 	@Qualifier("commonServiceImpl")
 	private CommonService commonService;
 	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+	
 	@Value("#{commonProperties['pageUnit']}")
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
 
 	@Value("#{commonProperties['pageSize']}")
 	// @Value("#{commonProperties['pageSize'] ?: 2}")
-	int pageSize;
-	
+	int pageSize;	
 
 	public NoticeRestController() {
 		System.out.println("/notice/rest/");
@@ -121,7 +126,7 @@ public class NoticeRestController {
 	@RequestMapping(value = "rest/noticeSend", method = RequestMethod.POST)
 	public String noticeSend(@RequestBody Map<String, Object> map, @ModelAttribute("notice") Notice notice) throws Exception {
 		String noticeId = ((String)map.get("userId"));
-		
+
 		if(Integer.parseInt(noticeId) == 31) {
 			return "yes";
 		}
@@ -131,6 +136,6 @@ public class NoticeRestController {
 		}
 				
 	}
-	
+
 
 }

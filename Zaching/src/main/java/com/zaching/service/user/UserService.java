@@ -54,8 +54,10 @@ public interface UserService {
  	//sns·Î±×ÀÎ Á¤º¸ DB·Î ½¹½¹
  	public void snsAddUser(User user)throws Exception;
 
- 	public String updateGetAccountToken(String token, int userId) throws Exception;
+	public String updateGetAccountToken(String token, int userId) throws Exception;
+	
+ 	public void setFCMToken(int userId, String fcmToken) throws Exception;
  	
- 	public void setFCMToekn(int userId, String fcmToken) throws Exception;
+ 	public String getFCMToken(int userId) throws Exception;
 
 }

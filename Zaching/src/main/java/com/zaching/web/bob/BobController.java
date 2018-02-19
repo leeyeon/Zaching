@@ -3,6 +3,7 @@ package com.zaching.web.bob;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,7 @@ import com.zaching.service.domain.Bob;
 import com.zaching.service.domain.Comment;
 import com.zaching.service.domain.Friend;
 import com.zaching.service.domain.Newsfeed;
+import com.zaching.service.domain.Notice;
 import com.zaching.service.domain.Participant;
 import com.zaching.service.domain.User;
 import com.zaching.service.domain.excelView;
@@ -156,7 +158,7 @@ public class BobController {
 			search.setSearchKeyword(((User)session.getAttribute("user")).getUserId()+"");
 			Map<String,Object> friendMap = friendService.listFriend(search);
 			List<Friend> listFriend = (List<Friend>)friendMap.get("list");
-			System.out.println(search);
+			//System.out.println(search);
 			model.addAttribute("listFriend", listFriend);
 		}
 		
@@ -241,6 +243,8 @@ public class BobController {
 	
 	@RequestMapping(value="/addBob", method=RequestMethod.POST)
 	public String addBob(@ModelAttribute Bob bob, @RequestParam(required=false) boolean imageCheck,
+						@RequestParam(required=false) String friendId,
+						HttpSession session,
 						BindingResult result) throws Exception {
 		
 		// binding Test
@@ -251,28 +255,72 @@ public class BobController {
 		
 		System.out.println(this.getClass()+"/addBob_ POST");
 		
-		//System.out.println(imageCheck);
-		
-		if(bob.getUploadFile() != null) {
-			try {
-				bob.setImage(commonService.addFile(fileDirectory, bob.getUploadFile()));
-			} catch(Exception e) {
-				e.printStackTrace();
+		if(!imageCheck) {
+			if(bob.getUploadFile() != null) {
+				try {
+					bob.setImage(commonService.addFile(fileDirectory, bob.getUploadFile()));
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		
-		if(imageCheck) {
-			bob.setImage(null);
-		}
-		
 		/* 시간 */
-		System.out.println("약속시간: "+bob.getAppointmentTime().length());
-		if(bob.getAppointmentTime().length() != 0) {
-			bob.setAppointmentTime(this.getAppointmentTime(bob.getAppointmentTime()));
+		if(!bob.getCategory().equals("B03")) {
+			System.out.println("약속시간: "+bob.getAppointmentTime().length());
+			if(bob.getAppointmentTime().length() != 0) {
+				bob.setAppointmentTime(this.getAppointmentTime(bob.getAppointmentTime()));
+			}
 		}
-		
-		bobService.addBob(bob);		
+
+		bobService.addBob(bob);
 		System.out.println(bob);
+		
+		/* 친구 초대 */
+		if(bob.getCategory().equals("B03")) {
+			String[] list = friendId.split(",");
+			System.out.println("친구리스트:" +friendId);
+			
+			List<String> tokenList = new ArrayList<String>();
+			
+			for (String userId : list) {
+				String token = userService.getFCMToken(Integer.valueOf(userId));
+				tokenList.add(token);
+			}
+			
+			for (String string : tokenList) {
+				System.out.println(string);
+			}
+			
+			Notice notice = new Notice();
+			notice.setCategory("B03:"+bob.getBobId());
+			notice.setContent("밥 친구 방에 초대합니다.");
+			
+			// 안드로이드 알람 보내기
+			commonService.sendAndroid(tokenList, notice);
+			
+			notice.setBobId(bob.getBobId());
+			notice.setSenderId(bob.getWrittenUserId());
+			notice.setCategory("B00");
+			notice.setName(((User)session.getAttribute("user")).getName());
+			
+			commonService.addNotice(notice);
+			
+			List<Integer> visitUser = new ArrayList<Integer>();
+			
+			// 알람 보내기
+			for (String string : list) {
+				notice.setUserId(Integer.valueOf(string));
+				visitUser.add(Integer.valueOf(string));
+				
+				commonService.addNoticeTarget(notice);
+			}
+			
+			// 참여자 초대
+			System.out.println("참여자 ?::"+visitUser.toString());
+			bobService.inviteBob(visitUser, bob.getBobId());
+			
+		}
 		
 		return "redirect:/bob/getBob?bobId="+bob.getBobId()+"&category="+bob.getCategory();
 	}

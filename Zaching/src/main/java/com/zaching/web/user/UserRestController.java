@@ -260,7 +260,7 @@ public class UserRestController {
 		
 		//System.out.println(user);
 		
-		userService.setFCMToekn(user.getUserId(), map.get("fcmToken").toString());	
+		userService.setFCMToken(user.getUserId(), map.get("fcmToken").toString());	
 
 		return user;
 	}

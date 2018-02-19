@@ -101,16 +101,15 @@ public class BobDaoImpl implements BobDao {
 
 	@Override
 	public void inviteBob(List<Integer> listUser, int bobId) throws Exception {
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("list", listUser);
 		map.put("bobId", bobId);
-		
+
 		for (Integer integer : listUser) {
+			map.put("userId", integer);
+			sqlSession.insert("BobMapper.inviteBob", map);
 		}
 
-		
-		sqlSession.insert("BobMapper.inviteBob", map);
 	}
 
 	@Override

@@ -88,15 +88,14 @@
 }
 
 .getBob .btn-bob {
-	background: #7a68a6; 
-	border: none; 
+	background: #f77e7e;
+	border: none;
 	display: inline-block;
-	color: rgb(255, 255, 255); 
-	font-size: 18px; 
-	font-weight: bold;
+	color: rgb(255, 255, 255);
+	font-size: 17px;
 	text-align: center;
-	height: 70px;
-	line-height: 70px;
+	height: 60px;
+	line-height: 60px;
 	width: 100%;
 	text-decoration: none;
 }
@@ -116,7 +115,7 @@
 }
      	
 .getBob .select-bob:hover, .select-bob.active{
-    background: #7a68a6;
+    background: #f77e7e;
     color: #FFFFFF;
 }
      	
@@ -191,7 +190,7 @@
 }
 
 .addBob .btn-bob {
-	background: #7a68a6; 
+	background: #f77e7e; 
 	border: none; 
 	color: rgb(255, 255, 255); 
 	font-size: 15px; 

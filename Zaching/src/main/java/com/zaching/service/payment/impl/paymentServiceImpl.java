@@ -1,5 +1,6 @@
 package com.zaching.service.payment.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,26 +123,28 @@ public class paymentServiceImpl implements PaymentService {
 	}
 	
 	@Override
-	public Map<String, Object> listBackCode() throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("002", "산업은행");
-		map.put("003", "기업은행");
-		map.put("004", "국민은행");
-		map.put("007", "수협중앙회");
-		map.put("011", "농협중앙회");
-		map.put("020", "우리은행");
-		map.put("023", "SC제일은행");
-		map.put("027", "시티은행");
-		map.put("031", "대구은행");
-		map.put("032", "부산은행");
-		map.put("034", "광주은행");
-		map.put("035", "제주은행");
-		map.put("037", "전북은행");
-		map.put("039", "경남은행");
-		map.put("081", "하나은행");
-		map.put("088", "신한은행");
+	public List<String> listBackCode() throws Exception {
+		List<String> list = new ArrayList<String>();
+		list.add("002=산업은행");
+		list.add("003=기업은행");
+		list.add("004=국민은행");
+		list.add("007=수협중앙회");
+		list.add("011=농협중앙회");
+		list.add("020=우리은행");
+		list.add("023=SC제일은행");
+		list.add("027=시티은행");
+		list.add("031=대구은행");
+		list.add("032=부산은행");
+		list.add("034=광주은행");
+		list.add("035=제주은행");
+		list.add("037=전북은행");
+		list.add("039=경남은행");
+		list.add("081=하나은행");
+		list.add("088=신한은행");
+		list.add("097=KDB산업은행");
 		
-		return map;
+		
+		return list;
 	}
 
 	//@Scheduled(fixedDelay=1000)

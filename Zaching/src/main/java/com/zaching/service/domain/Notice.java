@@ -9,7 +9,7 @@ public class Notice {
 	private Date date;
 	private int bobId;
 	private int senderId;
-	
+	private String content;
 	private int noticeTargetId;
 	private int userId;
 	private char status;
@@ -140,16 +140,23 @@ public class Notice {
 
 
 
-	@Override
-	public String toString() {
-		return "Notice [noticeId=" + noticeId + ", category=" + category + ", date=" + date + ", bobId=" + bobId
-				+ ", senderId=" + senderId + ",  noticeTargetId=" + noticeTargetId
-				+ ", userId=" + userId + ", status=" + status + "]";
+	public String getContent() {
+		return content;
 	}
 
 
 
-	
-	
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Notice [noticeId=" + noticeId + ", category=" + category + ", date=" + date + ", bobId=" + bobId
+				+ ", senderId=" + senderId + ", content=" + content + ", noticeTargetId=" + noticeTargetId + ", userId="
+				+ userId + ", status=" + status + ", name=" + name + "]";
+	}
 
 }

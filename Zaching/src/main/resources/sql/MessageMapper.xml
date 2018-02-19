@@ -27,7 +27,7 @@
 		SYSDATE ,
 		#{userId:INTEGER},
 		#{friendId:INTEGER},
-		<if test="roomId == null">
+		<if test="roomId != null">
 			#{roomId:INTEGER}
 		</if>
 		<if test="roomId == null">

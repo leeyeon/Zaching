@@ -196,10 +196,13 @@
   			
   			//alert($("option:selected").text());
 
-  			if($("div.container > div > div:nth-child(2) > div > div > select > option:selected").text() != '기간설정') {					
-  				//alert("??");
-  				titleText = $("div.container > div > div:nth-child(2) > div > div > select > option:selected").text()+"간 포인트 내역";
-  			}
+  			<c:if test="${searchCondition != null}">
+  			
+	  			if($("div.container > div > div:nth-child(2) > div > div > select > option:selected").text() != '기간설정') {					
+	  				alert($("div.container > div > div:nth-child(2) > div > div > select > option:selected").text());
+	  				titleText = $("div.container > div > div:nth-child(2) > div > div > select > option:selected").text()+"간 포인트 내역";
+	  			}
+  			</c:if>
   			
   			$("body > div.container > div > div:nth-child(1) > div").text(titleText);
 			
@@ -256,7 +259,7 @@
 			
 			
 			$("li:contains('마일리지 전환')").on('click', function() {
-				if(${totalMileage} < 1000) {
+				if(${accountUser.totalMileage} < 1000) {
 					alert("마일리지 전환이 불가능합니다.");
 				} else {
 					$('#exchargeMileage').modal('toggle');
@@ -295,28 +298,31 @@
 				}
 				
 			});
+
+			var exchargePointDiv = $("#exchargePoint input[name=exchargePoint]");
 			
-			$("input[name=exchargePoint]").on({'focusout': function() {
-				if($(this).val() == "") {
+			exchargePointDiv.on({'focusout': function() {
+				
+				if(exchargePointDiv.val() == "") {
 					$("#pointCheck").show();
 					$("#pointCheck").text("* 5,000 Point 이상 출금이 가능합니다.");
 				}
 				
-				if($(this).val() > ${user.totalPoint}) {
-					$(this).val(${user.totalPoint});
+				if(exchargePointDiv.val() > ${accountUser.totalPoint}) {
+					exchargePointDiv.val(${accountUser.totalPoint});
 					$("#pointCheck").show();
-					$(this).css("background", "#ff8c8c");
+					exchargePointDiv.css("background", "#ff8c8c");
 					$("#pointCheck").text("* 가지고 계신 Point 까지만 출금이 가능합니다.");
 				}
 				
-				if($(this).val() < 5000) {
+				if(exchargePointDiv.val() < 5000) {
 					$("#pointCheck").show();
-					$(this).css("background", "#ff8c8c");
+					exchargePointDiv.css("background", "#ff8c8c");
 					$("#pointCheck").text("* 5,000 Point 이상 출금이 가능합니다.");
 				}
 				},
 				'focusin' : function() {
-					$(this).css("background", "#FFF");
+					exchargePointDiv.css("background", "#FFF");
 					$("#pointCheck").hide();
 
 				}
@@ -344,8 +350,8 @@
 		<div class="wrapper">
 			<form id="searchForm">
 				<div id="search" class="text-center" style="position: absolute; background: none; color:#FFF; left: 5%;">
-					<h1 style="font-size:20px;">${user.name}님의 잔여 포인트 : <fmt:formatNumber type="currency" value="${totalPoint}" pattern="###,###" /> Point</h1>
-					<h4>( 마일리지 : <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" />점 )</h4>
+					<h1 style="font-size:20px;">${accountUser.name}님의 잔여 포인트 : <fmt:formatNumber type="currency" value="${accountUser.totalPoint}" pattern="###,###" /> Point</h1>
+					<h4>( 마일리지 : <fmt:formatNumber type="currency" value="${accountUser.totalMileage}" pattern="###,###" />점 )</h4>
 				</div>
 				<a href="#" class="advanced_search_icon" id="advanced_search_btn"></a>
 			</form>
@@ -421,7 +427,7 @@
 		      <div class="modal-body text-center"> 
 		      	충전할 포인트를 입력해주세요. <br>
 		      	충전은 1번 당 1,000원부터 10,0000원까지 가능합니다.
-			      <form style="padding-top: 50px;">
+			    <form style="padding-top: 50px;">
 					<input type="text" placeholder="충전할 포인트를 입력하세요" name="point" style="width: 400px; height:40px;">
 				</form>
 		      </div>
@@ -447,8 +453,8 @@
 				포인트로 전환할 마일리지를 입력해주세요. <br>
 				5,000점 이상부터 1,000점 당 1000포인트로 전환됩니다.
 			      <form>
-					<input type="text" placeholder="마일리지를 입력해주세요." name="point" style="width: 200px; height:40px; margin-top: 60px; margin-left: 30px;">
-					/ <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" />점
+					<input type="text" placeholder="마일리지를 입력해주세요." name="point" style="width: 200px; height:40px; margin-top: 60px; margin-left: 30px;"/>
+					/ <fmt:formatNumber type="currency" value="${accountUser.totalMileage}" pattern="###,###" />점
 				</form>
 		      </div>
 		      <div class="modal-footer">
@@ -470,49 +476,39 @@
 	      </div>
 		      <div class="modal-body text-center" style="height: 500px;">
 			      <form name="exchargePointForm" style="padding-top: 20px;">
-					<input type="text" placeholder="반환받을 포인트를 입력하세요." name="exchargePoint" 
-							style="width: 200px; height:40px; margin-left: 30px;">
-					/ <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" /> Point
+					<input type="text" placeholder="반환받을 포인트를 입력하세요." name="exchargePoint" style="width: 200px; height:40px; margin-left: 30px;"/>
+					/ <fmt:formatNumber type="currency" value="${accountUser.totalPoint}" pattern="###,###" /> Point
 					
 					<div id="pointCheck" class="text-center" style="padding: 10px 10px 20px 0; color:red; display: none;">
 						* 5,000 Point 이상 출금이 가능합니다.
 					</div>
 				</form>
 
-				    <div class="input-group">
-				      <span class="input-group-addon">
-				        <input type="radio" name="account" checked>
-				      </span>
-				      <div class="form-control">기존계좌사용</div>
-				    </div><!-- /input-group -->
-				    <div class="input-group" id="newAccount">
-				      <span class="input-group-addon">
-				        <input type="radio" name="account">
-				      </span>
-				      <div class="form-control">새로운계좌사용</div>
-				      
-				    </div><!-- /input-group -->
-		      		
-				    <form id="accountForm"  style="display: none;">
+				<c:if test="${accountUser.accountNumber == null}">
+				    <form id="accountForm" style="padding-top: 10px;">
 				    	등록할 계좌정보를 입력해주세요.
 						<div class="row" style="padding-top:40px;">
 							<label for="name" class="col-xs-4 control-label">
 									이름
 							</label>
 							<div class="col-xs-7">
-								<input type="text" class="form-control" name="name" value="${user.realName}" />
+								<input type="text" class="form-control" name="name" value="${accountUser.realName}" />
 							</div>
 						</div>
+						
+						${accountUser}
 						
 						<div class="row" style="padding-top:20px;">
 							<label for="name" class="col-xs-4 control-label">
 									은행명
 							</label>
 							<div class="col-xs-7">
-								${bank}
-								<select name="limitNum" class="selectpicker show-tick" title="제한 인원수"  >
-						    	  <c:forEach var="i" begin="2" end="20" step="1">
-						    	  	<option >${i}</option>
+								<select name="limitNum" class="selectpicker show-tick" title="은행선택"  >
+						    	  <c:forEach var="bank" items="${bank}">
+						    	  	<option value="${fn:substring(bank,0,3)}"
+						    	  		${accountUser.bankName eq fn:substring(bank, 4, fn:length(bank)) ? 'selected="selected"':''}>
+										${fn:substring(bank,4, fn:length(bank))}
+									</option>
 						    	  </c:forEach>
 								</select>
 							</div>
@@ -532,10 +528,11 @@
 									계좌번호
 							</label>
 							<div class="col-xs-7">
-								<input type="text" class="form-control" name="accountNum" value="${user.accountNumber}" />
+								<input type="text" class="form-control" name="accountNum" value="${accountUser.accountNumber}" />
 							</div>
 						</div>
 					</form>
+				</c:if>
 		      </div>
 		      <div class="modal-footer">
 		      <div class="search-container text-center" align="center" style="margin: 0 auto;">

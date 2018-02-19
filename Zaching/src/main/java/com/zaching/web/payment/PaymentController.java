@@ -94,17 +94,20 @@ public class PaymentController {
 		
 		Map<String, Object> map = paymentService.listPoint(search, user.getUserId());
 		
-		int totalPoint = paymentService.getPoint(user.getUserId());
-		int totalMileage = paymentService.getMileage(user.getUserId());
+		//int totalPoint = paymentService.getPoint(user.getUserId());
+		//int totalMileage = paymentService.getMileage(user.getUserId());
 		Page resultPage	= 
 				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
 				pageUnit, pageSize);
 		
+		User accountUser = userService.getAccountUser(user.getUserId());
+		
 		model.addAttribute("payment", map.get("list"))
-			 .addAttribute("totalPoint", totalPoint)
-			 .addAttribute("totalMileage", totalMileage)
+			 //.addAttribute("totalPoint", totalPoint)
+			 //.addAttribute("totalMileage", totalMileage)
 			 .addAttribute("paymentPage", resultPage)
-			 .addAttribute("bank", paymentService.listBackCode());
+			 .addAttribute("bank", paymentService.listBackCode())
+			 .addAttribute("accountUser", accountUser);
 		
 		return "forward:/payment/mainPayment.jsp";
 	}
