@@ -155,6 +155,10 @@
 		
 		
 		
+		
+		
+		
+		
 		//회원탈퇴
 		$("#deleteUser").on("click", function() {
 			var windowW = 400;  // 창의 가로 길이
@@ -178,6 +182,91 @@
 	
 	//프로필사진 업데이트
 	$(function(){
+		
+		
+		
+		var keyword = ${sessionScope.user.userId};
+		var userId = ${user.userId};
+	
+		$.ajax({
+			url : "/friend/rest/listFriend",
+			method : "POST",
+			contentType : "application/json; charset=UTF-8",
+			data : JSON.stringify({
+				"keyword" : keyword
+			}),
+			async : false,
+			dataType : "json",
+			success : function(serverData) {
+				
+				var display = "";
+				
+					for(var i=0; i<serverData.list.length; i++){
+						
+						if(serverData.list[i].friendId == userId){
+						
+							if(status == 0){								
+								display = '<a type="button" >친구끊기</a>';							
+							}else if(status == 1){
+								display = '<a type="button" >친구신청</a>';								
+							}else{
+								display = '<a type="button" >차단한 친구</a>';
+							}							
+						}
+						else{
+							display = '<a type="button" >친구신청</a>';
+						}
+					}
+					
+					$("#friendSttusInput").html(display);
+					
+					$("a:contains('친구끊기')").on("click", function() {
+						
+						if(confirm("친구 상태, 삭제하시겠습니까")){
+							
+							$.ajax({
+								url : "/friend/rest/delectFriend",
+								method : "POST",
+								contentType : "application/json; charset=UTF-8",
+								data : JSON.stringify({
+									"keyword" : keyword
+								}),
+								async : false,
+								dataType : "json",
+								success : function(serverData) {
+									
+								}
+									});
+								
+							
+						}else{
+							
+						}
+						
+					});
+					
+					$("a:contains('친구신청')").on("click", function() {
+						
+						if(confirm("친구 신청")){
+							
+						}else{
+							
+						}
+					});
+					
+					$("a:contains('차단한 친구')").on("click", function() {
+						
+						if(confirm("차단을 푸시겠습니까?")){
+							
+						}else{
+							
+						}
+					});
+					
+			}
+			
+		});
+		
      $("#uploadbutton").click(function(){
          
          var form = new FormData(form);
@@ -275,9 +364,9 @@
   
   <c:if test="${user.userId ne sessionScope.user.userId}">
   <div class="row" id="friendPage">
-    	<div class="col-xs-3">
-    		<a type="button" >친구신청</a>
-    	</div>
+    	<div class="col-xs-3" id="friendSttusInput">
+    	
+  		</div>
     	<div class="col-xs-3">
     		<a type="button" >FOLLOW</a>
     	</div>

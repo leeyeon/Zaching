@@ -68,7 +68,7 @@
 	</select>
 	
 	<sql id="listNewsfeedSql">
-		SELECT n.*, u.name, u.profile_image 
+		SELECT n.*, u.name, u.profile_image
 	  			FROM newsfeed n, users u 
 	  			<where>
 	  			n.user_id=u.user_id(+)

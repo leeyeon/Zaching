@@ -124,6 +124,11 @@
 			
 		</script>
 		<style type="text/css">
+			body{
+	padding-top: 110px;
+	background: rgba(255,255,255,1);
+	}
+	
 			img.wp-smiley,
 			img.emoji {
 				display: inline !important;
