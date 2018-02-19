@@ -323,7 +323,7 @@
          <button class="uploadbutton">데이터전송</button>
         
        <img  class="img-circle" alt="프로필사진변경"  style="width: 150px; height: 150px;"
-       src="../resources/upload_files/images/${sessionScope.user.profileImage}"/>
+       src="../resources/upload_files/images/${user.profileImage}"/>
          
        </div>
        </c:if>
