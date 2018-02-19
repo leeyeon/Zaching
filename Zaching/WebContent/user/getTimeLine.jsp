@@ -68,30 +68,6 @@
        
        form.op-form{ margin-top:  160px;}
        
-       
-       /* 프로필사진 업로드 */
-     	#profile > div > label{
-     
-     	    position: relative;
-    		display: block;
-    		margin-top: 15px;
-   			margin-left: auto;
-    		margin-right: auto;
-    		width: 140px;
-    		height: 25px;
-    		cursor: pointer;
-    		text-align: center;
-     
-     	}
-     	
-     	/* 파일업로드 버튼 투명하게함 */
-     	#profile > div > label > input{
-     		opacity: 1;       /*input type="file" tag 투명하게 처리*/
-  			position: relative;
-  			width: 140px;
-    		height: 25px;
-     		
-     	}
      	
 		
 		.container{
@@ -177,10 +153,11 @@
 		})
 		
 		
-		//프로필사진 변경
-		$(".profile-upload").on("click", function() {
-			self.location="";
-		})
+		
+		
+		
+		
+		
 		
 		//회원탈퇴
 		$("#deleteUser").on("click", function() {
@@ -203,7 +180,111 @@
 		//신고하기 Event
 	});
 	
+	//프로필사진 업데이트
+	$(function(){
+		
+		
+		
+		var keyword = ${sessionScope.user.userId};
+		var userId = ${user.userId};
 	
+		$.ajax({
+			url : "/friend/rest/listFriend",
+			method : "POST",
+			contentType : "application/json; charset=UTF-8",
+			data : JSON.stringify({
+				"keyword" : keyword
+			}),
+			async : false,
+			dataType : "json",
+			success : function(serverData) {
+				
+				var display = "";
+				
+					for(var i=0; i<serverData.list.length; i++){
+						
+						if(serverData.list[i].friendId == userId){
+						
+							if(status == 0){								
+								display = '<a type="button" >친구끊기</a>';							
+							}else if(status == 1){
+								display = '<a type="button" >친구신청</a>';								
+							}else{
+								display = '<a type="button" >차단한 친구</a>';
+							}							
+						}
+						else{
+							display = '<a type="button" >친구신청</a>';
+						}
+					}
+					
+					$("#friendSttusInput").html(display);
+					
+					$("a:contains('친구끊기')").on("click", function() {
+						
+						if(confirm("친구 상태, 삭제하시겠습니까")){
+							
+							$.ajax({
+								url : "/friend/rest/delectFriend",
+								method : "POST",
+								contentType : "application/json; charset=UTF-8",
+								data : JSON.stringify({
+									"keyword" : keyword
+								}),
+								async : false,
+								dataType : "json",
+								success : function(serverData) {
+									
+								}
+									});
+								
+							
+						}else{
+							
+						}
+						
+					});
+					
+					$("a:contains('친구신청')").on("click", function() {
+						
+						if(confirm("친구 신청")){
+							
+						}else{
+							
+						}
+					});
+					
+					$("a:contains('차단한 친구')").on("click", function() {
+						
+						if(confirm("차단을 푸시겠습니까?")){
+							
+						}else{
+							
+						}
+					});
+					
+			}
+			
+		});
+		
+     $("#uploadbutton").click(function(){
+         
+         var form = new FormData(form);
+         form.append("uploadFile",file);
+             $.ajax({
+                url: '/user/fileupload',
+                method: 'POST',
+                contentType: "application/json; charset=UTF-8",
+                data: formData,
+              	 async : false,
+    			dataType : "json",
+                success: function(result){
+                    alert("업로드 성공!!");
+                }
+            });
+         });
+	})
+
 
 
 </script>
@@ -216,28 +297,35 @@
 <div class="container">
 <div class="bg"></div>
 	<div class="content">
-	<form class="op-form" action="/settings/profile" method="POST" enctype="multipart/form-data">
+	<form id="frm" class="op-form" action="/user/fileupload" method="POST" enctype="multipart/form-data">
 	
 	<div class="row header" align="center">
 		<div class="col-xs-4" id="profile" align="left">
+		
+		<!--프로필 사진 없으면 기본이미지  -->
 		<c:if test="${user.profileImage eq null }">
 	
 		<div class="profileImage" align="center">
-         <button class="profile-upload">뀨?</button>
+		<input type="file" name="uploadfile" />
+		<input type="hidden" name="userId"/>
+         <button class="uploadbutton">데이터전송</button>
         	<img  class="img-circle" src="../resources/images/profile_default.png" 
         	 style="width: 150px; height: 150px;"/>
-         <input class="upload_input_hidden" type="file" name="profileImage"> 
+         
+
       	</div>
       
        </c:if>
-		
+		<!-- 프로필 사진 있을때 -->
 		<c:if test="${user.profileImage ne null }">
 		<div class="profileImage" align="center">
-        <button class="profile-upload">뀨?</button>
+        <input type="file" name="uploadfile" />
+         <button class="uploadbutton">데이터전송</button>
+        
        <img  class="img-circle" alt="프로필사진변경"  style="width: 150px; height: 150px;"
-       src="../resources/images/upload_files/images/${sessionScope.user.profileImage}"/>
-       <input class="upload_input_hidden" type="file" name="profileImage"> 
-    	</div>
+       src="../resources/upload_files/images/${user.profileImage}"/>
+         
+       </div>
        </c:if>
        
        
@@ -276,9 +364,9 @@
   
   <c:if test="${user.userId ne sessionScope.user.userId}">
   <div class="row" id="friendPage">
-    	<div class="col-xs-3">
-    		<a type="button" >친구신청</a>
-    	</div>
+    	<div class="col-xs-3" id="friendSttusInput">
+    	
+  		</div>
     	<div class="col-xs-3">
     		<a type="button" >FOLLOW</a>
     	</div>
@@ -293,7 +381,7 @@
    
     <div class="row body" align="center">
     		<h1>여기는 뉴스피드 게시물</h1>
-    		<jsp:include page="/newsfeed/newsfeed.jsp"/>
+    		
     </div>
     
     </div>	

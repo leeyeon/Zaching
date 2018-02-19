@@ -60,6 +60,13 @@
 	</insert>
 	
 	
+	<select id="snsCheck" parameterType="String" resultType="int">
+		SELECT 	COUNT(*)	
+		FROM users 
+		WHERE email = #{value}
+		AND sns_type = #{value} 
+	</select>
+	
 	<select id="checkSignup" parameterType="String" resultType="int">
 		SELECT COUNT(*)
 		FROM users 
@@ -86,7 +93,7 @@
 	<select id="getUser"	parameterType="int"	resultMap="userSelectMap">
 		SELECT
 		user_id , name , email , role, password, address, gender, phone, longitude,latitude,
-		birth, profile_image, real_name, account_number,  TO_CHAR(created_date , 'YYYY-MM-DD')		
+		birth, profile_image, real_name, account_number,  to_char(created_date,'yyyy-mm-dd') created_date		
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
@@ -94,11 +101,13 @@
 	 <select id="login"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
 		user_id , name , email , role, password, address, gender, phone,
-		birth, profile_image, real_name, account_number, created_date 		
+		birth, profile_image, real_name, account_number, created_date,
+		sns_type	
 		FROM users 
 		WHERE email = #{value}
 	 </select>
 	 
+	
 	 
 	 <select id="getAccountUser"	parameterType="int"	resultMap="userSelectMap">
 		SELECT
@@ -185,7 +194,6 @@
 	 </select>
 	 
 	 
-	 
 	 <update	id="updateNotice"	parameterType="user" >
 	 
 	 	
@@ -222,6 +230,17 @@
 	 	WHERE email=#{value}
 	 </select>
 	 
+	 <select id="getFCMToken" parameterType="int" resultType="string">
+	 	SELECT fcm_token
+	 	FROM users
+	 	WHERE user_id = #{userId}
+	 </select>
+	 
+	 <update id="updateFCMToken" parameterType="map">
+	 	UPDATE users
+	 	SET fcm_token = #{fcmToken}
+	 	WHERE user_id = #{userId}
+	 </update>
 </mapper>
 
 	

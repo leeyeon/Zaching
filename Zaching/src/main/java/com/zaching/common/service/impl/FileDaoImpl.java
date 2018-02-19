@@ -3,6 +3,8 @@ package com.zaching.common.service.impl;
 import java.io.File;
 import java.util.Calendar;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +25,64 @@ public class FileDaoImpl implements FileDao {
 
 	@Override
 	public String addFile(String fileDirectory, MultipartFile uploadFile) {
+
+		Calendar calendar = Calendar.getInstance();
+		
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH);
+		String monthStr = "";
+		
+		if(month < 10) {
+			monthStr = "0"+month;
+		} else {
+			monthStr = ""+month;
+		}
+		
+		// 파일경로+현재날짜
+		String url = fileDirectory+year+monthStr;
+		String realFileName;
+		
+		try {
+			//MultipartFile uploadFile = bob.getUploadFile();
+			//System.out.println("uploadFile :: "+bob.getUploadFile());
+			if(uploadFile != null) {
+				String fileName = uploadFile.getOriginalFilename();
+				//System.out.println("fileName :: " +fileName);
+				String fileNameExt = fileName.substring(fileName.indexOf(".")+1);
+				
+				if(!"".equals(fileName)) {
+					
+					File loc = new File(url);
+					
+					if(!loc.exists()) {
+						loc.mkdirs();
+					}
+			        
+			        realFileName = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(8), fileNameExt);
+					
+					File file = new File(url, realFileName);
+					//System.out.println("RandomStringUtils... :: "+realFileName);
+					
+					//bob.setImage(realFileName);
+					uploadFile.transferTo(file);
+					
+					//System.out.println("DB 저장할 파일 이름 ? ::"+year+monthStr+"\\"+realFileName);
+					
+					return year+monthStr+"\\"+realFileName;
+				}
+			}	
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	
+	public String addFile(HttpServletRequest request, MultipartFile uploadFile) {
+		
+		String fileDirectory = 
+				request.getSession().getServletContext().getRealPath("resources/upload_files/images");
 		
 		Calendar calendar = Calendar.getInstance();
 		
@@ -75,5 +135,4 @@ public class FileDaoImpl implements FileDao {
 		
 		return null;
 	}
-
 }

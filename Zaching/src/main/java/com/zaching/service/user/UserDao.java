@@ -49,7 +49,15 @@ public interface UserDao {
 	//sns계정 로그인 정보 DB로 슝슝
 	public void snsAddUser(User user)throws Exception;
 	
+	//sns계정 로그인 or 회원가입 여부 판단
+	public int snsCheck(String email, String snsType)throws Exception;
+	
 	public void updateAccountToken(String token, int userId) throws Exception;
 	
 	public String getAccountToken(int userId) throws Exception;
+	
+	// 안드로이드 알람 토큰 get. set
+	public String getFCMToken(int userId) throws Exception;
+
+	public void updateFCMToken(int userId, String fcmToken) throws Exception;
 }

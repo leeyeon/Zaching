@@ -224,8 +224,13 @@ public class Newsfeed {
 		return "Newsfeed [newsfeedId=" + newsfeedId + ", categoryCode=" + categoryCode + ", fileName=" + fileName
 				+ ", content=" + content + ", locationX=" + locationX + ", locationY=" + locationY + ", regDate="
 				+ regDate + ", userId=" + userId + ", locationName=" + locationName + ", countLikey=" + countLikey
-				+ ", countReply=" + countReply + ", file=" + file + "]";
+				+ ", countReply=" + countReply + ", privacyBound=" + privacyBound + ", status=" + status + ", file="
+				+ file + ", userName=" + userName + ", profileImage=" + profileImage + "]";
 	}
+
+
+
+	
 
 	
 	
