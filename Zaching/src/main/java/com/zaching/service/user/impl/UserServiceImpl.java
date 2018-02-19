@@ -214,13 +214,14 @@ public class UserServiceImpl implements UserService {
 		boolean result = false;
 		
 		if(check == 0) {//회원가입처리
-
+			System.out.println("check1 :"+check);
 			result = true;
 		}else {//로그인처리
+			System.out.println("check2 :"+check);
 			result =false;
 		}
 		
-		System.out.println("true=회원가입, false=로그인?====>"+result);
+		System.out.println("true=회원가입, false=로그인====>"+result);
 		return result;
 		
 	}

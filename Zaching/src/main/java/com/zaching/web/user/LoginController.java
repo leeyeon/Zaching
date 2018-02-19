@@ -129,12 +129,16 @@ public class LoginController {
 		User user = naverService.getAccessToken(session, code, state);
 		user = naverService.getUserProfile(user);
 
-		boolean dbUser = userService.checkSignup(user.getEmail());
-		if (dbUser == true) {//이메일정보가  db에 없을경우 
+		boolean result = userService.snsCheck(user.getEmail(), user.getSnsType());
+		
+		//System.out.println("받아온정보"+user.getSnsType());
+		if (result == true && user.getSnsType() == "3") {//이메일정보가  db에 없을경우 
+			
 			session.setAttribute("user", user);
 			userService.snsAddUser(user);//snstype으로 회원가입
+			
 			System.out.println("네이버계정으로 회원가입");
-		} else {
+		} else if(result == false && user.getSnsType() =="3"){
 			session.setAttribute("user", user);
 			
 			System.out.println("네이버계정으로 로그인");
