@@ -207,8 +207,8 @@ public class UserController {
 		
 		
 
-		//return "forward:/user/getTimeLine.jsp";
-		return "forward:/user/fileUser.jsp";
+		return "forward:/user/getTimeLine.jsp";
+		
 	}
 	@RequestMapping(value = "listUser")
 	public String listUser(@ModelAttribute("search") Search search, Model model, HttpServletRequest request)
