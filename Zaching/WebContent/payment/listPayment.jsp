@@ -28,37 +28,39 @@
  	<div class="col-xs-4">
  		<c:if test="${payment.paymentCode eq 'P01' || payment.paymentCode eq 'P05' || payment.paymentCode eq 'P06'}">+</c:if>
  		<c:if test="${payment.paymentCode eq 'P02' || payment.paymentCode eq 'P03' || payment.paymentCode eq 'P04'}">-</c:if>
- 		<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /> p
+ 		<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" />
+ 		<img src="../resources/images/point_smail_icon.png" width="15px" height="15px">
  	</div>
 	</div>
 	
 	<div class="row text-left listExplain" style="background: #ccc; margin:10px; padding: 15px 10px 10px 10px; display: none;">
-		<p>거래일시 : ${payment.createdDate}</p>
-		<p>적립/포인트 : 
+		<p style="padding-bottom: 5px;">거래일시 : ${payment.createdDate}</p>
+		<p style="padding-bottom: 5px;">적립/포인트 : 
 			<span style="font-weight: bold;"> 
   		<c:if test="${payment.paymentCode eq 'P02' || payment.paymentCode eq 'P03' || payment.paymentCode eq 'P04'}">-</c:if>
- 			<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /> p
+ 			<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /> 
+ 			<img src="../resources/images/point_smail_icon.png" width="15px" height="15px">
 			</span></p>
- 	<p>내역 : 
- 		<c:set var="content" value="${fn:split(payment.content,':')}" />
-
- 		<c:if test="${fn:contains(payment.content, 'B03')}">
- 			주기적으로 만나 <a href="/bob/getBob?category=B03&bobId=${content[1]}">'${content[2]}'</a> 에 회비 포인트 지출
- 		</c:if>
- 		<c:if test="${fn:contains(payment.content, 'B01')}">
- 			우리지금 만나 <a href="/bob/getBob?category=B01&bobId=${content[1]}">'${content[2]}'</a> 에 약속비 지출
- 		</c:if>
- 		<c:if test="${!fn:contains(payment.content, 'B')}">
- 			${content[2]}
- 		</c:if>
- 	</p>
+	 	<p>내역 : 
+	 		<c:set var="content" value="${fn:split(payment.content,':')}" />
+	
+	 		<c:if test="${fn:contains(payment.content, 'B03')}">
+	 			주기적으로 만나 <a href="/bob/getBob?category=B03&bobId=${content[1]}" style="color:#000;">'${content[2]}'</a> 에 회비 포인트 지출
+	 		</c:if>
+	 		<c:if test="${fn:contains(payment.content, 'B01')}">
+	 			우리지금 만나 <a href="/bob/getBob?category=B01&bobId=${content[1]}" style="color:#000;">'${content[2]}'</a> 에 약속비 지출
+	 		</c:if>
+	 		<c:if test="${!fn:contains(payment.content, 'B')}">
+	 			${content[2]}
+	 		</c:if>
+	 	</p>
 	</div>
 	<hr>
 </c:forEach>
 
 <c:if test="${paymentPage.totalCount > (paymentPage.currentPage * paymentPage.pageUnit)}">
-<div class="row text-center" style="height:50px; margin: 5px; line-height: 50px;
-			border-bottom: 2px solid #ccc; cursor: pointer;">더 보기</div>
+	<div class="row text-center" style="height:50px; margin: 5px; line-height: 50px;
+				border-bottom: 2px solid #ccc; cursor: pointer;">더 보기</div>
 </c:if>
 
    

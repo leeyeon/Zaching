@@ -264,7 +264,7 @@ public class UserController {
 	
 
 	@RequestMapping(value="memoryMap", method= RequestMethod.GET)
-	public String memoryMap( HttpSession session)throws Exception{
+	public String memoryMap(HttpSession session)throws Exception{
 
 		System.out.println("/user/memoryMap : GET");
 		

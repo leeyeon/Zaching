@@ -77,18 +77,16 @@ public class MessageController {
 	}
 		
 		
-		@RequestMapping(value="getMessage")
-		public String getMessage(@RequestParam(value="messageId",required=false)int messageId,Model model)throws Exception{
-			System.out.println("message/getMessage:POST");
-			
-			Message message=messageService.getMessage(messageId);
-			
-			model.addAttribute("message",message);
-			
-			return "forward:/message/getMessage.jsp";
-			
+	@RequestMapping(value="getMessage")
+	public String getMessage(@RequestParam(value="messageId",required=false)int messageId,Model model)throws Exception{
+		System.out.println("message/getMessage:POST");
 		
+		Message message=messageService.getMessage(messageId);
 		
+		model.addAttribute("message",message);
+		
+		return "forward:/message/getMessage.jsp";
+
 	}
 
 	
