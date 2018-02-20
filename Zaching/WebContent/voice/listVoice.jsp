@@ -56,12 +56,11 @@
 
 							$(".viewlist").html(displayValue);
 
-							$(".viewlist td")
-									.click(
-											function() {
+							$(".viewlist td").click(function() {
 												var title = $($("input[name='title']")[$('.viewlist td:nth-child(1)').index(this) - 1]).val();
-												var name = $($("input[name='name']")[$('.viewlist td:nth-child(1)').index(this) - 1]).val();
+												var name = $($("input[name='name']")[$('.viewlist td:nth-child(1)').index(this) ]).val();
 												var songIdd = $($("input[name='songIdd']")[$('.viewlist td:nth-child(1)').index(this) - 1]).val();
+												
 
 												$("input[name='selectsong']").val(title);
 												$("input[name='selectsinger']").val(name);
@@ -153,7 +152,7 @@
 						var display = '';
 						for(var i=0; i<serverData.length; i++){
 							display = display + '<li>'+
-													'<a href="#">';
+													'<a href="/voice/getVoice?voiceId='+serverData[i].voiceId+'">';
 													if( serverData[i].backgroundImage != null)
 														display += '<img src="../resources/images/voiceImages/'+serverData[i].backgroundImage+'" alt="" title="" class="property_img"/>';
 													else
@@ -162,7 +161,7 @@
 													'<span class="price"><i class="fas fa-play-circle"></i>&nbsp;'+serverData[i].countReply+'</span>'+
 													'<div class="property_details">'+
 														'<h1>'+
-															'<a href="#" style="vertical-align: bottom;"><img src="../resources/images/'+serverData[i].profileImage+'" id="profile">&nbsp;'+serverData[i].userName+'</a>'+
+															'<a href="/user/getTimeLine?userId='+serverData[i].userId+'" style="vertical-align: bottom;"><img src="../resources/images/'+serverData[i].profileImage+'" id="profile">&nbsp;'+serverData[i].userName+'</a>'+
 														'</h1>'+
 														'<h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'+
 															'<a href="/voice/getVoice?voiceId='+serverData[i].voiceId+'">'+serverData[i].voiceName+'</a>'+
@@ -214,47 +213,14 @@ body>div.container {
 }
 
 .modal-dialog {
-	max-width: 800px;
 	padding: 0;
 	display: inline-block;
 	text-align: left;
 	vertical-align: middle;
 }
 
-.modal-content {
-	border: 0;
-	border-radius: 0;
-}
 
-.modal-header {
-	border: 0; padding 0;
-	position: relative;
-}
 
-.modal-header .close {
-	margin: 0;
-	position: absolute;
-	top: -10px;
-	right: -10px;
-	width: 23px;
-	height: 23px;
-	border-radius: 23px;
-	background-color: #00aeef;
-	color: #ffe300;
-	font-size: 9px;
-	opacity: 1;
-	z-index: 10;
-}
-
-.modal-content p {
-	padding: 0 20px;
-}
-
-.modal-body {
-	padding: 0 0 10px 0;
-	height: 450px;
-	overflow: auto;
-}
 
 .topnav a {
 	float: left;
@@ -548,14 +514,14 @@ width:100%;}
 							<c:forEach var="voice" items="${list}">
 							<c:set var="i" value="${ i+1 }" />
 								<li>
-									<a href="#">
+									<a href="/voice/getVoice?voiceId=${voice.voiceId}">
 										<c:if test="${ !empty voice.backgroundImage}"><img src="../resources/images/voiceImages/${voice.backgroundImage}" alt="" title="" class="property_img"/></c:if>
 										<c:if test="${ empty voice.backgroundImage}"><img src="../resources/images/voiceImages/default.jpg" alt="" title="" class="property_img"/></c:if>
 									</a>
 									<span class="price"><i class="fas fa-play-circle"></i>&nbsp;${voice.countReply}</span>
 									<div class="property_details">
 										<h1>
-											<a href="#" style="vertical-align: bottom;"><c:if test="${!empty voice.profileImage}"><img src="../resources/images/${voice.profileImage}" id="profile"></c:if>
+											<a href="/user/getTimeLine?userId=${voice.userId}" style="vertical-align: bottom;"><c:if test="${!empty voice.profileImage}"><img src="../resources/images/${voice.profileImage}" id="profile"></c:if>
 											<c:if test="${empty voice.profileImage}"><img src="../resources/images/profile_default.png" id="profile"></c:if>&nbsp;${voice.userName}</a>
 										</h1>
 										
@@ -578,11 +544,12 @@ width:100%;}
 	</section>	<!--  end listing section  -->
 
 <div id="fixedbtn" align="right" style="z-index: 1500;">
+<c:if test="${user.userId ne null}">
    	  <div class="container">
-	  	<div class="btn-add-bob text-center" data-toggle="modal" data-target="#myModal" style="font-size:20px; 
+	  	<div class="btn-add-bob text-center" data-toggle="modal" data-target="#myModal3" style="font-size:20px; 
 	  	background: url('../resources/images/ic_add_circle_black_36px.svg') center center no-repeat; background-size: cover;">
 	  	</div>
-	  </div>
+	  </div></c:if>
 	</div>
 	<footer>
 		<div class="copyrights wrapper">
@@ -590,8 +557,8 @@ width:100%;}
 		</div>
 	</footer><!--  end footer  -->
 	
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
+	<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document"  style="width: 600px;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -638,7 +605,7 @@ width:100%;}
       	
       	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog" role="document" >
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
@@ -657,10 +624,10 @@ width:100%;}
 							
 						</div></div>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" style="height: 400px;  overflow : auto ;">
 					<div class="topnav">
 						
-						<div class="viewlist"></div>
+						<div class="viewlist" ></div>
 					</div>
 				</div>
 				<div class="modal-footer">

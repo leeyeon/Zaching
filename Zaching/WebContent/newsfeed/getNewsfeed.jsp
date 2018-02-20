@@ -13,7 +13,7 @@
 <link rel="alternate" type="application/rss+xml" title="DW Timeline &raquo; Comments Feed" href="http://demo.designwall.com/dw-timeline/comments/feed/" />
 <link rel="alternate" type="application/rss+xml" title="DW Timeline &raquo; About Comments Feed" href="http://demo.designwall.com/dw-timeline/about/feed/" />
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-
+<jsp:include page="/resources/layout/toolbar.jsp"/>
 <link rel='stylesheet' id='dwqa-style-css'  href='http://demo.designwall.com/dw-timeline/wp-content/plugins/dw-question-answer/templates/assets/css/style.css?ver=180720161352' type='text/css' media='all' />
 <link rel='stylesheet' id='dwqa-rtl-css'  href='http://demo.designwall.com/dw-timeline/wp-content/plugins/dw-question-answer/templates/assets/css/rtl.css?ver=180720161352' type='text/css' media='all' />
 <link rel='stylesheet' id='dw_timeline_main-css'  href='http://demo.designwall.com/dw-timeline/wp-content/themes/dw-timeline/assets/css/main.css?ver=6c39f42987ae297a5a21e2bb35bf3402' type='text/css' media='all' />
@@ -36,6 +36,7 @@
 <script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 <script type = "text/javascript" 
          src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+         
       </script>
 		<script type="text/javascript">
 		
@@ -123,6 +124,11 @@
 			
 		</script>
 		<style type="text/css">
+			body{
+	padding-top: 110px;
+	background: rgba(255,255,255,1);
+	}
+	
 			img.wp-smiley,
 			img.emoji {
 				display: inline !important;
@@ -228,7 +234,10 @@
 			    -webkit-animation-name: bounce;
 			    animation-name: bounce;
 			}
-				    
+			body > nav > div > div.navbar-header > a > div > img{
+				height: 50;
+				width: 100;
+			}	    
 	    </style>    
       
 </head>

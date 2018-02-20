@@ -141,51 +141,75 @@
 							var html = '<input type="hidden" name="bobId" value="'+data.bobId+'">'
 							+'<input type="hidden" name="category" value="'+data.category+'">'
 							+'<input type="hidden" name="writtenUserId" value="'+data.writtenUserId+'">'
-							+'<div class="col-sm-6 col-md-4 text-center">'
-							+'<div class="thumbnail"><div class="thumbnail-top" style="left: 40px;">';
+							+'<li>'
+							+'<img src = "../resources/upload_files/images/'+data.image+'" onerror="this.src=\'../resources/images/sample_bob_background.jpg\'"'
+							+'style="cursor: pointer; width: 100%; height:270px; opacity: 0.8;">';
+							
+							<c:if test="${search.category ne 'B03'}">
+								html = html + '<div class="user_thumnail" '
+								+'style="background: url(\'../resources/upload_files/images/'+data.writtenUserProfile+'}\'),'
+								+'url(\'../resources/images/user-icon.png\') center center no-repeat; background-size: cover; box-shadow: 1px #cccccc;"></div>';
+							</c:if>
 							
 							if(data.status == 'Y' && (appointmentTime>today || data.appointmentTime == null)) {
-								html += "참여 가능</div>";
+								html += '<span class="price">참여 가능</span>';
 							} else if(data.status == 'E' || (appointmentTime<=today)) {
-								html += '참여 마감</div>';
+								html += '<span class="price">참여 마감</span>';
 							}
 							
 							if(data.status == 'Y') {
-								html += '<div class="thumbnail-top" style="right: 40px;">'+participantList.length+"/"+data.limitNum+'명</div>'
+								html += '<span class="price" style="left:auto; right:10px;">';
+								<c:if test="${search.category eq 'B01'}">
+									html += participantList.length+"/"+data.limitNum+" 명";
+								</c:if>
+								<c:if test="${search.category eq 'B02'}">
+									html += participantList.length +"명 참여 중";
+								</c:if>
+								html += '</span>';
 							}
 							
-							html = html + '<img src = "../resources/upload_files/images/'+data.image+'" onerror="this.src=\'../resources/images/sample_bob_background.jpg\'"'
-							+'style="cursor: pointer; width: 100%; height:270px; opacity: 0.8; box-shadow: 0 5px 15px -5px #666;"> <div class="user_thumnail" '
-							+'style="background: url(\'../resources/upload_files/images/'+data.writtenUserProfile+'}\'),'
-							+'url(\'../resources/images/user-icon.png\') center center no-repeat; background-size: cover; box-shadow: 1px #cccccc;"></div>'
-							+'<div class="caption" style="position:relative; top:-20px; font-size: 20px;"><div style="font-size:20px; font-weight: bold;'
-							+'text-overflow: ellipsis; overflow: hidden; white-space: nowrap; ">'+data.title+'</div>'
-							+'<hr><p style="font-size: 17px;  font-weight: bold;">'+data.locationName+'<br></p>'
-							+'<p style="font-size: 16px;">';
+							html = html + '<div class="property_details text-center" style="padding-top: '
+								+"${search.category ne 'B03'? '40px':'none'}"
+								+'"><h1>'+data.title+'</h1><hr>';
 							
-							if(data.appointmentTime != null) {								
-								<c:if test="${empty sessionScope.user}">
-									html += moment(data.appointmentTime).format("YYYY년 MM월 DD일");
-								</c:if>
-								<c:if test="${!empty sessionScope.user}">
-									html += moment(data.appointmentTime).format("YYYY년 MM월 DD일")+" "+getInputDayLabel(data.appointmentTime)+" "
-										+ moment(data.appointmentTime).format("HH:mm");
-									
-								</c:if>
-							} else if(data.appointmentTime == '' || data.appointmentTime == null) {
-								html += "날짜 미정";
-							}
+							<c:if test="${search.category ne 'B03'}">
+								html += '<h2>'+data.locationName+'</h2><h2>';
+								if(data.appointmentTime != null) {								
+									<c:if test="${empty sessionScope.user}">
+										html += moment(data.appointmentTime).format("YYYY년 MM월 DD일");
+									</c:if>
+									<c:if test="${!empty sessionScope.user}">
+										html += moment(data.appointmentTime).format("YYYY년 MM월 DD일")+" "+getInputDayLabel(data.appointmentTime)+" ";
+									</c:if>
+								} else if(data.appointmentTime == '' || data.appointmentTime == null) {
+									html += "날짜 미정";
+								}
+							</c:if>
 							
-							html += '</p></div></div></div>';
+							html += "</h2>";
 							
-							$("#mainBob > .tab-content").append(html);
+							<c:if test="${search.category eq 'B03'}">
+								html += '<h1 class="text-left">참여하고 있는 친구 ('+participantList.length+'명)</h1><div class="row">';
+								
+								for(int i=0; i<participantList.length; i++) {
+									html += '<div class="col-sm-6 col-md-4 text-center">'
+										+'<img class="thumnail" src = "../resources/upload_files/images/'+participantList.get(i).participantProfile+'"'
+										+'onerror="this.src=\'../resources/images/user-icon.png\'"/>'
+										+'<p style="font-size: 17px;">'+participantList.get(i).participantName+'</p></div>';
+								}
+							</c:if>
+							
+							html += '</div></li>';
+							
+							$("ul.properties_list").append(html);
 							$("#exTab2 > div > div.tab-content").attr('class', 'tab-content');
-						})
+							
+						});
 						
 					},
 					error:function(request,status,error){
 					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					   }
+					}
 				});
 				
 				$("#loader").hide();

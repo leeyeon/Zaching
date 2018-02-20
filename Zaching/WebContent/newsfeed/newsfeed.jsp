@@ -59,7 +59,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	    	                    jQuery("#iconMarker").val(data.address);
 	    	                    $("input[name=ok]").val(data.address);
 	    	                    
-	    	                    console.log(data);
+	    	                 
 	    	                    var geocoder = new daum.maps.services.Geocoder();
 	    	                	geocoder.addressSearch($("input[name=ok]").val(), function(result, status) {
 
@@ -91,8 +91,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  			} 
         	 
         	 $(".cell").on("click",function(){
-        		 var id = $($("input[name='newsfeedId']")[$("li").index(this)-6]).val();
-        		 //alert($("li").index(this)-6);
+        		 //alert($($("input[name='newsfeedId']")[$("li").index(this)-6]).val());
+        		 var id = $($("input[name='newsfeedId']")[$("li").index(this)-40]).val();
+        		 //alert($("li").index(this));
         		 //alert($($("input[name='newsfeedId']")[$("li").index(this)]).val());
         		 //alert($($("input[name='newsfeedId']")[$("li").index(this)-6]).val());
         		 
@@ -161,6 +162,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				});
 
 
+			}
+			
+			function getNewsfeed(newsfeedId){
+				self.location = '/newsfeed/getNewsfeed?newsfeedId='+newsfeedId;
 			}
 			
 			/*var $ = jQuery.noConflict();
@@ -362,6 +367,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     clip:rect(0,0,0,0);
     border: 0;
 }
+a:link, a:visited { 
+    color: #00000;
+ }
+  a:link:active, a:visited:active { 
+    color: #00000;
+ } 
 		</style>
 		
 		<script>
@@ -500,15 +511,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<c:if test="${ !empty newsfeed.fileName }"><img src="../resources/upload_files/images/${newsfeed.fileName}" style="width: 100%"/></c:if>
 								<div class="post-info">
 									<div class="post-basic-info">
-										<span><a href="#"><label> </label><c:if test="${newsfeed.categoryCode.equals('N01')}">뉴스피드</c:if></a></span>
+										<span><a href="#"><label> </label><c:if test="${newsfeed.categoryCode.equals('N01')}">자취지식인</c:if>
+																			<c:if test="${newsfeed.categoryCode.equals('N10')}">밥친구 후기</c:if>
+																			<c:if test="${newsfeed.categoryCode.equals('N02')}">중고거래</c:if>
+																			<c:if test="${newsfeed.categoryCode.equals('N04')}">꿀팁</c:if>
+										</a></span>
 										<p></p>
 										<table border="0">
 											<tr>
 												<td>
-													<div class="thumb"><img alt="" src="../resources/images/${newsfeed.profileImage}"></div>
+													<div class="thumb">
+													<c:if test="${!empty newsfeed.profileImage }">
+													<img alt="" src="../resources/images/${newsfeed.profileImage}">
+													</c:if>
+													<c:if test="${empty newsfeed.profileImage }">
+													<img alt="" src="../resources/images/profile_default.png">
+													</c:if>
+													</div>
 												</td>
 												<td style="vertical-align: middle;">
-													<p>${newsfeed.userName}</p>
+													<p><a href="/user/getTimeLine?userId=${newsfeed.userId}" style="text-decoration:none; color:#00000;">${newsfeed.userName}</a></p>
 												</td>
 											</tr>
 										</table>
@@ -540,217 +562,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							
 							</li>
 						</c:forEach>
-			        <li onclick="location.href='single-page.jsp';">
-			        	<img src="../resources/images/newsfeedImages/img1.jpg" width="282" height="118">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
-			        <li onclick="location.href='single-page.jsp';">
-			        	<img src="../resources/images/newsfeedImages/img2.jpg" width="282" height="344">
-						<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-					</li>
-			        <li onclick="location.href='single-page.jsp';">
-			        	<img src="../resources/images/newsfeedImages/img3.jpg" width="282" height="210">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
-			        <li onclick="location.href='single-page.jsp';">
-			        	<img src="../resources/images/newsfeedImages/img4.jpg" width="282" height="385">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
-			        <!----//--->
-			        <li onclick="location.href='single-page.jsp';">
-			        	<img src="../resources/images/newsfeedImages/img4.jpg" width="282" height="385">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
-			        <li onclick="location.href='single-page.jsp';">
-			        	<img src="../resources/images/newsfeedImages/img3.jpg" width="282" height="210">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
-			        <li onclick="location.href='single-page.jsp';">
-			        	<img src="../resources/images/newsfeedImages/img2.jpg" width="282" height="344">
-						<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-					</li>
-					  <li onclick="location.href='single-page.jsp';">
-			        	<img src="../resources/images/newsfeedImages/img1.jpg" width="282" height="118">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
-			        <!----//--->
-			         <li onclick="location.href='single-page.jsp';">
-			        	<img src="../resources/images/newsfeedImages/img1.jpg" width="282" height="118">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
-			        <li onclick="location.href='single-page.jsp';">
-			        	<img src="../resources/images/newsfeedImages/img2.jpg" width="282" height="344">
-						<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-					</li>
-			        <li onclick="location.href='single-page.jsp';">
-			        	<img src="../resources/images/newsfeedImages/img3.jpg" width="282" height="210">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">Animation films</a></h3>
-				        		<span><a href="#"><label> </label>Movies</a></span>
-				        		<p>Lorem Ipsum is simply dummy text of the printing & typesetting industry.</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </li>
+			       
 			        <li onclick="location.href='single-page.jsp';">
 			        	<img src="../resources/images/newsfeedImages/img4.jpg" width="282" height="385">
 			        	<div class="post-info">
@@ -844,10 +656,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								"Content-Type" : "application/json"
 								},
 								success : function(JSONData , status) {
-								
+									
 								for(var i=0; i<JSONData.length;i++){
-									var displayValue = '<li class="cell">'+
-									'<input type="hidden" value="'+JSONData[i]+'" name="newsfeedId"/>';
+									
+									var displayValue = '<li class="cell" onclick="getNewsfeed('+JSONData[i].newsfeedId+')">'+
+									'<input type="hidden" value="'+JSONData[i].newsfeedId+'" name="newsfeedId"/>';
 										if(JSONData[i].fileName)
 											displayValue += '<img src="../resources/upload_files/images/'+JSONData[i].fileName+'" style="width: 100%"/>';
 										else
@@ -855,13 +668,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 										displayValue = displayValue + '<div class="post-info">'+
 											'<div class="post-basic-info">'+
 												'<span><a href="#"><label> </label>';
-												if(JSONData[i] == 'N01')
+												if(JSONData[i].categoryCode == 'N01')
 													displayValue += '자취지식인';
-												if(JSONData[i] == 'N10')
+												if(JSONData[i].categoryCode == 'N10')
 													displayValue += '밥친구 후기';
-												if(JSONData[i] == 'N02')
+												if(JSONData[i].categoryCode == 'N02')
 													displayValue += '중고거래';
-												if(JSONData[i] == 'N04')
+												if(JSONData[i].categoryCode == 'N04')
 													displayValue += '꿀팁';
 												
 													displayValue = displayValue+'</a></span>'+
@@ -870,18 +683,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 													'<tr>'+
 														'<td>'+
 															'<div class="thumb">';
-															if(!JSONData[i].profileImage)
+															
+															if(!JSONData[i].profileImage){
 																displayValue += '<img alt="" src="../resources/images/profile_default.png"></div>';
-															else
+															}
+															else{
 																displayValue += '<img alt="" src="../resources/images/'+JSONData[i].profileImage+'"></div>';
+															}
 														displayValue = displayValue+'</td>'+
 														'<td style="vertical-align: middle;">'+
-															'<p>'+JSONData[i].userName+'</p>'+
+															'<p><a href="/user/getTimeLine?userId='+JSONData[i].userId+'" style="text-decoration:none; color:#00000;">'+JSONData[i].userName+'</a></p>'+
 														'</td>'+
 													'</tr>'+
 												'</table>'+
 												'<p style="font-size: 13pt">'+JSONData[i].content+'</p>'+
-												
 												'<div class="likeit-wrap" id="item" onClick="fnc_addLikey('+JSONData[i].newsfeedId+')">'+
 													'<div class="likeit" data-postid="4" id="countLikey" >'+
 														'<span class="like-text">Like</span>'+
@@ -892,6 +707,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 												'</div>'+
 												'<span class="post-comment">'+
 												'<a href="/newsfeed/getNewsfeed?newsfeedId='+JSONData[i].newsfeedId+'">';
+												
+															
 												if(JSONData[i].countReply == 0)
 													displayValue += 'No comments';
 												else
@@ -977,7 +794,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					   </table>
 					<table border="1">
 						<tr>
-						<td  style="table-layout:fixed">
+						<td  style="table-layout:fixed" width="220px">
 							<div class="filebox">
         <label for="cma_file">사진 인증샷 업로드</label>
 		<input type="file" name="file" id="cma_file" imageswap="true" accept="image/*" capture="camera" onchange="getThumbnailPrivew(this,$('#cma_image'))"/>
@@ -985,11 +802,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
 						</td>						
 					  <td width=450 style="vertical-align: top; style="table-layout:fixed">
-					
+					&nbsp;&nbsp;&nbsp;&nbsp;
 					  <p style="font-size: 30px; color: #00D1CD;"><i class="glyphicon glyphicon-map-marker" id="iconMarker"></i><input type="text" name="ok" id="ok" placeholder="위치를 지정해주세요"
 							style="font-size: 16px; width: 80%; height: 30px; padding-left: 20px; border: none;" readonly/> <div id="map"overflow:hidden;"></div></p>
 								<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>	            		
-		            	   <textarea class="form-control" rows="7" placeholder="상태를 업데이트 하세요." class="span1" cols="40" name="content" id=" content"></textarea>
+		            	 &nbsp;&nbsp;&nbsp;&nbsp;  <textarea class="form-control" rows="7" placeholder="상태를 업데이트 하세요." class="span1" cols="40" name="content" id=" content"></textarea>
 						   
 						      </td>
 					    </tr>

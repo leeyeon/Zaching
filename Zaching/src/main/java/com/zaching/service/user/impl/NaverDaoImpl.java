@@ -23,7 +23,7 @@ public class NaverDaoImpl implements NaverDao {
 	
 	private final static String CLIENT_ID = "1NQw6r85_O8fOITDL8Dc"; //"ynLHu5Y1qRtLT74HiGOR";
 	private final static String CLIENT_SECRET = "pYKzsoSN5s";      //pY0Eno9_9Q";
-	private final static String REDIRECT_URI = "http://127.0.0.1:8080/naverLogin";
+	private final static String REDIRECT_URI = "http://localhost:8080//naverLogin";
 	private final static String SESSION_STATE = "oauth_state";
 	private final static String PROFILE_API_URL = "https://openapi.naver.com/v1/nid/me";
 	private final static String GET_TOKEN_API_URL = "https://nid.naver.com/oauth2.0/token";

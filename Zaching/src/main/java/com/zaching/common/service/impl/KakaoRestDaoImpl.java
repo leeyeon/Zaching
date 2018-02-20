@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,6 +30,8 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 	
 	private final String APP_CONNECTION_URL = "https://kapi.kakao.com/v1/user/signup";//앱연결
 	private final String USER_INFO_URL = "https://kapi.kakao.com/v1/user/me";//사용자정보 받아오는 URL
+	private final static String SESSION_STATE = "oauth_state";
+	
 	
 	private final String PAYMENT_TEST_PARAM = "cid=TC0ONETIME&partner_order_id=partner_order_id&partner_user_id=partner_user_id";
 	
@@ -161,10 +164,12 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 	//카카오 로그인
 	@Override
 	public String getAuthorizationUrl_login(HttpSession session) {
+		
+		System.out.println(":: kakaoR.getAuthrizationalUrl_login() ::");
+		
 		String url = "redirect:https://kauth.kakao.com/oauth/authorize?client_id="+this.REST_API_KEY
 				+"&redirect_uri="+this.REDIRECT_URI_Login+"&response_type=code";
-		
-		
+
 		
 		return url;
 	}
@@ -173,7 +178,7 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 	@Override
 	public User getAceessToken2(String code,HttpSession session) throws Exception {
 		
-		System.out.println("KakaoR.getAccessToken()");
+		System.out.println(":: KakaoR.getAccessToken2() ::");
 		
 		String param = "grant_type=authorization_code&client_id="+REST_API_KEY
 						+"&redirect_uri="+REDIRECT_URI_Login+"&code="+code;
@@ -193,7 +198,7 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 	        this.accessToken = obj.get("access_token").toString();
 	        this.refreshToken = obj.get("refresh_token").toString();
 	        
-	        session.setAttribute("user", user);
+	       
 	        
         return user;
 	}
@@ -203,7 +208,7 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 	@Override
 	public void getAppConnection(String token) throws Exception {
 		
-		System.out.println(":: KAKAO.getAppConnection() ::");
+		System.out.println(":: kakaoR.getAppConnection() ::");
 		
 		JSONObject obj = URLConnection.getJSON(URLConnection.HTTPMETHOD_POST, 
 				APP_CONNECTION_URL, "application/x-www-form-urlencoded;charset=utf-8",
@@ -215,7 +220,7 @@ public class KakaoRestDaoImpl implements KakaoRestDao {
 	@Override
 	public User getUserInfo(User user) throws Exception {
 		
-		System.out.println("::KAKAO.getUserInfo() ::");
+		System.out.println("::KakaoR.getUserInfo() ::");
 		
 		JSONObject obj = URLConnection.getJSON(URLConnection.HTTPMETHOD_GET, USER_INFO_URL,
 				"application/x-www-form-urlencoded;charset=utf-8", "Authorization", "Bearer "+accessToken);

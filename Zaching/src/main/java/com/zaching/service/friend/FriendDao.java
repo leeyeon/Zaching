@@ -8,13 +8,13 @@ import com.zaching.service.domain.Friend;
 public interface FriendDao {
 	
 	//模备肝扁
-	public void addFriend(Friend friend) throws Exception;
+	public void addFriend(Friend friend, String status) throws Exception;
 	
 	//模备夸没,模备脚没
 	public void acceptFriend(Friend friend) throws Exception;
 	
 	//模备眠玫(舅荐档乐绰模备)
-	public List<Friend> recommendFriend(Search search) throws Exception;
+	public List<Friend> recommendFriend(int userId) throws Exception;
 	
 	//模备谗扁
 	public void deleteFriend(int friendId) throws Exception;
@@ -36,9 +36,13 @@ public interface FriendDao {
 
 	public void enterFriend(Friend friend)throws Exception;
 	
+	public int checkFriend(int userId, int friendId, int status) throws Exception;
 	
+	public void cancelFriend(int userId, int friendId, int status) throws Exception;
 	
+	public void updateStatus(int userId, int friendId, int status) throws Exception;
 	
+	public int checkFollow(int userId, int friendId, int status) throws Exception;
 	
 	
 

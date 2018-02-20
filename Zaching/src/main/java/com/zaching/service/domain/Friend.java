@@ -74,11 +74,14 @@ public class Friend {
 		public void setId(int id) {
 			this.id = id;
 		}
-		
+
+
 		@Override
 		public String toString() {
-			return "Friend [id="+id+",friendId="+friendId+",userId="+userId+",status="+status+"]";
+			return "Friend [id=" + id + ", friendId=" + friendId + ", userId=" + userId + ", status=" + status
+					+ ", profileImage=" + profileImage + ", name=" + name + "]";
 		}
+		
 		
 
 

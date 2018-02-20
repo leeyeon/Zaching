@@ -59,7 +59,7 @@ public class FriendServiceTest {
 //		friend.setStatus(status);
 		
 		
-		friendService.addFriend(friend);
+		friendService.addFriend(friend,"0");
 		
 		System.out.println(friend);
 		

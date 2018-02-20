@@ -34,8 +34,8 @@
 		
 		
 		$(function () {
-			var birth = new Date($("#birth").val());
-			var date_format = new Date(birth).toDateString("yyyy-MM-dd");
+			
+			moment("#birth").format('YYYY-MM-DD');
 		})
 		
 	</script>
@@ -95,6 +95,7 @@
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>휴대전화번호</strong></div>
+	  		<c:if test="${user.phone eq null }"></c:if>
 			<div class="col-xs-8 col-md-4">${user.phone}</div>
 		</div>
 		
