@@ -285,12 +285,11 @@ public class UserRestController {
 	
 
 	@RequestMapping(value="/rest/addUser", method=RequestMethod.POST)
-	public boolean addUser(HttpServletRequest request,
+	public User addUser(HttpServletRequest request,
 						@RequestBody Map<String, Object> map,
 						@ModelAttribute("user")User user, Model model)throws Exception{
 		
 		System.out.println("/user/rest/addUser : POST ");
-		boolean result ;
 		
 		String email =(String)map.get("email");
 		String name = (String)map.get("name");
@@ -303,22 +302,14 @@ public class UserRestController {
 		user.setPassword(password);
 		user.setRole("1");
 		userService.addUser(user);
+		model.addAttribute("user", user);
 		
 		System.out.println("name : " + user.getEmail());
 		System.out.println("name : " + user.getPassword());
 		System.out.println("name : " + user.getName());
 		
+		return user;
 		
-		if(user.getEmail() ==null && user.getName()== null
-					&& user.getPassword() ==null) {
-			
-			result = false;
-			return result;
-			
-		}else {
-			return true;
-		}
-
 	}
 
 

@@ -5,6 +5,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 <head>
+
+<title>zaching</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -16,8 +18,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<style>
+<script src="static/js/html5.js"></script>
+<style rel="stylesheet">
 
 /* 글꼴 수정 */
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
@@ -37,7 +39,7 @@
 	background: #FFFFFF;
 }
 
-#navbar>ul>li>a {
+#navbar > ul > li > a {
 	margin :5px 5px 5px 5px;
 	color: #FFFFFF;
 }
@@ -180,7 +182,7 @@ body .login-container .tabs .tab.active {
 }
 body .login-container .content form {
   position: relative;
-  height: 287px;
+  height: 245px;
 }
 body .login-container .content label:first-of-type, body .container .content input:first-of-type, body .container .content .more:first-of-type {
   -moz-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
@@ -343,7 +345,7 @@ body .login-container .content .signup-cont {
     margin-left: 0px;
   }
 }
-@-webkit-keyframes slideIn {
+@-webkit-keyframes slidein {
   0% {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0;
@@ -373,7 +375,6 @@ body .login-container .content .signup-cont {
 }
 
 </style>
-
 <script type="text/javascript">
 		$( function() {
 
@@ -482,7 +483,7 @@ body .login-container .content .signup-cont {
 
 		
 		//==>"Login"  Event 연결
-		$("#signin").on("click" , function() {
+		$("#signinbtn").on("click" , function() {
 			
 
 			var email =$("input[name='email']").val();
@@ -560,7 +561,7 @@ body .login-container .content .signup-cont {
 			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";			
 	 	});
 		
-		$("a:contains('패스워드찾기')").on("click", function() {
+		$("#findPassword").on("click", function() {
 			
 				var windowW = 500;  // 창의 가로 길이
 		        var windowH = 500;  // 창의 세로 길이
@@ -652,21 +653,23 @@ body .login-container .content .signup-cont {
 	$(function() {
 				  $('#addclose,#addclose2').on('click', function(){
 					  $("#addUserform")[0].reset();
+					  
+					 
 				});
 			});
 		
 	
 	//==>"회원가입" Event 처리 및 연결
+
 	 $(function() {
 		
 			
-		 $( "#signup" ).on("click" , function() {
+		 $( "#singup" ).on("click" , function() {
+			
 				alert("회원가입 버튼클릭");
 				fncAddUser();
-				if(result == true){
-					alert("회원가입이 완료되었습니다.");
-				}
 				
+				  $('#loginModal').css('display','none');
 			});
 		});	
 		
@@ -710,7 +713,8 @@ body .login-container .content .signup-cont {
 					
 					"email" : email,
 					"password": pw,
-					"name": name
+					"name": name,
+					
 				
 				}),
 				async : false,
@@ -719,23 +723,17 @@ body .login-container .content .signup-cont {
                 	
                 	console.log(data);
                     
-                	}
+              	}
                 
-            
+            	
             
             });    //end ajax    
             //end on    
             alert(name);
 			alert(email);
+		
 	}
 			
-			
-		//==>"취소?" Event 처리 및 연결	
-		$(function() {
-			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
-			});
-		});	
 		
 	
 		//이메일 중복체크
@@ -796,12 +794,8 @@ body .login-container .content .signup-cont {
 		            //end on    
 		    }
 	
-			
-		
 	
 </script>
-
-<title>zaching</title>
 </head>
 
 <body>
@@ -873,8 +867,7 @@ body .login-container .content .signup-cont {
           	 
             <c:if test="${user.userId eq null}">
             <li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
-            <li><a data-toggle="modal" data-target="#AddUserModal">회원가입</a></li>
-            <!-- <li><a href="#">회원가입</a></li> -->
+           
           </c:if>
           </ul>
           			
@@ -944,7 +937,6 @@ body .login-container .content .signup-cont {
 
 				<c:if test="${user.userId eq null}">
 					<li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
-					<li><a data-toggle="modal" data-target="#AddUserModal">회원가입</a></li>
 				</c:if>
 			</ul>
 
@@ -975,9 +967,8 @@ body .login-container .content .signup-cont {
 				<!-- Modal Header end -->
 				<div class="login-modal">
 				<section class="login-container">
-		    	<article class="half">
-			       <img src="/resources/images/temp_logo.png" class="img-logo"
-							width="50" height="50">
+		    	<article class="half" style="padding-top:30px;">
+			       <img src="/resources/images/zaching2.png" class="img-logo" width="50%">
 			        <div class="tabs">
 				            <span class="tab signin active"><a href="#signin">로그인</a></span>
 				            <span class="tab signup"><a href="#signup">회원가입</a></span>
@@ -985,37 +976,61 @@ body .login-container .content .signup-cont {
 			        <div class="content">
 				            <div class="signin-cont cont">
 					                <form action="#" method="post" enctype="multipart/form-data" id="signin">
-						                    <input type="text" name="email" id="loginemail" class="inpt" required="required" placeholder="email입력">
+						                    <input type="text" name="email" id="loginemail" class="inpt" required="required" placeholder="이메일">
 						                    <label for="email">Your email</label>
-						                    <input type="password" name="password" id="loginpassword" class="inpt" required="required" placeholder="password입력">
+						                    <input type="password" name="password" id="loginpassword" class="inpt" required="required" placeholder="패스워드">
                 						    <label for="password">Your password</label>
 						                    <input type="checkbox" id="remember" class="checkbox" checked>
 						                    <label for="remember">Remember me</label>
-						                    <div class="submit-wrap">
-							                        <input type="submit" value="Sign in" class="submit">
-							                        <a href="#" class="more">Forgot your password?</a>
-						                    </div>
+						 						    <div class="submit-wrap" style="top: 160px; height: 50px;">
+							                        <input type="submit" value="로그인" class="submit" id="signinbtn">
+							                		</div>
         					        </form>
+        					        <div class="findPassword"  style="margin-top: -30px;">
+        					        <a href="#" class="more" id="findPassword">Forgot your password?</a>
+        					        </div>
+        					        <div class="row social-login">
+							<ul class="sns-login">
+								<li><a href="#kakaoLogin" id="kakaoLogin"> <img
+										src="/resources/images/KakaoTalk_lcon.png" class="img-rounded"
+										width="50" height="50" type="button" id="kakaologin" /></a>
+
+								<a href="#facebookLogin" id="facebookLogin"> <img
+										src="/resources/images/facebook_Icon.png" class="img-rounded"
+										width="50" height="50" type="button" id="facebooklogin"></a>
+
+								<a href="#naverLogin" id="naverLogin"> <img
+										src="/resources/images/Naver_Icon.png" class="img-rounded"
+										width="50" height="50" type="button" id="naverlogin" /></a>
+
+								<a href="#googleLogin" id="googleLogin"> <img
+										src="/resources/images/Google_Icon.jpg" class="img-rounded"
+										width="50" height="50" type="button" id="googlelogin" /></a></li>
+							</ul>
+						</div>
+        					        
     				        </div>
     				<div class="signup-cont cont">
-                	<form action="#" method="post" enctype="multipart/form-data" id="singup">
-					    <input type="text" name="email" id="name" class="inpt" required="required" placeholder="Your name">
+                	
+					    <input type="text" name="name" id="name" class="inpt" required="required" placeholder="이름">
 						<label for="name">Your name</label>
-                        <input type="text" name="email" id="checkEmail" class="inpt" required="required" placeholder="Your email">
+                        <input type="text" name="email" id="checkEmail" class="inpt" required="required" placeholder="이메일">
 						<label for="email">Your email</label>
-						<input type="password" name="password" id="pw" class="inpt" required="required" placeholder="Your password">
+						<div id="checkMsg"></div>
+		      			<button type="button" id="checkbtn" class="btn btn-default">중복확인</button>
+						<input type="password" name="password" id="pw" class="inpt" required="required" placeholder="비밀번호">
                 		<label for="password">Your password</label>
-                		<input type="password" name="password" id="pw2" class="inpt" required="required" placeholder="Your password">
+                		<input type="password" name="password2" id="pw2" class="inpt" required="required" placeholder="비밀번호 확인">
                 		<label for="password">Your password</label>
-						<div class="submit-wrap">
-						   <input type="submit" value="Sign up" class="submit">
-						   <a href="#" class="more">Terms and conditions</a>
+						
+						<div class="submit-wrap"style="top: 400px;height: 50px;width: 200px;">
+						   <input type="submit" value="회원가입" class="submit" id="singup">
 						</div>
-        			</form>
+        			
             		</div>
 			       </div>
 		    	</article>
-		    		<div class="half bg"></div>
+		    		<div class="half bg" style="padding-top:0px;"></div>
 				</section>
 				</div>
 			
@@ -1027,104 +1042,7 @@ body .login-container .content .signup-cont {
 	<!-- Modal Fade  -->
 	
 	<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-	
-	<!-- 회원가입 Modal -->
-	<div id="AddUserModal" class="modal fade" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-
-		<div class="modal-dialog">
-
-			<!-- 회원가입Modal content-->
-			<div class="modal-content">
-
-				<!-- 회원가입Modal Header start-->
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true" id="addclose">&times;</button>
-					<div class="modal-title" align="center"
-						style="margin-bottom: 15px;">
-						<!-- 자췽로고 -->
-						<img src="/resources/images/temp_logo.png" class="img-logo"
-							width="50" height="50">
-					</div>
-				</div>
-				<!-- 회원가입Modal Header end -->
-
-				<!-- 회원가입Modal Body start-->
-				<div class="modal-body" align="left">
-				<form class="form-horizontal" id="addUserform">
-		
-		  <div class="form-group">
-		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
-		    <div class="col-sm-4">
-		    	<c:if test="${sessionScope.user.snsType  ne null }">
-		      		<input type="text" class="form-control" id="checkEmail" name="email" value="${sessionScope.user.email}">
-		      		<div id="checkMsg"></div>
-		      		<button type="button" id="checkbtn" class="btn btn-default">중복확인</button>
-		      	</c:if>
-		      	
-		      	<c:if test="${sessionScope.user.snsType  eq null }">
-		      		<input type="text" class="form-control" id="checkEmail" name="email"  >
-		      		<div id="checkMsg"></div>
-		      		<button type="button" id="checkbtn" class="btn btn-default">중복확인</button>
-		      	</c:if>
-		      
-		      
-   			
-		    
-		    </div>
-		   
-		  </div>
-		   
-		  <div class="form-group">
-		    <label for="name" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" name="name" id="name" placeholder="회원이름">
-		    </div>
-		  </div>
-		  
-		  
-		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
-		    <div class="col-sm-4">
-		      <input type="password" class="form-control" name="password" id="pw" placeholder="비밀번호">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
-		    <div class="col-sm-4">
-		      <input type="password" class="form-control" name="password2" id="pw2"placeholder="비밀번호 확인" >
-		    </div>
-		  </div>
-		 
-		  
-		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary" id="signUp" >가 &nbsp;입</button>
-			  <a class="btn btn-primary cancelbtn" href="#" role="button">취&nbsp;소</a>
-		    </div>
-		  </div>
-		</form>
-
-					
-	</div>
-	<!--Modal Body  -->
-
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal" id="addclose2">Close</button>
-				</div>
-
-			</div>
-			<!-- Modal content-->
-		</div>
-		<!-- Modal dialog -->
-	</div>
-	<!-- Modal Fade  -->
-	
-	
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
 <script type="text/javascript">
 $('.tabs .tab').click(function(){
     if ($(this).hasClass('signin')) {
@@ -1146,5 +1064,9 @@ $('.container .bg').mousemove(function(e){
     $(this).css('background-position', amountMovedX + 'px ' + amountMovedY + 'px');
 });
 </script>
+	
+	
+	
+
 </body>
 </html>
