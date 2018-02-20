@@ -448,9 +448,8 @@
 									</a>
 									
 									<c:if test="${fn:contains(newsfeed.categoryCode, 'N10')}">
-									<a href="/bob/getBob?bobId=${fn:substring(newsfeed.categoryCode, 4, fn:length(newsfeed.categoryCode))}&category=B01">
 										<img src="../resources/images/link.png" width="15px" height="15px" class="link-style">
-									</a>
+										<input type="hidden" name="getBobId" value="${fn:substring(newsfeed.categoryCode, 4, fn:length(newsfeed.categoryCode))}">
 									</c:if>
 										
 									</span>
@@ -534,7 +533,21 @@
 					self.location="/user/getTimeLine?userId="+userId;
 				</c:if>
 				
-			});			
+			});
+			
+			
+			
+			$(document).on('click', '#tiles > li > div > div > span > img', function() {
+				<c:if test="${empty sessionScope.user}">
+					alert("로그인을 해주세요.");
+					$("#loginModal").modal('show');
+				</c:if>
+				
+				<c:if test="${!empty sessionScope.user}">
+					var bobId = $($('input[name=getBobId]')[$('#tiles > li > div > div > span > img').index(this)]).val();
+					self.location = "/bob/getBob?bobId="+bobId+"&category=B01";
+				</c:if>				
+			});
 			 
 		});
 		
@@ -646,8 +659,8 @@
 											displayValue = displayValue+'</a>';
 											
 											if(JSONData[i].categoryCode.includes('N10')) {
-												displayValue = displayValue+ '<a href="/bob/getBob?bobId='+JSONData[i].categoryCode.substring(4)+'&category=B01">'
-													+'<img src="../resources/images/link.png" width="15px" height="15px" class="link-style"></a>'
+												displayValue = displayValue + '<img src="../resources/images/link.png" width="15px" height="15px" class="link-style">'
+															+'<input type="hidden" name="getBobId" value="'+JSONData[i].categoryCode.substring(4)+'}">';
 											}
 												
 											displayValue = displayValue+ '</span><p></p><table border="0"><tr><td><div class="thumb">';
