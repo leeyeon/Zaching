@@ -18,7 +18,7 @@
 	<jsp:include page="/resources/layout/sub_toolbar.jsp"/>
 	<style>
  		body {
-            padding-top : 150px;
+            padding-top : 100px;
         }
         
         .profileImage{
