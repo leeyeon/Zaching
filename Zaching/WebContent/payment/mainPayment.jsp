@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -26,7 +26,6 @@
         
        	body {
        		padding-top: 50px;
-       		padding-bottom: 50px;
        	}
        	
        	.jumbotron {
@@ -182,24 +181,63 @@
 		section.search > div.advanced_search > div > ul > li > a {
 		    color: #000;
 		}
-
-       	
+		
+	@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans');
+	.h2 {font-family: 'Alegreya Sans', sans-serif;}
+	
+	.more_listing_btn {
+	    text-decoration: none;
+	    padding: 20px 40px;
+	    border: 2px solid #bfd9f1;
+	    border-radius: 30px;
+	    -webkit-border-radius: 30px;
+	    -moz-border-radius: 30px;
+	    -o-border-radius: 30px;
+	    width: 200px;
+	    color: #afcbe6;
+	    font-size: 18px;
+	    font-weight: bold;
+	    font-family: "lato-regular", Helvetica, Arial, sans-serif;
+	    text-transform: uppercase;
+	    letter-spacing: 1px;
+	    text-align: center;
+	    transition: all .2s linear;
+	    -webkit-transition: all .2s linear;
+	    -moz-transition: all .2s linear;
+	    -o-transition: all .2s linear;
+	    background: #FFF;
+	}
+	
+	.state_space {
+	    display: block;
+	    width: 82px;
+	    height: 82px;
+	    background: url('../resources/images/sp_state.png') no-repeat ;
+	    line-height: 82px;
+	    font-size: 18px;
+	    text-align: center;
+	    
+	}
+	       	
     </style>
     
     <script type="text/javascript">
-    
+
   		$(function() {
   			
   			$("html, body").animate({ scrollTop: 0 }, "slow"); 
   			
-  			var titleText = moment().format('M')+" ¿ù Æ÷ÀÎÆ® ³»¿ª";
+  			var titleText = moment().format('M')+" ì›” í¬ì¸íŠ¸ ë‚´ì—­";
   			
   			//alert($("option:selected").text());
 
-  			if($("div.container > div > div:nth-child(2) > div > div > select > option:selected").text() != '±â°£¼³Á¤') {					
-  				//alert("??");
-  				titleText = $("div.container > div > div:nth-child(2) > div > div > select > option:selected").text()+"°£ Æ÷ÀÎÆ® ³»¿ª";
-  			}
+  			<c:if test="${searchCondition != null}">
+  			
+	  			if($("div.container > div > div:nth-child(2) > div > div > select > option:selected").text() != 'ê¸°ê°„ì„¤ì •') {					
+	  				alert($("div.container > div > div:nth-child(2) > div > div > select > option:selected").text());
+	  				titleText = $("div.container > div > div:nth-child(2) > div > div > select > option:selected").text()+"ê°„ í¬ì¸íŠ¸ ë‚´ì—­";
+	  			}
+  			</c:if>
   			
   			$("body > div.container > div > div:nth-child(1) > div").text(titleText);
 			
@@ -209,13 +247,13 @@
   				var point = $("input[name=point]").val();
   				
   				if(point == null || point == '') {
-  					alert("ÃæÀüÇÒ ±İ¾×À» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+  					alert("ì¶©ì „í•  ê¸ˆì•¡ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
   				}
   				else if(point<1000 || point>100000) {
-  					alert("1,000¿øºÎÅÍ 100,000¿ø±îÁö ÃæÀüÀÌ °¡´ÉÇÕ´Ï´Ù.");
+  					alert("1,000ì›ë¶€í„° 100,000ì›ê¹Œì§€ ì¶©ì „ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤.");
   				} else {
-  					var windowW = 400;  // Ã¢ÀÇ °¡·Î ±æÀÌ
-  	  		        var windowH = 500;  // Ã¢ÀÇ ¼¼·Î ±æÀÌ
+  					var windowW = 400;  // ì°½ì˜ ê°€ë¡œ ê¸¸ì´
+  	  		        var windowH = 500;  // ì°½ì˜ ì„¸ë¡œ ê¸¸ì´
   	  		        var left = Math.ceil((window.screen.width - windowW)/2);
   	  		        var top = Math.ceil((window.screen.height - windowH)/2);
 
@@ -227,7 +265,7 @@
   				}
   			});
 			
-			$(".listPayment").on('click', function() {
+			$(document).on('click',".listPayment", function() {
 				var listIndex = $(".listPayment").index(this);
 				var target = $($(".listExplain")[listIndex]);
 				
@@ -240,12 +278,118 @@
 					
 				});				
 			});
+			
+			$("input[name=exchargePoint]").on('keyup', function() {
+				$(this).val($(this).val().replace(/[^0-9]/g,""));
+				
+				if($(this).val().charAt(0) == 0) {
+					$(this).val("");
+				}
+				
+			});
 
-			$('li:contains("¹İÈ¯½ÅÃ»")').on('click', function() {
-				$("#exchargePoint").modal("show");
+			//==================================== í¬ì¸íŠ¸ë°˜í™˜ ì‹ ì²­ 
+			
+			var exchargePointDiv = $("#exchargePoint input[name=exchargePoint]");
+			
+			exchargePointDiv.on({'focusout': function() {
+				
+				if(exchargePointDiv.val() == "") {
+					$("#pointCheck").show();
+					$("#pointCheck").text("* 5,000 Point ì´ìƒ ì¶œê¸ˆì´ ê°€ëŠ¥í•©ë‹ˆë‹¤.");
+				}
+				
+				if(exchargePointDiv.val() > ${accountUser.totalPoint}) {
+					exchargePointDiv.val(${accountUser.totalPoint});
+					$("#pointCheck").show();
+					exchargePointDiv.css("background", "#ff8c8c");
+					$("#pointCheck").text("* ê°€ì§€ê³  ê³„ì‹  Point ê¹Œì§€ë§Œ ì¶œê¸ˆì´ ê°€ëŠ¥í•©ë‹ˆë‹¤.");
+				}
+				
+				if(exchargePointDiv.val() < 5000) {
+					$("#pointCheck").show();
+					exchargePointDiv.css("background", "#ff8c8c");
+					$("#pointCheck").text("* 5,000 Point ì´ìƒ ì¶œê¸ˆì´ ê°€ëŠ¥í•©ë‹ˆë‹¤.");
+				}
+				},
+				'focusin' : function() {
+					exchargePointDiv.css("background", "#FFF");
+					$("#pointCheck").hide();
+
+				}
 			});
 			
-			$('li:contains("ÃæÀü")').on('click', function() {
+			$('li:contains("ë°˜í™˜ì‹ ì²­")').on('click', function() {
+				<c:if test="${accountUser.totalPoint > 0}">
+					if($("input[name=isNewBank]").val() == 'true') {
+						$("#registerBank").hide();
+						$("#oldBank").show();
+						$("input[name=btnisNewBank]").val("ìƒˆë¡œìš´ ê³„ì¢Œ ì‚¬ìš©");
+					} else {
+						$("#registerBank").show();
+						$("#oldBank").hide();
+						$("input[name=btnisNewBank]").val("ê¸°ì¡´ ê³„ì¢Œ ì‚¬ìš©");
+					}
+					
+					$("#exchargePoint").modal("show");
+					
+				</c:if>
+				<c:if test="${accountUser.totalPoint == 0}">
+					alert("ë°˜í™˜í•  í¬ì¸íŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤.");
+				</c:if>
+			});
+			
+			$('button:contains("ë°˜í™˜ ì‹ ì²­í•˜ê¸°")').on('click', function() {
+				if($('input[name=exchargePoint]').val() != "" && $('input[name=exchargePoint]').val() >= 5000 ) {
+					if (confirm($("input[name=exchargePoint]").val()+" Point ë°˜í™˜ ì‹ ì²­ì„ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?") == true){
+						
+						if($("input[name=isNewBank]").val() == 'true') {
+							// ê¸°ì¡´ê³„ì¢Œì‚¬ìš©
+							$("#accountForm").attr("target", "popup")
+							.attr("method", "POST").attr("action", "/payment/exchargePoint").submit();
+							
+						} else {
+							var windowW = 500;  // ì°½ì˜ ê°€ë¡œ ê¸¸ì´
+			 		        var windowH = 500;  // ì°½ì˜ ì„¸ë¡œ ê¸¸ì´
+			 		        var left = Math.ceil((window.screen.width - windowW)/2);
+			 		        var top = Math.ceil((window.screen.height - windowH)/2);
+				
+							window.open("/payment/newAccount", "popup",
+									"l top="+top+", left="+left+", height="+windowH+", width="+windowW
+									+"scrollbars=no");
+							
+							$("#accountForm").attr("target", "popup")
+								.attr("method", "POST").attr("action", "/payment/newAccount").submit();
+							
+							opener.location.reload(true);
+						    self.close();
+						}
+						
+					} else {
+						return;
+					}
+				} else {
+					$("#pointCheck").show();
+					exchargePointDiv.css("background", "#ff8c8c");
+					$("#pointCheck").text("* ì¶œê¸ˆí•  Pointë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
+				}
+			})
+			
+			$(document).on('click',"input[name=btnisNewBank]", function() {
+				if($("input[name=isNewBank]").val() == 'true') {
+					$("#registerBank").show();
+					$("#oldBank").hide();
+					$("input[name=isNewBank]").val('false');
+					$("input[name=btnisNewBank]").val("ê¸°ì¡´ ê³„ì¢Œ ì‚¬ìš©");
+				} else {
+					$("#registerBank").hide();
+					$("#oldBank").show();
+					$("input[name=isNewBank]").val('true');
+					$("input[name=btnisNewBank]").val("ìƒˆë¡œìš´ ê³„ì¢Œ ì‚¬ìš©");
+				}
+			})
+			
+			$('li:contains("ì¶©ì „")').on('click', function() {
 				<c:if test="${empty user.accessToken}">
 					$(self.location).attr("href","/payment/kakaoLoginRequest");
 				</c:if>
@@ -255,9 +399,9 @@
 			});
 			
 			
-			$("li:contains('¸¶ÀÏ¸®Áö ÀüÈ¯')").on('click', function() {
-				if(${totalMileage} < 1000) {
-					alert("¸¶ÀÏ¸®Áö ÀüÈ¯ÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù.");
+			$("li:contains('ë§ˆì¼ë¦¬ì§€ ì „í™˜')").on('click', function() {
+				if(${accountUser.totalMileage} < 1000) {
+					alert("ë§ˆì¼ë¦¬ì§€ ì „í™˜ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.");
 				} else {
 					$('#exchargeMileage').modal('toggle');
 				}
@@ -286,66 +430,37 @@
 				}
 
 			});
-			
-			$("input[name=exchargePoint]").on('keyup', function() {
-				$(this).val($(this).val().replace(/[^0-9]/g,""));
-				
-				if($(this).val().charAt(0) == 0) {
-					$(this).val("");
-				}
-				
-			});
-			
-			$("input[name=exchargePoint]").on({'focusout': function() {
-				if($(this).val() == "") {
-					$("#pointCheck").show();
-					$("#pointCheck").text("* 5,000 Point ÀÌ»ó Ãâ±İÀÌ °¡´ÉÇÕ´Ï´Ù.");
-				}
-				
-				if($(this).val() > ${user.totalPoint}) {
-					$(this).val(${user.totalPoint});
-					$("#pointCheck").show();
-					$(this).css("background", "#ff8c8c");
-					$("#pointCheck").text("* °¡Áö°í °è½Å Point ±îÁö¸¸ Ãâ±İÀÌ °¡´ÉÇÕ´Ï´Ù.");
-				}
-				
-				if($(this).val() < 5000) {
-					$("#pointCheck").show();
-					$(this).css("background", "#ff8c8c");
-					$("#pointCheck").text("* 5,000 Point ÀÌ»ó Ãâ±İÀÌ °¡´ÉÇÕ´Ï´Ù.");
-				}
-				},
-				'focusin' : function() {
-					$(this).css("background", "#FFF");
-					$("#pointCheck").hide();
 
-				}
-			});
+			//=================== ê²°ì œ ë‚´ì—­
+			
+	   	 	$('#listPayment > div.row.text-center:contains("next")').on("click", function() {
+	   	 		//alert();
+	   	 		$("#listPayment").load("/payment/listPayment?currentPage=${paymentPage.currentPage+1}");
+	   	 	});
 
 		});
 
     </script>
     
 </head>
-<body>
+<body >
 <input type="hidden" name="userId" value="${sessionScope.user.userId}" />
 
 	<section class="hero" style="background-image: url('../resources/images/igor-ovsyannykov-494256.jpg');
 			background-size: cover;
 			background-repeat: no-repeat, no-repeat;
-			background-position: center center; height:700px; ">
+			background-position: center center; height:400px; ">
 		<div class="img-cover"></div>
 		<section class="caption" style="padding-top: 70px;">
 			<h2 class="caption">My Point</h2>
 		</section>
 	</section>
-	
 	<section class="search" style="background: #000000;">
 		<div class="wrapper">
 			<form id="searchForm">
-				<div id="search" class="text-center" style="position: absolute; background: none; color:#FFF; left: 5%;">
-					<h1 style="font-size:20px;">${user.name}´ÔÀÇ ÀÜ¿© Æ÷ÀÎÆ® : <fmt:formatNumber type="currency" value="${totalPoint}" pattern="###,###" /> Point</h1>
-					<h4>( ¸¶ÀÏ¸®Áö : <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" />Á¡ )</h4>
+				<div id="search" class="text-center" style="position: absolute; background: none; color:#FFF; left: 5%; padding-top: 10px;">
+					<h1 style="font-size:20px;">${accountUser.name}ë‹˜ì˜ ì”ì—¬ í¬ì¸íŠ¸ : <fmt:formatNumber type="currency" value="${accountUser.totalPoint}" pattern="###,###" /> Point</h1>
+					<h4>( ë§ˆì¼ë¦¬ì§€ : <fmt:formatNumber type="currency" value="${accountUser.totalMileage}" pattern="###,###" />ì  )</h4>
 				</div>
 				<a href="#" class="advanced_search_icon" id="advanced_search_btn"></a>
 			</form>
@@ -355,59 +470,56 @@
 			<div class="wrapper">
 				<span class="arrow"></span>
             	<ul class="nav nav-tabs nav-justified" style="border: none;">
-					<li class="active" ><a>¸¶ÀÏ¸®Áö ÀüÈ¯</a></li>
-					<li><a>ÃæÀü</a></li>
-					<li><a>¹İÈ¯½ÅÃ»</a></li>
+					<li class="active" ><a>ë§ˆì¼ë¦¬ì§€ ì „í™˜</a></li>
+					<li><a>ì¶©ì „</a></li>
+					<li><a>ë°˜í™˜ì‹ ì²­</a></li>
 				</ul>
 			</div>
 		</div><!--  end advanced search section  -->
 	</section><!--  end search section  -->
 	
-	<div class="container" style="padding-top: 50px;">
+	<div class="container" style="padding-top: 20px;">
 
-		<div class="row" style="border:1px solid #000; background-color:#FFF; padding-top:15px;">
+		<div class="row" style="border:0.5px solid #efefef; background-color:#FFF; padding: 20px 5px 5px 5px; margin: 0 60px;">
 		
 			 <div class="row">
 	        	<div class="col-xs-12 text-center" style="font-size:20px; font-weight:bold; padding:20px;">
+	        	
 				</div>
 	        </div>
 
 	        <div class="row" align="right">
 	        	<div class="col-xs-12" style="padding-right:30px;">
 					<select name="term" class="selectpicker">
-					  <option value="" selected disabled hidden>±â°£¼³Á¤</option>
-					  <option value="0" ${param.searchCondition eq 0? "selected":""}>ÀÏÁÖÀÏ</option>
-					  <option value="1" ${param.searchCondition eq 1? "selected":""}>ÇÑ´Ş</option>
-					  <option value="2" ${param.searchCondition eq 2? "selected":""}>6°³¿ù</option>
+					  <option value="" selected disabled hidden>ê¸°ê°„ì„¤ì •</option>
+					  <option value="0" ${param.searchCondition eq 0? "selected":""}>ì¼ì£¼ì¼</option>
+					  <option value="1" ${param.searchCondition eq 1? "selected":""}>í•œë‹¬</option>
+					  <option value="2" ${param.searchCondition eq 2? "selected":""}>6ê°œì›”</option>
 					</select>
 										
 				</div>
 	        </div>
 	        
 	        <div class="row text-center" style="padding-top:15px; margin: 10px;">
-
-	        	<div class="row">
-		        	<div class="col-xs-4">
-		        		°Å·¡ÀÏ
-		        	</div>
-		        	<div class="col-xs-4">
-		        		³»¿ª
-		        	</div>
-		        	<div class="col-xs-4">
-		        		Àû¸³/»ç¿ë Æ÷ÀÎÆ®
-		        	</div>
-		        </div>
-		        	
-		        <hr style="border: 1px solid #bababa;">
-		       
-	        	<jsp:include page="./listPayment.jsp" />
+		       	
+		       	<div id="listPayment">
+	        		<jsp:include page="./listPayment.jsp" />
+	        	</div>
 	        	
 	        </div>
         
         </div>
 
 
-    </div><!-- /.container -->
+    </div>
+    
+    <footer style="background: #000000; margin-top: 20px;">
+		<div class="copyrights wrapper" style="border-top: 1px solid #6f6f6f; ">
+			Copyright @ 2015 <a href="/" class="ph_link" >zaching.com</a>. All Rights Reserved.
+		</div>
+	</footer>
+    
+    <!-- /.container -->
 	
 	<!-- Modal -->
 	<div class="modal fade" id="chargePoint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -415,14 +527,14 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title text-center" id="myModalLabel"><b>Æ÷ÀÎÆ® ÃæÀü</b></h4>
+	        <h4 class="modal-title text-center" id="myModalLabel"><b>í¬ì¸íŠ¸ ì¶©ì „</b></h4>
 	        <hr>
 	      </div>
 		      <div class="modal-body text-center"> 
-		      	ÃæÀüÇÒ Æ÷ÀÎÆ®¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. <br>
-		      	ÃæÀüÀº 1¹ø ´ç 1,000¿øºÎÅÍ 10,0000¿ø±îÁö °¡´ÉÇÕ´Ï´Ù.
-			      <form style="padding-top: 50px;">
-					<input type="text" placeholder="ÃæÀüÇÒ Æ÷ÀÎÆ®¸¦ ÀÔ·ÂÇÏ¼¼¿ä" name="point" style="width: 400px; height:40px;">
+		      	ì¶©ì „í•  í¬ì¸íŠ¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. <br>
+		      	ì¶©ì „ì€ 1ë²ˆ ë‹¹ 1,000ì›ë¶€í„° 10,0000ì›ê¹Œì§€ ê°€ëŠ¥í•©ë‹ˆë‹¤.
+			    <form style="padding-top: 50px;">
+					<input type="text" placeholder="ì¶©ì „í•  í¬ì¸íŠ¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”" name="point" style="width: 400px; height:40px;">
 				</form>
 		      </div>
 		      <div class="modal-footer">
@@ -440,20 +552,20 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title text-center" id="myModalLabel"><b>¸¶ÀÏ¸®Áö ÀüÈ¯</b></h4>
+	        <h4 class="modal-title text-center" id="myModalLabel"><b>ë§ˆì¼ë¦¬ì§€ ì „í™˜</b></h4>
 	        <hr>
 	      </div>
 		      <div class="modal-body text-center">  
-				Æ÷ÀÎÆ®·Î ÀüÈ¯ÇÒ ¸¶ÀÏ¸®Áö¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. <br>
-				5,000Á¡ ÀÌ»óºÎÅÍ 1,000Á¡ ´ç 1000Æ÷ÀÎÆ®·Î ÀüÈ¯µË´Ï´Ù.
-			      <form>
-					<input type="text" placeholder="¸¶ÀÏ¸®Áö¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä." name="point" style="width: 200px; height:40px; margin-top: 60px; margin-left: 30px;">
-					/ <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" />Á¡
+				í¬ì¸íŠ¸ë¡œ ì „í™˜í•  ë§ˆì¼ë¦¬ì§€ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. <br>
+				5,000ì  ì´ìƒë¶€í„° 1,000ì  ë‹¹ 1000í¬ì¸íŠ¸ë¡œ ì „í™˜ë©ë‹ˆë‹¤.
+			      <form style="margin-top: 60px;">
+					<input type="text" placeholder="ë§ˆì¼ë¦¬ì§€ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”." name="point" style="width: 200px; height:40px; margin-left: 30px;"/>
+					/ <fmt:formatNumber type="currency" value="${accountUser.totalMileage}" pattern="###,###" />ì 
 				</form>
 		      </div>
 		      <div class="modal-footer">
 		      <div class="search-container text-center" align="center" style="margin: 0 auto;">
-		      	 <button class="btn btn-primary" type="submit">¸¶ÀÏ¸®Áö ÀüÈ¯ÇÏ±â</button>
+		      	 <button class="btn btn-primary" type="submit">ë§ˆì¼ë¦¬ì§€ ì „í™˜í•˜ê¸°</button>
 		      </div>
 	      </div>
 	    </div>
@@ -465,81 +577,92 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title text-center" id="myModalLabel"><b>Æ÷ÀÎÆ® ¹İÈ¯ ½ÅÃ»</b></h4>
+	        <h4 class="modal-title text-center" id="myModalLabel"><b>í¬ì¸íŠ¸ ë°˜í™˜ ì‹ ì²­</b></h4>
 	        <hr>
 	      </div>
-		      <div class="modal-body text-center" style="height: 500px;">
-			      <form name="exchargePointForm" style="padding-top: 20px;">
-					<input type="text" placeholder="¹İÈ¯¹ŞÀ» Æ÷ÀÎÆ®¸¦ ÀÔ·ÂÇÏ¼¼¿ä." name="exchargePoint" 
-							style="width: 200px; height:40px; margin-left: 30px;">
-					/ <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" /> Point
+		      <div class="modal-body text-center" style="height: 450px;">
+				<input type="button" class="btn btn-primary" name="btnisNewBank" value="btn"/>
+				<input type="hidden" name="isNewBank" value="true"/>
+				
+				<form id="accountForm" style="padding-top: 10px; border: solid 1px #ccc; margin: 10px; padding-bottom: 20px;">
+				
+				<input type="text" placeholder="ë°˜í™˜ë°›ì„ í¬ì¸íŠ¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”." name="exchargePoint" style="width: 250px; height:40px; margin-left: 30px; padding-left: 5px;"/>
+					/ <fmt:formatNumber type="currency" value="${accountUser.totalPoint}" pattern="###,###" /> Point
 					
 					<div id="pointCheck" class="text-center" style="padding: 10px 10px 20px 0; color:red; display: none;">
-						* 5,000 Point ÀÌ»ó Ãâ±İÀÌ °¡´ÉÇÕ´Ï´Ù.
+						* 5,000 Point ì´ìƒ ì¶œê¸ˆì´ ê°€ëŠ¥í•©ë‹ˆë‹¤.
+				</div>
+				
+				<hr>
+				
+				<div id = "oldBank">
+					<div class="row" style="padding-top:40px;">
+						<label for="name" class="col-xs-4 control-label">
+								ì€í–‰ëª…
+						</label>
+						<div class="col-xs-7">
+							${accountUser.bankName}
+						</div>
 					</div>
-				</form>
-
-				    <div class="input-group">
-				      <span class="input-group-addon">
-				        <input type="radio" name="account" checked>
-				      </span>
-				      <div class="form-control">±âÁ¸°èÁÂ»ç¿ë</div>
-				    </div><!-- /input-group -->
-				    <div class="input-group" id="newAccount">
-				      <span class="input-group-addon">
-				        <input type="radio" name="account">
-				      </span>
-				      <div class="form-control">»õ·Î¿î°èÁÂ»ç¿ë</div>
-				      
-				    </div><!-- /input-group -->
-		      		
-				    <form id="accountForm"  style="display: none;">
-				    	µî·ÏÇÒ °èÁÂÁ¤º¸¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.
-						<div class="row" style="padding-top:40px;">
-							<label for="name" class="col-xs-4 control-label">
-									ÀÌ¸§
-							</label>
-							<div class="col-xs-7">
-								<input type="text" class="form-control" name="name" value="${user.realName}" />
-							</div>
+					<div class="row" style="padding-top:40px;">
+						<label for="name" class="col-xs-4 control-label">
+								ê³„ì¢Œë²ˆí˜¸
+						</label>
+						<div class="col-xs-7">
+							${accountUser.accountNumber}
 						</div>
-						
-						<div class="row" style="padding-top:20px;">
-							<label for="name" class="col-xs-4 control-label">
-									ÀºÇà¸í
-							</label>
-							<div class="col-xs-7">
-								${bank}
-								<select name="limitNum" class="selectpicker show-tick" title="Á¦ÇÑ ÀÎ¿ø¼ö"  >
-						    	  <c:forEach var="i" begin="2" end="20" step="1">
-						    	  	<option >${i}</option>
-						    	  </c:forEach>
-								</select>
-							</div>
+					</div>
+					
+				</div>
+				
+				<div class="row" style="padding-top:40px;">
+					<label for="name" class="col-xs-4 control-label">
+							ì˜ˆê¸ˆì£¼
+					</label>
+					<div class="col-xs-7">
+						<input type="text" class="form-control" name="name" value="${accountUser.realName}" />
+					</div>
+				</div>
+				
+				<div id="registerBank" >
+					<div class="row" style="padding-top:20px;">
+						<label for="name" class="col-xs-4 control-label">
+								ìƒë…„ì›”ì¼+í•œìë¦¬ (ex) 9402082
+						</label>
+						<div class="col-xs-7">
+							<input type="text" class="form-control" name="accountHolderinfo" value=""/>
 						</div>
-						
-						<div class="row" style="padding-top:20px;">
-							<label for="name" class="col-xs-4 control-label">
-									»ı³â¿ùÀÏ+ÇÑÀÚ¸® (ex) 9402082
-							</label>
-							<div class="col-xs-7">
-								<input type="text" class="form-control" name="accountHolderinfo" value=""/>
-							</div>
+					</div>
+					
+					<div class="row" style="padding-top:20px;">
+						<label for="bankCode" class="col-xs-4 control-label">
+								ì€í–‰ëª…
+						</label>
+						<div class="col-xs-7">
+							<select name="bankCode" class="selectpicker show-tick" title="ì€í–‰ì„ íƒ"  >
+					    	  <c:forEach var="bank" items="${bank}">
+					    	  	<option value="${fn:substring(bank,0,3)}"
+					    	  		${accountUser.bankName eq fn:substring(bank, 4, fn:length(bank)) ? 'selected="selected"':''}>
+										${fn:substring(bank,4, fn:length(bank))}
+									</option>
+					    	  </c:forEach>
+							</select>
 						</div>
-						
-						<div class="row" style="padding-top:20px;">
-							<label for="name" class="col-xs-4 control-label">
-									°èÁÂ¹øÈ£
-							</label>
-							<div class="col-xs-7">
-								<input type="text" class="form-control" name="accountNum" value="${user.accountNumber}" />
-							</div>
+					</div>
+					<div class="row" style="padding-top:20px;">
+						<label for="name" class="col-xs-4 control-label">
+								ê³„ì¢Œë²ˆí˜¸
+						</label>
+						<div class="col-xs-7">
+							<input type="text" class="form-control" name="accountNum" value="" />
 						</div>
-					</form>
+					</div>
+				</div>
+			  </form>
 		      </div>
 		      <div class="modal-footer">
 		      <div class="search-container text-center" align="center" style="margin: 0 auto;">
-		      	 <button class="btn btn-primary" type="submit">¹İÈ¯ ½ÅÃ»ÇÏ±â</button>
+		      	 <button class="btn btn-primary" type="submit">ë°˜í™˜ ì‹ ì²­í•˜ê¸°</button>
 		      </div>
 	      </div>
 	    </div>

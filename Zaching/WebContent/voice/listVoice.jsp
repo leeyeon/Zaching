@@ -152,7 +152,7 @@
 						var display = '';
 						for(var i=0; i<serverData.length; i++){
 							display = display + '<li>'+
-													'<a href="#">';
+													'<a href="/voice/getVoice?voiceId='+serverData[i].voiceId+'">';
 													if( serverData[i].backgroundImage != null)
 														display += '<img src="../resources/images/voiceImages/'+serverData[i].backgroundImage+'" alt="" title="" class="property_img"/>';
 													else
@@ -161,7 +161,7 @@
 													'<span class="price"><i class="fas fa-play-circle"></i>&nbsp;'+serverData[i].countReply+'</span>'+
 													'<div class="property_details">'+
 														'<h1>'+
-															'<a href="#" style="vertical-align: bottom;"><img src="../resources/images/'+serverData[i].profileImage+'" id="profile">&nbsp;'+serverData[i].userName+'</a>'+
+															'<a href="/user/getTimeLine?userId='+serverData[i].userId+'" style="vertical-align: bottom;"><img src="../resources/images/'+serverData[i].profileImage+'" id="profile">&nbsp;'+serverData[i].userName+'</a>'+
 														'</h1>'+
 														'<h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'+
 															'<a href="/voice/getVoice?voiceId='+serverData[i].voiceId+'">'+serverData[i].voiceName+'</a>'+
@@ -514,14 +514,14 @@ width:100%;}
 							<c:forEach var="voice" items="${list}">
 							<c:set var="i" value="${ i+1 }" />
 								<li>
-									<a href="#">
+									<a href="/voice/getVoice?voiceId=${voice.voiceId}">
 										<c:if test="${ !empty voice.backgroundImage}"><img src="../resources/images/voiceImages/${voice.backgroundImage}" alt="" title="" class="property_img"/></c:if>
 										<c:if test="${ empty voice.backgroundImage}"><img src="../resources/images/voiceImages/default.jpg" alt="" title="" class="property_img"/></c:if>
 									</a>
 									<span class="price"><i class="fas fa-play-circle"></i>&nbsp;${voice.countReply}</span>
 									<div class="property_details">
 										<h1>
-											<a href="#" style="vertical-align: bottom;"><c:if test="${!empty voice.profileImage}"><img src="../resources/images/${voice.profileImage}" id="profile"></c:if>
+											<a href="/user/getTimeLine?userId=${voice.userId}" style="vertical-align: bottom;"><c:if test="${!empty voice.profileImage}"><img src="../resources/images/${voice.profileImage}" id="profile"></c:if>
 											<c:if test="${empty voice.profileImage}"><img src="../resources/images/profile_default.png" id="profile"></c:if>&nbsp;${voice.userName}</a>
 										</h1>
 										

@@ -3,128 +3,36 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	
-	<!--   jQuery , Bootstrap CDN  -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/resources/layout/sub_toolbar.jsp"/>
-   	<!-- ToolBar End /////////////////////////////////////-->
-	
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-        
-        
-        div.row{
-      	    padding-top: 10px;
-    		padding-left: 10px;
-    		padding-right: 10px;
-    		padding-bottom: 10px;
-        } 
-        
-        div.body{
-        	
-        	padding-top: 150px;
-        	height: 100%;
-        }
-        
-        
-        .btn-group > a {
-    		border-top: 2px solid #fff;
-    		margin-right : 5px;
-    		color: black; /* White text */
-    		padding: 10px 24px; /* Some padding */
-    		cursor: pointer; /* Pointer/hand icon */
-    		width: 200px;
-			height: 40px;
-		}
-		
-		#myPage.btn-group{
-			margin-left: 10px;
-			margin-top: 10px;
-			margin-bottom: 5px;
-			margin-top: 5px;
-						}
-		#myPage.btn-group>a:hover, #myPage.btn-group>a.active{
-		    border-top: 2px solid  #333;
-		}
- 
-		
-       form.op-form, div.row.body{
-       
-        	padding-top: 10px;
-    		padding-left: 10px;
-   		 	padding-right: 10px;
-    		padding-bottom: 20px;
-    		margin-left: 10px;
-    		margin-right: 10px;
-       }
-       
-       form.op-form{ margin-top:  160px;}
-       
-     	
-		
-		.container{
-			padding-right: 30px;
-    		padding-left: 30px;
-    		margin-right: auto;
-    		margin-left: auto;
-		}
-		
-		
-		
-		.bg {
-			background: #f2b1d2;/*페이지 배경 컬러  */
-			position: fixed;
-			width: 100%;
-			height: 100%;
-			background-size: cover;
-			top: 0;
-			left: 0;
-			z-index: -1;
-			opacity: 0.3;
-		}
-		
-		.profile-upload{
-			height: 150px;
-    		left: 1;
-    		position: absolute;
-    		top: 0px;
-    		width: 150px;
-    		opacity: 0;
-    		}
-    		
-    	body > div.container > div.content {
-    		background-color: #fff;
-    		margin-top: -20px;
-    		
-    	
-    	}
-    		
-    	/* 게시물 스타일 */
-    	.cell{
-    	list-style: none;
-		margin: 0;
-		padding: 0;
-    	}
-	
-		hr {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: 0;
-    border-top: 1px solid #333;
-}
 
-    </style>
-   
-     <!--  ///////////////////////// JavaScript ////////////////////////// -->
-	<script type="text/javascript">
+  <head>
+    
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+
+    <link rel="shortcut icon" href="images/favicon/favicon.ico">
+    
+    <!-- All CSS Plugins -->
+    <link rel="stylesheet" type="text/css" href="/resources/css/userplugin.css">
+    
+    <!-- Main CSS Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="/resources/css/userstyle.css">
+    
+<jsp:include page="/resources/layout/sub_toolbar.jsp"/>
+    
+<style>
+body{
+padding-top: 110px;
+}
+.menu {
+align: left;
+}
+</style>
+
+<script type="text/javascript">
 	
 	$( function () {
 		//내정보조회 Event && 추가 저보 입력
@@ -137,8 +45,9 @@
 		
 		//추억지도 Event
 		$( "#memoryMap" ).on("click" , function() {
-			self.location = "/user/memoryMap?userId=${user.userId}";
-			
+			//window.open("/user/memoryMap?userId=${user.userId}", "memoryMap", "width=800,height=800");
+			//self.location = "/user/memoryMap?userId=${user.userId}";
+			lodaMemoryMap();
 	 	});
 		
 		//포인트관리 Event
@@ -465,110 +374,153 @@
          });
 	})
 
-
-
-</script>
-
-
-</head>
-
-
-<body>
-<div class="container">
-<div class="bg"></div>
-	<div class="content">
-	<form id="frm" class="op-form" action="/user/fileupload" method="POST" enctype="multipart/form-data">
+	</script>
 	
-	<div class="row header" align="center">
-		<div class="col-xs-4" id="profile" align="left">
-		
-		<!--프로필 사진 없으면 기본이미지  -->
-		<c:if test="${user.profileImage eq null }">
-	
-		<div class="profileImage" align="center">
+  </head>
+<style>
+.glyphicon{ position: absolute;
+    left: 0px;
+    top: 0px;
+    font-size: 20px;
+    color: #fff;
+    background: #23262dc7;
+    padding: 12px;}
+    
+  .social-icon <  li{
+  background : #000;
+  padding : 500px;
+  }
+
+a {text-decoration:none; color:#000}
+</style>
+ <body>
+
+    <div id="main">
+        <div class="container">
+            <div class="row">
+            	
+               
+                 
+                 <!-- About Me (Left Sidebar) Start -->
+                 <div class="col-md-3">
+                   <div class="about-fixed">
+                    <center>
+                     <div class="my-pic">
+                     
+                     <c:if test="${user.profileImage eq null }"><img  src="../resources/images/profile_default.png" style="width: 100%; height: 100%;"/></c:if>
+                     <c:if test="${user.profileImage ne null }"><img  alt="프로필사진변경"  style="width: 100%; height: 100%;" src="../resources/upload_files/images/${user.profileImage}"/></c:if>
+                        
+                        
+                        <a href="javascript:void(0)" class="collapsed" align="left" data-target="#menu" data-toggle="collapse"><i class="glyphicon glyphicon-camera"></i></a>
+                        
+                         <div id="menu" class="collapse">
+                           <ul class="menu-link">
+                               <li><div class="profileImage" align="center">
 		<input type="file" name="uploadfile" />
 		<input type="hidden" name="userId"/>
          <button class="uploadbutton">데이터전송</button>
-        	<img  class="img-circle" src="../resources/images/profile_default.png" 
-        	 style="width: 150px; height: 150px;"/>
+        	
          
 
-      	</div>
-      
-       </c:if>
-		<!-- 프로필 사진 있을때 -->
-		<c:if test="${user.profileImage ne null }">
-		<div class="profileImage" align="center">
-        <input type="file" name="uploadfile" />
-        <input type="hidden" name="userId"/>
-         <button class="uploadbutton">데이터전송</button>
-        
-       <img  class="img-circle" alt="프로필사진변경"  style="width: 150px; height: 150px;"
-       src="../resources/upload_files/images/${user.profileImage}"/>
-         
-       </div>
-       </c:if>
-       
-       
-       </div>
-        
-        <div class="col-xs-3" id="name" style=" margin-left: 20px">
-		<h3>${user.name}</h3>
-		
-        </div>
-     
-      
-      <div class="col-xs-4 message" align="right">
-      <a><img  id="listMessage" src="../resources/images/Message_Icon.png" 
-        	width="50px" height="50px"/>
-      </a></div>
-      <c:if test="${sessionScope.user.userId eq user.userId}">
-    	<button type="button" class="btn btn-primary" id="deleteUser">회원탈퇴</button>
-    	</c:if>
-    </div>
-    
-    </form>
-    
-    <!--//////////////////// 버튼 그룹///////////////////// -->
-    
-     <c:if test="${user.userId eq sessionScope.user.userId}"><!-- 세션에있는 아이디랑  -->
-    <div class="row btn-group"  id="myPage">
-    	<a class="btn col-xs-2" id="memoryMap">추억지도</a>
-    	<a class="btn col-xs-2" id="point">포인트관리</a>
-    	<a class="btn col-xs-2" id="listFreind">친구목록</a>
-    	<c:if test="${sessionScope.user.role eq '1'}">
-    	<a class="btn col-xs-2" id="getUser">추가정보입력</a></c:if>
-    	<c:if test="${sessionScope.user.role eq '2'}">
-    	<a class="btn col-xs-2" id="getUser">내정보조회</a></c:if>
-    	<a class="btn col-xs-2" id="listNotice">알림함</a>
+      	</div></li>
+                            </ul>
+                         </div>
+                         
+                        </div>
+                      </center>
+                      
+                      
+                      <div class="my-detail">
+                    	
+                        <div class="white-spacing">
+                            <h1>${user.name}</h1>
+                            <span></span>
+                        </div> 
+                       <center>
+                      
+                        <c:if test="${user.userId eq sessionScope.user.userId}">
+                            <div class="social-icon-info" style="padding-top: 26px; padding-bottom: 26px;">
+                            <center>                 
+                        <c:if test="${sessionScope.user.role eq '1'}"><a type="button" id="getUser">
+                        <img src="/resources/images/userupdate.png"  style="width: 50px; height: 50px;"/>
+                        </a></c:if>&nbsp;&nbsp;&nbsp;&nbsp;
+                       <a type="button" id="point">
+                        <img src="/resources/images/usercoin.png"  style="width: 50px; height: 50px;"/>
+                        </a>
+                       
     	
-	  </div>
+                        </center>
+                        </div>
+                        </c:if>
+                        
+                        
+                          <c:if test="${user.userId ne sessionScope.user.userId}">
+                        	 <div class="social-icon-info" style="font-color: #000; text-decoration : none; padding-top: 20px; padding-bottom: 20px;">                    
+                        	<c:if test="${code==0}"><a type="button" id="friendStatus">친구신청</a></c:if>
+    		<c:if test="${code==1}"><a type="button" id="friendStatus">친구 요청 중</a></c:if>
+    		<c:if test="${code==2}"><a type="button" id="friendStatus">친구 (친구끊기)</a></c:if>
+    		<c:if test="${code==3}"><a type="button" id="friendStatus">친구수락</a></c:if><br/>
+                        	<c:if test="${followCode==0}"><a type="button" id="followStatus">팔로우하기</a></c:if>
+    		<c:if test="${followCode==1}"><a type="button" id="followStatus">팔로우끊기</a></c:if>
+                       	 </div>                         
+                          </c:if>                    
+                        
+                        
+                        </center>
+
+                    </div>
+                  </div>
+                </div>
+                <!-- About Me (Left Sidebar) End -->
+                
+                
+                
+                
+                 
+                 <!-- Blog Post (Right Sidebar) Start -->
+                 <div class="col-md-9">
+                    <div class="col-md-12 page-body">
+                    	<div class="row">
+                    		
+                            
+                            <div class="sub-title" >
+                           		<h3> <c:if test="${user.userId eq sessionScope.user.userId}"><!-- 세션에있는 아이디랑  -->
+    
+    	<a class="btn col-xs-3" id="memoryMap" data-toggle="modal" data-target="#myModal" ><b>추억지도</b></a>    	
+    	<a class="btn col-xs-3" id="listFreind"><b>친구목록</b></a>    	
+    	
+    	<a class="btn col-xs-3" id="listNotice"><b>알림함</b></a>
+
   </c:if>
   
   <c:if test="${user.userId ne sessionScope.user.userId}">
   <div class="row" id="friendPage">
-    	<div class="col-xs-3" id="friendSttusInput">
-    		<c:if test="${code==0}"><a type="button" id="friendStatus">친구신청</a></c:if>
-    		<c:if test="${code==1}"><a type="button" id="friendStatus">친구 요청 중</a></c:if>
-    		<c:if test="${code==2}"><a type="button" id="friendStatus">친구 (친구끊기)</a></c:if>
-    		<c:if test="${code==3}"><a type="button" id="friendStatus">친구수락</a></c:if>
-  		</div>
-    	<div class="col-xs-3">
-    		<c:if test="${followCode==0}"><a type="button" id="followStatus">팔로우하기</a></c:if>
-    		<c:if test="${followCode==1}"><a type="button" id="followStatus">팔로우끊기</a></c:if>
+    	<div class="col-xs-12">
+    		<a type="button" ><img src="../resources/images/Message_Icon.png" height="20px" align="left"/>&nbsp;메세지전송</a>
     	</div>
-    	<div class="col-xs-3">
-    		<a type="button" >메세지전송</a>
-    	</div>
-    	<div class="col-xs-3">
+    	<!--  
+    	<div class="col-xs-6">
     		<a type="button" >신고하기</a>
-    	</div>
+    	</div>-->
   </div>
   </c:if>
-   
-    <div class="row body" align="center">
-    		
-    		 <c:set var="i" value="0"/>
+                           		
+                           		
+                           		</h3>
+                           		<c:if test="${user.userId eq sessionScope.user.userId}">
+                                <a><img  id="listMessage" src="../resources/images/Message_Icon.png" width="50px" height="50px" align="right"/></a>
+                                </c:if>
+                             </div>
+                            
+                            
+                            <div class="col-md-12 content-page">
+                            	
+                                
+                                <!-- Blog Post Start -->
+                                <div class="col-md-12 blog-post">
+                                    </div>
+                                <!-- Blog Post End -->
+                                 <c:set var="i" value="0"/>
 			 <c:forEach var="newsfeed" items="${list}">
 				<c:set var="i" value="${ i+1 }" />
 				<li class="cell">
@@ -618,14 +570,37 @@
 							
 							</li><hr>
 			</c:forEach>
-										
-    </div>
+                                
+                    
+                                
+                                  
+                                
+                                
+                                
+                           
+                           
+                         </div>
+                     
+                     
+                     
+                     
+                     
+                  </div>
+                
+            </div>
+         </div>
+      </div>
     
-   
     
-    </div>	
-</div>
+    
+    
+    <!-- All Javascript Plugins  -->
+    <script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/resources/js/plugin.js"></script>
+    
+    <!-- Main Javascript File  -->
+    <script type="text/javascript" src="/resources/js/scripts.js"></script>
 
-
-</body>
-</html>
+    
+   </body>
+ </html>

@@ -208,6 +208,7 @@ public class UserController {
 		
 
 		return "forward:/user/getTimeLine.jsp";
+		
 	}
 	@RequestMapping(value = "listUser")
 	public String listUser(@ModelAttribute("search") Search search, Model model, HttpServletRequest request)
@@ -264,7 +265,7 @@ public class UserController {
 	
 
 	@RequestMapping(value="memoryMap", method= RequestMethod.GET)
-	public String memoryMap( HttpSession session)throws Exception{
+	public String memoryMap(HttpSession session)throws Exception{
 
 		System.out.println("/user/memoryMap : GET");
 		

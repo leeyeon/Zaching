@@ -64,7 +64,7 @@ public class BroadcastDaoImpl implements BroadcastDao {
         //addObject.put("broadcasterId",broadcast.getBroadcaster().getUserId());        
         addObject.put("broadcastId",broadcast.getUserId());
         addObject.put("broadcaster",broadcast.getUserName());
-        addObject.put("profileImage",broadcast.getProfileImage());
+        addObject.put("profileImage","http://192.168.0.31:8080/resources/images/"+broadcast.getProfileImage());
         addObject.put("title",broadcast.getTitle());
         addObject.put("detail",broadcast.getDetail());        
         addObject.put("image",broadcast.getFileName());

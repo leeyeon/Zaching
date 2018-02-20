@@ -2,6 +2,7 @@ package com.zaching.web.friend;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -85,6 +86,10 @@ public class FriendController {
 		model.addAttribute("search", search);
 		model.addAttribute("recommendList", list);
 		
+		System.out.println(list);
+		
+		Random rnd = new Random(); 
+		rnd.nextInt(list.size()-1); 
 		
 		System.out.println("listFriend ³¡============");
 		

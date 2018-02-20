@@ -36,6 +36,6 @@ public interface PaymentDao {
 	
 	public void presentPoint(Payment payment) throws Exception;
 	
-	public Map<String, Object> getAccount(String accessToken, String accountNum, int accountHolderinfo) throws Exception;
+	public Map<String, Object> getAccount(String accessToken, String accountNum, int accountHolderinfo, String bankCode) throws Exception;
 	
 }

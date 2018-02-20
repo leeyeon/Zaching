@@ -343,24 +343,24 @@ function noticeclose(){
 			$(self.location).attr("href","/");			
 	 	});
 
-		$("a:contains('라이브방송')").on("click", function() {
+		$("li > a:contains('라이브방송')").on("click", function() {
 			self.location = "/broadcast/listBroadcast";
 		});
 		
-	 	$( "a:contains('밥친구')" ).on("click" , function() {
+	 	$("li > a:contains('밥친구')" ).on("click" , function() {
 			$(self.location).attr("href","/bob/mainBob");			
 	 	});
 
-		$("a:contains('생활정보')").on("click", function() {
+		$("li > a:contains('생활정보')").on("click", function() {
 			self.location = "/livingInfo/mainLivingInfo";
 		});
 	
 		
-		$("a:contains('로그아웃')").on("click", function() {
+		$("li > a:contains('로그아웃')").on("click", function() {
 			self.location = "/user/logout";
 		});
 		
-		$("a:contains('보이스리플')").on("click", function() {
+		$("li > a:contains('보이스리플')").on("click", function() {
 			self.location = "/voice/listVoice";
 		});
 		
