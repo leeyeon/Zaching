@@ -41,8 +41,13 @@ public class FriendDaoImpl implements FriendDao{
 	}
 
 	@Override
-	public void addFriend(Friend friend) throws Exception {
-		sqlSession.insert("FriendMapper.addFriend",friend);
+	public void addFriend(Friend friend, String status) throws Exception {
+		System.out.println("Dao : "+friend);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("friend", friend);
+		map.put("status", status);
+		
+		sqlSession.insert("FriendMapper.addFriend",map);
 	}
 	
 	@Override
@@ -58,8 +63,8 @@ public class FriendDaoImpl implements FriendDao{
 	}
 
 	@Override
-	public List<Friend> recommendFriend(Search search) throws Exception {
-		return sqlSession.selectList("FriendMapper.recommendFriend",search);
+	public List<Friend> recommendFriend(int userId) throws Exception {
+		return sqlSession.selectList("FriendMapper.recommendFriend", userId);
 	}
 
 	@Override
@@ -82,6 +87,47 @@ public class FriendDaoImpl implements FriendDao{
 	public int getTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("FriendMapper.getTotalCount",search);
 	}
+
+	@Override
+	public int checkFriend(int userId, int friendId, int status) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("friendId", friendId);
+		map.put("status", status);
+		return sqlSession.selectOne("FriendMapper.checkFriend", map);
+	}
+
+	@Override
+	public void cancelFriend(int userId, int friendId, int status) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("friendId", friendId);
+		map.put("status", status);
+		sqlSession.delete("FriendMapper.cancelFriend", map);
+		
+	}
+
+	@Override
+	public void updateStatus(int userId, int friendId, int status) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("friendId", friendId);
+		map.put("status", status);
+		sqlSession.update("FriendMapper.updateStatus", map);
+		
+	}
+
+	@Override
+	public int checkFollow(int userId, int friendId, int status) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("friendId", friendId);
+		map.put("status", status);
+		
+		return sqlSession.selectOne("FriendMapper.checkFollow", map);
+	}
+	
+	
 
 
 	
