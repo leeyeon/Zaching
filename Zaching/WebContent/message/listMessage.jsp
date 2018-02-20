@@ -283,8 +283,11 @@ body {
 	 		               }),
 	 		               dataType : "json",
 	 		               success : function(serverData) {
+	 		            	   
+	 		            	   var messageContent="";
+	 		            	   
 	 		            	   for(var i=0; i<serverData.length; i++){
-	 		            		   name=messageContent
+	 		            		  messageContent=messageContent
 	 		            		   +'<div class="message left"><div class="message-text">'
 	 		            		   +serverDate.message.content
 	 		            		   +'</div></div>'
@@ -293,7 +296,7 @@ body {
 	 		            		   +'</div></div>';
 	 		            	   }
 	 		            	   $("").append(serverData);
-	 		            	  $("#messageContent").modal('show');
+	 		            	  $("#myModal").modal('show');
 	 		               },
 	 		               error:function(request,status,error){
 	 		                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -386,11 +389,11 @@ body {
 								<button type="button" class="close" data-dismiss="modal"
 									aria-hidden="true" id="close">×</button>
 								<div class="message left">
-									<div class="message-text">하이!</div>
+									<div class="message-text"></div>
 								</div>
 								<div class="message right">
-									<div class="message-text">오랜만이네</div>
-									<div class="message-text">잘지내냐?</div>
+									<div class="message-text"></div>
+									<div class="message-text"></div>
 								</div>
 								
 							</div>
