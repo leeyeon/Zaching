@@ -188,6 +188,7 @@ public class VoiceController {
 		System.out.println("category :: "+voice.getCategoryCode());
 		System.out.println("22222"+(List)(commonService.listComment(search, voice.getCategoryCode(), voiceId).get("list")));
 	
+		
 		model.addAttribute("comment", (List)(commonService.listComment(search, voice.getCategoryCode(), voiceId).get("list")));
 		model.addAttribute("voice", voiceService.getVoice(voiceId));
 		model.addAttribute("list", map.get("list"));
