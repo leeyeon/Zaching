@@ -38,6 +38,7 @@
     margin-left: 10px;
     margin-top: 100px;
     padding-bottom: 100px;
+    
 }
 
 
@@ -61,7 +62,9 @@
 
 
 <div  class="page-body" id="map" style="width:70%; height:350px;" align="center"></div>
-
+<input type="hidden" value="${user.userId}" name="userId" id="userId"/>
+<input type="hidden"  name="locationX" value=""/>
+<input type="hidden" name="locationY" value="" />
 
 
 

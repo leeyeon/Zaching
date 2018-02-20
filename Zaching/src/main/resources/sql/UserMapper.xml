@@ -60,6 +60,8 @@
 	</insert>
 	
 	
+	
+	
 	<select id="snsCheck" parameterType="String" resultType="int">
 		SELECT 	COUNT(*)	
 		FROM users 
@@ -72,14 +74,6 @@
 		FROM users 
 		WHERE email= #{email} 
 	</select>
-	
-	 <select id="getTimeLine"	parameterType="int"	resultMap="userSelectMap">
-		SELECT *
-		FROM( SELECT inner_table.*, ROWNUM AS row_seq
-				FROM( SELECT * FROM newsfeed ) inner_table
-		WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
-	 </select>
 	
 	
 	<select id="findPassword"	parameterType="string"	resultMap="userSelectMap">
@@ -125,6 +119,14 @@
 		</set>
 		WHERE user_id = #{userId}
 	</update>
+	
+	<update id="updateLatestDate" parameterType="user"><!-- 최종접속일 남기기 -->
+		UPDATE users
+		<set>
+			latest_date = to_char(sysdate,'yyyy-mm-dd')
+		</set>
+		WHERE user_id = #{userId}
+	</update>
 	 
 	<update	id="updateUser"	parameterType="user" >
 	   	UPDATE users
@@ -148,18 +150,16 @@
 	   	WHERE user_id = #{userId}
 	 </update>
 	 
-	 <!-- 테스트 중 -->
-	 <select  id="memoryMap"  parameterType="search"	resultMap="userSelectMap">
-	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM( SELECT us.user_id, ns.newsfeed_id,
-	  										ns.category_code, ns.content 
-											FROM users us , newsfeed ns
-											ORDER BY user_id ) inner_table
-		WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
-	 </select>
-	 
+	
+	 <!-- 
+	 <select id="memoryMap" parameterType="int" resultMap="NewsfeedSelectMap">
+		SELECT n.latitude, n.longitude, n.newsfeed_id,
+
+		 u.name, u.profile_image
+		FROM newsfeed n, users u
+		WHERE n.user_id=u.user_id(+) AND u.user_id=#{value}
+	</select>
+	  -->
 	
 	<select  id="listUser"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *

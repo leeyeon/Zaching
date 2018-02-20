@@ -210,6 +210,18 @@ body {
 		});
 
 	});
+	
+	//회원탈퇴
+	$("#deleteUser").on("click", function() {
+		var windowW = 400;  // 창의 가로 길이
+	    var windowH = 500;  // 창의 세로 길이
+		var left = Math.ceil((window.screen.width - windowW)/2);
+	    var top = Math.ceil((window.screen.height - windowH)/2);
+	    
+		window.open("/user/deleteUser?userId=${sessionScope.user.userId}",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
+		opener.location.reload(true);
+		    self.close();
+	})
 </script>
 
 </head>
@@ -338,7 +350,9 @@ body {
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 					<button type="button" class="btn btn-primary" id="update">수	&nbsp;정</button>
 					<a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
-					
+					   	
+    					<button type="button" class="btn btn-primary" id="deleteUser">회원탈퇴</button>
+    					
 				</div>
 			</div>
 		</form>

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.zaching.common.domain.Search;
+import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.domain.User;
 import com.zaching.service.user.UserDao;
 
@@ -101,9 +102,9 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public List<User> memoryMap(Search search) throws Exception {
+	public List<Newsfeed> memoryMap(int userId) throws Exception {
 		
-		return sqlSession.selectList("UserMapper.memoryMap", search);
+		return sqlSession.selectList("UserMapper.memoryMap", userId);
 	}
 
 	@Override
@@ -165,5 +166,14 @@ public class UserDaoImpl implements UserDao{
 		map.put("fcmToken", fcmToken);
 		sqlSession.selectOne("UserMapper.updateFCMToken", map);
 	}
+
+	@Override
+	public void latestLogin(int userId) throws Exception {
+		System.out.println(":: UserDaoImpl/latestLogin/ :: "+userId);
+		sqlSession.update("UserMapper.updateLatestDate", userId);
+		
+	}
+	
+	
 	
 }

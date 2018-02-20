@@ -111,42 +111,7 @@ public class UserController {
 		return buffer.toString();
 	}
 
-	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception {
-
-		System.out.println("/user/login : POST");
-
-		System.out.println("::" + user);
-
-		User dbUser = userService.login(user.getEmail());
-		System.out.println("::::: " + dbUser);
-
-		if (user.getPassword().equals(dbUser.getPassword()) && user.getEmail().equals(dbUser.getEmail())) {
-			session.setAttribute("user", dbUser);
-			//세션에 저장하는 시간(=로그인시간 기록남기기) DB에 저장 OR 업데이트
-		}
-		if (session.getAttribute("user") == null) {
-					
-		}
-		System.out.println("=====>  " + session.getAttribute("user"));
-		
-		System.out.println("��===>" + user.getEmail() + " = " + dbUser.getEmail());
-		System.out.println("��===>" + user.getPassword() + " = " + dbUser.getPassword());
 	
-
-		return "redirect:/index.jsp";
-	}
-
-	@RequestMapping(value = "logout", method = RequestMethod.GET)
-	public String logout(HttpSession session) throws Exception {
-
-		System.out.println("/user/logout : POST");
-		
-		
-		session.invalidate();
-
-		return "redirect:/index.jsp";
-	}
 
 	@RequestMapping(value = "findPassword", method = RequestMethod.GET)
 	public String findPassword() throws Exception {

@@ -99,7 +99,6 @@
 	padding: 0;
 }
 
-
 .notice {
 	overflow: inherit;
 	overflow-y: inherit;
@@ -112,21 +111,22 @@
 	background: #fff;
 }
 
-.sns-login > ul {
-	
-	list-style: none;
-	margin: 0;
-	padding: 0;
+
+#sns-group> a > img {
+	width:100%;
+	height: 46px;
 }
 
-.sns-login>li {
-	margin: 0 0 0 0;
-	padding: 0 0 0 0;
-	border: 0;
-	float: left;
-}
 
-#loginModal > div > div > div.modal-body > form > div.row.social-login { margin: 5px;}
+#text-group {
+    width: 40%;
+    border-right-color: #333;
+    border-right-style: dashed;
+    border-right-width: 1px;
+    
+}
+.body-content{position: absolute; top: 50%; height: 240px; margin-top: -120px;}
+
 </style>
 
 <script type="text/javascript">
@@ -259,7 +259,7 @@
 			}
 			
 			
-			$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
+			$("form").attr("method","POST").attr("action","/login").attr("target","_parent").submit();
 			
 		});
 
@@ -300,7 +300,7 @@
 	
 		
 		$("a:contains('로그아웃')").on("click", function() {
-			self.location = "/user/logout";
+			self.location = "/logout";
 		});
 		
 		$("a:contains('보이스리플')").on("click", function() {
@@ -736,68 +736,50 @@
 				<!-- Modal Header end -->
 
 				<!-- Modal Body start-->
-				<div class="modal-body" align="left">
-
+				<div class="modal-body" align="center">
+					
+					<div class="body-content">
 					<form>
-						<div class="row">
-							<div class="col-xs-4">
-								<label for="inputlg" style="margin-left: 5px">이메일(ID)</label>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-sm-6">
-								<input type="email" class="form-control input-lg" name="email"
-									placeholder="이메일을입력하세요" style="margin-left: 5px" id="loginemail" />
-
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-xs-4">
-								<label for="inputlg" style="margin-left: 5px"
-									style="margin-top: 5px">패스워드(PW)</label>
-							</div>
-						</div>
-
-
-						<div class="row">
-							<div class="col-sm-6">
-								<input type="password" class="form-control input-lg"
+						<div class="col-sm-5" id="text-group">
+							<input type="text" class="form-control" name="email"
+									placeholder="이메일을입력하세요" style="margin-left: 5px" id="loginemail" /><br>
+									
+							<input type="password" class="form-control"
 									name="password" placeholder="패스워드를입력하세요" id="loginpassword"
 									style="margin-left: 5px">
-							</div>
-						</div>
+							<button type="submit" class="btn btn-primary" id="login" 
+									style=" margin-top: 10px;">로&nbsp;그 &nbsp;인</button>
+									<a class="btn btn-primary btn" href="#" role="button"
+									style=" margin-top: 10px;">패스워드찾기</a><br>
+					   </div>
+					</form>	
 
+					
+						
+						
+								<div class="col-sm-5" id="sns-group">
+								<a href="#kakaoLogin" id="kakaoLogin"> 
+								<img src="/resources/images/kakao_account_login_btn_medium_narrow_ov.png" class="img-rounded"
+										type="button" id="kakaologin" /></a>
 
+								<a href="#facebookLogin" id="facebookLogin"> 
+								<img src="/resources/images/facebook_login.png" class="img-rounded"
+											 type="button" id="facebooklogin"></a>
 
-						<div class="row social-login">
-							<ul class="sns-login">
-								<li><a href="#kakaoLogin" id="kakaoLogin"> <img
-										src="/resources/images/KakaoTalk_lcon.png" class="img-rounded"
-										width="50" height="50" type="button" id="kakaologin" /></a></li>
+								<a href="#naverLogin" id="naverLogin">
+								<img src="/resources/images/naver_login.png" class="img-rounded"
+										type="button" id="naverlogin" /></a>
 
-								<li><a href="#facebookLogin" id="facebookLogin"> <img
-										src="/resources/images/facebook_Icon.png" class="img-rounded"
-										width="50" height="50" type="button" id="facebooklogin"></a></li>
-
-								<li><a href="#naverLogin" id="naverLogin"> <img
-										src="/resources/images/Naver_Icon.png" class="img-rounded"
-										width="50" height="50" type="button" id="naverlogin" /></a></li>
-
-								<li><a href="#googleLogin" id="googleLogin"> <img
-										src="/resources/images/Google_Icon.jpg" class="img-rounded"
-										width="50" height="50" type="button" id="googlelogin" /></a></li>
-							</ul>
-						</div>
-
+								<a href="#googleLogin" id="googleLogin"><img
+										src="/resources/images/google_login.png" class="img-rounded"
+										 type="button" id="googlelogin" /></a>
+								</div>
+							
+						
 					<div class="row">
-						<div class="col-sm-offset-4 col-sm-6 text-center">
-							<button type="submit" class="btn btn-primary" id="login">로&nbsp;그 &nbsp;인</button>
-							<a class="btn btn-primary btn" href="#" role="button">패스워드찾기</a>
-						</div>
+						<div class="col-sm-offset-4 col-sm-6 text-center"></div>
 					</div>
-					</form>
+					</div><!-- Body content -->
 				</div>
 				<!--Modal Body  -->
 

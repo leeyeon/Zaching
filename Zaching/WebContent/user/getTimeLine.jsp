@@ -90,15 +90,7 @@
 			z-index: -1;
 			opacity: 0.3;
 		}
-		
-		.profile-upload{
-			height: 150px;
-    		left: 1;
-    		position: absolute;
-    		top: 0px;
-    		width: 150px;
-    		opacity: 0;
-    		}
+
     		
     	body > div.container > div.content {
     		background-color: #fff;
@@ -115,16 +107,65 @@
     	}
 	
 		hr {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: 0;
-    border-top: 1px solid #333;
-}
+    	margin-top: 20px;
+    	margin-bottom: 20px;
+    	border: 0;
+    	border-top: 1px solid #333;
+		}
+		
+		/* 프로필사진업데이트 */
+		.filebox label {
+   			 	display: inline-block;
+    			padding: .5em .75em;
+  			  	color: #999;
+    			font-size: inherit;
+    			line-height: normal;
+    			vertical-align: middle;
+			}
+ 
+		.filebox input[type="file"] {  
+    		position: absolute;
+    		width: 1px;
+    		height: 1px;
+    		padding: 0;
+    		margin: -1px;
+    		overflow: hidden;
+    		clip:rect(0,0,0,0);
+    		border: 0;
+		}
+		
+		#cma_image >img {
+    		vertical-align: middle;
+    		max-height: 150px;
+    		max-width: 150px;
+   			 border-radius: 50%;
+		}
+		
+		.profileImage{
+			vertical-align: middle;
+    		max-height: 150px;
+    		max-width: 150px;
+   			 border-radius: 50%;
+		
+		}
 
     </style>
    
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
+	function getThumbnailPrivew(html, $target) {
+	    if (html.files && html.files[0]) {
+	        var reader = new FileReader();
+	        reader.onload = function (e) {
+	            $target.css('display', '');
+	            
+	            //$target.css('background-image', 'url(\"' + e.target.result + '\")'); // 배경으로 지정시
+	            $target.html('<img src="' + e.target.result + '" border="0" alt="" />');
+	            $('.profileImage').detach();//
+	        }
+	        reader.readAsDataURL(html.files[0]);
+	    }
+	}
 	
 	$( function () {
 		//내정보조회 Event && 추가 저보 입력
@@ -165,23 +206,7 @@
 		})
 		
 		
-		
-		
-		
-		
-		
-		
-		//회원탈퇴
-		$("#deleteUser").on("click", function() {
-			var windowW = 400;  // 창의 가로 길이
-		    var windowH = 500;  // 창의 세로 길이
-			var left = Math.ceil((window.screen.width - windowW)/2);
-		    var top = Math.ceil((window.screen.height - windowH)/2);
-		    
-			window.open("/user/deleteUser?userId=${sessionScope.user.userId}",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
-			opener.location.reload(true);
-			    self.close();
-		})
+	
 		
 		//FOLLOW Event
 		
@@ -309,54 +334,29 @@
 <div class="container">
 <div class="bg"></div>
 	<div class="content">
-	<form id="frm" class="op-form" action="/user/fileupload" method="POST" enctype="multipart/form-data">
-	
+	<form id="form" class="form" action="/user/fileupload" method="POST" enctype="multipart/form-data">
+		<input type="hidden" value="${user.userId}" name="userId" id="userId"/>
 	<div class="row header" align="center">
 		<div class="col-xs-4" id="profile" align="left">
 		
-		<!--프로필 사진 없으면 기본이미지  -->
-		<c:if test="${user.profileImage eq null }">
-	
-		<div class="profileImage" align="center">
-		<input type="file" name="uploadfile" />
-		<input type="hidden" name="userId"/>
-         <button class="uploadbutton">데이터전송</button>
-        	<img  class="img-circle" src="../resources/images/profile_default.png" 
-        	 style="width: 150px; height: 150px;"/>
-         
-
-      	</div>
-      
-       </c:if>
-		<!-- 프로필 사진 있을때 -->
-		<c:if test="${user.profileImage ne null }">
-		<div class="profileImage" align="center">
-        <input type="file" name="uploadfile" />
-        <input type="hidden" name="userId"/>
-         <button class="uploadbutton">데이터전송</button>
-        
-       <img  class="img-circle" alt="프로필사진변경"  style="width: 150px; height: 150px;"
-       src="../resources/upload_files/images/${user.profileImage}"/>
-         
-       </div>
-       </c:if>
-       
+		<img alt="" src="../resources/upload_files/images/${user.profileImage }" class="profileImage">
+		<div class="filebox">
+        <label for="cma_file">프로필사진 업로드</label>
+		<input type="file" name="file" id="cma_file" imageswap="true" accept="image/*" capture="camera" onchange="getThumbnailPrivew(this,$('#cma_image'))"/>
+        <div id="cma_image" style="width:200px;max-width:200px;display:none;"></div>
+    	</div>
+      	
        
        </div>
         
         <div class="col-xs-3" id="name" style=" margin-left: 20px">
 		<h3>${user.name}</h3>
-		
-        </div>
+		</div>
      
       
       <div class="col-xs-4 message" align="right">
-      <a><img  id="listMessage" src="../resources/images/Message_Icon.png" 
-        	width="50px" height="50px"/>
-      </a></div>
-      <c:if test="${sessionScope.user.userId eq user.userId}">
-    	<button type="button" class="btn btn-primary" id="deleteUser">회원탈퇴</button>
-    	</c:if>
+      <a><img id="listMessage" src="../resources/images/Message_Icon.png" width="50px" height="50px"/></a></div>
+   
     </div>
     
     </form>
@@ -454,6 +454,6 @@
     </div>	
 </div>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </body>
 </html>
