@@ -43,8 +43,15 @@ public class MessageServiceImpl implements MessageService{
 
 	@Override
 	public Map<String, Object> listMessage(Search search) throws Exception {
-		List<Message> list=messageDao.listMessage(search);
-		int totalCount=messageDao.getTotalCount(search);
+		
+		List<Message> list = null;
+		int totalCount = messageDao.getTotalCount(search);
+		
+		if(search.getSearchCondition() == null) {
+			list = messageDao.listMessage(search);
+		} else {
+			list = messageDao.listMessagebyRoomId(search);
+		}
 		
 		Map<String, Object> map=new HashMap<String,Object>();
 		map.put("list", list);

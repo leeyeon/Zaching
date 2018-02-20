@@ -241,11 +241,20 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void setFCMToekn(int userId, String fcmToken) throws Exception {
+	public void setFCMToken(int userId, String fcmToken) throws Exception {
 		String currentToken = userDao.getFCMToken(userId);
 		if(currentToken == null || currentToken.equals("") || !currentToken.equals(fcmToken)) {
 			userDao.updateFCMToken(userId, fcmToken);
 		}
+	}
+	
+	@Override
+	public String getFCMToken(int userId) throws Exception {
+		String currentToken = userDao.getFCMToken(userId);
+		if(currentToken == null || currentToken.equals("")) {
+			return null;
+		}
+		return currentToken;
 	}
 
 }

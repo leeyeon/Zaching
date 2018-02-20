@@ -170,6 +170,9 @@
 					        		else if(serverData.list[i].category == 'B'){
 					        			category = '밥친구에 초대하였습니다.';
 					        		}
+					        		else if(serverData.list[i].category == 'F'){
+					        			category = '친구 신청을 하였습니다.';
+					        		}
 					        		
 					        		if(serverData.list[i].status == '0'){
 					        			++status;

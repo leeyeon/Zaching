@@ -10,6 +10,18 @@
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 	
 	<link rel="stylesheet" href="../resources/css/bob.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/bob.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
+	
+	<style>
+		body {
+		    line-height: 2;
+		}
+		h1, h2, h3, h4, h5, h6 {
+	    	color: #FFFFFF;
+	    }
+	</style>
 
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
     <script type="text/javascript">
@@ -55,7 +67,7 @@
    	    });
    	 	
    	 	$('.btn-ico:contains("초대하기")').on('click', function() {
-   			alert('초대하기');
+   			//alert('초대하기');
    			var lists = [];
 			$("input[name='inviteFriend']:checked").each(function(i){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
 				lists.push($(this).val());
@@ -119,7 +131,8 @@
 				data : JSON.stringify({
 					"userId" : <c:out value="${user.userId}" escapeXml="false" />,
 					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />,
-					"content" : $(":text[name='inputReview']").val()
+					"content" : $(":text[name='inputReview']").val(),
+					"image" : '<c:out value="${bob.image}" escapeXml="false" />'
 				}),
 				async : false,
 				dataType : "json",
@@ -183,15 +196,17 @@
 			});
    	 	}
 
-   	 	$('.deleteComment').on('click', function() {
+   	 	$(document).on('click', '.deleteComment > img', function() {
 	   	 	if (confirm("댓글을 삭제하시겠어요?") == true){
-	   	 		/*
+	   	 		var index = $('.deleteComment > img').index(this);
+	   	 		var commentId = $($('input[name=commentId]')[index]).val();
+	   	 		//alert(index+":"+commentId);
 		   	 	$.ajax({
-	   				url : "/bob/rest/blockBob",
+	   				url : "/comment/rest/deleteComment",
 	   				method : "POST",
 	   				contentType : "application/json; charset=UTF-8",
 	   				data : JSON.stringify({
-	   					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />
+	   					"commentId" : commentId
 	   				}),
 	   				async : false,
 	   				success : function(serverData) {
@@ -201,9 +216,9 @@
 	   				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	   				}
 	   			});
-	   	 		*/
+		   	 	
 		   	}else{
-		   	    return;
+		   		return ;
 		   	}
    	 	});
    	 	
@@ -211,7 +226,7 @@
    	 		$("#listComment").load("/bob/listCommment?category=${param.category}&bobId=${param.bobId}&currentPage=${commentPage.currentPage+1}");
    	 	});
    	 	
-   	 	$(document).on('click','#listComment img', function() {
+   	 	$(document).on('click','#listComment .col-sm-2 > img', function() {
 	 		var commentUserId = $($("input[name=commentUserId]")[$('#listComment img').index(this)]).val();
 	 		$(self.location).attr("href","/user/getTimeLine?userId="+commentUserId);
 	 	});
@@ -450,7 +465,7 @@
    	});
 
 </script>
-    
+
 </head>
 <body class="getBob">
 
@@ -572,7 +587,12 @@
 									src = "../resources/upload_files/images/${participant.participantProfile}"
 					      			onerror="this.src='../resources/images/user-icon.png'" />
 					      			${participant.participantName}
+					      			<c:if test="${participant.status eq 1}">
+										<img src="../resources/images/paper-plane.png" width="30px" style="position: absolute; top: 0; right: 3px;"/>
+									</c:if>
 							</div>
+							
+							
 						</c:if>						
 					</c:forEach>
 				</div>
@@ -654,7 +674,7 @@
       			placeholder="${!empty sessionScope.user? '댓글을 입력해주세요.':'로그인을 해주세요.'}"/>
       		</div>
       		<div class="col-xs-3">
-				<button type="submit" class="form-control" style="background-color: #7a68a6; color: #FFF; height:45px; font-size: 16px;">등록</button>
+				<button type="submit" class="form-control" style="background-color: #f77e7e; color: #FFF; height:45px; font-size: 16px;">등록</button>
 			</div>
       	</div>
 		
@@ -668,7 +688,7 @@
       
       <!-- ///////////////////////////////// 후기 시작 /////////////////////////////////  -->
       
-      <c:if test="${param.category ne 'B03'}">
+      <c:if test="${param.category eq 'B01'}">
 	      <div class="row custumRow" style="margin-top:20px; padding: 30px 10px 20px 10px;">
 	      
 	      	<div class="text-center textBold" style="font-size: 20px;">
@@ -676,13 +696,15 @@
 	      	</div>
 	      	
 	      	<hr>
+		     <!--  후기 댓글 -->
 		     <div class="row">
 		    	<c:if test="${bob.status eq 'Y'}">
 			      	<div class="col-xs-9">
-				      	<input type="text" name="inputReview" class="form-control" style="width: 100%; height: 150px; font-size:16px;"></input>
+				      	<input type="text" name="inputReview" class="form-control" style="width: 100%; height: 150px; font-size:16px;"
+				      		placeholder="${!empty sessionScope.user? '후기를 입력해주세요.':'로그인을 해주세요.'}"/>
 			      	</div>
 			      	<div class="col-xs-3">
-			      		<button type="submit" class="form-control" style="background-color: #7a68a6; color: #FFF; height:45px; font-size: 16px;">후기 올리기</button>
+			      		<button type="submit" class="form-control" style="background-color: #f77e7e; color: #FFF; height:45px; font-size: 16px;">후기 올리기</button>
 			      	</div>
 		      	</c:if>   	
 	      	</div>
@@ -693,7 +715,7 @@
 	      		</div>
 			</c:if>
 	      	<c:forEach var="review" items="${review}">
-	      		<div class="row">
+	      		<div id="listComment">
 	      			<div class="col-xs-12 text-center">${review.content} // ${review.categoryCode}</div>
 	      		</div>
 	      	</c:forEach>
@@ -734,7 +756,7 @@
 	      	<div class="row" align="right" style="margin-right:5px;">
 	      		<form id="excelForm">
 	      			<input type="hidden" name="bobId" value="${bob.bobId}" />
-	      			<button type="submit" class="btn-bob" style="width: 210px; height: 60px; line-height:60px;">엑셀 다운로드</button>
+	      			<button type="submit" class="btn-bob" style="width: 210px; height: 60px; line-height:60px; font-weight: normal;">엑셀 다운로드</button>
 	      		</form>
 	      	</div>
 	      </div>

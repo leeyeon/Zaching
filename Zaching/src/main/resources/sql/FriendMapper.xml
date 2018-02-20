@@ -21,29 +21,26 @@
 
 	</resultMap>
 
-	<insert id="addFriend" parameterType="friend">
+	<insert id="addFriend" parameterType="map">
 		INSERT
-		INTO FRIEND (
-		id,friend_id ,user_id ,status )
+		INTO FRIEND (id, user_id, friend_id, status )
 		VALUES( seq_id.nextval,
-		#{userId:INTEGER},
-		#{friendId:INTEGER},
-		'1',
+		#{friend.userId:INTEGER},
+		#{friend.friendId:INTEGER},
+		#{status:CHAR}
 		)
 
 	</insert>
 
 	<insert id="enterFriend" parameterType="map">
 		INSERT
-		INTO friend(id
-		,friend_id ,user_id ,status )
+		INTO friend(
+		id, user_id , friend_id , status )
 		VALUES(
 		seq_id.nextval,
-		#{userId:INTEGER},
 		#{friendId:INTEGER},
-		#{profileImage:VARCHAR},
-		#{name},
-		'1'
+		#{userId:INTEGER},
+		'0'
 		)
 	</insert>
 
@@ -97,28 +94,45 @@
 	</select>
 
 	<sql id="listFriendSql">
-		SELECT DISTINCT f1.user_id, f1.friend_id, f1.status, USERS.name, USERS.profile_image
-		FROM FRIEND f1, FRIEND f2, USERS
+		SELECT f.*, u.profile_image, u.name
+		FROM friend f, (select friend_id from friend where user_id=#{searchKeyword} and status=0) v, users u
 		<where>
-			f1.user_id = f2.friend_id AND f1.friend_id = f2.user_id
-			AND
-			f1.friend_id = users.user_id
-			AND (f1.status = '0' AND f2.status = '0')
-			AND f1.user_id = #{searchKeyword}
+			f.user_id=v.friend_id(+) 
+			AND u.user_id=f.user_id
+			AND status='0' 
+			AND f.friend_id=#{searchKeyword}
 		</where>
-		ORDER BY users.name
+		ORDER BY u.name
 	</sql>
-
-	<select id="recommendFriend" parameterType="search" resultMap="friendSelectMap">
-		SELECT *
-		FROM(SELECT * FROM friend
-		WHERE user_id=${userId} AND status=0
-		ORDER BY dbms_random.value)
-		<where>
-		ROWNUM  <![CDATA[<]]> 5
-		</where>
 		
-		
-		</select>
+	<select id="checkFriend" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM friend
+		WHERE user_id=#{userId} AND friend_id=#{friendId} AND status=#{status}
+	</select>
+	
+	<delete id="cancelFriend" parameterType="map">
+		DELETE
+		FROM friend
+		WHERE user_id=#{userId} AND friend_id=#{friendId} AND status=#{status}
+	</delete>
+	
+	<update id="updateStatus" parameterType="map">
+		UPDATE friend
+		SET status=#{status}
+		WHERE user_id=#{userId} AND friend_id=#{friendId}
+	</update>
+	
+	<select id="checkFollow" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM friend
+		WHERE user_id=#{userId} AND friend_id=#{friendId} AND status=#{status}
+	</select>
+	
+	<select id="recommendFriend" parameterType="int" resultMap="friendSelectMap">
+		SELECT * 
+		FROM (SELECT f.* FROM (select friend_id from friend where user_id=#{value} and status=0) v, friend f where v.friend_id=f.user_id(+) and status=0 order by DBMS_RANDOM.RANDOM) 
+		WHERE rownum<![CDATA[<]]>6
+	</select>
 
 </mapper>

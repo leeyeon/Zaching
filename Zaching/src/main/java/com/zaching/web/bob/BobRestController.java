@@ -311,12 +311,21 @@ public class BobRestController {
 		
 		//System.out.println("흠냐링?");
 		
+		System.out.println("addReview 파일 이름:"+obj.get("image"));
+		
 		Newsfeed newsfeed = new Newsfeed();
 		newsfeed.setCategoryCode("N10:"+obj.get("bobId"));
 		newsfeed.setContent((String)obj.get("content"));
 		newsfeed.setStatus("0");
 		newsfeed.setPrivacyBound("0");
 		newsfeed.setUserId(((Integer)obj.get("userId")).intValue());
+		
+		String tempImage = (String)obj.get("image");
+		
+		if(!tempImage.equals("")) {
+			tempImage = tempImage.substring(0, 6)+"/"+tempImage.substring(6);
+		}
+		newsfeed.setFileName(tempImage);
 
 		System.out.println(newsfeed);
 		

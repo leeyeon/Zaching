@@ -1,10 +1,13 @@
 package com.zaching.web.user;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sun.javafx.sg.prism.NGShape.Mode;
 import com.zaching.common.service.CommonService;
+import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.domain.User;
 import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.user.UserService;
@@ -121,14 +125,34 @@ public class UserRestController {
 
 	//추억지도
 	@RequestMapping(value="/rest/memoryMap/{userId}", method=RequestMethod.GET)
-	public String memoryMap( @PathVariable int userId, HttpSession session)throws Exception{
+	public String memoryMap(@PathVariable int userId)throws Exception{
 
 		System.out.println(userId);
 		
+		List<Newsfeed> list = newsfeedService.listMemoryMap(userId);
 		
+		JSONObject obj = new JSONObject();
+		JSONArray array = new JSONArray();
 		
+		for (Newsfeed newsfeed : list) {
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("newsfeedId", newsfeed.getNewsfeedId());
+			jsonObj.put("lng", newsfeed.getLocationY());
+			jsonObj.put("lat", newsfeed.getLocationX());
+			jsonObj.put("imgsrc", "/resources/upload_files/images/"+newsfeed.getFileName());
+			array.add(jsonObj);
+		}
+		
+		obj.put("positions", array);
+		
+		System.out.println(obj.toJSONString());
+		
+		return obj.toJSONString();
+		
+		/*
 		return "{\"positions\":[{\"lat\": 37.3733103146403,\"lng\": 127.43708794867802,\"imgsrc\": \"/resources/images/user-icon.png\"},{\"lat\": 37.1627912237388,\"lng\": 128.99580192447536,\"imgsrc\": \"/resources/images/author.png\"},{\"lat\": 36.93980515531936,\"lng\": 128.8060765485201,\"imgsrc\": \"/resources/upload_files/images/main@2x.png\"},"
 				+ "{\"lat\": 37.27943075229118,\"lng\": 127.01763998406159,\"imgsrc\": \"/resources/images/profile_test.png\"},{\"lat\": 37.55915668706214,\"lng\": 126.92536526611102,\"imgsrc\": \"/resources/images/test_2.jpg\"}]}";
+		*/
 	}
 	
 
@@ -260,7 +284,7 @@ public class UserRestController {
 		
 		//System.out.println(user);
 		
-		userService.setFCMToekn(user.getUserId(), map.get("fcmToken").toString());	
+		userService.setFCMToken(user.getUserId(), map.get("fcmToken").toString());	
 
 		return user;
 	}

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.zaching.common.URLConnection;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommentDao;
 import com.zaching.common.service.CommonService;
@@ -201,6 +202,10 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public void noticeUpdate(int noticeId) throws Exception{
 		commentDao.noticeUpdate(noticeId);
+	}
+	
+	public void sendAndroid(List<String> tokenList, Notice notice) throws Exception {
+		commentDao.sendAndroid(tokenList, notice);
 	}
 	
 

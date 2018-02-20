@@ -220,13 +220,12 @@
 			parameterType="int"
 			resultMap="participantSelectMap">
 	
-		SELECT participant_id, users.user_id AS user_id, participated_date, writer_id,
+		SELECT participant_id, users.user_id AS user_id, participated_date, writer_id, TRIM(participant.status) AS status,
 				users.profile_image AS profile_image, users.name AS user_name, TRIM(setting_fee) AS setting_fee
 		FROM BOB, PARTICIPANT, USERS
 		<where>
 			participant.user_id = users.user_id
 			AND bob.bob_id = participant.bob_id
-			AND participant.status = 0
 			AND participant.bob_id = #{bobId}
 		</where>
 		
@@ -253,19 +252,15 @@
 	
 	<insert id="inviteBob"
 			parameterType="map">
-		<if test="list.size != 0">
-			INSERT
-			INTO PARTICIPANT(participant_id, participated_date, status, bob_id, user_id)
-			VALUES (
-			<foreach collection="list" item="item" separator=",">
+		INSERT
+		INTO PARTICIPANT(participant_id, participated_date, status, bob_id, user_id)
+		VALUES(
 				seq_participant_id.nextval,
 				SYSDATE,
 				'1',
 				#{bobId: INTEGER},
-				#{item: INTEGER}
-			</foreach>
-			)
-		</if>
+				#{userId: INTEGER}
+		)
 	
 	</insert>
 	
@@ -317,7 +312,7 @@
 		to_char(fee.paid_date,'yyyy-mm-dd') AS paid_date, fee,
 		to_char(bob.fee_date,'yyyy-mm-dd') AS fee_date,
 		users.user_id AS user_id, users.name AS user_name, users.profile_image AS profile_image,
-		TRIM(setting_fee) AS setting_fee, participated_date, writer_id,
+		TRIM(setting_fee) AS setting_fee, participated_date, writer_id, TRIM(participant.status) AS status,
 		(CASE 
 			WHEN to_char(paid_date, 'yyyymmdd') 
 				 <![CDATA[>=]]> to_char(ADD_MONTHS(LAST_DAY(SYSDATE)+1,-1-#{month}) + extract(day from bob.fee_date) -1, 'yyyymmdd') 

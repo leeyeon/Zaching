@@ -114,6 +114,9 @@ public class NewsfeedServiceImpl implements NewsfeedService{
 		return newsfeedDao.timeline(userId);
 	}
 	
-	
+	@Override
+	public List<Newsfeed> listMemoryMap(int userId) throws Exception {
+		return newsfeedDao.listMemoryMap(userId);
+	}
 	
 }

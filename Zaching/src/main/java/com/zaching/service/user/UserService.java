@@ -57,8 +57,10 @@ public interface UserService {
  	//sns로그인 회원가입
  	public boolean snsCheck(String email, String snsType)throws Exception;
 
- 	public String updateGetAccountToken(String token, int userId) throws Exception;
+	public String updateGetAccountToken(String token, int userId) throws Exception;
+	
+ 	public void setFCMToken(int userId, String fcmToken) throws Exception;
  	
- 	public void setFCMToekn(int userId, String fcmToken) throws Exception;
+ 	public String getFCMToken(int userId) throws Exception;
 
 }
