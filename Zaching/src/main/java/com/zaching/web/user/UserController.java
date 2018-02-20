@@ -120,6 +120,14 @@ public class UserController {
 
 		return "redirect:/user/findPassword.jsp";
 	}
+	@RequestMapping(value ="findPassword", method=RequestMethod.POST)
+	public String findPassword(@RequestParam("email")String email)throws Exception{
+		
+		System.out.println("/user/findPassword : POST");
+		
+		userService.findPassword(email);
+		return"";
+	}
 
 	@RequestMapping(value = "getUser", method = RequestMethod.GET)
 	public String getUser(@RequestParam("userId") int userId, Model model) throws Exception {
@@ -200,7 +208,8 @@ public class UserController {
 		userService.updateUser(user);
 		
 		System.out.println("update user ====>"+user);
-
+		model.addAttribute("user", user);
+		
 		return "redirect:/user/getUser?userId=" + user.getUserId();
 	}
 

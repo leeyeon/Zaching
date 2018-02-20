@@ -35,7 +35,7 @@ public interface UserService {
     public void updateUser(User user)throws Exception;
     
 	//패스워드찾기
-    public void findPassword(String password)throws Exception;
+    public void findPassword(String email)throws Exception;
     
 	//회원탈퇴
     public void deleteUser(User user)throws Exception;

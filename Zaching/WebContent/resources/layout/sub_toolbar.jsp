@@ -18,7 +18,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="static/js/html5.js"></script>
 <style rel="stylesheet">
 
 /* 글꼴 수정 */
@@ -135,8 +134,8 @@ body .login-container .half {
   padding: 58px 40px 0;
 }
 body .login-container .half.bg {
-  background-image: url("http://www.blueb.co.kr/SRC2/_image/v01.jpg");
-  background-size: 400px;
+  background-image: url("/resources/images/loginModalImage.jpg");
+  background-size: 350px 500px;
   background-repeat: no-repeat;
 }
 body .login-container h1 {
@@ -975,18 +974,16 @@ body .login-container .content .signup-cont {
 			        </div>
 			        <div class="content">
 				            <div class="signin-cont cont">
-					                <form action="#" method="post" enctype="multipart/form-data" id="signin">
+					                <form action="#" method="post" enctype="multipart/form-data" id="signin" style="height: 200px;">
 						                    <input type="text" name="email" id="loginemail" class="inpt" required="required" placeholder="이메일">
 						                    <label for="email">Your email</label>
 						                    <input type="password" name="password" id="loginpassword" class="inpt" required="required" placeholder="패스워드">
                 						    <label for="password">Your password</label>
-						                    <input type="checkbox" id="remember" class="checkbox" checked>
-						                    <label for="remember">Remember me</label>
-						 						    <div class="submit-wrap" style="top: 160px; height: 50px;">
-							                        <input type="submit" value="로그인" class="submit" id="signinbtn">
-							                		</div>
+						                    <div class="submit-wrap" style="top: 110px; height: 50px;">
+							                   <input type="submit" value="로그인" class="submit" id="signinbtn">
+							                </div>
         					        </form>
-        					        <div class="findPassword"  style="margin-top: -30px;">
+        					        <div class="findPassword"  style="margin-top: -10px;margin-bottom: 20px;">
         					        <a href="#" class="more" id="findPassword">Forgot your password?</a>
         					        </div>
         					        <div class="row social-login">

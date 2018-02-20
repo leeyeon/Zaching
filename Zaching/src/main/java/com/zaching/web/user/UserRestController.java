@@ -311,6 +311,15 @@ public class UserRestController {
 		return user;
 		
 	}
+	@RequestMapping( value="json/getUser/{userId}", method=RequestMethod.GET )
+	public User getUser( @PathVariable int userId ) throws Exception{
+		
+		System.out.println("/user/json/getUser : GET");
+		
+		//Business Logic
+		return userService.getUser(userId);
+	}
+
 
 
 }

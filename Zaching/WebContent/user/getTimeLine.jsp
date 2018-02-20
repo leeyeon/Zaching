@@ -30,7 +30,7 @@
         
         div.body{
         	
-        	padding-top: 150px;
+        	padding-top: 180px;
         	height: 100%;
         }
         
@@ -94,7 +94,7 @@
     		
     	body > div.container > div.content {
     		background-color: #fff;
-    		margin-top: -20px;
+    		margin-top: 120px;
     		
     	
     	}
