@@ -119,6 +119,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         	 
          });
         	 function addNewsfeed(){
+        		 
+        		 var chk = document.getElementById('cma_file'); 
+					
+        		　if(!chk.value){ 
+        		　　alert('배경이 될 사진을 넣어주세요');
+        			return;
+        		　} 
+        		
+        		 
 				$("form").attr("method", "POST").attr("action", "/newsfeed/addNewsfeed").submit();
 			}
         	 
@@ -788,7 +797,7 @@ a:link, a:visited {
 					</td>					
 					<td width="200" style="text-align: right; vertical-align: middle;">
 						
-						<a href="#" onclick="addNewsfeed();" class="addNewsfeed" data-dismiss="modal">등록</a>
+						<a href="#" onclick="addNewsfeed();" class="addNewsfeed" >등록</a>
 					</td>
 					</tr> 
 					   </table>

@@ -291,7 +291,12 @@
 		<small>Leave a Reply
 		</small>
 		<div class="thumb2" style="float: left;">
-   		<img src="../resources/images/${user.profileImage}" height='20' width='20' align='left'/>
+		<c:if test="${!empty user.profileImage }">
+													<img alt="" src="../resources/images/${user.profileImage}"  height='20' width='20' align='left'>
+													</c:if>
+													<c:if test="${empty comment.userImage }">
+													<img alt="" src="../resources/images/profile_default.png"  height='20' width='20' align='left'>
+													</c:if>
    		</div><br/><p style="font-size: 10pt">&nbsp;${user.name}</p></h3>			
 			<div id="commentform" class="comment-form">
 				 
@@ -311,7 +316,16 @@
 						<c:forEach var="comment" items="${list}">
 						<c:set var="i" value="${ i+1 }" />
 							<tr>
-			   					<td valign="top"><div class="thumb2"><img alt="" src="../resources/images/${comment.userImage}" width='20' height='20'></div></td>
+			   					<td valign="top"><div class="thumb2">
+			   					<c:if test="${!empty comment.userImage }">
+													<img alt="" src="../resources/images/${comment.userImage}" width='20' height='20'>
+													</c:if>
+													<c:if test="${empty comment.userImage }">
+													<img alt="" src="../resources/images/profile_default.png" width='20' height='20'>
+													</c:if>
+			   					
+			   					
+			   					</div></td>
 			   					<td></td>
 			   					<td></td>
 			   					<td width=1000><p class="arrow_box" style="font-size: 10pt; padding: 5px;"><strong style="font-size: 13pt; line-height: 100%;">${comment.userName}</strong>

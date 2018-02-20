@@ -131,7 +131,13 @@
 	
 	<select id="recommendFriend" parameterType="int" resultMap="friendSelectMap">
 		SELECT * 
-		FROM (SELECT f.* FROM (select friend_id from friend where user_id=#{value} and status=0) v, friend f where v.friend_id=f.user_id(+) and status=0 order by DBMS_RANDOM.RANDOM) 
+		FROM (SELECT
+		u.*
+		FROM users u, (SELECT * FROM (SELECT DISTINCT f.friend_id FROM (select friend_id from friend where user_id=#{value} and status=0) v, friend f where v.friend_id=f.user_id(+)
+		and status=0 and  f.friend_id not in(#{value}) and f.friend_id not in(SELECT friend_id FROM friend WHERE user_id=#{value}) ) 
+		) p
+		where u.user_id = p.friend_id
+		order by DBMS_RANDOM.RANDOM)
 		WHERE rownum<![CDATA[<]]>6
 	</select>
 
