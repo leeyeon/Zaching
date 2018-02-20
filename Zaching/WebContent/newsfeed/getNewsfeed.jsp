@@ -13,7 +13,7 @@
 <link rel="alternate" type="application/rss+xml" title="DW Timeline &raquo; Comments Feed" href="http://demo.designwall.com/dw-timeline/comments/feed/" />
 <link rel="alternate" type="application/rss+xml" title="DW Timeline &raquo; About Comments Feed" href="http://demo.designwall.com/dw-timeline/about/feed/" />
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<jsp:include page="/resources/layout/toolbar.jsp"/>
+
 <link rel='stylesheet' id='dwqa-style-css'  href='http://demo.designwall.com/dw-timeline/wp-content/plugins/dw-question-answer/templates/assets/css/style.css?ver=180720161352' type='text/css' media='all' />
 <link rel='stylesheet' id='dwqa-rtl-css'  href='http://demo.designwall.com/dw-timeline/wp-content/plugins/dw-question-answer/templates/assets/css/rtl.css?ver=180720161352' type='text/css' media='all' />
 <link rel='stylesheet' id='dw_timeline_main-css'  href='http://demo.designwall.com/dw-timeline/wp-content/themes/dw-timeline/assets/css/main.css?ver=6c39f42987ae297a5a21e2bb35bf3402' type='text/css' media='all' />
@@ -33,11 +33,8 @@
 <link rel="alternate" type="application/json+oembed" href="http://demo.designwall.com/dw-timeline/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fdemo.designwall.com%2Fdw-timeline%2Fabout%2F" />
 <link rel="alternate" type="text/xml+oembed" href="http://demo.designwall.com/dw-timeline/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fdemo.designwall.com%2Fdw-timeline%2Fabout%2F&#038;format=xml" />
 <link rel="stylesheet" type="text/css" href="../resources/css/newsfeedStyle.css" />
-<script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
-<script type = "text/javascript" 
-         src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
-         
-      </script>
+<jsp:include page="/resources/layout/toolbar.jsp"/>
+
 		<script type="text/javascript">
 		
 			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/demo.designwall.com\/dw-timeline\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.7.9"}};
@@ -125,10 +122,10 @@
 		</script>
 		<style type="text/css">
 			body{
-	padding-top: 110px;
-	background: rgba(255,255,255,1);
-	}
-	
+				padding-top: 110px;
+				background: rgba(255,255,255,1);
+			}
+			
 			img.wp-smiley,
 			img.emoji {
 				display: inline !important;
@@ -234,10 +231,14 @@
 			    -webkit-animation-name: bounce;
 			    animation-name: bounce;
 			}
+			
 			body > nav > div > div.navbar-header > a > div > img{
-				height: 50;
-				width: 100;
-			}	    
+				height: 40px;
+			}
+			
+			.profile-img {
+				border-radius: 50%;
+			} 
 	    </style>    
       
 </head>

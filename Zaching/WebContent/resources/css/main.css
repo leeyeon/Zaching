@@ -24,13 +24,9 @@
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	display: none;
-	cursor: pointer;
 	border-radius: 0.2em;
 }
-#tiles li img{
-	border-top-left-radius:0.2em;
-	border-top-right-radius:0.2em;
-}
+
 #tiles li.inactive {
   visibility: hidden;
   opacity: 0;
@@ -38,6 +34,11 @@
 
 #tiles li img {
  	display: block;
+}
+
+#tiles a {
+ 	cursor: pointer;
+ 	text-decoration: none;
 }
 
 /**
