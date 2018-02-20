@@ -33,6 +33,9 @@ public class URLConnection {
         con.setDoOutput(true);
         con.setDoInput(true);
         con.setRequestProperty(propertyName, propertyValue);
+        if(propertyValue.contains("key=")) {
+        	con.setRequestProperty("Accept", "application/json");
+        }
         
         if(contentType != null) {
         	con.setRequestProperty("Content-Type", contentType);

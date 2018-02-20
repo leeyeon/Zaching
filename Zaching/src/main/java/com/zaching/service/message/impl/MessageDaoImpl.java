@@ -57,6 +57,11 @@ public class MessageDaoImpl implements MessageDao{
 	}
 	
 	@Override
+	public List<Message> listMessagebyRoomId(Search search) throws Exception {
+		return sqlSession.selectOne("MessageMapper.listMessagebyRoomId",search);
+	}
+	
+	@Override
 	public int checkRoom(int userId, int friendId) throws Exception {
 		
 		Map<String, Object> map = new HashMap<String, Object>();

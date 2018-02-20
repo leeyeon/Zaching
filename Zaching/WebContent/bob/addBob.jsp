@@ -107,13 +107,14 @@
 		}
 		
 		if(category.val() == "B03") {
-			alert($("input[name=category]").val());
+			alert(category.val());
 			if(fee.val() == "") {
 				fee.focus();
 				makeToast("회비를 지정해주세요.");
 				return false;
-			} else if(fee.val() < 0 || fee.val()>10000) {
-				makeToast("회비는 0부터 10,000원까지 가능합니다.");
+			} else if(fee.val() < 0 || fee.val()>30000) {
+				makeToast("회비는 0부터 30,000원까지 가능합니다.");
+				return false;
 			}
 			
 			if(feeDate.val() == "") {
@@ -126,7 +127,13 @@
 
 		}
 		
-
+		$('#sortable1 input').each(function(index, value) {
+			alert($($('#sortable1 input')[index]).val());
+			var input = $("<input>") .attr("type", "hidden") .attr("name", "friendId").val($($('#sortable1 input')[index]).val());
+			alert(input);
+			$("form").append(input);
+		})
+		
 		$("form").attr("method", "POST").attr("action", "/bob/addBob").submit();
 
 	}
@@ -146,7 +153,7 @@
 			fcnAddBob();
 		});
 		
-		$(".button:contains('취소')").on("click", function() {
+		$("input[name=cancle]").on("click", function() {
 			$("form")[0].reset();
 		});
 		
@@ -326,7 +333,10 @@
 	}
 	
   </script>
- 
+	 <style>
+	      @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+	      h3 { font-family: 'Nanum Pen Script', cursive; }
+	</style>
     
 </head>
 
@@ -336,7 +346,7 @@
     
     <div class="container">
     	<div class="page-header text-center" style="margin: 180px 0 140px 0; border: none;">
-			<h3 class="text-info" style="color: #000; font-weight: bold; font-size: 30px;">[${categoryName}] 방만들기</h3>
+			<h3 class="text-info" style="color: #fff; font-size: 45px;">[${categoryName}] 방만들기</h3>
 		</div>
     
 		<form class="form-horizontal" enctype="multipart/form-data" style="background: #FFF; padding: 10px;">
@@ -461,7 +471,7 @@
 						  <c:forEach var="friend" items="${friend.list}">
 							  <li class="ui-state-default">
 							  	<div class="draggable_area">
-							  		<input type="hidden" name="friendId" value="${friend.friendId}">
+							  		<input type="hidden" value="${friend.friendId}">
 							  		${friend.name}
 							  	</div></li>
 						  </c:forEach>
@@ -472,7 +482,7 @@
 	
 	            <div class="row" align="center">
 	                <input type="button" name="addBob" class="btn-bob" style="margin: 10px; width:250px;" value="방 만들기" >
-	                <button class="btn-bob" style="background: #ededed; color: #4d4d4d; margin: 10px; width:250px;">취소</button>
+	                <input type="button" name="cancle" class="btn-bob" style="background: #ededed; color: #4d4d4d; margin: 10px; width:250px;" value="취소">
 	            </div>
 		    </div>
 		</form>

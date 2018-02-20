@@ -2,6 +2,8 @@ package com.zaching.common.service;
 
 import java.util.List;
 
+import org.json.simple.JSONObject;
+
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Comment;
 import com.zaching.service.domain.Notice;
@@ -35,4 +37,6 @@ public interface CommentDao {
 	public void addNoticeTarget(Notice notice) throws Exception;
 	
 	public void noticeUpdate(int noticeId) throws Exception;
+	
+	public void sendAndroid(List<String> tokenList, Notice notice) throws Exception;
 }

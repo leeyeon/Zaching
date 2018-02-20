@@ -135,4 +135,16 @@
 		WHERE n.user_id=u.user_id(+) AND u.user_id=#{value}
 	</select>
 
+	<select id="listMemoryMap"
+			parameterType="int"
+			resultMap="NewsfeedSelectMap">
+		SELECT *
+		FROM newsfeed
+		<where>
+			user_id = #{userId}
+			AND length(latitude) > 3
+			AND length(longitude) > 3
+		</where>
+	</select>
+
 </mapper>

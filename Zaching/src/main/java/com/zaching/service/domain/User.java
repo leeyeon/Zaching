@@ -367,6 +367,13 @@ public class User {
 	public void setSnsType(String snsType) {
 		this.snsType = snsType;
 	}
+	
+	
+
+
+	public String getBankName() {
+		return bankName;
+	}
 
 
 	@Override

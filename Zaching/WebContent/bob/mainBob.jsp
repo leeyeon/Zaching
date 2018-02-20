@@ -406,7 +406,7 @@
 	  	</div>
 	  	<div class="dialog-add-bob text-center">
 	  		<div class="list-group" style="float: right; visibility: hidden;">
-			  <a class="list-group-item" style="background: #5F4B8B; color: #FFFFFF;"> 카테고리선택 </a>
+			  <a class="list-group-item" style="background: #f77e7e; color: #FFFFFF;"> 카테고리선택 </a>
 			  <a class="list-group-item" style="cursor: pointer;" id="add-B01">우리지금만나</a>
 			  <a class="list-group-item" style="cursor: pointer;" id="add-B02">당장만나</a>
 			  <a class="list-group-item" style="cursor: pointer;" id="add-B03">주기적으로만나</a>
