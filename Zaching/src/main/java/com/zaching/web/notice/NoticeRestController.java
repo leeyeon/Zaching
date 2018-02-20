@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -104,18 +105,17 @@ public class NoticeRestController {
 	}
 	
 	@RequestMapping(value = "rest/noticeUpdate", method = RequestMethod.POST)
-	public void noticeUpdate(@RequestBody Map<String, Object> map, @ModelAttribute("notice") Notice notice) throws Exception {
+	@ResponseBody
+	public String noticeUpdate(@RequestBody Map<String, Object> map) throws Exception {
 
 			System.out.println("µé¾î¿È");
-		String noticeId = ((String)map.get("NOTICE_ID"));
-		
+		String noticeId = ((String)map.get("noticeId"));
+		System.out.println(noticeId);
 		commonService.noticeUpdate(Integer.parseInt(noticeId));
 		
 		System.out.println("¿Ï·á");
 		
-		
-		
-		
+		return "success";
 	}
 	
 	@RequestMapping(value = "rest/noticeSend", method = RequestMethod.POST)

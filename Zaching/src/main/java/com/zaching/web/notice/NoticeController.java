@@ -59,6 +59,29 @@ public class NoticeController {
 	}
 	
 	
+	@RequestMapping(value = "listNotice", method = RequestMethod.GET)
+	public String listNotice(@RequestParam int userId, Model model, @ModelAttribute("notice") Notice notice,HttpSession session, @ModelAttribute("search") Search search) throws Exception {
+		
+		
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}		
+		
+		search.setPageSize(pageSize);
+
+		Map<String, Object> map =  commonService.listNotice(search, userId);		
+
+		Page resultPage	= new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		
+		System.out.println(map);
+		System.out.println(resultPage);
+		
+		model.addAttribute("list",map.get("list"));
+		
+		return "forward:/user/listNotice.jsp";
+	}
+	
 	
 	@RequestMapping(value = "makeNotice", method = RequestMethod.GET)
 	public String makeNotice(Model model, @ModelAttribute("notice") Notice notice,HttpSession session, @ModelAttribute("search") Search search) throws Exception {

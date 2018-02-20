@@ -16,9 +16,25 @@ public class Notice {
 	
 	private String name;
 	
+	private String profileImage;
 
 	
 	
+
+	
+
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
+
 
 	public String getName() {
 		return name;
@@ -143,9 +159,13 @@ public class Notice {
 	@Override
 	public String toString() {
 		return "Notice [noticeId=" + noticeId + ", category=" + category + ", date=" + date + ", bobId=" + bobId
-				+ ", senderId=" + senderId + ",  noticeTargetId=" + noticeTargetId
-				+ ", userId=" + userId + ", status=" + status + "]";
+				+ ", senderId=" + senderId + ", noticeTargetId=" + noticeTargetId + ", userId=" + userId + ", status="
+				+ status + ", name=" + name + ", profileImage=" + profileImage + "]";
 	}
+
+
+
+	
 
 
 

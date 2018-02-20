@@ -307,72 +307,72 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			}
 			
 			 #navigation2{
-    height: 70px;
-    z-index: 1000;
-    background: #fff;
-    }
-
-    .navbar-custom ul.nav2 {
-	text-align: center;
-	float: none;
-	margin: 0 auto;
-}
-.navbar-custom ul.nav2 li {
-	float: none;
-	display: inline-block;
-	text-align: center;
-}
-.navbar-custom ul.nav2 li a {
-	font-size: 14px;
-	letter-spacing: 1px;
-    color: #444;
-	text-transform: uppercase;
-	font-weight: 700;
-}
-
-
-.navbar-custom .nav2 li a {
-    -webkit-transition: background .3s ease-in-out;
-    -moz-transition: background .3s ease-in-out;
-    transition: background .3s ease-in-out;
-}
-
-.sticky {
-  position: fixed;
-  top: 100px;
-  width: 100%;
-  opacity: 0.7;
-}
-
-.sticky + .about {
-  padding-top: 503px;
-}
-
-.filebox label {
-    display: inline-block;
-    padding: .5em .75em;
-    color: #999;
-    font-size: inherit;
-    line-height: normal;
-    vertical-align: middle;
-}
- 
-.filebox input[type="file"] {  
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip:rect(0,0,0,0);
-    border: 0;
-}
-a:link, a:visited { 
-    color: #00000;
- }
-  a:link:active, a:visited:active { 
-    color: #00000;
- } 
+			    height: 60px;
+			    z-index: 1000;
+			    background: #fff;
+			    }
+			
+			    .navbar-custom ul.nav2 {
+				text-align: center;
+				float: none;
+				margin: 0 auto;
+			}
+			.navbar-custom ul.nav2 li {
+				float: none;
+				display: inline-block;
+				text-align: center;
+			}
+			.navbar-custom ul.nav2 li a {
+				font-size: 14px;
+				letter-spacing: 1px;
+			    color: #444;
+				text-transform: uppercase;
+				font-weight: 700;
+			}
+			
+			
+			.navbar-custom .nav2 li a {
+			    -webkit-transition: background .3s ease-in-out;
+			    -moz-transition: background .3s ease-in-out;
+			    transition: background .3s ease-in-out;
+			}
+			
+			.sticky {
+			  position: fixed;
+			  top: 100px;
+			  width: 100%;
+			  opacity: 0.7;
+			}
+			
+			.sticky + .about {
+			  padding-top: 503px;
+			}
+			
+			.filebox label {
+			    display: inline-block;
+			    padding: .5em .75em;
+			    color: #999;
+			    font-size: inherit;
+			    line-height: normal;
+			    vertical-align: middle;
+			}
+			 
+			.filebox input[type="file"] {  
+			    position: absolute;
+			    width: 1px;
+			    height: 1px;
+			    padding: 0;
+			    margin: -1px;
+			    overflow: hidden;
+			    clip:rect(0,0,0,0);
+			    border: 0;
+			}
+			a:link, a:visited { 
+			    color: #00000;
+			 }
+			  a:link:active, a:visited:active { 
+			    color: #00000;
+			 } 
 		</style>
 		
 		<script>

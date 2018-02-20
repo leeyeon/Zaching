@@ -155,7 +155,7 @@
 		
 		//알림함 Event
 		$("#listNotice").on("clcick", function() {
-			self.location = "/user/listNotice?userId=${user.userId}";
+			self.location = "/notice/listNotice?userId=${user.userId}";
 		});
 		
 		

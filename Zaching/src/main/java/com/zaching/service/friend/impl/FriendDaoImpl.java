@@ -126,6 +126,14 @@ public class FriendDaoImpl implements FriendDao{
 		
 		return sqlSession.selectOne("FriendMapper.checkFollow", map);
 	}
+
+	@Override
+	public List<Friend> addBobFriend(int userId, int bobId) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("bobId", bobId);
+		return sqlSession.selectList("friendMapper.addBobFriend", map);
+	}
 	
 	
 
