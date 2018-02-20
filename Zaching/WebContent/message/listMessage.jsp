@@ -206,14 +206,12 @@ body {
 </style>
 
 
-<script src="js/jquery.min.js"></script>
-<script src="js/stopExecutionOnTimeout.js"></script>
 <script type="text/javascript">
 	function fncGetUserList(currentPage) {
 		//document.getElementById("currentPage").value = currentPage;
 		$("#currentPage").val(currentPage)
 		//document.detailForm.submit();
-		$("form").attr("method", "POST").attr("action", "/user/listUser")
+		$("form").attr("method", "POST").attr("action", "/message/listMessage")
 				.submit();
 	}
 
@@ -267,16 +265,60 @@ body {
 
 			alert("보내기완료");
 		});
+		
 
-		$("#name").on("click", function() {
-			self.location = "user/getTimeLine?userId=${user.userId}";
+	 	$(document).on('click',"a[name='messageContent']", function() {
+	 		var index= $($("input[name=roomId]")[$("a[name='messageContent']").index(this)]).val();
+	 		alert(index);
+	 		
+	 		
+	 		
+
+	 		$.ajax({
+	 		               url : "/message/json/listMessage",
+	 		               method : "POST",
+	 		               contentType : "application/json; charset=UTF-8",
+	 		               data : JSON.stringify({
+	 		                  "searchKeyword" : index
+	 		               }),
+	 		               dataType : "json",
+	 		               success : function(serverData) {
+	 		            	   for(var i=0; i<serverData.length; i++){
+	 		            		   name=messageContent
+	 		            		   +'<div class="message left"><div class="message-text">'
+	 		            		   +serverDate.message.content
+	 		            		   +'</div></div>'
+	 		            		   +'<div class="message right"><div class="message-text">'
+	 		            		   +serverDate.message.content
+	 		            		   +'</div></div>';
+	 		            	   }
+	 		            	   $("").append(serverData);
+	 		            	  $("#messageContent").modal('show');
+	 		               },
+	 		               error:function(request,status,error){
+	 		                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	 		                   
+	 		                
+	 		               }
+	 		            });
+	 		
+	 	});
+		
+	 	/*
+		$("a[name='messageContent']").on("click", function() {
+			alert();
+		})
+		*/
+	
+
+	
+		
+	
 		});
+	
+		
 
-		$("#content").on("click", function() {
-			self.location = "";
-		});
 
-	});
 </script>
 
 </head>
@@ -313,15 +355,10 @@ body {
 
 
 
-
-
-
 				<c:forEach var="message" items="${list}">
-					<input type="hidden" name="messageId"
-						value="${message.friendName }">
-					<a href="#name" class="col-xs-6 col-sm-4 " style="color: #000000;"><h3>${message.friendName }</h3></a>
-					<a href="#content" class="col-xs-6 col-sm-4 "
-						style="color: #000000;"><h3>${message.content }</h3></a>
+					<input type="hidden" name="roomId" value="${message.roomId }">
+					<a href="/user/getTimeLine?userId=${message.friendId}"  class="col-xs-6 col-sm-4 " style="color: #000000;" name="messageName"><h3>${message.friendName }</h3></a>
+					<a href="#" class="col-xs-6 col-sm-4 "style="color: #000000;"  name="messageContent"><h3>${message.content }</h3></a>
 					<div class="col-xs-6 col-sm-4 ">
 						<h3>${message.createdDate }</h3>
 					</div>
@@ -329,8 +366,8 @@ body {
 				</c:forEach>
 
 			</table>
-
-			<button type="button" class="btn btn-primary" data-toggle="modal"
+			
+			     <button type="button" class="btn btn-primary" data-toggle="modal"
 				data-target="#myModal">메세지</button>
 
 			<!-- Modal -->
@@ -341,29 +378,21 @@ body {
 
 
 						<!-- 왼쪽 메세지 대화 박스 -->
+						
+						
+						
 						<div class="phone-containter">
 							<div id="phone" class="phone">
 								<button type="button" class="close" data-dismiss="modal"
 									aria-hidden="true" id="close">×</button>
 								<div class="message left">
-									<div class="message-text">안녕</div>
+									<div class="message-text">하이!</div>
 								</div>
 								<div class="message right">
 									<div class="message-text">오랜만이네</div>
 									<div class="message-text">잘지내냐?</div>
 								</div>
-								<div class="message left">
-									<div class="message-text">그렇지뭐 오늘 시간괜찮으면 밥이나 먹자</div>
-								</div>
-								<div class="message right">
-									<div class="message-text">좋지 어디서먹을까 강남?</div>
-								</div>
-								<div class="message left">
-									<div class="message-text">그래 그럼 5시까지 보자</div>
-								</div>
-								<div class="message right">
-									<div class="message-text">오케이 있다봐</div>
-								</div>
+								
 							</div>
 
 							<!-- 메세지 작성 -->
@@ -377,8 +406,9 @@ body {
 						</div>
 					</div>
 				</div>
+
 			</div>
-		</div>
+			</div>
 </body>
 
 </html>
