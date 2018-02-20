@@ -145,7 +145,7 @@ public class PaymentDaoImpl implements PaymentDao {
 	}
 	
 	@Override
-	public Map<String, Object> getAccount(String accessToken, String accountNum, int accountHolderinfo) throws Exception {
+	public Map<String, Object> getAccount(String accessToken, String accountNum, int accountHolderinfo, String bankCode) throws Exception {
 		
 		System.out.println("getAccessToken()");
 		
@@ -157,7 +157,7 @@ public class PaymentDaoImpl implements PaymentDao {
 		//String param = "bank_code_std=null&account_num="+accountNum+"&account_holder_info="+accountHolderinfo+"&tran_dtime="+dtime;
 		
 		JSONObject param = new JSONObject();
-		param.put("bank_code_std", "002");
+		param.put("bank_code_std", bankCode);
 		param.put("account_num", accountNum);
 		param.put("account_holder_info", accountHolderinfo);
 		param.put("tran_dtime", dtime);

@@ -37,4 +37,6 @@ public void addNewsfeed(Newsfeed newsfeed) throws Exception;
 	public int getLikeUser(int newsfeedId, int userId, String status) throws Exception;
 	
 	public List<Newsfeed> timeline(int userId) throws Exception;
+	
+	public List<Newsfeed> listMemoryMap(int userId) throws Exception;
 }

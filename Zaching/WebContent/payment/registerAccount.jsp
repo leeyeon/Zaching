@@ -55,10 +55,15 @@
 <body>
 
 	<div class="container" align="center">
-		
+
 		<div class="page-header" style="padding: 10px;">
-		  <h3>${user.name}</h3>님<br>
-		  계좌 등록이 완료되었습니다.
+			<c:if test="${result eq 'success'}">
+				<h3>${user.name}</h3>님<br>
+		  		계좌 확인 후 반환 신청을 완료하였습니다.
+			</c:if>
+			<c:if test="${result eq 'fail'}">
+				일치하는 게좌를 찾지 못하여 포인트 반환 신청이 되지 않았습니다.
+			</c:if>
 		</div>
 		<div class="row" style="padding-top:50px;">
 			<button>확인</button>

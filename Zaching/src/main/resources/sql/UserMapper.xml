@@ -113,7 +113,7 @@
 		SELECT
 		user_id, name, email, role, password,  gender, phone,
 		birth,  real_name, bank_name, account_number,
-		total_point, total_mileage		
+		total_point, total_mileage
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>

@@ -24,19 +24,18 @@
 
 <style>
 
-		
-
 /* 템플릿적용 */
 .hero {
-			background: url('../resources/images/memoryMAP.jpg') no-repeat bottom center;
-			background-size: cover;
-			background-repeat: no-repeat, no-repeat;
-			background-position: center center; height:700px;
-		}
+	background: url('../resources/images/memoryMAP.jpg') no-repeat bottom center;
+	background-size: cover;
+	background-repeat: no-repeat, no-repeat;
+	background-position: center center;
+	height:500px;
+}
 		
 #map{
     margin-left: 10px;
-    margin-top: 100px;
+    margin-top: 50px;
     padding-bottom: 100px;
 }
 
@@ -55,14 +54,14 @@
 
 	<section class="hero">
 		<section class="caption">
-				<h2 class="caption">Memory Map</h2>
+			<h2 class="caption" style="margin-top: 80px;">Memory Map</h2>
 		</section>
 	</section><!--  end hero section  -->
 
 
-<div  class="page-body" id="map" style="width:70%; height:350px;" align="center"></div>
-
-
+	<div class="container">
+		<div id="map" style="width:100%; height:500px;"></div>
+	</div>
 
 
 <script type="text/javascript" 
@@ -72,7 +71,7 @@
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 mapOption = { 
     center: new daum.maps.LatLng(36.566826, 126.9786567), // 지도의 중심좌표
-    level: 15// 지도의 확대 레벨
+    level: 13// 지도의 확대 레벨
 };
 
 var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -132,38 +131,38 @@ var userId = "${sessionScope.user.userId}"; //"3";
 $(function() {	
 	
 	$.ajax({
-				url : "/user/rest/memoryMap/"+userId,
-				method : "GET" ,
-				dataType : "json",										
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				},success : function(jsonData , status) {
-				       		var markers = $(jsonData.positions).map(function(i, position) {
-				        	var imageSrc = jsonData.positions[i].imgsrc, // 마커이미지의 주소입니다    
-				            imageSize = new daum.maps.Size(64, 69), // 마커이미지의 크기입니다
-				            imageOprion = {offset: new daum.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 
-				            //마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-								
-				            console.log(imageSrc); 
-				        	var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize, imageOprion);
-				        	
-				        	console.log(markerImage);
-				        	
-				            return new daum.maps.Marker({
-				            	position : new daum.maps.LatLng(position.lat, position.lng),
-				                image : markerImage // 마커 이미지 
-				            });
+			url : "/user/rest/memoryMap/"+userId,
+			method : "GET" ,
+			dataType : "json",										
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},success : function(jsonData , status) {
+			       		var markers = $(jsonData.positions).map(function(i, position) {
+			        	var imageSrc = jsonData.positions[i].imgsrc, // 마커이미지의 주소입니다    
+			            imageSize = new daum.maps.Size(64, 69), // 마커이미지의 크기입니다
+			            imageOption = {offset: new daum.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 
+			            //마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+							
+			            console.log(imageSrc); 
+			        	var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize, imageOption);
+			        	
+			        	console.log(markerImage);
+			        	
+			            return new daum.maps.Marker({
+			            	position : new daum.maps.LatLng(position.lat, position.lng),
+			                image : markerImage // 마커 이미지 
+			            });
 
-				        // 클러스터러에 마커들을 추가합니다
-				        
-				    });
-				        clusterer.addMarkers(markers);
-				        
-					}
-			
-			});	
-		});
+			        // 클러스터러에 마커들을 추가합니다
+			        
+			    });
+			        clusterer.addMarkers(markers);
+			        
+				}
+		
+		});	
+	});
 
 
 </script>

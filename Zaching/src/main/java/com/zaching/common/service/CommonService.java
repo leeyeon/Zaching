@@ -1,5 +1,6 @@
 package com.zaching.common.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,6 +76,8 @@ public interface CommonService {
 	public Map<String, Object> listNotice(Search search, int userId) throws Exception;
 	
 	public void noticeUpdate(int noticeId) throws Exception;
+	
+	public void sendAndroid(List<String> tokenList, Notice notice) throws Exception;
 
 	//∆‰¿ÃΩ∫∫œ
 	public String getAuthorizationUrl_facebook(HttpSession session);

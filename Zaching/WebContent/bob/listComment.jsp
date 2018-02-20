@@ -75,7 +75,9 @@
 				</c:if>
 			</div>
 			<div class="deleteComment" style="position: relative; right: 10px; top:-10px; text-align: end;">
-				<c:if test="${sessionScope.user.userId eq comment.userId}">X</c:if>
+				<c:if test="${sessionScope.user.userId eq comment.userId}">
+					<img src="../resources/images/trash.png" width="20px" height="20px">
+				</c:if>
 			</div>
 		</div>
 	</div>

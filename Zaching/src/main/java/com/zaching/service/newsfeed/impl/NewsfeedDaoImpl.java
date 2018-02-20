@@ -125,5 +125,10 @@ public class NewsfeedDaoImpl implements NewsfeedDao{
 	public List<Newsfeed> timeline(int userId) throws Exception {
 		return sqlSession.selectList("NewsfeedMapper.timeline", userId);
 	}
+	
+	@Override
+	public List<Newsfeed> listMemoryMap(int userId) throws Exception {
+		return sqlSession.selectList("NewsfeedMapper.listMemoryMap", userId);
+	}
 
 }

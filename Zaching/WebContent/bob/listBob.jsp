@@ -51,9 +51,15 @@
 		}
 		
 		.listings ul li:hover .property_details {
-		    border-bottom: 1px solid #7a68a6;
-		    border-left: 1px solid #7a68a6;
-		    border-right: 1px solid #7a68a6;
+		    border-bottom: 1px solid #f77e7e;
+		    border-left: 1px solid #f77e7e;
+		    border-right: 1px solid #f77e7e;
+		}
+
+		.listings ul li:hover img {
+		    border-top: 1px solid #f77e7e;
+		    border-left: 1px solid #f77e7e;
+		    border-right: 1px solid #f77e7e;
 		}
 		
 	</style>

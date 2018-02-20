@@ -196,10 +196,13 @@
   			
   			//alert($("option:selected").text());
 
-  			if($("div.container > div > div:nth-child(2) > div > div > select > option:selected").text() != '기간설정') {					
-  				//alert("??");
-  				titleText = $("div.container > div > div:nth-child(2) > div > div > select > option:selected").text()+"간 포인트 내역";
-  			}
+  			<c:if test="${searchCondition != null}">
+  			
+	  			if($("div.container > div > div:nth-child(2) > div > div > select > option:selected").text() != '기간설정') {					
+	  				alert($("div.container > div > div:nth-child(2) > div > div > select > option:selected").text());
+	  				titleText = $("div.container > div > div:nth-child(2) > div > div > select > option:selected").text()+"간 포인트 내역";
+	  			}
+  			</c:if>
   			
   			$("body > div.container > div > div:nth-child(1) > div").text(titleText);
 			
@@ -227,7 +230,7 @@
   				}
   			});
 			
-			$(".listPayment").on('click', function() {
+			$(document).on('click',".listPayment", function() {
 				var listIndex = $(".listPayment").index(this);
 				var target = $($(".listExplain")[listIndex]);
 				
@@ -240,10 +243,116 @@
 					
 				});				
 			});
-
-			$('li:contains("반환신청")').on('click', function() {
-				$("#exchargePoint").modal("show");
+			
+			$("input[name=exchargePoint]").on('keyup', function() {
+				$(this).val($(this).val().replace(/[^0-9]/g,""));
+				
+				if($(this).val().charAt(0) == 0) {
+					$(this).val("");
+				}
+				
 			});
+
+			//==================================== 포인트반환 신청 
+			
+			var exchargePointDiv = $("#exchargePoint input[name=exchargePoint]");
+			
+			exchargePointDiv.on({'focusout': function() {
+				
+				if(exchargePointDiv.val() == "") {
+					$("#pointCheck").show();
+					$("#pointCheck").text("* 5,000 Point 이상 출금이 가능합니다.");
+				}
+				
+				if(exchargePointDiv.val() > ${accountUser.totalPoint}) {
+					exchargePointDiv.val(${accountUser.totalPoint});
+					$("#pointCheck").show();
+					exchargePointDiv.css("background", "#ff8c8c");
+					$("#pointCheck").text("* 가지고 계신 Point 까지만 출금이 가능합니다.");
+				}
+				
+				if(exchargePointDiv.val() < 5000) {
+					$("#pointCheck").show();
+					exchargePointDiv.css("background", "#ff8c8c");
+					$("#pointCheck").text("* 5,000 Point 이상 출금이 가능합니다.");
+				}
+				},
+				'focusin' : function() {
+					exchargePointDiv.css("background", "#FFF");
+					$("#pointCheck").hide();
+
+				}
+			});
+			
+			$('li:contains("반환신청")').on('click', function() {
+				<c:if test="${accountUser.totalPoint > 0}">
+					if($("input[name=isNewBank]").val() == 'true') {
+						$("#registerBank").hide();
+						$("#oldBank").show();
+						$("input[name=btnisNewBank]").val("새로운 계좌 사용");
+					} else {
+						$("#registerBank").show();
+						$("#oldBank").hide();
+						$("input[name=btnisNewBank]").val("기존 계좌 사용");
+					}
+					
+					$("#exchargePoint").modal("show");
+					
+				</c:if>
+				<c:if test="${accountUser.totalPoint == 0}">
+					alert("반환할 포인트가 없습니다.");
+				</c:if>
+			});
+			
+			$('button:contains("반환 신청하기")').on('click', function() {
+				if($('input[name=exchargePoint]').val() != "" && $('input[name=exchargePoint]').val() >= 5000 ) {
+					if (confirm($("input[name=exchargePoint]").val()+" Point 반환 신청을 하시겠습니까?") == true){
+						
+						if($("input[name=isNewBank]").val() == 'true') {
+							// 기존계좌사용
+							$("#accountForm").attr("target", "popup")
+							.attr("method", "POST").attr("action", "/payment/exchargePoint").submit();
+							
+						} else {
+							var windowW = 500;  // 창의 가로 길이
+			 		        var windowH = 500;  // 창의 세로 길이
+			 		        var left = Math.ceil((window.screen.width - windowW)/2);
+			 		        var top = Math.ceil((window.screen.height - windowH)/2);
+				
+							window.open("/payment/newAccount", "popup",
+									"l top="+top+", left="+left+", height="+windowH+", width="+windowW
+									+"scrollbars=no");
+							
+							$("#accountForm").attr("target", "popup")
+								.attr("method", "POST").attr("action", "/payment/newAccount").submit();
+							
+							opener.location.reload(true);
+						    self.close();
+						}
+						
+					} else {
+						return;
+					}
+				} else {
+					$("#pointCheck").show();
+					exchargePointDiv.css("background", "#ff8c8c");
+					$("#pointCheck").text("* 출금할 Point를 입력해주세요.");
+				}
+			})
+			
+			$(document).on('click',"input[name=btnisNewBank]", function() {
+				if($("input[name=isNewBank]").val() == 'true') {
+					$("#registerBank").show();
+					$("#oldBank").hide();
+					$("input[name=isNewBank]").val('false');
+					$("input[name=btnisNewBank]").val("기존 계좌 사용");
+				} else {
+					$("#registerBank").hide();
+					$("#oldBank").show();
+					$("input[name=isNewBank]").val('true');
+					$("input[name=btnisNewBank]").val("새로운 계좌 사용");
+				}
+			})
 			
 			$('li:contains("충전")').on('click', function() {
 				<c:if test="${empty user.accessToken}">
@@ -256,7 +365,7 @@
 			
 			
 			$("li:contains('마일리지 전환')").on('click', function() {
-				if(${totalMileage} < 1000) {
+				if(${accountUser.totalMileage} < 1000) {
 					alert("마일리지 전환이 불가능합니다.");
 				} else {
 					$('#exchargeMileage').modal('toggle');
@@ -286,41 +395,13 @@
 				}
 
 			});
-			
-			$("input[name=exchargePoint]").on('keyup', function() {
-				$(this).val($(this).val().replace(/[^0-9]/g,""));
-				
-				if($(this).val().charAt(0) == 0) {
-					$(this).val("");
-				}
-				
-			});
-			
-			$("input[name=exchargePoint]").on({'focusout': function() {
-				if($(this).val() == "") {
-					$("#pointCheck").show();
-					$("#pointCheck").text("* 5,000 Point 이상 출금이 가능합니다.");
-				}
-				
-				if($(this).val() > ${user.totalPoint}) {
-					$(this).val(${user.totalPoint});
-					$("#pointCheck").show();
-					$(this).css("background", "#ff8c8c");
-					$("#pointCheck").text("* 가지고 계신 Point 까지만 출금이 가능합니다.");
-				}
-				
-				if($(this).val() < 5000) {
-					$("#pointCheck").show();
-					$(this).css("background", "#ff8c8c");
-					$("#pointCheck").text("* 5,000 Point 이상 출금이 가능합니다.");
-				}
-				},
-				'focusin' : function() {
-					$(this).css("background", "#FFF");
-					$("#pointCheck").hide();
 
-				}
-			});
+			//=================== 결제 내역
+			
+	   	 	$('#listPayment > div.row.text-center:contains("더 보기")').on("click", function() {
+	   	 		//alert();
+	   	 		$("#listPayment").load("/payment/listPayment?currentPage=${paymentPage.currentPage+1}");
+	   	 	});
 
 		});
 
@@ -344,8 +425,8 @@
 		<div class="wrapper">
 			<form id="searchForm">
 				<div id="search" class="text-center" style="position: absolute; background: none; color:#FFF; left: 5%;">
-					<h1 style="font-size:20px;">${user.name}님의 잔여 포인트 : <fmt:formatNumber type="currency" value="${totalPoint}" pattern="###,###" /> Point</h1>
-					<h4>( 마일리지 : <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" />점 )</h4>
+					<h1 style="font-size:20px;">${accountUser.name}님의 잔여 포인트 : <fmt:formatNumber type="currency" value="${accountUser.totalPoint}" pattern="###,###" /> Point</h1>
+					<h4>( 마일리지 : <fmt:formatNumber type="currency" value="${accountUser.totalMileage}" pattern="###,###" />점 )</h4>
 				</div>
 				<a href="#" class="advanced_search_icon" id="advanced_search_btn"></a>
 			</form>
@@ -399,8 +480,10 @@
 		        </div>
 		        	
 		        <hr style="border: 1px solid #bababa;">
-		       
-	        	<jsp:include page="./listPayment.jsp" />
+		       	
+		       	<div id="listPayment">
+	        		<jsp:include page="./listPayment.jsp" />
+	        	</div>
 	        	
 	        </div>
         
@@ -421,7 +504,7 @@
 		      <div class="modal-body text-center"> 
 		      	충전할 포인트를 입력해주세요. <br>
 		      	충전은 1번 당 1,000원부터 10,0000원까지 가능합니다.
-			      <form style="padding-top: 50px;">
+			    <form style="padding-top: 50px;">
 					<input type="text" placeholder="충전할 포인트를 입력하세요" name="point" style="width: 400px; height:40px;">
 				</form>
 		      </div>
@@ -447,8 +530,8 @@
 				포인트로 전환할 마일리지를 입력해주세요. <br>
 				5,000점 이상부터 1,000점 당 1000포인트로 전환됩니다.
 			      <form>
-					<input type="text" placeholder="마일리지를 입력해주세요." name="point" style="width: 200px; height:40px; margin-top: 60px; margin-left: 30px;">
-					/ <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" />점
+					<input type="text" placeholder="마일리지를 입력해주세요." name="point" style="width: 200px; height:40px; margin-top: 60px; margin-left: 30px;"/>
+					/ <fmt:formatNumber type="currency" value="${accountUser.totalMileage}" pattern="###,###" />점
 				</form>
 		      </div>
 		      <div class="modal-footer">
@@ -468,74 +551,85 @@
 	        <h4 class="modal-title text-center" id="myModalLabel"><b>포인트 반환 신청</b></h4>
 	        <hr>
 	      </div>
-		      <div class="modal-body text-center" style="height: 500px;">
-			      <form name="exchargePointForm" style="padding-top: 20px;">
-					<input type="text" placeholder="반환받을 포인트를 입력하세요." name="exchargePoint" 
-							style="width: 200px; height:40px; margin-left: 30px;">
-					/ <fmt:formatNumber type="currency" value="${totalMileage}" pattern="###,###" /> Point
+		      <div class="modal-body text-center" style="height: 450px;">
+				<input type="button" class="btn btn-primary" name="btnisNewBank" value="btn"/>
+				<input type="hidden" name="isNewBank" value="true"/>
+				
+				<form id="accountForm" style="padding-top: 10px; border: solid 1px #ccc; margin: 10px; padding-bottom: 20px;">
+				
+				<input type="text" placeholder="반환받을 포인트를 입력하세요." name="exchargePoint" style="width: 250px; height:40px; margin-left: 30px; padding-left: 5px;"/>
+					/ <fmt:formatNumber type="currency" value="${accountUser.totalPoint}" pattern="###,###" /> Point
 					
 					<div id="pointCheck" class="text-center" style="padding: 10px 10px 20px 0; color:red; display: none;">
 						* 5,000 Point 이상 출금이 가능합니다.
+				</div>
+				
+				<hr>
+				
+				<div id = "oldBank">
+					<div class="row" style="padding-top:40px;">
+						<label for="name" class="col-xs-4 control-label">
+								은행명
+						</label>
+						<div class="col-xs-7">
+							${accountUser.bankName}
+						</div>
 					</div>
-				</form>
-
-				    <div class="input-group">
-				      <span class="input-group-addon">
-				        <input type="radio" name="account" checked>
-				      </span>
-				      <div class="form-control">기존계좌사용</div>
-				    </div><!-- /input-group -->
-				    <div class="input-group" id="newAccount">
-				      <span class="input-group-addon">
-				        <input type="radio" name="account">
-				      </span>
-				      <div class="form-control">새로운계좌사용</div>
-				      
-				    </div><!-- /input-group -->
-		      		
-				    <form id="accountForm"  style="display: none;">
-				    	등록할 계좌정보를 입력해주세요.
-						<div class="row" style="padding-top:40px;">
-							<label for="name" class="col-xs-4 control-label">
-									이름
-							</label>
-							<div class="col-xs-7">
-								<input type="text" class="form-control" name="name" value="${user.realName}" />
-							</div>
+					<div class="row" style="padding-top:40px;">
+						<label for="name" class="col-xs-4 control-label">
+								계좌번호
+						</label>
+						<div class="col-xs-7">
+							${accountUser.accountNumber}
 						</div>
-						
-						<div class="row" style="padding-top:20px;">
-							<label for="name" class="col-xs-4 control-label">
-									은행명
-							</label>
-							<div class="col-xs-7">
-								${bank}
-								<select name="limitNum" class="selectpicker show-tick" title="제한 인원수"  >
-						    	  <c:forEach var="i" begin="2" end="20" step="1">
-						    	  	<option >${i}</option>
-						    	  </c:forEach>
-								</select>
-							</div>
+					</div>
+					
+				</div>
+				
+				<div class="row" style="padding-top:40px;">
+					<label for="name" class="col-xs-4 control-label">
+							예금주
+					</label>
+					<div class="col-xs-7">
+						<input type="text" class="form-control" name="name" value="${accountUser.realName}" />
+					</div>
+				</div>
+				
+				<div id="registerBank" >
+					<div class="row" style="padding-top:20px;">
+						<label for="name" class="col-xs-4 control-label">
+								생년월일+한자리 (ex) 9402082
+						</label>
+						<div class="col-xs-7">
+							<input type="text" class="form-control" name="accountHolderinfo" value=""/>
 						</div>
-						
-						<div class="row" style="padding-top:20px;">
-							<label for="name" class="col-xs-4 control-label">
-									생년월일+한자리 (ex) 9402082
-							</label>
-							<div class="col-xs-7">
-								<input type="text" class="form-control" name="accountHolderinfo" value=""/>
-							</div>
+					</div>
+					
+					<div class="row" style="padding-top:20px;">
+						<label for="bankCode" class="col-xs-4 control-label">
+								은행명
+						</label>
+						<div class="col-xs-7">
+							<select name="bankCode" class="selectpicker show-tick" title="은행선택"  >
+					    	  <c:forEach var="bank" items="${bank}">
+					    	  	<option value="${fn:substring(bank,0,3)}"
+					    	  		${accountUser.bankName eq fn:substring(bank, 4, fn:length(bank)) ? 'selected="selected"':''}>
+										${fn:substring(bank,4, fn:length(bank))}
+									</option>
+					    	  </c:forEach>
+							</select>
 						</div>
-						
-						<div class="row" style="padding-top:20px;">
-							<label for="name" class="col-xs-4 control-label">
-									계좌번호
-							</label>
-							<div class="col-xs-7">
-								<input type="text" class="form-control" name="accountNum" value="${user.accountNumber}" />
-							</div>
+					</div>
+					<div class="row" style="padding-top:20px;">
+						<label for="name" class="col-xs-4 control-label">
+								계좌번호
+						</label>
+						<div class="col-xs-7">
+							<input type="text" class="form-control" name="accountNum" value="" />
 						</div>
-					</form>
+					</div>
+				</div>
+			  </form>
 		      </div>
 		      <div class="modal-footer">
 		      <div class="search-container text-center" align="center" style="margin: 0 auto;">
