@@ -161,7 +161,7 @@ $( "#profile" ).on("click" , function() {
       }
     #navigation2{
     background: #bfd9f2;
-    height: 100px;
+    height: 60px;
     z-index: 1000;
     }
     

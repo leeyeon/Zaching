@@ -85,10 +85,22 @@
  				myFileButton.run(); //
  			} 
         	 
+
+        /*	 $(".cell").on("click",function(){
+        		 //alert($($("input[name='newsfeedId']")[$("li").index(this)-6]).val());
+        		 var id = $($("input[name='newsfeedId']")[$("li").index(this)-40]).val();
+        		 //alert($("li").index(this));
+        		 //alert($($("input[name='newsfeedId']")[$("li").index(this)]).val());
+        		 //alert($($("input[name='newsfeedId']")[$("li").index(this)-6]).val());
+        		 self.location="/newsfeed/getNewsfeed?newsfeedId="+id;
+        		 
+        	 });*/
+
 	       	 $(document).on("click","#tiles > li > img",function(){
 	       		 var id = $($("input[name='newsfeedId']")[$("#tiles > li > img").index(this)]).val();	       		 
 	       		 self.location="/newsfeed/getNewsfeed?newsfeedId="+id;
 	       	 });
+
         	 
         	 $(".ufo").on("click", function() {
      			self.location = "/newsfeed/ufo";
@@ -108,6 +120,15 @@
         	 
          });
         	 function addNewsfeed(){
+        		 
+        		 var chk = document.getElementById('cma_file'); 
+					
+        		　if(!chk.value){ 
+        		　　alert('배경이 될 사진을 넣어주세요');
+        			return;
+        		　} 
+        		
+        		 
 				$("form").attr("method", "POST").attr("action", "/newsfeed/addNewsfeed").submit();
 			}
         	 
@@ -301,6 +322,7 @@
 	    display: block;
 	}
 			
+
 	#navigation2 {
 	    height: 70px;
 	    z-index: 1000;
@@ -418,6 +440,7 @@
 	      </div>
 	    </nav>
 	 </div>
+
 		
 	<div class="content">
 		<div class="wrap">
@@ -579,6 +602,7 @@
 		var pageSize = ${search.pageSize};
 		var searchCondition = '${search.searchCondition}';
 			
+
 	    (function ($){
 	      var $tiles = $('#tiles'),
 	          $handler = $('li', $tiles),
@@ -600,6 +624,7 @@
 	          if ($handler.wookmarkInstance) {
 	            $handler.wookmarkInstance.clear();
 	          }
+
 	
 	          // Create a new layout handler.
 	          $handler = $('li', $tiles);
@@ -771,7 +796,9 @@
 					  </div>
 					</td>					
 					<td width="200" style="text-align: right; vertical-align: middle;">
+
 						<a href="#" onclick="addNewsfeed();" class="addNewsfeed" data-dismiss="modal">등록</a>
+
 					</td>
 				  </tr> 
 				</table>

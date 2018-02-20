@@ -44,7 +44,7 @@ public interface FriendDao {
 	
 	public int checkFollow(int userId, int friendId, int status) throws Exception;
 	
-	
+	public List<Friend> addBobFriend(int userId, int bobId) throws Exception;
 
 	
 	
