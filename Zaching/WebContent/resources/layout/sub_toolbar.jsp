@@ -85,16 +85,16 @@
 }
 
 .modal-dialog.login {
-	width: 300px;
-	height: 200px;
+	width: 700px;
+	height: 500px;
 	margin: 0;
 	padding: 0;
 }
 
-/* ////////////////////로그인 모달 창 style/////////////////////// */
+
 .modal-dialog.modal {
-	width: 50%;
-	height: 50%;
+	width: 100%;
+	height: 100%;
 	margin: 0;
 	padding: 0;
 }
@@ -111,21 +111,266 @@
 	background: #fff;
 }
 
+/* ////////////////////로그인 모달 창 style/////////////////////// */
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
 
-#sns-group> a > img {
-	width:100%;
-	height: 46px;
+body .login-container {
+  position: relative;
+  overflow: hidden;
+  width: 700px;
+  height: 500px;
+  margin: 40px auto 40px;
+  background-color: #ffffff;
+  -moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
+}
+body .login-container .half {
+  float: left;
+  width: 50%;
+  height: 100%;
+  padding: 58px 40px 0;
+}
+body .login-container .half.bg {
+  background-image: url("http://www.blueb.co.kr/SRC2/_image/v01.jpg");
+  background-size: 400px;
+  background-repeat: no-repeat;
+}
+body .login-container h1 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 23px;
+  text-align: center;
+  text-indent: 6px;
+  letter-spacing: 7px;
+  text-transform: uppercase;
+  color: #263238;
+}
+body .login-container .tabs {
+  width: 100%;
+  margin-bottom: 29px;
+  border-bottom: 1px solid #d9d9d9;
+}
+body .login-container .tabs .tab {
+  display: inline-block;
+  margin-bottom: -1px;
+  padding: 20px 15px 10px;
+  cursor: pointer;
+  letter-spacing: 0;
+  border-bottom: 1px solid #d9d9d9;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: all 0.1s ease-in-out;
+}
+body .login-container .tabs .tab a {
+  font-size: 11px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #d9d9d9;
+  transition: all 0.1s ease-in-out;
+}
+body .login-container .tabs .tab.active a, body .container .tabs .tab:hover a {
+  color: #263238;
+}
+body .login-container .tabs .tab.active {
+  border-bottom: 1px solid #263238;
+}
+body .login-container .content form {
+  position: relative;
+  height: 287px;
+}
+body .login-container .content label:first-of-type, body .container .content input:first-of-type, body .container .content .more:first-of-type {
+  -moz-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+body .login-container .content label:nth-of-type(2), body .container .content input:nth-of-type(2), body .container .content .more:nth-of-type(2) {
+  -moz-animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+body .login-container .content label:nth-of-type(3), body .container .content input:nth-of-type(3), body .container .content .more:nth-of-type(3) {
+  -moz-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+body .login-container .content label {
+  font-size: 12px;
+  color: #263238;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+body .login-container .content label:not([for='remember']) {
+  display: none;
+}
+body .login-container .content input.inpt {
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  height: 42px;
+  margin-bottom: 12px;
+  padding: 16px 13px;
+  color: #999999;
+  border: 1px solid #d9d9d9;
+  background: transparent;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+body .login-container .content input.inpt::-webkit-input-placeholder {
+  font-size: 14px;
+  color: #999999;
+  font-family: 'Lato', sans-serif;
+}
+body .login-container .content input.inpt:-moz-placeholder {
+  font-size: 14px;
+  color: #999999;
+  font-family: 'Lato', sans-serif;
+}
+body .login-container .content input.inpt::-moz-placeholder {
+  font-size: 14px;
+  color: #999999;
+  font-family: 'Lato', sans-serif;
+}
+body .login-container .content input.inpt:-ms-input-placeholder {
+  font-size: 14px;
+  color: #999999;
+  font-family: 'Lato', sans-serif;
+}
+body .login-container .content input.inpt:focus {
+  border-color: #999999;
+}
+body .login-container .content input.submit {
+  font-size: 12px;
+  line-height: 42px;
+  display: block;
+  width: 100%;
+  height: 42px;
+  cursor: pointer;
+  vertical-align: middle;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #263238;
+  border: 1px solid #263238;
+  background: transparent;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+body .login-container .content input.submit:hover {
+  background-color: #263238;
+  color: #ffffff;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+body .login-container .content input:focus {
+  outline: none;
+}
+body .login-container .content .checkbox {
+  margin-top: 4px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 0;
+  height: 0;
+  margin: 17px -1px;
+  padding: 0;
+  border: 0;
+}
+body .login-container .content .checkbox + label {
+  vertical-align: middle;
+  display: inline-block;
+  width: 50%;
+}
+body .login-container .content .checkbox + label:before {
+  content: "\A";
+  color: #999999;
+  font-family: Verdana;
+  font-weight: bold;
+  font-size: 8px;
+  line-height: 10px;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background: transparent;
+  border: 1px solid #d9d9d9;
+  width: 11px;
+  height: 11px;
+  margin: -2px 8px 0 0;
+}
+body .login-container .content .checkbox:checked + label:before {
+  content: "✓";
+}
+body .login-container .content .submit-wrap {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+body .login-container .content .submit-wrap a {
+  font-size: 12px;
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  text-decoration: none;
+  color: #999999;
+}
+body .login-container .content .submit-wrap a:hover {
+  text-decoration: underline;
+}
+body .login-container .content .signup-cont {
+  display: none;
 }
 
-
-#text-group {
-    width: 40%;
-    border-right-color: #333;
-    border-right-style: dashed;
-    border-right-width: 1px;
-    
+@keyframes slideIn {
+  0% {
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+    margin-left: -320px;
+  }
+  100% {
+    filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+    opacity: 1;
+    margin-left: 0px;
+  }
 }
-.body-content{position: absolute; top: 50%; height: 240px; margin-top: -120px;}
+@-webkit-keyframes slideIn {
+  0% {
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+    margin-left: -320px;
+  }
+  100% {
+    filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+    opacity: 1;
+    margin-left: 0px;
+  }
+}
+.credits {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #999999;
+  font-size: 14px;
+  margin: 0 10px 10px 0;
+}
+.credits a {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  opacity: 0.8;
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
 
 </style>
 
@@ -226,7 +471,7 @@
 		
 		//모달창 닫기 버튼 이벤트
 		$(function() {
-				  $('#close,#endclose').on('click', function(){
+				  $('#close').on('click', function(){
 			        	
 			        	$("#loginemail").val('');
 			        	$("#loginpassword").val('');
@@ -237,7 +482,7 @@
 
 		
 		//==>"Login"  Event 연결
-		$("#login").on("click" , function() {
+		$("#signin").on("click" , function() {
 			
 
 			var email =$("input[name='email']").val();
@@ -259,7 +504,7 @@
 			}
 			
 			
-			$("form").attr("method","POST").attr("action","/login").attr("target","_parent").submit();
+			$("#signin").attr("method","POST").attr("action","/login").attr("target","_parent").submit();
 			
 		});
 
@@ -415,7 +660,7 @@
 	 $(function() {
 		
 			
-		 $( "#signUp" ).on("click" , function() {
+		 $( "#signup" ).on("click" , function() {
 				alert("회원가입 버튼클릭");
 				fncAddUser();
 				if(result == true){
@@ -717,7 +962,7 @@
 	<div id="loginModal" class="modal fade" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 
-		<div class="modal-dialog">
+		<div class="modal-dialog" style="width: 800px;">
 
 			<!-- Modal content-->
 			<div class="modal-content">
@@ -726,67 +971,54 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true" id="close">&times;</button>
-					<div class="modal-title" align="center"
-						style="margin-bottom: 15px;">
-						<!-- 자췽로고 -->
-						<img src="/resources/images/temp_logo.png" class="img-logo"
-							width="50" height="50">
-					</div>
 				</div>
 				<!-- Modal Header end -->
-
-				<!-- Modal Body start-->
-				<div class="modal-body" align="center">
-					
-					<div class="body-content">
-					<form>
-						<div class="col-sm-5" id="text-group">
-							<input type="text" class="form-control" name="email"
-									placeholder="이메일을입력하세요" style="margin-left: 5px" id="loginemail" /><br>
-									
-							<input type="password" class="form-control"
-									name="password" placeholder="패스워드를입력하세요" id="loginpassword"
-									style="margin-left: 5px">
-							<button type="submit" class="btn btn-primary" id="login" 
-									style=" margin-top: 10px;">로&nbsp;그 &nbsp;인</button>
-									<a class="btn btn-primary btn" href="#" role="button"
-									style=" margin-top: 10px;">패스워드찾기</a><br>
-					   </div>
-					</form>	
-
-					
-						
-						
-								<div class="col-sm-5" id="sns-group">
-								<a href="#kakaoLogin" id="kakaoLogin"> 
-								<img src="/resources/images/kakao_account_login_btn_medium_narrow_ov.png" class="img-rounded"
-										type="button" id="kakaologin" /></a>
-
-								<a href="#facebookLogin" id="facebookLogin"> 
-								<img src="/resources/images/facebook_login.png" class="img-rounded"
-											 type="button" id="facebooklogin"></a>
-
-								<a href="#naverLogin" id="naverLogin">
-								<img src="/resources/images/naver_login.png" class="img-rounded"
-										type="button" id="naverlogin" /></a>
-
-								<a href="#googleLogin" id="googleLogin"><img
-										src="/resources/images/google_login.png" class="img-rounded"
-										 type="button" id="googlelogin" /></a>
-								</div>
-							
-						
-					<div class="row">
-						<div class="col-sm-offset-4 col-sm-6 text-center"></div>
-					</div>
-					</div><!-- Body content -->
+				<div class="login-modal">
+				<section class="login-container">
+		    	<article class="half">
+			       <img src="/resources/images/temp_logo.png" class="img-logo"
+							width="50" height="50">
+			        <div class="tabs">
+				            <span class="tab signin active"><a href="#signin">로그인</a></span>
+				            <span class="tab signup"><a href="#signup">회원가입</a></span>
+			        </div>
+			        <div class="content">
+				            <div class="signin-cont cont">
+					                <form action="#" method="post" enctype="multipart/form-data" id="signin">
+						                    <input type="text" name="email" id="loginemail" class="inpt" required="required" placeholder="email입력">
+						                    <label for="email">Your email</label>
+						                    <input type="password" name="password" id="loginpassword" class="inpt" required="required" placeholder="password입력">
+                						    <label for="password">Your password</label>
+						                    <input type="checkbox" id="remember" class="checkbox" checked>
+						                    <label for="remember">Remember me</label>
+						                    <div class="submit-wrap">
+							                        <input type="submit" value="Sign in" class="submit">
+							                        <a href="#" class="more">Forgot your password?</a>
+						                    </div>
+        					        </form>
+    				        </div>
+    				<div class="signup-cont cont">
+                	<form action="#" method="post" enctype="multipart/form-data" id="singup">
+					    <input type="text" name="email" id="name" class="inpt" required="required" placeholder="Your name">
+						<label for="name">Your name</label>
+                        <input type="text" name="email" id="checkEmail" class="inpt" required="required" placeholder="Your email">
+						<label for="email">Your email</label>
+						<input type="password" name="password" id="pw" class="inpt" required="required" placeholder="Your password">
+                		<label for="password">Your password</label>
+                		<input type="password" name="password" id="pw2" class="inpt" required="required" placeholder="Your password">
+                		<label for="password">Your password</label>
+						<div class="submit-wrap">
+						   <input type="submit" value="Sign up" class="submit">
+						   <a href="#" class="more">Terms and conditions</a>
+						</div>
+        			</form>
+            		</div>
+			       </div>
+		    	</article>
+		    		<div class="half bg"></div>
+				</section>
 				</div>
-				<!--Modal Body  -->
-
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal" id="endclose">Close</button>
-				</div>
-
+			
 			</div>
 			<!-- Modal content-->
 		</div>
@@ -892,6 +1124,27 @@
 	
 	
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+$('.tabs .tab').click(function(){
+    if ($(this).hasClass('signin')) {
+        $('.tabs .tab').removeClass('active');
+        $(this).addClass('active');
+        $('.cont').hide();
+        $('.signin-cont').show();
+    } 
+    if ($(this).hasClass('signup')) {
+        $('.tabs .tab').removeClass('active');
+        $(this).addClass('active');
+        $('.cont').hide();
+        $('.signup-cont').show();
+    }
+});
+$('.container .bg').mousemove(function(e){
+    var amountMovedX = (e.pageX * -1 / 30);
+    var amountMovedY = (e.pageY * -1 / 9);
+    $(this).css('background-position', amountMovedX + 'px ' + amountMovedY + 'px');
+});
+</script>
 </body>
 </html>

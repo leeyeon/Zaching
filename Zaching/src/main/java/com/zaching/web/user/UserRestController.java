@@ -211,7 +211,7 @@ public class UserRestController {
 		}
 		return"";
 	}
-	
+
 
 	@RequestMapping(value="/rest/androidLogin")
 	public String androidLogin( @RequestBody String loginInfomation, HttpSession session)throws Exception{
@@ -282,6 +282,7 @@ public class UserRestController {
 
 		return user;
 	}
+	
 
 	@RequestMapping(value="/rest/addUser", method=RequestMethod.POST)
 	public boolean addUser(HttpServletRequest request,
