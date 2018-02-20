@@ -118,8 +118,8 @@ public class paymentServiceImpl implements PaymentService {
 	}
 	
 	@Override
-	public Map<String, Object> getAccountRealName(String accessToken, String accountNum, int accountHolderinfo) throws Exception {
-		return paymentDao.getAccount(accessToken, accountNum, accountHolderinfo);
+	public Map<String, Object> getAccountRealName(String accessToken, String accountNum, int accountHolderinfo, String bankCode) throws Exception {
+		return paymentDao.getAccount(accessToken, accountNum, accountHolderinfo, bankCode);
 	}
 	
 	@Override
@@ -141,7 +141,7 @@ public class paymentServiceImpl implements PaymentService {
 		list.add("039=경남은행");
 		list.add("081=하나은행");
 		list.add("088=신한은행");
-		list.add("097=KDB산업은행");
+		list.add("097=오픈은행");
 		
 		
 		return list;

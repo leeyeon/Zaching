@@ -32,7 +32,7 @@ public interface PaymentService {
 	
 	public String getUserCI(String accessToken, String userSeqNo) throws Exception;
 	
-	public Map<String, Object> getAccountRealName(String accessToken, String accountNum, int accountHolderinfo) throws Exception;
+	public Map<String, Object> getAccountRealName(String accessToken, String accountNum, int accountHolderinfo, String bankCode) throws Exception;
 	
 	public List<String> listBackCode() throws Exception;
 }

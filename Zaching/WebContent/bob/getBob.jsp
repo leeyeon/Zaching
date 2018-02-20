@@ -67,7 +67,7 @@
    	    });
    	 	
    	 	$('.btn-ico:contains("초대하기")').on('click', function() {
-   			alert('초대하기');
+   			//alert('초대하기');
    			var lists = [];
 			$("input[name='inviteFriend']:checked").each(function(i){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
 				lists.push($(this).val());
@@ -123,13 +123,6 @@
 			}
    	 	});
    	 	
-   	 	var imageURL = '<c:out value="${bob.image}" escapeXml="false" />';
-   	 	if(imageURL != '') {
-	   	 	var frontImage = str.substring(0, 6);
-	   	    var endImage = str.substring(6);
-	   	    imageURL = frontImage+"/"+endImage;
-   	 	}
-   	 	
    	 	function fuc_addReview() {
 	 		$.ajax({
 				url : "/bob/rest/addReview",
@@ -139,7 +132,7 @@
 					"userId" : <c:out value="${user.userId}" escapeXml="false" />,
 					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />,
 					"content" : $(":text[name='inputReview']").val(),
-					"image" : imageURL
+					"image" : '<c:out value="${bob.image}" escapeXml="false" />'
 				}),
 				async : false,
 				dataType : "json",
@@ -203,15 +196,17 @@
 			});
    	 	}
 
-   	 	$('.deleteComment').on('click', function() {
+   	 	$(document).on('click', '.deleteComment > img', function() {
 	   	 	if (confirm("댓글을 삭제하시겠어요?") == true){
-	   	 		/*
+	   	 		var index = $('.deleteComment > img').index(this);
+	   	 		var commentId = $($('input[name=commentId]')[index]).val();
+	   	 		//alert(index+":"+commentId);
 		   	 	$.ajax({
-	   				url : "/bob/rest/blockBob",
+	   				url : "/comment/rest/deleteComment",
 	   				method : "POST",
 	   				contentType : "application/json; charset=UTF-8",
 	   				data : JSON.stringify({
-	   					"bobId" : <c:out value="${bob.bobId}" escapeXml="false" />
+	   					"commentId" : commentId
 	   				}),
 	   				async : false,
 	   				success : function(serverData) {
@@ -221,9 +216,9 @@
 	   				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	   				}
 	   			});
-	   	 		*/
+		   	 	
 		   	}else{
-		   	    return;
+		   		return ;
 		   	}
    	 	});
    	 	
@@ -231,7 +226,7 @@
    	 		$("#listComment").load("/bob/listCommment?category=${param.category}&bobId=${param.bobId}&currentPage=${commentPage.currentPage+1}");
    	 	});
    	 	
-   	 	$(document).on('click','#listComment img', function() {
+   	 	$(document).on('click','#listComment .col-sm-2 > img', function() {
 	 		var commentUserId = $($("input[name=commentUserId]")[$('#listComment img').index(this)]).val();
 	 		$(self.location).attr("href","/user/getTimeLine?userId="+commentUserId);
 	 	});
