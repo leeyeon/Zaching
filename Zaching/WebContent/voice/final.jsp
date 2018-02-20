@@ -94,7 +94,7 @@
 	  alert(hf.href);
 	  alert(hf.download);
 	  var xhr = new XMLHttpRequest();
-	  xhr.open('POST', '/voice/json/testUpload', true);
+	  xhr.open('POST', '/voice/json/testUpload/32/3', true);
 	  xhr.onload = function(e){console.log("loaded");};
 	  xhr.onreadystatechange = function(){
 		  console.log("state : "+xhr.readyState);

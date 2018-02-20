@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,14 +57,17 @@ public class VoiceRestController {
 	
 
 	// 여기에서부터
-	@RequestMapping(value="json/testUpload")
-	public String testUpload(HttpServletRequest request) throws Exception{
+	@RequestMapping(value="json/testUpload/{userId}/{voiceId}")
+	public String testUpload(HttpServletRequest request, @PathVariable int userId, @PathVariable int voiceId) throws Exception{
 		//System.out.println(link);
-		
+		System.out.println("testUpload()");
+		System.out.println("userId :: "+userId);
+		System.out.println("voiceId :: "+voiceId);
 		byte[] buffer = new byte[1024 * 1024];
 		
+		
 		InputStream input = request.getInputStream();
-		OutputStream output = new FileOutputStream("C:\\Users\\jiwon\\Documents\\costam0.wav");
+		OutputStream output = new FileOutputStream("C:\\Users\\jiwon\\Documents\\costam01.wav");
 		int bytesRead;
 		while((bytesRead = input.read(buffer)) != -1) {
 			System.out.println(bytesRead);
