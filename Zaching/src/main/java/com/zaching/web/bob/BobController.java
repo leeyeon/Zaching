@@ -376,16 +376,13 @@ public class BobController {
 	public String listCommment(@RequestParam int bobId, @RequestParam int currentPage,
 						Model model) throws Exception {
 		System.out.println(this.getClass()+"/listCommment");
-		
-		//System.out.println("방 ID :: "+bobId);
-		//System.out.println(category+"나왔따");
 
 		Search search = new Search();
 		search.setCurrentPage(currentPage);
 		search.setPageSize(pageSize);
-		search.setCategory("comment");
+		search.setCategory("B00");
 		
-		System.out.println(search);
+		//System.out.println(search);
 		
 		Map<String,Object> map = (Map<String,Object>)commonService.listComment(search, "B00", bobId);
 		

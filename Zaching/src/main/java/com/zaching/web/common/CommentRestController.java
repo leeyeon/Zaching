@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zaching.common.service.CommonService;
@@ -66,10 +67,12 @@ public class CommentRestController {
 	}
 	
 	@RequestMapping(value="/deleteComment", method=RequestMethod.POST)
-	public void deleteComment(Map<String, Object> map) throws Exception {
+	@ResponseBody
+	public String deleteComment(@RequestBody Map<String, Object> map) throws Exception {
 
 		commonService.deleteComment(Integer.parseInt(map.get("commentId").toString()));
 
+		return "success";
 	}
 	
 }

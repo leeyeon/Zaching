@@ -67,15 +67,25 @@ public class PaymentController {
 		
 		return "forward:/payment/chargePoint.jsp";
 	}
-	
-	@RequestMapping("exchargePoint")
-	public String exchargePoint(HttpSession session, Model model) throws Exception {
+
+	@RequestMapping(value="exchargePoint", method=RequestMethod.POST)
+	public String exchargePoint(HttpSession session,
+								@RequestParam int exchargePoint,
+								Model model) throws Exception {
 		
 		User user = userService.getAccountUser(((User)session.getAttribute("user")).getUserId());
-		model.addAttribute("user", user)
-			 .addAttribute("bank", paymentService.listBackCode());
+
+		Payment payment = new Payment();
+		payment.setPaymentCode("P03");
+		payment.setUserId(user.getUserId());
+		payment.setPoint(exchargePoint);
+		payment.setContent("P03:none:포인트 반환 신청");
 		
-		return "forward:/payment/exchargePoint.jsp";
+		session.setAttribute("exchargePoint", exchargePoint);
+		
+		paymentService.managePoint(payment);
+
+		return "redirect:/payment/mainPayment";
 	}
 
 	@RequestMapping(value="mainPayment")
@@ -93,9 +103,7 @@ public class PaymentController {
 		System.out.println(search);
 		
 		Map<String, Object> map = paymentService.listPoint(search, user.getUserId());
-		
-		//int totalPoint = paymentService.getPoint(user.getUserId());
-		//int totalMileage = paymentService.getMileage(user.getUserId());
+
 		Page resultPage	= 
 				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
 				pageUnit, pageSize);
@@ -103,13 +111,39 @@ public class PaymentController {
 		User accountUser = userService.getAccountUser(user.getUserId());
 		
 		model.addAttribute("payment", map.get("list"))
-			 //.addAttribute("totalPoint", totalPoint)
-			 //.addAttribute("totalMileage", totalMileage)
 			 .addAttribute("paymentPage", resultPage)
 			 .addAttribute("bank", paymentService.listBackCode())
 			 .addAttribute("accountUser", accountUser);
 		
 		return "forward:/payment/mainPayment.jsp";
+	}
+	
+	@RequestMapping(value="listPayment")
+	public String listPayment(@RequestParam int currentPage,
+							HttpSession session,
+							Model model) throws Exception {
+		
+		System.out.println(this.getClass()+"/listPayment");
+		
+		User user = (User)session.getAttribute("user");
+		
+		Search search = new Search();
+		search.setCurrentPage(currentPage);
+		search.setPageSize(pageSize);
+		search.setCategory("P00");
+		
+		System.out.println(search);
+		
+		Map<String, Object> map = paymentService.listPoint(search, user.getUserId());
+
+		Page resultPage	= 
+				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
+				pageUnit, pageSize);
+		
+		model.addAttribute("payment", map.get("list"))
+			 .addAttribute("paymentPage", resultPage);
+		
+		return "forward:/payment/listPayment.jsp";
 	}
 	
 	@RequestMapping("kakaoPay")
@@ -161,10 +195,12 @@ public class PaymentController {
 	
 	@RequestMapping("newAccount")
 	public String tftcAccount(HttpSession session,
+							@RequestParam int exchargePoint,
 							@RequestParam String accountNum,
-							@RequestParam int accountHolderinfo) throws Exception {
+							@RequestParam int accountHolderinfo,
+							@RequestParam String bankCode) throws Exception {
 		
-		System.out.println("이얍");
+		System.out.println(this.getClass()+"/payment/newAccount");
 		
 		/*
 		User user = (User)session.getAttribute("user");
@@ -178,13 +214,15 @@ public class PaymentController {
 		}
 		*/
 		
+		session.setAttribute("exchargePoint", exchargePoint);
+		
 		String token = paymentService.getAccessToken2();
 		
 		return "redirect:/payment/getRealName?token="+token+"&accountNum="+accountNum
-				+"&accountHolderinfo="+accountHolderinfo;
+				+"&accountHolderinfo="+accountHolderinfo+"&bankCode="+bankCode;
 	}
 	
-	@RequestMapping("/payment/oauthAccount")
+	@RequestMapping("/oauthAccount")
 	public String tftcAccountReturn(@RequestParam String code,
 									@RequestParam String scope,
 									@RequestParam String client_info,
@@ -213,7 +251,7 @@ public class PaymentController {
 		
 	}
 	
-	@RequestMapping("/payment/getUserNe")
+	@RequestMapping("/getUserNe")
 	public String getUserNe(@RequestParam String accessToken,
 									@RequestParam String userSeqNo,
 									HttpSession session) throws Exception {
@@ -234,29 +272,42 @@ public class PaymentController {
 	}
 	
 	
-	@RequestMapping("/payment/getRealName")
+	@RequestMapping("/getRealName")
 	public String getRealName(@RequestParam String token,
 							@RequestParam String accountNum,
 							@RequestParam int accountHolderinfo,
+							@RequestParam String bankCode,
 							HttpSession session,
 							Model model) throws Exception {
 		
 		User sessionUser = (User)session.getAttribute("user");
 		
-		Map<String, Object> map = paymentService.getAccountRealName(token, accountNum, accountHolderinfo);
-		sessionUser.setAccountNumber((String)map.get("accountNum"));
-		sessionUser.setRealName((String)map.get("realName"));
-		sessionUser.setBankName((String)map.get("bankName"));
-		
-		if(sessionUser.getAccountNumber() != null) {
+		Map<String, Object> map = paymentService.getAccountRealName(token, accountNum, accountHolderinfo, bankCode);
+
+		if(((String)map.get("realName")).trim().length() != 0) {
+			sessionUser.setAccountNumber((String)map.get("accountNum"));
+			sessionUser.setRealName((String)map.get("realName"));
+			sessionUser.setBankName((String)map.get("bankName"));
+			System.out.println("요깅" + sessionUser);
 			userService.updateUser(sessionUser);
+			int point = Integer.valueOf(session.getAttribute("exchargePoint").toString());
+			
+			Payment payment = new Payment();
+			payment.setPaymentCode("P03");
+			payment.setUserId(sessionUser.getUserId());
+			payment.setPoint(point);
+			payment.setContent("P03:none:포인트 반환 신청");
+			
+			paymentService.managePoint(payment);
+			
+			session.removeAttribute("exchargePoint");
 			model.addAttribute("result", "success");
 		} else {
 			model.addAttribute("result", "fail");
 		}
 
 		// 성공페이지로 이동
-		return "redirect:/payment/registerAccount.jsp";
+		return "forward:/payment/registerAccount.jsp";
 		
 	}
 }
