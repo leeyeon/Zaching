@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%
 	out.clear();
 %>
@@ -22,9 +23,8 @@
 <!-- 부가적인 테마 -->
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script defer
-	src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<link rel="stylesheet" href="../resources/css/audioStyle.css">
 
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -33,7 +33,262 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 <script>
+	document.addEventListener("DOMContentLoaded", theDOMHasLoaded, false);
+	
+	var files = new Array();
+	var replyImage = new Array();
+	var replyuserName = new Array();
+	var replyUserId = new Array();
+	
+	 <c:set var="i" value="0" />
+			<c:forEach var="reply" items="${comment}">
+				<c:set var="i" value="${ i+1 }" />
+				files[${i-1}] = "${reply.content}";
+				replyImage[${i-1}] = "${reply.userImage}";
+				replyuserName[${i-1}] = "${reply.userName}";
+				replyUserId[${i-1}] = "${reply.userId}";
+			</c:forEach>
+
+	// array of audio files (stored in a folder called audio)
+	
+	
+	///////////////////////////////////////////////
+	// Find and store audio info
+	///////////////////////////////////////////////
+	
+	// array for AudioObjects
+	var audioList = [];
+	// components and the index for their AudioObject
+	var componentDict = {};
+	// store AudioObject that is currently playing
+	var playingAudio = null;
+	// store playhead id if one is being dragged
+	var onplayhead = null;
+	
+	/* AudioObject Constructor */
+	function AudioObject(audio, duration) {
+		this.audio = audio;
+		this.id = audio.id;
+		this.duration = duration;
+	}
+	/* bindAudioPlayer
+	 * Store audioplayer components in correct AudioObject
+	 * num identifes correct audioplayer
+	 */
+	AudioObject.prototype.bindAudioPlayer = function (num) {
+		this.audioplayer = document.getElementById("audioplayer-" + num);
+		this.playbutton = document.getElementById("playbutton-" + num);
+		this.timeline = document.getElementById("timeline-" + num);
+		this.playhead = document.getElementById("playhead-" + num);
+		this.timelineWidth = this.timeline.offsetWidth - this.playhead.offsetWidth;
+	}
+	
+	/* addEventListeners() */
+	AudioObject.prototype.addEventListeners = function () {
+		this.audio.addEventListener("timeupdate", AudioObject.prototype.timeUpdate, false);
+		this.audio.addEventListener("durationchange", AudioObject.prototype.durationChange, false);
+		this.timeline.addEventListener("click", AudioObject.prototype.timelineClick, false);
+		this.playbutton.addEventListener("click", AudioObject.prototype.pressPlay, false);
+		// Makes playhead draggable 
+		this.playhead.addEventListener('mousedown', AudioObject.prototype.mouseDown, false);
+		window.addEventListener('mouseup', mouseUp, false);
+	}
+	
+	/* populateAudioList */
+	function populateAudioList() {
+		var audioElements = document.getElementsByClassName("audio");
+		for (i = 0; i < audioElements.length; i++) {
+			audioList.push(
+				new AudioObject(audioElements[i], 0)
+			);
+			audioList[i].bindAudioPlayer(i);
+			audioList[i].addEventListeners();
+		}
+	}
+	
+	/* populateComponentDictionary() 
+	 * {key=element id : value=index of audioList} */
+	function populateComponentDictionary() {
+		for (i = 0; i < audioList.length; i++) {
+			componentDict[audioList[i].audio.id] = i;
+			componentDict[audioList[i].playbutton.id] = i;
+			componentDict[audioList[i].timeline.id] = i;
+			componentDict[audioList[i].playhead.id] = i;
+		}
+	}
+	
+	///////////////////////////////////////////////
+	// Update Audio Player
+	///////////////////////////////////////////////
+	
+	/* durationChange
+	 * set duration for AudioObject */
+	AudioObject.prototype.durationChange = function () {
+		var ao = audioList[getAudioListIndex(this.id)];
+		ao.duration = this.duration;
+	}
+	
+	/* pressPlay() 
+	 * call play() for correct AudioObject
+	 */
+	AudioObject.prototype.pressPlay = function () {
+		var index = getAudioListIndex(this.id);
+		audioList[index].play();
+	}
+	
+	/* play() 
+	 * play or pause selected audio, if there is a song playing pause it
+	 */
+	AudioObject.prototype.play = function () {
+		if (this == playingAudio) {
+			playingAudio = null;
+			this.audio.pause();
+			changeClass(this.playbutton, "playbutton play");
+		}
+		// else check if playing audio exists and pause it, then start this
+		else {
+			if (playingAudio != null) {
+				playingAudio.audio.pause();
+				changeClass(playingAudio.playbutton, "playbutton play");
+			}
+			this.audio.play();
+			playingAudio = this;
+			changeClass(this.playbutton, "playbutton pause");
+		}
+	}
+	
+	/* timelineClick()
+	 * get timeline's AudioObject
+	 */
+	AudioObject.prototype.timelineClick = function (event) {
+		var ao = audioList[getAudioListIndex(this.id)];
+		ao.audio.currentTime = ao.audio.duration * clickPercent(event, ao.timeline, ao.timelineWidth);
+	}
+	
+	/* mouseDown */
+	AudioObject.prototype.mouseDown = function (event) {
+		onplayhead = this.id;
+		var ao = audioList[getAudioListIndex(this.id)];
+		window.addEventListener('mousemove', AudioObject.prototype.moveplayhead, true);
+		ao.audio.removeEventListener('timeupdate', AudioObject.prototype.timeUpdate, false);
+	}
+	
+	/* mouseUp EventListener
+	 * getting input from all mouse clicks */
+	function mouseUp(e) {
+		if (onplayhead != null) {
+			var ao = audioList[getAudioListIndex(onplayhead)];
+			window.removeEventListener('mousemove', AudioObject.prototype.moveplayhead, true);
+			// change current time
+			ao.audio.currentTime = ao.audio.duration * clickPercent(e, ao.timeline, ao.timelineWidth);
+			ao.audio.addEventListener('timeupdate', AudioObject.prototype.timeUpdate, false);
+		}
+		onplayhead = null;
+	}
+	
+	/* mousemove EventListener
+	 * Moves playhead as user drags */
+	AudioObject.prototype.moveplayhead = function (e) {
+		var ao = audioList[getAudioListIndex(onplayhead)];
+		var newMargLeft = e.pageX - ao.timeline.offsetLeft;
+		if (newMargLeft >= 0 && newMargLeft <= ao.timelineWidth) {
+			document.getElementById(onplayhead).style.marginLeft = newMargLeft + "px";
+		}
+		if (newMargLeft < 0) {
+			playhead.style.marginLeft = "0px";
+		}
+		if (newMargLeft > ao.timelineWidth) {
+			playhead.style.marginLeft = ao.timelineWidth + "px";
+		}
+	}
+	
+	/* timeUpdate 
+	 * Synchronizes playhead position with current point in audio 
+	 * this is the html audio element
+	 */
+	AudioObject.prototype.timeUpdate = function () {
+		// audio element's AudioObject
+		var ao = audioList[getAudioListIndex(this.id)];
+		var playPercent = ao.timelineWidth * (ao.audio.currentTime / ao.duration);
+		ao.playhead.style.marginLeft = playPercent + "px";
+		// If song is over
+		if (ao.audio.currentTime == ao.duration) {
+			changeClass(ao.playbutton, "playbutton play");
+			ao.audio.currentTime = 0;
+			ao.audio.pause();
+			playingAudio = null;
+		}
+	}
+	
+	///////////////////////////////////////////////
+	// Utility Methods
+	///////////////////////////////////////////////
+	
+	/* changeClass 
+	 * overwrites element's class names */
+	function changeClass(element, newClasses) {
+		element.className = newClasses;
+	}
+	
+	/* getAudioListIndex
+	 * Given an element's id, find the index in audioList for the correct AudioObject */
+	function getAudioListIndex(id) {
+		return componentDict[id];
+	}
+	
+	/* clickPercent()
+	 * returns click as decimal (.77) of the total timelineWidth */
+	function clickPercent(e, timeline, timelineWidth) {
+		return (e.pageX - timeline.offsetLeft) / timelineWidth;
+	}
+	
+	///////////////////////////////////////////////
+	// GENERATE HTML FOR AUDIO ELEMENTS AND PLAYERS
+	///////////////////////////////////////////////
+	
+	/* 	var audioString = "<div id=\"audio-players\">"+ "<div class=\"container\"><div class=\"card\"><div class=\"col-xs-1\"><img alt=\"\" src=\"../resources/images/"+replyImage[f]+"\"width=\"40\" height=\"40\">"+replyuserName[f]+"&nbsp;</div>"
+			+"<div class=\"col-xs-10\"><audio id=\"audio-" + f + "\" class=\"audio\" preload=\"true\"><source src=\"../resources/upload_files/record/" + files[f] + "\"></audio></div></div></div></div>";
+ */
+	function createAudioElements() {
+		 
+
+		for (f in files) {
+			
+			var audioString = "<blockquote><div id=\"audio-players\">"+ "<div class=\"col-sm-3\"><a href=\"/user/getTimeLine?userId="+replyUserId[f]+"\" style=\"color: #fff; text-decoration: none;\"><img alt=\"\" src=\"../resources/images/"+replyImage[f]+"\"width=\"40\" height=\"40\">"+replyuserName[f]+"</div></a>&nbsp;"
+			+"<div class=\"col-sm-3\"><audio id=\"audio-" + f + "\" class=\"audio\" preload=\"true\"><source src=\"../resources/upload_files/record/" + files[f] + "\"></audio>"+
+			"<div id=\"audioplayer-" + f + "\" class=\"audioplayer\"><button id=\"playbutton-" + f + "\" class=\"play playbutton\"></button><div id=\"timeline-" + f + "\" class=\"timeline\"><div id=\"playhead-" + f + "\" class=\"playhead\"></div></div></div></div></blockquote><br/>";
+
+			
+			$("#jinsubaby").append(audioString);
+			
+			
+			//var playerString = "<div id=\"audioplayer-" + f + "\" class=\"audioplayer\"><button id=\"playbutton-" + f + "\" class=\"play playbutton\"></button><div id=\"timeline-" + f + "\" class=\"timeline\"><div id=\"playhead-" + f + "\" class=\"playhead\"></div></div><br/></div></blockquote>";
+			//$("#jinsubaby").append(playerString);
+			
+		}
+		
+		
+	}
+	
+	/* createAudioPlayers
+	 * create audio players for each file in files */
+	
+	
+	/* theDOMHasLoaded()
+	 * Execute when DOM is loaded */
+	function theDOMHasLoaded(e) {
+		// Generate HTML for audio elements and audio players
+		createAudioElements();
+		
+	
+		// Populate Audio List
+		populateAudioList();
+		populateComponentDictionary();
+	}
+
 	$(function() {
+		
+	
 		
 		$("a:contains('가사보기')").on("click",function() {
 			var songId = ${voice.voicelyrics};
@@ -44,114 +299,8 @@
 			
 		});
 		      
-		var music = document.getElementById('music'); // id for audio element
-		var duration = music.duration; // Duration of audio clip, calculated here for embedding purposes
-		var pButton = document.getElementById('pButton'); // play button
-		var playhead = document.getElementById('playhead'); // playhead
-		var timeline = document.getElementById('timeline'); // timeline
-
 		var page = ${search.currentPage};
 		var pageSize = ${search.pageSize};
-
-		// timeline width adjusted for playhead
-		var timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
-
-		// play button event listenter
-		pButton.addEventListener("click", play);
-
-		// timeupdate event listener
-		music.addEventListener("timeupdate", timeUpdate, false);
-
-		// makes timeline clickable
-		timeline.addEventListener("click", function(event) {
-			moveplayhead(event);
-			music.currentTime = duration * clickPercent(event);
-		}, false);
-
-		// returns click as decimal (.77) of the total timelineWidth
-		function clickPercent(event) {
-			return (event.clientX - getPosition(timeline)) / timelineWidth;
-		}
-
-		// makes playhead draggable
-		playhead.addEventListener('mousedown', mouseDown, false);
-		window.addEventListener('mouseup', mouseUp, false);
-
-		// Boolean value so that audio position is updated only when the playhead is released
-		var onplayhead = false;
-
-		// mouseDown EventListener
-		function mouseDown() {
-			onplayhead = true;
-			window.addEventListener('mousemove', moveplayhead, true);
-			music.removeEventListener('timeupdate', timeUpdate, false);
-		}
-
-		// mouseUp EventListener
-		// getting input from all mouse clicks
-		function mouseUp(event) {
-			if (onplayhead == true) {
-				moveplayhead(event);
-				window.removeEventListener('mousemove', moveplayhead, true);
-				// change current time
-				music.currentTime = duration * clickPercent(event);
-				music.addEventListener('timeupdate', timeUpdate, false);
-			}
-			onplayhead = false;
-		}
-		// mousemove EventListener
-		// Moves playhead as user drags
-		function moveplayhead(event) {
-			var newMargLeft = event.clientX - getPosition(timeline);
-
-			if (newMargLeft >= 0 && newMargLeft <= timelineWidth) {
-				playhead.style.marginLeft = newMargLeft + "px";
-			}
-			if (newMargLeft < 0) {
-				playhead.style.marginLeft = "0px";
-			}
-			if (newMargLeft > timelineWidth) {
-				playhead.style.marginLeft = timelineWidth + "px";
-			}
-		}
-
-		// timeUpdate
-		// Synchronizes playhead position with current point in audio
-		function timeUpdate() {
-			var playPercent = timelineWidth * (music.currentTime / duration);
-			playhead.style.marginLeft = playPercent + "px";
-			if (music.currentTime == duration) {
-				pButton.className = "";
-				pButton.className = "play";
-			}
-		}
-
-		//Play and Pause
-		function play() {
-			// start music
-			if (music.paused) {
-				music.play();
-				// remove play, add pause
-				pButton.className = "";
-				pButton.className = "pause";
-			} else { // pause music
-				music.pause();
-				// remove pause, add play
-				pButton.className = "";
-				pButton.className = "play";
-			}
-		}
-
-		// Gets audio file duration
-		music.addEventListener("canplaythrough", function() {
-			duration = music.duration;
-		}, false);
-
-		// getPosition
-		// Returns elements left position relative to top-left of viewport
-		function getPosition(el) {
-			return el.getBoundingClientRect().left;
-		}
 
 		$("#inside").scroll(function() {
 							var elem = $("#inside");
@@ -174,17 +323,17 @@
 													display = display
 															+ '<div class="col-xs-6 col-lg-5" style="padding-left: 0pt; padding-right: 0pt">';
 													if (serverData[i].backgroundImage)
-														display += '<img src="../resources/images/voiceImages/'
+														display += '<a href="/voice/getVoice?voiceId='+serverData[i].voiceId+'"><img src="../resources/images/voiceImages/'
 																+ serverData[i].backgroundImage
 																+ '" width="100%" height="90pt">';
 													else
 														display += '<img src="../resources/images/voiceImages/default.jpg" width="100%" height="90pt">';
 													display = display
-															+ '</div>'
-															+ '<div class="col-xs-6 col-lg-7" style="padding-top: 7pt; line-height: 1.5em; height: 80pt;"><a href="#" style="color: black; font-size:12pt;"><strong>'
+															+ '</a></div>'
+															+ '<div class="col-xs-6 col-lg-7" style="padding-top: 7pt; line-height: 1.5em; height: 80pt;"><a href="/voice/getVoice?voiceId='+serverData[i].voiceId+'" style="color: black; font-size:12pt;"><strong>'
 															+ serverData[i].voiceName
 															+ '</strong></a>'
-															+ '<br><a href="#" style="color:gray;">'
+															+ '<br><a href="/user/getTimeLine?userId='+serverData[i].userId+'" style="color:gray;">'
 															+ serverData[i].userName
 															+ '<br></a>'
 															+ '<p5 style="color: gray;"><i class="fas fa-play-circle"></i>&nbsp;'
@@ -196,6 +345,10 @@
 										})
 							}
 						});
+		
+		
+
+		
 	})
 
 	
@@ -242,47 +395,7 @@
 	position: absolute;
 	color: white;
 	z-index: 2;
-}
-
-#audioplayer {
-	width: 480px;
-	height: 60px;
-}
-
-#pButton {
-	height: 60px;
-	width: 60px;
-	border: none;
-	background-size: 50% 50%;
-	background-repeat: no-repeat;
-	background-position: center;
-	float: left;
-	outline: none;
-}
-
-.play {
-	background: url('http://www.alexkatz.me/codepen/img/play.png');
-}
-
-.pause {
-	background: url('http://www.alexkatz.me/codepen/img/pause.png');
-}
-
-#timeline {
-	width: 400px;
-	height: 20px;
-	margin-top: 20px;
-	float: left;
-	border-radius: 15px;
-	background: rgba(0, 0, 0, .3);
-}
-
-#playhead {
-	width: 18px;
-	height: 18px;
-	border-radius: 50%;
-	margin-top: 1px;
-	background: rgba(0, 0, 0, 1);
+	width: 100%;
 }
 
 #fixedbtn {
@@ -319,13 +432,26 @@
 
  ul { list-style: none; }
     #recordingslist audio { display: block; margin-bottom: 10px; }
+ 
+ div.blog-main{
+ background-color: rgba(0, 0, 0, 0.3);
+ 
+ }
+ .container{
+ 	padding-right: 0px;
+ }
+ 
+ #jinsubaby > blockquote{
+    padding-top: 0px;
+    padding-bottom: 15px;
+}
 </style>
 </head>
 
 
 <body>
 
-
+	
 	<div class="container">
 
 		<div class="blog-header">
@@ -333,69 +459,46 @@
 			<p class="lead blog-description">음성을 녹음해보세요!</p>
 		</div>
 
-		<div class="row">
+		<div class="row" >
 
 			<div class="col-sm-8 blog-main"
-				style="overflow-x: hidden; height: 700px; background: url('../resources/images/suzi.jpg'); background-size: 100% 100%; padding-right: 0px; padding-left: 0px;">
-				<div class="img-cover"></div>
+				style=" height: 700px; background: url('../resources/images/voiceImages/${voice.backgroundImage}'); background-size: 100% 100%; padding-right: 0px; padding-left: 0px;">
+				<div class="img-cover" style="  background-size: cover;  background-color: rgba(0, 0, 0, 0.3);">
 				<div class="blog-post">
-					<h3 class="blog-post-title">&nbsp;${voice.voiceName}</h3>
+					<h3 class="blog-post-title">&nbsp;${voice.voiceName} </h3>
 					<p class="blog-post-meta"
 						style="background-color: black; opacity: 0.5; width:100%">
-						<a href="#">소간지</a>
+						 <a href="#">진슈</a>
 					</p>
-					<div style="padding-right: 15px; padding-left: 15px;">
+					<div style=" height: 600px; overflow-y: scroll; padding-right: 15px; padding-left: 15px;">
 						<c:if test="${voice.categoryCode == 'R02'}">
 							<a href='#' class="lyrics">가사보기</a>
 						</c:if>
-						<hr>
-
-						<c:set var="i" value="0" />
-						<c:forEach var="reply" items="${comment}">
-							<c:set var="i" value="${ i+1 }" />
-							<blockquote style="vertical-align: middle;">
-								<div
-									style="display: -webkit-inline-box; vertical-align: middle;">
-									<img alt="" src="../resources/images/${reply.userImage}"
-										width="40" height="40">${reply.userName}&nbsp;
-									<audio id="music" style="display: hidden;">
-										<source
-											src="../resources/upload_files/record/${reply.content}"
-											type="audio/mpeg">
-									</audio>
-
-									<div id="audioplayer">
-										<button id="pButton" class="play" onclick="play()"></button>
-										<div id="timeline">
-											<div id="playhead"></div>
-										</div>
-									</div>
-
-								</div>
-							</blockquote>
-						</c:forEach>
+						<hr >
+						
+						<div id="jinsubaby"></div>
+						
+						
+							
+							
+						
 						<blockquote style="vertical-align: middle;">
-							<div style="display: -webkit-inline-box; vertical-align: middle;">
+							
 								<img alt="" src="../resources/images/suzi.jpg" width="40"
 									height="40">수지&nbsp;
-								<audio id="music" preload="true" style="display: hidden;">
+								<audio controls="controls">
 									<source src="../resources/upload_files/record/Ailee.mp3"
 										type="audio/mpeg">
 								</audio>
-
-								<div id="audioplayer">
-									<button id="pButton" class="play" onclick="play()"></button>
-									<div id="timeline">
-										<div id="playhead"></div>
-									</div>
-								</div>
-
-							</div>
 						</blockquote>
+					
 						
-
+					
+						
+					</div>
 					</div>
 				</div>
+				
 			</div>
 			<!-- /.blog-main -->
 			<div class="hidden-xs">
@@ -405,10 +508,7 @@
 					<div
 						style="border: 1px solid #A4A4A4; padding: 10pt; margin-top: -1pt; margin-right: -16px; margin-left: -16px; vertical-align: middle;">
 						<strong style="padding-left: 5px; font-size: 15pt"> 최신 글
-							보기</strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						&nbsp;<a href="#" style="color: gray; font-size: 12px;"><i
-							class="glyphicon glyphicon-refresh"></i>새로고침</a>
+							보기</strong>
 					</div>
 					<div
 						style="overflow-x: hidden; height: 623px; margin-right: -15px; padding-top: 10pt;"
@@ -418,22 +518,21 @@
 								<c:set var="i" value="0" />
 								<c:forEach var="voice" items="${list}">
 									<c:set var="i" value="${ i+1 }" />
-									<div class="col-xs-6 col-lg-5"
-										style="padding-left: 0pt; padding-right: 0pt">
+									
+									<div class="col-xs-6 col-lg-5" style="padding-left: 0pt; padding-right: 0pt">
+										<a href="/voice/getVoice?voiceId=${voice.voiceId}" style="z-index: 1000;">
 										<c:if test="${!empty voice.backgroundImage}">
-											<img
-												src="../resources/images/voiceImages/${voice.backgroundImage}"
-												width="100%" height="90pt">
+											<img src="../resources/images/voiceImages/${voice.backgroundImage}" width="100%" height="90pt">
 										</c:if>
 										<c:if test="${empty voice.backgroundImage}">
-											<img src="../resources/images/voiceImages/default.jpg"
-												width="100%" height="90pt">
+											<img src="../resources/images/voiceImages/default.jpg" width="100%" height="90pt">
 										</c:if>
+									</a>
 									</div>
-									<div class="col-xs-6 col-lg-7"
-										style="padding-top: 7pt; line-height: 1.5em; height: 80pt;">
-										<a href="#" style="color: black; font-size: 12pt;"><strong>${voice.voiceName}</strong></a><br>
-										<a href="#" style="color: gray;">${voice.userName}<br></a>
+										
+									<div class="col-xs-6 col-lg-7" style="padding-top: 7pt; line-height: 1.5em; height: 80pt;">
+										<a href="/voice/getVoice?voiceId=${voice.voiceId}" style="color: black; font-size: 12pt;"><strong>${voice.voiceName}</strong></a><br>
+										<a href="/user/getTimeLine?userId=${voice.userId}" style="color: gray;">${voice.userName}</a><br>
 										<p5 style="color: gray;">
 										<i class="fas fa-play-circle"></i>&nbsp;${voice.countReply}</p5>
 										<br>
@@ -641,8 +740,9 @@
 			});
 		};
 	</script>
-
+	
 	<script src="../resources/javascript/recorder.js"></script>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="../resources/javascript/audioplayer.js"></script>
 </body>
 </html>

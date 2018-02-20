@@ -75,8 +75,7 @@ body {
 				})
 
 		});
-		});
-	});
+	
 </script>
 
 </head>
@@ -176,15 +175,60 @@ body {
 		</div>
 
 
-
-
-
-
-
 		<!-- PageNavigation Start... -->
 		<jsp:include page="../common/pageNavigator.jsp" />
 		<!-- PageNavigation End... -->
-		
+		<div class="container">
+			<div class="page-header text-info">
+				<h3>친구 추천</h3>
+			</div>
+			
+			<div class="row">
+
+
+				<c:forEach var="friend" items="${list}" varStatus="status">
+
+					<div class="col-xs-6 col-md-4">
+						<div>
+							<c:if test="${user.profileImage ne null }">
+								<button type="button" class="btn btn-default" id="friendImage">
+									<img class="friend_img" style="width: 120px; height: 120px;"
+										src="../resources/upload_files/images/${friend.profileImage}">
+								</button>
+							</c:if>
+
+							<c:if test="${user.profileImage eq null }">
+
+
+								<button type="button" class="btn btn-default" id="friendImage">
+									<img class="friend_img" style="width: 120px; height: 120px;"
+										src="../resources/images/profile_default.png">
+								</button>
+
+
+
+							</c:if>
+						</div>
+						<input type="hidden" name="friendId" value="${friend.name}">
+						<div class="col-xs-6 col-sm-4 ">${friend.name }</div>
+						<div class="col-xs-6 col-sm-4 ">
+							<div class="dropdown">
+								<span> 친구 </span>
+								<div class="dropdown-content">
+									<ul>
+										<li><a href="#">메세지</a></li>
+										<li><a href="#">친구삭제</a></li>
+										<li><a href="#">친구차단</a></li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</c:forEach>
+			</div>
+		</div>
 		
 		
 

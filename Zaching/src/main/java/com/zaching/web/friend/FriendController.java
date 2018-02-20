@@ -1,5 +1,6 @@
 package com.zaching.web.friend;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -62,6 +63,7 @@ public class FriendController {
 		
 		System.out.println("friend/listFriend : GET");
 		
+		int userId = ((User)session.getAttribute("user")).getUserId();
 		//System.out.println("요기까지 왔습니다");
 
 		if (search.getCurrentPage() == 0) {
@@ -75,11 +77,13 @@ public class FriendController {
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
 				pageSize);
 		System.out.println(resultPage);
+		List<Friend> list = friendService.recommendFriend(userId);
 		
 
 		model.addAttribute("list",map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		model.addAttribute("recommendList", list);
 		
 		
 		System.out.println("listFriend 끝============");
@@ -87,41 +91,14 @@ public class FriendController {
 		return "forward:/friend/listFriend.jsp";
 	}
 	
-	@RequestMapping(value = "recommendFriend",method=RequestMethod.GET)
-	public String recommendFriend(@ModelAttribute("search") Search search,HttpSession session, Model model) throws Exception {
-
-		
-		System.out.println("friend/recommendFriend : GET");
-		
-		//System.out.println("요기까지 왔습니다");
-
-		if (search.getCurrentPage() == 0) {
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		search.setSearchKeyword(String.valueOf(((User)session.getAttribute("user")).getUserId()));
-
-		Map<String, Object> map = friendService.recommendFriend(search);
-		System.out.println(search);
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-				pageSize);
-		System.out.println(resultPage);
-		
-
-		model.addAttribute("list",map.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);
-		
-		
-		System.out.println("recommendFriend 끝============");
-		
-		return "forward:/friend/listFriend.jsp";
-	}
+	
 	
 	@RequestMapping(value="getFriend",method=RequestMethod.POST)
-	public String getFriend(@RequestParam(value="id",required=false)int id, Model model) throws Exception{
+	public String getFriend(@RequestParam(value="id",required=false)int id, Model model, HttpSession session) throws Exception{
 		
 		System.out.println("friend/getFriend:POST");
+		
+		
 		
 		Friend friend=friendService.getFriend(id);
 		

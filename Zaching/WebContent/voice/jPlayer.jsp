@@ -20,7 +20,7 @@
 		<script type="text/javascript">
 		$(document).ready(function(){
 			var myCirclePlayer = new Array();
-			alert(${comment.size()});
+			alert(${comment});
 			/*
 			 * Instance CirclePlayer inside jQuery doc ready
 			 *
