@@ -90,16 +90,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  				myFileButton.run(); //
  			} 
         	 
-        	 $(".cell").on("click",function(){
+        /*	 $(".cell").on("click",function(){
         		 //alert($($("input[name='newsfeedId']")[$("li").index(this)-6]).val());
         		 var id = $($("input[name='newsfeedId']")[$("li").index(this)-40]).val();
         		 //alert($("li").index(this));
         		 //alert($($("input[name='newsfeedId']")[$("li").index(this)]).val());
         		 //alert($($("input[name='newsfeedId']")[$("li").index(this)-6]).val());
-        		 
         		 self.location="/newsfeed/getNewsfeed?newsfeedId="+id;
         		 
-        	 });
+        	 });*/
         	 
         	 $(".ufo").on("click", function() {
      			self.location = "/newsfeed/ufo";
@@ -517,7 +516,10 @@ a:link, a:visited {
 							<c:set var="i" value="${ i+1 }" />
 							<li class="cell">
 								<input type="hidden" value="${newsfeed.newsfeedId}" name="newsfeedId"/>
+								<a href="/newsfeed/getNewsfeed?newsfeedId=${newsfeed.newsfeedId}">
 								<c:if test="${ !empty newsfeed.fileName }"><img src="../resources/upload_files/images/${newsfeed.fileName}" style="width: 100%"/></c:if>
+								<c:if test="${empty newsfeed.fileName }"><img src="/resources/images/profile_default.png" style="width: 100%"/></c:if>
+								</a>
 								<div class="post-info">
 									<div class="post-basic-info">
 										<span><a href="#"><label> </label><c:if test="${newsfeed.categoryCode.equals('N01')}">자취지식인</c:if>
@@ -543,7 +545,7 @@ a:link, a:visited {
 												</td>
 											</tr>
 										</table>
-										<p style="font-size: 13pt">${newsfeed.content}</p>
+										<p style="font-size: 13pt"><a href="/newsfeed/getNewsfeed?newsfeedId=${newsfeed.newsfeedId}">${newsfeed.content}</a></p>
 										
 										<div class="likeit-wrap" id="item" onClick="fnc_addLikey(${newsfeed.newsfeedId})">
 											<div class="likeit" data-postid="4" id="countLikey" >
@@ -669,12 +671,12 @@ a:link, a:visited {
 								for(var i=0; i<JSONData.length;i++){
 									
 									var displayValue = '<li class="cell" onclick="getNewsfeed('+JSONData[i].newsfeedId+')">'+
-									'<input type="hidden" value="'+JSONData[i].newsfeedId+'" name="newsfeedId"/>';
+									'<input type="hidden" value="'+JSONData[i].newsfeedId+'" name="newsfeedId"/><a href="/newsfeed/getNewsfeed?newsfeedId='+JSONData[i].newsfeedId+'">';
 										if(JSONData[i].fileName)
 											displayValue += '<img src="../resources/upload_files/images/'+JSONData[i].fileName+'" style="width: 100%"/>';
 										else
 											displayValue += '<img src="../resources/upload_files/images/profile_default.png" style="width: 100%"/>';
-										displayValue = displayValue + '<div class="post-info">'+
+										displayValue = displayValue + '</a><div class="post-info">'+
 											'<div class="post-basic-info">'+
 												'<span><a href="#"><label> </label>';
 												if(JSONData[i].categoryCode == 'N01')
@@ -705,7 +707,7 @@ a:link, a:visited {
 														'</td>'+
 													'</tr>'+
 												'</table>'+
-												'<p style="font-size: 13pt">'+JSONData[i].content+'</p>'+
+												'<p style="font-size: 13pt"><a href="/newsfeed/getNewsfeed?newsfeedId='+JSONData[i].newsfeedId+'">'+JSONData[i].content+'</a></p>'+
 												'<div class="likeit-wrap" id="item" onClick="fnc_addLikey('+JSONData[i].newsfeedId+')">'+
 													'<div class="likeit" data-postid="4" id="countLikey" >'+
 														'<span class="like-text">Like</span>'+
