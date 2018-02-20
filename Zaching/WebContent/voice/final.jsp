@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <html>
@@ -69,40 +71,51 @@
 	    theBlob.name = fileName;
 	    return theBlob;
 	}
-
+	function uploadVoice(){
+		alert("fdafaf");
+	}
   function createDownloadLink() {
     recorder && recorder.exportWAV(function(blob) {
-    	//alert(blob);
+    	alert(blob);
       var url = URL.createObjectURL(blob);
       var li = document.createElement('li');
       var au = document.createElement('audio');
       var hf = document.createElement('a');
+      var uploadButton = document.createElement('input');
       
+      uploadButton.type = 'button';
+      uploadButton.value = '등록';
+      uploadButton.onclick = function(){
+       	  
+    	  var xhr = new XMLHttpRequest();
+    	  xhr.open('POST', '/voice/json/testUpload/32/3/'+hf.download, true);
+    	  xhr.onload = function(e){console.log("loaded");};
+    	  xhr.onreadystatechange = function(){
+    		  console.log("state : "+xhr.readyState);
+    	  };
+    	  
+    	  xhr.upload.onprogress = function(e) {console.log("uploading.....");};
+    	  xhr.setRequestHeader("Content-Type", "audio/wav");
+    	  xhr.send(blob);
+    	  window.location.reload();
+      };
       au.controls = true;
       au.src = url;
       hf.href = url;
       hf.download = new Date().toISOString() + '.wav';
-      hf.innerHTML = hf.download;
+      hf.innerHTML = '녹음파일 다운';
       li.appendChild(au);
       li.appendChild(hf);
+      li.appendChild(uploadButton);
       recordingslist.appendChild(li);
       
       //alert(hf.download);
       //alert(au.src);
       //alert(hf);
       link=hf.href;
-	  alert(hf.href);
+	  //alert(hf.href);
 	  alert(hf.download);
-	  var xhr = new XMLHttpRequest();
-	  xhr.open('POST', '/voice/json/testUpload/32/3', true);
-	  xhr.onload = function(e){console.log("loaded");};
-	  xhr.onreadystatechange = function(){
-		  console.log("state : "+xhr.readyState);
-	  };
 	  
-	  xhr.upload.onprogress = function(e) {console.log("uploading.....");};
-	  xhr.setRequestHeader("Content-Type", "audio/wav");
-	  xhr.send(blob);
 	  //var myFile = blobToFile(blob, hf.download);
 	 // var myFile = new File(blob, hf.download);
 	  //alert(myFile);
@@ -148,5 +161,9 @@
   </script>
 
   <script src="../resources/javascript/recorder.js"></script>
+  
+  <div>
+  	<input type="hidden" value="3">
+  </div>
 </body>
 </html>

@@ -57,17 +57,18 @@ public class VoiceRestController {
 	
 
 	// 여기에서부터
-	@RequestMapping(value="json/testUpload/{userId}/{voiceId}")
-	public String testUpload(HttpServletRequest request, @PathVariable int userId, @PathVariable int voiceId) throws Exception{
+	@RequestMapping(value="json/testUpload/{userId}/{voiceId}/{fileName}")
+	public String testUpload(HttpServletRequest request, @PathVariable int userId, @PathVariable int voiceId, @PathVariable String fileName) throws Exception{
 		//System.out.println(link);
 		System.out.println("testUpload()");
 		System.out.println("userId :: "+userId);
 		System.out.println("voiceId :: "+voiceId);
+		System.out.println("fileName :: "+fileName);
 		byte[] buffer = new byte[1024 * 1024];
 		
 		
 		InputStream input = request.getInputStream();
-		OutputStream output = new FileOutputStream("C:\\Users\\jiwon\\Documents\\costam01.wav");
+		OutputStream output = new FileOutputStream("C:\\Users\\jiwon\\Documents\\costam02.wav");
 		int bytesRead;
 		while((bytesRead = input.read(buffer)) != -1) {
 			System.out.println(bytesRead);
