@@ -52,23 +52,32 @@ public class VoiceRestController {
 			@PathVariable int voiceId, @PathVariable String fileName, @ModelAttribute Comment comment) throws Exception{
 		System.out.println("testUpload()");
 		
+		System.out.println("OTL :: "+fileName.length());
+		System.out.println("fileName :: "+fileName);
+		
+		fileName = fileName.replaceAll(":", "");
+		System.out.println(fileName);
+		
 		comment.setRoomId(voiceId);
 		comment.setUserId(userId);
 		comment.setCategory(categoryCode);
 		comment.setContent(fileName+".wav");
 		
 		byte[] buffer = new byte[1024 * 1024];
+		System.out.println(comment);
 		
 		
-		InputStream input = request.getInputStream();
 
-		OutputStream output = new FileOutputStream("C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\record\\"+fileName+".wav");
+		InputStream input = request.getInputStream();
+		OutputStream output = new FileOutputStream("C:\\Users\\jiwon\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\record\\"+fileName+".wav");
 
 		int bytesRead;
 		while((bytesRead = input.read(buffer)) != -1) {
 			System.out.println(bytesRead);
 			output.write(buffer, 0, bytesRead);
 		}
+		commonService.addComment(comment);
+		voiceService.updateCountReply(voiceId);
 		output.close();
 		input.close();
 		
