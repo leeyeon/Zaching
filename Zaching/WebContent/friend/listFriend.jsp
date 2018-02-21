@@ -33,7 +33,13 @@
 
 <style>
 body {
-	padding-top: 80px;
+	padding-top: 100px;
+	
+}
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+* {
+	font-family: 'Hanna', serif;
 }
 
 .dropdown {
@@ -54,6 +60,7 @@ body {
 .dropdown:hover .dropdown-content {
 	display: block;
 }
+
 </style>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -88,70 +95,26 @@ body {
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
+	<div class="friendlistui">
 
 		<div class="page-header text-info">
 			<h3>친구목록조회</h3>
 		</div>
-
-
-
-
-
-			<!--  <div class="col-md-6 text-left">
-				<p class="text-primary">전체 ${resultPage.totalCount } 건수, 현재
-					${resultPage.currentPage} 페이지</p>
-			</div>
-
-			<div class="col-md-6 text-right">
-				<form class="form-inline" name="detailForm">
-
-					<div class="form-group">
-						<select class="form-control" name="searchCondition">
-							<option value="0"
-								${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>이름</option>
-						</select>
-					</div>
-
-					<div class="form-group">
-						<label class="sr-only" for="searchKeyword">검색어</label> <input
-							type="text" class="form-control" id="searchKeyword"
-							name="searchKeyword" placeholder="검색어"
-							value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
-					</div>
-
-					<button type="button" class="btn btn-default">검색</button>
-
-				</form>
-			</div>
-		</div>-->
-
-
-
 			<div class="row">
-
-
-				<c:forEach var="friend" items="${list}" varStatus="status">
-
+			<c:forEach var="friend" items="${list}" varStatus="status">
 					<div class="col-xs-6 col-md-4">
 						<div>
-							<c:if test="${user.profileImage ne null }">
-								<button type="button" class="btn btn-default" id="friendImage">
-									<img class="friend_img" style="width: 120px; height: 120px;"
-										src="../resources/upload_files/images/${friend.profileImage}">
-								</button>
-							</c:if>
-
-							<c:if test="${user.profileImage eq null }">
-
-
-								<button type="button" class="btn btn-default" id="friendImage">
-									<img class="friend_img" style="width: 120px; height: 120px;"
-										src="../resources/images/profile_default.png">
-								</button>
-
-
-
-							</c:if>
+							<c:if test="${!empty friend.profileImage }">
+						<button type="button" class="btn btn-default" id="friendImage">
+													<a href="/user/getTimeLine?userId=${friend.userId}"><img class="friend_img" style="width: 120px; height: 120px;" alt="" src="../resources/upload_files/images/${friend.profileImage}"></a>
+													</button>
+													</c:if>
+													
+													<c:if test="${empty friend.profileImage }">
+													<button type="button" class="btn btn-default" id="friendImage">
+													<a href="/user/getTimeLine?userId=${friend.userId}"><img class="friend_img" style="width: 120px; height: 120px;" alt="" src="../resources/images/profile_default.png"></a>
+													</button>
+													</c:if>
 						</div>
 						<input type="hidden" name="friendId" value="${friend.name}">
 						<div class="col-xs-6 col-sm-4 ">${friend.name }</div>
@@ -184,30 +147,23 @@ body {
 			</div>
 			
 			<div class="row">
-
-
-				<c:forEach var="friend" items="${list}" varStatus="status">
+				<c:forEach var="friend" items="${recommendList}" varStatus="status">
 
 					<div class="col-xs-6 col-md-4">
-						<div>
-							<c:if test="${user.profileImage ne null }">
-								<button type="button" class="btn btn-default" id="friendImage">
-									<img class="friend_img" style="width: 120px; height: 120px;"
-										src="../resources/upload_files/images/${friend.profileImage}">
-								</button>
-							</c:if>
-
-							<c:if test="${user.profileImage eq null }">
-
-
-								<button type="button" class="btn btn-default" id="friendImage">
-									<img class="friend_img" style="width: 120px; height: 120px;"
-										src="../resources/images/profile_default.png">
-								</button>
-
-
-
-							</c:if>
+						<div><c:if test="${!empty friend.profileImage }">
+						<button type="button" class="btn btn-default" id="friendImage">
+													<a href="/user/getTimeLine?userId=${friend.userId}"><img class="friend_img" style="width: 120px; height: 120px;" alt="" src="../resources/upload_files/images/${friend.profileImage}"></a>
+													</button>
+													</c:if>
+													
+													<c:if test="${empty friend.profileImage }">
+													<button type="button" class="btn btn-default" id="friendImage">
+													<a href="/user/getTimeLine?userId=${friend.userId}"><img class="friend_img" style="width: 120px; height: 120px;" alt="" src="../resources/images/profile_default.png"></a>
+													</button>
+													</c:if>
+													
+													
+													
 						</div>
 						<input type="hidden" name="friendId" value="${friend.name}">
 						<div class="col-xs-6 col-sm-4 ">${friend.name }</div>
@@ -230,6 +186,7 @@ body {
 			</div>
 		</div>
 		
+		</div>
 		
 
 		

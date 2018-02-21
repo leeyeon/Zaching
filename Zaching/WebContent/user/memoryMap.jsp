@@ -23,7 +23,6 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 
 <style>
-
 /* 템플릿적용 */
 .hero {
 	background: url('../resources/images/memoryMAP.jpg') no-repeat bottom center;
@@ -38,9 +37,6 @@
     margin-top: 50px;
     padding-bottom: 100px;
 }
-
-
-
 .customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
 .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
 .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
@@ -67,15 +63,12 @@
 <script type="text/javascript" 
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=clusterer"></script>
 <script>
-
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 mapOption = { 
     center: new daum.maps.LatLng(36.566826, 126.9786567), // 지도의 중심좌표
     level: 13// 지도의 확대 레벨
 };
-
 var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
 var clusterer = new daum.maps.MarkerClusterer({
 	
     map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
@@ -119,15 +112,9 @@ var clusterer = new daum.maps.MarkerClusterer({
         lineHeight: '61px'
     }
 ]
-
-
-
     
 });
-
-
 var userId = "${sessionScope.user.userId}"; //"3";
-
 $(function() {	
 	
 	$.ajax({
@@ -153,7 +140,6 @@ $(function() {
 			            	position : new daum.maps.LatLng(position.lat, position.lng),
 			                image : markerImage // 마커 이미지 
 			            });
-
 			        // 클러스터러에 마커들을 추가합니다
 			        
 			    });
@@ -163,8 +149,6 @@ $(function() {
 		
 		});	
 	});
-
-
 </script>
 
 

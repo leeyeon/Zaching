@@ -20,11 +20,7 @@
    </head>
    
        <style>
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
-		
-		* {
-			font-family: 'Nanum Gothic', serif;
-		}
+
 
 .containerr {
   margin: 0 auto;
@@ -32,6 +28,7 @@
   height: 200px;
   position: relative;
   perspective: 1000px;
+  font-family: 'Hanna', serif;
 }
 
 .carouselMovie {
@@ -40,7 +37,7 @@
   position: absolute;
   transform-style: preserve-3d;
   transition: transform 1s;
-
+font-family: 'Hanna', serif;
   
 }
 
@@ -53,15 +50,17 @@
   font-size: 20px;
   text-align: center;
   color: #00000;
-  
+  font-family: 'Hanna', serif;
  
 }
 
 .a {
   transform: rotateY(0deg) translateZ(250px);
+  
 }
 .b {
   transform: rotateY(60deg) translateZ(250px);
+  
 }
 .c {
   transform: rotateY(120deg) translateZ(250px);
@@ -77,6 +76,35 @@
 }
 
 
+#contact > div.containerr > div > div.itemMovie.a > div > div{
+background-color:#fff;
+font-family: 'Hanna', serif;
+}
+
+#contact > div.containerr > div > div.itemMovie.b > div > div{
+background-color:#fff;
+font-family: 'Hanna', serif;
+}
+
+#contact > div.containerr > div > div.itemMovie.c > div > div{
+background-color:#fff;
+font-family: 'Hanna', serif;
+}
+
+#contact > div.containerr > div > div.itemMovie.d > div > div{
+background-color:#fff;
+font-family: 'Hanna', serif;
+}
+
+#contact > div.containerr > div > div.itemMovie.e > div > div{
+background-color:#fff;
+font-family: 'Hanna', serif;
+}
+
+#contact > div.containerr > div > div.itemMovie.f > div > div{
+background-color:#fff;
+font-family: 'Hanna', serif;
+}
     </style>
  
 
@@ -183,9 +211,9 @@ $(function() {
 						
 						for(var i=0; i<6; i++){
 											
-							displayValue = displayValue + '<div class="itemMovie '+itemNum[i]+' " ><h1>'+(i+1)+'</h1><div class="containerr">'+
-							'<img src="'+img[i]+'" width="150px"/>'+
-							' <h4><b>'+name[i]+'</b><br/></h4><h7>장르:'+item1[i]+'<br/>주연:'+item3[i]+'<br/>개봉일:'+item2[i]+'<br/></h7></div></div>';
+							displayValue = displayValue + '<div class="itemMovie '+itemNum[i]+' " ><h1>'+(i+1)+'</h1><div class="containerr" >'+
+							'<div class="jinsu" style="background-color=#fff"><img src="'+img[i]+'" width="150px"/>'+
+							'<h4><b>'+name[i]+'</b><br/></h4><h7>장르:'+item1[i]+'<br/>주연:'+item3[i]+'<br/>개봉일:'+item2[i]+'<br/></h7></div></div></div>';
 							
 						}
 						

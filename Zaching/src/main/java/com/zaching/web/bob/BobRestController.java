@@ -113,10 +113,6 @@ public class BobRestController {
 		obj.put("list", list);
 		obj.put("resultPage", resultPage);
 		
-		for (Bob bob : list) {
-			System.out.println(list);
-		}
-		
 		return obj;
 		
 	}
