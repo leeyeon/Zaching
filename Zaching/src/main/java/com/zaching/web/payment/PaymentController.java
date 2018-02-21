@@ -111,9 +111,8 @@ public class PaymentController {
 		
 		User accountUser = userService.getAccountUser(user.getUserId());
 		
-		System.out.println(kakaologin);
-		
 		if(kakaologin != null) {
+			System.out.println(kakaologin);
 			model.addAttribute("kakologin", "success");
 			System.out.println("kakaologin - success");
 		}
