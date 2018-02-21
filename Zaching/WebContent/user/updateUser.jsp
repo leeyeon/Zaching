@@ -184,13 +184,16 @@ body {
 	});
 
 	function fncUpdateUser() {
-
+		
+		var accountNumber =$("#accountNumber").val();
 		var userId = $("input[name='userId']").val();
 		var email = $("#inputEmail").val();
-		var address = $("input[name='address']").val();
 		var pw = $("#updatepw").val();
-		var pw2 = $("#updatepw2").val();
+		var address = $("input[name='address']").val();
 		var gender =$("input[name='gender']").val();
+		var pw2 = $("#updatepw2").val();
+		
+		
 	/* 	var chk = document.getElementById('cma_file'); */
 		
 		
@@ -205,6 +208,7 @@ body {
 		alert(userId);
 		alert(email);
 		alert(address);
+		alert(accountNumber);
 
 		$("#form").attr("method", "POST").attr("action",
 				"/user/updateUser?userId=${sessionScope.user.userId}").submit();
@@ -372,7 +376,7 @@ body {
 				style="padding-top:0px;padding-bottom: 20px; padding-left: 10px; padding-right: 10px;">
 			
 		<input type="hidden" name="userId" value="${sessionScope.user.userId}" id="userId"/>
-		
+		<input type="hidden" name="accountNumber" value="${sessionScope.user.accountNumber}" id="accountNumber"/>
 		
 		
 			<div class="form-group">
@@ -429,7 +433,7 @@ body {
 			<div class="form-group">
 				<label for="address" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="ad" name="address"
+					<input type="text" class="form-control" id="ad" name="address" value="${!empty user.address ? user.address : '' }"
 						placeholder="변경주소">
 				</div>
 			</div>

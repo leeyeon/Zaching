@@ -181,11 +181,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value="updateUser", method = RequestMethod.POST)
-	public String updateUser(@ModelAttribute("user") User user, 
+	public String updateUser(@ModelAttribute User user, 
 			Model model, HttpSession session,HttpServletRequest request) throws Exception {
 
 		System.out.println("/user/updateUser : POST");
 		
+		user.setRole("2");
 		userService.updateUser(user);
 		
 		System.out.println("update user ====>"+user);

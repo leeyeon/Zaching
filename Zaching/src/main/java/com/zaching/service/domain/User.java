@@ -200,7 +200,7 @@ public class User {
 		if(birth ==null) {
 			return"";
 		}
-		return birth.replace("-", "/").trim();
+		return birth.replace("-", " ").trim();
 	}
 
 
