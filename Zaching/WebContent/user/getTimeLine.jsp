@@ -57,6 +57,7 @@ $( function () {
 	//추억지도 Event
 	
 	$("#memoryMapshow").hide();
+	$("#noticeshow").hide();
 	
 	//친구목록 Event
 	$( "#listFreind" ).on("click" , function() {
@@ -67,23 +68,17 @@ $( function () {
 	
 	//알림함 Event
 	$("#listNotice").on("click", function() {
-		self.location = "/user/listNotice?userId=${user.userId}";
+		
+		$("#memoryMapshow").hide();
+		$("#timelineshow").hide();
+		$("#noticeshow").show();
+		
+		$("#memoryMap").css('backgroundColor', '#fff');
+		$("#listtimeline").css('backgroundColor', '#fff');
+		$("#listNotice").css('backgroundColor', '#adbfdea1');
 	});
 
-
-		
-		//친구목록 Event
-		$( "#listFreind" ).on("click" , function() {
-
-			self.location = "/friend/listFriend";
-			
-	 	});
-		
-		//알림함 Event
-		$("#listNotice").on("click", function() {
-			self.location = "/user/listNotice?userId=${user.userId}";
-		});
-		
+	
 		
 		//메세지함
 		$("#listMessage").on("click", function() {
@@ -96,18 +91,22 @@ $( function () {
 			
 			$("#timelineshow").show();
 			$("#memoryMapshow").hide();
+			$("#noticeshow").hide();
+			
 			$("#memoryMap").css('backgroundColor', '#fff');
 			$("#listtimeline").css('backgroundColor', '#adbfdea1');
+			$("#listNotice").css('backgroundColor', '#fff');
 			
 		})
 		
 		$( "#memoryMap" ).on("click" , function() {
 			$("#memoryMapshow").show();
 			$("#timelineshow").hide();
+			$("#noticeshow").hide();
 			map.relayout();
 			$("#memoryMap").css('backgroundColor', '#adbfdea1');
 			$("#listtimeline").css('backgroundColor', '#fff');
-			
+			$("#listNotice").css('backgroundColor', '#fff');
 	 	});
 		
 		
@@ -774,6 +773,11 @@ font-size:14pt;
 			
 			<div id="memoryMapshow">
 				<div id="map" style="width:100%; height:700px;"></div>
+			</div>
+			
+			
+			<div id="noticeshow">
+				<jsp:include page="/notice/listNotice?userId=${user.userId}"/>
 			</div>
 			
 			 </div>
