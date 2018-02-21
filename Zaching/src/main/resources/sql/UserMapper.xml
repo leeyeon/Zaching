@@ -112,10 +112,10 @@
 		WHERE user_id = #{value}
 	 </select>
 	 
-	<update id="updateRole" parameterType="user">
+	<update id="updateRole" parameterType="user" >
 		UPDATE users
 		<set>
-			role = #{value}
+			role = #{role}
 		</set>
 		WHERE user_id = #{userId}
 	</update>
