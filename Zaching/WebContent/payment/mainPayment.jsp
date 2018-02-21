@@ -216,7 +216,21 @@
 	    line-height: 82px;
 	    font-size: 18px;
 	    text-align: center;
-	    
+	}
+	
+	.spot_button.type1 {
+		position: relative;
+	    top: -11px;
+	    left: 5px;
+	    display: inline-block;
+	    width: 82px;
+	    border: 1px solid;
+	    font-size: 14px;
+	    line-height: 35px;
+	    text-align: center;
+	    height:35px;
+	    text-decoration: none !important;
+	    color: #fff;
 	}
 	       	
     </style>
@@ -231,12 +245,17 @@
   			
   			//alert($("option:selected").text());
 
-  			<c:if test="${searchCondition != null}">
+  			<c:if test="${param.searchCondition != null}">
   			
 	  			if($("div.container > div > div:nth-child(2) > div > div > select > option:selected").text() != '기간설정') {					
-	  				alert($("div.container > div > div:nth-child(2) > div > div > select > option:selected").text());
+	  				//alert($("div.container > div > div:nth-child(2) > div > div > select > option:selected").text());
 	  				titleText = $("div.container > div > div:nth-child(2) > div > div > select > option:selected").text()+"간 포인트 내역";
 	  			}
+	  			
+  			</c:if>
+  			
+  			<c:if test="${kakologin eq 'success'}">
+  				$('#chargePoint').modal("show");
   			</c:if>
   			
   			$("body > div.container > div > div:nth-child(1) > div").text(titleText);
@@ -389,7 +408,9 @@
 				}
 			})
 			
-			$('li:contains("충전")').on('click', function() {
+			
+			
+			$('a:contains("충전하기")').on('click', function() {
 				<c:if test="${empty user.accessToken}">
 					$(self.location).attr("href","/payment/kakaoLoginRequest");
 				</c:if>
@@ -455,36 +476,52 @@
 			<h2 class="caption">My Point</h2>
 		</section>
 	</section>
-	<section class="search" style="background: #000000;">
+	<section class="search" style="background: #000000; height:120px;">
 		<div class="wrapper">
 			<form id="searchForm">
-				<div id="search" class="text-center" style="position: absolute; background: none; color:#FFF; left: 5%; padding-top: 10px;">
-					<h1 style="font-size:20px;">${accountUser.name}님의 잔여 포인트 : <fmt:formatNumber type="currency" value="${accountUser.totalPoint}" pattern="###,###" /> Point</h1>
-					<h4>( 마일리지 : <fmt:formatNumber type="currency" value="${accountUser.totalMileage}" pattern="###,###" />점 )</h4>
+				<div id="search" class="text-center" style="position: absolute; background: none; color:#FFF; left: 5%; padding-top: 20px;">
+					<div class="row">
+						<div class="col-sm-6 text-right">				
+							<h1 style="font-size:15px; color:#FFF; font-weight: normal;">
+								<span style="margin-right: 120px;">사용가능 포인트</span><br>
+								<span style="font-size:20px; font-weight: bold;">
+									<fmt:formatNumber type="currency" value="${accountUser.totalPoint}" pattern="###,###" /> Point
+								</span>
+								<a href="#" class="spot_button type1">충전하기</a>
+							</h1>
+						</div>
+						<div class="col-sm-4">
+							<h1 style="font-size:15px; color:#FFF; font-weight: normal; padding-top:10px;">
+								<span style="margin-right: 30px;">마일리지</span>
+								<span style="font-size:20px; font-weight: bold;">
+									<fmt:formatNumber type="currency" value="${accountUser.totalMileage}" pattern="###,###" />점
+								</span>
+							</h1>
+						</div>
+					</div>
 				</div>
-				<a href="#" class="advanced_search_icon" id="advanced_search_btn"></a>
+				<a href="#" class="advanced_search_icon" id="advanced_search_btn"  style="margin-top: 42px;"></a>
+				
 			</form>
 		</div>
 		
-		<div class="advanced_search" style="z-index: 50;">
+		<div class="advanced_search" style="z-index: 50; top: 120px;">
 			<div class="wrapper">
 				<span class="arrow"></span>
             	<ul class="nav nav-tabs nav-justified" style="border: none;">
 					<li class="active" ><a>마일리지 전환</a></li>
-					<li><a>충전</a></li>
 					<li><a>반환신청</a></li>
 				</ul>
 			</div>
 		</div><!--  end advanced search section  -->
 	</section><!--  end search section  -->
 	
-	<div class="container" style="padding-top: 20px;">
+	<div class="container" style="padding-top: 20px; max-width: 1000px;">
 
-		<div class="row" style="border:0.5px solid #efefef; background-color:#FFF; padding: 20px 5px 5px 5px; margin: 0 60px;">
+		<div class="row" style="border:0.5px solid #efefef; background-color:#FFF; padding: 20px 5px 5px 5px;">
 		
 			 <div class="row">
 	        	<div class="col-xs-12 text-center" style="font-size:20px; font-weight:bold; padding:20px;">
-	        	
 				</div>
 	        </div>
 
@@ -515,7 +552,7 @@
     
     <footer style="background: #000000; margin-top: 20px;">
 		<div class="copyrights wrapper" style="border-top: 1px solid #6f6f6f; ">
-			Copyright @ 2015 <a href="/" class="ph_link" >zaching.com</a>. All Rights Reserved.
+			Copyright @ 2018 <a href="/" class="ph_link" >zaching.com</a>. All Rights Reserved.
 		</div>
 	</footer>
     
