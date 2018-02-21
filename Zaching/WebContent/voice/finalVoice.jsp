@@ -2,9 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
-<%
-	out.clear();
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -448,6 +446,9 @@
     padding-top: 0px;
     padding-bottom: 15px;
 }
+.nav a{
+font-family: 'Hanna', serif;"
+}
 </style>
 </head>
 
@@ -481,19 +482,7 @@
 						
 						<div id="jinsubaby"></div>
 						
-						
-							
-							
-						
-						<blockquote style="vertical-align: middle;">
-							
-								<img alt="" src="../resources/images/suzi.jpg" width="40"
-									height="40">수지&nbsp;
-								<audio controls="controls">
-									<source src="../resources/upload_files/record/Ailee.mp3"
-										type="audio/mpeg">
-								</audio>
-						</blockquote>
+					
 					
 						
 					
@@ -695,9 +684,10 @@
 				au.src = url;
 				hf.href = url;
 				hf.download = new Date().toISOString() + '.wav';
-				hf.innerHTML = hf.download;
+				hf.innerHTML = '녹음파일 다운';
 				li.appendChild(au);
 				li.appendChild(hf);
+				li.appendChild(uploadButton);
 				recordingslist.appendChild(li);
 
 				//alert(hf.download);

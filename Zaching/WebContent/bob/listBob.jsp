@@ -42,10 +42,6 @@
    			max-width: 1200px;
    		}
 		
-		.listings ul.properties_list li{
-		    border: 1px solid #f2f1f1;
-		}
-		
 		.listings ul li .property_details {
 			width: 100%;
 		}
@@ -61,6 +57,9 @@
 		    border-left: 1px solid #f77e7e;
 		    border-right: 1px solid #f77e7e;
 		}
+		.nav a{
+font-family: 'Hanna', serif;"
+}
 		
 	</style>
 
@@ -103,7 +102,7 @@
 			}
 			
 			/* 무한스크롤 */
-			$("#loader").hide();
+			$("#loader").css('visibility','hidden');
 
 			var pageInfo = ${resultPage.currentPage};
 			var totalCount = ${resultPage.totalCount};
@@ -120,7 +119,7 @@
 			
 			function dataLoading() {
 				
-				$("#loader").show();
+				$('#loader').css('visibility','visible');
 				
 				pageInfo++;
 				
@@ -135,6 +134,7 @@
 						category : $("#exTab2 li.active > a").attr('data-target').substring(1)
 					}),
 					dataType : "json",
+					async : false,
 					success : function(serverData) {
 						$(serverData.list).each(function(index,data) {
 							
@@ -149,7 +149,7 @@
 							+'<input type="hidden" name="writtenUserId" value="'+data.writtenUserId+'">'
 							+'<li>'
 							+'<img src = "../resources/upload_files/images/'+data.image+'" onerror="this.src=\'../resources/images/sample_bob_background.jpg\'"'
-							+'style="cursor: pointer; width: 100%; height:270px; opacity: 0.8;">';
+							+'style="cursor: pointer; width: 100%; height:270px; opacity: 0.8; background: #FFF;">';
 							
 							<c:if test="${search.category ne 'B03'}">
 								html = html + '<div class="user_thumnail" '
@@ -218,7 +218,7 @@
 					}
 				});
 				
-				$("#loader").hide();
+				$("#loader").css('visibility','hidden');
 			}
 			
 		});
@@ -270,7 +270,7 @@
 				<li>
 					<img src = "../resources/upload_files/images/${bob.image}"
 			      	onerror="this.src='../resources/images/sample_bob_background.jpg'" 
-			      	style="cursor: pointer; width: 100%; height:270px; opacity: 0.8;">
+			      	style="cursor: pointer; width: 100%; height:270px; opacity: 0.8; background: #FFF;">
 			      	<c:if test="${search.category ne 'B03'}">
 				      	<div class="user_thumnail" 
 				      	style="background: url('../resources/upload_files/images/${bob.writtenUserProfile}'),

@@ -36,6 +36,11 @@ body {
 	padding-top: 100px;
 	
 }
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+* {
+	font-family: 'Hanna', serif;
+}
 
 .dropdown {
 	position: relative;

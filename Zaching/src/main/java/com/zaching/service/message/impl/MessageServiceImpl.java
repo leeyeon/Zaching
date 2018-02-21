@@ -50,7 +50,9 @@ public class MessageServiceImpl implements MessageService{
 		if(search.getSearchCondition() == null) {
 			list = messageDao.listMessage(search);
 		} else {
+			System.out.println("しさし1");
 			list = messageDao.listMessagebyRoomId(search);
+			System.out.println("しさし2");
 		}
 		
 		Map<String, Object> map=new HashMap<String,Object>();

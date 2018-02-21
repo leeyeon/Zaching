@@ -62,84 +62,9 @@ public class UserController {
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 	
-
-	// �̸��� ����
-	@RequestMapping(value = "emailAuth", method = RequestMethod.POST)
-	public String emailAuth(HttpServletRequest request, HttpSession session) throws Exception {
-
-		System.out.println("/user/emailAuth : POST");
-
-		String email = request.getParameter("email");
-		String authNum = "";// ���� ������ȣ
-
-		authNum = RandomNum();
-
-		User getSessionUser = (User) session.getAttribute("user");
-
-		System.out.println("getSessionUser :: " + getSessionUser);
-
-		System.out.println("�޴»�� email ����==>" + email);
-		System.out.println("���λ����� ������ȣ==> " + authNum);
-
-		getSessionUser.setAuthNum(authNum);
-		userService.sendMail(email, authNum);
-
-		System.out.println("DB������ȣ ===> " + getSessionUser.getAuthNum());
-
-		session.setAttribute("user", getSessionUser);
-
-		System.out.println("setSessionUser :: " + getSessionUser);
-
-		return "forward:/user/emailAuth.jsp";
-	}
+	private String fileDirectory = "C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
 
 
-	public String RandomNum() {
-
-		StringBuffer buffer = new StringBuffer();
-		for (int i = 0; i <= 6; i++) {
-			int n = (int) (Math.random() * 10);
-			buffer.append(n);
-		}
-		return buffer.toString();
-	}
-
-	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception {
-
-		System.out.println("/user/login : POST");
-
-		System.out.println("::" + user);
-
-		User dbUser = userService.login(user.getEmail());
-		System.out.println("::::: " + dbUser);
-
-		if (user.getPassword().equals(dbUser.getPassword()) && user.getEmail().equals(dbUser.getEmail())) {
-			session.setAttribute("user", dbUser);
-			//세션에 저장하는 시간(=로그인시간 기록남기기) DB에 저장 OR 업데이트
-		}
-		if (session.getAttribute("user") == null) {
-					
-		}
-		System.out.println("=====>  " + session.getAttribute("user"));
-		
-		System.out.println("��===>" + user.getEmail() + " = " + dbUser.getEmail());
-		System.out.println("��===>" + user.getPassword() + " = " + dbUser.getPassword());
-	
-
-		return "redirect:/index.jsp";
-	}
-
-	@RequestMapping(value = "logout", method = RequestMethod.GET)
-	public String logout(HttpSession session) throws Exception {
-
-		System.out.println("/user/logout : POST");
-		
-		
-		session.invalidate();
-
-		return "redirect:/index.jsp";
-	}
 
 	@RequestMapping(value = "findPassword", method = RequestMethod.GET)
 	public String findPassword() throws Exception {
@@ -147,6 +72,14 @@ public class UserController {
 		System.out.println("/user/findPassword : GET");
 
 		return "redirect:/user/findPassword.jsp";
+	}
+	@RequestMapping(value ="findPassword", method=RequestMethod.POST)
+	public String findPassword(@RequestParam("email")String email)throws Exception{
+		
+		System.out.println("/user/findPassword : POST");
+		
+		userService.findPassword(email);
+		return"";
 	}
 
 	@RequestMapping(value = "getUser", method = RequestMethod.GET)
@@ -204,10 +137,10 @@ public class UserController {
 		model.addAttribute("user", user);
 		model.addAttribute("list", list);
 		
-		
+		System.out.println(list);
 		
 
-		return "forward:/user/getTimeLine.jsp";
+		return "forward:/user/nonogetTimeLine.jsp";
 		
 	}
 	@RequestMapping(value = "listUser")
@@ -249,16 +182,29 @@ public class UserController {
 	}
 
 	@RequestMapping(value="updateUser", method = RequestMethod.POST)
-	public String updateUser(@ModelAttribute("user") User user, 
-			Model model, HttpSession session) throws Exception {
+	public String updateUser(@ModelAttribute User user, 
+						
+			Model model, HttpSession session,HttpServletRequest request) throws Exception {
 
 		System.out.println("/user/updateUser : POST");
-		// Business Logic
+		if(user.getUploadFile() != null) {
+			try {System.out.println("여기?");
+				user.setProfileImage(commonService.addFile(fileDirectory, user.getUploadFile()));
+				System.out.println("여기");
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+		}else {
+			System.out.println("뭐여");
+			user.setProfileImage("profile_default.png");
+		}
 		user.setRole("2");
 		userService.updateUser(user);
 		
 		System.out.println("update user ====>"+user);
-
+		model.addAttribute("user", user);
+		
 		return "redirect:/user/getUser?userId=" + user.getUserId();
 	}
 

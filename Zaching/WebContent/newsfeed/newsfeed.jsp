@@ -208,6 +208,7 @@
 		<!---//End-click-drop-down-menu----->
 		
 	<style>
+
 	.btn-add-bob {
       	border: 1px solid #FFFFF;
 		border-radius: 70px;
@@ -299,7 +300,6 @@
 		border:1px solid #84bbf3;
 		display:inline-block;
 		color:#ffffff;
-		font-family:Arial Black;
 		font-size:15px;
 		font-weight:bold;
 		font-style:normal;
@@ -326,10 +326,9 @@
 			
 
 	#navigation2 {
-	    height: 70px;
+	    width: 100%;
 	    z-index: 1000;
-	    background: #fff;
-	    padding-top: 60px;
+	    padding-top: 40px;
     }
 
     .navbar-custom ul.nav2 {
@@ -359,13 +358,21 @@
 	
 	.sticky {
 	  position: fixed;
-	  top: 100px;
 	  width: 100%;
 	  opacity: 0.7;
 	}
 	
 	.sticky + .about {
-	  padding-top: 503px;
+	  padding-top: 483px;
+	}
+	#menu{
+	background-color: #fff;
+    padding-bottom: 20px;
+    width: 100%;
+	}
+	
+	#navigation2 > nav{
+	background-color: #fff;
 	}
 	
 	.filebox label {
@@ -422,21 +429,21 @@
 	            <div class="collapse navbar-collapse" id="menu"><br/>
 	              <ul class="nav2 navbar-nav">
 	                <li><img src="/resources/images/ufo.png" class="ufo" width="25"></li>
-	                <li class="active"><c:if test="${search.searchCondition == 'N06'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N06">전체보기</a></c:if>
-							<c:if test="${search.searchCondition != 'N06'}"><a href="/newsfeed/listNewsfeed?searchCondition=N06">전체보기</a></c:if></li>&nbsp;&nbsp;
-	                <li><c:if test="${search.searchCondition == 'N01'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N01">자취지식인</a></c:if>
-							<c:if test="${search.searchCondition != 'N01'}"><a href="/newsfeed/listNewsfeed?searchCondition=N01">자취지식인</a></c:if></li>&nbsp;&nbsp;
-	                <li><c:if test="${search.searchCondition == 'N10'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N10">밥친구 후기</a></c:if>
-							<c:if test="${search.searchCondition != 'N10'}"><a href="/newsfeed/listNewsfeed?searchCondition=N10">밥친구 후기</a></c:if>
+	                <li class="active"><c:if test="${search.searchCondition == 'N06'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N06" style="font-family: 'Hanna', serif;">전체보기</a></c:if>
+							<c:if test="${search.searchCondition != 'N06'}"><a href="/newsfeed/listNewsfeed?searchCondition=N06" style="font-family: 'Hanna', serif;">전체보기</a></c:if></li>&nbsp;&nbsp;
+	                <li><c:if test="${search.searchCondition == 'N01'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N01" style="font-family: 'Hanna', serif;">자취지식인</a></c:if>
+							<c:if test="${search.searchCondition != 'N01'}"><a href="/newsfeed/listNewsfeed?searchCondition=N01" style="font-family: 'Hanna', serif;">자취지식인</a></c:if></li>&nbsp;&nbsp;
+	                <li><c:if test="${search.searchCondition == 'N10'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N10" style="font-family: 'Hanna', serif;">밥친구 후기</a></c:if>
+							<c:if test="${search.searchCondition != 'N10'}"><a href="/newsfeed/listNewsfeed?searchCondition=N10" style="font-family: 'Hanna', serif;">밥친구 후기</a></c:if>
 						</li>&nbsp;&nbsp;
-	                <li><c:if test="${search.searchCondition == 'N04'}"><a class="current-demo"href="/newsfeed/listNewsfeed?searchCondition=N04">꿀팁</a></c:if>
-							<c:if test="${search.searchCondition != 'N04'}"><a href="/newsfeed/listNewsfeed?searchCondition=N04">꿀팁</a></c:if>
+	                <li><c:if test="${search.searchCondition == 'N04'}"><a class="current-demo"href="/newsfeed/listNewsfeed?searchCondition=N04" style="font-family: 'Hanna', serif;">꿀팁</a></c:if>
+							<c:if test="${search.searchCondition != 'N04'}"><a href="/newsfeed/listNewsfeed?searchCondition=N04" style="font-family: 'Hanna', serif;">꿀팁</a></c:if>
 						</li>&nbsp;&nbsp;
-	                <li>	<c:if test="${search.searchCondition == 'N02'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N02">중고거래</a></c:if>
-							<c:if test="${search.searchCondition != 'N02'}"><a href="/newsfeed/listNewsfeed?searchCondition=N02">중고거래</a></c:if>
+	                <li>	<c:if test="${search.searchCondition == 'N02'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N02" style="font-family: 'Hanna', serif;">중고거래</a></c:if>
+							<c:if test="${search.searchCondition != 'N02'}"><a href="/newsfeed/listNewsfeed?searchCondition=N02" style="font-family: 'Hanna', serif;">중고거래</a></c:if>
 						</li>&nbsp;&nbsp;
-					<li><a href="index6.html">친구글만</a></li>&nbsp;&nbsp;
-							<li><a href="index7.html">팔로워글만</a></li>
+					<li><a href="index6.html" style="font-family: 'Hanna', serif;" >친구글만</a></li>&nbsp;&nbsp;
+							<li><a href="index7.html" style="font-family: 'Hanna', serif;">팔로워글만</a></li>
 	              </ul>
 	            </div>
 	          </div>
@@ -542,7 +549,17 @@
 
 			 var header =  document.getElementById("navigation2");
 			 var sticky = header.offsetTop;
+
+			 function myFunction() {
+				
+			   if (window.pageYOffset >= sticky - 95) {
+			     header.classList.add("sticky");
+			   } else {
+			     header.classList.remove("sticky");
+			   }
+			 }
 			 
+
 			 $('.mainbar-menu').on('click', function(){
 				 $('.active').removeClass('active');
 				 $(this).addClass('active');
@@ -555,7 +572,7 @@
 					$("#loginModal").modal('show');
 				</c:if>
 				
-				<c:if test="${!empty sessionScope.user}">
+				 <c:if test="${!empty sessionScope.user}">
 					var userId = $($('input[name=newsfeedUserId]')[$('#tiles table > tbody > tr > td > p > a').index(this)]).val();
 					self.location="/user/getTimeLine?userId="+userId;
 				</c:if>
@@ -579,15 +596,7 @@
 		});
 		
 		/* function들 */
-		
-		function myFunction() {
-			
-		   if (window.pageYOffset >= sticky - 95) {
-		     header.classList.add("sticky");
-		   } else {
-		     header.classList.remove("sticky");
-		   }
-		 }
+	
 
 		function getThumbnailPrivew(html, $target) {
 		    if (html.files && html.files[0]) {

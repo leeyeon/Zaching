@@ -22,10 +22,6 @@
 		* {
 			font-family: 'Nanum Gothic', serif;
 		}
-	
-		body {
-			padding-bottom: 50px;
-		}
 		
 		.cover {
 			background-color: #000;
@@ -134,6 +130,12 @@
 		    border: none;
 		}
 		
+		.listings ul li img {
+		    border-top: 1px solid #cccccc;
+		    border-left: 1px solid #cccccc;
+		    border-right: 1px solid #cccccc;
+		}
+		
 		#exTab2 > ul > li> a:hover {
 			background-color: #f2dede;
 		}
@@ -156,7 +158,19 @@
 		.hero {
 			background: url('../resources/images/202991-OZ1TED-507.jpg') no-repeat bottom center;
 		}
-	
+		
+
+		.nav a{
+font-family: 'Hanna', serif;"
+}
+
+		.listings ul li .property_details {
+			background: #fff;
+		    border-bottom: 1px solid #cccccc;
+		    border-left: 1px solid #cccccc;
+		    border-right: 1px solid #cccccc;
+	    }
+			
 	</style>
 	
 	<script type="text/javascript">
@@ -329,6 +343,12 @@
 				}
 
 			});
+			
+			/*
+			$(document).on('change','#loader', function () {
+				$('footer').show();
+			});
+			*/
 
 		});		
 
@@ -337,7 +357,7 @@
 </head>
 	
 	
-<body>
+<body style="background: #e3e3e3;">
 
 	<div class="cover"></div>
 	<div class="bg"></div>
@@ -358,7 +378,9 @@
 				<input type="text" id="search" name="searchKeyword" placeholder="What are you looking for?"  autocomplete="off"
 					style="background: none;"/>
 				<a href="#" class="advanced_search_icon" id="advanced_search_btn"></a>
+				
 			</form>
+			<img src = "../resources/images/category-add-button.png" width="50px" height=" 50px"/>
 		</div>
 		
 		<div class="advanced_search" style="z-index: 50;">
@@ -379,23 +401,29 @@
 
 	<div class="container" style="font-size: 17px; padding:0;"> 
 		
-		<div class="form-group">
-		<form class="form-horizontal" id="mainBob">
-
-				<!-- 데이터 들어갈 것들,,, -->
-				<div class="tab-content" style="padding:20px; background: #FFF;overflow: hidden; border-right: 1px solid #ddd; border-left: 1px solid #ddd; border-bottom: 1px solid #ddd;">
-					<c:import url="/bob/listBobd"></c:import>
-					
-					<!-- 데이터 끝... -->
-					    	
-		    	<div id="loader" class="text-center" style="margin: 50px;">
-					<img src = "../resources/images/ajax-loader.gif"/>
+		<div class="form-group" style="margin: auto;">
+			<form class="form-horizontal" id="mainBob">
+	
+					<!-- 데이터 들어갈 것들,,, -->
+					<div class="tab-content" style="padding: 3.636363636363636% 0 0 0; overflow: hidden;">
+						<c:import url="/bob/listBobd"></c:import>
+						
+						<!-- 데이터 끝... -->
+						    	
+			    	<div id="loader" class="text-center">
+						<img src = "../resources/images/ajax-loader.gif" width="150px" height="150px"/>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
 		</div>
 
 	</div>
+	
+	<footer style="background: #f77e7e;">
+		<div class="copyrights wrapper" style="border-top: 1px solid #ffb8b8; ">
+			Copyright @ 2018 <a href="/" class="ph_link" >zaching.com</a>. All Rights Reserved.
+		</div>
+	</footer>
 
 	<!-- 방만들기 버튼 시작 -->
 	

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.zaching.common.domain.Search;
+import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.domain.User;
 import com.zaching.service.user.UserDao;
 
@@ -68,9 +69,18 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public void updateUser(User user) throws Exception {
-		System.out.println(":: UserDaoImpl UpdateUser ::"+user);
+		System.out.println("::[before] UserDaoImpl UpdateUser ::"+user);
 		sqlSession.update("UserMapper.updateUser", user);
+		System.out.println("::[After] UserDaoImpl UpdateUser ::"+user);
 		
+	}
+
+	@Override
+	public int updateRole(User user) throws Exception {
+		
+		System.out.println("::UserDao updateRole::\n"+user);
+	
+		return	sqlSession.update("UserMapper.updateRole", user);
 		
 	}
 
@@ -101,18 +111,11 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public List<User> memoryMap(Search search) throws Exception {
+	public List<Newsfeed> memoryMap(int userId) throws Exception {
 		
-		return sqlSession.selectList("UserMapper.memoryMap", search);
+		return sqlSession.selectList("UserMapper.memoryMap", userId);
 	}
 
-	@Override
-	public void updateRole(User user) throws Exception {
-		
-		System.out.println("::UserDao updateRole::\n"+user);
-		sqlSession.update("UserMapper.updateRole", user);
-		
-	}
 
 	@Override
 	public int checkSignup(String email) throws Exception {
@@ -165,5 +168,14 @@ public class UserDaoImpl implements UserDao{
 		map.put("fcmToken", fcmToken);
 		sqlSession.selectOne("UserMapper.updateFCMToken", map);
 	}
+
+	@Override
+	public void latestLogin(int userId) throws Exception {
+		System.out.println(":: UserDaoImpl/latestLogin/ :: "+userId);
+		sqlSession.update("UserMapper.updateLatestDate", userId);
+		
+	}
+	
+	
 	
 }
