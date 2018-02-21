@@ -21,11 +21,13 @@
 <style rel="stylesheet">
 
 /* 글꼴 수정 */
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+		
+		* {
+			font-family: 'Nanum Gothic', serif;
+		}
 
-* {
-	font-family: 'Nanum Gothic', serif;
-}
 
 .navbar-fixed-top {
 	background: #ffffff;
@@ -824,7 +826,8 @@ function noticeclose(){
 	<nav class="navbar navbar-inverse navbar-fixed-top"
 		style="height: 105px; background-color: #FFF;  
     	background-image: url('/resources/images/toolbar_img.png');     background-repeat: repeat-x;
-    	border-bottom: 1px solid rgba(214, 213, 212, 0.64);">
+
+    	border-bottom: 1px solid rgba(214, 213, 212, 0.64);" >
 
       <div class="container" style="color:#000">
         <div class="navbar-header">
@@ -843,7 +846,7 @@ function noticeclose(){
 	          		style="margin-top: 20px;"/></div>
 	        </a>
         </div>
-        <div id="navigationbar" class="collapse navbar-collapse">
+        <div id="navigationbar" class="collapse navbar-collapse" style="font-family: 'Hanna', serif;">
           <ul class="nav navbar-nav">
             <li><a href="#" style="color:#000;">밥친구</a></li>
             <li><a href="#" style="color:#000;">라이브방송</a></li>
@@ -1051,7 +1054,8 @@ function noticeclose(){
 	
 	<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> --> 
+
 <script type="text/javascript">
 $('.tabs .tab').click(function(){
     if ($(this).hasClass('signin')) {

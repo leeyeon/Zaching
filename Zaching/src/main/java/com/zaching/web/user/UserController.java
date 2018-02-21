@@ -177,7 +177,7 @@ public class UserController {
 		model.addAttribute("user", user);
 		model.addAttribute("list", list);
 		
-		
+		System.out.println(list);
 		
 
 		return "forward:/user/getTimeLine.jsp";

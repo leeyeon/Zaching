@@ -40,12 +40,12 @@
   		$(function() {
   			
   			setTimeout(function(){
-  				window.opener.location.reload();
+  				window.opener.location.replace('/payment/mainPayment');
   				window.close();
-  			},60000);
+  			},5000);
   			
   			$('button:contains("»Æ¿Œ")').on('click', function() {
-  				window.opener.location.reload();
+  				window.opener.location.replace('/payment/mainPayment');
   				window.close();
   			});
 

@@ -90,6 +90,7 @@ public class PaymentController {
 
 	@RequestMapping(value="mainPayment")
 	public String mainPayment(@ModelAttribute Search search,
+							@RequestParam(required=false) String kakaologin,
 							HttpSession session,
 							Model model) throws Exception {
 		
@@ -109,6 +110,12 @@ public class PaymentController {
 				pageUnit, pageSize);
 		
 		User accountUser = userService.getAccountUser(user.getUserId());
+		
+		if(kakaologin != null) {
+			System.out.println(kakaologin);
+			model.addAttribute("kakologin", "success");
+			System.out.println("kakaologin - success");
+		}
 		
 		model.addAttribute("payment", map.get("list"))
 			 .addAttribute("paymentPage", resultPage)
