@@ -232,6 +232,47 @@
 	    text-decoration: none !important;
 	    color: #fff;
 	}
+	
+	#search .col-xs-12.col-sm-6.text-center {
+	    border-right: 0.5px solid #ccc;
+    }
+    .search .advanced_search {
+    	z-index: 50;
+    	top: 120px;
+    }    
+	
+	@media only screen and (max-width: 767px) {
+	
+		#search .col-xs-12.col-sm-6.text-center {
+		    border: none;
+	    }
+	
+		#search .col-xs-12.col-sm-6.text-center a {
+		    position: relative;
+		    left: 30px;
+		    top: 0;
+	    }
+	
+	    #search .col-xs-12.col-sm-4.text-center {
+		    position: relative;
+		    top: -30px;
+		    left: -53px;
+	    }
+	    
+	    .search .advanced_search  {
+		    display: block;
+	    }
+	    
+	    .nav.nav-tabs.nav-justified li {
+		    width: 50%;
+	    	float: left;
+	    }
+	    
+	    #advanced_search_btn {
+	    	display: none;
+	    }
+
+	}
 	       	
     </style>
     
@@ -481,7 +522,7 @@
 			<form id="searchForm">
 				<div id="search" class="text-center" style="position: absolute; background: none; color:#FFF; left: 5%; padding-top: 20px;">
 					<div class="row">
-						<div class="col-sm-6 text-right">				
+						<div class="col-xs-12 col-sm-6 text-center">				
 							<h1 style="font-size:15px; color:#FFF; font-weight: normal;">
 								<span style="margin-right: 120px;">사용가능 포인트</span><br>
 								<span style="font-size:20px; font-weight: bold;">
@@ -490,7 +531,7 @@
 								<a href="#" class="spot_button type1">충전하기</a>
 							</h1>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-xs-12 col-sm-4 text-center">
 							<h1 style="font-size:15px; color:#FFF; font-weight: normal; padding-top:10px;">
 								<span style="margin-right: 30px;">마일리지</span>
 								<span style="font-size:20px; font-weight: bold;">
@@ -505,7 +546,7 @@
 			</form>
 		</div>
 		
-		<div class="advanced_search" style="z-index: 50; top: 120px;">
+		<div class="advanced_search">
 			<div class="wrapper">
 				<span class="arrow"></span>
             	<ul class="nav nav-tabs nav-justified" style="border: none;">
