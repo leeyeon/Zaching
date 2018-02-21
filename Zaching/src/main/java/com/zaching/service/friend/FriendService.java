@@ -37,4 +37,6 @@ public interface FriendService {
 	public void updateStatus(int userId, int friednId, int status) throws Exception;
 	
 	public int checkFollow(int userId, int friendId, int status) throws Exception;
+	
+	public List<Friend> addBobFriend(int userId, int bobId) throws Exception;
 }

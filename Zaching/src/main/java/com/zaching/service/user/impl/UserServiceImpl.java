@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.zaching.common.domain.Search;
+import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.domain.User;
 import com.zaching.service.user.UserDao;
 import com.zaching.service.user.UserService;
@@ -93,15 +94,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Object> memoryMap(Search search) throws Exception {
-		//List<Newsfeed> list =news 뉴스피드에서 카테고리구분으로 받아오기
-		List<User> list = userDao.memoryMap(search);
-		int totalCount =userDao.getTotalCount(search);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list );
-		map.put("totalCount", new Integer(totalCount));
-		
-		return map;
+	public List<Newsfeed> memoryMap(int userId) throws Exception {
+		System.out.println("UserServiceImpl/memoryMap");
+		return userDao.memoryMap(userId);
 	}
 
 	@Override
@@ -240,12 +235,30 @@ public class UserServiceImpl implements UserService {
 		userDao.snsAddUser(user);
 	}
 	
+	
+	
 	@Override
-	public void setFCMToekn(int userId, String fcmToken) throws Exception {
+	public void latestLogin(int userId) throws Exception {
+		//최종접속일 기록남기기
+		System.out.println(":: UserServiceImpl/latestLogin ::");
+		userDao.latestLogin(userId);
+	}
+
+	@Override
+	public void setFCMToken(int userId, String fcmToken) throws Exception {
 		String currentToken = userDao.getFCMToken(userId);
 		if(currentToken == null || currentToken.equals("") || !currentToken.equals(fcmToken)) {
 			userDao.updateFCMToken(userId, fcmToken);
 		}
+	}
+	
+	@Override
+	public String getFCMToken(int userId) throws Exception {
+		String currentToken = userDao.getFCMToken(userId);
+		if(currentToken == null || currentToken.equals("")) {
+			return null;
+		}
+		return currentToken;
 	}
 
 }

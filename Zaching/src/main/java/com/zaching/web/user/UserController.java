@@ -104,42 +104,7 @@ public class UserController {
 		return buffer.toString();
 	}
 
-	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception {
-
-		System.out.println("/user/login : POST");
-
-		System.out.println("::" + user);
-
-		User dbUser = userService.login(user.getEmail());
-		System.out.println("::::: " + dbUser);
-
-		if (user.getPassword().equals(dbUser.getPassword()) && user.getEmail().equals(dbUser.getEmail())) {
-			session.setAttribute("user", dbUser);
-			//세션에 저장하는 시간(=로그인시간 기록남기기) DB에 저장 OR 업데이트
-		}
-		if (session.getAttribute("user") == null) {
-					
-		}
-		System.out.println("=====>  " + session.getAttribute("user"));
-		
-		System.out.println("��===>" + user.getEmail() + " = " + dbUser.getEmail());
-		System.out.println("��===>" + user.getPassword() + " = " + dbUser.getPassword());
 	
-
-		return "redirect:/index.jsp";
-	}
-
-	@RequestMapping(value = "logout", method = RequestMethod.GET)
-	public String logout(HttpSession session) throws Exception {
-
-		System.out.println("/user/logout : POST");
-		
-		
-		session.invalidate();
-
-		return "redirect:/index.jsp";
-	}
 
 	@RequestMapping(value = "findPassword", method = RequestMethod.GET)
 	public String findPassword() throws Exception {
@@ -147,6 +112,14 @@ public class UserController {
 		System.out.println("/user/findPassword : GET");
 
 		return "redirect:/user/findPassword.jsp";
+	}
+	@RequestMapping(value ="findPassword", method=RequestMethod.POST)
+	public String findPassword(@RequestParam("email")String email)throws Exception{
+		
+		System.out.println("/user/findPassword : POST");
+		
+		userService.findPassword(email);
+		return"";
 	}
 
 	@RequestMapping(value = "getUser", method = RequestMethod.GET)
@@ -208,6 +181,7 @@ public class UserController {
 		
 
 		return "forward:/user/getTimeLine.jsp";
+		
 	}
 	@RequestMapping(value = "listUser")
 	public String listUser(@ModelAttribute("search") Search search, Model model, HttpServletRequest request)
@@ -257,14 +231,15 @@ public class UserController {
 		userService.updateUser(user);
 		
 		System.out.println("update user ====>"+user);
-
+		model.addAttribute("user", user);
+		
 		return "redirect:/user/getUser?userId=" + user.getUserId();
 	}
 
 	
 
 	@RequestMapping(value="memoryMap", method= RequestMethod.GET)
-	public String memoryMap( HttpSession session)throws Exception{
+	public String memoryMap(HttpSession session)throws Exception{
 
 		System.out.println("/user/memoryMap : GET");
 		

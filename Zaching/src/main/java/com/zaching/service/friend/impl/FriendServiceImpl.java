@@ -108,6 +108,11 @@ public class FriendServiceImpl implements FriendService{
 		return friendDao.checkFollow(userId, friendId, status);
 	}
 
+	@Override
+	public List<Friend> addBobFriend(int userId, int bobId) throws Exception {
+		return friendDao.addBobFriend(userId, bobId);
+	}
+
 	
 	
 	

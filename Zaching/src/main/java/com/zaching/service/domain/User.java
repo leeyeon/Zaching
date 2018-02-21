@@ -2,7 +2,7 @@ package com.zaching.service.domain;
 
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Value;
+
 
 public class User {
 	
@@ -118,7 +118,7 @@ public class User {
 
 
 	public String getName() {
-		return name.trim();
+		return name;
 	}
 
 
@@ -166,7 +166,7 @@ public class User {
 		this.gender = gender;
 	}
 	public String getPhone() {
-		return phone.trim();
+		return phone;
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
@@ -196,7 +196,11 @@ public class User {
 
 
 	public String getBirth() {
-		return birth.replace("-", "").trim();
+		
+		if(birth ==null) {
+			return"";
+		}
+		return birth.replace("-", "/").trim();
 	}
 
 
@@ -227,7 +231,7 @@ public class User {
 
 	public String getRealName() {
 		if(realName != null) {
-			return realName.trim();
+			return realName;
 		} else {
 			return realName;
 		}		
@@ -366,6 +370,13 @@ public class User {
 
 	public void setSnsType(String snsType) {
 		this.snsType = snsType;
+	}
+	
+	
+
+
+	public String getBankName() {
+		return bankName;
 	}
 
 

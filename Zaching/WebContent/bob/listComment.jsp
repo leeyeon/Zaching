@@ -14,7 +14,7 @@
       		등록된 댓글이 없습니다. <br>첫번째 댓글을 달아보세요!
       	</div>
       </c:if>
-    	<c:forEach var="comment" items="${comments}">
+    	<c:forEach var="comment" items="${comments}" varStatus="status">
     		<input type="hidden" name="commentUserId" value="${comment.userId}" />
     		<input type="hidden" name="commentId" value="${comment.commentId}" />
     		<div class="row comment" style="margin: 5px;">
@@ -29,10 +29,10 @@
 			onerror="this.src='../resources/images/user-icon.png'" />
 			${comment.userName}
 		</div>
-		<div class="col-sm-7">
+		<div class="col-sm-8">
 			${comment.content}
 		</div>
-		<div class="col-sm-3" style="font-size: 13px; text-align: end;">
+		<div class="col-sm-2" style="font-size: 13px; text-align: end;">
 			<div style="padding-right: 50px;">
 				<fmt:parseDate value="${comment.createdDate}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
 				<fmt:formatDate var="commentDate" value="${Date}" pattern="yyyyMMdd"/>
@@ -75,10 +75,17 @@
 				</c:if>
 			</div>
 			<div class="deleteComment" style="position: relative; right: 10px; top:-10px; text-align: end;">
-				<c:if test="${sessionScope.user.userId eq comment.userId}">X</c:if>
+				<c:if test="${sessionScope.user.userId eq comment.userId}">
+					<img src="../resources/images/trash.png" width="20px" height="20px">
+				</c:if>
 			</div>
 		</div>
 	</div>
+	
+	<c:if test="${(status.index + 1) != fn:length(comments)}">
+		<hr style="border-top: 2px solid #cccccc61;">
+	</c:if>
+	
    </c:forEach>
 
    <c:if test="${commentPage.totalCount > (commentPage.currentPage * commentPage.pageUnit)}">
