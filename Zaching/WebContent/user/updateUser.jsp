@@ -23,12 +23,28 @@
 
 <!-- 다음 주소검색 -->
 <script	src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="/resources/layout/sub_toolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
+
+@font-face {
+  font-family: NanumSquareWeb;
+  src: local(NanumSquareR),
+       local(NanumSquare),
+       url(NanumSquareR.eot?#iefix) format('embedded-opentype'),
+       url(NanumSquareR.woff) format('woff'),
+       url(NanumSquareR.ttf) format('truetype');
+  font-style: normal;
+  font-weight: normal;
+  unicode-range: U+0-10FFFF;
+}
+ 
+*{
+  font-family: NanumSquareWeb, sans-serif;
+}
 body {
 	padding-top: 130px;
 }
@@ -41,6 +57,65 @@ body {
 #phone {
 	font-size: 1em
 }
+		.form-group .btn{background-color: #5f4b8b; color: #fff;}
+    
+        .bg {
+			background: #f2b1d2;/*페이지 배경 컬러  */
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			background-size: cover;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			opacity: 0.3;
+		}
+		
+		.main{
+        background-color: #fff;
+        padding-top: 30px;
+        }
+        
+        .filebox label {
+    			display: block;
+     			padding: .5em .75em;
+   			  	color: #999;
+     			font-size: inherit;
+     			line-height: normal;
+     			vertical-align: middle;
+ 			}
+  
+ 		.filebox input[type="file"] {  
+     		position: absolute;
+     		width: 1px;
+     		height: 1px;
+     		padding: 0;
+     		margin: -1px;
+     		overflow: hidden;
+     		clip:rect(0,0,0,0);
+     		border: 0;
+ 		}
+ 		
+ 		#cma_image >img {
+     		vertical-align: middle;
+     		max-height: 150px;
+     		max-width: 150px;
+     		min-width: 150px;
+    		min-height: 150px;
+    		border-radius: 50%;
+ 		}
+ 		
+ 		.profileImage{
+ 			
+ 			vertical-align: middle;
+     		max-height: 150px;
+     		max-width: 150px;
+     		min-width: 150px;
+    		min-height: 150px;
+     		border-radius: 50%;
+ 		
+ 		}
+ 	
 </style>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -98,8 +173,8 @@ body {
 	//============= "취소"  Event 처리 및  연결 =============
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$("a[href='#' ]").on("click", function() {
-			$("form")[0].reset();
+		$("#cancel").on("click", function() {
+			$("#form")[0].reset();
 		});
 	});
 
@@ -113,14 +188,19 @@ body {
 	});
 
 	function fncUpdateUser() {
-
+		
+		var accountNumber =$("#accountNumber").val();
 		var userId = $("input[name='userId']").val();
-		var email = $("input[name='email']").val();
-		var address = $("input[name='address']").val();
+		var email = $("#inputEmail").val();
 		var pw = $("#updatepw").val();
-		var pw2 = $("#updatepw2").val();
+		var address = $("input[name='address']").val();
 		var gender =$("input[name='gender']").val();
-
+		var pw2 = $("#updatepw2").val();
+		var UploadFile = $("input[name='UploadFile']").val();
+		
+		
+		
+		
 		if (pw != pw2) {
 
 			alert("비밀번호가 일치하지않습니다.");
@@ -128,10 +208,9 @@ body {
 		}
 
 		alert(userId);
-		alert(email);
-		alert(address);
+		alert(UploadFile);
 
-		$("form").attr("method", "POST").attr("action",
+		$("#form").attr("method", "POST").attr("action",
 				"/user/updateUser?userId=${sessionScope.user.userId}").submit();
 
 	}
@@ -147,11 +226,12 @@ body {
 
 	//============= "emailAuth =============
 	function fncEmailAuth() {
+		var role =$("#role").val();//롤~~~
 		var inputEmail = $("#inputEmail").val(); //입력받은이메일
 		alert(inputEmail);
 
-		if (inputEmail == null || inputEmail.length < 1) {
-			alert("이메일은  반드시 입력하셔야 합니다.");
+		if (inputEmail == null && role =='1' || inputEmail.length < 1) {
+			alert("이메일은 반드시 입력하셔야 합니다.");
 			return false;
 		}
 
@@ -167,7 +247,7 @@ body {
 			async : false,
 			dataType : "json",
 			success : function(serverData) {
-				alert(serverData);
+				alert("데이터가보내졌다.");
 
 			}
 
@@ -211,6 +291,21 @@ body {
 
 	});
 	
+	///프로필사진바꾸ㄱㅣ
+	function getThumbnailPrivew(html, $target) {
+ 	    if (html.files && html.files[0]) {
+ 	        var reader = new FileReader();
+ 	        reader.onload = function (e) {
+ 	            $target.css('display', 'inline-block');
+ 	            
+ 	            //$target.css('background-image', 'url(\"' + e.target.result + '\")'); // 배경으로 지정시
+             $target.html('<img src="' + e.target.result + '" border="0" alt="" />');
+ 	            $('.profileImage').detach();//
+ 	        }
+ 	        reader.readAsDataURL(html.files[0]);
+ 	    }
+ 	}
+
 	//회원탈퇴
 	$("#deleteUser").on("click", function() {
 		var windowW = 400;  // 창의 가로 길이
@@ -221,7 +316,9 @@ body {
 		window.open("/user/deleteUser?userId=${sessionScope.user.userId}",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
 		opener.location.reload(true);
 		    self.close();
-	})
+	});
+		
+ 	
 </script>
 
 </head>
@@ -234,7 +331,9 @@ body {
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-
+	<div class="bg"></div>
+		<div class="main">
+		
 		<div class="page-header text-center">
 
 			<c:if test="${user.role.trim()=='2'}">
@@ -248,24 +347,47 @@ body {
 			<c:if test="${user.role.trim()=='1'}">
 				<!-- 준회원일경우 -->
 				<h3 class=" text-info">추가정보입력</h3>
-				<h5 class="text-muted">
-					회원님은 <strong class="text-danger">준회원</strong>입니다.
+				<h5 class="text-muted"><strong class="text-danger">${user.name}</strong>님
+				<strong class="text-danger">이메일 인증</strong>을해주세요.
 				</h5>
 			</c:if>
 		</div>
-
+			
+		<!-- 프로필 사진바꾸기 start -->
+	
+				<input type="hidden" value="${user.userId}" name="userId" id="userId"/>
+		<div class="row profile" id="Imagebox" align="center" >
+		
+			<div class="filebox" style="padding-bottom: 20px;">
+			<img alt="" src="../resources/upload_files/images/${user.profileImage }" class="profileImage">
+			<input type="file" name="UploadFile" id="cma_file" imageswap="true" accept="image/*" capture="camera" 
+			onchange="getThumbnailPrivew(this,$('#cma_image'))"/>
+	  		<div id="cma_image" style="width:200px;max-width:200px;display:none;"></div>
+			<label for="cma_file">프로필사진 업로드</label>
+			
+	  		</div>
+	  	
+	  	</div>
+	  	<!-- 프로필 사진부분 end -->
+	  	
+			
+				
+		
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
-			<input type="hidden" name="userId"
-				value="${sessionScope.user.userId}" />
-
+		<form id="form" class="form-horizontal" enctype="multipart/form-data" 
+				style="padding-top:0px;padding-bottom: 20px; padding-left: 10px; padding-right: 10px;">
+			
+		<input type="hidden" name="userId" value="${sessionScope.user.userId}" id="userId"/>
+		<input type="hidden" name="accountNumber" value="${sessionScope.user.accountNumber}" id="accountNumber"/>
+		<input type="hidden" name="role" value="${sessionScope.user.role}" id="role"/>
+		
 			<div class="form-group">
+			
 				<label for="email-label"
 					class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
 				<div class="col-sm-4">
 					<input type="email" class="form-control" id="inputEmail"
 						name="email" value="${user.email }">
-
 				</div>
 
 				<div class="col-sm-3" id="contents">
@@ -305,7 +427,7 @@ body {
 			<div class="form-group">
 				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="userName" name="name"
+					<input type="text" class="form-control" id="userName" name="name" value="${user.name}"
 						readonly="readonly">
 				</div>
 			</div>
@@ -313,7 +435,7 @@ body {
 			<div class="form-group">
 				<label for="address" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="ad" name="address"
+					<input type="text" class="form-control" id="ad" name="address" value="${!empty user.address ? user.address : '' }"
 						placeholder="변경주소">
 				</div>
 			</div>
@@ -340,7 +462,7 @@ body {
 			<div class="form-group">
 				<label for="birth" class="col-sm-offset-1 col-sm-3 control-label">생년월일</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="birth" name="birth"	size="12" />
+					<input type="text" class="form-control" id="birth" name="birth"	size="12"value="${!empty user.birth ? user.birth : '-' }" />
 				</div>
 			</div>
 			
@@ -348,16 +470,14 @@ body {
 
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" class="btn btn-primary" id="update">수	&nbsp;정</button>
-					<a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
-					   	
-    					<button type="button" class="btn btn-primary" id="deleteUser">회원탈퇴</button>
-    					
-				</div>
+					<button type="button" class="btn btn" id="update">수	&nbsp;정</button>
+					<a class="btn btn" href="#" role="button" id="cancel">취 &nbsp;소</a>
+					<button type="button" class="btn btn" id="deleteUser">회원탈퇴</button>
+    			</div>
 			</div>
 		</form>
 		<!-- form end /////////////////////////////////////-->
-
+		</div>
 	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 

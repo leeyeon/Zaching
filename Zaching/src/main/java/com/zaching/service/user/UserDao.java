@@ -42,7 +42,7 @@ public interface UserDao {
 	public List<Newsfeed> memoryMap(int userId)throws Exception;
 	
 	//이메일 인증성공시 정회원으로 업데이트
-	public void updateRole(User user)throws Exception;
+	public int updateRole(User user)throws Exception;
 	
 	//이메일 중복체크
 	public int checkSignup(String email)throws Exception;
@@ -55,7 +55,6 @@ public interface UserDao {
 	
 	//로그인 기록 남기기
 	public void latestLogin(int userId)throws Exception;
-	
 	
 	public void updateAccountToken(String token, int userId) throws Exception;
 	

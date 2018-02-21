@@ -80,10 +80,13 @@ font-size: 20px;
   top: 100px;
   width: 100%;
   opacity: 0.7;
+  background-color : #fff;
+  color : #fff;
+  background : rgba(255,255,255,1);
 }
 
 .sticky + .about {
-  padding-top: 503px;
+  padding-top: 503px;  
 }
 .nav a{
 font-family: 'Hanna', serif;"

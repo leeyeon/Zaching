@@ -100,12 +100,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUser(User user) throws Exception {
-	
-		userDao.updateUser(user);
-	}
-
-	@Override
 	public void findPassword(String password) throws Exception {
 		
 		
@@ -175,9 +169,15 @@ public class UserServiceImpl implements UserService {
 		}
 
 	@Override
-	public void updateRole(User user) throws Exception {
+	public int updateRole(User user) throws Exception {
 		System.out.println(":: updateRole:: ");
-		userDao.updateRole(user);		
+		return userDao.updateRole(user);		
+	}
+
+	@Override
+	public void updateUser(User user) throws Exception {
+	
+		userDao.updateUser(user);
 	}
 
 

@@ -135,8 +135,13 @@ body .login-container .half {
   padding: 58px 40px 0;
 }
 body .login-container .half.bg {
+<<<<<<< HEAD
   background-image: url("/resources/images/loginModalImage.jpg");
   background-size: 100% 100%;
+=======
+  
+  background-size: 350px 500px;
+>>>>>>> refs/heads/new/jeongeun
   background-repeat: no-repeat;
 }
 body .login-container h1 {
@@ -184,21 +189,37 @@ body .login-container .content form {
   position: relative;
   height: 170px;
 }
-body .login-container .content label:first-of-type, body .container .content input:first-of-type, body .container .content .more:first-of-type {
+#loginemail,#name{
   -moz-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
   -webkit-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
   animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
-body .login-container .content label:nth-of-type(2), body .container .content input:nth-of-type(2), body .container .content .more:nth-of-type(2) {
+#loginpassword,#checkEmail{
   -moz-animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
   -webkit-animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
   animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
-body .login-container .content label:nth-of-type(3), body .container .content input:nth-of-type(3), body .container .content .more:nth-of-type(3) {
+#signinbtn,#checkbtn{
   -moz-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
   -webkit-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
   animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
+#findPassword,#pw{
+  -moz-animation: slideIn 0.7s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.7s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.7s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+.sns-login,#pw2{
+  -moz-animation: slideIn 0.8s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.8s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.8s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+#singup{
+  -moz-animation: slideIn 0.9s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.9s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.9s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+
 body .login-container .content label {
   font-size: 12px;
   color: #263238;
@@ -947,7 +968,8 @@ function noticeclose(){
 			
 				<div class="login-modal" style="width: 100%; height: 100%;">
 				<section class="login-container">
-		    	<article class="half" style="width:56%;">
+				<article class="half" style="width:56%;">
+
 			       <img src="/resources/images/zaching2.png" class="img-logo" width="50%">
 			        <div class="tabs">
 				            <span class="tab signin active"><a href="#signin">로그인</a></span>
@@ -1004,7 +1026,9 @@ function noticeclose(){
             		</div>
 			       </div>
 		    	</article>
+
 		    		<div class="half bg" style="padding-top:0px;  width:44%;"></div>
+
 				</section>
 				</div>
 			

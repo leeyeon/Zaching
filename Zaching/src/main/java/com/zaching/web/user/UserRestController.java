@@ -52,8 +52,7 @@ public class UserRestController {
 	}
 	//"C:\\Users\\301-6\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\"
 
-	private String fileDirectory = "C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
-
+	
 	//이메일인증
 	@RequestMapping(value = "json/emailAuth", method = RequestMethod.POST )
 	public User emailAuth(@RequestBody Map<String, Object> map,
@@ -101,7 +100,7 @@ public class UserRestController {
 		return buffer.toString();
 	}
 	@RequestMapping(value="json/authNum", method=RequestMethod.POST)
-	public String authNum(@RequestBody Map<String, Object> map,
+	public void authNum(@RequestBody Map<String, Object> map,
 			
 			HttpServletRequest request,HttpSession session)throws Exception{
 		
@@ -116,12 +115,13 @@ public class UserRestController {
 		
 		if(authNum.equals(getSessionAuth.getAuthNum())) {
 			System.out.println("Before updateRole===> "+getSessionAuth);
+			getSessionAuth.setRole("2");
 			userService.updateRole(getSessionAuth);
 			System.out.println("After updateRole===> "+getSessionAuth.getRole());
 		
 		}
 		
-		return "";
+		
 	}
 	
 

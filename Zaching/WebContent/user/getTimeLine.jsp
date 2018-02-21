@@ -44,6 +44,7 @@
 <script type="text/javascript">
 
 $( function () {
+
 		
 	
 	//내정보조회 Event && 추가 저보 입력

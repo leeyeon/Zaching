@@ -97,8 +97,12 @@
 	    </div>
 		<ul>
 		<li class="row" >
+	  		<c:if test="${user.profileImage ne null }">
 	  		<img alt="" src="../resources/upload_files/images/${user.profileImage }" class="profileImage"
-	  			style="max-width: 100%; width: 180px; border-radius: 50%;">
+	  			style="max-width: 100%; width: 180px; border-radius: 50%;"></c:if>
+	  		<c:if test="${user.profileImage eq null }">
+	  		<img alt="" src="../resources/upload_files/images/profile_default.png" class="profileImage"
+	  			style="max-width: 100%; width: 180px; border-radius: 50%;"></c:if>
 		</li><hr>
 		
 		
