@@ -156,6 +156,10 @@
 		.hero {
 			background: url('../resources/images/202991-OZ1TED-507.jpg') no-repeat bottom center;
 		}
+		
+		.nav a{
+font-family: 'Hanna', serif;"
+}
 	
 	</style>
 	

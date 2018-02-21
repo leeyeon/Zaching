@@ -99,7 +99,7 @@
 		   					'<td></td>'+
 		   					'<td></td>'+
 		   					'<td width=1000><p class="arrow_box"style="font-size: 10pt; padding: 5px;"><strong style="font-size: 13pt; line-height: 100%;">'+comment.userName+'</strong>'+
-		   					'<br/>&nbsp;'+comment.content+'</p></td>'+
+		   					'<br/><br/>&nbsp;'+comment.content+'</p></td>'+
 		   				'</tr>'+
 		   				'<tr></tr>';
 		   				$('#table').append(displayValue);
@@ -121,9 +121,15 @@
 			
 		</script>
 		<style type="text/css">
+		
+		@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+		
+		*{
+		font-family: 'Jeju Gothic', serif;
+		}
 			body{
 				padding-top: 110px;
-				background: rgba(255,255,255,1);
+				background: rgba(239, 239, 239, 0.62);			
 			}
 			
 			img.wp-smiley,
@@ -142,9 +148,8 @@
 			
 			.arrow_box {
 				position: relative;
-				background: #aee7f2;
-				border: 2px solid #a29fbd;
-				border-radius: 10px;
+				background: #fff;
+				
 			}
 			
 			.arrow_box:after {
@@ -239,6 +244,16 @@
 			.profile-img {
 				border-radius: 50%;
 			} 
+			
+			td, th {
+    padding: 1;
+}
+
+			body > div.wrap.container > div{
+				   border: 2px solid #9e9dad9c;
+			}
+			
+			
 	    </style>    
       
 </head>
@@ -247,8 +262,8 @@
 <header>
   
 </header>
-  <div class="wrap container" role="document">
-    <div class="content row">
+  <div class="wrap container" role="document" >
+    <div class="content row" style="background-color:#fff;">
       <main class="main col-sm-8 col-sm-offset-2" role="main">
         <article class="post-60 page type-page status-publish hentry dwtl normal">
   <div class="page-header">
@@ -256,8 +271,9 @@
    <img src="../resources/images/${roomUser.profileImage}" height='50' width='100' align="left"/></div>
    <div style="font-size: 12pt; line-height: 200%;">${roomUser.name}</div>&nbsp;${newsfeed.regDate}
 </div>
-	
-	<c:if test="${!empty newsfeed.fileName}"><a href="../resources/upload_files/images/${newsfeed.fileName}"><img src="../resources/upload_files/images/${newsfeed.fileName}"></a></c:if>
+	<br/><br/>
+	<c:if test="${!empty newsfeed.fileName}"><a href="../resources/upload_files/images/${newsfeed.fileName}"><img src="../resources/upload_files/images/${newsfeed.fileName}" width="100%"></a></c:if>
+	<br/><br/>
     <p style="font-size: 20pt;">${newsfeed.content}</p>
     <br/>
 	<div id="respond">
@@ -273,19 +289,19 @@
 
 <div class="social-share msss4 sharrre">
             <div class="twitter-share sharrre">
-            <a onclick="window.open('//twitter.com/intent/tweet?url=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Fbaking-cake&#038;text=Baking+Cake','twitter','toolbar=0, status=0, width=650, height=360')" title="Twitter" rel="nofollow" href="javascript:void(0);" class="share"></a>
+            <a onclick="window.open('//twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A8080%2Fnewsfeed%2FgetNewsfeed%3FnewsfeedId%3D122;','twitter','toolbar=0, status=0, width=650, height=360')" title="Twitter" rel="nofollow" href="javascript:void(0);" class="share"></a>
         </div>
             <div class="facebook-share sharrre">
-            <a onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Fbaking-cake&#038;t=Baking+Cake&#038;original_referer=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Fbaking-cake%2F','facebook','toolbar=0, status=0, width=900, height=500')" title="Facebook" rel="nofollow" href="javascript:void(0);" class="share"></a>
+            <a onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8080%2Fnewsfeed%2FgetNewsfeed%3FnewsfeedId%3D122&#038;','facebook','toolbar=0, status=0, width=900, height=500')" title="Facebook" rel="nofollow" href="javascript:void(0);" class="share"></a>
         </div>
             <div class="pinterest-share sharrre">
-            <a onclick="window.open('//pinterest.com/pin/create/button/?url=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Fbaking-cake&#038;description=Baking+Cake&#038;media=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Ffiles%2F2012%2F06%2F86531227.jpg','pinterest','toolbar=no,width=700,height=300')" title="Pinterest" rel="nofollow" href="javascript:void(0);" class="share"></a>
+            <a onclick="window.open('//pinterest.com/pin/create/button/?url=http%3A%2F%2Flocalhost%3A8080%2Fnewsfeed%2FgetNewsfeed%3FnewsfeedId%3D122;media=http%3A%2F%2Flocalhost%3A8080%2Fresources%2Fupload%5Ffile%2Fimages%2Fvoice14.jpg','pinterest','toolbar=no,width=700,height=300')" title="Pinterest" rel="nofollow" href="javascript:void(0);" class="share"></a>
         </div>
             <div class="googleplus-share sharrre">
-            <a onclick="window.open('//plus.google.com/share?hl=en-US&#038;url=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Fbaking-cake','googlePlus','toolbar=0, status=0, width=900, height=500')" title="Google+" rel="nofollow" href="javascript:void(0);" class="share"></a>
+            <a onclick="window.open('//plus.google.com/share?hl=en-US&#038;url=http%3A%2F%2Flocalhost%3A8080%2Fnewsfeed%2FgetNewsfeed%3FnewsfeedId%3D122','googlePlus','toolbar=0, status=0, width=900, height=500')" title="Google+" rel="nofollow" href="javascript:void(0);" class="share"></a>
         </div>
             <div class="linkedin-share sharrre">
-            <a onclick="window.open('//www.linkedin.com/cws/share?url=https%3A%2F%2Fthemify.me%2Fdemo%2Fthemes%2Fpinboard%2Fbaking-cake&#038;token=&#038;isFramed=true','linkedin','toolbar=no,width=550,height=550')" title="LinkedIn" rel="nofollow" href="javascript:void(0);" class="share"></a>
+            <a onclick="window.open('//www.linkedin.com/cws/share?url=http%3A%2F%2Flocalhost%3A8080%2Fnewsfeed%2FgetNewsfeed%3FnewsfeedId%3D122&#038;token=&#038;isFramed=true','linkedin','toolbar=no,width=550,height=550')" title="LinkedIn" rel="nofollow" href="javascript:void(0);" class="share"></a>
         </div>
     </div>
 		<h3 id="reply-title" class="comment-reply-title"> 
@@ -293,12 +309,12 @@
 		</small>
 		<div class="thumb2" style="float: left;">
 		<c:if test="${!empty user.profileImage }">
-													<img alt="" src="../resources/images/${user.profileImage}"  height='20' width='20' align='left'>
+													<img alt="" src="../resources/images/${user.profileImage}"  height='25' width='25' align='left'>
 													</c:if>
 													<c:if test="${empty comment.userImage }">
-													<img alt="" src="../resources/images/profile_default.png"  height='20' width='20' align='left'>
+													<img alt="" src="../resources/images/profile_default.png"  height='25' width='25' align='left'>
 													</c:if>
-   		</div><br/><p style="font-size: 10pt">&nbsp;${user.name}</p></h3>			
+   		</div><br/><p style="font-size: 10pt">&nbsp;${user.name}</p></h3>		
 			<div id="commentform" class="comment-form">
 				 
 				<div class="form-group"><label for="comment">Comment</label>
@@ -311,18 +327,18 @@
 				<input type='hidden' name='countLikey' value='${newsfeed.countLikey}'/>
 				</p>
 		</div>
-	
+	<br/><br/>
 				<table border="0" id="table">
 					<c:set var="i" value="0"/>
 						<c:forEach var="comment" items="${list}">
-						<c:set var="i" value="${ i+1 }" />
+						<c:set var="i" value="${ i+1 }" />						
 							<tr>
-			   					<td valign="top"><div class="thumb2">
+			   					<td valign="top" style="border-bottom-width:2px; border-color:#000;"><div class="thumb2" >
 			   					<c:if test="${!empty comment.userImage }">
-													<img alt="" src="../resources/images/${comment.userImage}" width='20' height='20'>
+													<img alt="" src="../resources/images/${comment.userImage}" width='35' height='35'>
 													</c:if>
 													<c:if test="${empty comment.userImage }">
-													<img alt="" src="../resources/images/profile_default.png" width='20' height='20'>
+													<img alt="" src="../resources/images/profile_default.png" width='35' height='35'>
 													</c:if>
 			   					
 			   					
@@ -330,9 +346,12 @@
 			   					<td></td>
 			   					<td></td>
 			   					<td width=1000><p class="arrow_box" style="font-size: 10pt; padding: 5px;"><strong style="font-size: 13pt; line-height: 100%;">${comment.userName}</strong>
-			   					<br/>&nbsp;${comment.content}</p></td>
+			   					
+			   					<br/><br/>&nbsp;${comment.content}</p></td>
+			   					
 			   				</tr>
 			   				<tr></tr>
+			   				
 		   				</c:forEach>
 				</table>
 				<hr/>

@@ -31,6 +31,12 @@
 	  <jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 </head>
 <style>
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+* {
+	font-family: 'Nanum Gothic', serif;
+}
+
 
 #music{
 background-image: url('/resources/images/musicbg.png');
@@ -79,7 +85,9 @@ font-size: 20px;
 .sticky + .about {
   padding-top: 503px;
 }
-
+.nav a{
+font-family: 'Hanna', serif;"
+}
  </style>
  <script>
  $(function() {
@@ -87,7 +95,7 @@ font-size: 20px;
 	 $( "#fixedbtn" ).on("click" , function() {		
 		 $( document ).ready(function() {
 			    showPopup();
-			    function showPopup() { window.open("/livingInfo/getChatbot.jsp", "a", "width=370px, height=470px, left=1000, top=50"); }
+			    function showPopup() { window.open("/livingInfo/getChatbot.jsp", "a", "width=330px, height=470px, left=1000, top=50"); }
 			});
 		});
 });
@@ -160,14 +168,11 @@ $( "#profile" ).on("click" , function() {
          z-index:1;
       }
     #navigation2{
-    background: #bfd9f2;
-    height: 100px;
+    background: #cee2f5;
+    height: 70px;
     z-index: 1000;
     }
     
-    #menu > ul{
-    	background: #bfd9f2;
-    }
     .navbar-custom ul.nav2 {
 	text-align: center;
 	float: none;
@@ -222,12 +227,12 @@ $( "#profile" ).on("click" , function() {
             <br/>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="menu">
-              <ul class="nav2 navbar-nav">
-                <li class="active"><a href="#intro">HOME</a></li>&nbsp;&nbsp;
-                <li><a href="#about">편의시설검색</a></li>&nbsp;&nbsp;
-                <li><a href="#gallery">전월세정보</a></li>&nbsp;&nbsp;
-                <li><a href="#contact">문화정보</a></li>&nbsp;&nbsp;
-                <li><a href="#job">공채정보</a></li>
+              <ul class="nav2 navbar-nav" style="font-family: 'Hanna', serif;">
+                <li class="active" ><a href="#intro" style="font-family: 'Hanna', serif;">HOME</a></li>&nbsp;&nbsp;
+                <li><a href="#about" style="font-family: 'Hanna', serif;" >편의시설검색</a></li>&nbsp;&nbsp;
+                <li><a href="#gallery" style="font-family: 'Hanna', serif;">전월세정보</a></li>&nbsp;&nbsp;
+                <li><a href="#contact" style="font-family: 'Hanna', serif;">문화정보</a></li>&nbsp;&nbsp;
+                <li><a href="#job" style="font-family: 'Hanna', serif;">공채정보</a></li>
               </ul>
             </div>
             <!-- /.Navbar-collapse -->
@@ -246,7 +251,7 @@ $( "#profile" ).on("click" , function() {
 
           <div class="section-heading text-center">
             <div class="wow bounceInDown" data-wow-delay="0.2s">
-              <h2><img src="/resources/images/conmap.png" width="80px"> 편의시설검색</h2>
+              <h2><img src="/resources/images/conmap.png" width="80px" style="font-family: 'Hanna', serif;"> 편의시설검색</h2>
             </div>
             <p class="wow bounceInUp" data-wow-delay="0.3s">주소 주변의 편의 시설을 검색해보세요!</p>
           </div>
@@ -275,7 +280,7 @@ $( "#profile" ).on("click" , function() {
         <div class="col-lg-8 col-lg-offset-2">
           <div class="wow bounceInDown" data-wow-delay="0.4s">
             <div class="section-heading">
-              <h2><img src="/resources/images/mortgage.png" width="80px"> 전월세정보</h2>
+              <h2><img src="/resources/images/mortgage.png" width="80px" style="font-family: 'Hanna', serif;"> 전월세정보</h2>
               <p>지역별(시/동 기준) 평균 월세를 나타냅니다.</p>
             </div>
           </div>
@@ -302,7 +307,7 @@ $( "#profile" ).on("click" , function() {
           <div class="col-lg-8 col-md-offset-2">
 
             <div class="section-heading">
-              <div class="wow bounceInDown" data-wow-delay="0.4s">
+              <div class="wow bounceInDown" data-wow-delay="0.4s" style="font-family: 'Hanna', serif;">
                 <h2>문화정보</h2>
               </div>
               <p class="wow lightSpeedIn" data-wow-delay="0.3s">영화 인기순위, 베스트 셀러, 현재 멜론 노래 순위입니다.</p>
@@ -367,7 +372,7 @@ $( "#profile" ).on("click" , function() {
  
  <section id="contact" class="home-section text-center">
 <p class="wow bounceInUp" data-wow-delay="0.3s"><img src="/resources/images/moviec.png" width="80px"> &nbsp; <img src="/resources/images/moviechart.png"/></p>
- <!--   <jsp:include page="getMovieInfo.jsp"/> -->  
+  <jsp:include page="getMovieInfo.jsp"/>  
 
    <div class="containerr">
   <div class="carouselMovie">
@@ -390,7 +395,7 @@ $( "#profile" ).on("click" , function() {
           <div class="col-lg-8 col-md-offset-2">
 
             <div class="section-heading">
-              <div class="wow bounceInDown" data-wow-delay="0.4s">
+              <div class="wow bounceInDown" style="font-family: 'Hanna', serif;" data-wow-delay="0.4s">
                 <h2><b>공개 채용 정보</b></h2>
               </div>
               <p class="wow lightSpeedIn" data-wow-delay="0.3s">이번 달 공채 정보 달력입니다.</p>

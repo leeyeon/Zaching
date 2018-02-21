@@ -189,9 +189,15 @@
 	</script>
 	
 	<style type="text/css">
+	
+	@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+		
+		
 body {
 	padding-top: 130px;
 }
+
+
 
 body>div.container {
 	margin-top: 10px;
@@ -458,6 +464,15 @@ width:100%;}
 		
 		.listings{
     padding: 100px 0;
+}
+
+a {
+text-decoration:none;
+color:#000;
+}
+
+.nav a{
+font-family: 'Hanna', serif;"
 }
 	</style>
 </head>

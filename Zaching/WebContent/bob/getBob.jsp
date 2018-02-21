@@ -21,6 +21,9 @@
 		h1, h2, h3, h4, h5, h6 {
 	    	color: #FFFFFF;
 	    }
+	    .nav a{
+font-family: 'Hanna', serif;"
+}
 	</style>
 
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>

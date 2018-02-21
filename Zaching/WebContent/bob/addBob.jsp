@@ -336,6 +336,10 @@
 	 <style>
 	      @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
 	      h3 { font-family: 'Nanum Pen Script', cursive; }
+	      
+	      .nav a{
+font-family: 'Hanna', serif;"
+}
 	</style>
     
 </head>
