@@ -269,33 +269,41 @@ body {
 
 	 	$(document).on('click',"a[name='messageContent']", function() {
 	 		var index= $($("input[name=roomId]")[$("a[name='messageContent']").index(this)]).val();
-	 		alert(index);
-	 		
-	 		
-	 		
+	 		alert(index);	 		
 
 	 		$.ajax({
 	 		               url : "/message/json/listMessage",
 	 		               method : "POST",
 	 		               contentType : "application/json; charset=UTF-8",
 	 		               data : JSON.stringify({
-	 		                  "searchKeyword" : index
+	 		                  "searchKeyword" :   index
 	 		               }),
 	 		               dataType : "json",
+	 		               async: false,
 	 		               success : function(serverData) {
-	 		            	   
 	 		            	   var messageContent="";
 	 		            	   
-	 		            	   for(var i=0; i<serverData.length; i++){
-	 		            		  messageContent=messageContent
-	 		            		   +'<div class="message left"><div class="message-text">'
-	 		            		   +serverDate.message.content
-	 		            		   +'</div></div>'
-	 		            		   +'<div class="message right"><div class="message-text">'
-	 		            		   +serverDate.message.content
-	 		            		   +'</div></div>';
+	 		            	   if(serverData != null) {
+		 		            	   for(var i=0; i<serverData.length; i++){
+		 		            		 
+		 		            		  
+		 		            		  if(serverData[i].userId != ${user.userId}){
+		 		            			messageContent +=  '<div class="message left"><div class="message-text">'
+			 		            		   +serverData[i].content
+			 		            		   +'</div></div>';
+		 		            		    
+		 		            		  }else{
+		 		            			messageContent +=  '<div class="message right"><div class="message-text">'
+			 		            		   +serverData[i].content
+			 		            		   +'</div></div>';
+		 		            		  
+		 		            		  }
+		 		            	   }
+	 		            	   } else {
+	 		            		   messageContent += "메시지가 없습니다.";
 	 		            	   }
-	 		            	   $("").append(serverData);
+	 		            	   $("#messegeBox").html("");
+	 		            	   $("#messegeBox").append(messageContent);
 	 		            	  $("#myModal").modal('show');
 	 		               },
 	 		               error:function(request,status,error){
@@ -386,16 +394,8 @@ body {
 						
 						<div class="phone-containter">
 							<div id="phone" class="phone">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true" id="close">×</button>
-								<div class="message left">
-									<div class="message-text"></div>
-								</div>
-								<div class="message right">
-									<div class="message-text"></div>
-									<div class="message-text"></div>
-								</div>
-								
+								<button type="button" class="close" data-dismiss="modal" varia-hidden="true" id="close">×</button>
+								<div id="messegeBox"></div>
 							</div>
 
 							<!-- 메세지 작성 -->

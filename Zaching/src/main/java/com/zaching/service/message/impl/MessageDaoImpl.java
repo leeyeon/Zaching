@@ -58,7 +58,7 @@ public class MessageDaoImpl implements MessageDao{
 	
 	@Override
 	public List<Message> listMessagebyRoomId(Search search) throws Exception {
-		return sqlSession.selectOne("MessageMapper.listMessagebyRoomId",search);
+		return sqlSession.selectList("MessageMapper.listMessagebyRoomId",search);
 	}
 	
 	@Override

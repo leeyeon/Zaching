@@ -5,16 +5,24 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
+import com.zaching.service.domain.Friend;
+import com.zaching.service.domain.Message;
+import com.zaching.service.domain.Notice;
 import com.zaching.service.domain.User;
 import com.zaching.service.message.MessageService;
 
@@ -22,6 +30,8 @@ import com.zaching.service.message.MessageService;
 @RequestMapping("/message/*")
 public class MessageRestController {
 	
+
+
 	@Autowired
 	@Qualifier("messageServiceImpl")
 	
@@ -39,6 +49,7 @@ private MessageService messageService;
 	// @Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 
+
 	
 	@RequestMapping(value="json/listMessage", method=RequestMethod.POST)
 	public List<String> listMessage(@RequestBody Search search,HttpSession session)  throws Exception{
@@ -47,12 +58,14 @@ private MessageService messageService;
 	      if(search.getCurrentPage() ==0 ){
 	          search.setCurrentPage(1);
 	          }
-		
-	      
+	
 	      search.setPageSize(pageSize);
-			
-			search.setSearchKeyword(((User)session.getAttribute("user")).getUserId()+"");
+	      search.setSearchCondition("roomId");
 	      
+	      System.out.println(search);
+			
+		//System.out.println(((User)session.getAttribute("user")).getUserId()+"");
+			
 	      Map<String, Object> map = messageService.listMessage(search);
 	  	Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
 				pageSize);
@@ -63,7 +76,35 @@ private MessageService messageService;
 	      return (List)map.get("list");
 		
 	}
+	
+	@RequestMapping(value = "rest/addFriend", method=RequestMethod.POST)
+	public String addtFriend(@ModelAttribute("notice") Notice notice, @RequestBody Map<String, Object> map, @ModelAttribute("friend") Friend friend, @ModelAttribute("search") Search search,HttpSession session, Model model) throws Exception {
 
+		
+
+		int userId = ((int)map.get("userId"));
+		int friendId = ((int)map.get("friendId"));
+		String userName =  ((String)map.get("userName"));
+		
+		friend.setFriendId(friendId);
+		friend.setUserId(userId);
+		System.out.println(friend);
+		
+		//friendService.addFriend(friend, "0");
+		
+		/*¾Ë¸²
+		notice.setSenderId(userId);
+		notice.setCategory("F00");
+		notice.setName(userName);
+		commonService.addNotice(notice);
+
+		notice.setUserId(friendId);
+
+		commonService.addNoticeTarget(notice);
+		*/
+		
+		return null;
+	}
 
 }
 
