@@ -1,6 +1,6 @@
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
->>>>>>>=refs/remotes/origin/master
+>>>>>>>=refs/heads/new/jeongeun
 eclipse.preferences.version=1
 encoding//WebContent/index.jsp=UTF-8
 encoding//WebContent/message/addMessage.jsp=UTF-8
@@ -10,19 +10,26 @@ encoding//WebContent/newsfeed/newsfeed.jsp=UTF-8
 encoding//WebContent/newsfeed/test.jsp=UTF-8
 encoding//WebContent/newsfeed/test02.jsp=UTF-8
 <<<<<<< HEAD
+encoding//WebContent/payment/mainPayment.jsp=UTF-8
+=======
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
+>>>>>>> refs/remotes/origin/master
 encoding//WebContent/resources/layout/sub_toolbar.jsp=UTF-8
 encoding//WebContent/resources/layout/toolbarDemo.jsp=UTF-8
+<<<<<<< HEAD
+=======
 =======
 encoding//WebContent/payment/mainPayment.jsp=UTF-8
 >>>>>>> refs/remotes/origin/master
 =======
 >>>>>>> refs/heads/new/jeongeun
 >>>>>>> refs/remotes/origin/master
+>>>>>>> refs/remotes/origin/master
 encoding//WebContent/voice/final.jsp=UTF-8
-encoding//WebContent/voice/finalVoice.jsp=UTF-8
+encoding//WebContent/voice/finalVoice2.jsp=UTF-8
 encoding//WebContent/voice/listVoice.jsp=UTF-8
 encoding//WebContent/voice/test.jsp=UTF-8
 encoding//src/main/java/com/zaching/common/service/impl/KakaoRestDaoImpl.java=UTF-8
