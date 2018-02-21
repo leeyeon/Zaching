@@ -183,21 +183,37 @@ body .login-container .content form {
   position: relative;
   height: 245px;
 }
-body .login-container .content label:first-of-type, body .container .content input:first-of-type, body .container .content .more:first-of-type {
+#loginemail,#name{
   -moz-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
   -webkit-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
   animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
-body .login-container .content label:nth-of-type(2), body .container .content input:nth-of-type(2), body .container .content .more:nth-of-type(2) {
+#loginpassword,#checkEmail{
   -moz-animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
   -webkit-animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
   animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
-body .login-container .content label:nth-of-type(3), body .container .content input:nth-of-type(3), body .container .content .more:nth-of-type(3) {
+#signinbtn,#checkbtn{
   -moz-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
   -webkit-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
   animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
+#findPassword,#pw{
+  -moz-animation: slideIn 0.7s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.7s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.7s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+.sns-login,#pw2{
+  -moz-animation: slideIn 0.8s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.8s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.8s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+#singup{
+  -moz-animation: slideIn 0.9s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.9s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.9s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+
 body .login-container .content label {
   font-size: 12px;
   color: #263238;

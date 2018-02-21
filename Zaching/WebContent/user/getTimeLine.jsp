@@ -35,6 +35,7 @@ align: left;
 <script type="text/javascript">
 	
 	$( function () {
+		
 		//내정보조회 Event && 추가 저보 입력
 		$( "#getUser" ).on("click" , function() {
 			self.location = "/user/getUser?userId=${user.userId}";

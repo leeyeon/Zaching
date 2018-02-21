@@ -23,7 +23,7 @@
 
 <!-- 다음 주소검색 -->
 <script	src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="/resources/layout/sub_toolbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
@@ -41,6 +41,61 @@ body {
 #phone {
 	font-size: 1em
 }
+		.form-group .btn{background-color: #5f4b8b; color: #fff;}
+    
+        .bg {
+			background: #f2b1d2;/*페이지 배경 컬러  */
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			background-size: cover;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			opacity: 0.3;
+		}
+		
+		.main{
+        background-color: #fff;
+        padding-top: 30px;
+        }
+        
+        .filebox label {
+    			display: block;
+     			padding: .5em .75em;
+   			  	color: #999;
+     			font-size: inherit;
+     			line-height: normal;
+     			vertical-align: middle;
+ 			}
+  
+ 		.filebox input[type="file"] {  
+     		position: absolute;
+     		width: 1px;
+     		height: 1px;
+     		padding: 0;
+     		margin: -1px;
+     		overflow: hidden;
+     		clip:rect(0,0,0,0);
+     		border: 0;
+ 		}
+ 		
+ 		#cma_image >img {
+     		vertical-align: middle;
+     		max-height: 150px;
+     		max-width: 150px;
+    		border-radius: 50%;
+ 		}
+ 		
+ 		.profileImage{
+ 			
+ 			vertical-align: middle;
+     		max-height: 150px;
+     		max-width: 150px;
+    	    border-radius: 50%;
+ 		
+ 		}
+ 	
 </style>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -67,11 +122,11 @@ body {
 	function blur(num) {
 		num = num.replace(/[^0-9]/g, '');
 		var tmp = '';
-		tmp += num.substr(0, 3);
-		tmp += '-';
-		tmp += num.substr(3, 4);
-		tmp += '-';
-		tmp += num.substr(7);
+		tmp = num.substr(0, 3);
+		tmp = '-';
+		tmp = num.substr(3, 4);
+		tmp = '-';
+		tmp = num.substr(7);
 		$("#phone").val(tmp);
 	}
 	//============= "주소검색"  다음 =============
@@ -211,6 +266,21 @@ body {
 
 	});
 	
+	///프로필사진바꾸ㄱㅣ
+	function getThumbnailPrivew(html, $target) {
+ 	    if (html.files && html.files[0]) {
+ 	        var reader = new FileReader();
+ 	        reader.onload = function (e) {
+ 	            $target.css('display', 'inline-block');
+ 	            
+ 	            //$target.css('background-image', 'url(\"' + e.target.result + '\")'); // 배경으로 지정시
+             $target.html('<img src="' + e.target.result + '" border="0" alt="" />');
+ 	            $('.profileImage').detach();//
+ 	        }
+ 	        reader.readAsDataURL(html.files[0]);
+ 	    }
+ 	}
+
 	//회원탈퇴
 	$("#deleteUser").on("click", function() {
 		var windowW = 400;  // 창의 가로 길이
@@ -222,6 +292,8 @@ body {
 		opener.location.reload(true);
 		    self.close();
 	})
+		
+ 	
 </script>
 
 </head>
@@ -234,7 +306,9 @@ body {
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-
+	<div class="bg"></div>
+		<div class="main">
+		
 		<div class="page-header text-center">
 
 			<c:if test="${user.role.trim()=='2'}">
@@ -253,19 +327,40 @@ body {
 				</h5>
 			</c:if>
 		</div>
-
+			
+		<!-- 프로필 사진바꾸기 start -->
+		<form id="form" class="form" action="/user/fileupload" method="POST" enctype="multipart/form-data" style="text-align: center;">
+				<input type="hidden" value="${user.userId}" name="userId" id="userId"/>
+		<div class="row profile" id="Imagebox" >
+		
+			<div class="filebox" style="padding-bottom: 20px;">
+			<img alt="" src="../resources/upload_files/images/${user.profileImage }" class="profileImage">
+			<input type="file" name="file" id="cma_file" imageswap="true" accept="image/*" capture="camera" onchange="getThumbnailPrivew(this,$('#cma_image'))"/>
+	  		<div id="cma_image" style="width:200px;max-width:200px;display:none;"></div>
+			<label for="cma_file">프로필사진 업로드</label>
+			
+	  		</div>
+	  	
+	  	</div>
+	  	</form><!-- 프로필 사진부분 end -->
+	  	
+			
+				
+		
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
-			<input type="hidden" name="userId"
-				value="${sessionScope.user.userId}" />
-
+		<form class="form-horizontal" style="padding-top:0px;padding-bottom: 20px; padding-left: 10px; padding-right: 10px;">
+			
+		<input type="hidden" name="userId" value="${sessionScope.user.userId}" />
+		
+		
+		
 			<div class="form-group">
+			
 				<label for="email-label"
 					class="col-sm-offset-1 col-sm-3 control-label">이 메 일</label>
 				<div class="col-sm-4">
 					<input type="email" class="form-control" id="inputEmail"
 						name="email" value="${user.email }">
-
 				</div>
 
 				<div class="col-sm-3" id="contents">
@@ -348,16 +443,16 @@ body {
 
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
-					<button type="button" class="btn btn-primary" id="update">수	&nbsp;정</button>
-					<a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
+					<button type="button" class="btn btn" id="update">수	&nbsp;정</button>
+					<a class="btn btn" href="#" role="button">취 &nbsp;소</a>
 					   	
-    					<button type="button" class="btn btn-primary" id="deleteUser">회원탈퇴</button>
+    					<button type="button" class="btn btn" id="deleteUser">회원탈퇴</button>
     					
 				</div>
 			</div>
 		</form>
 		<!-- form end /////////////////////////////////////-->
-
+		</div>
 	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 

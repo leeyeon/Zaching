@@ -180,7 +180,7 @@ public class UserController {
 		
 		
 
-		return "forward:/user/getTimeLine.jsp";
+		return "forward:/user/nonogetTimeLine.jsp";
 		
 	}
 	@RequestMapping(value = "listUser")
