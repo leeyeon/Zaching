@@ -100,6 +100,8 @@ body {
      		vertical-align: middle;
      		max-height: 150px;
      		max-width: 150px;
+     		min-width: 150px;
+    		min-height: 150px;
     		border-radius: 50%;
  		}
  		
@@ -108,7 +110,9 @@ body {
  			vertical-align: middle;
      		max-height: 150px;
      		max-width: 150px;
-    	    border-radius: 50%;
+     		min-width: 150px;
+    		min-height: 150px;
+     		border-radius: 50%;
  		
  		}
  	
@@ -169,8 +173,8 @@ body {
 	//============= "취소"  Event 처리 및  연결 =============
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$("a[href='#' ]").on("click", function() {
-			$("form")[0].reset();
+		$("#cancel").on("click", function() {
+			$("#form")[0].reset();
 		});
 	});
 
@@ -192,9 +196,7 @@ body {
 		var address = $("input[name='address']").val();
 		var gender =$("input[name='gender']").val();
 		var pw2 = $("#updatepw2").val();
-		
-		
-	/* 	var chk = document.getElementById('cma_file'); */
+		var UploadFile = $("input[name='UploadFile']").val();
 		
 		
 		
@@ -206,9 +208,7 @@ body {
 		}
 
 		alert(userId);
-		alert(email);
-		alert(address);
-		alert(accountNumber);
+		alert(UploadFile);
 
 		$("#form").attr("method", "POST").attr("action",
 				"/user/updateUser?userId=${sessionScope.user.userId}").submit();
@@ -226,11 +226,12 @@ body {
 
 	//============= "emailAuth =============
 	function fncEmailAuth() {
+		var role =$("#role").val();//롤~~~
 		var inputEmail = $("#inputEmail").val(); //입력받은이메일
 		alert(inputEmail);
 
-		if (inputEmail == null || inputEmail.length < 1) {
-			alert("이메일은  반드시 입력하셔야 합니다.");
+		if (inputEmail == null && role =='1' || inputEmail.length < 1) {
+			alert("이메일은 반드시 입력하셔야 합니다.");
 			return false;
 		}
 
@@ -315,7 +316,7 @@ body {
 		window.open("/user/deleteUser?userId=${sessionScope.user.userId}",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
 		opener.location.reload(true);
 		    self.close();
-	})
+	});
 		
  	
 </script>
@@ -359,7 +360,8 @@ body {
 		
 			<div class="filebox" style="padding-bottom: 20px;">
 			<img alt="" src="../resources/upload_files/images/${user.profileImage }" class="profileImage">
-			<input type="file" name="file" id="cma_file" imageswap="true" accept="image/*" capture="camera" onchange="getThumbnailPrivew(this,$('#cma_image'))"/>
+			<input type="file" name="UploadFile" id="cma_file" imageswap="true" accept="image/*" capture="camera" 
+			onchange="getThumbnailPrivew(this,$('#cma_image'))"/>
 	  		<div id="cma_image" style="width:200px;max-width:200px;display:none;"></div>
 			<label for="cma_file">프로필사진 업로드</label>
 			
@@ -377,7 +379,7 @@ body {
 			
 		<input type="hidden" name="userId" value="${sessionScope.user.userId}" id="userId"/>
 		<input type="hidden" name="accountNumber" value="${sessionScope.user.accountNumber}" id="accountNumber"/>
-		
+		<input type="hidden" name="role" value="${sessionScope.user.role}" id="role"/>
 		
 			<div class="form-group">
 			
@@ -425,7 +427,7 @@ body {
 			<div class="form-group">
 				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="userName" name="name" value="${user.name }"
+					<input type="text" class="form-control" id="userName" name="name" value="${user.name}"
 						readonly="readonly">
 				</div>
 			</div>
@@ -460,7 +462,7 @@ body {
 			<div class="form-group">
 				<label for="birth" class="col-sm-offset-1 col-sm-3 control-label">생년월일</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="birth" name="birth"	size="12" />
+					<input type="text" class="form-control" id="birth" name="birth"	size="12"value="${!empty user.birth ? user.birth : '-' }" />
 				</div>
 			</div>
 			
@@ -469,11 +471,9 @@ body {
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 					<button type="button" class="btn btn" id="update">수	&nbsp;정</button>
-					<a class="btn btn" href="#" role="button">취 &nbsp;소</a>
-					   	
-    					<button type="button" class="btn btn" id="deleteUser">회원탈퇴</button>
-    					
-				</div>
+					<a class="btn btn" href="#" role="button" id="cancel">취 &nbsp;소</a>
+					<button type="button" class="btn btn" id="deleteUser">회원탈퇴</button>
+    			</div>
 			</div>
 		</form>
 		<!-- form end /////////////////////////////////////-->

@@ -134,7 +134,7 @@ body .login-container .half {
   padding: 58px 40px 0;
 }
 body .login-container .half.bg {
-  background-image: url("/resources/images/loginModalImage.jpg");
+  
   background-size: 350px 500px;
   background-repeat: no-repeat;
 }
@@ -993,7 +993,7 @@ function noticeclose(){
 				<!-- Modal Header end -->
 				<div class="login-modal">
 				<section class="login-container">
-		    	<article class="half" style="padding-top:30px;">
+		    	<article class="half" style="padding-top:30px;" >
 			       <img src="/resources/images/zaching2.png" class="img-logo" width="50%">
 			        <div class="tabs">
 				            <span class="tab signin active"><a href="#signin">로그인</a></span>
@@ -1054,7 +1054,7 @@ function noticeclose(){
             		</div>
 			       </div>
 		    	</article>
-		    		<div class="half bg" style="padding-top:0px;"></div>
+		    		<div class="half bg" style="padding-top:0px;background-image: url(/resources/images/loginModalImage.jpg);"></div>
 				</section>
 				</div>
 			

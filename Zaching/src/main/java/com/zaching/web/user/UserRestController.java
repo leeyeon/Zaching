@@ -52,8 +52,7 @@ public class UserRestController {
 	}
 	//"C:\\Users\\301-6\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\"
 
-	private String fileDirectory = "C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
-
+	
 	//이메일인증
 	@RequestMapping(value = "json/emailAuth", method = RequestMethod.POST )
 	public User emailAuth(@RequestBody Map<String, Object> map,

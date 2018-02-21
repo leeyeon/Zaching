@@ -2,6 +2,8 @@ package com.zaching.service.domain;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 
 
 public class User {
@@ -13,7 +15,6 @@ public class User {
 	private int userId;//유저ID시퀀스
 	private String email;//이메일ID
 	private String password;//패스워드
-	private String password2;//패스워드 일치
 	private String name;//이름
 	private String address;//주소
 	private String longitude;//경도
@@ -26,6 +27,8 @@ public class User {
 	private String phone3;//연락처
 	
 	private String birth;//생일
+	private MultipartFile uploadFile;//업로드 파일
+	
 	
 	private String profileImage;//프로필사진
 	private String role;//회원등급 정회원 준회원 ========> 계정정지'0' 준회원 '1' 정회원 '2'
@@ -379,11 +382,20 @@ public class User {
 		return bankName;
 	}
 
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+
+
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+	
 
 	@Override
 	public String toString() {
 		return "User [authNum=" + authNum + ", userId=" + userId + ", email=" + email + ", password=" + password
-				+ ", password2=" + password2 + ", name=" + name + ", address=" + address + ", longitude=" + longitude
+				+ ", uploadFile=" + uploadFile + ", name=" + name + ", address=" + address + ", longitude=" + longitude
 				+ ", latitude=" + latitude + ", gender=" + gender + ", phone=" + phone + ", phone1=" + phone1
 				+ ", phone2=" + phone2 + ", phone3=" + phone3 + ", birth=" + birth + ", profileImage=" + profileImage
 				+ ", role=" + role + ", realName=" + realName + ", bankName=" + bankName + ", accountNumber="
@@ -395,13 +407,4 @@ public class User {
 	}
 
 
-	public String getPassword2() {
-		return password2;
-	}
-
-
-	public void setPassword2(String password2) {
-		this.password2 = password2;
-	}
-	
 }
