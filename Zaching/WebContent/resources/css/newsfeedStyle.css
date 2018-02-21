@@ -67,7 +67,6 @@ textarea, input[type=text], input[type=password], input[type=search], input[type
 }
 input[type=text], input[type=search], input[type=email], input[type=url] {
 	width: 240px;
-	max-width: 90%;
 }
 
 /* text area */

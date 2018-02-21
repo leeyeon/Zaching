@@ -22,10 +22,6 @@
 		* {
 			font-family: 'Nanum Gothic', serif;
 		}
-	
-		body {
-			padding-bottom: 50px;
-		}
 		
 		.cover {
 			background-color: #000;
@@ -377,7 +373,9 @@
 				<input type="text" id="search" name="searchKeyword" placeholder="What are you looking for?"  autocomplete="off"
 					style="background: none;"/>
 				<a href="#" class="advanced_search_icon" id="advanced_search_btn"></a>
+				
 			</form>
+			<img src = "../resources/images/category-add-button.png" width="50px" height=" 50px"/>
 		</div>
 		
 		<div class="advanced_search" style="z-index: 50;">

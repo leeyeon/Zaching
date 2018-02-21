@@ -45,9 +45,8 @@
 
 	//==>"이메일" 유효성Check  Event 처리 및 연결
 	$(function() {
-				  $('#checkbtn').on('click', function(){
-			        	alert("버튼클릭!");
-			        	fncCheckSingup();
+			$('#checkbtn').on('click', function(){
+			        fncCheckSingup();
 			  	});
 			});
 			
@@ -117,14 +116,13 @@
 				
 				</div>
 			</div>
-
-		</div>
-
-		<div class="form-group" style="margin-left: 82%">
 			<!-- Button -->
 				<div id="checkMsg"></div>
+				
+			<div class="col-xs-offset-8 col-md-8">
 				<button type="button" id="checkbtn" class="btn btn-default">중복확인</button>
-			<div class="col-md-offset-8 col-md-8">
+			</div>
+			<div class="col-xs-offset-8 col-md-8">
 				<button id="btn-signup" type="submit" class="btn btn-warning">임시비밀번호전송</button>
 			</div>
 		</div>
