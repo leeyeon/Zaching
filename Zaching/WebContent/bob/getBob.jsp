@@ -505,7 +505,7 @@ font-family: 'Hanna', serif;"
 
 	<c:set var="frontImage" value="${fn:substring(bob.image, 0, 6)}"/>
 	<c:set var="endImage" value="${fn:substring(bob.image, 7, fn:length(bob.image))}"/>
-	<div class="bg" style="background-image: url('../resources/upload_files/images/${frontImage}/${endImage}'), url('../resources/upload_files/images/download.jpg') ">
+	<div class="bg" style="background-image: url('../resources/upload_files/images/${frontImage}/${endImage}'), url('../resources/images/sample_bob_background.jpg') ">
 		<div class="img-cover"></div>
 	</div>
 	<div class="jumbotron">

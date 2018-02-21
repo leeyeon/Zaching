@@ -849,12 +849,12 @@ function noticeclose(){
 		    }
 		
 		$(document).ready(function(){
-		  
-		  $('.hamburger').click(function() {
+			
+		  $('nav .hamburger').click(function() {
 			  $('#navigationbar').toggle();
-			  $('.hamburger').toggleClass('is-open');
-			  $('.hamburger').toggleClass('is-closed');
-			  $('.hamburger').toggleClass('indexcity');
+			  $('nav .hamburger').toggleClass('is-open');
+			  $('nav .hamburger').toggleClass('is-closed');
+			  $('nav .hamburger').toggleClass('indexcity');
 		  });
 	});
 	

@@ -1,5 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -73,7 +72,7 @@
 		#footer {
 		   position:fixed;
 		   left:0px;
-		   bottom:-150px;
+		   bottom:-125px;
 		   width:100%;
 		}
 		
@@ -161,8 +160,8 @@
 		
 
 		.nav a{
-font-family: 'Hanna', serif;"
-}
+			font-family: 'Hanna', serif;"
+		}
 
 		.listings ul li .property_details {
 			background: #fff;
@@ -170,6 +169,33 @@ font-family: 'Hanna', serif;"
 		    border-left: 1px solid #cccccc;
 		    border-right: 1px solid #cccccc;
 	    }
+	    
+	    input::-webkit-input-placeholder { /* í¬ë¡¬ 4â€“56 */
+		   color: #FFF !important;
+		}
+		input::-moz-placeholder { /* íŒŒì´ì–´í­ìŠ¤ 4â€“18 */
+		   color: #FFF !important;
+		   opacity:  1;
+		}
+		input::-moz-placeholder { /* íŒŒì´ì–´í­ìŠ¤ 19â€“50 */
+		   color: #FFF !important;
+		   opacity:  1;
+		}
+		input::-ms-input-placeholder { /* ì¸í„°ë„· ìµìŠ¤í”Œë¡œëŸ¬ 10+ */
+		   color: #FFF !important;
+		}
+		input::placeholder { /* íŒŒì´ì–´í­ìŠ¤ 51+, í¬ë¡¬ 57+ */
+		   color: #FFF !important;
+		   opacity:  1;
+		}
+		
+		section .hamburger.is-closed .hamb-top, section .hamburger.is-closed .hamb-middle,
+		section .hamburger.is-closed .hamb-bottom, section .hamburger.is-open .hamb-bottom,
+		section .hamburger.is-open .hamb-top
+		 {
+	    	background-color: #FFF;
+	    }
+	    
 			
 	</style>
 	
@@ -195,7 +221,7 @@ font-family: 'Hanna', serif;"
 				$('.cover').css('visibility','hidden');
 			});
 			
-			// °Ë»öÇßÀ» ¶§ tooltip
+			// ê²€ìƒ‰í–ˆì„ ë•Œ tooltip
 
 			$(":text[name='searchKeyword']").on("keydown", function(e) {
 
@@ -214,10 +240,10 @@ font-family: 'Hanna', serif;"
 						
 						$("#mainBob > .tab-content").html(data);
 
-						/* css »ö º¯°æÇÏ±â */
+						/* css ìƒ‰ ë³€ê²½í•˜ê¸° */
 						$('#exTab2 a').css('color', '#000');
 						$('#exTab2 a').css('background', '#ede8f7');						
-						$($('a:contains("°Ë»ö")')[1]).css('color', '#000').css('background', '#FFF')
+						$($('a:contains("ê²€ìƒ‰")')[1]).css('color', '#000').css('background', '#FFF')
 					});
 					
 					return false;
@@ -251,10 +277,10 @@ font-family: 'Hanna', serif;"
 					$(self.location).attr("href","/bob/addBob?category="+($(this).attr("id")).substring(4));
 				</c:if>
 				<c:if test="${!empty user && (fn:trim(user.role) eq '1')}"> 
-					alert("º»ÀÎÀÎÁõ ÀÌÈÄ¿¡ ¹äÄ£±¸ ¼­ºñ½º¸¦ ¸ğµÎ ÀÌ¿ëÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù.");
+					alert("ë³¸ì¸ì¸ì¦ ì´í›„ì— ë°¥ì¹œêµ¬ ì„œë¹„ìŠ¤ë¥¼ ëª¨ë‘ ì´ìš©í•˜ì‹¤ ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
 				</c:if>
 				<c:if test="${empty user}">
-					alert("·Î±×ÀÎÀ» ÇØÁÖ¼¼¿ä.");
+					alert("ë¡œê·¸ì¸ì„ í•´ì£¼ì„¸ìš”.");
 					$('.list-group').css('visibility','hidden');
 					$('.cover').css('visibility','hidden');
 					$('#loginModal').modal('toggle');
@@ -277,8 +303,8 @@ font-family: 'Hanna', serif;"
 			    $(":text[name='searchKeyword']").val("");
 
 			    if('${user}' == '' && (targ == "#B03" || targ == "#B04")) {
-					alert("·Î±×ÀÎ ÈÄ »ç¿ëÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù. \n"
-							+"°£ÆíÈ¸¿ø°¡ÀÔÀ» ÅëÇØ¼­ ½±°í °£ÆíÇÏ°Ô ÀÚÃñ ¼­ºñ½º¸¦ ÀÌ¿ëÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù.");
+					alert("ë¡œê·¸ì¸ í›„ ì‚¬ìš©í•˜ì‹¤ ìˆ˜ ìˆìŠµë‹ˆë‹¤. \n"
+							+"ê°„í¸íšŒì›ê°€ì…ì„ í†µí•´ì„œ ì‰½ê³  ê°„í¸í•˜ê²Œ ìì·½ ì„œë¹„ìŠ¤ë¥¼ ì´ìš©í•˜ì‹¤ ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
 					$('#loginModal').modal('toggle');
 					//$(self.location).attr("href","/user/addUser");
 				} else {
@@ -339,9 +365,11 @@ font-family: 'Hanna', serif;"
 
 					$(this).removeClass('active');
 					ads_box.stop().fadeOut(200).removeClass('advanced_displayed');
-
 				}
-
+				
+				  $(this).toggleClass('is-open');
+				  $(this).toggleClass('is-closed');
+				  $(this).toggleClass('indexcity');
 			});
 			
 			/*
@@ -375,12 +403,13 @@ font-family: 'Hanna', serif;"
 	<section class="search" style="background: #f77e7e;">
 		<div class="wrapper">
 			<form id="searchForm">
-				<input type="text" id="search" name="searchKeyword" placeholder="What are you looking for?"  autocomplete="off"
-					style="background: none;"/>
-				<a href="#" class="advanced_search_icon" id="advanced_search_btn"></a>
-				
+				<input type="text" id="search" name="searchKeyword" placeholder="What are you looking for?"  autocomplete="off" style="background: none;"/>
 			</form>
-			<img src = "../resources/images/category-add-button.png" width="50px" height=" 50px"/>
+			<button type="button" class="hamburger is-closed" style="position: absolute;" id="advanced_search_btn">
+	            <span class="hamb-top"></span>
+	   			<span class="hamb-middle"></span>
+				<span class="hamb-bottom"></span>
+            </button>
 		</div>
 		
 		<div class="advanced_search" style="z-index: 50;">
@@ -388,11 +417,11 @@ font-family: 'Hanna', serif;"
 				<span class="arrow"></span>
 					<div id="exTab2" style="padding:0;">
 					<ul class="nav nav-tabs nav-justified" style="border: none;">
-						<li class="active" ><a href="/bob/listBob?category=B01" data-target="#B01" data-toggle="tabajax">¿ì¸®Áö±İ¸¸³ª</a></li>
-						<li><a href="/bob/listBob?category=B02" data-target="#B02" data-toggle="tabajax">´çÀå¸¸³ª</a></li>
-						<li><a href="/bob/listBob?category=B03" data-target="#B03"  data-toggle="tabajax">ÁÖ±âÀûÀ¸·Î¸¸³ª</a></li>
-						<li><a href="/bob/listBob?category=B04" data-target="#B04" 	data-toggle="tabajax">³» ÁÖ¼Ò·Î °Ë»öÇÏ±â</a></li>
-						<li style="display: none;"><a href="/bob/listBob?category=B05" data-target="#B05"  data-toggle="tabajax">Å°¿öµå·Î °Ë»öÇÏ±â</a></li>
+						<li class="active" ><a href="/bob/listBob?category=B01" data-target="#B01" data-toggle="tabajax">ìš°ë¦¬ì§€ê¸ˆë§Œë‚˜</a></li>
+						<li><a href="/bob/listBob?category=B02" data-target="#B02" data-toggle="tabajax">ë‹¹ì¥ë§Œë‚˜</a></li>
+						<li><a href="/bob/listBob?category=B03" data-target="#B03"  data-toggle="tabajax">ì£¼ê¸°ì ìœ¼ë¡œë§Œë‚˜</a></li>
+						<li><a href="/bob/listBob?category=B04" data-target="#B04" 	data-toggle="tabajax">ë‚´ ì£¼ì†Œë¡œ ê²€ìƒ‰í•˜ê¸°</a></li>
+						<li style="display: none;"><a href="/bob/listBob?category=B05" data-target="#B05"  data-toggle="tabajax">í‚¤ì›Œë“œë¡œ ê²€ìƒ‰í•˜ê¸°</a></li>
 					</ul>
 				</div>
 			</div>
@@ -404,11 +433,11 @@ font-family: 'Hanna', serif;"
 		<div class="form-group" style="margin: auto;">
 			<form class="form-horizontal" id="mainBob">
 	
-					<!-- µ¥ÀÌÅÍ µé¾î°¥ °Íµé,,, -->
+					<!-- ë°ì´í„° ë“¤ì–´ê°ˆ ê²ƒë“¤,,, -->
 					<div class="tab-content" style="padding: 3.636363636363636% 0 0 0; overflow: hidden;">
 						<c:import url="/bob/listBobd"></c:import>
 						
-						<!-- µ¥ÀÌÅÍ ³¡... -->
+						<!-- ë°ì´í„° ë... -->
 						    	
 			    	<div id="loader" class="text-center">
 						<img src = "../resources/images/ajax-loader.gif" width="150px" height="150px"/>
@@ -425,7 +454,7 @@ font-family: 'Hanna', serif;"
 		</div>
 	</footer>
 
-	<!-- ¹æ¸¸µé±â ¹öÆ° ½ÃÀÛ -->
+	<!-- ë°©ë§Œë“¤ê¸° ë²„íŠ¼ ì‹œì‘ -->
 	
    	<div id="footer" align="right" style="z-index: 1500;">
    	  <div class="container">
@@ -434,15 +463,15 @@ font-family: 'Hanna', serif;"
 	  	</div>
 	  	<div class="dialog-add-bob text-center">
 	  		<div class="list-group" style="float: right; visibility: hidden;">
-			  <a class="list-group-item" style="background: #f77e7e; color: #FFFFFF;"> Ä«Å×°í¸®¼±ÅÃ </a>
-			  <a class="list-group-item" style="cursor: pointer;" id="add-B01">¿ì¸®Áö±İ¸¸³ª</a>
-			  <a class="list-group-item" style="cursor: pointer;" id="add-B02">´çÀå¸¸³ª</a>
-			  <a class="list-group-item" style="cursor: pointer;" id="add-B03">ÁÖ±âÀûÀ¸·Î¸¸³ª</a>
+			  <a class="list-group-item" style="background: #f77e7e; color: #FFFFFF;"> ì¹´í…Œê³ ë¦¬ì„ íƒ </a>
+			  <a class="list-group-item" style="cursor: pointer;" id="add-B01">ìš°ë¦¬ì§€ê¸ˆë§Œë‚˜</a>
+			  <a class="list-group-item" style="cursor: pointer;" id="add-B02">ë‹¹ì¥ë§Œë‚˜</a>
+			  <a class="list-group-item" style="cursor: pointer;" id="add-B03">ì£¼ê¸°ì ìœ¼ë¡œë§Œë‚˜</a>
 			</div>
 	  	</div>
 	  </div>
 	</div>
 	
-	<!--  ¹æ¸¸µé±â ¹öÆ° ³¡ -->
+	<!--  ë°©ë§Œë“¤ê¸° ë²„íŠ¼ ë -->
 </body>
 </html>

@@ -453,7 +453,15 @@
 			
 			$('a:contains("충전하기")').on('click', function() {
 				<c:if test="${empty user.accessToken}">
-					$(self.location).attr("href","/payment/kakaoLoginRequest");
+					//$(self.location).attr("href","/payment/kakaoLoginRequest");
+					var windowW = 400;  // 창의 가로 길이
+	 		        var windowH = 500;  // 창의 세로 길이
+	 		        var left = Math.ceil((window.screen.width - windowW)/2);
+	 		        var top = Math.ceil((window.screen.height - windowH)/2);
+		
+					window.open("/payment/kakaoLoginRequest", "popup1",
+							"l top="+top+", left="+left+", height="+windowH+", width="+windowW
+							+"scrollbars=no");
 				</c:if>
 				<c:if test="${!empty user.accessToken}">
 					$("#chargePoint").modal("show");
@@ -501,11 +509,15 @@
 	   	 	});
 
 		});
+  		
+  		function loadModalWindow() {
+	         // onload="loadModalWindow()"
+	      }
 
     </script>
     
 </head>
-<body >
+<body>
 <input type="hidden" name="userId" value="${sessionScope.user.userId}" />
 
 	<section class="hero" style="background-image: url('../resources/images/igor-ovsyannykov-494256.jpg');
