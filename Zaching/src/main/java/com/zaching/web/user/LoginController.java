@@ -65,48 +65,41 @@ public class LoginController {
 	@RequestMapping(value = "kakaoLogin", method = RequestMethod.GET)
 	public String KakaoLogin(@RequestParam("code") String code, Model model, HttpSession session) throws Exception {
 
-		System.out.println("/kakaoLogin/code");
-
-		User user = commonService.getAceessToken2(code, session);
-		user = commonService.getUserInfo(user);
-
-		boolean result = userService.snsCheck(user.getEmail(), user.getSnsType());
-
-		// System.out.println("받아온정보"+user.getSnsType());
-		if (result == true) {// 이메일정보가 db에 없을경우
-
-			session.setAttribute("user", user);
-			userService.snsAddUser(user);// snstype으로 회원가입
-
-			System.out.println("카카오계정으로 회원가입");
-		} else{
-			session.setAttribute("user", user);
-
-			System.out.println("카카오계정으로 로그인");
-		}
-
+		System.out.println(this.getClass()+"/kakaoLogin/code");
+		
 		User sessionUser = (User) session.getAttribute("user");
-		System.out.println("세션====>" + sessionUser);
-		// System.out.println(sessionUser);
 
-		/* 카카오페이 때 로그인하는 거 때문에 만듦!!! */
-		if (sessionUser.getAccessToken() == null) {
+		// 로그인되어 있지 않은 상태, 카카오로그인으로 가야됨
+		if(sessionUser == null) {
+			
+			User user = commonService.getAceessToken2(code, session);
+			user = commonService.getUserInfo(user);
+			boolean result = userService.snsCheck(user.getEmail(), user.getSnsType());
 
-			// System.out.println("여기까지 왔군욤");
+			// System.out.println("받아온정보"+user.getSnsType());
+			if (result == true) {// 이메일정보가 db에 없을경우
 
-			sessionUser.setAccessToken("kakaoPay");
+				session.setAttribute("user", user);
+				userService.snsAddUser(user);// snstype으로 회원가입
 
-			session.setAttribute("user", sessionUser);
+				System.out.println("카카오계정으로 회원가입");
+			} else{
+				session.setAttribute("user", user);
 
-			return "redirect:/payment/mainPayment";
-
-		} else {
-
-			System.out.println("session 저장정보===>" + session.getAttribute("user"));
-			System.out.println("이메일 ==> " + user.getEmail());
-			System.out.println("프로필 이미지 ==> " + user.getProfileImage());
-
+				System.out.println("카카오계정으로 로그인");
+			}
+			
 			return "forward:/index.jsp";
+		
+		} else {
+			//카카오페이
+			
+			sessionUser.setAccessToken("kakaoPay");
+			session.setAttribute("user", sessionUser);
+			
+			System.out.println("카카오페이");
+
+			return "redirect:/payment/mainPayment?kakaologin=true";
 		}
 
 	}
