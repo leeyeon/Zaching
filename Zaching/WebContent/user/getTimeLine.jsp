@@ -30,6 +30,163 @@ padding-top: 110px;
 .menu {
 align: left;
 }
+
+html, body {
+
+	position: relative;
+	margin: 0;
+}
+
+body {
+	font-family: Helvetica, Arial, serif;
+	font-size: 16px;
+}
+
+.wrapper {
+	width: 612px;
+	height: 100%;
+	margin: 0 auto;
+}
+
+.phone-containter {
+	width: 340px;
+	height: 100%;
+}
+
+.phone {
+	height: 60%;
+	border: 1px solid #dcdcdc;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background-color: #fff;
+}
+
+.button {
+	background-color: none;
+	border: 1px solid #36a9fc;
+	text-decoration: none;
+	border-radius: 10px;
+	padding: 5px 10px;
+	color: #36a9fc;
+	display: block;
+	width: 80px;
+	text-align: center;
+	overflow: hidden;
+	text-oveflow: ellipsis;
+	margin: 20px auto;
+}
+
+.build-container {
+	width: 230px;
+	height: 100%;
+	margin-left: 20px;
+	float: right;
+}
+
+#buildInput {
+	width: 100%;
+	height: 60%;
+}
+
+/* Messages baloon: 메세지 풍선 */
+.message {
+	margin: 10px 0;
+	overflow: hidden;
+}
+
+.message-text {
+	padding: 10px 20px;
+	float: right;
+	clear: both;
+	border-radius: 25px;
+	position: relative;
+	margin-bottom: 1px;
+}
+
+.message.left .message-text {
+	margin-right: 70px;
+	margin-left: 20px;
+	background-color: #e5e5ea;
+	float: left;
+}
+
+.message.right .message-text {
+	margin-left: 70px;
+	margin-right: 20px;
+	background-color: #36a9fc;
+	color: #fff;
+	float: right;
+}
+
+.message-text:last-child:before, .message-text:last-child:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	width: 35px;
+	height: 25px;
+	z-index: -1;
+}
+
+.message.right .message-text:before, .message.right .message-text:after
+	{
+	border-radius: 0 0 0 50%;
+}
+
+.message.right .message-text:before {
+	height: 20px;
+	right: -23px;
+	background-color: #36a9fc;
+}
+
+.message.right .message-text:after {
+	right: -35px;
+	bottom: -3px;
+	background-color: #fff;
+}
+
+.message.left .message-text:before, .message.left .message-text:after {
+	border-radius: 0 0 50% 0;
+}
+
+.message.left .message-text:before {
+	height: 20px;
+	left: -23px;
+	background-color: #e5e5ea;
+}
+
+.message.left .message-text:after {
+	left: -35px;
+	bottom: -3px;
+	background-color: #fff;
+}
+
+.send-container {
+	background-color: #f6f6f6;
+	border: 1px solid #dcdcdc;
+	margin-top: -1px;
+	padding: 10px;
+}
+
+.send-input {
+	border-radius: 5px;
+	border: 1px solid #dbdbdb;
+	background-color: #fff;
+	padding: 5px 5px;
+	font-size: 1em;
+	width: 78%;
+}
+
+.send-btn {
+	text-decoration: none;
+	color: #939297;
+	font-weight: bold;
+	background-color: transparent;
+	border: none;
+	font-size: 1em;
+	cursor: pointer;
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -73,6 +230,11 @@ align: left;
 			self.location ="/message/listMessage";	
 		})
 		
+		//메세지 전송 Event
+		$("#friendPage").on("click", function() {
+			alert(${user.userId})
+			$("#messageModal").modal('show');
+		})
 		
 		
 		
@@ -95,16 +257,32 @@ align: left;
 		//FOLLOW Event
 		
 		
-		//메세지 전송 Event
 		
 		
 		//신고하기 Event
 	});
 	
-	//프로필사진 업데이트
+	//모달창 메세지 입력
+	function addMessage(){
+		 
+		// var userId = ${sessionScope.user.userId};
+		// var  friendId= ${user.userId} ;
+		
+		 var messageContent = document.getElementById('send'); 
+			
+		　if(!messageContent.value){ 
+		　　alert('메세지를 입력해주세요.');
+			return;
+		　} 
+		
+		 
+		$("form").attr("method", "POST").attr("action", "/message/listMessage").submit();
+	}
+	
 	$(function(){
 		
 		
+			//프로필사진 업데이트
 		var status = 0 ;
 		
 		var keyword = ${sessionScope.user.userId};
@@ -492,9 +670,11 @@ a {text-decoration:none; color:#000}
   </c:if>
   
   <c:if test="${user.userId ne sessionScope.user.userId}">
-  <div class="row" id="friendPage">
+  
+  <div class="row" id="friendPage" >
     	<div class="col-xs-12">
-    		<a type="button" ><img src="../resources/images/Message_Icon.png" height="20px" align="left"/>&nbsp;메세지전송</a>
+    	<input type="hidden" name="roomId" value="${message.roomId }">
+    		<a type="button" ><img src="../resources/images/Message_Icon.png" height="20px" align="left"  name="messageContent"/>&nbsp;메세지전송</a>
     	</div>
     	<!--  
     	<div class="col-xs-6">
@@ -588,6 +768,41 @@ a {text-decoration:none; color:#000}
             </div>
          </div>
       </div>
+      
+      
+      
+      
+      <!-- Modal -->
+			<div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="wrapper">
+
+
+						<!-- 왼쪽 메세지 대화 박스 -->
+						
+						
+						
+						<div class="phone-containter">
+							<div id="phone" class="phone">
+								<button type="button" class="close" data-dismiss="modal" varia-hidden="true" id="close">×</button>
+								<div id="messegeBox"></div>
+							</div>
+
+							<!-- 메세지 작성 -->
+							<div class="send-container">
+								<form id="send">
+								<input type="hidden" value="${user.userId }" name="userId"/>
+								<input type="hidden" value="${sessionScope.user.userId}" name="friendId"/>
+									<input type="text" id="msgInput" class="send-input" placeholder="메세지내용">
+									<a href="#" onclick="addMessage();" class="send-btn" data-dismiss="modal"  value="Send">send</a>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+      
     
     
     
