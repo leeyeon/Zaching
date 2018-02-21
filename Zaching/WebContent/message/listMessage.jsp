@@ -304,7 +304,7 @@ body {
 	 		            	   }
 	 		            	   $("#messegeBox").html("");
 	 		            	   $("#messegeBox").append(messageContent);
-	 		            	  $("#myModal").modal('show');
+	 		            	  $("#messageModal").modal('show');
 	 		               },
 	 		               error:function(request,status,error){
 	 		                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -377,12 +377,9 @@ body {
 				</c:forEach>
 
 			</table>
-			
-			     <button type="button" class="btn btn-primary" data-toggle="modal"
-				data-target="#myModal">메세지</button>
 
 			<!-- Modal -->
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			<div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel">
 				<div class="modal-dialog" role="document">
 					<div class="wrapper">
