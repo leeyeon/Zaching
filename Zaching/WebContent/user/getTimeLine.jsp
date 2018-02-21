@@ -373,7 +373,6 @@ align: left;
             });
          });
 	})
-
 	</script>
 	
   </head>
@@ -390,7 +389,6 @@ align: left;
   background : #000;
   padding : 500px;
   }
-
 a {text-decoration:none; color:#000}
 </style>
  <body>

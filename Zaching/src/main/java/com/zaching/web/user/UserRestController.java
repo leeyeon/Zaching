@@ -1,5 +1,7 @@
 package com.zaching.web.user;
 
+import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -148,11 +150,7 @@ public class UserRestController {
 		System.out.println(obj.toJSONString());
 		
 		return obj.toJSONString();
-		
-		/*
-		return "{\"positions\":[{\"lat\": 37.3733103146403,\"lng\": 127.43708794867802,\"imgsrc\": \"/resources/images/user-icon.png\"},{\"lat\": 37.1627912237388,\"lng\": 128.99580192447536,\"imgsrc\": \"/resources/images/author.png\"},{\"lat\": 36.93980515531936,\"lng\": 128.8060765485201,\"imgsrc\": \"/resources/upload_files/images/main@2x.png\"},"
-				+ "{\"lat\": 37.27943075229118,\"lng\": 127.01763998406159,\"imgsrc\": \"/resources/images/profile_test.png\"},{\"lat\": 37.55915668706214,\"lng\": 126.92536526611102,\"imgsrc\": \"/resources/images/test_2.jpg\"}]}";
-		*/
+
 	}
 	
 
@@ -217,7 +215,7 @@ public class UserRestController {
 		}
 		return"";
 	}
-	
+
 
 	@RequestMapping(value="/rest/androidLogin")
 	public String androidLogin( @RequestBody String loginInfomation, HttpSession session)throws Exception{
@@ -288,14 +286,14 @@ public class UserRestController {
 
 		return user;
 	}
+	
 
 	@RequestMapping(value="/rest/addUser", method=RequestMethod.POST)
-	public boolean addUser(HttpServletRequest request,
+	public User addUser(HttpServletRequest request,
 						@RequestBody Map<String, Object> map,
 						@ModelAttribute("user")User user, Model model)throws Exception{
 		
 		System.out.println("/user/rest/addUser : POST ");
-		boolean result ;
 		
 		String email =(String)map.get("email");
 		String name = (String)map.get("name");
@@ -308,23 +306,24 @@ public class UserRestController {
 		user.setPassword(password);
 		user.setRole("1");
 		userService.addUser(user);
+		model.addAttribute("user", user);
 		
 		System.out.println("name : " + user.getEmail());
 		System.out.println("name : " + user.getPassword());
 		System.out.println("name : " + user.getName());
 		
+		return user;
 		
-		if(user.getEmail() ==null && user.getName()== null
-					&& user.getPassword() ==null) {
-			
-			result = false;
-			return result;
-			
-		}else {
-			return true;
-		}
-
 	}
+	@RequestMapping( value="json/getUser/{userId}", method=RequestMethod.GET )
+	public User getUser( @PathVariable int userId ) throws Exception{
+		
+		System.out.println("/user/json/getUser : GET");
+		
+		//Business Logic
+		return userService.getUser(userId);
+	}
+
 
 
 }
