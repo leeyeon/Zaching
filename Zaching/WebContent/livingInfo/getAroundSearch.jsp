@@ -27,7 +27,11 @@
 
 	$(function() {
 		
-		
+		$(".myadressinput").on("click", function() {
+			alert("내 정보에 주소를 입력해주세요!");
+			
+		});
+	
 		$(".myadressSearch").on("click", function() {
 			<c:if test="${sessionScope.user.userId ne null}">
 			
@@ -65,7 +69,12 @@
 <body>
 	<div class="container">
 	<div class="page-header text-info">
-	       <div class="myadressSearch" align="right">내주소로 검색</div>
+	<c:if test="${sessionScope.user.role eq '1'}">
+	       <div class="myadressinput" align="right" style="font-family: 'Hanna', serif;"><i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;내주소로 검색</div>
+	   </c:if>
+	   	<c:if test="${sessionScope.user.role eq '2'}">
+	       <div class="myadressSearch" align="right" style="font-family: 'Hanna', serif;"><i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;내주소로 검색</div>
+	   </c:if>   
 <div class="topnav">
   <div class="search-container">
       <input type="text" placeholder="Search.." name="search" id="selectAddress" value="" readonly>

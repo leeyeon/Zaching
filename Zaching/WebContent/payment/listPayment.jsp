@@ -5,37 +5,91 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<style>
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans');
+.h3 {font-family: 'Alegreya Sans', sans-serif;}
+</style>
+
 <c:if test="${empty payment}">
 	<div class="text-center" style="padding:30px;">
 		포인트 내역이 없습니다.
 	</div>
 </c:if>
 
-<c:forEach var="payment" items="${payment}">
+<c:set var="old" value="201802" />
+<fmt:formatNumber value="${old}" type="number" var="numberOld" />
+
+<c:forEach var="payment" items="${payment}" varStatus="status">
+
+	<fmt:parseDate value="${payment.createdDate}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
+	<fmt:formatDate var="newDate" value="${Date}" pattern="yyyyMM"/>
+	<c:set var="new" value="${newDate}" />
+
+	<c:if test="${status.index eq 0}">
+		<div class="col-xs-12 text-center" style ="background: url('../resources/images/bg_tit_month.gif') repeat-x; height: 39px; margin-bottom: 20px;">
+	  		<p style ="background: url('../resources/images/bg_tit_month2.gif') no-repeat; width: 110px; height: 39px; margin: 0 auto; line-height: 39px;">
+	  			<fmt:formatDate value="${Date}" pattern="yyyy.MM"/>
+	  		</p>
+	  	</div>
+	</c:if>
+	
+	<c:if test="${old ne newDate}">
+		<c:set var="old" value="${newDate}"></c:set>
+		<div class="col-xs-12 text-center" style ="background: url('../resources/images/bg_tit_month.gif') repeat-x; height: 39px; margin-bottom: 20px;">
+	  		<p style ="background: url('../resources/images/bg_tit_month2.gif') no-repeat; width: 110px; height: 39px; margin: 0 auto; line-height: 39px;">
+	  			<fmt:formatDate value="${Date}" pattern="yyyy.MM"/>
+	  		</p>
+	  	</div>
+	</c:if>	
+   	
 	<div class="row listPayment">
-		<div class="col-xs-4">
- 		<fmt:parseDate value="${payment.createdDate}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
-		<fmt:formatDate value="${Date}" pattern="yyyy.MM.dd"/>
- 	</div>
- 	<div class="col-xs-4">
- 		<c:if test="${payment.paymentCode eq 'P01'}">포인트 충전</c:if>
- 		<c:if test="${payment.paymentCode eq 'P02'}">포인트 사용</c:if>
- 		<c:if test="${payment.paymentCode eq 'P03'}">포인트 반환 신청</c:if>
- 		<c:if test="${payment.paymentCode eq 'P04'}">포인트 반환 완료</c:if>
- 		<c:if test="${payment.paymentCode eq 'P05'}">포인트 반환 신청 취소</c:if>
- 		<c:if test="${payment.paymentCode eq 'P06'}">포인트 사용 취소</c:if>
- 	</div>
- 	<div class="col-xs-4">
- 		<c:if test="${payment.paymentCode eq 'P01' || payment.paymentCode eq 'P05' || payment.paymentCode eq 'P06'}">+</c:if>
- 		<c:if test="${payment.paymentCode eq 'P02' || payment.paymentCode eq 'P03' || payment.paymentCode eq 'P04'}">-</c:if>
- 		<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" />
- 		<img src="../resources/images/point_smail_icon.png" width="15px" height="15px">
- 	</div>
+		<div class="col-xs-1">
+			<c:if test="${payment.paymentCode eq 'P01'}">
+				<span class="state_space" style="background-position: 0 -82px; color: #39c934;">충전</span>
+			</c:if>
+			<c:if test="${payment.paymentCode eq 'P02'}">
+				<span class="state_space" style="background-position: 0 -164px; color: #d95555;">사용</span>
+			</c:if>
+			<c:if test="${payment.paymentCode ne 'P01' && payment.paymentCode ne 'P02'}">
+				<span class="state_space" >기타</span>
+			</c:if>
+	 	</div>
+	 	<div class="col-xs-11">
+	 		<div class="row" style="padding-top: 4%;">
+			 	<div class="col-xs-9 col-sm-2" style="padding: 3px;">
+					<p><fmt:formatDate value="${Date}" pattern="yyyy.MM.dd"/></p>
+			 	</div>
+			 	<div class="col-xs-12 col-sm-7" style="padding: 3px;">
+			 		<c:if test="${payment.paymentCode eq 'P01'}">카카오페이 충전 <img src="../resources/images/payment_icon_small.png"></c:if>
+			 		<c:if test="${payment.paymentCode eq 'P02'}">
+			 			<c:if test="${fn:contains(payment.content, 'B03') || fn:contains(payment.content, 'B01')}">
+				 			밥친구에서 약속비로 사용
+				 		</c:if>
+				 		<c:if test="${fn:contains(payment.content, 'H00')}">
+				 			라이브방송에서 포인트선물로 사용
+				 		</c:if>
+			 		</c:if>
+			 		<c:if test="${payment.paymentCode eq 'P03'}">포인트 반환 신청</c:if>
+			 		<c:if test="${payment.paymentCode eq 'P04'}">포인트 반환 완료</c:if>
+			 		<c:if test="${payment.paymentCode eq 'P05'}">포인트 반환 신청 취소</c:if>
+			 		<c:if test="${payment.paymentCode eq 'P06'}">포인트 사용 취소</c:if>
+			 	</div>
+			 	<div class="col-sm-3 col-xs-9" style="padding: 3px;">
+			 		<c:if test="${payment.paymentCode eq 'P01' || payment.paymentCode eq 'P05' || payment.paymentCode eq 'P06'}">
+			 			<p>+<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /></c:if>
+			 		<c:if test="${payment.paymentCode eq 'P02' || payment.paymentCode eq 'P03' || payment.paymentCode eq 'P04'}">
+			 			<p style="color:#d21e1e;">-<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /></c:if>
+			 		<img src="../resources/images/point_smail_icon.png" width="15px" height="15px"></p>
+			 	</div>
+			</div>
+			
+			
+		</div>
 	</div>
 	
-	<div class="row text-left listExplain" style="background: #ccc; margin:10px; padding: 15px 10px 10px 10px; display: none;">
+	<div class="row text-left listExplain" style="background: rgb(241, 241, 241); margin:10px; padding: 15px 20px 15px; display: none; padding: 15px 20px 15px;">
 		<p style="padding-bottom: 5px;">거래일시 : ${payment.createdDate}</p>
-		<p style="padding-bottom: 5px;">적립/포인트 : 
+		<p style="padding-bottom: 5px;">적립/사용 포인트 : 
 			<span style="font-weight: bold;"> 
   		<c:if test="${payment.paymentCode eq 'P02' || payment.paymentCode eq 'P03' || payment.paymentCode eq 'P04'}">-</c:if>
  			<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /> 
@@ -55,12 +109,16 @@
 	 		</c:if>
 	 	</p>
 	</div>
-	<hr>
+	
+	<hr style="border-top: 1px solid #e2e2e29c;">
+	
 </c:forEach>
 
 <c:if test="${paymentPage.totalCount > (paymentPage.currentPage * paymentPage.pageUnit)}">
-	<div class="row text-center" style="height:50px; margin: 5px; line-height: 50px;
-				border-bottom: 2px solid #ccc; cursor: pointer;">더 보기</div>
+	<div class="row text-center" style="margin: 5px;">
+				<button class="more_listing_btn">next</button>
+	</div>
+
 </c:if>
 
    

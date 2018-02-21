@@ -183,7 +183,7 @@ public class UserServiceTest {
 	
 	}
 	
-	public void testmemoryMap() throws Exception{
+	/*public void testmemoryMap() throws Exception{
 		
 		Search search = new Search();
 	 	search.setCurrentPage(1);
@@ -217,7 +217,7 @@ public class UserServiceTest {
 	 	System.out.println(""+totalCount);
 		
 		
-	} 
+	} */
 	
 
 }

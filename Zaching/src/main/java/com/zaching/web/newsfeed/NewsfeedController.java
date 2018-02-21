@@ -107,10 +107,11 @@ public class NewsfeedController {
 		Newsfeed newsfeed = newsfeedService.getNewsfeed(newsfeedId);
 		model.addAttribute("newsfeed", newsfeed);
 		model.addAttribute("roomUser", userService.getUser(newsfeed.getUserId()));
-		System.out.println("image :: "+userService.getUser(newsfeed.getUserId()));
-		System.out.println(newsfeed.getCategoryCode());
-		model.addAttribute("list", (List)(commonService.listComment(search, newsfeed.getCategoryCode(), newsfeedId).get("list")));
-		System.out.println("list :: "+(List)(commonService.listComment(search, "N01", newsfeedId).get("list")));
+	
+		
+		model.addAttribute("list", (List)(commonService.listComment(search, "N01", newsfeedId).get("list")));
+		
+		System.out.println("list :: "+(List)(commonService.listComment(search, newsfeed.getCategoryCode(), newsfeedId).get("list")));
 		
 		return "forward:/newsfeed/getNewsfeed.jsp";
 		

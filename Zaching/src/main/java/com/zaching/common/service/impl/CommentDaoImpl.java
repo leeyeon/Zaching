@@ -134,7 +134,6 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public List<Comment> listComment(Search search, String categoryCode, int roomId) throws Exception {
 		Map<String, Object> map = new HashMap<String,Object>();
-		System.out.println(categoryCode+" // "+roomId);
 		map.put("categoryCode", categoryCode);
 		map.put("roomId", roomId);
 		map.put("search", search);

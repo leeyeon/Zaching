@@ -4,6 +4,7 @@
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri = "http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
@@ -38,6 +39,10 @@
 
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
   	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+  	
+  	<script type="text/javascript" src="../resources/javascript/masonry.pkgd.min.js"></script>
+	<script type="text/javascript" src="../resources/javascript/moment.js"></script>
+	<script type="text/javascript" src="../resources/javascript/moment-ko.js"></script>
   	
 	<script type='text/javascript'>
 
@@ -107,7 +112,6 @@
 		}
 		
 		if(category.val() == "B03") {
-			alert(category.val());
 			if(fee.val() == "") {
 				fee.focus();
 				makeToast("회비를 지정해주세요.");
@@ -123,6 +127,11 @@
 				return false;
 			} else {
 				//alert(feeDate.val().subString);
+			}
+			
+			if($("#sortable1").children().size() <= 1) {
+				makeToast("친구를 한 명이상 선택해주세요.");
+				return false;
 			}
 
 		}
@@ -298,6 +307,60 @@
 			lang: 'ko-KR'
 		});
 	    
+	    $(document).on('click', "#sortable2 > li", function() {
+	    	$(this).remove();
+	    	$("#sortable1").append('<li class="ui-state-default ui-sortable-handle">'+$(this).html()+'</li>');
+	    	
+	    	$("#selectedFriend").text($("#sortable1").children().size() - 1);
+	    	
+	    	$("#defaultFriend").hide();
+	    });
+	    
+	    $(document).on('click', "#sortable1 > li" , function() {
+
+	    	$(this).remove();
+	    	$("#sortable2").append('<li class="ui-state-default ui-sortable-handle">'+$(this).html()+'</li>');
+	    	$("#defaultFriend").hide();
+	    	
+	    	$("#selectedFriend").text($("#sortable1").children().size() - 1);
+	    	
+	    	//alert($("#sortable1").children().size());
+	    	if($("#sortable1").children().size() == 1) {
+	    		$("#defaultFriend").show();
+	    	}
+	    });
+	    
+	    /*
+	    $(document).on('draggable', "#sortable1" , function() {
+	    	alert();
+	    	//alert($("#sortable1").children().size());
+	    	if($("#sortable1").children().size() == 1) {
+	    		$("#defaultFriend").show();
+	    	}
+	    });
+	    */
+	    
+	    // 오늘 날짜로 세팅 (B03 -feeDate)
+	    var today = moment().format('YYYY-MM-DD');
+	    $("input[name=feeDate]").val(today);
+	    
+	    $('input.searchFriend').on('keydown keyup', function() {
+
+	    	if($(this).val().length >= 1) {
+	    		
+	    		var element = $("#sortable2 > li > div > span");
+	    		
+		    	if(element.text().indexOf($(this).val()) > -1) {
+		    		
+		    		$("#sortable2 > li").hide();
+		    		$("#sortable2 > li:contains('"+$(this).val()+"')").show();
+			    } else {
+			    	$("#sortable2 > li").show();
+			    }
+	    	} else {
+	    		$("#sortable2 > li").show();
+	    	}
+	    });
 	    
 	});
 
@@ -333,9 +396,57 @@
 	}
 	
   </script>
+<<<<<<< HEAD
 	 <style>
 	      @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
 	      h3 { font-family: 'Nanum Pen Script', cursive; }
+	      
+	      .nav a{
+font-family: 'Hanna', serif;"
+}
+=======
+	<style>
+     @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+     h3 { font-family: 'Nanum Pen Script', cursive; }
+     
+     .searchFriend {
+     	    display: inline-block;
+	    box-sizing: border-box;
+	    -moz-box-sizing: border-box;
+	    padding: 2px 30px 2px 8px;
+	    line-height: 22px;
+	    font-weight: normal;
+	    font-size: 15px;
+	    letter-spacing: 0;
+	    color: #000;
+	    vertical-align: middle;
+	    background: none; 
+	    border: none; 
+	    width: 100%; 
+	    padding: 5px 5px 5px 30px;
+	    
+     }
+     
+    .searchFriend:focus {
+         border-color: red;
+         outline: none;
+    }
+	      
+	.icon-search {
+	    overflow: hidden;
+	    background-image: url(../resources/images/sp.png);
+	    line-height: 999em;
+	    vertical-align: top;
+	    color: transparent;
+	    width: 20px;
+	    height: 20px;
+	    display: inline-block;
+	    background-position: -362px -159px;
+		position: absolute;
+		top: 12px;
+	    left: 15px;
+	}
+>>>>>>> refs/remotes/origin/master
 	</style>
     
 </head>
@@ -442,7 +553,7 @@
 		    		<div class="row">
 		            	<div class="col-sm-3 btn-bob">회비 (원)</div>
 		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
-		            		<input type="text" class="form-control" name="fee" placeholder="(ex) 20000">
+		            		<input type="text" class="form-control" name="fee" placeholder="(ex) 20000" />
 		            	</div>
 		            	<div class="col-sm-3 btn-bob">회비 납부일</div>
 		            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
@@ -453,29 +564,37 @@
 		    		<hr>
 		    			    	
 		            <div class="row" style="margin-top: 10px;">
-		            	<div class="col-xs-12 btn-bob" style="width: 100%; ">초대할 친구</div>
+		            	<div class="col-xs-12 btn-bob" style="width: 100%; height: auto;">
+		            		친구 초대 ( <span id="selectedFriend">0</span> 명 / 총 ${fn:length(friend.list)} 명 )
+		            	</div>
 					</div>	
 
 					<div class="row" style="padding: 10px;">
 
-	            		<ul id="sortable1" class="col-sm-5 droptrue" align="center" style="background: #ccc; height: 200px; padding:5px;">
-	            		
+	            		<ul id="sortable1" class="col-sm-6 droptrue" align="center" style="background: #efefef; height: 300px; padding:5px; border: 1px solid #a7a7a7;">
+	            			<li id="defaultFriend" style="margin-top: 125px;">초대할 친구를 선택하거나 드래그해주세요.</li>
 						</ul>
-
-		            	<div class="col-sm-2" align="center">
-		            		<button>왼쪽</button><br/>
-		            		<button>오른쪽</button>
-		            	</div>
-
-						<ul id="sortable2" class="col-sm-5 droptrue" align="center" style="background: #ccc; height: 200px; padding: 5px;">
-						  <c:forEach var="friend" items="${friend.list}">
-							  <li class="ui-state-default">
-							  	<div class="draggable_area">
-							  		<input type="hidden" value="${friend.friendId}">
-							  		${friend.name}
-							  	</div></li>
-						  </c:forEach>
-						</ul>		            	
+						
+						<div class="col-sm-6" style="background: #efefef; height: 300px; padding: 5px; border: 1px solid #a7a7a7;">
+							<div>
+								<span class="icon-search"></span>
+								<input type="text" class="searchFriend" placeholder="이름 검색" />
+							</div>
+							<ul id="sortable2" class="droptrue" align="center" style="height: 250px;">
+							  <c:forEach var="friend" items="${friend.list}">
+								  <li class="ui-state-default">
+								  	<div class="draggable_area">
+								  		
+								  		<img class="userProfile" width="45px" height="45px"
+										style=" border-radius: 40px; box-shadow: 1px #cccccc;"
+										src = "../resources/upload_files/images/${friend.profileImage}"
+										onerror="this.src='../resources/images/user-icon.png'" />
+								  		<input type="hidden" value="${friend.friendId}">
+								  		<span class="friendName">${friend.name}</span>
+								  	</div></li>
+							  </c:forEach>
+							</ul>
+						</div>	            	
 	            	</div>		            	
 			    	
 		    	</c:if>

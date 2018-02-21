@@ -1,9 +1,11 @@
 package com.zaching.service.user;
 
 
+import java.util.List;
 import java.util.Map;
 
 import com.zaching.common.domain.Search;
+import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.domain.User;
 
 public interface UserService {
@@ -27,13 +29,13 @@ public interface UserService {
 	public Map<String,Object>listUser(Search search)throws Exception;
 
 	//나만의 추억지도 보기
-	public Map<String, Object>memoryMap(Search search)throws Exception;
+	public List<Newsfeed> memoryMap(int userId)throws Exception;
 	
 	//내정보수정 == 추가정보입력
     public void updateUser(User user)throws Exception;
     
 	//패스워드찾기
-    public void findPassword(String password)throws Exception;
+    public void findPassword(String email)throws Exception;
     
 	//회원탈퇴
     public void deleteUser(User user)throws Exception;
@@ -56,6 +58,9 @@ public interface UserService {
  	
  	//sns로그인 회원가입
  	public boolean snsCheck(String email, String snsType)throws Exception;
+ 	
+ 	//로그인 기록 남기기
+ 	public void latestLogin(int userId)throws Exception;
 
 	public String updateGetAccountToken(String token, int userId) throws Exception;
 	

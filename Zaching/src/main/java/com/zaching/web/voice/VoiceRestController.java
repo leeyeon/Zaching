@@ -23,6 +23,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,14 +58,20 @@ public class VoiceRestController {
 	
 
 	// 여기에서부터
-	@RequestMapping(value="json/testUpload")
-	public String testUpload(HttpServletRequest request) throws Exception{
-		//System.out.println(link);
+	@RequestMapping(value="json/testUpload/{userId}/{voiceId}/{categoryCode}/{fileName}")
+	public String testUpload(HttpServletRequest request, @PathVariable int userId, @PathVariable String categoryCode, 
+			@PathVariable int voiceId, @PathVariable String fileName, @ModelAttribute Comment comment) throws Exception{
+		System.out.println("testUpload()");
+		
+		comment.setRoomId(voiceId);
+		comment.setUserId(userId);
+		comment.setCategory(categoryCode);
+		comment.setContent(fileName+".wav");
 		
 		byte[] buffer = new byte[1024 * 1024];
 		
 		InputStream input = request.getInputStream();
-		OutputStream output = new FileOutputStream("C:\\Users\\jiwon\\Documents\\costam0.wav");
+		OutputStream output = new FileOutputStream("C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\record\\"+fileName+".wav");
 		int bytesRead;
 		while((bytesRead = input.read(buffer)) != -1) {
 			System.out.println(bytesRead);
@@ -71,71 +79,7 @@ public class VoiceRestController {
 		}
 		output.close();
 		input.close();
-		/*URL url = new URL((String)link.get("link")); 
-		System.out.println("dd");
-		String tDir = System.getProperty("java.io.tmpdir"); 
-		System.out.println(tDir);
-		String path = tDir + "tmp" + ".pdf"; 
-		System.out.println("dd2");
-		File file = new File(path); 
-		file.deleteOnExit(); 
-		FileUtils.copyURLToFile(url, file);*/
-		//File file = (File)link.get("file");
-		//String hlink = (String)link.get("link");
-		//String fileName = (String)link.get("fileName");
-		//Blob blob = (Blob)link.get("blob");
 		
-		/*InputStream is = blob.getBinaryStream();
-		FileOutputStream fos = new FileOutputStream("C:\\" + fileName);
-		int b = 0;
-		while ((b = is.read()) != -1)
-		{
-		    fos.write(b); 
-		}
-		boolean result = false;
-		System.out.println(hlink);
-		System.out.println(fileName);
-		/*File sourceFile = new File(hlink);
-		FileInputStream inputStream = null;
-		FileOutputStream outputStream = null;
-		FileChannel fcin = null;
-		FileChannel fcout = null;
-		
-		inputStream = new FileInputStream(sourceFile);
-		outputStream = new FileOutputStream("C:\\Users\\jiwon\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\audio"+fileName);
-		
-		fcin = inputStream.getChannel();
-		fcout = outputStream.getChannel();
-		
-		long size = fcin.size();
-		
-		fcin.transferTo(0, size, fcout);
-		
-		fcout.close();
-		fcin.close();
-		outputStream.close();
-		inputStream.close();
-		result = true;
-		
-		File file = new File(hlink);
-		if(file.delete()) {
-			result = true;
-		}*/
-		/*
-		FileInputStream fis = null;
-		   ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		   fis= new FileInputStream((String)link.get("link"));
-		   int len = 0;
-		   byte[] buf =new byte[1024] ;
-		   byte[] file_data = null;
-		     while ((len=fis.read(buf))!=-1){
-				  baos.write(buf, 0, len);
-		     }
-			file_data = baos.toByteArray();
-			fis.close();
-			baos.close();
-			String size = String.valueOf(((String)link.get("link")).length());//파일 크기
-			int a = Integer.parseInt(size);*/
 			
 		
 		return "ㅎㅇ";

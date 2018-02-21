@@ -117,6 +117,9 @@
 		}
 	}
 	
+	 function test() {
+		 window.location.reload();
+		}
 	///////////////////////////////////////////////
 	// Update Audio Player
 	///////////////////////////////////////////////
@@ -445,6 +448,9 @@
     padding-top: 0px;
     padding-bottom: 15px;
 }
+.nav a{
+font-family: 'Hanna', serif;"
+}
 </style>
 </head>
 
@@ -580,6 +586,8 @@
 						<b>녹음하기</b>
 					</h4>
 					<div class="modal-body">
+					<button onclick="test();">테스드등록</button>
+					
 						<button onclick="startRecording(this);">녹음하기</button>
 						<button onclick="stopRecording(this);" disabled>정지</button>
 
@@ -588,6 +596,8 @@
 
 						<h2>Log</h2>
 						<pre id="log"></pre>
+						
+						
 						
 					</div>
 				</div>
@@ -661,6 +671,28 @@
 				var li = document.createElement('li');
 				var au = document.createElement('audio');
 				var hf = document.createElement('a');
+				var uploadButton = document.createElement('input');
+				
+				uploadButton.type = 'button';
+				uploadButton.value = '등록';
+				uploadButton.onclick = function(){
+					var xhr = new XMLHttpRequest();
+					xhr.open('POST', '/voice/json/testUpload/${user.userId}/${voice.voiceId}/${voice.categoryCode}/'+hf.download, true);
+					xhr.onload = function(e) {
+						console.log("loaded");
+					};
+					xhr.onreadystatechange = function() {
+						console.log("state : " + xhr.readyState);
+					};
+
+					xhr.upload.onprogress = function(e) {
+						console.log("uploading.....");
+					};
+					xhr.setRequestHeader("Content-Type", "audio/wav");
+					xhr.send(blob);
+					
+					window.location.reload();
+				}
 
 				au.controls = true;
 				au.src = url;
@@ -669,6 +701,7 @@
 				hf.innerHTML = hf.download;
 				li.appendChild(au);
 				li.appendChild(hf);
+				li.appendChild(uploadButton);
 				recordingslist.appendChild(li);
 
 				//alert(hf.download);
@@ -677,41 +710,8 @@
 				link = hf.href;
 				alert(hf.href);
 				alert(hf.download);
-				var xhr = new XMLHttpRequest();
-				xhr.open('POST', '/voice/json/testUpload', true);
-				xhr.onload = function(e) {
-					console.log("loaded");
-				};
-				xhr.onreadystatechange = function() {
-					console.log("state : " + xhr.readyState);
-				};
-
-				xhr.upload.onprogress = function(e) {
-					console.log("uploading.....");
-				};
-				xhr.setRequestHeader("Content-Type", "audio/wav");
-				xhr.send(blob);
-				//var myFile = blobToFile(blob, hf.download);
-				// var myFile = new File(blob, hf.download);
-				//alert(myFile);
-				/*$.ajax({
-					url : "/voice/json/testUpload",
-					method : "POST" ,
-					 contentType : "application/json; charset=UTF-8",
-				        async : false,
-				        dataType : "json",
-				        data : JSON.stringify({
-				        	"link" : link,
-				        	"fileName" : hf.download,
-				        	"blob" : myFile
-				        }),
-				        success : function(serverData) {
-				        	
-				        	alert(serverData);
-				           
-				        }
-				});*/
-				//self.location="/voice/testUpload?link="+hf+"&fileName="+hf.download;
+				
+				
 			});
 		}
 
@@ -738,7 +738,7 @@
 			}, startUserMedia, function(e) {
 				__log('마이크 장치가 없습니다: ' + e);
 			});
-		};
+		}
 	</script>
 	
 	<script src="../resources/javascript/recorder.js"></script>

@@ -16,6 +16,7 @@
 		<result property="userId" column="receiver_id" jdbcType="INTEGER"/>
 		<result property="senderId" column="sender_id" jdbcType="INTEGER"/>
 		<result property="status" column="status" jdbcType="CHAR"/>
+		<result property="profileImage" column="profile_image" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<insert id="addNotice" 
@@ -68,10 +69,12 @@
 			resultMap="noticeSelectMap">
 			
 		SELECT notice.notice_id, notice.user_name, notice.category_code, notice.created_date, notice.bob_id, notice.sender_id,
-										notice_target.receiver_id, notice_target.notice_target_id,  notice_target.receiver_id, notice_target.status
-											FROM notice, notice_target
+										notice_target.receiver_id, notice_target.notice_target_id,  notice_target.receiver_id, 
+										notice_target.status, users.profile_image
+											FROM notice, notice_target, users
 												<where>
 													notice.notice_Id = notice_target.notice_Id AND
+													 users.user_id=notice_target.sender_id AND
 										 				RECEIVER_ID = #{userId}
 												</where>
 			
@@ -87,5 +90,6 @@
 					</where>
 				) countTable
 	</select>
+	
 	
 </mapper>

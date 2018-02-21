@@ -103,10 +103,11 @@ $("#messageSend").on('click',function(){
 	  height: 100%;
 	}
 	.phone {
-	  height: 60%;
-	  border: 1px solid #dcdcdc;
-	  overflow-y: auto;
-	  overflow-x: hidden;
+	height: 60%;
+	border: 1px solid #dcdcdc;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background-color: #fff;
 	}
 	.button {
 	  background-color: none;
@@ -234,49 +235,46 @@ $("#messageSend").on('click',function(){
 
   <div class="row">
     <div class="col-xs-12">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">메세지</button>
-      </div>
-  </div>
-</div>
+     <button type="button" class="btn btn-primary" data-toggle="modal"
+				data-target="#myModal">메세지</button>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-   <div class="wrapper">
-	
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="wrapper">
 
-		<!-- 왼쪽 메세지 대화 박스 -->
-		<div class="phone-containter">
-			<div id="phone" class="phone">
-				<div class="message left">
-					<div class="message-text">안녕</div>
+
+						<!-- 왼쪽 메세지 대화 박스 -->
+						
+						
+						
+						<div class="phone-containter">
+							<div id="phone" class="phone">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true" id="close">×</button>
+								<div class="message left">
+									<div class="message-text">하이!</div>
+								</div>
+								<div class="message right">
+									<div class="message-text">오랜만이네</div>
+									<div class="message-text">잘지내냐?</div>
+								</div>
+								
+							</div>
+
+							<!-- 메세지 작성 -->
+							<div class="send-container">
+								<form id="send">
+									<input type="text" id="msgInput" class="send-input"
+										placeholder="메세지내용"> <input type="submit"
+										class="send-btn" id="messageSend" value="Send">
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="message right">
-					<div class="message-text">오랜만이네</div>
-					<div class="message-text">잘지내냐?</div>
-				</div>
-				<div class="message left">
-					<div class="message-text">그렇지뭐 오늘 시간괜찮으면 밥이나 먹자</div>
-				</div>
-					<div class="message right">
-					<div class="message-text">좋지 어디서먹을까 강남?</div>
-				</div>
-				<div class="message left">
-					<div class="message-text">그래 그럼 5시까지 보자</div>
-				</div>
-				<div class="message right">
-					<div class="message-text">오케이 있다봐</div>
-				</div>
-			</div>
-			
-			<!-- 메세지 작성 -->
-			<div class="send-container">
-				<form id="send">
-					<input type="text" id="msgInput" class="send-input" placeholder="메세지내용">
-					<input type="submit" class="send-btn" id="messageSend"value="Send">
-				</form>
 			</div>
 		</div>
-	</div>
 
 </html>
