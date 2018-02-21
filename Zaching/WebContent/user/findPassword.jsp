@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,9 +9,9 @@
 
 <html lang="ko">
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -28,9 +28,9 @@
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
    
    
-   <!-- jQuery UI toolTip »ç¿ë CSS-->
+   <!-- jQuery UI toolTip ì‚¬ìš© CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip »ç¿ë JS-->
+  <!-- jQuery UI toolTip ì‚¬ìš© JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
@@ -43,34 +43,73 @@
     <script type="text/javascript">
     
 
-	//==>"ÀÌ¸ŞÀÏ" À¯È¿¼ºCheck  Event Ã³¸® ¹× ¿¬°á
-	 $(function() {
-		 
-		 $("input[name='email']").on("change" , function() {
+	//==>"ì´ë©”ì¼" ìœ íš¨ì„±Check  Event ì²˜ë¦¬ ë° ì—°ê²°
+	$(function() {
+				  $('#checkbtn').on('click', function(){
+			        	alert("ë²„íŠ¼í´ë¦­!");
+			        	fncCheckSingup();
+			  	});
+			});
 			
-			 var email=$("input[name='email']").val();
-			
-			 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
-		    	alert("ÀÌ¸ŞÀÏ Çü½ÄÀÌ ¾Æ´Õ´Ï´Ù.");
-		     }
-		});
-		 
-	});	
+		function fncCheckSingup(){
+			 var checkEmail = $("#checkEmail").val();
+			 var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+			 if(checkEmail == null|| checkEmail.length <1){
+				 $('#checkMsg').html('<p style="color:red">ì´ë©”ì¼ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.</p>');
+	        		
+	        		return false
+
+			 }else if(exptext.test(checkEmail) == false){
+	        		$("#email").val('');
+	        		$('#checkMsg').html('<p style="color:red">ì´ë©”ì¼í˜•ì‹ìœ¼ë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”.</p>');
+	        		return false
+			 }
+			 
+		            $.ajax({
+		            	url: "/user/rest/checkSingup",
+		            	method:"POST",
+		            	contentType : "application/json; charset=UTF-8",
+						data : JSON.stringify({
+							"checkEmail" : checkEmail
+						
+						}),
+						async : false,
+						dataType : "json",
+		                success: function(data){
+		                	console.log(data);
+		                    if(data == true){
+		                    	console.log("ë°ì´í„° ê°’==> "+data);
+		                        $('#checkMsg').html('<p style="color:blue">ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì´ë©”ì¼ ì…ë‹ˆë‹¤.</p>');
+		                    }
+		                    else if(data == false){
+		                        $('#checkMsg').html('<p style="color:red">ì´ë©”ì¼ì „ì†¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.</p>');
+		                        
+		                        return $("#checkEmail").val('');
+
+		                 
+		                    }
+		                }
+		            
+		            
+		            });    //end ajax    
+		            //end on    
+		    }
     
 
 </script>
 
-<title>ÆĞ½º¿öµåÃ£±â</title>
+<title>íŒ¨ìŠ¤ì›Œë“œì°¾ê¸°</title>
 
 
 </head>
 <body>
 
 		<div class="form-group">
-			<label for="email" class="col-md-2 control-label">ÀÌ¸ŞÀÏ</label>
+			<label for="email" class="col-md-2 control-label">ì´ë©”ì¼</label>
 			<div class="col-md-10">
-				<input type="text" class="form-control" name="bEmail"
-					value="${user.email}" placeholder="ÀÌ¸ŞÀÏÀ» ÀÛ¼ºÇØÁÖ¼¼¿ä">
+				<input type="text" class="form-control" name="email"
+				 placeholder="ì´ë©”ì¼ì„ ì‘ì„±í•´ì£¼ì„¸ìš”" id="checkEmail">
 			</div>
 
 			<div class="col-md-offset-2 col-md-10">
@@ -83,17 +122,18 @@
 
 		<div class="form-group" style="margin-left: 82%">
 			<!-- Button -->
-
+				<div id="checkMsg"></div>
+				<button type="button" id="checkbtn" class="btn btn-default">ì¤‘ë³µí™•ì¸</button>
 			<div class="col-md-offset-8 col-md-8">
-				<button id="btn-signup" type="submit" class="btn btn-warning">ÀÓ½Ãºñ¹Ğ¹øÈ£Àü¼Û</button>
+				<button id="btn-signup" type="submit" class="btn btn-warning">ì„ì‹œë¹„ë°€ë²ˆí˜¸ì „ì†¡</button>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<div class="col-md-12 control">
-				<div
-					style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-					°¡ÀÔÇÏ½Å ÀÌ¸ŞÀÏ·Î ¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£¸¦ Àü¼ÛÇØµå¸®°Ú½À´Ï´Ù.</div>
+			<div id="checkMsg"></div>
+				<div style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
+					ê°€ì…í•˜ì‹  ì´ë©”ì¼ë¡œ ì•„ì´ë””ì™€ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì „ì†¡í•´ë“œë¦¬ê² ìŠµë‹ˆë‹¤.</div>
 			</div>
 		</div>
 

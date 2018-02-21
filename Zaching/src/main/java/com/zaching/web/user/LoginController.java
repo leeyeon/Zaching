@@ -51,7 +51,48 @@ public class LoginController {
 	int pageUnit;
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
+	
+	@RequestMapping(value = "login", method = RequestMethod.POST)
+	public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception {
 
+		System.out.println("/user/login : POST");
+
+		System.out.println("::" + user);
+
+		User dbUser = userService.login(user.getEmail());
+		System.out.println("::::: " + dbUser);
+
+		if (user.getPassword().equals(dbUser.getPassword()) && user.getEmail().equals(dbUser.getEmail())) {
+			session.setAttribute("user", dbUser);
+			
+			
+			//System.out.println("userId ===> "+userId);
+			//userService.latestLogin(userId);
+			
+			//ì„¸ì…˜ì— ì €ìž¥í•˜ëŠ” ì‹œê°„(=ë¡œê·¸ì¸ì‹œê°„ ê¸°ë¡ë‚¨ê¸°ê¸°) DBì— ì €ìž¥ OR ì—…ë°ì´íŠ¸
+		}
+		if (session.getAttribute("user") == null) {
+					
+		}
+		System.out.println("=====>  " + session.getAttribute("user"));
+		
+		System.out.println("ï¿½ï¿½===>" + user.getEmail() + " = " + dbUser.getEmail());
+		System.out.println("ï¿½ï¿½===>" + user.getPassword() + " = " + dbUser.getPassword());
+	
+
+		return "redirect:/index.jsp";
+	}
+
+	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) throws Exception {
+
+		System.out.println("/user/logout : POST");
+		
+		
+		session.invalidate();
+
+		return "redirect:/index.jsp";
+	}
 	@RequestMapping(value = "kakaoLoginRequest", method = RequestMethod.GET)
 	public String kakaoLoginRequest(HttpSession session) {
 
@@ -72,27 +113,27 @@ public class LoginController {
 
 		boolean result = userService.snsCheck(user.getEmail(), user.getSnsType());
 
-		// System.out.println("¹Þ¾Æ¿ÂÁ¤º¸"+user.getSnsType());
-		if (result == true) {// ÀÌ¸ÞÀÏÁ¤º¸°¡ db¿¡ ¾øÀ»°æ¿ì
+		// System.out.println("ë°›ì•„ì˜¨ì •ë³´"+user.getSnsType());
+		if (result == true) {// ì´ë©”ì¼ì •ë³´ê°€ dbì— ì—†ì„ê²½ìš°
 
 			session.setAttribute("user", user);
-			userService.snsAddUser(user);// snstypeÀ¸·Î È¸¿ø°¡ÀÔ
+			userService.snsAddUser(user);// snstypeìœ¼ë¡œ íšŒì›ê°€ìž…
 
-			System.out.println("Ä«Ä«¿À°èÁ¤À¸·Î È¸¿ø°¡ÀÔ");
+			System.out.println("ì¹´ì¹´ì˜¤ê³„ì •ìœ¼ë¡œ íšŒì›ê°€ìž…");
 		} else{
 			session.setAttribute("user", user);
 
-			System.out.println("Ä«Ä«¿À°èÁ¤À¸·Î ·Î±×ÀÎ");
+			System.out.println("ì¹´ì¹´ì˜¤ê³„ì •ìœ¼ë¡œ ë¡œê·¸ì¸");
 		}
 
 		User sessionUser = (User) session.getAttribute("user");
-		System.out.println("¼¼¼Ç====>" + sessionUser);
+		System.out.println("ì„¸ì…˜====>" + sessionUser);
 		// System.out.println(sessionUser);
 
-		/* Ä«Ä«¿ÀÆäÀÌ ¶§ ·Î±×ÀÎÇÏ´Â °Å ¶§¹®¿¡ ¸¸µê!!! */
+		/* ì¹´ì¹´ì˜¤íŽ˜ì´ ë•Œ ë¡œê·¸ì¸í•˜ëŠ” ê±° ë•Œë¬¸ì— ë§Œë“¦!!! */
 		if (sessionUser.getAccessToken() == null) {
 
-			// System.out.println("¿©±â±îÁö ¿Ô±º¿è");
+			// System.out.println("ì—¬ê¸°ê¹Œì§€ ì™”êµ°ìš¤");
 
 			sessionUser.setAccessToken("kakaoPay");
 
@@ -102,9 +143,9 @@ public class LoginController {
 
 		} else {
 
-			System.out.println("session ÀúÀåÁ¤º¸===>" + session.getAttribute("user"));
-			System.out.println("ÀÌ¸ÞÀÏ ==> " + user.getEmail());
-			System.out.println("ÇÁ·ÎÇÊ ÀÌ¹ÌÁö ==> " + user.getProfileImage());
+			System.out.println("session ì €ìž¥ì •ë³´===>" + session.getAttribute("user"));
+			System.out.println("ì´ë©”ì¼ ==> " + user.getEmail());
+			System.out.println("í”„ë¡œí•„ ì´ë¯¸ì§€ ==> " + user.getProfileImage());
 
 			return "forward:/index.jsp";
 		}
@@ -124,34 +165,34 @@ public class LoginController {
 	public String naverLogin(@RequestParam("code") String code, @RequestParam("state") String state, Model model,
 			HttpSession session) throws Exception {
 
-		System.out.println("naverLogin/code¹Þ¾Æ¼­ ÅäÅ« ¿äÃ»ÇÏ¤Ó");
+		System.out.println("naverLogin/codeë°›ì•„ì„œ í† í° ìš”ì²­í•˜ã…£");
 
 		User user = naverService.getAccessToken(session, code, state);
 		user = naverService.getUserProfile(user);
 
 		boolean result = userService.snsCheck(user.getEmail(), user.getSnsType());
 
-		// System.out.println("¹Þ¾Æ¿ÂÁ¤º¸"+user.getSnsType());
-		if (result == true) {// ÀÌ¸ÞÀÏÁ¤º¸°¡ db¿¡ ¾øÀ»°æ¿ì
+		// System.out.println("ë°›ì•„ì˜¨ì •ë³´"+user.getSnsType());
+		if (result == true) {// ì´ë©”ì¼ì •ë³´ê°€ dbì— ì—†ì„ê²½ìš°
 
 			session.setAttribute("user", user);
-			userService.snsAddUser(user);// snstypeÀ¸·Î È¸¿ø°¡ÀÔ
+			userService.snsAddUser(user);// snstypeìœ¼ë¡œ íšŒì›ê°€ìž…
 
-			System.out.println("³×ÀÌ¹ö°èÁ¤À¸·Î È¸¿ø°¡ÀÔ");
+			System.out.println("ë„¤ì´ë²„ê³„ì •ìœ¼ë¡œ íšŒì›ê°€ìž…");
 		} else  {
 			session.setAttribute("user", user);
 
-			System.out.println("³×ÀÌ¹ö°èÁ¤À¸·Î ·Î±×ÀÎ");
+			System.out.println("ë„¤ì´ë²„ê³„ì •ìœ¼ë¡œ ë¡œê·¸ì¸");
 		}
 
 		// userService.snsAddUser(user);
 		System.out.println("code ==>" + code);
 		System.out.println("state  ==>" + state);
-		System.out.println("userÁ¤º¸ ==>" + user);
+		System.out.println("userì •ë³´ ==>" + user);
 
-		System.out.println("session ÀúÀåÁ¤º¸===>" + session.getAttribute("user"));
-		System.out.println("ÀÌ¸ÞÀÏ ==> " + user.getEmail());
-		System.out.println("ÇÁ·ÎÇÊ ÀÌ¹ÌÁö ==> " + user.getProfileImage());
+		System.out.println("session ì €ìž¥ì •ë³´===>" + session.getAttribute("user"));
+		System.out.println("ì´ë©”ì¼ ==> " + user.getEmail());
+		System.out.println("í”„ë¡œí•„ ì´ë¯¸ì§€ ==> " + user.getProfileImage());
 
 		return "forward:/index.jsp";
 	}
@@ -174,22 +215,22 @@ public class LoginController {
 
 		boolean result = userService.snsCheck(user.getEmail(), user.getSnsType());
 
-		// System.out.println("¹Þ¾Æ¿ÂÁ¤º¸"+user.getSnsType());
-		if (result == true) {// ÀÌ¸ÞÀÏÁ¤º¸°¡ db¿¡ ¾øÀ»°æ¿ì
+		// System.out.println("ë°›ì•„ì˜¨ì •ë³´"+user.getSnsType());
+		if (result == true) {// ì´ë©”ì¼ì •ë³´ê°€ dbì— ì—†ì„ê²½ìš°
 
 			session.setAttribute("user", user);
-			userService.snsAddUser(user);// snstypeÀ¸·Î È¸¿ø°¡ÀÔ
+			userService.snsAddUser(user);// snstypeìœ¼ë¡œ íšŒì›ê°€ìž…
 
-			System.out.println("±¸±Û°èÁ¤À¸·Î È¸¿ø°¡ÀÔ");
+			System.out.println("êµ¬ê¸€ê³„ì •ìœ¼ë¡œ íšŒì›ê°€ìž…");
 		} else{
 			session.setAttribute("user", user);
 
-			System.out.println("±¸±Û°èÁ¤À¸·Î ·Î±×ÀÎ");
+			System.out.println("êµ¬ê¸€ê³„ì •ìœ¼ë¡œ ë¡œê·¸ì¸");
 		}
 		
 		System.out.println("session==> " + session.getAttribute("user"));
-		System.out.println("google ÀÌ¸ÞÀÏ ==> " + user.getEmail());
-		System.out.println("ÇÁ·ÎÇÊ ÀÌ¹ÌÁö ==> " + user.getProfileImage());
+		System.out.println("google ì´ë©”ì¼ ==> " + user.getEmail());
+		System.out.println("í”„ë¡œí•„ ì´ë¯¸ì§€ ==> " + user.getProfileImage());
 
 		return "forward:/index.jsp";
 	}
@@ -207,28 +248,28 @@ public class LoginController {
 	public String facebookLogin(@RequestParam("code") String code, Model model, HttpSession session, String state)
 			throws Exception {
 
-		System.out.println("[ facebookLogin ÅäÅ«/»ç¿ëÀÚÁ¤º¸ ¹Þ±â!! ]");
+		System.out.println("[ facebookLogin í† í°/ì‚¬ìš©ìžì •ë³´ ë°›ê¸°!! ]");
 
 		User user = commonService.getAccessToken_facebook(session, code);
 		user = commonService.getUserProfile(user);
 
 		boolean result = userService.snsCheck(user.getEmail(), user.getSnsType());
 
-		// System.out.println("¹Þ¾Æ¿ÂÁ¤º¸"+user.getSnsType());
-		if (result == true) {// ÀÌ¸ÞÀÏÁ¤º¸°¡ db¿¡ ¾øÀ»°æ¿ì
+		// System.out.println("ë°›ì•„ì˜¨ì •ë³´"+user.getSnsType());
+		if (result == true) {// ì´ë©”ì¼ì •ë³´ê°€ dbì— ì—†ì„ê²½ìš°
 
 			session.setAttribute("user", user);
-			userService.snsAddUser(user);// snstypeÀ¸·Î È¸¿ø°¡ÀÔ
+			userService.snsAddUser(user);// snstypeìœ¼ë¡œ íšŒì›ê°€ìž…
 
-			System.out.println("ÆäÀÌ½ººÏ°èÁ¤À¸·Î È¸¿ø°¡ÀÔ");
+			System.out.println("íŽ˜ì´ìŠ¤ë¶ê³„ì •ìœ¼ë¡œ íšŒì›ê°€ìž…");
 		} else {
 			session.setAttribute("user", user);
 
-			System.out.println("ÆäÀÌ½ººÏ°èÁ¤À¸·Î ·Î±×ÀÎ");
+			System.out.println("íŽ˜ì´ìŠ¤ë¶ê³„ì •ìœ¼ë¡œ ë¡œê·¸ì¸");
 		}
 		System.out.println("session==> " + session.getAttribute("user"));
-		System.out.println("facebook ÀÌ¸ÞÀÏ ==> " + user.getEmail());
-		System.out.println("ÇÁ·ÎÇÊ ÀÌ¹ÌÁö ==> " + user.getProfileImage());
+		System.out.println("facebook ì´ë©”ì¼ ==> " + user.getEmail());
+		System.out.println("í”„ë¡œí•„ ì´ë¯¸ì§€ ==> " + user.getProfileImage());
 
 		return "redirect:/index.jsp";
 
