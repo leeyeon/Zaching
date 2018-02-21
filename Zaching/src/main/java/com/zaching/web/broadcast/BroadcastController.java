@@ -83,7 +83,7 @@ public class BroadcastController {
 		
 		//System.out.println("ÀßÇÑ´Ù :"+broadcast);
 		
-		return "redirect:http://localhost:3000/broadcast?broadcaster="+broadcast.getUserId();
+		return "redirect:http://localhost:3000/broadcast?broadcaster="+broadcast.getUserId()+"&connectUserId="+broadcast.getUserId();
 		//return "forward:/chat/broadcast.jsp";
 	}
 	

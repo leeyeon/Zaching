@@ -156,14 +156,25 @@
    </style>
    <script type="text/javascript">
       
+   
+    
+    
       $(function() {
          
          $(document).on("click",'body > section.listings > div > ul > li > img', function(){
             var index = $("body > section.listings > div > ul > li > img").index(this);
             var broadcastId = $($("input[name=broadcastId]")[index]).val();
             alert("sad");
-               $(self.location).attr("href","http://localhost:3000/broadcast?broadcaster="+broadcastId+"&connectUserId="+${sessionScope.user.userId});         
+               //$(self.location).attr("href","http://localhost:3000/broadcast?broadcaster="+broadcastId+"&connectUserId="+${sessionScope.user.userId}); 
+               winOpen();
+               
+               function winOpen() {
+                  window.open("http://192.168.0.34:3000/broadcast?broadcaster="+broadcastId+"&connectUserId="+${sessionScope.user.userId} ,"addBroadcast","width=1450,height=900,toolbar=no")
+                 
+                  }
          });
+         
+         
          
          $(document).on("click",".user_thumnail", function(){
             if('${user}' != '') {
@@ -209,8 +220,7 @@
                   "searchCondition" : searchCondition,
                   "searchKeyword" : searchKeyword
                }),
-               processData : false,
-                  contentType : false,
+               
                async : false,
                dataType : "json",
                success : function(serverData){
@@ -222,17 +232,17 @@
                var display = '';
             for(var i=0; i<serverData.length; i++){                           
                   display = display + '<li>'+ 
-                     '<img src = "../resources/upload_files/images/'+serverData[i].image+'" onerror="this.src=\'../resources/images/broadcast_default.jpg\'" />';
+                     '<img src = "../resources/upload_files/images/'+serverData[i].image+'" onerror="this.src=\'../resources/images/broadcast_default.jpg\'" />'+
                      '<div class="property_details" style="width: 100%" >'+
                         '<div class ="user_thumnail">'+
                         '<h1>'+
                            '<a href="#" style="vertical-align: bottom;"><img src="../resources/images/'+serverData[i].profileImage+'" id="profile" onerror="this.src=\'../resources/images/20160916_190916.jpg\'">&nbsp; [BJ] '+serverData[i].broadcaster+'</a>'+
                         '</h1>'+
-                        '</div>'
+                        '</div>'+
                         '<h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'+
-                           '<a href="#">'+serverData[i].title+'</a>'+
+                           serverData[i].title+
                         '</h1>'+
-                        '<h2><span class="property_size">${obj.detail}</span></h2>'+
+                        '<h2><span class="property_size">'+serverData[i].detail+'</span></h2>'+
                      '</div>'+
                   '</li>';
                   }
@@ -250,10 +260,7 @@
          });
       });
       
-//      function winOpen() {
-//         window.open("/broadcast/addBroadcast.jsp","addBroadcast","width=500,height=700,toolbar=no")
-//
-//         }
+
       //dialog ajax
       function addBroadcast(){
          
