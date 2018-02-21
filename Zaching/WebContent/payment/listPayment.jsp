@@ -43,7 +43,7 @@
 	</c:if>	
    	
 	<div class="row listPayment">
-		<div class="col-xs-4">
+		<div class="col-xs-1">
 			<c:if test="${payment.paymentCode eq 'P01'}">
 				<span class="state_space" style="background-position: 0 -82px; color: #39c934;">충전</span>
 			</c:if>
@@ -53,33 +53,41 @@
 			<c:if test="${payment.paymentCode ne 'P01' && payment.paymentCode ne 'P02'}">
 				<span class="state_space" >기타</span>
 			</c:if>
-			<p style="position: absolute; left: 125px; top: 33px;"><fmt:formatDate value="${Date}" pattern="yyyy.MM.dd"/></p>
 	 	</div>
-	 	<div class="col-xs-4" style="padding-top: 33px;">
-	 		<c:if test="${payment.paymentCode eq 'P01'}">카카오페이 충전 <img src="../resources/images/payment_icon_small.png"></c:if>
-	 		<c:if test="${payment.paymentCode eq 'P02'}">
-	 			<c:if test="${fn:contains(payment.content, 'B03') || fn:contains(payment.content, 'B01')}">
-		 			밥친구에서 약속비로 사용
-		 		</c:if>
-		 		<c:if test="${fn:contains(payment.content, 'H00')}">
-		 			라이브방송에서 포인트선물로 사용
-		 		</c:if>
-	 		</c:if>
-	 		<c:if test="${payment.paymentCode eq 'P03'}">포인트 반환 신청</c:if>
-	 		<c:if test="${payment.paymentCode eq 'P04'}">포인트 반환 완료</c:if>
-	 		<c:if test="${payment.paymentCode eq 'P05'}">포인트 반환 신청 취소</c:if>
-	 		<c:if test="${payment.paymentCode eq 'P06'}">포인트 사용 취소</c:if>
-	 	</div>
-	 	<div class="col-xs-4" style="padding-top: 33px;">
-	 		<c:if test="${payment.paymentCode eq 'P01' || payment.paymentCode eq 'P05' || payment.paymentCode eq 'P06'}">
-	 			<p>+<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /></c:if>
-	 		<c:if test="${payment.paymentCode eq 'P02' || payment.paymentCode eq 'P03' || payment.paymentCode eq 'P04'}">
-	 			<p style="color:#d21e1e;">-<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /></c:if>
-	 		<img src="../resources/images/point_smail_icon.png" width="15px" height="15px"></p>
-	 	</div>
+	 	<div class="col-xs-11">
+	 		<div class="row" style="padding-top: 4%;">
+			 	<div class="col-xs-9 col-sm-2" style="padding: 3px;">
+					<p><fmt:formatDate value="${Date}" pattern="yyyy.MM.dd"/></p>
+			 	</div>
+			 	<div class="col-xs-12 col-sm-7" style="padding: 3px;">
+			 		<c:if test="${payment.paymentCode eq 'P01'}">카카오페이 충전 <img src="../resources/images/payment_icon_small.png"></c:if>
+			 		<c:if test="${payment.paymentCode eq 'P02'}">
+			 			<c:if test="${fn:contains(payment.content, 'B03') || fn:contains(payment.content, 'B01')}">
+				 			밥친구에서 약속비로 사용
+				 		</c:if>
+				 		<c:if test="${fn:contains(payment.content, 'H00')}">
+				 			라이브방송에서 포인트선물로 사용
+				 		</c:if>
+			 		</c:if>
+			 		<c:if test="${payment.paymentCode eq 'P03'}">포인트 반환 신청</c:if>
+			 		<c:if test="${payment.paymentCode eq 'P04'}">포인트 반환 완료</c:if>
+			 		<c:if test="${payment.paymentCode eq 'P05'}">포인트 반환 신청 취소</c:if>
+			 		<c:if test="${payment.paymentCode eq 'P06'}">포인트 사용 취소</c:if>
+			 	</div>
+			 	<div class="col-sm-3 col-xs-9" style="padding: 3px;">
+			 		<c:if test="${payment.paymentCode eq 'P01' || payment.paymentCode eq 'P05' || payment.paymentCode eq 'P06'}">
+			 			<p>+<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /></c:if>
+			 		<c:if test="${payment.paymentCode eq 'P02' || payment.paymentCode eq 'P03' || payment.paymentCode eq 'P04'}">
+			 			<p style="color:#d21e1e;">-<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /></c:if>
+			 		<img src="../resources/images/point_smail_icon.png" width="15px" height="15px"></p>
+			 	</div>
+			</div>
+			
+			
+		</div>
 	</div>
 	
-	<div class="row text-left listExplain" style="background: rgb(255, 243, 217); margin:10px; padding: 15px 10px 10px 10px; display: none;">
+	<div class="row text-left listExplain" style="background: rgb(241, 241, 241); margin:10px; padding: 15px 20px 15px; display: none; padding: 15px 20px 15px;">
 		<p style="padding-bottom: 5px;">거래일시 : ${payment.createdDate}</p>
 		<p style="padding-bottom: 5px;">적립/사용 포인트 : 
 			<span style="font-weight: bold;"> 
