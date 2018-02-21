@@ -29,6 +29,22 @@
 <!-- ToolBar End /////////////////////////////////////-->
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
+
+@font-face {
+  font-family: NanumSquareWeb;
+  src: local(NanumSquareR),
+       local(NanumSquare),
+       url(NanumSquareR.eot?#iefix) format('embedded-opentype'),
+       url(NanumSquareR.woff) format('woff'),
+       url(NanumSquareR.ttf) format('truetype');
+  font-style: normal;
+  font-weight: normal;
+  unicode-range: U+0-10FFFF;
+}
+ 
+*{
+  font-family: NanumSquareWeb, sans-serif;
+}
 body {
 	padding-top: 130px;
 }
@@ -122,11 +138,11 @@ body {
 	function blur(num) {
 		num = num.replace(/[^0-9]/g, '');
 		var tmp = '';
-		tmp = num.substr(0, 3);
-		tmp = '-';
-		tmp = num.substr(3, 4);
-		tmp = '-';
-		tmp = num.substr(7);
+		tmp += num.substr(0, 3);
+		tmp += '-';
+		tmp += num.substr(3, 4);
+		tmp += '-';
+		tmp += num.substr(7);
 		$("#phone").val(tmp);
 	}
 	//============= "주소검색"  다음 =============
@@ -170,12 +186,16 @@ body {
 	function fncUpdateUser() {
 
 		var userId = $("input[name='userId']").val();
-		var email = $("input[name='email']").val();
+		var email = $("#inputEmail").val();
 		var address = $("input[name='address']").val();
 		var pw = $("#updatepw").val();
 		var pw2 = $("#updatepw2").val();
 		var gender =$("input[name='gender']").val();
-
+	/* 	var chk = document.getElementById('cma_file'); */
+		
+		
+		
+		
 		if (pw != pw2) {
 
 			alert("비밀번호가 일치하지않습니다.");
@@ -186,7 +206,7 @@ body {
 		alert(email);
 		alert(address);
 
-		$("form").attr("method", "POST").attr("action",
+		$("#form").attr("method", "POST").attr("action",
 				"/user/updateUser?userId=${sessionScope.user.userId}").submit();
 
 	}
@@ -222,7 +242,7 @@ body {
 			async : false,
 			dataType : "json",
 			success : function(serverData) {
-				alert(serverData);
+				alert("데이터가보내졌다.");
 
 			}
 
@@ -322,16 +342,16 @@ body {
 			<c:if test="${user.role.trim()=='1'}">
 				<!-- 준회원일경우 -->
 				<h3 class=" text-info">추가정보입력</h3>
-				<h5 class="text-muted">
-					회원님은 <strong class="text-danger">준회원</strong>입니다.
+				<h5 class="text-muted"><strong class="text-danger">${user.name}</strong>님
+				<strong class="text-danger">이메일 인증</strong>을해주세요.
 				</h5>
 			</c:if>
 		</div>
 			
 		<!-- 프로필 사진바꾸기 start -->
-		<form id="form" class="form" action="/user/fileupload" method="POST" enctype="multipart/form-data" style="text-align: center;">
+	
 				<input type="hidden" value="${user.userId}" name="userId" id="userId"/>
-		<div class="row profile" id="Imagebox" >
+		<div class="row profile" id="Imagebox" align="center" >
 		
 			<div class="filebox" style="padding-bottom: 20px;">
 			<img alt="" src="../resources/upload_files/images/${user.profileImage }" class="profileImage">
@@ -342,15 +362,16 @@ body {
 	  		</div>
 	  	
 	  	</div>
-	  	</form><!-- 프로필 사진부분 end -->
+	  	<!-- 프로필 사진부분 end -->
 	  	
 			
 				
 		
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal" style="padding-top:0px;padding-bottom: 20px; padding-left: 10px; padding-right: 10px;">
+		<form id="form" class="form-horizontal" enctype="multipart/form-data" 
+				style="padding-top:0px;padding-bottom: 20px; padding-left: 10px; padding-right: 10px;">
 			
-		<input type="hidden" name="userId" value="${sessionScope.user.userId}" />
+		<input type="hidden" name="userId" value="${sessionScope.user.userId}" id="userId"/>
 		
 		
 		
@@ -400,7 +421,7 @@ body {
 			<div class="form-group">
 				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="userName" name="name"
+					<input type="text" class="form-control" id="userName" name="name" value="${user.name }"
 						readonly="readonly">
 				</div>
 			</div>

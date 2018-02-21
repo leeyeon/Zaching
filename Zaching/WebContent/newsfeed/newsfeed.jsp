@@ -551,7 +551,7 @@
 					$("#loginModal").modal('show');
 				</c:if>
 				
-				<c:if test="${!empty sessionScope.user}">
+				 <c:if test="${!empty sessionScope.user}">
 					var userId = $($('input[name=newsfeedUserId]')[$('#tiles table > tbody > tr > td > p > a').index(this)]).val();
 					self.location="/user/getTimeLine?userId="+userId;
 				</c:if>

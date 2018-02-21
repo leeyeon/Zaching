@@ -51,7 +51,7 @@ public interface UserService {
  	public void sendMail(String email, String authNum)throws Exception;
  	
  	//이메일 인증시 정회원으로 등급 up
- 	public void updateRole(User user)throws Exception;
+ 	public int updateRole(User user)throws Exception;
  	
  	//sns로그인 정보 DB로 슝슝
  	public void snsAddUser(User user)throws Exception;

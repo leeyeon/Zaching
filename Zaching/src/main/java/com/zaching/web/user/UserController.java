@@ -63,48 +63,7 @@ public class UserController {
 	int pageSize;
 	
 
-	// �̸��� ����
-	@RequestMapping(value = "emailAuth", method = RequestMethod.POST)
-	public String emailAuth(HttpServletRequest request, HttpSession session) throws Exception {
 
-		System.out.println("/user/emailAuth : POST");
-
-		String email = request.getParameter("email");
-		String authNum = "";// ���� ������ȣ
-
-		authNum = RandomNum();
-
-		User getSessionUser = (User) session.getAttribute("user");
-
-		System.out.println("getSessionUser :: " + getSessionUser);
-
-		System.out.println("�޴»�� email ����==>" + email);
-		System.out.println("���λ����� ������ȣ==> " + authNum);
-
-		getSessionUser.setAuthNum(authNum);
-		userService.sendMail(email, authNum);
-
-		System.out.println("DB������ȣ ===> " + getSessionUser.getAuthNum());
-
-		session.setAttribute("user", getSessionUser);
-
-		System.out.println("setSessionUser :: " + getSessionUser);
-
-		return "forward:/user/emailAuth.jsp";
-	}
-
-
-	public String RandomNum() {
-
-		StringBuffer buffer = new StringBuffer();
-		for (int i = 0; i <= 6; i++) {
-			int n = (int) (Math.random() * 10);
-			buffer.append(n);
-		}
-		return buffer.toString();
-	}
-
-	
 
 	@RequestMapping(value = "findPassword", method = RequestMethod.GET)
 	public String findPassword() throws Exception {
@@ -223,11 +182,10 @@ public class UserController {
 
 	@RequestMapping(value="updateUser", method = RequestMethod.POST)
 	public String updateUser(@ModelAttribute("user") User user, 
-			Model model, HttpSession session) throws Exception {
+			Model model, HttpSession session,HttpServletRequest request) throws Exception {
 
 		System.out.println("/user/updateUser : POST");
-		// Business Logic
-		user.setRole("2");
+		
 		userService.updateUser(user);
 		
 		System.out.println("update user ====>"+user);

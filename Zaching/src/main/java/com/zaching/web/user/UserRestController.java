@@ -101,7 +101,7 @@ public class UserRestController {
 		return buffer.toString();
 	}
 	@RequestMapping(value="json/authNum", method=RequestMethod.POST)
-	public String authNum(@RequestBody Map<String, Object> map,
+	public void authNum(@RequestBody Map<String, Object> map,
 			
 			HttpServletRequest request,HttpSession session)throws Exception{
 		
@@ -116,12 +116,13 @@ public class UserRestController {
 		
 		if(authNum.equals(getSessionAuth.getAuthNum())) {
 			System.out.println("Before updateRole===> "+getSessionAuth);
+			getSessionAuth.setRole("2");
 			userService.updateRole(getSessionAuth);
 			System.out.println("After updateRole===> "+getSessionAuth.getRole());
 		
 		}
 		
-		return "";
+		
 	}
 	
 
