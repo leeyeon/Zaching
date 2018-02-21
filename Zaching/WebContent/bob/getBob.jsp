@@ -7,6 +7,9 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
 	<jsp:include page="../resources/layout/sub_toolbar.jsp"/>
 	
 	<link rel="stylesheet" href="../resources/css/bob.css">
@@ -14,12 +17,38 @@
 	<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
 	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../resources/css/bobCss/preloader.css">
+    <link rel="stylesheet" href="../resources/css/bobCss/style.css">
+    <link rel="stylesheet" href="../resources/css/bobCss/responsive.css">
+    <link rel="stylesheet" href="../resources/css/bobCss/animate.css">
+    <link rel="stylesheet" href="../resources/css/bobCss/simple-line-icons.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Antic|Raleway:300">
+    
+    
+	
 	<style>
 		body {
 		    line-height: 2;
 		}
 		h1, h2, h3, h4, h5, h6 {
 	    	color: #FFFFFF;
+	    }
+	    
+	    #testimonials > div.sectionhead.wow.bounceInUp.animated > hr{
+	    	display: inline-block;
+	    }
+	    
+	    #testimonials > div.sectionhead.wow.bounceInUp.animated > h3, h4{
+	    	color: black;
+	    }
+	    
+	    #testimonials > div.row > div > div.quote > h5{
+	    	color: black;
+	    }
+	    
+	    #testimonials > div.row > div > div.quote{
+	    	padding-right: 20px;
 	    }
 	</style>
 
@@ -467,7 +496,7 @@
 </script>
 
 </head>
-<body class="getBob">
+<body class="getBob" data-spy="scroll">
 
 	<c:set var="frontImage" value="${fn:substring(bob.image, 0, 6)}"/>
 	<c:set var="endImage" value="${fn:substring(bob.image, 7, fn:length(bob.image))}"/>
@@ -708,17 +737,44 @@
 			      	</div>
 		      	</c:if>   	
 	      	</div>
+			<div id="testimonials" class="container">
+		        <div class="sectionhead wow bounceInUp" data-wow-duration="2s" style="font-color: black;">
+		            <span class="bigicon icon-bubbles"></span>
+		            <h3>밥친구 후기</h3>
+		            <h4>밥친구 후기를 남겨주세요!!</h4>
+		            <hr class="separetor">
+		        </div>
+		        <!-- TESTIMONIAL SECTIONHEAD END -->
 			
+		        <!-- TESTIMONIAL ITEMS START -->
+		        <div class="row">
+		        <c:forEach var="review" items="${review}">
+		            <!-- 1ST TESTIMONIAL ITEM -->
+		            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+		                <div class="clientsphoto">
+		                    <a href="/user/getTimeLine?userId=${review.userId}"><img src="../resources/upload_files/images/${review.profileImage}" alt="Dan"></a>
+		                </div>
+		
+		                <div class="quote">
+		                    <blockquote>
+		                        <p>${review.content}</p>
+		                    </blockquote>
+		                    <h5>${review.userName}</h5>
+		                    <a href="/newsfeed/getNewsfeed?newsfeedId=${review.newsfeedId}"><p>자세히 보기</p></a>
+		                </div>
+		            </div>
+		            <!-- 1ST TESTIMONIAL ITEM END -->
+		         </c:forEach>
+		
+		            
+		        </div>
+		    </div>
 			<c:if test="${empty review}">
 				<div class="row">
 	      			<div class="col-xs-12 text-center" style="padding:40px 0 20px 0;">등록된 후기가 없습니다.</div>
 	      		</div>
 			</c:if>
-	      	<c:forEach var="review" items="${review}">
-	      		<div id="listComment">
-	      			<div class="col-xs-12 text-center">${review.content} // ${review.categoryCode}</div>
-	      		</div>
-	      	</c:forEach>
+	      	
 	      </div>
       
       </c:if>
@@ -869,5 +925,14 @@
 	  </div>
 	</div>
 
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<script src="../resources/javascript/bobJs/jquery.nicescroll.min.js"></script>
+    <script src="../resources/javascript/bobJs/jribbble.min.js"></script>
+    <script src="../resources/javascript/bobJs/drifolio.js"></script>
+    <script src="../resources/javascript/bobJs/wow.min.js"></script>
+    <script>
+        new WOW().init();
+    </script>
 </body>
 </html>

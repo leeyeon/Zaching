@@ -159,10 +159,12 @@
 						async : false,
 						dataType : "json",
 						success : function(serverData){
-							$(".likeit-wrap .likeit")
-								.css("color","#E26F6A");
+							alert(newsfeedId);
+							
 							$("#like"+newsfeedId).text(serverData);
 							if(countLikey < serverData){
+								alert($("#item"+newsfeedId+" .like-text:after").css('content'));
+								$("#item"+newsfeedId+" .like-text:after").css({content: '\\e802'});
 								$("#like"+newsfeedId).css("color","#ff5b4e");
 							}
 							
@@ -404,6 +406,8 @@
 	    top: 6px;
 	}
 	
+	
+	
 </style>
 
 </head>
@@ -493,7 +497,7 @@
 									</table>
 									<p style="font-size: 13pt">${newsfeed.content}</p>
 									
-									<div class="likeit-wrap" id="item" onClick="fnc_addLikey(${newsfeed.newsfeedId})">
+									<div class="likeit-wrap" id="item${newsfeed.newsfeedId}" onClick="fnc_addLikey(${newsfeed.newsfeedId})">
 										<div class="likeit" data-postid="4" id="countLikey" >
 											<span class="like-text">Like</span>
 											<ins class="like-count" id="like${newsfeed.newsfeedId}">${newsfeed.countLikey}</ins>
