@@ -322,6 +322,7 @@
 	    display: block;
 	}
 			
+
 	#navigation2 {
 	    width: 100%;
 	    z-index: 1000;
@@ -446,6 +447,7 @@
 	      </div>
 	    </nav>
 	 </div>
+
 		
 	<div class="content">
 		<div class="wrap">

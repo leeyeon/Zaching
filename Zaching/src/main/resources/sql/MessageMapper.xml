@@ -105,14 +105,12 @@
 		</where>
 	</sql>
 	
-	<select id="listMessagebyRoomId" 
-			parameterType="search" 
-			resultMap="messageSelectMap">
-		SELECT *
-		FROM 	(SELECT inner_table.*,ROWNUM AS row_seq
-					FROM ( <include refid="messagebyRoomIdSql" /> ) inner_table
-							WHERE ROWNUM &lt;=#{endRowNum})
-								WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	<select id="listMessagebyRoomId"   parameterType="search" resultMap="messageSelectMap">
+	SELECT *
+	FROM 	(SELECT inner_table.*,ROWNUM AS row_seq
+				FROM ( <include refid="messagebyRoomIdSql" /> ) inner_table
+						WHERE ROWNUM &lt;=#{endRowNum})
+							WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
 	
 	<sql id="messagebyRoomIdSql">

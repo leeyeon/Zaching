@@ -18,12 +18,34 @@
 		body {
 		    line-height: 2;
 		}
-		h1, h2, h3, h4, h5, h6 {
+		.overlay h2, .overlay h4 {
 	    	color: #FFFFFF;
 	    }
+
 	    .nav a{
 font-family: 'Hanna', serif;"
 }
+
+	    
+	    .fullscreen_popup__close {
+		    position: absolute;
+		    top: 15px;
+		    right: 20px;
+		    width: 25px;
+		    height: 25px;
+		    padding: 15px;
+		    cursor: pointer;
+		}
+	    
+	    .circle-close-button {
+		    vertical-align: middle;
+		    background-image: url(../resources/images/stylenanda.png);
+		    background-repeat: no-repeat;
+		    width: 25px;
+		    height: 25px;
+		    background-position: -37px -61px;
+		}
+
 	</style>
 
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
@@ -413,6 +435,14 @@ font-family: 'Hanna', serif;"
    		});
    		
    		$("#report").on('click',function(){
+   			
+   			alert($("#reportText").val().length);
+   			
+   			if($("#reportText").val().length < 10) {
+   				alert("신고 내용을 10자 이상 입력해주세요.");
+   				return false;
+   			}
+   			
    			$.ajax({
    					 
    		        url : "/admin/rest/addReport",
@@ -427,9 +457,10 @@ font-family: 'Hanna', serif;"
    		        async : false,
    		        dataType : "json",
    		        success : function(serverData) {
-   		        	alert("신고가 완료되었습니다.");
+   		        	alert("신고가 완료되었습니다. \n 빠른 확인 후 조치를 취하도록 하겠습니다. \n 감사합니다.");
    		        }
-   			})
+   			});
+   			
    		});
    		
    	 	
@@ -807,17 +838,21 @@ font-family: 'Hanna', serif;"
 	<!-- Modal --> 
 	<div class="modal fade" id="enterBob" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
         <div class="modal-dialog"> 
-               <div class="modal-content"> 
-                    <div class="modal-header"> 
-                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
-                             <h4 class="modal-title" style="text-align: center;" id="myModalLabel">참여하기</h4> 
-                     </div> 
+               <div class="modal-content">
+                     
+                     <div class="fullscreen_popup__close" style="top: -38px; right: -19px;">
+					    	<div class="circle-close-button" class="close" data-dismiss="modal" aria-hidden="true"></div>
+					  	</div>
+                     
+                     <h4 class="modal-title" style="text-align: center;" id="myModalLabel">참여하기</h4>
+                     
                      <div class="modal-body" align="center">
 	                    약속일 일주일 이내에는 약속 취소를 할 수 없습니다.<br>
 	                    정말로 참여하시겠어요?
                     </div>
                     <div align="center" class="modal-footer" style="text-align: center;">
                     	<button class="btn btn-default btn-ico" >참여하기</button>
+                    	<div style="background-image: url('../resources/images/enter_bob.png'); background-repeat: no-repeat;"></div>
                     </div>
                </div> 
         </div> 
@@ -828,8 +863,12 @@ font-family: 'Hanna', serif;"
         <div class="modal-dialog"> 
                <div class="modal-content"> 
                     <div class="modal-header"> 
-                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
-                             <h4 class="modal-title" style="text-align: center;" id="myModalLabel">참여취소하기</h4> 
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+                        <h4 class="modal-title" style="text-align: center;" id="myModalLabel">참여취소하기</h4>
+                        
+                        <div class="fullscreen_popup__close" style="top: 25px;right: 109px;">
+					    	<div class="circle-close-button"></div>
+					  	</div>
                      </div> 
                      <div class="modal-body" align="center">
 	                    약속일 일주일 이내에는 약속 취소를 할 수 없습니다.<br>
@@ -854,18 +893,23 @@ font-family: 'Hanna', serif;"
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel"><b>신고하기</b></h4><label for="exampleTextarea">카테고리/신고대상:</label>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	        	<span aria-hidden="true">&times;</span>
+	        </button>      
+	        <h4 class="modal-title" id="myModalLabel"><b>신고하기</b></h4>
+	        <span>
+	        	'${bob.title}' 방이 불건전하거나 확인이 필요한 경우 신고를 해주세요.
+	        </span>
 	      </div>
 	      <div class="modal-body">    
-	      	 <textarea class="form-control" id="reportText" rows="5"></textarea>
+	      	 <textarea id="reportText" rows="5" style="resize: none; height: 210px; width: 100%;padding: 10px;"></textarea>
 	        </div>
 	      <div class="modal-footer">
 	       <div class="topnav">
-	      <div class="search-container">
-	      	<button type="button" class="btn btn-primary" id="report" data-dismiss="modal" >신고하기</button>
-	      	 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      	</div></div>
+		      <div class="search-container">
+		      	<button type="button" class="btn btn-primary" id="report" data-dismiss="modal" >신고하기</button>
+		      </div>
+	      </div>
 	       
 	      </div>
 	    </div>

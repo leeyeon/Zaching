@@ -16,9 +16,25 @@ public class Notice {
 	
 	private String name;
 	
+	private String profileImage;
 
 	
 	
+
+	
+
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
+
 
 	public String getName() {
 		return name;
@@ -140,9 +156,11 @@ public class Notice {
 
 
 
+
 	public String getContent() {
 		return content;
 	}
+
 
 
 
@@ -158,5 +176,6 @@ public class Notice {
 				+ ", senderId=" + senderId + ", content=" + content + ", noticeTargetId=" + noticeTargetId + ", userId="
 				+ userId + ", status=" + status + ", name=" + name + "]";
 	}
+
 
 }

@@ -62,12 +62,71 @@ $( function () {
 	$( "#listFreind" ).on("click" , function() {
 
 		self.location = "/friend/listFriend";
-		
+
  	});
 	
 	//알림함 Event
 	$("#listNotice").on("click", function() {
 		self.location = "/user/listNotice?userId=${user.userId}";
+	});
+
+		//추억지도 Event
+		$( "#memoryMap" ).on("click" , function() {
+			//window.open("/user/memoryMap?userId=${user.userId}", "memoryMap", "width=800,height=800");
+			//self.location = "/user/memoryMap?userId=${user.userId}";
+			lodaMemoryMap();
+	 	});
+		
+		//포인트관리 Event
+		$( "#point" ).on("click" , function() {
+			self.location = "/payment/mainPayment";
+			
+	 	});
+		
+		//친구목록 Event
+		$( "#listFreind" ).on("click" , function() {
+			self.location = "/friend/listFriend";
+			
+	 	});
+		
+		//알림함 Event
+		$("#listNotice").on("clcick", function() {
+			self.location = "/notice/listNotice?userId=${user.userId}";
+		});
+		
+		
+		//메세지함
+		$("#listMessage").on("click", function() {
+			self.location ="/message/listMessage";	
+		})
+		
+		
+		
+		
+		
+		
+		
+		
+		//회원탈퇴
+		$("#deleteUser").on("click", function() {
+			var windowW = 400;  // 창의 가로 길이
+		    var windowH = 500;  // 창의 세로 길이
+			var left = Math.ceil((window.screen.width - windowW)/2);
+		    var top = Math.ceil((window.screen.height - windowH)/2);
+		    
+			window.open("/user/deleteUser?userId=${sessionScope.user.userId}",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
+			opener.location.reload(true);
+			    self.close();
+		})
+		
+		//FOLLOW Event
+		
+		
+		//메세지 전송 Event
+		
+		
+		//신고하기 Event
+>>>>>>> refs/remotes/origin/master
 	});
 	
 	
@@ -372,27 +431,25 @@ $( function () {
 				});
 				
 		
-	
- $("#uploadbutton").click(function(){
-     
-     var form = new FormData(form);
-     form.append("uploadFile",file);
-         $.ajax({
-            url: '/user/fileupload',
-            method: 'POST',
-            contentType: "application/json; charset=UTF-8",
-            data: formData,
-          	 async : false,
-			dataType : "json",
-            success: function(result){
-                alert("업로드 성공!!");
-            }
-        });
-     });
-})
 
 
-
+     $("#uploadbutton").click(function(){
+         
+         var form = new FormData(form);
+         form.append("uploadFile",file);
+             $.ajax({
+                url: '/user/fileupload',
+                method: 'POST',
+                contentType: "application/json; charset=UTF-8",
+                data: formData,
+              	 async : false,
+    			dataType : "json",
+                success: function(result){
+                    alert("업로드 성공!!");
+                }
+            });
+         });
+	})
 
 	</script>
 	
@@ -539,6 +596,7 @@ align: left;
   background : #000;
   padding : 500px;
   }
+
 .hero {
 	background: url('../resources/images/memoryMAP.jpg') no-repeat bottom center;
 	background-size: cover;
@@ -600,7 +658,7 @@ b{
 font-size:14pt;
 }
 
-   
+
 </style>
 
 

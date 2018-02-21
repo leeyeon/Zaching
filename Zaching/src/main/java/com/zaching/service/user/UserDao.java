@@ -3,6 +3,7 @@ package com.zaching.service.user;
 import java.util.List;
 
 import com.zaching.common.domain.Search;
+import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.domain.User;
 
 public interface UserDao {
@@ -38,7 +39,7 @@ public interface UserDao {
 	public String findPassword(String email);
 	
 	//추억지도 보기
-	public List<User> memoryMap(Search search)throws Exception;
+	public List<Newsfeed> memoryMap(int userId)throws Exception;
 	
 	//이메일 인증성공시 정회원으로 업데이트
 	public void updateRole(User user)throws Exception;
@@ -51,6 +52,10 @@ public interface UserDao {
 	
 	//sns계정 로그인 or 회원가입 여부 판단
 	public int snsCheck(String email, String snsType)throws Exception;
+	
+	//로그인 기록 남기기
+	public void latestLogin(int userId)throws Exception;
+	
 	
 	public void updateAccountToken(String token, int userId) throws Exception;
 	

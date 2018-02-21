@@ -168,8 +168,13 @@ $( "#profile" ).on("click" , function() {
          z-index:1;
       }
     #navigation2{
+<<<<<<< HEAD
     background: #cee2f5;
     height: 70px;
+=======
+    background: #bfd9f2;
+    height: 60px;
+>>>>>>> refs/remotes/origin/master
     z-index: 1000;
     }
     
