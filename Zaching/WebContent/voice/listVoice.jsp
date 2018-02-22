@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -117,6 +118,9 @@
 
 	
 		$(function(){
+			
+			
+			
 			var page = ${search.currentPage};
 			var pageSize = ${search.pageSize};
 			if('${search.searchCondition}' == '')
@@ -278,10 +282,12 @@ body>div.container {
 padding-top: 40px;
 background: #fff;
 padding-bottom: 80px;
+
 }
 
 .songSelectButton{
 background: #fff;
+border-radius: 5px;
 
 }
 
@@ -290,97 +296,45 @@ background: #fff;
 	vertical-align: middle;
 	align : center;
 }
-
+#detailForm > div > div > div.form-group > div > button{
+border-radius: 5px;
+background-color: #4379f3e8;;
+font-family: 'Hanna', serif;
+}
+#myModal3 > div > div > div > div > center > div > center > button{
+border-radius: 5px;
+background-color: #4379f3e8;;
+font-family: 'Hanna', serif;
+}
 .makevoiceroom {
-	-moz-box-shadow:inset 0px 1px 0px 0px #cae3fc;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #cae3fc;
-	box-shadow:inset 0px 1px 0px 0px #cae3fc;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #4197ee) );
-	background:-moz-linear-gradient( center top, #79bbff 5%, #4197ee 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#4197ee');
-	background-color:#79bbff;
-	-webkit-border-top-left-radius:0px;
-	-moz-border-radius-topleft:0px;
-	border-top-left-radius:0px;
-	-webkit-border-top-right-radius:0px;
-	-moz-border-radius-topright:0px;
-	border-top-right-radius:0px;
-	-webkit-border-bottom-right-radius:0px;
-	-moz-border-radius-bottomright:0px;
-	border-bottom-right-radius:0px;
-	-webkit-border-bottom-left-radius:0px;
-	-moz-border-radius-bottomleft:0px;
-	border-bottom-left-radius:0px;
-	text-indent:0;
-	border:1px solid #469df5;
+
 	display:inline-block;
 	color:#ffffff;
-	font-family:Arial;
 	font-size:15px;
-	font-weight:bold;
-	font-style:normal;
 	height:40px;
 	line-height:40px;
 	width:100px;
 	text-decoration:none;
 	text-align:center;
-	text-shadow:1px 1px 5px #287ace;
+
 }
-.makevoiceroom:hover {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #4197ee), color-stop(1, #79bbff) );
-	background:-moz-linear-gradient( center top, #4197ee 5%, #79bbff 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#4197ee', endColorstr='#79bbff');
-	background-color:#4197ee;
-}.makevoiceroom:active {
-	position:relative;
-	top:1px;
-}
+
 .viewlist{
 width:100%;}
 .songSelectButton {
-	-moz-box-shadow:inset 0px 0px 50px -1px #97c4fe;
-	-webkit-box-shadow:inset 0px 0px 50px -1px #97c4fe;
-	box-shadow:inset 0px 0px 50px -1px #97c4fe;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3d94f6), color-stop(1, #1e62d0) );
-	background:-moz-linear-gradient( center top, #3d94f6 5%, #1e62d0 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3d94f6', endColorstr='#1e62d0');
-	background-color:#3d94f6;
-	-webkit-border-top-left-radius:0px;
-	-moz-border-radius-topleft:0px;
-	border-top-left-radius:0px;
-	-webkit-border-top-right-radius:0px;
-	-moz-border-radius-topright:0px;
-	border-top-right-radius:0px;
-	-webkit-border-bottom-right-radius:0px;
-	-moz-border-radius-bottomright:0px;
-	border-bottom-right-radius:0px;
-	-webkit-border-bottom-left-radius:0px;
-	-moz-border-radius-bottomleft:0px;
-	border-bottom-left-radius:0px;
-	text-indent:0;
-	border:1px solid #337fed;
+	
 	display:inline-block;
 	color:#ffffff;
-	font-family:Comic Sans MS;
 	font-size:15px;
-	font-weight:bold;
 	font-style:normal;
 	height:40px;
 	line-height:40px;
 	width:100px;
 	text-decoration:none;
 	text-align:center;
-	text-shadow:0px 1px 0px #1570cd;
+
 }
-.songSelectButton:hover {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #1e62d0), color-stop(1, #3d94f6) );
-	background:-moz-linear-gradient( center top, #1e62d0 5%, #3d94f6 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#1e62d0', endColorstr='#3d94f6');
-	background-color:#1e62d0;
-}.songSelectButton:active {
-	position:relative;
-	top:1px;
-}
+
 
 		.listings ul.properties_list li a #profile{
 			width: 40px;
@@ -474,7 +428,41 @@ color:#000;
 .nav a{
 font-family: 'Hanna', serif;"
 }
+
+.filebox label {
+	    display: inline-block;
+	    padding: .5em .75em;
+	    color: #999;
+	    font-size: inherit;
+	    line-height: normal;
+	    vertical-align: middle;
+	}
+	 
+	.filebox input[type="file"] {  
+	    position: absolute;
+	    width: 1px;
+	    height: 1px;
+	    padding: 0;
+	    margin: -1px;
+	    overflow: hidden;
+	    clip:rect(0,0,0,0);
+	    border: 0;
+	}
 	</style>
+	
+	<script>
+	function getThumbnailPrivew(html, $target) {
+	    if (html.files && html.files[0]) {
+	        var reader = new FileReader();
+	        reader.onload = function (e) {
+	            $target.css('display', '');
+	            //$target.css('background-image', 'url(\"' + e.target.result + '\")'); // 배경으로 지정시
+	            $target.html('<img src="' + e.target.result + '" border="0" alt="" />');
+	        }
+	        reader.readAsDataURL(html.files[0]);
+	    }
+	}
+	</script>
 </head>
 
 <body>
@@ -586,7 +574,11 @@ font-family: 'Hanna', serif;"
 			<div class="row">
 				<div class="form-group" >
 					<br/><div></div>
-						<input type="file" name="uploadFile" imageswap="true" imagesrc="../resources/images/imageButton.PNG"/>
+							<div class="filebox">
+					        <label for="cma_file">사진 인증샷 업로드</label>
+							<input type="file" name="uploadFile" id="cma_file" imageswap="true" accept="image/*" capture="camera" onchange="getThumbnailPrivew(this,$('#cma_image'))"/>
+					        <div id="cma_image" style="width:200px;max-width:200px;display:none;"></div>
+					    </div>					    
 						<input type="text" name=voiceName placeholder="방 제목을 입력해주세요"
 							style="font-size: 20px; width: 100%; height: 50px; padding-left: 20px; border: none; border-bottom: 1px solid #eee;" maxlength="30"/><br/>
 							<div class="form-group" align="left">

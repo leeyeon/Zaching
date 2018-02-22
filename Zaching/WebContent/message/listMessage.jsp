@@ -285,7 +285,6 @@ body {
 	 		            	   
 	 		            	   if(serverData != null) {
 		 		            	   for(var i=0; i<serverData.length; i++){
-		 		            		 
 		 		            		  
 		 		            		  if(serverData[i].userId != ${user.userId}){
 		 		            			messageContent +=  '<div class="message left"><div class="message-text">'
@@ -350,7 +349,7 @@ body {
 			<table class="table table-hover">
 				<div class="col-xs-6 col-sm-4 ">
 					<h2>
-						<b>이름</b>
+						<b>친구이름</b>
 					</h2>
 				</div>
 				<div class="col-xs-6 col-sm-4 ">
@@ -406,8 +405,9 @@ body {
 						</div>
 					</div>
 				</div>
-
 			</div>
+			
+			
 			</div>
 </body>
 

@@ -41,11 +41,26 @@ public class MessageController {
 	// @Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 	
+	
+	
+	
+	
 	@RequestMapping(value="addMessage",method=RequestMethod.POST)
 	public String addMessage(@ModelAttribute("message")Message message,Model model)throws Exception{
 		System.out.println("/message/addMessage:POST");
+		System.out.println("addMessage()");
+		System.out.println(message);
 		
-		return "forward:/message/addMessage.jsp";
+		
+		
+		
+		messageService.addMessage(message);
+		model.addAttribute("message",message);
+
+		
+		
+		
+		return "forward:/message/listMessage.jsp";
 		
 	}
 	

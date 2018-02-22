@@ -93,8 +93,12 @@ font-family: 'Hanna', serif;"
 }
  </style>
  <script>
+ jQuery(".plane-container").hide();  
+ 
  $(function() {
-
+	 
+	 jQuery(".plane-container").hide();  
+	 
 	 $( "#fixedbtn" ).on("click" , function() {		
 		 $( document ).ready(function() {
 			    showPopup();
@@ -156,6 +160,8 @@ $("a:contains('로그아웃')").on("click", function() {
 $( "#profile" ).on("click" , function() {
 	self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";			
 });
+
+$(".plane-container").hide();  
  </script>
 <style>
 	.hero{
@@ -171,13 +177,9 @@ $( "#profile" ).on("click" , function() {
          z-index:1;
       }
     #navigation2{
-<<<<<<< HEAD
+
     background: #cee2f5;
     height: 70px;
-=======
-    background: #bfd9f2;
-    height: 60px;
->>>>>>> refs/remotes/origin/master
     z-index: 1000;
     }
     

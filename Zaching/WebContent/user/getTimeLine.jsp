@@ -44,7 +44,6 @@
 <script type="text/javascript">
 
 $( function () {
-
 		
 	
 	//내정보조회 Event && 추가 저보 입력
@@ -58,6 +57,7 @@ $( function () {
 	//추억지도 Event
 	
 	$("#memoryMapshow").hide();
+	$("#noticeshow").hide();
 	
 	//친구목록 Event
 	$( "#listFreind" ).on("click" , function() {
@@ -68,23 +68,17 @@ $( function () {
 	
 	//알림함 Event
 	$("#listNotice").on("click", function() {
-		self.location = "/user/listNotice?userId=${user.userId}";
+		
+		$("#memoryMapshow").hide();
+		$("#timelineshow").hide();
+		$("#noticeshow").show();
+		
+		$("#memoryMap").css('backgroundColor', '#fff');
+		$("#listtimeline").css('backgroundColor', '#fff');
+		$("#listNotice").css('backgroundColor', '#adbfdea1');
 	});
 
-
-		
-		//친구목록 Event
-		$( "#listFreind" ).on("click" , function() {
-
-			self.location = "/friend/listFriend";
-			
-	 	});
-		
-		//알림함 Event
-		$("#listNotice").on("click", function() {
-			self.location = "/user/listNotice?userId=${user.userId}";
-		});
-		
+	
 		
 		//메세지함
 		$("#listMessage").on("click", function() {
@@ -97,18 +91,22 @@ $( function () {
 			
 			$("#timelineshow").show();
 			$("#memoryMapshow").hide();
+			$("#noticeshow").hide();
+			
 			$("#memoryMap").css('backgroundColor', '#fff');
 			$("#listtimeline").css('backgroundColor', '#adbfdea1');
+			$("#listNotice").css('backgroundColor', '#fff');
 			
 		})
 		
 		$( "#memoryMap" ).on("click" , function() {
 			$("#memoryMapshow").show();
 			$("#timelineshow").hide();
+			$("#noticeshow").hide();
 			map.relayout();
 			$("#memoryMap").css('backgroundColor', '#adbfdea1');
 			$("#listtimeline").css('backgroundColor', '#fff');
-			
+			$("#listNotice").css('backgroundColor', '#fff');
 	 	});
 		
 		
@@ -128,13 +126,46 @@ $( function () {
 		//FOLLOW Event
 		
 		
-		//메세지 전송 Event
+		//메세지 모달 Event
+		$("#friendPage").on("click", function() {
+			alert(${user.userId});
+			$("#messageModal").modal('show');
+		})
+		
+		$( "a.send-btn:contains('send')" ).on("click" , function() {
+				//alert(  $( "a.send-btn:contains('send')" ).html() );
+				addMessage();
+			});
+		
+		
+		
 		
 		
 		//신고하기 Event
 
 
-	
+		function addMessage(){
+			 
+			 var userId = ${sessionScope.user.userId};
+			 var  friendId= ${user.userId} ;
+			 var content = $("input[name='content']").val();
+			
+			alert("1");
+			alert(userId);
+			alert(friendId);
+			alert(content);
+			
+			
+				
+			　if(content==null || content.length<1){ 
+			　　alert('메세지를 입력해주세요.');
+				return;
+			　} 
+			
+			 
+			$("form").attr("method", "POST").attr("action", "/message/addMessage").submit();
+			alert("메세지 전송완료");
+		}
 	
 	var status = 0 ;
 	
@@ -614,6 +645,150 @@ font-size:14pt;
 }
 
 
+.wrapper {
+	width: 612px;
+	height: 100%;
+	margin: 0 auto;
+}
+
+.phone-containter {
+	width: 340px;
+	height: 100%;
+}
+
+.phone {
+	height: 60%;
+	border: 1px solid #dcdcdc;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background-color: #fff;
+}
+
+.button {
+	background-color: none;
+	border: 1px solid #36a9fc;
+	text-decoration: none;
+	border-radius: 10px;
+	padding: 5px 10px;
+	color: #36a9fc;
+	display: block;
+	width: 80px;
+	text-align: center;
+	overflow: hidden;
+	text-oveflow: ellipsis;
+	margin: 20px auto;
+}
+
+.build-container {
+	width: 230px;
+	height: 100%;
+	margin-left: 20px;
+	float: right;
+}
+
+#buildInput {
+	width: 100%;
+	height: 60%;
+}
+
+/* Messages baloon: 메세지 풍선 */
+.message {
+	margin: 10px 0;
+	overflow: hidden;
+}
+
+.message-text {
+	padding: 10px 20px;
+	float: right;
+	clear: both;
+	border-radius: 25px;
+	position: relative;
+	margin-bottom: 1px;
+}
+
+.message.left .message-text {
+	margin-right: 70px;
+	margin-left: 20px;
+	background-color: #e5e5ea;
+	float: left;
+}
+
+.message.right .message-text {
+	margin-left: 70px;
+	margin-right: 20px;
+	background-color: #36a9fc;
+	color: #fff;
+	float: right;
+}
+
+.message-text:last-child:before, .message-text:last-child:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	width: 35px;
+	height: 25px;
+	z-index: -1;
+}
+
+.message.right .message-text:before, .message.right .message-text:after
+	{
+	border-radius: 0 0 0 50%;
+}
+
+.message.right .message-text:before {
+	height: 20px;
+	right: -23px;
+	background-color: #36a9fc;
+}
+
+.message.right .message-text:after {
+	right: -35px;
+	bottom: -3px;
+	background-color: #fff;
+}
+
+.message.left .message-text:before, .message.left .message-text:after {
+	border-radius: 0 0 50% 0;
+}
+
+.message.left .message-text:before {
+	height: 20px;
+	left: -23px;
+	background-color: #e5e5ea;
+}
+
+.message.left .message-text:after {
+	left: -35px;
+	bottom: -3px;
+	background-color: #fff;
+}
+
+.send-container {
+	background-color: #f6f6f6;
+	border: 1px solid #dcdcdc;
+	margin-top: -1px;
+	padding: 10px;
+}
+
+.send-input {
+	border-radius: 5px;
+	border: 1px solid #dbdbdb;
+	background-color: #fff;
+	padding: 5px 5px;
+	font-size: 1em;
+	width: 78%;
+}
+
+.send-btn {
+	text-decoration: none;
+	color: #939297;
+	font-weight: bold;
+	background-color: transparent;
+	border: none;
+	font-size: 1em;
+	cursor: pointer;
+}
+
 </style>
 
 
@@ -707,7 +882,7 @@ font-size:14pt;
                            		<h3> <c:if test="${user.userId eq sessionScope.user.userId}"><!-- 세션에있는 아이디랑  -->
     	<a class="btn col-xs-3" id="listtimeline"><b>타임라인</b></a>
     	<a class="btn col-xs-3" id="memoryMap" data-toggle="modal" data-target="#myModal" ><b>추억지도</b></a>    	
-    	<a class="btn col-xs-3" id="listNotice"><b>알림함</b></a>
+    	<a class="btn col-xs-3" id="listNotice"><b>알림함<div class="badge   badge-primary"></div></b></a>
 	 <a class="btn col-xs-3" id="listMessage" ><b><img src="../resources/images/Message_Icon.png" width="20px" height="20px"/>&nbsp;채팅함</b></a>
   </c:if>
   
@@ -777,11 +952,45 @@ font-size:14pt;
 				<div id="map" style="width:100%; height:700px;"></div>
 			</div>
 			
+			
+			<div id="noticeshow">
+				<jsp:include page="/notice/listNotice?userId=${user.userId}"/>
+			</div>
+			
 			 </div>
          </div>
       </div>
  
-    
+ 
+ <div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="wrapper">
+
+
+						<!-- 왼쪽 메세지 대화 박스 -->
+						
+						
+						
+						<div class="phone-containter">
+							<div id="phone" class="phone">
+								<button type="button" class="close" data-dismiss="modal" varia-hidden="true" id="close">×</button>
+								<div id="messegeBox"></div>
+							</div>
+
+							<!-- 메세지 작성 -->
+							<div class="send-container">
+								<form id="send">
+								<input type="hidden" value="${sessionScope.user.userId}" name="userId"/>
+								<input type="hidden" value="${user.userId }" name="friendId"/>
+									<input type="text" id="msgInput" class="send-input" placeholder="메세지내용" name="content">
+									<a href="#" onclick="addMessage();" class="send-btn" data-dismiss="modal"  value="Send">send</a>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>   
     
     
     <!-- All Javascript Plugins  -->
