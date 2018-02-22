@@ -147,7 +147,7 @@ $( function () {
 			　if(!messageContent.value){ 
 			　　alert('메세지를 입력해주세요.');
 				return;
-			　} 
+			 } 
 			
 			 
 			$("form").attr("method", "POST").attr("action", "/message/listMessage").submit();
