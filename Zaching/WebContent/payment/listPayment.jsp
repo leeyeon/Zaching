@@ -62,11 +62,14 @@
 			 	<div class="col-xs-12 col-sm-7" style="padding: 3px;">
 			 		<c:if test="${payment.paymentCode eq 'P01'}">카카오페이 충전 <img src="../resources/images/payment_icon_small.png"></c:if>
 			 		<c:if test="${payment.paymentCode eq 'P02'}">
-			 			<c:if test="${fn:contains(payment.content, 'B03') || fn:contains(payment.content, 'B01')}">
-				 			밥친구에서 약속비로 사용
+			 			<c:if test="${fn:contains(payment.content, 'B01')}">
+				 			밥친구 우리지금만나 약속비
+				 		</c:if>
+				 		<c:if test="${fn:contains(payment.content, 'B03')}">
+				 			밥친구 주기적으로만나 회비
 				 		</c:if>
 				 		<c:if test="${fn:contains(payment.content, 'H00')}">
-				 			라이브방송에서 포인트선물로 사용
+				 			라이브방송에서 포인트선물
 				 		</c:if>
 			 		</c:if>
 			 		<c:if test="${payment.paymentCode eq 'P03'}">포인트 반환 신청</c:if>

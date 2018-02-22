@@ -403,7 +403,8 @@
 	<section class="search" style="background: #f77e7e;">
 		<div class="wrapper">
 			<form id="searchForm">
-				<input type="text" id="search" name="searchKeyword" placeholder="What are you looking for?"  autocomplete="off" style="background: none;"/>
+				<img src="../resources/images/search-icon.png" style="position: absolute; height: 30px; width: 30px; top: 34px;">
+				<input type="text" id="search" name="searchKeyword" placeholder="What are you looking for?"  autocomplete="off" style="background: none; padding-left: 50px;"/>
 			</form>
 			<button type="button" class="hamburger is-closed" style="position: absolute;" id="advanced_search_btn">
 	            <span class="hamb-top"></span>
@@ -431,7 +432,7 @@
 	<div class="container" style="font-size: 17px; padding:0;"> 
 		
 		<div class="form-group" style="margin: auto;">
-			<form class="form-horizontal" id="mainBob">
+			<form class="form-horizontal" id="mainBob" style="min-height: 500px;">
 	
 					<!-- 데이터 들어갈 것들,,, -->
 					<div class="tab-content" style="padding: 3.636363636363636% 0 0 0; overflow: hidden;">

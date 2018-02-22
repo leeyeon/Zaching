@@ -273,6 +273,13 @@
 	    }
 
 	}
+	
+	section .hamburger.is-closed .hamb-top, section .hamburger.is-closed .hamb-middle,
+	section .hamburger.is-closed .hamb-bottom, section .hamburger.is-open .hamb-bottom,
+	section .hamburger.is-open .hamb-top
+	 {
+    	background-color: #FFF;
+    }
 	       	
     </style>
     
@@ -498,6 +505,10 @@
 					ads_box.stop().fadeOut(200).removeClass('advanced_displayed');
 
 				}
+				
+				$(this).toggleClass('is-open');
+				$(this).toggleClass('is-closed');
+				$(this).toggleClass('indexcity');
 
 			});
 
@@ -553,7 +564,12 @@
 						</div>
 					</div>
 				</div>
-				<a href="#" class="advanced_search_icon" id="advanced_search_btn"  style="margin-top: 42px;"></a>
+				
+				<button type="button" class="hamburger is-closed" style="position: absolute;" id="advanced_search_btn">
+		            <span class="hamb-top"></span>
+		   			<span class="hamb-middle"></span>
+					<span class="hamb-bottom"></span>
+	            </button>
 				
 			</form>
 		</div>

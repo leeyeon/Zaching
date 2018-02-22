@@ -919,24 +919,27 @@ function noticeclose(){
 	          	<li>
 	          		<div class="col-xs-12" style="padding-top: 10px; color:#333;">
 			          	<img src="../resources/images/paper-plane.png" id="notice" width="30px" style="display:none;"/>
-			          	<img src="../resources/images/profile_default.png" id="profile"
-				          	width="30px"/>&nbsp;<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
+			          	<img src="../resources/images/profile_default.png" id="profile" width="30px" height="30px"/>&nbsp;
+			          	<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
 	          		</div>
 	          	</li>
 	          	<li><a href="#">로그아웃</a></li>
           	</c:if>
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
-	          	<li><div style="padding-top: 10px; color:#333;">
-				<img src="../resources/images/paper-plane.png" id="notice"
-								width="30px" style="display:none;"/>
-		          		 
-		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px"
-		       	style="border-radius: 50%"/>&nbsp;
-		        <a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
-		        &nbsp;님 환영합니다!
-
-		       
-	          	</div></li>
+	          	<li>
+		          	<div class="col-xs-12" style="padding-top: 10px; color:#333;">
+						<img src="../resources/images/paper-plane.png" id="notice" width="30px" style="display:none;"/>
+				        <c:if test="${sessionScope.user.password ne null}">
+				       		<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px" height="30px"
+				       		style="border-radius: 50%"/>&nbsp;
+				       	</c:if>
+				       	<c:if test="${sessionScope.user.password eq null}">
+				       		<img src="${sessionScope.user.profileImage}" id="profile" width="30px" height="30px" style="border-radius: 50%"/>&nbsp;
+				       	</c:if>
+				        <a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
+				        &nbsp;님 환영합니다!
+		          	</div>
+	          	</li>
 	          	<li><a href="#">로그아웃</a></li>
 	          	 
           	</c:if>
@@ -950,7 +953,6 @@ function noticeclose(){
      </div><!--/.nav-collapse -->
     
     <div class="noticelist" align="right" style="display:none;"></div>
-
 </nav>
 
 
