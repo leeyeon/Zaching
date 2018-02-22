@@ -815,7 +815,7 @@ svg {
 
 	          	<li><div style="padding-top: 10px; color:#333;">
 	          	<img src="../resources/images/paper-plane.png" id="notice"
-		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
+		          	width="30px" height="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
 	          	<img src="../resources/images/profile_default.png" id="profile"
 
 		          	width="30px"/>&nbsp;<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
@@ -830,7 +830,7 @@ svg {
 				<img src="../resources/images/paper-plane.png" id="notice"
 		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
 		          		 
-		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px"
+		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px" height="30px"
 		       	style="border-radius: 50%"/>&nbsp;
 		        <a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
 		        &nbsp;님 환영합니다!

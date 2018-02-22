@@ -150,6 +150,14 @@
 	   	WHERE user_id = #{userId}
 	 </update>
 	 
+	 <update	id="updateUserProfile"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+				profile_image = #{profileImage:VARCHAR}
+	   	</set>
+	   	WHERE user_id = #{userId}
+	 </update>
+	 
 	
 	 <!-- 
 	 <select id="memoryMap" parameterType="int" resultMap="NewsfeedSelectMap">

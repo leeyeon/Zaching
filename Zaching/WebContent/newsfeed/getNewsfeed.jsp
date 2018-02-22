@@ -95,7 +95,7 @@
 							console.log(comment);
 							
 							var displayValue = '<tr>'+
-		   					'<td valign="top"><div class="thumb2"><img alt="" src="../resources/images/'+comment.userImage+'" width="20" height="20"></div></td>'+
+		   					'<td valign="top"><div class="thumb2"><img alt="" src="/resources/upload_files/images/'+comment.userImage+'" width="20" height="20"></div></td>'+
 		   					'<td></td>'+
 		   					'<td></td>'+
 		   					'<td width=1000><p class="arrow_box"style="font-size: 10pt; padding: 5px;"><strong style="font-size: 13pt; line-height: 100%;">'+comment.userName+'</strong>'+
@@ -268,7 +268,7 @@
         <article class="post-60 page type-page status-publish hentry dwtl normal">
   <div class="page-header">
   <div class="thumb" style="float: left;">
-   <img src="../resources/images/${roomUser.profileImage}" height='50' width='100' align="left"/></div>
+   <img src="../resources/upload_files/images/${roomUser.profileImage}" height='50' width='100' align="left"/></div>
    <div style="font-size: 12pt; line-height: 200%;">${roomUser.name}</div>&nbsp;${newsfeed.regDate}
 </div>
 	<br/><br/>
@@ -305,23 +305,26 @@
         </div>
     </div>
 		<h3 id="reply-title" class="comment-reply-title"> 
-		<small>Leave a Reply
+		<small>댓글창
 		</small>
 		<div class="thumb2" style="float: left;">
 		<c:if test="${!empty user.profileImage }">
-													<img alt="" src="../resources/images/${user.profileImage}"  height='25' width='25' align='left'>
+													<img alt="" src="../resources/upload_files/images/${user.profileImage}"  height='25' width='25' align='left'>
 													</c:if>
-													<c:if test="${empty comment.userImage }">
+													
+													<c:if test="${empty user.profileImage }">
 													<img alt="" src="../resources/images/profile_default.png"  height='25' width='25' align='left'>
 													</c:if>
+													
+												
    		</div><br/><p style="font-size: 10pt">&nbsp;${user.name}</p></h3>		
 			<div id="commentform" class="comment-form">
 				 
 				<div class="form-group"><label for="comment">Comment</label>
-					<textarea placeholder="Write your comment" name="comment" id="comment" class="form-control" rows="5" aria-required="true"></textarea>
+					<textarea placeholder="댓글을 남겨 보세요!" name="comment" id="comment" class="form-control" rows="5" aria-required="true"></textarea>
 				</div>
 				<p class="form-submit">
-				<input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> 
+				<input name="submit" type="submit" id="submit" class="submit" value="댓글 남기기" /> 
 				<input type='hidden' name='comment_post_ID' value='60' id='comment_post_ID' />
 				<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
 				<input type='hidden' name='countLikey' value='${newsfeed.countLikey}'/>
@@ -335,7 +338,7 @@
 							<tr>
 			   					<td valign="top" style="border-bottom-width:2px; border-color:#000;"><div class="thumb2" >
 			   					<c:if test="${!empty comment.userImage }">
-													<img alt="" src="../resources/images/${comment.userImage}" width='35' height='35'>
+													<img alt="" src="../resources/upload_files/images/${comment.userImage}" width='35' height='35'>
 													</c:if>
 													<c:if test="${empty comment.userImage }">
 													<img alt="" src="../resources/images/profile_default.png" width='35' height='35'>

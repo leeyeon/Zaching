@@ -108,8 +108,7 @@
         	 
 				
 			$("#main > div > header > nav > a:nth-child(1)").on('click', function() {
-				
-				alert();
+
 				
 				var condition = $(this).attr("href");
 				
@@ -147,7 +146,6 @@
 				<c:if test="${!empty user.userId}">
 				
 					var countLikey= $("#like"+newsfeedId).text();
-					alert(countLikey);
 					$.ajax({
 						url : "/newsfeed/json/updateLikey/"+${user.userId}+"/0",
 						method : "POST",
@@ -159,11 +157,9 @@
 						async : false,
 						dataType : "json",
 						success : function(serverData){
-							alert(newsfeedId);
 							
 							$("#like"+newsfeedId).text(serverData);
 							if(countLikey < serverData){
-								alert($("#item"+newsfeedId+" .like-text:after").css('content'));
 								$("#item"+newsfeedId+" .like-text:after").css({content: '\\e802'});
 								$("#like"+newsfeedId).css("color","#ff5b4e");
 							}
@@ -431,8 +427,8 @@
 	                <li><img src="/resources/images/ufo.png" class="ufo" width="25"></li>
 	                <li class="active"><c:if test="${search.searchCondition == 'N06'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N06" style="font-family: 'Hanna', serif;">전체보기</a></c:if>
 							<c:if test="${search.searchCondition != 'N06'}"><a href="/newsfeed/listNewsfeed?searchCondition=N06" style="font-family: 'Hanna', serif;">전체보기</a></c:if></li>&nbsp;&nbsp;
-	                <li><c:if test="${search.searchCondition == 'N01'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N01" style="font-family: 'Hanna', serif;">자취지식인</a></c:if>
-							<c:if test="${search.searchCondition != 'N01'}"><a href="/newsfeed/listNewsfeed?searchCondition=N01" style="font-family: 'Hanna', serif;">자취지식인</a></c:if></li>&nbsp;&nbsp;
+	                <li><c:if test="${search.searchCondition == 'N01'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N01" style="font-family: 'Hanna', serif;">재잘재잘</a></c:if>
+							<c:if test="${search.searchCondition != 'N01'}"><a href="/newsfeed/listNewsfeed?searchCondition=N01" style="font-family: 'Hanna', serif;">재잘재잘</a></c:if></li>&nbsp;&nbsp;
 	                <li><c:if test="${search.searchCondition == 'N10'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N10" style="font-family: 'Hanna', serif;">밥친구 후기</a></c:if>
 							<c:if test="${search.searchCondition != 'N10'}"><a href="/newsfeed/listNewsfeed?searchCondition=N10" style="font-family: 'Hanna', serif;">밥친구 후기</a></c:if>
 						</li>&nbsp;&nbsp;
@@ -475,7 +471,7 @@
 								<div class="post-basic-info">
 									<span><a href="#">
 									<label></label>
-										<c:if test="${newsfeed.categoryCode.equals('N01')}">자취지식인</c:if>
+										<c:if test="${newsfeed.categoryCode.equals('N01')}">재잘재잘</c:if>
 										<c:if test="${newsfeed.categoryCode.equals('N02')}">중고거래</c:if>
 										<c:if test="${fn:contains(newsfeed.categoryCode, 'N10')}">밥친구 후기</c:if>
 										<c:if test="${newsfeed.categoryCode.equals('N04')}">꿀팁</c:if>
@@ -686,7 +682,7 @@
 										'<div class="post-basic-info">'+
 											'<span><a href="#"><label> </label>';
 											if(JSONData[i].categoryCode == 'N01')
-												displayValue += '자취지식인';
+												displayValue += '재잘재잘';
 											if(JSONData[i].categoryCode.includes('N10'))
 												displayValue += '밥친구 후기';
 											if(JSONData[i].categoryCode == 'N02')
@@ -791,7 +787,7 @@
 						<div class="form-group" align="left">
 						   <strong style="font-size: 12px">카테고리</strong> 
 						   <select name="categoryCode"	id="categoryCode" class="form-control" style="height: 40px" maxLength="20">
-								<option value="N01" selected="selected">자취지식인</option>
+								<option value="N01" selected="selected">재잘재잘</option>
 								<option value="N02">중고거래</option>
 								<option value="N10">밥친구후기</option>
 								<option value="N04">꿀팁</option>

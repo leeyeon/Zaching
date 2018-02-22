@@ -157,7 +157,7 @@ public class UserRestController {
 	
 	
 	//프로필사진 업데이트
-	@RequestMapping(value="/fileupload",method=RequestMethod.POST)
+	@RequestMapping(value="/rest/fileupload",method=RequestMethod.POST)
 	public String ProfileUpload(@RequestParam("userId") int userId,
 			@RequestBody Map<String, Object> map)throws Exception{
 		
