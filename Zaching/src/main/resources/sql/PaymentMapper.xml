@@ -113,7 +113,7 @@
 			content
 		FROM PAYMENT
 		<where>
-			user_id = #{userId}
+			( user_id = #{userId} OR receiver_id = #{userId} )			
 			AND substr(payment_code,0,1) = 'P'
 			<if test="search.searchCondition != null and search.searchCondition != ''">
 				<if test="search.searchCondition eq 0">
