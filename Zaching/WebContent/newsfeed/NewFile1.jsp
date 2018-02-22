@@ -20,18 +20,6 @@
   background-position: -2800px 0;
 }
 
-body {
-
-  font: 300 16px/1.5 "Open Sans", sans-serif;
-}
-
-.stage {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-}
 </style></head><body>
 <div class="stage">
   <div class="heart"></div>

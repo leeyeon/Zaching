@@ -157,7 +157,7 @@ public class UserRestController {
 	
 	
 	//프로필사진 업데이트
-	@RequestMapping(value="/fileupload",method=RequestMethod.POST)
+	@RequestMapping(value="/rest/fileupload",method=RequestMethod.POST)
 	public String ProfileUpload(@RequestParam("userId") int userId,
 			@RequestBody Map<String, Object> map)throws Exception{
 		
@@ -179,7 +179,7 @@ public class UserRestController {
 	}
 	
 	
-	//회원가입 이메일 중복쳌ㅡ
+	//회원가입 이메일 유효성체크
 	@RequestMapping(value="/rest/checkSingup", method=RequestMethod.POST)
 	public boolean checkSingup(HttpServletRequest request,
 							@RequestBody Map<String , Object> map)throws Exception{

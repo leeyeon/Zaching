@@ -29,22 +29,11 @@
 <!-- ToolBar End /////////////////////////////////////-->
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css); 
+		
+		*{font-family: 'Jeju Gothic';}
+	
 
-@font-face {
-  font-family: NanumSquareWeb;
-  src: local(NanumSquareR),
-       local(NanumSquare),
-       url(NanumSquareR.eot?#iefix) format('embedded-opentype'),
-       url(NanumSquareR.woff) format('woff'),
-       url(NanumSquareR.ttf) format('truetype');
-  font-style: normal;
-  font-weight: normal;
-  unicode-range: U+0-10FFFF;
-}
- 
-*{
-  font-family: NanumSquareWeb, sans-serif;
-}
 body {
 	padding-top: 130px;
 }
@@ -120,6 +109,21 @@ body {
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
+//회원탈퇴
+$(function() {
+$("#deleteUser").on("click", function() {
+	alert("클릭?");
+	var windowW = 400;  // 창의 가로 길이
+    var windowH = 500;  // 창의 세로 길이
+	var left = Math.ceil((window.screen.width - windowW)/2);
+    var top = Math.ceil((window.screen.height - windowH)/2);
+    
+    window.open("/user/deleteUser?userId="+'${sessionScope.user.userId}', '', 
+			"l top="+top+", left="+left+", height="+windowH+", width="+windowW,
+			"resizable=no");
+	opener.location.reload(true);
+	});
+});	
 	//============= "핸드폰번호"  입력 =============
 	$(document).ready(function() {
 
@@ -182,7 +186,7 @@ body {
 
 		//============= "수정" Event 연결 =============
 		$("#update").on("click", function() {
-			alert("수정버튼클릭!");
+			//alert("수정버튼클릭!");
 			fncUpdateUser();
 		});
 	});
@@ -207,8 +211,8 @@ body {
 			return false;
 		}
 
-		alert(userId);
-		alert(UploadFile);
+		//alert(userId);
+		//alert(UploadFile);
 
 		$("#form").attr("method", "POST").attr("action",
 				"/user/updateUser?userId=${sessionScope.user.userId}").submit();
@@ -219,7 +223,7 @@ body {
 	$(function() {
 
 		$("#emailAuth").on("click", function() {
-			alert("인증버튼클릭!");
+			//alert("인증버튼클릭!");
 			fncEmailAuth();
 		});
 	});
@@ -228,7 +232,7 @@ body {
 	function fncEmailAuth() {
 		var role =$("#role").val();//롤~~~
 		var inputEmail = $("#inputEmail").val(); //입력받은이메일
-		alert(inputEmail);
+		//alert(inputEmail);
 
 		if (inputEmail == null && role =='1' || inputEmail.length < 1) {
 			alert("이메일은 반드시 입력하셔야 합니다.");
@@ -247,7 +251,7 @@ body {
 			async : false,
 			dataType : "json",
 			success : function(serverData) {
-				alert("데이터가보내졌다.");
+				//alert("데이터가보내졌다.");
 
 			}
 
@@ -257,11 +261,11 @@ body {
 	//입력한 인증번호와 세션에 저장된 인증번호 비교
 	$(function() {
 		$("#check").on('click', function() {
-			alert("클릭?");
+			//alert("클릭?");
 
 			var authNum = $("#authNum").val();
-			alert(authNum);
-			alert("인증버노확인!");
+			//alert(authNum);
+			alert("인증번호 전송이 완료되었습니다!");
 
 			if (authNum == null || authNum.length < 1) {
 				alert("인증번호를 다시 입력해주세요.");
@@ -281,7 +285,7 @@ body {
 				dataType : "json",
 				success : function(serverData) {
 
-					alert("인증이가 완료되었습니다.");
+					alert("인증이 완료되었습니다! 로그인을 새로 해주세여");
 
 				}
 
@@ -293,6 +297,7 @@ body {
 	
 	///프로필사진바꾸ㄱㅣ
 	function getThumbnailPrivew(html, $target) {
+		//alert("클릭?");
  	    if (html.files && html.files[0]) {
  	        var reader = new FileReader();
  	        reader.onload = function (e) {
@@ -306,18 +311,7 @@ body {
  	    }
  	}
 
-	//회원탈퇴
-	$("#deleteUser").on("click", function() {
-		var windowW = 400;  // 창의 가로 길이
-	    var windowH = 500;  // 창의 세로 길이
-		var left = Math.ceil((window.screen.width - windowW)/2);
-	    var top = Math.ceil((window.screen.height - windowH)/2);
-	    
-		window.open("/user/deleteUser?userId=${sessionScope.user.userId}",'popup',"l top="+top+",left="+left+", height="+windowH+", width="+windowW);
-		opener.location.reload(true);
-		    self.close();
-	});
-		
+	
  	
 </script>
 
@@ -471,8 +465,9 @@ body {
 			<div class="form-group">
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 					<button type="button" class="btn btn" id="update">수	&nbsp;정</button>
-					<a class="btn btn" href="#" role="button" id="cancel">취 &nbsp;소</a>
-					<button type="button" class="btn btn" id="deleteUser">회원탈퇴</button>
+					<a class="btn btn" href="#cancel" role="button" id="cancel">취 &nbsp;소</a>
+					<a class="btn btn" href="#deleteUser" role="button" id="deleteUser" >회원탈퇴</a>
+					
     			</div>
 			</div>
 		</form>

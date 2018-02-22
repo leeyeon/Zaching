@@ -396,15 +396,6 @@
 	}
 	
   </script>
-<<<<<<< HEAD
-	 <style>
-	      @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
-	      h3 { font-family: 'Nanum Pen Script', cursive; }
-	      
-	      .nav a{
-font-family: 'Hanna', serif;"
-}
-=======
 	<style>
      @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
      h3 { font-family: 'Nanum Pen Script', cursive; }
@@ -483,7 +474,7 @@ font-family: 'Hanna', serif;"
 		    	
 		    	<c:if test="${categoryName eq '우리지금만나'}">
 			    	<div class="row">
-			    		<div class="col-sm-6 btn-bob" align="center">
+			    		<div class="col-sm-3 btn-bob " align="center">
 			    			제한인원수
 			    		</div>
 		            	<div class="col-sm-3 text-center" style="padding-top: 8px; ">
@@ -503,13 +494,13 @@ font-family: 'Hanna', serif;"
 		    	</c:if>
 	            
 	            <div class="row">
-	            	<div class="col-sm-2 btn-bob">대표사진 설정</div>
-	            	<div class="col-sm-2 text-center" style="padding-top: 7px;">
+	            	<div class="col-sm-3 btn-bob">대표사진 설정</div>
+	            	<div class="col-sm-3 text-center" style="padding-top: 7px;">
 	            		<div class="checkbox">
 	            			<label><input type="checkbox" name="imageCheck">기본배경화면</label>
 	            		</div>
 	            	</div>
-	            	<div class="col-sm-8" align="center" style="padding-top: 7px;">
+	            	<div class="col-sm-6" align="center" style="padding-top: 7px;">
 	            		<input id="input-b1" name="uploadFile" type="file" class="file" style="width:80%;"/>
 	            	</div>
 		    	</div>
@@ -518,7 +509,7 @@ font-family: 'Hanna', serif;"
 		    	
 		    	<c:if test="${categoryName eq '우리지금만나'}">
 			    	<div class="row">
-			    		<div class="col-sm-6 btn-bob">날짜</div>
+			    		<div class="col-sm-3 btn-bob">날짜</div>
 		            	<div class="col-sm-6" align="center" style="padding-top: 8px;">
 			                <div class="input-group date form_datetime col-md-5" data-date-format="yyyy-mm-dd P HH:ii" data-link-field="dtp_input1" style="width: 100%;"
 			               		data-date-useseconds="false" data-date-pickDate="false">
@@ -534,14 +525,15 @@ font-family: 'Hanna', serif;"
 			    	
 		        <c:if test="${categoryName ne '주기적으로만나'}">
 		            
-		            <div class="row" style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px; border: 1px solid #5F4B8B;">
-		            	<div class="col-xs-12 btn-bob" style="width: 100%; ">위치</div>
-	
+		            <div class="row" style="margin-top: 10px; margin-bottom: 10px; padding-bottom: 10px; border: 1px solid #eeeeee;">
+		            	<div class="col-xs-3 btn-bob" >위치</div>
+						<div class= "col-xs-9">
+							<input type="text" name="locationName" class="form-control" style="font-size: 16px; margin-top:10px; margin-bottom:10px;"
+			            				placeholder="위치를 지정해주세요" />
+						</div>
 		            	<div class="col-xs-12" align="center">
-		            		<input type="text" name="locationName" class="form-control" style="font-size: 16px; margin-top:10px; margin-bottom:10px;"
-		            				placeholder="위치를 지정해주세요" />
 		            		<div class="map_wrap">
-							    <div id="map" style="width:100%;height:400px;position:relative;overflow:hidden;"></div>
+							    <div id="map" style="width:100%;height:400px;position:relative;overflow:hidden; border: 1px solid #5F4B8B; "></div>
 							</div>
 							<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>	            		
 		            	</div>

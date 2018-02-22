@@ -20,6 +20,8 @@ public interface UserDao {
 	//타임라인 보기
 	public User getTimeLine(int userId)throws Exception;
 	
+	public void updateUserProfile(User user)throws Exception;
+	
 	//회원리스트조회
 	public List<User> listUser(Search search)throws Exception;
 	

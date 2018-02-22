@@ -44,7 +44,6 @@
 <script type="text/javascript">
 
 $( function () {
-
 		
 	
 	//내정보조회 Event && 추가 저보 입력
@@ -58,6 +57,7 @@ $( function () {
 	//추억지도 Event
 	
 	$("#memoryMapshow").hide();
+	$("#noticeshow").hide();
 	
 	//친구목록 Event
 	$( "#listFreind" ).on("click" , function() {
@@ -68,47 +68,45 @@ $( function () {
 	
 	//알림함 Event
 	$("#listNotice").on("click", function() {
-		self.location = "/user/listNotice?userId=${user.userId}";
+		
+		$("#memoryMapshow").hide();
+		$("#timelineshow").hide();
+		$("#noticeshow").show();
+		
+		$("#memoryMap").css('backgroundColor', '#fff');
+		$("#listtimeline").css('backgroundColor', '#fff');
+		$("#listNotice").css('backgroundColor', '#adbfdea1');
 	});
 
-
-		
-		//친구목록 Event
-		$( "#listFreind" ).on("click" , function() {
-
-			self.location = "/friend/listFriend";
-			
-	 	});
-		
-		//알림함 Event
-		$("#listNotice").on("click", function() {
-			self.location = "/user/listNotice?userId=${user.userId}";
-		});
-		
+	
 		
 		//메세지함
 		$("#listMessage").on("click", function() {
 			self.location ="/message/listMessage?userId=${user.userId}";	
 		})
-		
+
 
 			
 		$("#listtimeline").on("click", function() {
 			
 			$("#timelineshow").show();
 			$("#memoryMapshow").hide();
+			$("#noticeshow").hide();
+			
 			$("#memoryMap").css('backgroundColor', '#fff');
 			$("#listtimeline").css('backgroundColor', '#adbfdea1');
+			$("#listNotice").css('backgroundColor', '#fff');
 			
 		})
 		
 		$( "#memoryMap" ).on("click" , function() {
 			$("#memoryMapshow").show();
 			$("#timelineshow").hide();
+			$("#noticeshow").hide();
 			map.relayout();
 			$("#memoryMap").css('backgroundColor', '#adbfdea1');
 			$("#listtimeline").css('backgroundColor', '#fff');
-			
+			$("#listNotice").css('backgroundColor', '#fff');
 	 	});
 		
 		
@@ -128,20 +126,115 @@ $( function () {
 		//FOLLOW Event
 		
 		
-		//메세지 전송 Event
+		//메세지 모달 Event
+		$("#friendPage").on("click", function() {
+			//alert("${user.userId}");
+			$("#messageModal").modal('show');
+		})
+		
+		$( "a.send-btn:contains('send')" ).on("click" , function() {
+				//alert(  $( "a.send-btn:contains('send')" ).html() );
+				addMessage();
+			});
+		
+		
+		
 		
 		
 		//신고하기 Event
 
 
-	
+		function addMessage(){
+			 
+			 var userId = ${sessionScope.user.userId};
+			 var  friendId= ${user.userId} ;
+			 var content = $("input[name='content']").val();
+			
+
+				
+			　if(content==null || content.length<1){ 
+			　　alert('메세지를 입력해주세요.');
+				return;
+			 } 
+			
+			 
+			$("form").attr("method", "POST").attr("action", "/message/addMessage").submit();
+			alert("메세지 전송완료");
+		}
 	
 	var status = 0 ;
 	
 	var keyword = ${sessionScope.user.userId};
 	var userId = ${user.userId};
+	/*
+	$("a:contains('수락')").on("click", function() {
+		
+		var friendId = ${user.userId};
+		var userId2 = ${sessionScope.user.userId};
+		var username = "${user.name}";
+		var noticeTargetId = $($("input:hidden[name='noticeTargetId']")[$(this).index()-2]).val();
+		
+
+			$.ajax({
+				url : "/friend/rest/addFriend",
+				method : "POST",
+				contentType : "application/json; charset=UTF-8",
+				data : JSON.stringify({
+					"friendId" : friendId,
+					"userId" : userId2,
+					"userName" : username
+					
+				}),
+				async : false,
+				dataType : "json",
+				success : function(serverData2) {				
+					}
+				});
+			
+			$.ajax({
+				url : "/friend/rest/okFriend",
+				method : "POST",
+				contentType : "application/json; charset=UTF-8",
+				data : JSON.stringify({
+					"noticeId" : noticeTargetId				
+				}),
+				async : false,
+				dataType : "json",
+				success : function(serverData2) {
+					alert("친구 수락 완료!");					
+					}
+				});
+	});	
 	
+	$("a:contains('거절')").on("click", function() {
+		
+		var friendId = ${user.userId};
+		var userId4 = ${sessionScope.user.userId};
+		var username = "${user.name}";
+		var noticeTargetId = $($("input:hidden[name='noticeTargetId']")[$(this).index()-2]).val();
+		
+		$.ajax({
+			url : "/friend/rest/refuseFriend",
+			method : "POST",
+			contentType : "application/json; charset=UTF-8",
+			data : JSON.stringify({
+				"friendId" : friendId,
+				"userId" : userId4,
+				"userName" : username,
+				"noticeId" : noticeTargetId
+			}),
+			async : false,
+			dataType : "json",
+			success : function(serverData) {
 				
+				alert("친구 신청 거절!");
+				
+			}
+		});
+	
+	});		
+	
+	*/
 				$("a:contains('친구끊기')").on("click", function() {
 					var friendId = ${user.userId};
 					var userId4 = ${sessionScope.user.userId};
@@ -176,7 +269,8 @@ $( function () {
 					
 					var friendId = ${user.userId};
 					var userId2 = ${sessionScope.user.userId};
-					var username = "${user.name}";
+					var username = "${sessionScope.user.name}";
+					var noticeTargetId = "";
 					
 					if(status != 0){
 						var friendId = ${user.userId};
@@ -207,6 +301,9 @@ $( function () {
 			
 					if(confirm("친구 신청을 하겠습니까")){
 						$("#friendStatus").text("친구 요청 중");
+						
+						
+						
 						$.ajax({
 							url : "/friend/rest/addFriend",
 							method : "POST",
@@ -214,7 +311,8 @@ $( function () {
 							data : JSON.stringify({
 								"friendId" : friendId,
 								"userId" : userId2,
-								"userName" : username
+								"userName" : username,
+								"noticeId": noticeTargetId
 							}),
 							async : false,
 							dataType : "json",
@@ -251,7 +349,8 @@ $( function () {
 						var friendId = ${user.userId};
 						var userId2 = ${sessionScope.user.userId};
 						var username = "${user.name}";
-				
+						
+						
 							$.ajax({
 								url : "/friend/rest/addFriend",
 								method : "POST",
@@ -282,7 +381,7 @@ $( function () {
 					var friendId = ${user.userId};
 					var userId3 = ${sessionScope.user.userId};
 					var username = "${user.name}";
-					alert(status);
+					//alert(status);
 					
 					if(status != 0){
 						var friendId = ${user.userId};
@@ -388,21 +487,10 @@ $( function () {
 		
 
 
-     $("#uploadbutton").click(function(){
+     $(".uploadbutton").click(function(){
          
-         var form = new FormData(form);
-         form.append("uploadFile",file);
-             $.ajax({
-                url: '/user/fileupload',
-                method: 'POST',
-                contentType: "application/json; charset=UTF-8",
-                data: formData,
-              	 async : false,
-    			dataType : "json",
-                success: function(result){
-                    alert("업로드 성공!!");
-                }
-            });
+         $("#detailForm").attr("method", "POST").attr("action", "/user/fileupload").submit();        
+       
          });
 	});
 
@@ -420,7 +508,25 @@ font-family: 'Hanna', serif;
 .menu {
 align: left;
 }
-
+.filebox label {
+	    display: inline-block;
+	    padding: .5em .75em;
+	    color: #999;
+	    font-size: inherit;
+	    line-height: normal;
+	    vertical-align: middle;
+	}
+	 
+	.filebox input[type="file"] {  
+	    position: absolute;
+	    width: 1px;
+	    height: 1px;
+	    padding: 0;
+	    margin: -1px;
+	    overflow: hidden;
+	    clip:rect(0,0,0,0);
+	    border: 0;
+	}
 			body{
 				padding-top: 110px;
 				background: rgba(255,255,255,1);
@@ -614,10 +720,170 @@ font-size:14pt;
 }
 
 
+.wrapper {
+	width: 612px;
+	height: 100%;
+	margin: 0 auto;
+}
+
+.phone-containter {
+	width: 340px;
+	height: 100%;
+}
+
+.phone {
+	height: 60%;
+	border: 1px solid #dcdcdc;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background-color: #fff;
+}
+
+.button {
+	background-color: none;
+	border: 1px solid #36a9fc;
+	text-decoration: none;
+	border-radius: 10px;
+	padding: 5px 10px;
+	color: #36a9fc;
+	display: block;
+	width: 80px;
+	text-align: center;
+	overflow: hidden;
+	text-oveflow: ellipsis;
+	margin: 20px auto;
+}
+
+.build-container {
+	width: 230px;
+	height: 100%;
+	margin-left: 20px;
+	float: right;
+}
+
+#buildInput {
+	width: 100%;
+	height: 60%;
+}
+
+/* Messages baloon: 메세지 풍선 */
+.message {
+	margin: 10px 0;
+	overflow: hidden;
+}
+
+.message-text {
+	padding: 10px 20px;
+	float: right;
+	clear: both;
+	border-radius: 25px;
+	position: relative;
+	margin-bottom: 1px;
+}
+
+.message.left .message-text {
+	margin-right: 70px;
+	margin-left: 20px;
+	background-color: #e5e5ea;
+	float: left;
+}
+
+.message.right .message-text {
+	margin-left: 70px;
+	margin-right: 20px;
+	background-color: #36a9fc;
+	color: #fff;
+	float: right;
+}
+
+.message-text:last-child:before, .message-text:last-child:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	width: 35px;
+	height: 25px;
+	z-index: -1;
+}
+
+.message.right .message-text:before, .message.right .message-text:after
+	{
+	border-radius: 0 0 0 50%;
+}
+
+.message.right .message-text:before {
+	height: 20px;
+	right: -23px;
+	background-color: #36a9fc;
+}
+
+.message.right .message-text:after {
+	right: -35px;
+	bottom: -3px;
+	background-color: #fff;
+}
+
+.message.left .message-text:before, .message.left .message-text:after {
+	border-radius: 0 0 50% 0;
+}
+
+.message.left .message-text:before {
+	height: 20px;
+	left: -23px;
+	background-color: #e5e5ea;
+}
+
+.message.left .message-text:after {
+	left: -35px;
+	bottom: -3px;
+	background-color: #fff;
+}
+
+.send-container {
+	background-color: #f6f6f6;
+	border: 1px solid #dcdcdc;
+	margin-top: -1px;
+	padding: 10px;
+}
+
+.send-input {
+	border-radius: 5px;
+	border: 1px solid #dbdbdb;
+	background-color: #fff;
+	padding: 5px 5px;
+	font-size: 1em;
+	width: 78%;
+}
+
+.send-btn {
+	text-decoration: none;
+	color: #939297;
+	font-weight: bold;
+	background-color: transparent;
+	border: none;
+	font-size: 1em;
+	cursor: pointer;
+}
+
+#main > div > div > div.col-md-9 > div.col-md-12.page-body{
+			margin-left: 20px;
+			margin-right: 20px;
+			}
 </style>
 
 
-	
+	<script>
+	function getThumbnailPrivew(html, $target) {
+	    if (html.files && html.files[0]) {
+	        var reader = new FileReader();
+	        reader.onload = function (e) {
+	            $target.css('display', '');
+	            //$target.css('background-image', 'url(\"' + e.target.result + '\")'); // 배경으로 지정시
+	            $target.html('<img src="' + e.target.result + '" border="0" alt="" />');
+	        }
+	        reader.readAsDataURL(html.files[0]);
+	    }
+	}
+	</script>
   </head>
 
  <body>
@@ -641,10 +907,21 @@ font-size:14pt;
                         
                          <div id="menu" class="collapse">
                            <ul class="menu-link">
-                               <li><div class="profileImage" align="center">
-		<input type="file" name="uploadfile" />
-		<input type="hidden" name="userId"/>
-         <button class="uploadbutton">데이터전송</button>	</div></li>
+                               <li>
+                               <div class="profileImage" align="center">
+
+		<div class="filebox">
+			<form name="form" id="detailForm" class="form-vertical" enctype="multipart/form-data">
+				<input type="hidden" name="userId" value="${user.userId}">
+					        <label for="cma_file">프로필 사진 업로드</label>
+							<input type="file" name="uploadFile" id="cma_file" imageswap="true" accept="image/*" capture="camera" onchange="getThumbnailPrivew(this,$('#cma_image'))"/>
+					        <div id="cma_image" style="width:200px;max-width:200px;display:none;"></div>
+					    </div>
+					    </form>
+         <button class="uploadbutton">확인</button>	</div>
+        
+        
+         </li>
                             </ul>
                          </div>
                          
@@ -707,7 +984,7 @@ font-size:14pt;
                            		<h3> <c:if test="${user.userId eq sessionScope.user.userId}"><!-- 세션에있는 아이디랑  -->
     	<a class="btn col-xs-3" id="listtimeline"><b>타임라인</b></a>
     	<a class="btn col-xs-3" id="memoryMap" data-toggle="modal" data-target="#myModal" ><b>추억지도</b></a>    	
-    	<a class="btn col-xs-3" id="listNotice"><b>알림함</b></a>
+    	<a class="btn col-xs-3" id="listNotice"><b>알림함<div class="badge   badge-primary"></div></b></a>
 	 <a class="btn col-xs-3" id="listMessage" ><b><img src="../resources/images/Message_Icon.png" width="20px" height="20px"/>&nbsp;채팅함</b></a>
   </c:if>
   
@@ -741,7 +1018,7 @@ font-size:14pt;
       <main class="main col-sm-6 col-sm-offset-1" role="main">
   <div class="page-header">
   <div class="thumb" style="float: left;">
-  <c:if test="${!empty newsfeed.profileImage}"><img src="../resources/images/${newsfeed.profileImage}" height='50' width='100' align="left"/></c:if>
+  <c:if test="${!empty newsfeed.profileImage}"><img src="../resources/upload_files/images/${newsfeed.profileImage}" height='50' width='100' align="left"/></c:if>
   <c:if test="${empty newsfeed.profileImage}"><img src="../resources/images/profile_default.png" height='50' width='100' align="left"/></c:if>
    
    
@@ -777,11 +1054,45 @@ font-size:14pt;
 				<div id="map" style="width:100%; height:700px;"></div>
 			</div>
 			
+			
+			<div id="noticeshow">
+				<jsp:include page="/notice/listNotice?userId=${user.userId}"/>
+			</div>
+			
 			 </div>
          </div>
       </div>
  
-    
+ 
+ <div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="wrapper">
+
+
+						<!-- 왼쪽 메세지 대화 박스 -->
+						
+						
+						
+						<div class="phone-containter">
+							<div id="phone" class="phone">
+								<button type="button" class="close" data-dismiss="modal" varia-hidden="true" id="close">×</button>
+								<div id="messegeBox"></div>
+							</div>
+
+							<!-- 메세지 작성 -->
+							<div class="send-container">
+								<form id="send">
+								<input type="hidden" value="${sessionScope.user.userId}" name="userId"/>
+								<input type="hidden" value="${user.userId }" name="friendId"/>
+									<input type="text" id="msgInput" class="send-input" placeholder="메세지내용" name="content">
+									<a href="#" onclick="addMessage();" class="send-btn" data-dismiss="modal"  value="Send">send</a>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>   
     
     
     <!-- All Javascript Plugins  -->

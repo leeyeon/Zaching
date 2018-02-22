@@ -77,34 +77,33 @@ private MessageService messageService;
 		
 	}
 	
-	@RequestMapping(value = "rest/addFriend", method=RequestMethod.POST)
-	public String addtFriend(@ModelAttribute("notice") Notice notice, @RequestBody Map<String, Object> map, @ModelAttribute("friend") Friend friend, @ModelAttribute("search") Search search,HttpSession session, Model model) throws Exception {
-
-		
-
+	@RequestMapping(value = "rest/addMessage", method=RequestMethod.POST)
+	public Message addMessage(@ModelAttribute("message") Message message,@RequestBody Map<String,Object>map,@ModelAttribute("search") Search search,Model model)throws Exception{
 		int userId = ((int)map.get("userId"));
 		int friendId = ((int)map.get("friendId"));
-		String userName =  ((String)map.get("userName"));
+		String content =  ((String)map.get("content"));
 		
-		friend.setFriendId(friendId);
-		friend.setUserId(userId);
-		System.out.println(friend);
+		message.setFriendId(friendId);
+		message.setUserId(userId);
+		message.setContent(content);
 		
-		//friendService.addFriend(friend, "0");
+		messageService.addMessage(message);
+		model.addAttribute("message",message);
 		
-		/*¾Ë¸²
-		notice.setSenderId(userId);
-		notice.setCategory("F00");
-		notice.setName(userName);
-		commonService.addNotice(notice);
-
-		notice.setUserId(friendId);
-
-		commonService.addNoticeTarget(notice);
-		*/
 		
-		return null;
+		System.out.println("userId:"+message.getUserId());
+		System.out.println("friendId:"+message.getMessageId());
+		System.out.println("content:"+message.getContent());
+		
+		
+		
+		
+		return message;
 	}
+		
+
+		
+		
 
 }
 

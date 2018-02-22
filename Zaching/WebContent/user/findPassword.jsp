@@ -79,13 +79,13 @@
 		                	console.log(data);
 		                    if(data == true){
 		                    	console.log("데이터 값==> "+data);
-		                        $('#checkMsg').html('<p style="color:blue">존재하지 않는 이메일 입니다.</p>');
+		                        $('#checkMsg').html('<p style="color:blue">&nbsp;존재하지 않는 이메일 입니다.</p>');
 		                    }
 		                    else if(data == false){
-		                        $('#checkMsg').html('<p style="color:red">이메일전송이 완료되었습니다.</p>');
+		                        $('#checkMsg').html('<p style="color:red">&nbsp;이메일로 임시비밀번호가 발송되었습니다.</p>');
 		                        
 		                        return $("#checkEmail").val('');
-
+		                        
 		                 
 		                    }
 		                }

@@ -146,7 +146,7 @@ body {
 				<h3>친구 추천</h3>
 			</div>
 			
-			<div class="row">
+			<div class="row" style="padding-bottom: 200px;">
 				<c:forEach var="friend" items="${recommendList}" varStatus="status">
 
 					<div class="col-xs-6 col-md-4">

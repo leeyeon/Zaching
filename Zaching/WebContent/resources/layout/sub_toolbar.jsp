@@ -135,14 +135,10 @@ body .login-container .half {
   padding: 58px 40px 0;
 }
 body .login-container .half.bg {
-<<<<<<< HEAD
-  background-image: url("/resources/images/loginModalImage.jpg");
-  background-size: 100% 100%;
-=======
-  
-  background-size: 350px 500px;
->>>>>>> refs/heads/new/jeongeun
-  background-repeat: no-repeat;
+
+	background-size: cover;
+    background-repeat: no-repeat, no-repeat;
+    background-position: center center;
 }
 body .login-container h1 {
   font-size: 18px;
@@ -409,91 +405,6 @@ svg {
   display: block;
 }
 
-/**
- * Paper Plane
- */
-/*Paper Plane: Container*/
-.plane-container {
-	position:fixed;
-	right:100px;
-	bottom:30%;
-  width: 60px;
-  margin: 0px auto;
-  z-index: 3;
-  display: inline-block;
-}
- /*Paper Plane: Image*/
-.plane {
-  width: 100%;
-  height: 60px;
-}
-
-/*Paper Plane: Animation*/
-.plane-container {
-  -webkit-animation: paper-plane-scoping 2s alternate infinite;
-  -moz-animation: paper-plane-scoping 2s alternate infinite;
-  animation: paper-plane-scoping 2s alternate infinite;
-
-  -webkit-animation-timing-function: linear;
-  -moz-animation-timing-function: linear;
-  animation-timing-function: linear;
-}
-
-@-webkit-keyframes paper-plane-scoping {
-  0% {
-    -webkit-transform: translateY(0px);
-    -moz-transform: translateY(0px);
-    transform: translateY(0px);
-  }
-  100% {
-    -webkit-transform: translateY(100px);
-    -moz-transform: translateY(100px);
-    transform: translateY(100px);
-  }
-}
-
-.plane {
-  -webkit-animation-timing-function: ease-in-out;
-  -moz-animation-timing-function: ease-in-out;
-  animation-timing-function: ease-in-out;
-
-  -webkit-animation: paper-plane-soaring 4s forwards infinite;
-  -moz-animation: paper-plane-soaring 4s forwards infinite;
-  animation: paper-plane-soaring 4s forwards infinite;
-}
-@-webkit-keyframes paper-plane-soaring {
-  0% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  40% {
-    -webkit-transform: rotate(15deg);
-    -moz-transform: rotate(15deg);
-    transform: rotate(15deg);
-  }
-  50% {
-    -webkit-transform: rotate(15deg);
-    -moz-transform: rotate(15deg);
-    transform: rotate(15deg);
-  }
-  60% {
-    -webkit-transform: rotate(-10deg);
-    -moz-transform: rotate(-10deg);
-    transform: rotate(-10deg);
-  }
-  70% {
-    -webkit-transform: rotate(-10deg);
-    -moz-transform: rotate(-10deg);
-    transform: rotate(-10deg);
-  }
-  100% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-}
-
 
 #loginModal > div > div > div.modal-body > form > div.row.social-login { margin: 5px;}
 
@@ -533,10 +444,7 @@ svg {
 </style>
 <script type="text/javascript">
 
-function noticeclose(){	
-	 jQuery('.plane-container').hide(); 
-	
-}
+
 
 		$( function() {
 			
@@ -565,11 +473,6 @@ function noticeclose(){
 		      	
 		        	$(".badge").text(status);
 		        	
-		        	if(status != 0){   			        		
-		                jQuery(".plane-container").show();  
-		            } else { 
-		                jQuery(".plane-container").hide();  
-		            }      	
 		        	
 		        	
 		        	
@@ -580,19 +483,12 @@ function noticeclose(){
 
 			
 			
-		$( ".noticeAirplane" ).on("click" , function() {
-			self.location = "/notice/listNotice?userId=${user.userId}";
+		$( "#notice" ).on("click" , function() {
+			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";
 			
 		});
 		
-		//모달창 닫기 버튼 이벤트
-		$(function() {
-				  $('#close').on('click', function(){
-			        	
-			        	$("#loginemail").val('');
-			        	$("#loginpassword").val('');
-				});
-			});
+
 		
 	
 
@@ -686,7 +582,7 @@ function noticeclose(){
 						"l top="+top+", left="+left+", height="+windowH+", width="+windowW,
 						"resizable=no");
 				opener.location.reload(true);
-			    self.close();
+			    
 
 		});
 		
@@ -728,13 +624,7 @@ function noticeclose(){
 //===============================회원가입===========================================
 	
 	//회원가입 모달창 닫기 이벤트
-	$(function() {
-				  $('#addclose,#addclose2').on('click', function(){
-					  $("#addUserform")[0].reset();
-					  
-					 
-				});
-			});
+	
 		
 	
 	//==>"회원가입" Event 처리 및 연결
@@ -744,10 +634,12 @@ function noticeclose(){
 			
 		 $( "#singup" ).on("click" , function() {
 			
-				alert("회원가입 버튼클릭");
+				//alert("회원가입 버튼클릭");
+				
 				fncAddUser();
 				
-				  $('#loginModal').css('display','none');
+				
+				
 			});
 		});	
 		
@@ -759,28 +651,28 @@ function noticeclose(){
 			var pw2 = $("#pw2").val();
 			var name = $("input[name='name']").val();
 			
-			
+			if(name == null || name.length <1){
+				alert("이름은  반드시 입력하셔야 합니다.");
+				return false;
+			}
 			if(email == null || email.length <1){
 				alert("이메일은 반드시 입력하셔야 합니다.");
 				return false;
 			}
 			if(pw == null || pw.length <4){
 				alert("패스워드는  3자리 이상 입력하셔야 합니다.");
-				return;
+				return false;
 			}
 			if(pw2 == null || pw2.length <4){
 				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
-				return;
+				return false;
 			}
-			if(name == null || name.length <1){
-				alert("이름은  반드시 입력하셔야 합니다.");
-				return;
-			}
+			
 			
 			if( pw != pw2 ) {				
 				alert("비밀번호 확인이 일치하지 않습니다.");
 				$("#pw2").focus();
-				return;
+				return false;
 			}
 
             $.ajax({
@@ -807,9 +699,33 @@ function noticeclose(){
             
             });    //end ajax    
             //end on    
-
+            self.location ="/index.jsp";
 	}
-			
+		
+		//포커스이벤트
+		$(function(){
+			  var focus1 = $('#checkEmail');
+			  
+			  focus1.focus(function(){
+				  
+				  $('#checkMsg').html('<p style="color:red">이메일을 입력해주세요.</p>');
+			  });
+			  
+			 focus1.blur(function(){
+				 if(focus1 != null){
+					  
+					  $('#checkMsg').html('<p style="color:red">중복체크를 해주세요</p>');  
+					  return false;
+				  }
+				 	if(focus1 == null){
+					 
+			 		$('#checkMsg').html('<p style="color:red">이메일을 입력해주세요.</p>');		
+				 }
+				  
+			  });
+			  
+			 
+		});
 		
 	
 		//이메일 중복체크
@@ -831,12 +747,12 @@ function noticeclose(){
 			 if(checkEmail == null|| checkEmail.length <1){
 				 $('#checkMsg').html('<p style="color:red">이메일을 입력해주세요.</p>');
 	        		
-	        		return false
+	        		return false;
 
 			 }else if(exptext.test(checkEmail) == false){
 	        		$("#checkEmail").val('');
 	        		$('#checkMsg').html('<p style="color:red">이메일형식으로 입력해주세요.</p>');
-	        		return false
+	        		return false;
 			 }
 			 
 		            $.ajax({
@@ -870,12 +786,12 @@ function noticeclose(){
 		    }
 		
 		$(document).ready(function(){
-		  
-		  $('.hamburger').click(function() {
+			
+		  $('nav .hamburger').click(function() {
 			  $('#navigationbar').toggle();
-			  $('.hamburger').toggleClass('is-open');
-			  $('.hamburger').toggleClass('is-closed');
-			  $('.hamburger').toggleClass('indexcity');
+			  $('nav .hamburger').toggleClass('is-open');
+			  $('nav .hamburger').toggleClass('is-closed');
+			  $('nav .hamburger').toggleClass('indexcity');
 		  });
 	});
 	
@@ -915,28 +831,39 @@ function noticeclose(){
           </ul>
           <ul class="nav navbar-nav navbar-right">
 
+
+
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage eq null}">
 	          	<li>
 	          		<div class="col-xs-12" style="padding-top: 10px; color:#333;">
 			          	<img src="../resources/images/paper-plane.png" id="notice" width="30px" style="display:none;"/>
-			          	<img src="../resources/images/profile_default.png" id="profile"
-				          	width="30px"/>&nbsp;<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
+			          	<div class="badge   badge-primary"></div>&nbsp;&nbsp;
+			          	<img src="../resources/images/profile_default.png" id="profile" width="30px" height="30px"/>&nbsp;
+			          	<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
 	          		</div>
 	          	</li>
+
 	          	<li><a href="#">로그아웃</a></li>
           	</c:if>
-          	<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
-	          	<li><div style="padding-top: 10px; color:#333;">
-				<img src="../resources/images/paper-plane.png" id="notice"
-								width="30px" style="display:none;"/>
-		          		 
-		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px"
-		       	style="border-radius: 50%"/>&nbsp;
-		        <a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
-		        &nbsp;님 환영합니다!
 
-		       
-	          	</div></li>
+
+          	<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
+	          	<li>
+		          	<div class="col-xs-12" style="padding-top: 10px; color:#333;">
+						<img src="../resources/images/paper-plane.png" id="notice" width="30px" style="display:none;"/>
+						<div class="badge   badge-primary"></div>&nbsp;&nbsp;
+				        <c:if test="${sessionScope.user.password ne null}">
+				       		<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px" height="30px"
+				       		style="border-radius: 50%"/>&nbsp;
+				       	</c:if>
+				       	<c:if test="${sessionScope.user.password eq null}">
+				       		<img src="${sessionScope.user.profileImage}" id="profile" width="30px" height="30px" style="border-radius: 50%"/>&nbsp;
+				       	</c:if>
+				        <a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
+				        &nbsp;님 환영합니다!
+		          	</div>
+	          	</li>
+
 	          	<li><a href="#">로그아웃</a></li>
 	          	 
           	</c:if>
@@ -950,7 +877,6 @@ function noticeclose(){
      </div><!--/.nav-collapse -->
     
     <div class="noticelist" align="right" style="display:none;"></div>
-
 </nav>
 
 
@@ -1027,7 +953,7 @@ function noticeclose(){
 			       </div>
 		    	</article>
 
-		    		<div class="half bg" style="padding-top:0px;  width:44%;"></div>
+		    		<div class="half bg" id="frog" style="padding-top:0px;  width:44%; background-image: url(/resources/login/0.jpg);"></div>
 
 				</section>
 				</div>
@@ -1045,42 +971,63 @@ function noticeclose(){
 
 <script type="text/javascript">
 $('.tabs .tab').click(function(){
+	
     if ($(this).hasClass('signin')) {
         $('.tabs .tab').removeClass('active');
         $(this).addClass('active');
         $('.cont').hide();
         $('.signin-cont').show();
+        random_image();
     } 
     if ($(this).hasClass('signup')) {
         $('.tabs .tab').removeClass('active');
         $(this).addClass('active');
         $('.cont').hide();
         $('.signup-cont').show();
+        random_image();
     }
 });
+
 $('.container .bg').mousemove(function(e){
     var amountMovedX = (e.pageX * -1 / 30);
     var amountMovedY = (e.pageY * -1 / 9);
     $(this).css('background-position', amountMovedX + 'px ' + amountMovedY + 'px');
 });
+
+function random_image(){
+ var myimages = new Array();
+ 
+ myimages[0] = "0.jpg";
+ myimages[1] = "1.jpg";
+ myimages[2] = "2.jpg";
+ myimages[3] = "3.jpg";
+ myimages[4] = "4.jpg";
+ myimages[5] = "5.jpg";
+ myimages[6] = "6.jpg";
+ myimages[7] = "7.jpg";
+ myimages[8] = "8.jpg";
+ myimages[9] = "9.jpg";
+ myimages[10] = "10.jpg";
+ myimages[11] = "11.jpg";
+ myimages[12] = "12.jpg";
+ myimages[13] = "13.jpg";
+ myimages[14] = "14.jpg";
+ 
+ 
+ 
+
+ var ry = Math.floor( Math.random() * (myimages.length-1) );
+ 
+ $('#frog').css('background-image','url(/resources/login/'+myimages[ry]+')');
+ 
+}
+random_image();
+
 </script>
 	
 
 
-<div class="frame">
-<div class="plane-container" style="display:none;">
-<button type="button" class="close" onclick="noticeclose()">&times;</button>
-<div class="noticeAirplane">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-width="1131.53px" height="379.304px" viewBox="0 0 1131.53 379.304" enable-background="new 0 0 1131.53 379.304"
-xml:space="preserve" class="plane">
-<polygon fill="#D8D8D8" points="72.008,0 274.113,140.173 274.113,301.804 390.796,221.102 601.682,367.302 1131.53,0.223  "/>
-<polygon fill="#C4C4C3" points="1131.53,0.223 274.113,140.173 274.113,301.804 390.796,221.102   "/>
-</svg>
-<div class="badge   badge-primary"></div>
-</div>
-</div>
-</div>
+
 
 </body>
 </html>

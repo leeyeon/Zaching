@@ -101,7 +101,7 @@ public class NoticeRestController {
 		Gson gson = new Gson(); 
 		String json = gson.toJson(mapp); 
 		
-		
+		System.out.println(json);
 	
 		
 		return json;
@@ -113,12 +113,10 @@ public class NoticeRestController {
 	@ResponseBody
 	public String noticeUpdate(@RequestBody Map<String, Object> map) throws Exception {
 
-			System.out.println("µé¾î¿È");
 		String noticeId = ((String)map.get("noticeId"));
 		System.out.println(noticeId);
 		commonService.noticeUpdate(Integer.parseInt(noticeId));
-		
-		System.out.println("¿Ï·á");
+
 		
 		return "success";
 	}

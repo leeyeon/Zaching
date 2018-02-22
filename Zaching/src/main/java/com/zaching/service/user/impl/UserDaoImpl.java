@@ -32,6 +32,11 @@ public class UserDaoImpl implements UserDao{
 		System.out.println(this.getClass());
 	}
 	
+	@Override
+	public void updateUserProfile(User user)throws Exception{
+		sqlSession.update("UserMapper.updateUserProfile", user);
+	}
+	
 	
 	@Override
 	public User login(String email) throws Exception {
