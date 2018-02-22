@@ -22,6 +22,7 @@
 		<script type="text/javascript" src="../resources/javascript/FileButton.js"></script> 
 		<!----webfonts---->
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">	
 		<!----//webfonts---->
 		<!-- Global CSS for the page and tiles -->
   		<link rel="stylesheet" href="../resources/css/main.css">
@@ -163,8 +164,11 @@
 							
 							$("#like"+newsfeedId).text(serverData);
 							if(countLikey < serverData){
-								alert($("#item"+newsfeedId+" .like-text:after").css('content'));
-								$("#item"+newsfeedId+" .like-text:after").css({content: '\\e802'});
+								//alert($("#item"+newsfeedId+" .like-text:after").css('content'));
+								var div = $('#item'+newsfeedId+' .like-text::after').get(0);
+						        div.style.removeProperty('content');  
+						
+								$("#item"+newsfeedId+" .like-text\:after").css('content', '');
 								$("#like"+newsfeedId).css("color","#ff5b4e");
 							}
 							
@@ -216,8 +220,8 @@
 		-khtml-border-radius: 70px;
 		-webkit-border-radius: 70px;
 		 background: #bfd9f2;
-		 width: 100px;
-		 height: 100px;
+		 width: 70px;
+		 height: 70px;
 		 line-height: 100px;
 		 font-size: 17px;
 		 float:right;
@@ -275,50 +279,6 @@
     	min-height: 100%;
     	-ms-interpolation-mode: bicubic;
     }
-    
-    .addNewsfeed {
-		-moz-box-shadow:inset 0px 1px 0px 0px #dcecfb;
-		-webkit-box-shadow:inset 0px 1px 0px 0px #dcecfb;
-		box-shadow:inset 0px 1px 0px 0px #dcecfb;
-		background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #bddbfa), color-stop(1, #80b5ea) );
-		background:-moz-linear-gradient( center top, #bddbfa 5%, #80b5ea 100% );
-		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bddbfa', endColorstr='#80b5ea');
-		background-color:#bddbfa;
-		-webkit-border-top-left-radius:0px;
-		-moz-border-radius-topleft:0px;
-		border-top-left-radius:0px;
-		-webkit-border-top-right-radius:0px;
-		-moz-border-radius-topright:0px;
-		border-top-right-radius:0px;
-		-webkit-border-bottom-right-radius:0px;
-		-moz-border-radius-bottomright:0px;
-		border-bottom-right-radius:0px;
-		-webkit-border-bottom-left-radius:0px;
-		-moz-border-radius-bottomleft:0px;
-		border-bottom-left-radius:0px;
-		text-indent:0;
-		border:1px solid #84bbf3;
-		display:inline-block;
-		color:#ffffff;
-		font-size:15px;
-		font-weight:bold;
-		font-style:normal;
-		height:40px;
-		line-height:40px;
-		width:100px;
-		text-decoration:none;
-		text-align:center;
-		text-shadow:1px 1px 0px #528ecc;
-	}
-	.addNewsfeed {
-		background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #80b5ea), color-stop(1, #bddbfa) );
-		background:-moz-linear-gradient( center top, #80b5ea 5%, #bddbfa 100% );
-		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#80b5ea', endColorstr='#bddbfa');
-		background-color:#80b5ea;
-	}.addNewsfeed:active {
-		position:relative;
-		top:1px;
-	}
 	
 	article, aside, footer, header, hgroup, main, nav, section {
 	    display: block;
@@ -413,6 +373,100 @@
 	    top: 6px;
 	}
 	
+	.button-container {
+  display: inline-block;
+  margin: 10px 10px;
+  cursor: pointer;
+  font-weight: 400;
+  letter-spacing: 2px;
+  height: 45px;
+  width: 200px;
+  -webkit-perspective: 1000;
+  -ms-perspective: 1000;
+  perspective: 1000;
+}
+.button-container .flipper {
+  transition: all .5s ease-in-out;
+  -webkit-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  position: relative;
+}
+.button-container .button {
+  height: 45px;
+  width: 160px;
+  border-radius: 3px;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  -webkit-box-shadow: 1px 2px 4px -1px rgba(60, 60, 60, 0.64);
+  box-shadow: 1px 2px 4px -1px rgba(60, 60, 60, 0.64);
+}
+.button-container .button i.fa {
+  color: white;
+  font-size: 20px;
+  margin: auto;
+  text-shadow: .5px 1px 2px #3c3c3c;
+}
+.button-container .button.front {
+  z-index: 10;
+}
+.button-container .button.back {
+  color: white;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+/* -------------------------------- 
+			Slide
+-------------------------------- */
+.slider i {
+  transition: all .3s ease-in-out;
+}
+.slider i:before {
+  transition: all .3s ease-in-out;
+}
+.slider i:after {
+  font-family: "Lato", sans-serif;
+  color: white;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: none;
+  content: '등록하기';
+  position: absolute;
+  opacity: 0;
+  top: 2.5px;
+  transition: all .3s ease-in-out;
+}
+
+/*** Horizontal Slide ***/
+.button-slide-horizontal .button {
+  background-image: linear-gradient(90deg, #ea4c89, #ee9b83);
+}
+.button-slide-horizontal i {
+  position: relative;
+  display: inline-block;
+  transition: all .3s ease-in-out;
+}
+.button-slide-horizontal i:before {
+  transition: all .3s ease-in-out;
+}
+.button-slide-horizontal:hover i {
+  padding-right: 100px;
+}
+.button-slide-horizontal:hover i:before {
+  opacity: 0;
+}
+.button-slide-horizontal:hover i:after {
+  opacity: 1;
+}
+	
+	
+	
 	
 	
 </style>
@@ -474,7 +528,7 @@
 							<div class="post-info">
 								<div class="post-basic-info">
 									<span><a href="#">
-									<label></label>
+									<label style="margin-bottom:auto;"></label>
 										<c:if test="${newsfeed.categoryCode.equals('N01')}">자취지식인</c:if>
 										<c:if test="${newsfeed.categoryCode.equals('N02')}">중고거래</c:if>
 										<c:if test="${fn:contains(newsfeed.categoryCode, 'N10')}">밥친구 후기</c:if>
@@ -787,7 +841,7 @@
 			<div class="row">
 				<table border="1">
 				  <tr>
-					<td width="300">
+					<td width="250">
 						<div class="form-group" align="left">
 						   <strong style="font-size: 12px">카테고리</strong> 
 						   <select name="categoryCode"	id="categoryCode" class="form-control" style="height: 40px" maxLength="20">
@@ -798,7 +852,7 @@
 							</select>
 						</div>
 					</td>						  
-					<td width="300">
+					<td width="250">
 					  <div class="form-group">
 					    <strong style="font-size: 12px">공개범위</strong>
 					    <select name="privacyBound"	id="privacyBound" class="form-control" style=" height: 40px" maxLength="20">
@@ -808,9 +862,15 @@
 						</select>
 					  </div>
 					</td>					
-					<td width="200" style="text-align: right; vertical-align: middle;">
+					<td width="170" style="text-align: right; vertical-align: middle;">
 
-						<a href="#" onclick="addNewsfeed();" class="addNewsfeed" data-dismiss="modal">등록</a>
+						<div class="button-container button-slide-horizontal" onclick="addNewsfeed();">
+					        <div class="slider slider-horizontal">
+					            <div class="button">
+					              	<i class="fa fa-dribbble"></i>
+					            </div>
+					        </div>
+				    	</div>
 
 					</td>
 				  </tr> 
@@ -826,11 +886,11 @@
 					    </div>
 					</td>						
 					<td width=450 style="vertical-align: top; style="table-layout:fixed">&nbsp;&nbsp;&nbsp;&nbsp;
-					  <p style="font-size: 30px; color: #00D1CD;">
+					  <p5 style="font-size: 30px; color:#ea4c89; display: flex; padding-top: 10pt">
 					  	<i class="glyphicon glyphicon-map-marker" id="iconMarker"></i>
 					  	<input type="text" name="ok" id="ok" placeholder="위치를 지정해주세요"
 							style="font-size: 16px; width: 80%; height: 30px; padding-left: 20px; border: none;" readonly/>
-							<div id="map"overflow:hidden;"></div></p>
+							<div id="map"overflow:hidden;"></div></p5>
 								<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>&nbsp;&nbsp;&nbsp;&nbsp;
 								<textarea class="form-control" rows="7" placeholder="상태를 업데이트 하세요." class="span1" cols="40" name="content" id=" content"></textarea>
 						   

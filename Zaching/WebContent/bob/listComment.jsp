@@ -18,7 +18,7 @@
     		<input type="hidden" name="commentUserId" value="${comment.userId}" />
     		<input type="hidden" name="commentId" value="${comment.commentId}" />
     		<div class="row comment" style="margin: 5px;">
-     		<div class="col-sm-2" style="cursor: pointer;">
+     		<div class="col-sm-2" style="cursor: pointer;" id="services">
 			<img width="60px" height="60px"
 			style=" border-radius: 40px;
 					-moz-border-radius: 40px;

@@ -17,7 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="../resources/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="../resources/css/responsive.css">
 	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	
 	<link rel="stylesheet" href="../resources/css/bobCss/preloader.css">
     <link rel="stylesheet" href="../resources/css/bobCss/style.css">
     <link rel="stylesheet" href="../resources/css/bobCss/responsive.css">
@@ -52,8 +52,8 @@
 	    }
 
 	    .nav a{
-font-family: 'Hanna', serif;"
-}
+			font-family: 'Hanna', serif;"
+		}
 
 	    
 	    .fullscreen_popup__close {
@@ -74,7 +74,33 @@ font-family: 'Hanna', serif;"
 		    height: 25px;
 		    background-position: -37px -61px;
 		}
+		
+		.getBob .col-xs-1:hover{
+			background: #e05555e6;
+			color : white;
+		}
+		
+		
+		button:hover{
+			background: #2ec3a9;
+		}
+		#ListParticipant > div > div:nth-child(4) > button:hover{
+			background: #2ec3a9; 
+		}
 
+		body > div.container > div:nth-child(2) > div.row > div.col-xs-3 > button{
+			background-color: #f77e7e; 
+		}
+		body > div.container > div:nth-child(2) > div.row > div.col-xs-3 > button:hover{
+			background-color: #2ec3a9; 
+		}
+		body > div.container > div:nth-child(3) > div.row > div.col-xs-3 > button{
+			background-color: #f77e7e; 
+		}
+		
+		body > div.container > div:nth-child(3) > div.row > div.col-xs-3 > button:hover{
+			background-color: #2ec3a9;
+		}
 	</style>
 
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43d9cc470a001d78424b773481ac24d2&libraries=services"></script>
@@ -548,9 +574,9 @@ font-family: 'Hanna', serif;"
 		</div>
 		<div class="textStyle text-center" style="padding-top: 210px;">
 			<div class="overlay">
-				<h2 style="font-weight: bold; font-size: 50px;">${bob.title}</h2>
+				<h2 style="font-weight: bold; font-size: 50px;" class="wow fadeInUp" data-wow-duration="2s">${bob.title}</h2>
 				<c:if test="${category ne 'B03'}">
-					<h4 style="padding-top: 22px; font-size: 25px;">
+					<h4 style="padding-top: 22px; font-size: 25px;" class="wow fadeInDown" data-wow-duration="3s">
 						<c:if test="${category eq 'B01'}">
 							<c:if test="${!empty bob.appointmentTime}">
 					        	<fmt:parseDate value="${bob.appointmentTime}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
@@ -577,7 +603,7 @@ font-family: 'Hanna', serif;"
             ${bob.content}
             <c:if test="${!empty bob.longitude}">
             	<hr style="margin-top: 50px;">
-	            <div class="text-center textBold" style="font-size: 25px; padding-bottom: 30px;">약속장소<br/></div>            
+	            <div class="text-center textBold wow fadeInDown" style="font-size: 25px; padding-bottom: 30px;" data-wow-duration="2s">약속장소<br/></div>            
 	            <div id="staticMap" style="height:350px;"></div>
             </c:if>          
           </div><!-- /.blog-post -->
@@ -586,7 +612,7 @@ font-family: 'Hanna', serif;"
         
         <!-- /////////////////////  우리지금만나/당장만나 Participant /////////////////////  -->
 
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar" id="ListParticipant" style="padding-bottom: 0px;">
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar" id="ListParticipant" style="padding-bottom: 0px;" >
         	<div style="padding:8px;">
 				<div class="row">
 					<div class="col-xs-8 textBold" align="left" style="padding-right: 0px; padding-top:3px;">
@@ -605,15 +631,15 @@ font-family: 'Hanna', serif;"
 							${fn:length(participant)}명
 						</c:if>
 						<c:if test="${param.category eq 'B03'}">
-							<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#inviteFriend" style="">친구초대</button>
+							<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#inviteFriend">친구초대</button>
 						</c:if>
 					</div>
 					
 				</div>
-				<div class="row" style="padding: 10px; top:-30px;  padding-top:-50px;">
+				<div class="row" style="padding: 10px; top:-30px;  padding-top:-50px;" id="services">
 					<div class="col-xs-12" align="left" style="margin-top:20px;">
 						<!-- 왕관 이미지 -->
-						<div style="position: relative; z-index: 2; top:-15px; left:-1px;">
+						<div style="position: relative; z-index: 2; top:-15px; left:-1px;" >
 							<img src="/resources/images/sample_crown.png" width="60px" height="60px"/>
 						</div>
 						<div style="position: relative; z-index: 1; top:-35px;">
@@ -728,7 +754,7 @@ font-family: 'Hanna', serif;"
       <!-- ///////////////////////////////// 댓글 시작 /////////////////////////////////  -->
       <div class="row custumRow" style="margin-top:20px; padding: 30px 10px 20px 10px;">
       	
-      	<div class="text-center textBold" style="font-size: 20px;">친구들과 대화를 나누세요 :)</div>
+      	<div class="text-center textBold wow fadeInDown" style="font-size: 20px; data-wow-duration="2s" >친구들과 대화를 나누세요 :)</div>
         <hr>
 		
 		<div class="row" style="padding:0px 5px 30px 5px;">
@@ -737,7 +763,7 @@ font-family: 'Hanna', serif;"
       			placeholder="${!empty sessionScope.user? '댓글을 입력해주세요.':'로그인을 해주세요.'}"/>
       		</div>
       		<div class="col-xs-3">
-				<button type="submit" class="form-control" style="background-color: #f77e7e; color: #FFF; height:45px; font-size: 16px;">등록</button>
+				<button type="submit" class="form-control" style=" color: #FFF; height:45px; font-size: 16px;">등록</button>
 			</div>
       	</div>
 		
@@ -754,7 +780,7 @@ font-family: 'Hanna', serif;"
       <c:if test="${param.category eq 'B01'}">
 	      <div class="row custumRow" style="margin-top:20px; padding: 30px 10px 20px 10px;">
 	      
-	      	<div class="text-center textBold" style="font-size: 20px;">
+	      	<div class="text-center textBold wow fadeInDown" style="font-size: 20px;" data-wow-duration="2s">
 	      		${sessionScope.user.name} 님, 이번 밥친구모임은 어떠셨나요?
 	      	</div>
 	      	
@@ -767,7 +793,7 @@ font-family: 'Hanna', serif;"
 				      		placeholder="${!empty sessionScope.user? '후기를 입력해주세요.':'로그인을 해주세요.'}"/>
 			      	</div>
 			      	<div class="col-xs-3">
-			      		<button type="submit" class="form-control" style="background-color: #f77e7e; color: #FFF; height:45px; font-size: 16px;">후기 올리기</button>
+			      		<button type="submit" class="form-control" style=" color: #FFF; height:45px; font-size: 16px;">후기 올리기</button>
 			      	</div>
 		      	</c:if>   	
 	      	</div>
@@ -973,7 +999,6 @@ font-family: 'Hanna', serif;"
 	</div>
 
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 	<script src="../resources/javascript/bobJs/jquery.nicescroll.min.js"></script>
     <script src="../resources/javascript/bobJs/jribbble.min.js"></script>
     <script src="../resources/javascript/bobJs/drifolio.js"></script>
