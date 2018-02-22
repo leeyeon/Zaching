@@ -35,9 +35,8 @@
 }
 
 #navigationbar {
-	margin-top: 10px;
-	padding-top: 20px;
-	background: #FFFFFF;
+	padding-top: 25px;
+	margin-top: 5px;
 }
 
 #navbar > ul > li > a {
@@ -84,12 +83,12 @@
 
 /* 모달 크기조정 */
 .social-login {
-	margin-left: 20px;
+	padding-top: 40px;
 }
 
 .modal-dialog.login {
-	width: 700px;
-	height: 500px;
+	width: 800px;
+	height: 700px;
 	margin: 0;
 	padding: 0;
 }
@@ -121,9 +120,9 @@
 body .login-container {
   position: relative;
   overflow: hidden;
-  width: 700px;
-  height: 500px;
-  margin: 40px auto 40px;
+  width: 100%;
+  height: 100%;
+  margin: 0;
   background-color: #ffffff;
   -moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
@@ -136,7 +135,7 @@ body .login-container .half {
   padding: 58px 40px 0;
 }
 body .login-container .half.bg {
-  background-image: url("/resources/images/loginModalImage.jpg");
+  
   background-size: 350px 500px;
   background-repeat: no-repeat;
 }
@@ -183,23 +182,39 @@ body .login-container .tabs .tab.active {
 }
 body .login-container .content form {
   position: relative;
-  height: 245px;
+  height: 170px;
 }
-body .login-container .content label:first-of-type, body .container .content input:first-of-type, body .container .content .more:first-of-type {
+#loginemail,#name{
   -moz-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
   -webkit-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
   animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
-body .login-container .content label:nth-of-type(2), body .container .content input:nth-of-type(2), body .container .content .more:nth-of-type(2) {
+#loginpassword,#checkEmail{
   -moz-animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
   -webkit-animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
   animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
-body .login-container .content label:nth-of-type(3), body .container .content input:nth-of-type(3), body .container .content .more:nth-of-type(3) {
+#signinbtn,#checkbtn{
   -moz-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
   -webkit-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
   animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
+#findPassword,#pw{
+  -moz-animation: slideIn 0.7s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.7s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.7s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+.sns-login,#pw2{
+  -moz-animation: slideIn 0.8s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.8s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.8s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+#singup{
+  -moz-animation: slideIn 0.9s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.9s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.9s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+
 body .login-container .content label {
   font-size: 12px;
   color: #263238;
@@ -250,7 +265,6 @@ body .login-container .content input.inpt:focus {
 }
 body .login-container .content input.submit {
   font-size: 12px;
-  line-height: 42px;
   display: block;
   width: 100%;
   height: 42px;
@@ -392,6 +406,39 @@ svg {
 
 
 #loginModal > div > div > div.modal-body > form > div.row.social-login { margin: 5px;}
+
+.icon-search {
+    background-image: url(../resources/images/sp.png);
+    vertical-align: top;
+    color: transparent;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-position: -362px -159px;
+    position: absolute;
+    top: 44%;
+    right: 50%;
+}
+
+.fullscreen_popup__close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    width: 25px;
+    height: 25px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.circle-close-button {
+    vertical-align: middle;
+    background-image: url(../resources/images/stylenanda.png);
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    background-position: -37px -61px;
+}
+
 
 </style>
 <script type="text/javascript">
@@ -716,37 +763,44 @@ svg {
 		            });    //end ajax    
 		            //end on    
 		    }
-	
+		
+		$(document).ready(function(){
+		  
+		  $('.hamburger').click(function() {
+			  $('#navigationbar').toggle();
+			  $('.hamburger').toggleClass('is-open');
+			  $('.hamburger').toggleClass('is-closed');
+			  $('.hamburger').toggleClass('indexcity');
+		  });
+	});
 	
 </script>
+
+<link rel="stylesheet" href="/resources/css/navber-yh.css">
 </head>
 
 <body>
 
-	<nav class="navbar navbar-inverse navbar-fixed-top"
-		style="height: 105px; background-color: #FFF;  
+<nav class="navbar navbar-inverse navbar-fixed-top" style="height: 105px; background-color: #FFF;  
     	background-image: url('/resources/images/toolbar_img.png');     background-repeat: repeat-x;
+    	border-bottom: 1px solid rgba(214, 213, 212, 0.64);">
 
-    	border-bottom: 1px solid rgba(214, 213, 212, 0.64);" >
-
-      <div class="container" style="color:#000">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigationbar" aria-expanded="false" aria-controls="navbar"
-          	style="margin-top: 35px;">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            
+      <div class="container" style="color:#000; padding-left: 20px;">
+        <div class="navbar-header">          
+          <button type="button" class="navbar-toggle hamburger custom-toggle is-closed" data-target="#navigationbar" aria-expanded="false" aria-controls="navbar">
+            <span class="hamb-top"></span>
+   			<span class="hamb-middle"></span>
+			<span class="hamb-bottom"></span>
           </button>
-          <a class="navbar-brand" href="#">
+          
+          <a class="navbar-brand" href="#" style="margin-top: 20px; */">
         	  <div class="row">
-        	
-	          	<img alt="뉴스피드로 이동" src="/resources/images/zaching2.png"  height="40px" 
-	          		style="margin-top: 20px;"/></div>
-	        </a>
+	          	<img alt="뉴스피드로 이동" src="/resources/images/zaching2.png"  height="40px"/>
+	          </div>
+	       </a>
         </div>
-        <div id="navigationbar" class="collapse navbar-collapse" style="font-family: 'Hanna', serif;">
+        
+        <div id="navigationbar" class="collapse navbar-collapse" style="max-height: 100%; font-family: 'Hanna', serif;">
           <ul class="nav navbar-nav">
             <li><a href="#" style="color:#000;">밥친구</a></li>
             <li><a href="#" style="color:#000;">라이브방송</a></li>
@@ -754,9 +808,10 @@ svg {
             <li><a href="#" style="color:#000;">생활정보</a></li>
           
           </ul>
-          <ul class="nav navbar-nav" style="float:right;">
+          <ul class="nav navbar-nav navbar-right">
 
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage eq null}">
+
 	          	<li><div style="padding-top: 10px; color:#333;">
 	          	<img src="../resources/images/paper-plane.png" id="notice"
 		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
@@ -766,11 +821,9 @@ svg {
 
 		       
 	          	</div></li>
+
 	          	<li><a href="#">로그아웃</a></li>
           	</c:if>
-          	
-
-          
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
 	          	<li><div style="padding-top: 10px; color:#333;">
 				<img src="../resources/images/paper-plane.png" id="notice"
@@ -787,161 +840,94 @@ svg {
 	          	 
           	</c:if>
           	 
-          	 
             <c:if test="${user.userId eq null}">
-            <li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
-           
-          </c:if>
+	           <li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
+	        </c:if>
+	        
           </ul>
-          			
-        </div><!--/.nav-collapse -->
-        <div class="noticelist" align="right" style="display:none;">
-						
+    	</div>
+     </div><!--/.nav-collapse -->
+    
+    <div class="noticelist" align="right" style="display:none;"></div>
 
-	<div class="container" style="color: #000">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigationbar"
-				aria-expanded="false" aria-controls="navbar" style="margin-top: 35px;">
-				<span class="sr-only">Toggle navigation</span> 
-				<span class="icon-bar"></span> 
-				<span class="icon-bar"></span> 
-				<span class="icon-bar"></span>
-
-			</button>
-			<a class="navbar-brand" href="#"> <img alt="뉴스피드로 이동"
-				src="/resources/images/zaching2.png" height="40px"
-				style="margin-top: 20px;" />
-			</a>
-		</div>
-		<div id="navigationbar" class="collapse navbar-collapse">
-			<ul class="nav navbar-nav">
-				<li><a href="#" style="color: #000;">밥친구</a></li>
-				<li><a href="#" style="color: #000;">라이브방송</a></li>
-				<li><a href="#" style="color: #000;">보이스리플</a></li>
-				<li><a href="#" style="color: #000;">생활정보</a></li>
-			</ul>
-			<ul class="nav navbar-nav" style="float: right;">
-
-				<c:if test="${user.userId ne null && sessionScope.user.profileImage eq null}">
-					<li><div style="padding-top: 10px; color: #333;">
-							<img src="../resources/images/profile_default.png" id="profile"
-								width="30px" class="img-circle"/>&nbsp;<a href="#profile" style="color: #f0ad4e;"
-								title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
-
-
-						</div></li>
-					<li><a href="#">로그아웃</a></li>
-				</c:if>
-
-
-
-				<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
-					<li><div style="padding-top: 10px; color: #333;">
-							
-							<img class="img-circle" src="../resources/upload_files/images/${sessionScope.user.profileImage}" 
-								id="profile" width="30px" />
-						<a href="#profile"style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>
-							&nbsp;님 환영합니다!
-					</div></li>
-					<li><a href="#">로그아웃</a></li>
-				</c:if>
-
-
-				<c:if test="${user.userId eq null}">
-					<li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
-				</c:if>
-			</ul>
-
-		</div>
-		<!--/.nav-collapse -->
-		
-	</div>
-
-
-
-	</nav>
+</nav>
 
 
 	<!-- Modal -->
 	<div id="loginModal" class="modal fade" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 
-		<div class="modal-dialog" style="width: 800px;">
-
+		<div class="modal-dialog" style="width: 800px; height: 600px;">
+				<div class="fullscreen_popup__close" style="top: -38px; right: -19px;">
+			    	<div class="circle-close-button" data-dismiss="modal" aria-hidden="true"></div>
+			  	</div>
+	
 			<!-- Modal content-->
-			<div class="modal-content">
-
-				<!-- Modal Header start-->
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true" id="close">&times;</button>
-
-				</div>
-				<!-- Modal Header end -->
-				<div class="login-modal">
+			<div class="modal-content" style="height: 100%;">
+			
+				<div class="login-modal" style="width: 100%; height: 100%;">
 				<section class="login-container">
-		    	<article class="half" style="padding-top:30px;">
+				<article class="half" style="width:56%;">
+
 			       <img src="/resources/images/zaching2.png" class="img-logo" width="50%">
 			        <div class="tabs">
 				            <span class="tab signin active"><a href="#signin">로그인</a></span>
 				            <span class="tab signup"><a href="#signup">회원가입</a></span>
 			        </div>
-			        <div class="content">
-				            <div class="signin-cont cont">
-					                <form action="#" method="post" enctype="multipart/form-data" id="signin" style="height: 200px;">
-						                    <input type="text" name="email" id="loginemail" class="inpt" required="required" placeholder="이메일">
-						                    <label for="email">Your email</label>
-						                    <input type="password" name="password" id="loginpassword" class="inpt" required="required" placeholder="패스워드">
-                						    <label for="password">Your password</label>
-						                    <div class="submit-wrap" style="top: 110px; height: 50px;">
-							                   <input type="submit" value="로그인" class="submit" id="signinbtn">
-							                </div>
-        					        </form>
-        					        <div class="findPassword"  style="margin-top: -10px;margin-bottom: 20px;">
-        					        <a href="#" class="more" id="findPassword">Forgot your password?</a>
-        					        </div>
-        					        <div class="row social-login">
-							<ul class="sns-login">
-								<li><a href="#kakaoLogin" id="kakaoLogin"> <img
-										src="/resources/images/KakaoTalk_lcon.png" class="img-rounded"
-										width="50" height="50" type="button" id="kakaologin" /></a>
-
-								<a href="#facebookLogin" id="facebookLogin"> <img
-										src="/resources/images/facebook_Icon.png" class="img-rounded"
-										width="50" height="50" type="button" id="facebooklogin"></a>
-
-								<a href="#naverLogin" id="naverLogin"> <img
-										src="/resources/images/Naver_Icon.png" class="img-rounded"
-										width="50" height="50" type="button" id="naverlogin" /></a>
-
-								<a href="#googleLogin" id="googleLogin"> <img
-										src="/resources/images/Google_Icon.jpg" class="img-rounded"
-										width="50" height="50" type="button" id="googlelogin" /></a></li>
-							</ul>
-						</div>
-        					        
-    				        </div>
+			        <div class="content text-center">
+			            <div class="signin-cont cont">
+				                <form action="#" method="post" enctype="multipart/form-data" id="signin">
+					                    <input type="text" name="email" id="loginemail" class="inpt" required="required" placeholder="이메일">
+					                    <label for="email">Your email</label>
+					                    <input type="password" name="password" id="loginpassword" class="inpt" required="required" placeholder="패스워드">
+               						    <label for="password">Your password</label>
+					                    <div class="submit-wrap" style="top: 110px; height: 50px;">
+						                   <input type="submit" value="로그인" class="submit" id="signinbtn">
+						                </div>
+       					        </form>
+	       					<div class="findPassword"  style="margin-top: -10px; margin-bottom: 20px;">
+	     					    <hr>
+	     					    <a href="#" class="more" id="findPassword" >비밀번호를 잊으셨나요?</a>
+	       					</div>
+	        				<div class="row social-login text-center">
+								<ul class="sns-login">
+									<li><a href="#kakaoLogin" id="kakaoLogin"> <img
+											src="/resources/images/KakaoTalk_lcon.png" class="img-rounded"
+											width="50" height="50" type="button" id="kakaologin" /></a>
+	
+									<a href="#facebookLogin" id="facebookLogin"> <img
+											src="/resources/images/facebook_Icon.png" class="img-rounded"
+											width="50" height="50" type="button" id="facebooklogin"></a>
+	
+									<a href="#naverLogin" id="naverLogin"> <img
+											src="/resources/images/Naver_Icon.png" class="img-rounded"
+											width="50" height="50" type="button" id="naverlogin" /></a>
+	
+									<a href="#googleLogin" id="googleLogin"> <img
+											src="/resources/images/Google_Icon.jpg" class="img-rounded"
+											width="50" height="50" type="button" id="googlelogin" /></a></li>
+								</ul>
+							</div>        					        
+    				    </div>
     				<div class="signup-cont cont">
                 	
 					    <input type="text" name="name" id="name" class="inpt" required="required" placeholder="이름">
-						<label for="name">Your name</label>
                         <input type="text" name="email" id="checkEmail" class="inpt" required="required" placeholder="이메일">
-						<label for="email">Your email</label>
+                        <span id="checkbtn" class="icon-search"></span>
 						<div id="checkMsg"></div>
-		      			<button type="button" id="checkbtn" class="btn btn-default">중복확인</button>
 						<input type="password" name="password" id="pw" class="inpt" required="required" placeholder="비밀번호">
-                		<label for="password">Your password</label>
                 		<input type="password" name="password2" id="pw2" class="inpt" required="required" placeholder="비밀번호 확인">
-                		<label for="password">Your password</label>
 						
-						<div class="submit-wrap"style="top: 400px;height: 50px;width: 200px;">
+						<div style="width: 100%;">
 						   <input type="submit" value="회원가입" class="submit" id="singup">
 						</div>
         			
             		</div>
 			       </div>
 		    	</article>
-		    		<div class="half bg" style="padding-top:0px;"></div>
+
+		    		<div class="half bg" style="padding-top:0px;  width:44%;"></div>
+
 				</section>
 				</div>
 			

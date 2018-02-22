@@ -165,7 +165,7 @@ public class BobController {
 		Page resultPage	= 
 				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
 				pageUnit, pageSize);
-
+System.out.println("review :: "+review);
 		model.addAttribute("comments", map.get("list"))
 			.addAttribute("commentPage", resultPage)
 			.addAttribute("category", category)
