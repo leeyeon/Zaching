@@ -257,10 +257,10 @@ $( function () {
 			self.location ="/message/listMessage?userId=${user.userId}";	
 		})
 		
-<<<<<<< HEAD
+
 		//메세지 전송 Event
 		$("#friendPage").on("click", function() {
-			alert(${user.userId})
+			alert("${user.userId}");
 			$("#messageModal").modal('show');
 
 			
