@@ -179,7 +179,7 @@ public class UserRestController {
 	}
 	
 	
-	//회원가입 이메일 중복쳌ㅡ
+	//회원가입 이메일 유효성체크
 	@RequestMapping(value="/rest/checkSingup", method=RequestMethod.POST)
 	public boolean checkSingup(HttpServletRequest request,
 							@RequestBody Map<String , Object> map)throws Exception{
