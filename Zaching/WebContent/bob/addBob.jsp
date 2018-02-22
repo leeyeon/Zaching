@@ -396,6 +396,15 @@
 	}
 	
   </script>
+<<<<<<< HEAD
+	 <style>
+	      @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+	      h3 { font-family: 'Nanum Pen Script', cursive; }
+	      
+	      .nav a{
+font-family: 'Hanna', serif;"
+}
+=======
 	<style>
      @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
      h3 { font-family: 'Nanum Pen Script', cursive; }
@@ -437,6 +446,7 @@
 		top: 12px;
 	    left: 15px;
 	}
+>>>>>>> refs/remotes/origin/master
 	</style>
     
 </head>

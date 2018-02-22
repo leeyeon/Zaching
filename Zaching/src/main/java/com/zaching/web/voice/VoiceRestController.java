@@ -1,20 +1,11 @@
 package com.zaching.web.voice;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
-
-import java.sql.Blob;
 import java.util.List;
 import java.util.Map;
 
@@ -30,10 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
-
 import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.Comment;
 import com.zaching.service.domain.Voice;
@@ -63,20 +52,32 @@ public class VoiceRestController {
 			@PathVariable int voiceId, @PathVariable String fileName, @ModelAttribute Comment comment) throws Exception{
 		System.out.println("testUpload()");
 		
+		System.out.println("OTL :: "+fileName.length());
+		System.out.println("fileName :: "+fileName);
+		
+		fileName = fileName.replaceAll(":", "");
+		System.out.println(fileName);
+		
 		comment.setRoomId(voiceId);
 		comment.setUserId(userId);
 		comment.setCategory(categoryCode);
 		comment.setContent(fileName+".wav");
 		
 		byte[] buffer = new byte[1024 * 1024];
+		System.out.println(comment);
 		
+		
+
 		InputStream input = request.getInputStream();
-		OutputStream output = new FileOutputStream("C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\record\\"+fileName+".wav");
+		OutputStream output = new FileOutputStream("C:\\Users\\jiwon\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\record\\"+fileName+".wav");
+
 		int bytesRead;
 		while((bytesRead = input.read(buffer)) != -1) {
 			System.out.println(bytesRead);
 			output.write(buffer, 0, bytesRead);
 		}
+		commonService.addComment(comment);
+		voiceService.updateCountReply(voiceId);
 		output.close();
 		input.close();
 		

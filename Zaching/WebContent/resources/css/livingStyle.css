@@ -1,3 +1,10 @@
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+* {
+	font-family: 'Nanum Gothic', serif;
+}
+
 #preloader {
     background: #f6f8ff;
     bottom: 0;
@@ -180,7 +187,6 @@ hr {
 	font-size: 60px;
 	line-height: 60px;
 	font-weight: 700;
-	font-family: Montserrat, sans-serif;
 	background-color: rgba(0, 0, 0, 0);
 	text-decoration: none;
 	text-transform: uppercase;

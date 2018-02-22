@@ -57,6 +57,9 @@
 		    border-left: 1px solid #f77e7e;
 		    border-right: 1px solid #f77e7e;
 		}
+		.nav a{
+font-family: 'Hanna', serif;"
+}
 		
 	</style>
 

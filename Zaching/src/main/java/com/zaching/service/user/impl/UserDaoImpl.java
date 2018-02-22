@@ -76,6 +76,15 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
+	public int updateRole(User user) throws Exception {
+		
+		System.out.println("::UserDao updateRole::\n"+user);
+	
+		return	sqlSession.update("UserMapper.updateRole", user);
+		
+	}
+
+	@Override
 	public int getTotalCount(Search search) throws Exception {
 		
 		return sqlSession.selectOne("UserMapper.getTotalCount", search);
@@ -107,13 +116,6 @@ public class UserDaoImpl implements UserDao{
 		return sqlSession.selectList("UserMapper.memoryMap", userId);
 	}
 
-	@Override
-	public void updateRole(User user) throws Exception {
-		
-		System.out.println("::UserDao updateRole::\n"+user);
-		sqlSession.update("UserMapper.updateRole", user);
-		
-	}
 
 	@Override
 	public int checkSignup(String email) throws Exception {

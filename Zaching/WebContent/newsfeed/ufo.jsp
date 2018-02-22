@@ -6,6 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+  		<script src="../resources/javascript/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 <style>
 body {
@@ -91,7 +93,7 @@ footer {
     });
 
     function set_section_heights(){
-
+    
       var doc_height = $(".background").height();
 
       var section_heights = {
@@ -107,6 +109,9 @@ footer {
       });
 
     }
+
+   
+
 
   </script>
   

@@ -24,11 +24,12 @@
 
 </head>
 <style>
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
-		
-		* {
-			font-family: 'Nanum Gothic', serif;
-		}
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+* {
+	font-family: 'Nanum Gothic', serif;
+}
+}
 .mc{
 
 	color: #404372;
