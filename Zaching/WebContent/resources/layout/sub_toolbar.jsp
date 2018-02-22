@@ -135,10 +135,10 @@ body .login-container .half {
   padding: 58px 40px 0;
 }
 body .login-container .half.bg {
+
 	background-size: cover;
     background-repeat: no-repeat, no-repeat;
     background-position: center center;
-
 }
 body .login-container h1 {
   font-size: 18px;
@@ -405,91 +405,6 @@ svg {
   display: block;
 }
 
-/**
- * Paper Plane
- */
-/*Paper Plane: Container*/
-.plane-container {
-	position:fixed;
-	right:100px;
-	bottom:30%;
-  width: 60px;
-  margin: 0px auto;
-  z-index: 3;
-  display: inline-block;
-}
- /*Paper Plane: Image*/
-.plane {
-  width: 100%;
-  height: 60px;
-}
-
-/*Paper Plane: Animation*/
-.plane-container {
-  -webkit-animation: paper-plane-scoping 2s alternate infinite;
-  -moz-animation: paper-plane-scoping 2s alternate infinite;
-  animation: paper-plane-scoping 2s alternate infinite;
-
-  -webkit-animation-timing-function: linear;
-  -moz-animation-timing-function: linear;
-  animation-timing-function: linear;
-}
-
-@-webkit-keyframes paper-plane-scoping {
-  0% {
-    -webkit-transform: translateY(0px);
-    -moz-transform: translateY(0px);
-    transform: translateY(0px);
-  }
-  100% {
-    -webkit-transform: translateY(100px);
-    -moz-transform: translateY(100px);
-    transform: translateY(100px);
-  }
-}
-
-.plane {
-  -webkit-animation-timing-function: ease-in-out;
-  -moz-animation-timing-function: ease-in-out;
-  animation-timing-function: ease-in-out;
-
-  -webkit-animation: paper-plane-soaring 4s forwards infinite;
-  -moz-animation: paper-plane-soaring 4s forwards infinite;
-  animation: paper-plane-soaring 4s forwards infinite;
-}
-@-webkit-keyframes paper-plane-soaring {
-  0% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  40% {
-    -webkit-transform: rotate(15deg);
-    -moz-transform: rotate(15deg);
-    transform: rotate(15deg);
-  }
-  50% {
-    -webkit-transform: rotate(15deg);
-    -moz-transform: rotate(15deg);
-    transform: rotate(15deg);
-  }
-  60% {
-    -webkit-transform: rotate(-10deg);
-    -moz-transform: rotate(-10deg);
-    transform: rotate(-10deg);
-  }
-  70% {
-    -webkit-transform: rotate(-10deg);
-    -moz-transform: rotate(-10deg);
-    transform: rotate(-10deg);
-  }
-  100% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-}
-
 
 #loginModal > div > div > div.modal-body > form > div.row.social-login { margin: 5px;}
 
@@ -529,10 +444,7 @@ svg {
 </style>
 <script type="text/javascript">
 
-function noticeclose(){	
-	 jQuery('.plane-container').hide(); 
-	
-}
+
 
 		$( function() {
 			
@@ -561,11 +473,6 @@ function noticeclose(){
 		      	
 		        	$(".badge").text(status);
 		        	
-		        	if(status != 0){   			        		
-		                jQuery(".plane-container").show();  
-		            } else { 
-		                jQuery(".plane-container").hide();  
-		            }      	
 		        	
 		        	
 		        	
@@ -576,19 +483,12 @@ function noticeclose(){
 
 			
 			
-		$( ".noticeAirplane" ).on("click" , function() {
-			self.location = "/notice/listNotice?userId=${user.userId}";
+		$( "#notice" ).on("click" , function() {
+			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";
 			
 		});
 		
-		//모달창 닫기 버튼 이벤트
-		$(function() {
-				  $('#close').on('click', function(){
-			        	
-			        	$("#loginemail").val('');
-			        	$("#loginpassword").val('');
-				});
-			});
+
 		
 	
 
@@ -912,19 +812,23 @@ function noticeclose(){
           <ul class="nav navbar-nav navbar-right">
 
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage eq null}">
-	          	<li>
-	          		<div class="col-xs-12" style="padding-top: 10px; color:#333;">
-			          	<img src="../resources/images/paper-plane.png" id="notice" width="30px" style="display:none;"/>
-			          	<img src="../resources/images/profile_default.png" id="profile"
-				          	width="30px"/>&nbsp;<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
-	          		</div>
-	          	</li>
+
+	          	<li><div style="padding-top: 10px; color:#333;">
+	          	<img src="../resources/images/paper-plane.png" id="notice"
+		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
+	          	<img src="../resources/images/profile_default.png" id="profile"
+
+		          	width="30px"/>&nbsp;<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
+
+		       
+	          	</div></li>
+
 	          	<li><a href="#">로그아웃</a></li>
           	</c:if>
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
 	          	<li><div style="padding-top: 10px; color:#333;">
 				<img src="../resources/images/paper-plane.png" id="notice"
-								width="30px" style="display:none;"/>
+		          	width="30px"/><div class="badge   badge-primary"></div>&nbsp;&nbsp;
 		          		 
 		       	<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px"
 		       	style="border-radius: 50%"/>&nbsp;
@@ -1089,20 +993,7 @@ random_image();
 	
 
 
-<div class="frame">
-<div class="plane-container" style="display:none;">
-<button type="button" class="close" onclick="noticeclose()">&times;</button>
-<div class="noticeAirplane">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-width="1131.53px" height="379.304px" viewBox="0 0 1131.53 379.304" enable-background="new 0 0 1131.53 379.304"
-xml:space="preserve" class="plane">
-<polygon fill="#D8D8D8" points="72.008,0 274.113,140.173 274.113,301.804 390.796,221.102 601.682,367.302 1131.53,0.223  "/>
-<polygon fill="#C4C4C3" points="1131.53,0.223 274.113,140.173 274.113,301.804 390.796,221.102   "/>
-</svg>
-<div class="badge   badge-primary"></div>
-</div>
-</div>
-</div>
+
 
 </body>
 </html>
