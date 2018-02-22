@@ -624,13 +624,7 @@ svg {
 //===============================회원가입===========================================
 	
 	//회원가입 모달창 닫기 이벤트
-	$(function() {
-				  $('#addclose,#addclose2').on('click', function(){
-					  $("#addUserform")[0].reset();
-					  
-					 
-				});
-			});
+	
 		
 	
 	//==>"회원가입" Event 처리 및 연결
@@ -640,10 +634,12 @@ svg {
 			
 		 $( "#singup" ).on("click" , function() {
 			
-				alert("회원가입 버튼클릭");
+				//alert("회원가입 버튼클릭");
+				
 				fncAddUser();
 				
-				  $('#loginModal').css('display','none');
+				
+				
 			});
 		});	
 		
@@ -655,28 +651,28 @@ svg {
 			var pw2 = $("#pw2").val();
 			var name = $("input[name='name']").val();
 			
-			
+			if(name == null || name.length <1){
+				alert("이름은  반드시 입력하셔야 합니다.");
+				return false;
+			}
 			if(email == null || email.length <1){
 				alert("이메일은 반드시 입력하셔야 합니다.");
 				return false;
 			}
 			if(pw == null || pw.length <4){
 				alert("패스워드는  3자리 이상 입력하셔야 합니다.");
-				return;
+				return false;
 			}
 			if(pw2 == null || pw2.length <4){
 				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
-				return;
+				return false;
 			}
-			if(name == null || name.length <1){
-				alert("이름은  반드시 입력하셔야 합니다.");
-				return;
-			}
+			
 			
 			if( pw != pw2 ) {				
 				alert("비밀번호 확인이 일치하지 않습니다.");
 				$("#pw2").focus();
-				return;
+				return false;
 			}
 
             $.ajax({
@@ -703,9 +699,33 @@ svg {
             
             });    //end ajax    
             //end on    
-
+            self.location ="/index.jsp";
 	}
-			
+		
+		//포커스이벤트
+		$(function(){
+			  var focus1 = $('#checkEmail');
+			  
+			  focus1.focus(function(){
+				  
+				  $('#checkMsg').html('<p style="color:red">이메일을 입력해주세요.</p>');
+			  });
+			  
+			 focus1.blur(function(){
+				 if(focus1 != null){
+					  
+					  $('#checkMsg').html('<p style="color:red">중복체크를 해주세요</p>');  
+					  return false;
+				  }
+				 	if(focus1 == null){
+					 
+			 		$('#checkMsg').html('<p style="color:red">이메일을 입력해주세요.</p>');		
+				 }
+				  
+			  });
+			  
+			 
+		});
 		
 	
 		//이메일 중복체크
@@ -727,12 +747,12 @@ svg {
 			 if(checkEmail == null|| checkEmail.length <1){
 				 $('#checkMsg').html('<p style="color:red">이메일을 입력해주세요.</p>');
 	        		
-	        		return false
+	        		return false;
 
 			 }else if(exptext.test(checkEmail) == false){
 	        		$("#checkEmail").val('');
 	        		$('#checkMsg').html('<p style="color:red">이메일형식으로 입력해주세요.</p>');
-	        		return false
+	        		return false;
 			 }
 			 
 		            $.ajax({
@@ -968,7 +988,7 @@ $('.container .bg').mousemove(function(e){
 
 function random_image(){
  var myimages = new Array();
- // 이곳에 출력할 이미지 주소를 계속해서 아래의 방법처럼 기입해 주세요
+ 
  myimages[0] = "0.jpg";
  myimages[1] = "1.jpg";
  myimages[2] = "2.jpg";
@@ -978,6 +998,14 @@ function random_image(){
  myimages[6] = "6.jpg";
  myimages[7] = "7.jpg";
  myimages[8] = "8.jpg";
+ myimages[9] = "9.jpg";
+ myimages[10] = "10.jpg";
+ myimages[11] = "11.jpg";
+ myimages[12] = "12.jpg";
+ myimages[13] = "13.jpg";
+ myimages[14] = "14.jpg";
+ 
+ 
  
 
  var ry = Math.floor( Math.random() * (myimages.length-1) );
