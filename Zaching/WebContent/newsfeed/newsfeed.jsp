@@ -694,7 +694,7 @@
 											
 											if(JSONData[i].categoryCode.includes('N10')) {
 												displayValue = displayValue + '<img src="../resources/images/link.png" width="15px" height="15px" class="link-style">'
-															+'<input type="hidden" name="getBobId" value="'+JSONData[i].categoryCode.substring(4)+'}">';
+															+'<input type="hidden" name="getBobId" value="'+JSONData[i].categoryCode.substring(4)+'">';
 											}
 												
 											displayValue = displayValue+ '</span><p></p><table border="0"><tr><td><div class="thumb">';

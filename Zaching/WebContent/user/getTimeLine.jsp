@@ -84,7 +84,7 @@ $( function () {
 		$("#listMessage").on("click", function() {
 			self.location ="/message/listMessage?userId=${user.userId}";	
 		})
-		
+
 
 			
 		$("#listtimeline").on("click", function() {
@@ -126,30 +126,40 @@ $( function () {
 		//FOLLOW Event
 		
 		
-		//메세지 전송 Event
+		//메세지 모달 Event
 		$("#friendPage").on("click", function() {
-			alert(${user.userId});
+			//alert("${user.userId}");
 			$("#messageModal").modal('show');
 		})
+		
+		$( "a.send-btn:contains('send')" ).on("click" , function() {
+				//alert(  $( "a.send-btn:contains('send')" ).html() );
+				addMessage();
+			});
+		
+		
+		
+		
 		
 		//신고하기 Event
 
 
 		function addMessage(){
 			 
-			// var userId = ${sessionScope.user.userId};
-			// var  friendId= ${user.userId} ;
+			 var userId = ${sessionScope.user.userId};
+			 var  friendId= ${user.userId} ;
+			 var content = $("input[name='content']").val();
 			
-	
-			 var messageContent = document.getElementById('send'); 
+
 				
-			　if(!messageContent.value){ 
+			　if(content==null || content.length<1){ 
 			　　alert('메세지를 입력해주세요.');
 				return;
-			　} 
+			 } 
 			
 			 
-			$("form").attr("method", "POST").attr("action", "/message/listMessage").submit();
+			$("form").attr("method", "POST").attr("action", "/message/addMessage").submit();
+			alert("메세지 전송완료");
 		}
 	
 	var status = 0 ;
@@ -371,7 +381,7 @@ $( function () {
 					var friendId = ${user.userId};
 					var userId3 = ${sessionScope.user.userId};
 					var username = "${user.name}";
-					alert(status);
+					//alert(status);
 					
 					if(status != 0){
 						var friendId = ${user.userId};
@@ -1073,9 +1083,9 @@ font-size:14pt;
 							<!-- 메세지 작성 -->
 							<div class="send-container">
 								<form id="send">
-								<input type="hidden" value="${user.userId }" name="userId"/>
-								<input type="hidden" value="${sessionScope.user.userId}" name="friendId"/>
-									<input type="text" id="msgInput" class="send-input" placeholder="메세지내용">
+								<input type="hidden" value="${sessionScope.user.userId}" name="userId"/>
+								<input type="hidden" value="${user.userId }" name="friendId"/>
+									<input type="text" id="msgInput" class="send-input" placeholder="메세지내용" name="content">
 									<a href="#" onclick="addMessage();" class="send-btn" data-dismiss="modal"  value="Send">send</a>
 								</form>
 							</div>

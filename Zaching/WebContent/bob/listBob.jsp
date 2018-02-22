@@ -237,8 +237,10 @@ font-family: 'Hanna', serif;"
 <body>
 
 <c:if test="${empty list}">
+	<span style="font-family: 'Hanna', serif;">
 	목록이 없습니다. <br>
 	하단의 방만들기를 통해 친구를 만들어보세요.
+	</span>
 </c:if>
 
 <jsp:useBean id="today" class="java.util.Date" />

@@ -17,12 +17,9 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/resources/layout/sub_toolbar.jsp"/>
 	<style>
-		@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
-		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
-		*{
-		font-family: 'Nanum Gothic', serif;
-		text-shadow: 0 1px 0 rgba(255,255,255,.25);
-		}
+	 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css); 
+		
+		*{font-family: 'Jeju Gothic';}
 		
 		body {
  		
@@ -62,6 +59,10 @@
         .info{
         background-color: #fff;
         padding-top: 30px;
+        }
+        #updateUser{
+        	color: #fff;
+   			background-color: #5f4b8b;
         }
      </style>
     
@@ -157,7 +158,7 @@
 		</ul>
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
-	  			<button type="button" id="updateUser">회원정보수정</button>
+	  			<button type="button" class="btn btn" id="updateUser">회원정보수정</button>
 	  		</div>
 		</div>
 		
