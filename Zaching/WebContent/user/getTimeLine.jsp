@@ -140,8 +140,7 @@ $( function () {
 			// var userId = ${sessionScope.user.userId};
 			// var  friendId= ${user.userId} ;
 			
-			alert("1");
-			
+	
 			 var messageContent = document.getElementById('send'); 
 				
 			　if(!messageContent.value){ 
@@ -157,8 +156,75 @@ $( function () {
 	
 	var keyword = ${sessionScope.user.userId};
 	var userId = ${user.userId};
+	/*
+	$("a:contains('수락')").on("click", function() {
+		
+		var friendId = ${user.userId};
+		var userId2 = ${sessionScope.user.userId};
+		var username = "${user.name}";
+		var noticeTargetId = $($("input:hidden[name='noticeTargetId']")[$(this).index()-2]).val();
+		
+
+			$.ajax({
+				url : "/friend/rest/addFriend",
+				method : "POST",
+				contentType : "application/json; charset=UTF-8",
+				data : JSON.stringify({
+					"friendId" : friendId,
+					"userId" : userId2,
+					"userName" : username
+					
+				}),
+				async : false,
+				dataType : "json",
+				success : function(serverData2) {				
+					}
+				});
+			
+			$.ajax({
+				url : "/friend/rest/okFriend",
+				method : "POST",
+				contentType : "application/json; charset=UTF-8",
+				data : JSON.stringify({
+					"noticeId" : noticeTargetId				
+				}),
+				async : false,
+				dataType : "json",
+				success : function(serverData2) {
+					alert("친구 수락 완료!");					
+					}
+				});
+	});	
 	
+	$("a:contains('거절')").on("click", function() {
+		
+		var friendId = ${user.userId};
+		var userId4 = ${sessionScope.user.userId};
+		var username = "${user.name}";
+		var noticeTargetId = $($("input:hidden[name='noticeTargetId']")[$(this).index()-2]).val();
+		
+		$.ajax({
+			url : "/friend/rest/refuseFriend",
+			method : "POST",
+			contentType : "application/json; charset=UTF-8",
+			data : JSON.stringify({
+				"friendId" : friendId,
+				"userId" : userId4,
+				"userName" : username,
+				"noticeId" : noticeTargetId
+			}),
+			async : false,
+			dataType : "json",
+			success : function(serverData) {
 				
+				alert("친구 신청 거절!");
+				
+			}
+		});
+	
+	});		
+	
+	*/
 				$("a:contains('친구끊기')").on("click", function() {
 					var friendId = ${user.userId};
 					var userId4 = ${sessionScope.user.userId};
@@ -193,7 +259,8 @@ $( function () {
 					
 					var friendId = ${user.userId};
 					var userId2 = ${sessionScope.user.userId};
-					var username = "${user.name}";
+					var username = "${sessionScope.user.name}";
+					var noticeTargetId = "";
 					
 					if(status != 0){
 						var friendId = ${user.userId};
@@ -224,6 +291,9 @@ $( function () {
 			
 					if(confirm("친구 신청을 하겠습니까")){
 						$("#friendStatus").text("친구 요청 중");
+						
+						
+						
 						$.ajax({
 							url : "/friend/rest/addFriend",
 							method : "POST",
@@ -231,7 +301,8 @@ $( function () {
 							data : JSON.stringify({
 								"friendId" : friendId,
 								"userId" : userId2,
-								"userName" : username
+								"userName" : username,
+								"noticeId": noticeTargetId
 							}),
 							async : false,
 							dataType : "json",
@@ -268,7 +339,8 @@ $( function () {
 						var friendId = ${user.userId};
 						var userId2 = ${sessionScope.user.userId};
 						var username = "${user.name}";
-				
+						
+						
 							$.ajax({
 								url : "/friend/rest/addFriend",
 								method : "POST",

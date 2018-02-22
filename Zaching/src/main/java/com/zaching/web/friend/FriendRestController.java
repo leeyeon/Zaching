@@ -87,12 +87,11 @@ public class FriendRestController {
 	
 	@RequestMapping(value = "rest/addFriend", method=RequestMethod.POST)
 	public String addtFriend(@ModelAttribute("notice") Notice notice, @RequestBody Map<String, Object> map, @ModelAttribute("friend") Friend friend, @ModelAttribute("search") Search search,HttpSession session, Model model) throws Exception {
-
-		
-
+	
 		int userId = ((int)map.get("userId"));
 		int friendId = ((int)map.get("friendId"));
 		String userName =  ((String)map.get("userName"));
+			
 		
 		friend.setFriendId(friendId);
 		friend.setUserId(userId);
@@ -101,6 +100,10 @@ public class FriendRestController {
 		friendService.addFriend(friend, "0");
 		
 		/*¾Ë¸²*/
+		if(userId == friendId) {
+			
+		}
+		else {
 		notice.setSenderId(userId);
 		notice.setCategory("F00");
 		notice.setName(userName);
@@ -109,7 +112,10 @@ public class FriendRestController {
 		notice.setUserId(friendId);
 
 		commonService.addNoticeTarget(notice);
+		}
 		/**/
+		
+
 		
 		return null;
 	}
@@ -165,6 +171,36 @@ public class FriendRestController {
 		
 		return null;
 	}
+	
+	@RequestMapping(value="rest/refuseFriend", method=RequestMethod.POST)
+	public String refuseFriend(@RequestBody Map<String, Object> map, Model model) throws Exception{
+		System.out.println("refuseFriend()");
+		
+		int userId = ((int)map.get("userId"));
+		int friendId = ((int)map.get("friendId"));
+		int noticeId = ((int)map.get("noticeId"));
+		
+		friendService.updateStatus(friendId, userId, 1);		
+
+		commonService.deleteNotice(noticeId);
+	
+		
+		return null;
+	}
+	
+	@RequestMapping(value="rest/okFriend", method=RequestMethod.POST)
+	public String okFriend(@RequestBody Map<String, Object> map, Model model) throws Exception{
+		System.out.println("okFriend()");
+		int noticeId = ((int)map.get("noticeId"));
+
+		commonService.deleteNotice(noticeId);
+	
+		
+		return null;
+	}
+	
+
+	
 	
 	@RequestMapping(value="rest/addFollow", method=RequestMethod.POST)
 	public String addFollow(@RequestBody Map<String, Object> map, @ModelAttribute("friend") Friend friend, Model model) throws Exception{

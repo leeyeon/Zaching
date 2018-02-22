@@ -8,9 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">                  
 <link rel="stylesheet" href="../resources/css/templatemo-style.css">
 <script type="text/javascript">
-	function dbClickEvent(category, roomId){
-		alert("fdsafa");
-	}
+
 	$(function(){
 		
 		$("section").dblclick(function(){
@@ -18,7 +16,6 @@
 			
 			var noticeId = $($("input:hidden[name='noticeId']")[$(this).index()-2]).val();
 			
-			alert(noticeId);
 
 			$.ajax({
 				url : "/notice/rest/noticeUpdate",
@@ -30,7 +27,6 @@
 				async : false,
 				dataType : "text",
 				success : function(serverData) {
-					alert("fdasf");
 					
 						$($("section")[$(this).index()]).css("background-color", "white");
 						
@@ -50,7 +46,7 @@
 						}
 					},
 				error : function(error){
-					alert("진슈");
+					
 				}
 					
 				})
@@ -111,12 +107,17 @@ color:#f00;
 
 		                            <p class="tm-2-col-text-description">
 		                                <c:if test="${fn:contains(notice.category, 'B')}">${notice.name} 님과 밥 한 끼 어떠세요? </c:if>
-		                            <c:if test="${fn:contains(notice.category, 'F')}">${notice.name} 님으로부터 친구 요청이 들어왔어요. &nbsp;<a href="#">수락</a>&nbsp;<a href="#">거절</a></c:if>
+		                            <c:if test="${fn:contains(notice.category, 'F')}">
+		                            <input type="hidden" name="noticeTargetId" value="${notice.noticeTargetId}">
+		                            ${notice.name} 님으로부터 친구 요청이 들어왔어요. &nbsp;
+		                       <!--      <a href="#">수락</a>&nbsp;<a href="#">거절</a> -->
+		                            </c:if>
 		                            <c:if test="${fn:contains(notice.category, 'N')}">${notice.name} 님이 새로운 게시글을 올렸어요!</c:if> 
 		                            </p>
 		                            <c:if test="${notice.status == ''}"><section class="noread" >안읽음</c:if>
 								<c:if test="${notice.status != ''}"><section class="read">읽음</c:if>						
                     		
+                    			
 		                        </div>
                         
                    			 </section>

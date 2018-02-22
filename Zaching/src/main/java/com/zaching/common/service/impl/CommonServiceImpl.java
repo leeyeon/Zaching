@@ -204,8 +204,14 @@ public class CommonServiceImpl implements CommonService {
 		commentDao.noticeUpdate(noticeId);
 	}
 	
+	@Override
 	public void sendAndroid(List<String> tokenList, Notice notice) throws Exception {
 		commentDao.sendAndroid(tokenList, notice);
+	}
+	
+	@Override
+	public void deleteNotice(int noticeId) throws Exception{
+		commentDao.deleteNotice(noticeId);
 	}
 	
 

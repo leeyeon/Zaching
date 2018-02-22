@@ -61,8 +61,12 @@
 
 	</insert>
 	
-	
-	
+	<delete id="deleteNotice" parameterType="int">
+		DELETE
+		FROM notice_target
+		WHERE notice_target=#{value}
+	</delete>
+		
 	
 	<select id="listNotice" 
 			parameterType="map"

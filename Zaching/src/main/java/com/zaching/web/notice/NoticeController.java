@@ -74,7 +74,7 @@ public class NoticeController {
 
 		Page resultPage	= new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
-		System.out.println(map);
+		System.out.println("¾Ë¸²"+map);
 		System.out.println(resultPage);
 		
 		model.addAttribute("list",map.get("list"));
