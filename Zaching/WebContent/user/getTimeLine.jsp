@@ -299,7 +299,7 @@ $( function () {
 					var friendId = ${user.userId};
 					var userId3 = ${sessionScope.user.userId};
 					var username = "${user.name}";
-					alert(status);
+					//alert(status);
 					
 					if(status != 0){
 						var friendId = ${user.userId};

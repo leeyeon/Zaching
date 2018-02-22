@@ -624,13 +624,7 @@ svg {
 //===============================회원가입===========================================
 	
 	//회원가입 모달창 닫기 이벤트
-	$(function() {
-				  $('#addclose,#addclose2').on('click', function(){
-					  $("#addUserform")[0].reset();
-					  
-					 
-				});
-			});
+	
 		
 	
 	//==>"회원가입" Event 처리 및 연결
@@ -640,10 +634,12 @@ svg {
 			
 		 $( "#singup" ).on("click" , function() {
 			
-				alert("회원가입 버튼클릭");
+				//alert("회원가입 버튼클릭");
+				
 				fncAddUser();
 				
-				  $('#loginModal').css('display','none');
+				
+				
 			});
 		});	
 		
@@ -655,28 +651,28 @@ svg {
 			var pw2 = $("#pw2").val();
 			var name = $("input[name='name']").val();
 			
-			
+			if(name == null || name.length <1){
+				alert("이름은  반드시 입력하셔야 합니다.");
+				return false;
+			}
 			if(email == null || email.length <1){
 				alert("이메일은 반드시 입력하셔야 합니다.");
 				return false;
 			}
 			if(pw == null || pw.length <4){
 				alert("패스워드는  3자리 이상 입력하셔야 합니다.");
-				return;
+				return false;
 			}
 			if(pw2 == null || pw2.length <4){
 				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
-				return;
+				return false;
 			}
-			if(name == null || name.length <1){
-				alert("이름은  반드시 입력하셔야 합니다.");
-				return;
-			}
+			
 			
 			if( pw != pw2 ) {				
 				alert("비밀번호 확인이 일치하지 않습니다.");
 				$("#pw2").focus();
-				return;
+				return false;
 			}
 
             $.ajax({
@@ -703,7 +699,7 @@ svg {
             
             });    //end ajax    
             //end on    
-
+            self.location ="/index.jsp";
 	}
 			
 		
