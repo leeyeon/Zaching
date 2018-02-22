@@ -21,6 +21,8 @@
 
 <c:forEach var="payment" items="${payment}" varStatus="status">
 
+	<c:set var="content" value="${fn:split(payment.content,':')}" />
+
 	<fmt:parseDate value="${payment.createdDate}" var="Date" pattern="yyyy-MM-dd HH:mm"/>
 	<fmt:formatDate var="newDate" value="${Date}" pattern="yyyyMM"/>
 	<c:set var="new" value="${newDate}" />
@@ -62,22 +64,30 @@
 			 	<div class="col-xs-12 col-sm-7" style="padding: 3px;">
 			 		<c:if test="${payment.paymentCode eq 'P01'}">카카오페이 충전 <img src="../resources/images/payment_icon_small.png"></c:if>
 			 		<c:if test="${payment.paymentCode eq 'P02'}">
-			 			<c:if test="${fn:contains(payment.content, 'B03') || fn:contains(payment.content, 'B01')}">
-				 			밥친구에서 약속비로 사용
+			 			<c:if test="${fn:contains(payment.content, 'B01')}">
+				 			밥친구 우리지금만나 약속비
+				 		</c:if>
+				 		<c:if test="${fn:contains(payment.content, 'B03')}">
+				 			밥친구 주기적으로만나 회비
 				 		</c:if>
 				 		<c:if test="${fn:contains(payment.content, 'H00')}">
-				 			라이브방송에서 포인트선물로 사용
+				 			라이브방송에서 포인트선물
 				 		</c:if>
 			 		</c:if>
 			 		<c:if test="${payment.paymentCode eq 'P03'}">포인트 반환 신청</c:if>
 			 		<c:if test="${payment.paymentCode eq 'P04'}">포인트 반환 완료</c:if>
 			 		<c:if test="${payment.paymentCode eq 'P05'}">포인트 반환 신청 취소</c:if>
 			 		<c:if test="${payment.paymentCode eq 'P06'}">포인트 사용 취소</c:if>
+			 		<c:if test="${payment.paymentCode eq 'P07'}">포인트 선물</c:if>
 			 	</div>
 			 	<div class="col-sm-3 col-xs-9" style="padding: 3px;">
 			 		<c:if test="${payment.paymentCode eq 'P01' || payment.paymentCode eq 'P05' || payment.paymentCode eq 'P06'}">
 			 			<p>+<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /></c:if>
 			 		<c:if test="${payment.paymentCode eq 'P02' || payment.paymentCode eq 'P03' || payment.paymentCode eq 'P04'}">
+			 			<p style="color:#d21e1e;">-<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /></c:if>
+			 		<c:if test="${payment.paymentCode eq 'P07' && sessionScope.user.userId eq content[1]}">
+			 			<p>+<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /></c:if>
+			 		<c:if test="${payment.paymentCode eq 'P07' && sessionScope.user.userId ne content[1]}">
 			 			<p style="color:#d21e1e;">-<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /></c:if>
 			 		<img src="../resources/images/point_smail_icon.png" width="15px" height="15px"></p>
 			 	</div>
@@ -91,12 +101,12 @@
 		<p style="padding-bottom: 5px;">거래일시 : ${payment.createdDate}</p>
 		<p style="padding-bottom: 5px;">적립/사용 포인트 : 
 			<span style="font-weight: bold;"> 
-  		<c:if test="${payment.paymentCode eq 'P02' || payment.paymentCode eq 'P03' || payment.paymentCode eq 'P04'}">-</c:if>
+  		<c:if test="${payment.paymentCode eq 'P02' || payment.paymentCode eq 'P03' || payment.paymentCode eq 'P04' || 
+  					(payment.paymentCode eq 'P07' && sessionScope.user.userId ne content[1])}">-</c:if>
  			<fmt:formatNumber type="currency" value="${payment.point}" pattern="###,###" /> 
  			<img src="../resources/images/point_smail_icon.png" width="15px" height="15px">
 			</span></p>
 	 	<p>내역 : 
-	 		<c:set var="content" value="${fn:split(payment.content,':')}" />
 	
 	 		<c:if test="${fn:contains(payment.content, 'B03')}">
 	 			주기적으로 만나 <a href="/bob/getBob?category=B03&bobId=${content[1]}" style="color:#000;">'${content[2]}'</a> 에 회비 포인트 지출
@@ -104,7 +114,13 @@
 	 		<c:if test="${fn:contains(payment.content, 'B01')}">
 	 			우리지금 만나 <a href="/bob/getBob?category=B01&bobId=${content[1]}" style="color:#000;">'${content[2]}'</a> 에 약속비 지출
 	 		</c:if>
-	 		<c:if test="${!fn:contains(payment.content, 'B')}">
+	 		<c:if test="${fn:contains(payment.content, 'P07') && sessionScope.user.userId eq content[1]}">
+	 			라이브 방송 중 포인트 선물 받음
+	 		</c:if>
+	 		<c:if test="${fn:contains(payment.content, 'P07') && sessionScope.user.userId ne content[1]}">
+	 			<a href="/user/getTimeLine?userId=${content[1]}" style="color:#000;">'${content[2]}'</a>님께 포인트 선물
+	 		</c:if>
+	 		<c:if test="${!fn:contains(payment.content, 'B') && !fn:contains(payment.content, 'P07')}">
 	 			${content[2]}
 	 		</c:if>
 	 	</p>

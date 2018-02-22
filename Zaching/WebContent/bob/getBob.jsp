@@ -52,8 +52,8 @@
 	    }
 
 	    .nav a{
-font-family: 'Hanna', serif;"
-}
+			font-family: 'Hanna', serif;"
+		}
 
 	    
 	    .fullscreen_popup__close {
@@ -73,6 +73,10 @@ font-family: 'Hanna', serif;"
 		    width: 25px;
 		    height: 25px;
 		    background-position: -37px -61px;
+		}
+		
+		.modal-backdrop {
+		    z-index: 0;
 		}
 
 	</style>
@@ -392,18 +396,18 @@ font-family: 'Hanna', serif;"
    	 	});
 
    		
-   		$('button:contains("설정")').on('hover', function(){
-   			if($('.list-group').css('visibility') =='visible') {
-   				$('.list-group').css('visibility','hidden');
+   		$('.settings-icon').on('click', function(){
+   			if($('#ListParticipant .list-group').css('visibility') =='visible') {
+   				$('#ListParticipant .list-group').css('visibility','hidden');
    			} else {
-   				$('.list-group').css('visibility','visible');
+   				$('#ListParticipant .list-group').css('visibility','visible');
    			}
    		});
    		
    	 	
    	 	$('button:contains("회비 내기")').on('click', function() {
    	 		
-   	 		alert("${user.userId} / "+ $("input[name='participantId']").val() + "${bob.fee} / ${bob.bobId}");
+   	 		//alert("${user.userId} / "+ $("input[name='participantId']").val() + "${bob.fee} / ${bob.bobId}");
    	 		
    	 		$.ajax({
    				url : "/bob/rest/payFeebob",
@@ -434,7 +438,6 @@ font-family: 'Hanna', serif;"
    	 	});
    		
    		$('a:contains("자동으로 회비내기")').on('click', function() {
-   			//alert($("input[name='participantId']").val() +"&&"+$("input[name='isAutoFee']").val());
 
    			$.ajax({
    				url : "/bob/rest/setFeebob",
@@ -534,7 +537,7 @@ font-family: 'Hanna', serif;"
 
 	<c:set var="frontImage" value="${fn:substring(bob.image, 0, 6)}"/>
 	<c:set var="endImage" value="${fn:substring(bob.image, 7, fn:length(bob.image))}"/>
-	<div class="bg" style="background-image: url('../resources/upload_files/images/${frontImage}/${endImage}'), url('../resources/upload_files/images/download.jpg') ">
+	<div class="bg" style="background-image: url('../resources/upload_files/images/${frontImage}/${endImage}'), url('../resources/images/sample_bob_background.jpg') ">
 		<div class="img-cover"></div>
 	</div>
 	<div class="jumbotron">
@@ -605,7 +608,7 @@ font-family: 'Hanna', serif;"
 							${fn:length(participant)}명
 						</c:if>
 						<c:if test="${param.category eq 'B03'}">
-							<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#inviteFriend" style="">친구초대</button>
+							<button class="btn btn-default btn-ico" data-toggle="modal" data-target="#inviteFriend" style="margin: 0;">친구초대</button>
 						</c:if>
 					</div>
 					
@@ -699,15 +702,15 @@ font-family: 'Hanna', serif;"
 							</c:if>
 							<c:if test="${isAutoFee eq 'N'}">
 								<c:if test="${paidFee eq 0 }">
-									<button type="submit" class="btn-bob" >회비 내기</button>
+									<button type="submit" class="form-control" style="background-color: #f77e7e;color: #FFF; height:45px;font-size: 16px;">회비 내기</button>
 								</c:if>
 								<c:if test="${paidFee ne 0 }">
 									<div class="btn-bob" style="background-color: #FFF; color: #000;" >회비 납부 완료</div>
 								</c:if>
 							</c:if>
 						</div>
-						<div class="col-xs-3" style="padding: 5px;">
-							<button type="submit" class="btn-bob" >설정</button>
+						<div class="col-xs-3 text-center" style="padding: 5px;">
+							<img class="settings-icon" src="../resources/images/setting-icon.png" style="width: 40px; height: 40px;">
 							<div class="dialog-add-bob text-center" style="z-index:10;">
 						  		<div class="list-group" style="float: right; position:absolute; visibility: hidden;  box-shadow: 0 5px 15px -5px #666;
 						  			cursor: pointer; top: -10px; width: 220px; right: 40px;">
@@ -753,32 +756,28 @@ font-family: 'Hanna', serif;"
       
       <c:if test="${param.category eq 'B01'}">
 	      <div class="row custumRow" style="margin-top:20px; padding: 30px 10px 20px 10px;">
-	      
-	      	<div class="text-center textBold" style="font-size: 20px;">
-	      		${sessionScope.user.name} 님, 이번 밥친구모임은 어떠셨나요?
-	      	</div>
-	      	
-	      	<hr>
-		     <!--  후기 댓글 -->
-		     <div class="row">
-		    	<c:if test="${bob.status eq 'Y'}">
-			      	<div class="col-xs-9">
-				      	<input type="text" name="inputReview" class="form-control" style="width: 100%; height: 150px; font-size:16px;"
-				      		placeholder="${!empty sessionScope.user? '후기를 입력해주세요.':'로그인을 해주세요.'}"/>
-			      	</div>
-			      	<div class="col-xs-3">
-			      		<button type="submit" class="form-control" style="background-color: #f77e7e; color: #FFF; height:45px; font-size: 16px;">후기 올리기</button>
-			      	</div>
-		      	</c:if>   	
-	      	</div>
+		    <!--  후기 댓글 -->
+		    
 			<div id="testimonials" class="container">
-		        <div class="sectionhead wow bounceInUp" data-wow-duration="2s" style="font-color: black;">
+		        <div class="sectionhead wow bounceInUp" data-wow-duration="2s" style="font-color: black; padding-bottom: 0;">
 		            <span class="bigicon icon-bubbles"></span>
 		            <h3>밥친구 후기</h3>
 		            <h4>밥친구 후기를 남겨주세요!!</h4>
 		            <hr class="separetor">
 		        </div>
 		        <!-- TESTIMONIAL SECTIONHEAD END -->
+		        
+		        <div class="row" style="padding: 10px;">
+			    	<c:if test="${bob.status eq 'Y'}">
+				      	<div class="col-xs-9">
+					      	<input type="text" name="inputReview" class="form-control" style="width: 100%; height: 150px; font-size:16px;"
+					      		placeholder="${!empty sessionScope.user? '후기를 입력해주세요.':'로그인을 해주세요.'}"/>
+				      	</div>
+				      	<div class="col-xs-3">
+				      		<button type="submit" class="form-control" style="background-color: #f77e7e; color: #FFF; height:45px; font-size: 16px;">후기 올리기</button>
+				      	</div>
+			      	</c:if>   	
+		      	</div>
 			
 		        <!-- TESTIMONIAL ITEMS START -->
 		        <div class="row">
@@ -820,6 +819,10 @@ font-family: 'Hanna', serif;"
 	  <c:if test="${param.category eq 'B03'}">
 	      <div class="row custumRow" style="margin-top:20px; padding-top: 30px;">
 		    <div class="text-center textBold" style="font-size: 20px;">회비 장부</div>
+		    <div class="text-center textBold" style="font-size: 20px;">
+		    	<img src="/resources/images/fee-icon.png" width="100px" height="100px"/>
+		    </div>
+		    
 	      	<hr>
 	      	
 	      	<div class="row" style="padding: 10px;">
@@ -828,7 +831,7 @@ font-family: 'Hanna', serif;"
 	      		<div class="col-xs-4 select-bob active" id="fee-0">이번달</div>
 	      	</div>
 	      	
-	      	<div class="row text-center textBold" style="padding-top:25px; padding-botton:30px;">
+	      	<div class="row text-center textBold" style="padding-botton:30px;">
 	      		<fmt:parseDate value="${bob.feeDate}" var="Date" pattern="yyyy-MM-dd HH:mm:ss.S"/>
 	      		<fmt:formatDate var="feeDate" value="${Date}" pattern="d"/><br>
 	      		<h1 style="font-size: 17px">회비 내는 날 : 매 월 ${feeDate}일</h1>
@@ -982,4 +985,7 @@ font-family: 'Hanna', serif;"
         new WOW().init();
     </script>
 </body>
+<style>
+	modal-backdrop fade in
+</style>
 </html>

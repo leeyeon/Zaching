@@ -18,7 +18,7 @@
 							 box-shadow: 1px #cccccc;" />
 			&nbsp;&nbsp;&nbsp;${participant.participantName}&nbsp;&nbsp;&nbsp;
 			<c:if test="${participant.paidFee != 0}">
-				<img width="55px" height="55px" src="/resources/images/checkmark.png" />
+				<img width="55px" height="55px" src="/resources/images/checkmarker.png" />
 			</c:if>
 		</div>
 	</c:if>	
