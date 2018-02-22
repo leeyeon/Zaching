@@ -425,11 +425,6 @@ svg {
 		      	
 		        	$(".badge").text(status);
 		        	
-		        	if(status != 0){   			        		
-		                jQuery(".plane-container").show();  
-		            } else { 
-		                jQuery(".plane-container").hide();  
-		            }      	
 		        	
 		        	
 		        	
@@ -441,7 +436,7 @@ svg {
 			
 			
 		$( "#notice" ).on("click" , function() {
-			self.location = "/notice/listNotice?userId=${user.userId}";
+			self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";
 			
 		});
 		

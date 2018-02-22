@@ -705,7 +705,7 @@ font-size:14pt;
                            		<h3> <c:if test="${user.userId eq sessionScope.user.userId}"><!-- 세션에있는 아이디랑  -->
     	<a class="btn col-xs-3" id="listtimeline"><b>타임라인</b></a>
     	<a class="btn col-xs-3" id="memoryMap" data-toggle="modal" data-target="#myModal" ><b>추억지도</b></a>    	
-    	<a class="btn col-xs-3" id="listNotice"><b>알림함</b></a>
+    	<a class="btn col-xs-3" id="listNotice"><b>알림함<div class="badge   badge-primary"></div></b></a>
 	 <a class="btn col-xs-3" id="listMessage" ><b><img src="../resources/images/Message_Icon.png" width="20px" height="20px"/>&nbsp;채팅함</b></a>
   </c:if>
   
