@@ -29,22 +29,14 @@
 <!-- ToolBar End /////////////////////////////////////-->
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+		
+		* {
+			font-family: 'Nanum Gothic', serif;
+		}
 
-@font-face {
-  font-family: NanumSquareWeb;
-  src: local(NanumSquareR),
-       local(NanumSquare),
-       url(NanumSquareR.eot?#iefix) format('embedded-opentype'),
-       url(NanumSquareR.woff) format('woff'),
-       url(NanumSquareR.ttf) format('truetype');
-  font-style: normal;
-  font-weight: normal;
-  unicode-range: U+0-10FFFF;
-}
- 
-*{
-  font-family: NanumSquareWeb, sans-serif;
-}
+
 body {
 	padding-top: 130px;
 }
@@ -293,6 +285,7 @@ body {
 	
 	///프로필사진바꾸ㄱㅣ
 	function getThumbnailPrivew(html, $target) {
+		alert("클릭?");
  	    if (html.files && html.files[0]) {
  	        var reader = new FileReader();
  	        reader.onload = function (e) {
@@ -308,6 +301,7 @@ body {
 
 	//회원탈퇴
 	$("#deleteUser").on("click", function() {
+		alert("클릭?");
 		var windowW = 400;  // 창의 가로 길이
 	    var windowH = 500;  // 창의 세로 길이
 		var left = Math.ceil((window.screen.width - windowW)/2);
@@ -472,7 +466,7 @@ body {
 				<div class="col-sm-offset-4  col-sm-4 text-center">
 					<button type="button" class="btn btn" id="update">수	&nbsp;정</button>
 					<a class="btn btn" href="#" role="button" id="cancel">취 &nbsp;소</a>
-					<button type="button" class="btn btn" id="deleteUser">회원탈퇴</button>
+					<button type="button" class="btn delete" id="deleteUser">회원탈퇴</button>
     			</div>
 			</div>
 		</form>

@@ -135,14 +135,10 @@ body .login-container .half {
   padding: 58px 40px 0;
 }
 body .login-container .half.bg {
-<<<<<<< HEAD
-  background-image: url("/resources/images/loginModalImage.jpg");
-  background-size: 100% 100%;
-=======
-  
-  background-size: 350px 500px;
->>>>>>> refs/heads/new/jeongeun
-  background-repeat: no-repeat;
+	background-size: cover;
+    background-repeat: no-repeat, no-repeat;
+    background-position: center center;
+
 }
 body .login-container h1 {
   font-size: 18px;
@@ -686,7 +682,7 @@ function noticeclose(){
 						"l top="+top+", left="+left+", height="+windowH+", width="+windowW,
 						"resizable=no");
 				opener.location.reload(true);
-			    self.close();
+			    
 
 		});
 		
@@ -1027,7 +1023,7 @@ function noticeclose(){
 			       </div>
 		    	</article>
 
-		    		<div class="half bg" style="padding-top:0px;  width:44%;"></div>
+		    		<div class="half bg" id="frog" style="padding-top:0px;  width:44%; background-image: url(/resources/login/0.jpg);"></div>
 
 				</section>
 				</div>
@@ -1045,24 +1041,50 @@ function noticeclose(){
 
 <script type="text/javascript">
 $('.tabs .tab').click(function(){
+	
     if ($(this).hasClass('signin')) {
         $('.tabs .tab').removeClass('active');
         $(this).addClass('active');
         $('.cont').hide();
         $('.signin-cont').show();
+        random_image();
     } 
     if ($(this).hasClass('signup')) {
         $('.tabs .tab').removeClass('active');
         $(this).addClass('active');
         $('.cont').hide();
         $('.signup-cont').show();
+        random_image();
     }
 });
+
 $('.container .bg').mousemove(function(e){
     var amountMovedX = (e.pageX * -1 / 30);
     var amountMovedY = (e.pageY * -1 / 9);
     $(this).css('background-position', amountMovedX + 'px ' + amountMovedY + 'px');
 });
+
+function random_image(){
+ var myimages = new Array();
+ // 이곳에 출력할 이미지 주소를 계속해서 아래의 방법처럼 기입해 주세요
+ myimages[0] = "0.jpg";
+ myimages[1] = "1.jpg";
+ myimages[2] = "2.jpg";
+ myimages[3] = "3.jpg";
+ myimages[4] = "4.jpg";
+ myimages[5] = "5.jpg";
+ myimages[6] = "6.jpg";
+ myimages[7] = "7.jpg";
+ myimages[8] = "8.jpg";
+ 
+
+ var ry = Math.floor( Math.random() * (myimages.length-1) );
+ 
+ $('#frog').css('background-image','url(/resources/login/'+myimages[ry]+')');
+ 
+}
+random_image();
+
 </script>
 	
 

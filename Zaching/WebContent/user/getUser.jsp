@@ -17,8 +17,16 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/resources/layout/sub_toolbar.jsp"/>
 	<style>
- 		body {
-            padding-top : 100px;
+		@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+		*{
+		font-family: 'Nanum Gothic', serif;
+		text-shadow: 0 1px 0 rgba(255,255,255,.25);
+		}
+		
+		body {
+ 		
+        padding-top : 100px;
         }
         
         .profileImage{
@@ -85,12 +93,12 @@
 	<div class="info">
 		<div class="page-header" style="text-align: center;border-bottom-width: 1px;padding-bottom: 20px;">
 			<c:if test="${user.role eq '1'}">
-    		<h3 class="text-info">추가정보입력</h3>
-    		<h5 class="text-muted"> <strong class="text-danger">추가정보</strong>를입력해 주세요.</h5>
+    		<h3 class="text">추가정보입력</h3>
+    		<h5 class="text"> <strong class="text-danger">추가정보</strong>를입력해 주세요.</h5>
     		</c:if>
     		<c:if test="${user.role eq '2'}">
-    		<h3 class="text-info">회원정보조회</h3>
-    		<h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
+    		<h3 class="text">회원정보조회</h3>
+    		<h5 class="text">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
     		</c:if>
 	       
 	       
