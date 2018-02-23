@@ -5,6 +5,7 @@ eclipse.preferences.version=1
 encoding//WebContent/index.jsp=UTF-8
 encoding//WebContent/newsfeed/NewFile.jsp=UTF-8
 encoding//WebContent/newsfeed/NewFile1.jsp=UTF-8
+encoding//WebContent/newsfeed/button.jsp=UTF-8
 encoding//WebContent/newsfeed/newsfeed.jsp=UTF-8
 encoding//WebContent/newsfeed/test02.jsp=UTF-8
 encoding//WebContent/payment/mainPayment.jsp=UTF-8

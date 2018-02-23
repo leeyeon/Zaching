@@ -65,7 +65,6 @@ public class FriendController {
 		System.out.println("friend/listFriend : GET");
 		
 		int userId = ((User)session.getAttribute("user")).getUserId();
-		//System.out.println("요기까지 왔습니다");
 
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -75,11 +74,13 @@ public class FriendController {
 
 		Map<String, Object> map = friendService.listFriend(search);
 		System.out.println(search);
+		
+		System.out.println("이");
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
 				pageSize);
 		System.out.println(resultPage);
 		List<Friend> list = friendService.recommendFriend(userId);
-		
+		System.out.println("아");
 
 		model.addAttribute("list",map.get("list"));
 		model.addAttribute("resultPage", resultPage);
@@ -88,8 +89,6 @@ public class FriendController {
 		
 		System.out.println(list);
 		
-		Random rnd = new Random(); 
-		rnd.nextInt(list.size()-1); 
 		
 		System.out.println("listFriend 끝============");
 		

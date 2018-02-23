@@ -70,6 +70,7 @@ public interface CommonService {
 	
 	public void addNotice(Notice notice) throws Exception;
 	
+	public void deleteNotice(int noticeId) throws Exception;
 	
 	public void addNoticeTarget(Notice notice) throws Exception;
 	

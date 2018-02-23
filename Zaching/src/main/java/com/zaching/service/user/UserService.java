@@ -22,6 +22,9 @@ public interface UserService {
 	//로그인
 	public User login(String email)throws Exception;
 	
+	//프로필 업데이트
+	public void updateUserProfile(User user)throws Exception;
+	
 	//user계좌정보 조회
     public User getAccountUser(int userId)throws Exception;
 	

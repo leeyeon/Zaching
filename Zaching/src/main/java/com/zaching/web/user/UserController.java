@@ -2,9 +2,15 @@
 package com.zaching.web.user;
 
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -66,6 +72,7 @@ public class UserController {
 	int pageSize;
 	
 	private String fileDirectory = "C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
+
 
 
 
@@ -240,6 +247,46 @@ public class UserController {
 		model.addAttribute("user", user);
 		
 		return"forward:/user/deleteUser.jsp";
+	}
+	
+	
+	@RequestMapping(value="/fileupload",method=RequestMethod.POST)
+	public String ProfileUpload(@ModelAttribute("user") User user, Model model)throws Exception{
+		
+		
+		System.out.println("/user/fileupload : GET");
+		
+		String path = "";
+		System.out.println(user);
+		
+		if(user.getUploadFile() != null) {
+			try {
+				path = commonService.addFile(fileDirectory, user.getUploadFile());
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		if(path != null) {
+			user.setProfileImage(path.substring(path.indexOf("\\")+1));
+			File in = new File(fileDirectory+path);
+	        BufferedImage inputImage = ImageIO.read(in);
+	 
+	        int width = 200;
+	        int height = 200;
+	 
+	            BufferedImage outputImage = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB);
+	            Graphics2D g = outputImage.createGraphics();
+	            g.drawImage(inputImage, 0, 0, width, height, null);
+
+	            File out = new File("C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\"+user.getProfileImage());
+	            FileOutputStream fos = new FileOutputStream(out);	            
+	            ImageIO.write(outputImage, user.getProfileImage().substring(user.getProfileImage().indexOf(".")+1), fos);
+		}
+
+		userService.updateUserProfile(user);
+		
+		return "forward:/user/getTimeLine.jsp";
 	}
 	
 }

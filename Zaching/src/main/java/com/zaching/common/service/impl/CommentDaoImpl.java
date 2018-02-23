@@ -77,6 +77,11 @@ public class CommentDaoImpl implements CommentDao {
 	}
 	
 	@Override
+	public void deleteNotice(int noticeId) throws Exception{
+		sqlSession.delete("NoticeMapper.deleteNotice", noticeId);
+	}
+	
+	@Override
 	public void sendAndroid(List<String> tokenList, Notice notice) throws Exception {
 		
 		//https://firebase.google.com/docs/cloud-messaging/http-server-ref?hl=ko

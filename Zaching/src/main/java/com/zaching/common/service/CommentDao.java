@@ -39,4 +39,7 @@ public interface CommentDao {
 	public void noticeUpdate(int noticeId) throws Exception;
 	
 	public void sendAndroid(List<String> tokenList, Notice notice) throws Exception;
+	
+	public void deleteNotice(int noticeId) throws Exception;
+	
 }

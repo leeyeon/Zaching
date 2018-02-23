@@ -84,7 +84,7 @@ $( function () {
 		$("#listMessage").on("click", function() {
 			self.location ="/message/listMessage?userId=${user.userId}";	
 		})
-		
+
 
 			
 		$("#listtimeline").on("click", function() {
@@ -128,56 +128,84 @@ $( function () {
 		
 		//메세지 모달 Event
 		$("#friendPage").on("click", function() {
-			alert(${user.userId});
-			alert(${message.roomId});
+			//alert(${user.userId});
+			//alert(${message.roomId});
 			$("#messageModal").modal('show');
 		})
-		
-		$( "a.send-btn:contains('send')" ).on("click" , function() {
-				//alert(  $( "a.send-btn:contains('send')" ).html() );
-				addMessage();
-			});
-		
-		
-		
-		
-		function addMessage(){
-			 
-			 var userId = ${sessionScope.user.userId};
-			 var  friendId= ${user.userId} ;
-			 var content = $("input[name='content']").val();
-			 //var  roomId= ${message.roomId } .val();
-	
-			 
-			alert("1");
-			alert(userId);
-			alert(friendId);
-			//alert(roomId);
-		//	alert(messageId);
-		//	alert(createdDate);
-		//	alert(friendProfileImage);
-		//	alert(friendName);
-		//	alert(createdDate);
-			alert(content);
-			
-			
-				
-			　if(content==null || content.length<1){ 
-			　　alert('메세지를 입력해주세요.');
-				return;
-			　} 
-			
-			 
-			$("form").attr("method", "POST").attr("action", "/message/addMessage").submit();
-			alert("메세지 전송완료");
-		}
 	
 	var status = 0 ;
 	
 	var keyword = ${sessionScope.user.userId};
 	var userId = ${user.userId};
+	/*
+	$("a:contains('수락')").on("click", function() {
+		
+		var friendId = ${user.userId};
+		var userId2 = ${sessionScope.user.userId};
+		var username = "${user.name}";
+		var noticeTargetId = $($("input:hidden[name='noticeTargetId']")[$(this).index()-2]).val();
+		
+
+			$.ajax({
+				url : "/friend/rest/addFriend",
+				method : "POST",
+				contentType : "application/json; charset=UTF-8",
+				data : JSON.stringify({
+					"friendId" : friendId,
+					"userId" : userId2,
+					"userName" : username
+					
+				}),
+				async : false,
+				dataType : "json",
+				success : function(serverData2) {				
+					}
+				});
+			
+			$.ajax({
+				url : "/friend/rest/okFriend",
+				method : "POST",
+				contentType : "application/json; charset=UTF-8",
+				data : JSON.stringify({
+					"noticeId" : noticeTargetId				
+				}),
+				async : false,
+				dataType : "json",
+				success : function(serverData2) {
+					alert("친구 수락 완료!");					
+					}
+				});
+	});	
 	
+	$("a:contains('거절')").on("click", function() {
+		
+		var friendId = ${user.userId};
+		var userId4 = ${sessionScope.user.userId};
+		var username = "${user.name}";
+		var noticeTargetId = $($("input:hidden[name='noticeTargetId']")[$(this).index()-2]).val();
+		
+		$.ajax({
+			url : "/friend/rest/refuseFriend",
+			method : "POST",
+			contentType : "application/json; charset=UTF-8",
+			data : JSON.stringify({
+				"friendId" : friendId,
+				"userId" : userId4,
+				"userName" : username,
+				"noticeId" : noticeTargetId
+			}),
+			async : false,
+			dataType : "json",
+			success : function(serverData) {
 				
+				alert("친구 신청 거절!");
+				
+			}
+		});
+	
+	});		
+	
+	*/
 				$("a:contains('친구끊기')").on("click", function() {
 					var friendId = ${user.userId};
 					var userId4 = ${sessionScope.user.userId};
@@ -212,7 +240,8 @@ $( function () {
 					
 					var friendId = ${user.userId};
 					var userId2 = ${sessionScope.user.userId};
-					var username = "${user.name}";
+					var username = "${sessionScope.user.name}";
+					var noticeTargetId = "";
 					
 					if(status != 0){
 						var friendId = ${user.userId};
@@ -243,6 +272,9 @@ $( function () {
 			
 					if(confirm("친구 신청을 하겠습니까")){
 						$("#friendStatus").text("친구 요청 중");
+						
+						
+						
 						$.ajax({
 							url : "/friend/rest/addFriend",
 							method : "POST",
@@ -250,7 +282,8 @@ $( function () {
 							data : JSON.stringify({
 								"friendId" : friendId,
 								"userId" : userId2,
-								"userName" : username
+								"userName" : username,
+								"noticeId": noticeTargetId
 							}),
 							async : false,
 							dataType : "json",
@@ -287,7 +320,8 @@ $( function () {
 						var friendId = ${user.userId};
 						var userId2 = ${sessionScope.user.userId};
 						var username = "${user.name}";
-				
+						
+						
 							$.ajax({
 								url : "/friend/rest/addFriend",
 								method : "POST",
@@ -318,7 +352,7 @@ $( function () {
 					var friendId = ${user.userId};
 					var userId3 = ${sessionScope.user.userId};
 					var username = "${user.name}";
-					alert(status);
+					//alert(status);
 					
 					if(status != 0){
 						var friendId = ${user.userId};
@@ -424,21 +458,10 @@ $( function () {
 		
 
 
-     $("#uploadbutton").click(function(){
+     $(".uploadbutton").click(function(){
          
-         var form = new FormData(form);
-         form.append("uploadFile",file);
-             $.ajax({
-                url: '/user/fileupload',
-                method: 'POST',
-                contentType: "application/json; charset=UTF-8",
-                data: formData,
-              	 async : false,
-    			dataType : "json",
-                success: function(result){
-                    alert("업로드 성공!!");
-                }
-            });
+         $("#detailForm").attr("method", "POST").attr("action", "/user/fileupload").submit();        
+       
          });
 	});
 
@@ -456,7 +479,25 @@ font-family: 'Hanna', serif;
 .menu {
 align: left;
 }
-
+.filebox label {
+	    display: inline-block;
+	    padding: .5em .75em;
+	    color: #999;
+	    font-size: inherit;
+	    line-height: normal;
+	    vertical-align: middle;
+	}
+	 
+	.filebox input[type="file"] {  
+	    position: absolute;
+	    width: 1px;
+	    height: 1px;
+	    padding: 0;
+	    margin: -1px;
+	    overflow: hidden;
+	    clip:rect(0,0,0,0);
+	    border: 0;
+	}
 			body{
 				padding-top: 110px;
 				background: rgba(255,255,255,1);
@@ -794,10 +835,26 @@ font-size:14pt;
 	cursor: pointer;
 }
 
+#main > div > div > div.col-md-9 > div.col-md-12.page-body{
+			margin-left: 20px;
+			margin-right: 20px;
+			}
 </style>
 
 
-	
+	<script>
+	function getThumbnailPrivew(html, $target) {
+	    if (html.files && html.files[0]) {
+	        var reader = new FileReader();
+	        reader.onload = function (e) {
+	            $target.css('display', '');
+	            //$target.css('background-image', 'url(\"' + e.target.result + '\")'); // 배경으로 지정시
+	            $target.html('<img src="' + e.target.result + '" border="0" alt="" />');
+	        }
+	        reader.readAsDataURL(html.files[0]);
+	    }
+	}
+	</script>
   </head>
 
  <body>
@@ -821,10 +878,21 @@ font-size:14pt;
                         
                          <div id="menu" class="collapse">
                            <ul class="menu-link">
-                               <li><div class="profileImage" align="center">
-		<input type="file" name="uploadfile" />
-		<input type="hidden" name="userId"/>
-         <button class="uploadbutton">데이터전송</button>	</div></li>
+                               <li>
+                               <div class="profileImage" align="center">
+
+		<div class="filebox">
+			<form name="form" id="detailForm" class="form-vertical" enctype="multipart/form-data">
+				<input type="hidden" name="userId" value="${user.userId}">
+					        <label for="cma_file">프로필 사진 업로드</label>
+							<input type="file" name="uploadFile" id="cma_file" imageswap="true" accept="image/*" capture="camera" onchange="getThumbnailPrivew(this,$('#cma_image'))"/>
+					        <div id="cma_image" style="width:200px;max-width:200px;display:none;"></div>
+					    </div>
+					    </form>
+         <button class="uploadbutton">확인</button>	</div>
+        
+        
+         </li>
                             </ul>
                          </div>
                          
@@ -922,7 +990,7 @@ font-size:14pt;
       <main class="main col-sm-6 col-sm-offset-1" role="main">
   <div class="page-header">
   <div class="thumb" style="float: left;">
-  <c:if test="${!empty newsfeed.profileImage}"><img src="../resources/images/${newsfeed.profileImage}" height='50' width='100' align="left"/></c:if>
+  <c:if test="${!empty newsfeed.profileImage}"><img src="../resources/upload_files/images/${newsfeed.profileImage}" height='50' width='100' align="left"/></c:if>
   <c:if test="${empty newsfeed.profileImage}"><img src="../resources/images/profile_default.png" height='50' width='100' align="left"/></c:if>
    
    

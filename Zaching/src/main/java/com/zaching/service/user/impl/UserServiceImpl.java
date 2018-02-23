@@ -52,7 +52,11 @@ public class UserServiceImpl implements UserService {
 			userDao.addUser(user);
 	}
 	
-
+	@Override
+	public void updateUserProfile(User user)throws Exception{
+		userDao.updateUserProfile(user);		
+	}
+	
 	@Override
 	public User login(String email) throws Exception {
 		System.out.println(":: userServiceImpl login::");

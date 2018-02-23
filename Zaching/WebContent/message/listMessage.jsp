@@ -282,14 +282,16 @@ var roomindex = 0;
 		 		            		  	//messageContent +='<div style="overflow:scroll;">'
 		 		            		  if(serverData[i].userId != ${user.userId}){
 		 		            			messageContent +=  '<div class="message left"><div class="message-text">'
-			 		            		   +serverData[i].content +'</div></div>';
+			 		            		   +serverData[i].content+'</div>'
+			 		            		  +'<div class="row col-xs-12" style="padding-left: 40px; font-size: 11px;">'+serverData[i].createdDate+'</div></div>';
 		 		            		    
 		 		            		  }else{
 		 		            			messageContent +=  '<div class="message right"><div class="message-text">'
-			 		            		   +serverData[i].content
-			 		            		   +'</div></div>';
-		 		            		  
+			 		            		   +serverData[i].content+'</div>'
+			 		            		  +'<div class="row col-xs-12 text-right" style="padding-left: 40px; font-size: 11px;">'+serverData[i].createdDate+'</div></div>';
 		 		            		  }
+		 		            		  	
+		 		            		  	//messageContent += '<div class="row col-xs-12" style="padding-left: 40px; font-size: 13px;">'+serverData[i].createdDate+'</div></div>';
 		 		            	   }
 	 		            	   } else {
 	 		            		   messageContent += "메시지가 없습니다.";
@@ -408,11 +410,18 @@ var roomindex = 0;
 				<div class="row">
 					<input type="hidden" name="roomId" value="${message.roomId }">
 							<input type="hidden" value="${message.userId}" name="friendIdinfo"/>
-							<input type="hidden" value="" name="friendId"/>
-					<h3><a href="/user/getTimeLine?userId=${message.friendId}"  class="col-xs-6 col-sm-4 " style="color: #000000;" name="messageName">
-						${message.friendId} ${message.friendName }
+					<h3><a href="/user/getTimeLine?userId=${message.friendId}"  class="col-xs-4 col-sm-4 " style="color: #000000;" name="messageName">
+						<img src="../resources/upload_files/images/${message.friendProfileImage}" id="profile" width="30px" height="30px"
+				       		style="border-radius: 50%" onerror="this.src='../resources/images/profile_default.png'" >
+						${message.friendName }
 					</a></h3>
 					<h3><a href="#" class="col-xs-4 col-sm-4 "style="color: #000000;"  name="messageContent">
+					<c:if test="${message.userId eq sessionScope.user.userId }">
+						(보냄)
+					</c:if>
+					<c:if test="${message.userId ne sessionScope.user.userId }">
+						(받음)
+					</c:if>
 						${message.content }
 					</a></h3>
 					<div class="col-xs-4 col-sm-4 ">
@@ -432,7 +441,7 @@ var roomindex = 0;
 					<div class="phone-containter">
 						<div id="phone" class="phone">
 							<button type="button" class="close" data-dismiss="modal" varia-hidden="true" id="close">×</button>
-							<div id="messegeBox"></div>
+							<div id="messegeBox" style="overflow-y: auto;  height: 400px;"></div>
 						</div>
 						<div class="send-container">
 							<input type="text" id="msgInput" class="send-input" placeholder="메세지내용" name="content">
