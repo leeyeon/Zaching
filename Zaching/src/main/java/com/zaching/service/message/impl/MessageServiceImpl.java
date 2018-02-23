@@ -45,22 +45,29 @@ public class MessageServiceImpl implements MessageService{
 	public Map<String, Object> listMessage(Search search) throws Exception {
 		
 		List<Message> list = null;
-		int totalCount = messageDao.getTotalCount(search);
 		
 		if(search.getSearchCondition() == null) {
+			System.out.println("しさし1");
 			list = messageDao.listMessage(search);
 		} else {
-			System.out.println("しさし1");
-			list = messageDao.listMessagebyRoomId(search);
 			System.out.println("しさし2");
+			list = messageDao.listMessagebyRoomId(search);
+			
 		}
+		
+		int totalCount = messageDao.getTotalCount(search);
+		
+
 		
 		Map<String, Object> map=new HashMap<String,Object>();
 		map.put("list", list);
 		map.put("totalCount", totalCount);
 		
+		System.out.println(list);
+		System.out.println(totalCount);
 		return map;
 	}
+	
 
 	@Override
 	public void deleteMessage(int messageId) throws Exception {
@@ -72,6 +79,10 @@ public class MessageServiceImpl implements MessageService{
 	public Message getMessage(int messageId) throws Exception {
 		return messageDao.getMessage(messageId);
 	}
+
+	
+	
+	
 	
 
 }

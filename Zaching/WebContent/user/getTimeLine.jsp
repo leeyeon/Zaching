@@ -128,39 +128,10 @@ $( function () {
 		
 		//메세지 모달 Event
 		$("#friendPage").on("click", function() {
-			//alert("${user.userId}");
+			//alert(${user.userId});
+			//alert(${message.roomId});
 			$("#messageModal").modal('show');
 		})
-		
-		$( "a.send-btn:contains('send')" ).on("click" , function() {
-				//alert(  $( "a.send-btn:contains('send')" ).html() );
-				addMessage();
-			});
-		
-		
-		
-		
-		
-		//신고하기 Event
-
-
-		function addMessage(){
-			 
-			 var userId = ${sessionScope.user.userId};
-			 var  friendId= ${user.userId} ;
-			 var content = $("input[name='content']").val();
-			
-
-				
-			　if(content==null || content.length<1){ 
-			　　alert('메세지를 입력해주세요.');
-				return;
-			 } 
-			
-			 
-			$("form").attr("method", "POST").attr("action", "/message/addMessage").submit();
-			alert("메세지 전송완료");
-		}
 	
 	var status = 0 ;
 	
@@ -991,6 +962,7 @@ font-size:14pt;
   <c:if test="${user.userId ne sessionScope.user.userId}">
   <div class="row" id="friendPage">
     	<div class="col-xs-12">
+    	<input type="hidden" value="${message.roomId }" name="roomId"/>
     		<a type="button" ><img src="../resources/images/Message_Icon.png" width="20px" height="20px" align="left"/>&nbsp;메세지전송</a>
     	</div>
     	<!--  
@@ -1085,6 +1057,15 @@ font-size:14pt;
 								<form id="send">
 								<input type="hidden" value="${sessionScope.user.userId}" name="userId"/>
 								<input type="hidden" value="${user.userId }" name="friendId"/>
+								
+								
+								<!--<input type="hidden" value="${message.roomId }" name="roomId"/>
+								<input type="hidden" value="${message.messageId }" name="messageId"/>
+								<input type="hidden" value="${message.createdDate }" name="createdDate"/>
+								<input type="hidden" value="${message. friendProfileImage}" name="friendProfileImage"/>
+								<input type="hidden" value="${message. friendName}" name="friendName"/> -->
+							
+								
 									<input type="text" id="msgInput" class="send-input" placeholder="메세지내용" name="content">
 									<a href="#" onclick="addMessage();" class="send-btn" data-dismiss="modal"  value="Send">send</a>
 								</form>

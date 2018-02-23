@@ -27,9 +27,9 @@ public class MessageServiceTest {
 	@Qualifier("messageServiceImpl")
 	private MessageService messageService;
 
-	private int friendId = 24;
+	private int friendId = 5;
 	private int messageId = 28;
-	private int userId=9;
+	private int userId=31;
 
 	 @Test
 	public void testAddMessage() throws Exception {
@@ -39,7 +39,7 @@ public class MessageServiceTest {
 		Message message = new Message();
 		message.setUserId(userId);
 		message.setFriendId(friendId);
-		message.setContent("하이하이");
+		message.setContent("ㅇㅅㅇ");
 
 		messageService.addMessage(message);
 
