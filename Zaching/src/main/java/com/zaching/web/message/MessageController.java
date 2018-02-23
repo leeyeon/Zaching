@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
+import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.Message;
 import com.zaching.service.domain.User;
 import com.zaching.service.message.MessageService;
@@ -29,47 +30,26 @@ public class MessageController {
 
 	private MessageService messageService;
 	
+	@Autowired
+	@Qualifier("commonServiceImpl")
+	private CommonService commonService;
+	
 	public MessageController() {
 		System.out.println(this.getClass());
 	}
 	
 	@Value("#{commonProperties['pageUnit']}")
-	// @Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
 
 	@Value("#{commonProperties['pageSize']}")
-	// @Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
-	
-	
-	
-	
-	
-	@RequestMapping(value="addMessage",method=RequestMethod.POST)
-	public String addMessage(@ModelAttribute("message")Message message,Model model)throws Exception{
-		System.out.println("/message/addMessage:POST");
-		System.out.println("addMessage()");
-		System.out.println(message);
-		
-		
-		
-		
-		messageService.addMessage(message);
-		model.addAttribute("message",message);
-
-		
-		
-		
-		return "forward:/message/listMessage.jsp";
-		
-	}
 	
 	@RequestMapping(value="listMessage")
 	public String listMessage(@ModelAttribute("search")Search search, 
 							HttpSession session, 
 							Model model)throws Exception{
 		
-		System.out.println("message/listMessage:GET");
+		System.out.println("message/listMessage:GET/POST");
 		
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -78,33 +58,20 @@ public class MessageController {
 		
 		search.setSearchKeyword(((User)session.getAttribute("user")).getUserId()+"");
 		
+		System.out.println("¼­Ä¡"+search);
 		Map<String , Object> map=messageService.listMessage(search);
 		
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-				pageSize);
+		Page resultPage = new Page( search.getCurrentPage(),(Integer)map.get("totalCount"), pageUnit, pageSize);
 		System.out.println(resultPage);
+		System.out.println("¸Ê"+map);
 		
 		model.addAllAttributes(map);
 		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
 		
 		return "forward:/message/listMessage.jsp";
 		
 	}
-		
-		
-	@RequestMapping(value="getMessage")
-	public String getMessage(@RequestParam(value="messageId",required=false)int messageId,Model model)throws Exception{
-		System.out.println("message/getMessage:POST");
-		
-		Message message=messageService.getMessage(messageId);
-		
-		model.addAttribute("message",message);
-		
-		return "forward:/message/getMessage.jsp";
-
-	}
-
-	
 	
 	
 	

@@ -24,28 +24,12 @@
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
 
-h2 {
-	font-family: 'Nanum Pen Script', cursive;
-}
-
-@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
-
-b {
-	font-family: 'Nanum Pen Script', cursive;
-}
-
-@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
-
-h3 {
+a, b, h2, h3 {
 	font-family: 'Nanum Pen Script', cursive;
 }
 
 body {
 	padding-top: 50px;
-}
-
-.btn btn-primary {
-	
 }
 
 html, body {
@@ -207,13 +191,8 @@ body {
 
 
 <script type="text/javascript">
-	function fncGetUserList(currentPage) {
-		//document.getElementById("currentPage").value = currentPage;
-		$("#currentPage").val(currentPage)
-		//document.detailForm.submit();
-		$("form").attr("method", "POST").attr("action", "/message/listMessage")
-				.submit();
-	}
+
+var roomindex = 0;
 
 	$('#build').bind('click', function() {
 		var inputText = $('#buildInput').val();
@@ -261,15 +240,22 @@ body {
 
 	$(function() {
 
-		$("#messageSend").on('click', function() {
-
-			alert("보내기완료");
+		
+		$( "a.send-btn:contains('send')" ).on("click" , function() {
+			addMessage();
 		});
 		
+		$( "#msgInput" ).on( "keydown" , function(e) {
+			if(e.keyCode == 13) {
+				addMessage();
+				return false;
+			}
+		});
 
 	 	$(document).on('click',"a[name='messageContent']", function() {
-	 		var index= $($("input[name=roomId]")[$("a[name='messageContent']").index(this)]).val();
-	 		alert(index);	 		
+	 		
+	 		var index= $($("input[name=roomId]")[$("a[name='messageContent']").index(this)]).val(); 		
+	 		roomindex =  $($("input[name=friendIdinfo]")[$("a[name='messageContent']").index(this)]).val();
 
 	 		$.ajax({
 	 		               url : "/message/json/listMessage",
@@ -284,12 +270,19 @@ body {
 	 		            	   var messageContent="";
 	 		            	   
 	 		            	   if(serverData != null) {
+	 		            		   var friendId;
+	 		            		  if(serverData[0].userId != ${user.userId}){
+	 		            		  	friendId = serverData[0].userId;
+	 		            		  }
+	 		            		 messageContent += ' <input type="hidden" value="${sessionScope.user.userId}" name="userId"/>	'			
+									+ '<input type="hidden" value = "'+friendId+'" name= "friendId"/>'
+									+ '<input type="hidden" value = "'+index+'" name= "roomId"/>'
+	 		            		   
 		 		            	   for(var i=0; i<serverData.length; i++){
-		 		            		  
+		 		            		  	//messageContent +='<div style="overflow:scroll;">'
 		 		            		  if(serverData[i].userId != ${user.userId}){
 		 		            			messageContent +=  '<div class="message left"><div class="message-text">'
-			 		            		   +serverData[i].content
-			 		            		   +'</div></div>';
+			 		            		   +serverData[i].content +'</div></div>';
 		 		            		    
 		 		            		  }else{
 		 		            			messageContent +=  '<div class="message right"><div class="message-text">'
@@ -304,30 +297,79 @@ body {
 	 		            	   $("#messegeBox").html("");
 	 		            	   $("#messegeBox").append(messageContent);
 	 		            	  $("#messageModal").modal('show');
+	 		            	  
 	 		               },
 	 		               error:function(request,status,error){
 	 		                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	 		                   
-	 		                
 	 		               }
 	 		            });
 	 		
-	 	});
-		
-	 	/*
-		$("a[name='messageContent']").on("click", function() {
-			alert();
-		})
-		*/
-	
-
-	
-		
+	 		});
 	
 		});
 	
-		
+ 	function addMessage(){
+ 		
+ 		//alert(JSON.stringify($("#send").serializeObject()));
+		var content = $("input[name='content']").val();
+			
+		　if(content=="" || content.length<1){ 
+		　	alert('메세지를 입력해주세요.');
+				return;
+		　} 
+			
+			$.ajax({
+	               url : "/message/json/addMessage",
+	               method : "POST",
+	               contentType : "application/json; charset=UTF-8",
+	               data : JSON.stringify($("#send").serializeObject()),
+	               dataType : "json",
+	               async: false,
+	               success : function(serverData) {
+	            	   var messageContent =  '<div class="message right"><div class="message-text">'
+	 		            		   +serverData.content +'</div></div>';
+	 		            		   
+	            	   $("#messegeBox").append(messageContent);
+	            	  
+	               },
+	               error:function(request,status,error){
+	                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	               }
+	        });
+	
+		};
 
+	$.fn.serializeObject = function()
+
+	{
+
+	   var o = {};
+
+	   var a = this.serializeArray();
+
+	   $.each(a, function() {
+
+	       if (o[this.name]) {
+
+	           if (!o[this.name].push) {
+
+	               o[this.name] = [o[this.name]];
+
+	           }
+
+	           o[this.name].push(this.value || '');
+
+	       } else {
+
+	           o[this.name] = this.value || '';
+
+	       }
+
+	   });
+
+	   return o;
+
+	};
 
 </script>
 
@@ -342,73 +384,66 @@ body {
 		<div class="page-header text-info" style="color: #000000;">
 			<h2>메세지목록</h2>
 		</div>
-
-		<div class="row">
-
-
-			<table class="table table-hover">
-				<div class="col-xs-6 col-sm-4 ">
+		
+		<table class="table table-hover">
+			<div class="row">
+				<div class="col-xs-4 col-sm-4 ">
 					<h2>
 						<b>친구이름</b>
 					</h2>
 				</div>
-				<div class="col-xs-6 col-sm-4 ">
+				<div class="col-xs-4 col-sm-4 ">
 					<h2>
 						<b>내용</b>
 					</h2>
 				</div>
-				<div class="col-xs-6 col-sm-4 ">
+				<div class="col-xs-4 col-sm-4 ">
 					<h2>
 						<b>날짜</b>
 					</h2>
 				</div>
-
-
+			</div>
 
 				<c:forEach var="message" items="${list}">
+				<div class="row">
 					<input type="hidden" name="roomId" value="${message.roomId }">
-					<a href="/user/getTimeLine?userId=${message.friendId}"  class="col-xs-6 col-sm-4 " style="color: #000000;" name="messageName"><h3>${message.friendName }</h3></a>
-					<a href="#" class="col-xs-6 col-sm-4 "style="color: #000000;"  name="messageContent"><h3>${message.content }</h3></a>
-					<div class="col-xs-6 col-sm-4 ">
+							<input type="hidden" value="${message.userId}" name="friendIdinfo"/>
+							<input type="hidden" value="" name="friendId"/>
+					<h3><a href="/user/getTimeLine?userId=${message.friendId}"  class="col-xs-6 col-sm-4 " style="color: #000000;" name="messageName">
+						${message.friendId} ${message.friendName }
+					</a></h3>
+					<h3><a href="#" class="col-xs-4 col-sm-4 "style="color: #000000;"  name="messageContent">
+						${message.content }
+					</a></h3>
+					<div class="col-xs-4 col-sm-4 ">
 						<h3>${message.createdDate }</h3>
 					</div>
-
+				</div>
 				</c:forEach>
-
-			</table>
-
-			<!-- Modal -->
-			<div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel">
-				<div class="modal-dialog" role="document">
-					<div class="wrapper">
-
-
-						<!-- 왼쪽 메세지 대화 박스 -->
-						
-						
-						
-						<div class="phone-containter">
-							<div id="phone" class="phone">
-								<button type="button" class="close" data-dismiss="modal" varia-hidden="true" id="close">×</button>
-								<div id="messegeBox"></div>
-							</div>
-
-							<!-- 메세지 작성 -->
-							<div class="send-container">
-								<form id="send">
-									<input type="text" id="msgInput" class="send-input"
-										placeholder="메세지내용"> <input type="submit"
-										class="send-btn" id="messageSend" value="Send">
-								</form>
-							</div>
+		</table>
+	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="wrapper">
+				<form id="send">
+					<div class="phone-containter">
+						<div id="phone" class="phone">
+							<button type="button" class="close" data-dismiss="modal" varia-hidden="true" id="close">×</button>
+							<div id="messegeBox"></div>
+						</div>
+						<div class="send-container">
+							<input type="text" id="msgInput" class="send-input" placeholder="메세지내용" name="content">
+							<a href="#" class="send-btn" data-dismiss="modal"  value="Send">send</a>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
-			
-			
-			</div>
+		</div>
+	</div>
+	
 </body>
 
 </html>

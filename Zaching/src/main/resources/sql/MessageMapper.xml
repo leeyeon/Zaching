@@ -123,6 +123,11 @@
 	
 	</sql>
 	
+	<select id="selectRoomId" parameterType="map" resultType="int">
+		SELECT distinct room_id 
+		FROM message where user_id=#{userId} AND friend_id=#{friendId}
+	</select>
+	
 	
 	</mapper>
 	
