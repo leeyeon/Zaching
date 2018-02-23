@@ -9,6 +9,7 @@
 		<result property="id" column="id" jdbcType="INTEGER" />
 		<result property="friendId" column="friend_id" jdbcType="INTEGER" />
 		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="createdDate" column="created_date" jdbcType="DATE"/>
 		<result property="profileImage" column="profile_image"
 			jdbcType="VARCHAR" />
 		<result property="name" column="name" jdbcType="VARCHAR" />
@@ -23,11 +24,12 @@
 
 	<insert id="addFriend" parameterType="map">
 		INSERT
-		INTO FRIEND (id, user_id, friend_id, status )
+		INTO FRIEND (id, user_id, friend_id, status, created_date )
 		VALUES( seq_id.nextval,
 		#{friend.userId:INTEGER},
 		#{friend.friendId:INTEGER},
-		#{status:CHAR}
+		#{status:CHAR},
+		SYSDATE
 		)
 
 	</insert>

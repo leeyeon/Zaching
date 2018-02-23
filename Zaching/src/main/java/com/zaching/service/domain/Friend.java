@@ -1,5 +1,6 @@
 package com.zaching.service.domain;
 
+
 public class Friend {
 	
 	private int id;
@@ -8,6 +9,18 @@ public class Friend {
 	private int status;
 	private String profileImage;//프로필사진
 	private String name;//실명
+	private String createdDate;
+
+	
+	public String getCreatedDate() {
+		return createdDate;
+	}
+
+
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
+	}
+
 
 	public String getProfileImage() {
 		return profileImage;

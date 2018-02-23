@@ -18,6 +18,7 @@
 	<script type="text/javascript" src="../resources/javascript/main.js"></script>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="../resources/javascript/FileButton.js"></script>
+	
 
 <script>
 	$(function() {
@@ -91,7 +92,7 @@
 			
 		});
 		
-		$(".makevoiceroom").on('click', function(){
+		$("#makeVoiceRoom").on('click', function(){
 			addVoice();
 		});
 		
@@ -192,10 +193,7 @@
 		});
 	</script>
 	
-	<style type="text/css">
-	
-	@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
-		
+	<style type="text/css">	
 		
 body {
 	padding-top: 130px;
@@ -252,13 +250,9 @@ body>div.container {
 	color: white;
 }
 
-.topnav .search-container {
-	float: right;
-}
-
 .topnav input[type=text] {
 	padding: 6px;
-	margin-top: 8px;
+	margin-top: 17px;
 	font-size: 15px;
 	border: none;
 	width: 300px;
@@ -279,17 +273,10 @@ body>div.container {
 }
 
 .songSelect{
-padding-top: 40px;
 background: #fff;
-padding-bottom: 80px;
 
 }
 
-.songSelectButton{
-background: #fff;
-border-radius: 5px;
-
-}
 
 .makevoice{
 	text-align: center;
@@ -321,19 +308,7 @@ font-family: 'Hanna', serif;
 
 .viewlist{
 width:100%;}
-.songSelectButton {
-	
-	display:inline-block;
-	color:#ffffff;
-	font-size:15px;
-	font-style:normal;
-	height:40px;
-	line-height:40px;
-	width:100px;
-	text-decoration:none;
-	text-align:center;
 
-}
 
 
 		.listings ul.properties_list li a #profile{
@@ -375,8 +350,8 @@ width:100%;}
 			-khtml-border-radius: 70px;
 			-webkit-border-radius: 70px;
 			 background: #bfd9f2;
-			 width: 100px;
-			 height: 100px;
+			 width: 70px;
+			 height: 70px;
 			 line-height: 100px;
 			 font-size: 17px;
 			 float:right;
@@ -448,6 +423,266 @@ font-family: 'Hanna', serif;"
 	    clip:rect(0,0,0,0);
 	    border: 0;
 	}
+	
+	.flex-grid-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 5em 0;
+}
+
+.fuller-button {
+  color: white;
+  background: #333;
+  border-radius: 0;
+  padding: 1.2em 0;
+  letter-spacing: 0.35em;
+  font-size: 0.8em;
+  -webkit-transition: background-color 0.3s, color 0.3s, -webkit-box-shadow 0.3s;
+  transition: background-color 0.3s, color 0.3s, -webkit-box-shadow 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s, color 0.3s, -webkit-box-shadow 0.3s;
+  margin: 1em;
+  cursor: pointer;
+}
+.fuller-button.blue {
+  -webkit-box-shadow: inset 0 0 1em rgba(0, 170, 170, 0.5), 0 0 1em rgba(0, 170, 170, 0.5);
+          box-shadow: inset 0 0 1em rgba(0, 170, 170, 0.5), 0 0 1em rgba(0, 170, 170, 0.5);
+  border: #0dd solid 2px;
+}
+.fuller-button.blue:hover {
+  background-color: #0dd;
+  -webkit-box-shadow: inset 0 0 0 rgba(0, 170, 170, 0.5), 0 0 1.5em rgba(0, 170, 170, 0.7);
+          box-shadow: inset 0 0 0 rgba(0, 170, 170, 0.5), 0 0 1.5em rgba(0, 170, 170, 0.7);
+}
+.fuller-button.red {
+  -webkit-box-shadow: inset 0 0 1em rgba(251, 81, 81, 0.4), 0 0 1em rgba(251, 81, 81, 0.4);
+          box-shadow: inset 0 0 1em rgba(251, 81, 81, 0.4), 0 0 1em rgba(251, 81, 81, 0.4);
+  border: #fb5454 solid 2px;
+}
+.fuller-button.red:hover {
+  background-color: #fb5454;
+  -webkit-box-shadow: inset 0 0 0 rgba(251, 81, 81, 0.4), 0 0 1.5em rgba(251, 81, 81, 0.6);
+          box-shadow: inset 0 0 0 rgba(251, 81, 81, 0.4), 0 0 1.5em rgba(251, 81, 81, 0.6);
+}
+.fuller-button.white {
+  -webkit-box-shadow: inset 0 0 0.8em rgba(255, 255, 255, 0.3), 0 0 0.8em rgba(255, 255, 255, 0.3);
+          box-shadow: inset 0 0 0.8em rgba(255, 255, 255, 0.3), 0 0 0.8em rgba(255, 255, 255, 0.3);
+  border: #fff solid 2px;
+}
+.fuller-button.white:hover {
+  color: rgba(0, 0, 0, 0.8);
+  background-color: #fff;
+  -webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.3), 0 0 1.2em rgba(255, 255, 255, 0.5);
+          box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.3), 0 0 1.2em rgba(255, 255, 255, 0.5);
+}
+
+.pure-control-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  padding: 0 1em 2.6em 1em;
+}
+
+.pure-form .pure-control-group label {
+  text-align: left;
+  position: absolute;
+  left: 0;
+  top: 15%;
+  z-index: 0;
+  letter-spacing: 0;
+  margin: 0 1em;
+}
+
+.pure-form .pure-control-group input {
+  background: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  padding-left: 0;
+  border-radius: 0;
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+  position: relative;
+  z-index: 1;
+  color: #fff;
+}
+
+.pure-form .pure-control-group input:focus {
+  border-bottom: 2px solid white;
+}
+
+.pure-form .pure-control-group textarea {
+  background: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border-radius: 0;
+  border: none;
+  border-left: 2px solid rgba(255, 255, 255, 0.4);
+  resize: none;
+  height: 8em;
+  color: #fff;
+}
+
+.pure-form .pure-control-group textarea:focus {
+  border-left: 2px solid white;
+}
+
+.pure-form .pure-control-group input[type=email]:focus:invalid {
+  color: #fff;
+}
+
+.pure-form .pure-control-group input[type=email]:invalid {
+  color: #fb5454;
+}
+
+.pure-form button {
+  margin: 0.5em 1em;
+}
+
+
+.checkBox {
+  width: 130px;
+  height: 65px;
+  margin: 15px auto;
+  color: #4274D3;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.15rem;
+  line-height: 55px;
+  text-transform: uppercase;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+}
+
+#makeVoiceRoom svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#makeVoiceRoom svg rect, #makeVoiceRoom svg path, #makeVoiceRoom svg polyline {
+  fill: none;
+  stroke: #4274D3;
+  stroke-width: 1;
+}
+
+/* Check Box */
+.checkBox {
+  /* Add Padding Left To Center Text */
+}
+.checkBox svg {
+  /* Presentation Purposes */
+  margin-left: -3px;
+}
+.checkBox svg rect, .checkBox svg polyline {
+  fill: none;
+  stroke: #4274D3;
+  stroke-width: 1;
+  -webkit-transition: all 0.8s ease-in-out;
+  -moz-transition: all 0.8s ease-in-out;
+  -ms-transition: all 0.8s ease-in-out;
+  -o-transition: all 0.8s ease-in-out;
+}
+.checkBox:hover svg rect {
+  stroke-width: 2;
+  -webkit-transition: all 0.8s ease-in-out;
+  -moz-transition: all 0.8s ease-in-out;
+  -ms-transition: all 0.8s ease-in-out;
+  -o-transition: all 0.8s ease-in-out;
+}
+.checkBox:hover svg polyline {
+  stroke-width: 2;
+  -webkit-transition: all 0.8s ease-in-out;
+  -moz-transition: all 0.8s ease-in-out;
+  -ms-transition: all 0.8s ease-in-out;
+  -o-transition: all 0.8s ease-in-out;
+}
+.checkBox svg .button {
+  stroke-dasharray: 400px, 0;
+}
+.checkBox:hover svg .button {
+  stroke-dasharray: 0, 400px;
+  stroke-dashoffset: 33px;
+}
+/* Check Mark Effect */
+.box, .checkMark {
+  opacity: 0;
+}
+.checkBox:hover .box {
+  -webkit-animation: boxDisplay 0.2s forwards;
+  -moz-animation: boxDisplay 0.2s forwards;
+  -ms-animation: boxDisplay 0.2s forwards;
+  -o-animation: boxDisplay 0.2s forwards;
+  animation: boxDisplay 0.2s forwards;
+  -webkit-animation-delay: 0.65s;
+  -moz-animation-delay: 0.65s;
+  -ms-animation-delay: 0.65s;
+  -o-animation-delay: 0.65s;
+  animation-delay: 0.65s;
+}
+.checkBox:hover .checkMark {
+  -webkit-animation: checkDisplay 0.2s forwards;
+  -moz-animation: checkDisplay 0.2s forwards;
+  -ms-animation: checkDisplay 0.2s forwards;
+  -o-animation: checkDisplay 0.2s forwards;
+  animation: checkDisplay 0.2s forwards;
+  -webkit-animation-delay: 1s;
+  -moz-animation-delay: 1s;
+  -ms-animation-delay: 1s;
+  -o-animation-delay: 1s;
+  animation-delay: 1s;
+}
+/* Check Box Display */
+@-webkit-keyframes boxDisplay {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-moz-keyframes boxDisplay {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-ms-keyframes boxDisplay {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-o-keyframes boxDisplay {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes boxDisplay {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+/* Check Mark Display */
+@-webkit-keyframes checkDisplay {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-moz-keyframes checkDisplay {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-ms-keyframes checkDisplay {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-o-keyframes checkDisplay {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes checkDisplay {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+	
+	
 	</style>
 	
 	<script>
@@ -561,11 +796,11 @@ font-family: 'Hanna', serif;"
 	</footer><!--  end footer  -->
 	
 	<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document"  style="width: 600px;">
+  <div class="modal-dialog" role="document"  style="width: 600px; ">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><b>녹음하기</b></h4>
+        <h4 class="modal-title" id="myModalLabel"><b>방만들기</b></h4>
 		<div class="songSelect">
 		<center>
 			<form name='Form' id="detailForm" class="form-vertical" enctype="multipart/form-data">
@@ -575,15 +810,15 @@ font-family: 'Hanna', serif;"
 				<div class="form-group" >
 					<br/><div></div>
 							<div class="filebox">
-					        <label for="cma_file">사진 인증샷 업로드</label>
+					        <label for="cma_file">배경사진 설정</label>
 							<input type="file" name="uploadFile" id="cma_file" imageswap="true" accept="image/*" capture="camera" onchange="getThumbnailPrivew(this,$('#cma_image'))"/>
 					        <div id="cma_image" style="width:200px;max-width:200px;display:none;"></div>
 					    </div>					    
 						<input type="text" name=voiceName placeholder="방 제목을 입력해주세요"
 							style="font-size: 20px; width: 100%; height: 50px; padding-left: 20px; border: none; border-bottom: 1px solid #eee;" maxlength="30"/><br/>
-							<div class="form-group" align="left">
+							<div class="form-group" style="margin-top: 10px;" align="left">
 						   <strong style="font-size: 15px">카테고리</strong> <select 	name="categoryCode"	id="categoryCode" class="form-control" 
-							style="height: 40px" maxLength="20">
+							style="height: 40px; margin-top:10px;" maxLength="20">
 						<option value="R02" selected="selected">노래 이어 부르기</option>
 						<option value="R03">글 읽어주기</option>
 						<option value="R04">ASMR</option>
@@ -591,19 +826,26 @@ font-family: 'Hanna', serif;"
 						<option value="R06">프리토킹</option>
 					</select>
 					<br/>
-					<div class="category1">
+					<div class="category1" style="vertical-align: -webkit-baseline-middle;">
 					<input type="text" name="ok" id="ok" placeholder="무슨 노래인가요?"
-							style="font-size: 20px; width: 80%; height: 50px; padding-left: 20px; border: none; border-bottom: 1px solid #eee;" readonly/>
-							<button type="button" class="songSelectButton" data-toggle="modal" data-target="#myModal2">노래 검색</button>
+							style="font-size: 20px; width: 80%; height: 50px; padding-left: 20px; border: none; border-bottom: 1px solid #eee; float: left; width:75%" readonly/>
+							
+							<!-- <button type="button" class="songSelectButton" data-toggle="modal" data-target="#myModal2">노래 검색</button>-->
+							<div class="pure-button fuller-button blue" data-toggle="modal" data-target="#myModal2" style="text-align: center; float:left; width:20%">노래검색</div>
+							
 						  </div></div>
 				</div>
 		</div>
 	</form>
-	<div class="modal-footer">
-	<center>
-	 <button type="button" class="makevoiceroom">완료</button></center>
-      	</div>
-      	</center>
+	
+      	<div class="checkBox" id="makeVoiceRoom">
+		  등&nbsp;록
+		  <svg width="140" height="55" viewBox="0 0 140 65">
+		    <rect x="10" class="button" width="128.8" height="63.9"/>
+		    <rect x="0" y="22.5" class="box" width="20" height="20"/>
+		    <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
+		  </svg>
+		</div>
 	</div>
 	</div>
       </div>
@@ -614,7 +856,7 @@ font-family: 'Hanna', serif;"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document" >
 			<div class="modal-content">
-				<div class="modal-header">
+				<div class="modal-header" style="padding-bottom: 0;">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -624,9 +866,11 @@ font-family: 'Hanna', serif;"
 					</h4><div class="topnav">
 					<div class="search-container">
 							<input type="text" placeholder="제목이나 가수명을 입력하세요"
-								name="searchsong" id="searchsong" value="">
-							<button type="button" class="btn btn-primary" id="search2">검색</button>
-							<button type="submit" class="btn btn-primary" data-dismiss="modal" id="select">선택</button>
+								name="searchsong" id="searchsong" value="" style="float: left; width:58%; font-size:17px;">
+							<!-- <button type="button" class="btn btn-primary" id="search2">검색</button>
+							<button type="submit" class="btn btn-primary" data-dismiss="modal" id="select">선택</button> -->
+							<div class="pure-button fuller-button red" id="search2" style="text-align: center; float: left; width: 17%;">검색</div>
+  							<div class="pure-button fuller-button white" data-dismiss="modal" id="select" style="text-align: center; float: left; width: 17%;">선택</div>
 							<br />
 							
 						</div></div>
