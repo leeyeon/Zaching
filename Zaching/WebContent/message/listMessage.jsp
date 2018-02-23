@@ -11,22 +11,9 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!--   jQuery , Bootstrap CDN  -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="/resources/layout/sub_toolbar.jsp" />
-<!-- ToolBar End /////////////////////////////////////-->
-<style>
-@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
 
-a, b, h2, h3 {
-	font-family: 'Nanum Pen Script', cursive;
-}
+<style>
+
 
 body {
 	padding-top: 50px;
@@ -381,52 +368,54 @@ var roomindex = 0;
 <body>
 
 
-	<div class="container" style="padding-top: 80px;">
+	<div class="container" style=" width: 100%">
 
-		<div class="page-header text-info" style="color: #000000;">
-			<h2>메세지목록</h2>
+		<div class="page-header text-info" style="color: #000000; border-bottom-color: #927490; margin-bottom:0;">
+			<img src="../resources/images/Message_Icon.png" width="20px" height="20px" align="left"/><h2> &nbsp;메세지목록</h2>
 		</div>
 		
 		<table class="table table-hover">
-			<div class="row">
-				<div class="col-xs-4 col-sm-4 ">
+			<!--  <div class="row">
+				<div class="col-xs-3 col-sm-3 ">
 					<h2>
 						<b>친구이름</b>
 					</h2>
 				</div>
-				<div class="col-xs-4 col-sm-4 ">
+				<div class="col-xs-6 col-sm-6 ">
 					<h2>
 						<b>내용</b>
 					</h2>
 				</div>
-				<div class="col-xs-4 col-sm-4 ">
+				<div class="hidden-xs">
+				<div class="col-xs-3 col-sm-3 ">
 					<h2>
 						<b>날짜</b>
 					</h2>
 				</div>
-			</div>
+				</div>
+			</div>-->
 
 				<c:forEach var="message" items="${list}">
-				<div class="row">
+				<div class="row" style="border-bottom:1px solid gray; padding-bottom:20px;">
 					<input type="hidden" name="roomId" value="${message.roomId }">
 							<input type="hidden" value="${message.userId}" name="friendIdinfo"/>
-					<h3><a href="/user/getTimeLine?userId=${message.friendId}"  class="col-xs-4 col-sm-4 " style="color: #000000;" name="messageName">
+					<h3><a href="/user/getTimeLine?userId=${message.friendId}"  class="col-xs-2 col-sm-2 " style="color: #000000;" name="messageName">
 						<img src="../resources/upload_files/images/${message.friendProfileImage}" id="profile" width="30px" height="30px"
-				       		style="border-radius: 50%" onerror="this.src='../resources/images/profile_default.png'" >
-						${message.friendName }
+				       		style="border-radius: 50%" onerror="this.src='../resources/images/profile_default.png'" align="right" >
+						
 					</a></h3>
-					<h3><a href="#" class="col-xs-4 col-sm-4 "style="color: #000000;"  name="messageContent">
+					<h3><div class="col-xs-10 col-sm-10 "style="color: #000000; display: inline-block; height: 60px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; padding-left:15px;"  name="messageContent">
+						<div style="margin-bottom: 4pt; float: left;">${message.friendName}</div><p style="line-height: normal;"align=right>${message.createdDate}</p>
 					<c:if test="${message.userId eq sessionScope.user.userId }">
-						(보냄)
+						<a href="#" style="font-style: italic; float: left;" >(보냄)넘어가면 안보입니다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ</a>
 					</c:if>
 					<c:if test="${message.userId ne sessionScope.user.userId }">
-						(받음)
+						<a href="#" style="font-style: italic; float: left;" >(받음)${message.content }</a>
 					</c:if>
-						${message.content }
-					</a></h3>
-					<div class="col-xs-4 col-sm-4 ">
-						<h3>${message.createdDate }</h3>
+						
 					</div>
+					</h3>
+					
 				</div>
 				</c:forEach>
 		</table>

@@ -58,6 +58,7 @@ $( function () {
 	
 	$("#memoryMapshow").hide();
 	$("#noticeshow").hide();
+	$("#listMessageshow").hide();
 	
 	//친구목록 Event
 	$( "#listFreind" ).on("click" , function() {
@@ -72,19 +73,18 @@ $( function () {
 		$("#memoryMapshow").hide();
 		$("#timelineshow").hide();
 		$("#noticeshow").show();
+		$( "#listMessageshow").hide();
 		
 		$("#memoryMap").css('backgroundColor', '#fff');
 		$("#listtimeline").css('backgroundColor', '#fff');
 		$("#listNotice").css('backgroundColor', '#adbfdea1');
+		$("#listMessage").css('backgroundColor', '#fff');
 	});
 
 	
 		
 		//메세지함
-		$("#listMessage").on("click", function() {
-			self.location ="/message/listMessage?userId=${user.userId}";	
-		})
-
+		
 
 			
 		$("#listtimeline").on("click", function() {
@@ -92,21 +92,36 @@ $( function () {
 			$("#timelineshow").show();
 			$("#memoryMapshow").hide();
 			$("#noticeshow").hide();
-			
+			$( "#listMessageshow").hide();			
 			$("#memoryMap").css('backgroundColor', '#fff');
 			$("#listtimeline").css('backgroundColor', '#adbfdea1');
 			$("#listNotice").css('backgroundColor', '#fff');
-			
+			$("#listMessage").css('backgroundColor', '#fff');
 		})
 		
 		$( "#memoryMap" ).on("click" , function() {
 			$("#memoryMapshow").show();
 			$("#timelineshow").hide();
 			$("#noticeshow").hide();
+			$( "#listMessageshow").hide();
 			map.relayout();
 			$("#memoryMap").css('backgroundColor', '#adbfdea1');
 			$("#listtimeline").css('backgroundColor', '#fff');
 			$("#listNotice").css('backgroundColor', '#fff');
+			$("#listMessage").css('backgroundColor', '#fff');
+	 	});
+		
+		$( "#listMessage" ).on("click" , function() {
+			$("#memoryMapshow").hide();
+			$("#timelineshow").hide();
+			$("#noticeshow").hide();
+			$( "#listMessageshow").show();
+			
+			$("#memoryMap").css('backgroundColor', '#fff');
+			$("#listtimeline").css('backgroundColor', '#fff');
+			$("#listNotice").css('backgroundColor', '#fff');
+			$("#listMessage").css('backgroundColor', '#adbfdea1');
+			
 	 	});
 		
 		
@@ -128,10 +143,39 @@ $( function () {
 		
 		//메세지 모달 Event
 		$("#friendPage").on("click", function() {
-			//alert(${user.userId});
-			//alert(${message.roomId});
+			//alert("${user.userId}");
 			$("#messageModal").modal('show');
 		})
+		
+		$( "a.send-btn:contains('send')" ).on("click" , function() {
+				//alert(  $( "a.send-btn:contains('send')" ).html() );
+				addMessage();
+			});
+		
+		
+		
+		
+		
+		//신고하기 Event
+
+
+		function addMessage(){
+			 
+			 var userId = ${sessionScope.user.userId};
+			 var  friendId= ${user.userId} ;
+			 var content = $("input[name='content']").val();
+			
+
+				
+			　if(content==null || content.length<1){ 
+			　　alert('메세지를 입력해주세요.');
+				return;
+			 } 
+			
+			 
+			$("form").attr("method", "POST").attr("action", "/message/addMessage").submit();
+			alert("메세지 전송완료");
+		}
 	
 	var status = 0 ;
 	
@@ -863,7 +907,7 @@ font-size:14pt;
 							
     <div id="main">
         <div class="container">
-            <div class="row"><!-- About Me (Left Sidebar) Start -->
+            <div class="row" style="padding-top: 80pt;"><!-- About Me (Left Sidebar) Start -->
            
                  <div class="col-md-3">
                    <div class="about-fixed" >
@@ -962,7 +1006,6 @@ font-size:14pt;
   <c:if test="${user.userId ne sessionScope.user.userId}">
   <div class="row" id="friendPage">
     	<div class="col-xs-12">
-    	<input type="hidden" value="${message.roomId }" name="roomId"/>
     		<a type="button" ><img src="../resources/images/Message_Icon.png" width="20px" height="20px" align="left"/>&nbsp;메세지전송</a>
     	</div>
     	<!--  
@@ -1031,6 +1074,10 @@ font-size:14pt;
 				<jsp:include page="/notice/listNotice?userId=${user.userId}"/>
 			</div>
 			
+			<div id="listMessageshow">
+				<jsp:include page="/message/listMessage?userId=${user.userId}"/>
+			</div>
+			
 			 </div>
          </div>
       </div>
@@ -1057,15 +1104,6 @@ font-size:14pt;
 								<form id="send">
 								<input type="hidden" value="${sessionScope.user.userId}" name="userId"/>
 								<input type="hidden" value="${user.userId }" name="friendId"/>
-								
-								
-								<!--<input type="hidden" value="${message.roomId }" name="roomId"/>
-								<input type="hidden" value="${message.messageId }" name="messageId"/>
-								<input type="hidden" value="${message.createdDate }" name="createdDate"/>
-								<input type="hidden" value="${message. friendProfileImage}" name="friendProfileImage"/>
-								<input type="hidden" value="${message. friendName}" name="friendName"/> -->
-							
-								
 									<input type="text" id="msgInput" class="send-input" placeholder="메세지내용" name="content">
 									<a href="#" onclick="addMessage();" class="send-btn" data-dismiss="modal"  value="Send">send</a>
 								</form>
