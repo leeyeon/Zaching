@@ -37,6 +37,9 @@
          <script type="text/javascript">
          
          $(function(){
+        	 $(".like-text").on("hover", function(){
+        		 $(this).toggleClass('changed');
+        	 });
         	 var placeOverlay = new daum.maps.CustomOverlay({zIndex:1}), 
 		        contentNode = document.createElement('div');
 		     
@@ -162,15 +165,15 @@
 							$("#like"+newsfeedId).text(serverData);
 							if(countLikey < serverData){
 								//alert($("#item"+newsfeedId+" .like-text:after").css('content'));
-								var div = $('#item'+newsfeedId+' .like-text::after').get(0);
-						        div.style.removeProperty('content');  
-						
-								$("#item"+newsfeedId+" .like-text\:after").css('content', '');
+								alert("fdasf");
+								$("#item"+newsfeedId+" .like-text").toggleClass('changed');
 								$("#like"+newsfeedId).css("color","#ff5b4e");
+								
 							}
 							
 							else{
 								$("#like"+newsfeedId).css("color","#aaaaaa");
+								$("#item"+newsfeedId+" .like-text").toggleClass('changed02');
 							}
 								//.css("text-decoration", "none");
 							
@@ -210,6 +213,12 @@
 		
 	<style>
 
+	.like-text.changed:after {
+		content: "\e802"; /* fa-heart */
+	}
+	.like-text.changed02:after {
+		content: "\e803"; /* fa-heart */
+	}
 	.btn-add-bob {
       	border: 1px solid #FFFFF;
 		border-radius: 70px;
@@ -462,7 +471,14 @@
   opacity: 1;
 }
 	
-	
+	.likeit-wrap .like-text.fa:after {
+	content: "\e802"; /* fa-heart-o */
+	color: #E26F6A;
+	text-indent: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
 	
 	
 	
@@ -559,8 +575,16 @@
 									
 									<div class="likeit-wrap" id="item${newsfeed.newsfeedId}" onClick="fnc_addLikey(${newsfeed.newsfeedId})">
 										<div class="likeit" data-postid="4" id="countLikey" >
-											<span class="like-text">Like</span>
-											<ins class="like-count" id="like${newsfeed.newsfeedId}">${newsfeed.countLikey}</ins>
+										<c:if test="${!empty sessionScope.user && newsfeed.likeUser eq user.userId}">
+											<span class="like-text fa" style="cursor: pointer;">Like</span>
+											<ins class="like-count" id="like${newsfeed.newsfeedId}" style="cursor: pointer; color: #ff5b4e">${newsfeed.countLikey}</ins></c:if>
+										<c:if test="${!empty sessionScope.user && newsfeed.likeUser ne user.userId}">
+											<span class="like-text" style="cursor: pointer;">Like</span>
+											<ins class="like-count" id="like${newsfeed.newsfeedId}" style="cursor: pointer;">${newsfeed.countLikey}</ins></c:if>
+											
+											<c:if test="${empty sessionScope.user}">
+											<span class="like-text" style="cursor: pointer;">Like</span>
+											<ins class="like-count" style="cursor: pointer;">${newsfeed.countLikey}</ins></c:if>											
 										</div>
 										<span class="newliker">Thanks!</span>
 										<span class="isliker">You've already liked this</span>
@@ -825,7 +849,7 @@
 	<!----Modal--->
 		
 <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
-  <div class="modal-dialog" role="document" style="width: 900px;">
+  <div class="modal-dialog" role="document" style="width: 740px;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

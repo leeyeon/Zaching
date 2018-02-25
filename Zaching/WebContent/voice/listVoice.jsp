@@ -306,6 +306,8 @@ font-family: 'Hanna', serif;
 
 }
 
+
+
 .viewlist{
 width:100%;}
 
@@ -759,7 +761,7 @@ font-family: 'Hanna', serif;"
 									<span class="price"><i class="fas fa-play-circle"></i>&nbsp;${voice.countReply}</span>
 									<div class="property_details">
 										<h1>
-											<a href="/user/getTimeLine?userId=${voice.userId}" style="vertical-align: bottom;"><c:if test="${!empty voice.profileImage}"><img src="../resources/images/${voice.profileImage}" id="profile"></c:if>
+											<a href="/user/getTimeLine?userId=${voice.userId}" style="vertical-align: bottom;"><c:if test="${!empty voice.profileImage}"><img src="../resources/upload_files/images/${voice.profileImage}" id="profile"></c:if>
 											<c:if test="${empty voice.profileImage}"><img src="../resources/images/profile_default.png" id="profile"></c:if>&nbsp;${voice.userName}</a>
 										</h1>
 										

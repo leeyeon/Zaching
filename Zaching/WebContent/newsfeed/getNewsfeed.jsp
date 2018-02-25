@@ -269,7 +269,7 @@
   <div class="page-header">
   <div class="thumb" style="float: left;">
    <img src="../resources/upload_files/images/${roomUser.profileImage}" height='50' width='100' align="left"/></div>
-   <div style="font-size: 12pt; line-height: 200%;">${roomUser.name}</div>&nbsp;${newsfeed.regDate}
+   <div style="font-size: 12pt; line-height: 200%;">${roomUser.name}</div>&nbsp;${newsfeed.regDate} <i class="glyphicon glyphicon-trash" align="right"></i>
 </div>
 	<br/><br/>
 	<c:if test="${!empty newsfeed.fileName}"><a href="../resources/upload_files/images/${newsfeed.fileName}"><img src="../resources/upload_files/images/${newsfeed.fileName}" width="100%"></a></c:if>

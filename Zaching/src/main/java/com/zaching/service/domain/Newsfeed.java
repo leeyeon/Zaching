@@ -20,8 +20,21 @@ public class Newsfeed {
 	private MultipartFile file;
 	private String userName;
 	private String profileImage;
+	private String likeUser;
 
 	
+
+	public String getLikeUser() {
+		return likeUser;
+	}
+
+
+
+	public void setLikeUser(String likeUser) {
+		this.likeUser = likeUser;
+	}
+
+
 
 	public int getNewsfeedId() {
 		return newsfeedId;
@@ -225,8 +238,9 @@ public class Newsfeed {
 				+ ", content=" + content + ", locationX=" + locationX + ", locationY=" + locationY + ", regDate="
 				+ regDate + ", userId=" + userId + ", locationName=" + locationName + ", countLikey=" + countLikey
 				+ ", countReply=" + countReply + ", privacyBound=" + privacyBound + ", status=" + status + ", file="
-				+ file + ", userName=" + userName + ", profileImage=" + profileImage + "]";
+				+ file + ", userName=" + userName + ", profileImage=" + profileImage + ", likeUser=" + likeUser + "]";
 	}
+
 
 
 

@@ -102,7 +102,13 @@
 		body > div.container > div:nth-child(3) > div.row > div.col-xs-3 > button:hover{
 			background-color: #2ec3a9;
 		}
-
+		#testimonials > div:nth-child(2) > div.col-xs-3 > button{
+			background-color: #f77e7e; 
+		}
+		#testimonials > div:nth-child(2) > div.col-xs-3 > button:hover{
+			background-color: #2ec3a9;
+		}
+	
 		.modal-backdrop {
 		    z-index: 0;
 		}
@@ -325,7 +331,7 @@
    		});
    	 	
    	 	/* 결제 modal toggle */
-   	 	$('button:contains("참여하기")').on('click',function() {
+   	 	$('button:contains("참여하기")').on('click',function() { 
    	 		$('#enterBob').modal('toggle');
    	 	});
    	 	
@@ -1004,7 +1010,7 @@
 	      <div class="modal-footer">
 	       <div class="topnav">
 		      <div class="search-container">
-		      	<button type="button" class="btn btn-primary" id="report" data-dismiss="modal" >신고하기</button>
+		      	<button type="button" class="btn btn-primary" id="report" data-dismiss="modal">신고하기</button>
 		      </div>
 	      </div>
 	       
@@ -1018,6 +1024,8 @@
     <script src="../resources/javascript/bobJs/jribbble.min.js"></script>
     <script src="../resources/javascript/bobJs/drifolio.js"></script>
     <script src="../resources/javascript/bobJs/wow.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
         new WOW().init();
     </script>

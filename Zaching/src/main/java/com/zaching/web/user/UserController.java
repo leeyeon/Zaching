@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -251,7 +250,7 @@ public class UserController {
 	
 	
 	@RequestMapping(value="/fileupload",method=RequestMethod.POST)
-	public String ProfileUpload(@ModelAttribute("user") User user, Model model)throws Exception{
+	public String ProfileUpload(@ModelAttribute("user") User user, Model model, HttpSession session)throws Exception{
 		
 		
 		System.out.println("/user/fileupload : GET");
@@ -269,6 +268,7 @@ public class UserController {
 
 		if(path != null) {
 			user.setProfileImage(path.substring(path.indexOf("\\")+1));
+			((User)session.getAttribute("user")).setProfileImage(user.getProfileImage());
 			File in = new File(fileDirectory+path);
 	        BufferedImage inputImage = ImageIO.read(in);
 	 

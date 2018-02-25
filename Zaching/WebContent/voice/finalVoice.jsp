@@ -33,6 +33,9 @@
 <script>
 	document.addEventListener("DOMContentLoaded", theDOMHasLoaded, false);
 	
+
+
+	
 	var files = new Array();
 	var replyImage = new Array();
 	var replyuserName = new Array();
@@ -114,10 +117,6 @@
 			componentDict[audioList[i].playhead.id] = i;
 		}
 	}
-	
-	 function test() {
-		 window.location.reload();
-		}
 	///////////////////////////////////////////////
 	// Update Audio Player
 	///////////////////////////////////////////////
@@ -289,7 +288,6 @@
 
 	$(function() {
 		
-	
 		
 		$("a:contains('가사보기')").on("click",function() {
 			var songId = ${voice.voicelyrics};
@@ -351,7 +349,9 @@
 
 		
 	})
-
+	$(function(){
+		$(".fas fa-pause").hide();
+	})
 	
 </script>
 <style>
@@ -572,10 +572,9 @@ font-family: 'Hanna', serif;"
 						<b>녹음하기</b>
 					</h4>
 					<div class="modal-body">
-					<button onclick="test();">테스드등록</button>
-					
-						<button onclick="startRecording(this);">녹음하기</button>
-						<button onclick="stopRecording(this);" disabled>정지</button>
+						<i class="fas fa-pause" id="pause" style="font-size: 26px;"></i>
+						<button onclick="startRecording(this);" style="background: white; border: none; font-size: 26px;" ><i class="fas fa-play" id="start"></i></button>
+						<button onclick="stopRecording(this);"  style="background: white; border: none; font-size: 26px;" disabled><i class="fas fa-stop" id="stop"></i></button>
 
 						<h2>Recordings</h2>
 						<ul id="recordingslist"></ul>
@@ -629,6 +628,8 @@ font-family: 'Hanna', serif;"
 			button.disabled = true;
 			button.nextElementSibling.disabled = false;
 			__log('녹음중입니다...');
+			$("#pause").show();
+			$("#start").hide();
 		}
 
 		function stopRecording(button) {
@@ -641,6 +642,8 @@ font-family: 'Hanna', serif;"
 			createDownloadLink();
 
 			recorder.clear();
+			$("#pause").hide();
+			$("#start").show();
 		}
 
 		function blobToFile(theBlob, fileName) {
@@ -704,6 +707,7 @@ font-family: 'Hanna', serif;"
 		window.onload = function init() {
 			try {
 				// webkit shim
+				
 				window.AudioContext = window.AudioContext
 						|| window.webkitAudioContext;
 				navigator.getUserMedia = navigator.getUserMedia
@@ -715,14 +719,22 @@ font-family: 'Hanna', serif;"
 				__log('navigator.getUserMedia '
 						+ (navigator.getUserMedia ? 'available.'
 								: 'not present!'));
+				
+				$("#pause").hide();
+				$("#stop").hide();
+				
 			} catch (e) {
 				alert('보이스리플을 이용하시려면 크롬으로 이동해주세요.');
+				
 			}
 
 			navigator.getUserMedia({
 				audio : true
 			}, startUserMedia, function(e) {
 				__log('마이크 장치가 없습니다: ' + e);
+				$("#pause").hide();
+				$("#start").hide();
+				$("#stop").hide();
 			});
 		}
 	</script>

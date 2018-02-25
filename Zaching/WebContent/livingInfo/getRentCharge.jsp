@@ -62,18 +62,18 @@ daum.maps.event.addListener(map1, 'click', function(mouseEvent) {
         	var mm = money.split(" ");
         	
         	
-            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+            var detailAddr = !!result[0].road_address ? '<div style="color: #000;">도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+            detailAddr += '<div style="color: #000;">지번 주소 : ' + result[0].address.address_name + '</div>';
             
         	if(money == 0){
-        		 var content = '<div class="bAddr">' +
-                 '<span class="title">주소정보</span>' + 
-                 detailAddr + '<span class="title">전월세 정보를 불러오는 중입니다..</span>'+
+        		 var content = '<div class="bAddr" style="color: #000;">' +
+                 '<span class="title" style="color: #000;">주소정보</span>' + 
+                 detailAddr + '<span class="title" style="color: #000;">전월세 정보를 불러오는 중입니다..</span>'+
              '</div>';
         	}
         	else{
         		
-        		 var content = '<div class="bAddr">' +
+        		 var content = '<div class="bAddr" style="color: #000;">' +
                  '<span class="title">주소정보</span>' + 
                  detailAddr + '<span class="title">월세 : </span>'+ mm[0]+"만원 "+'<span class="title">보증금 : </span>' + mm[1] +"만원"+
                  '<span class="title">전세 : </span>' + mm[2] +"만원"+

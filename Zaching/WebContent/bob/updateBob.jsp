@@ -387,15 +387,15 @@
 	            <hr/>
 	            
 	            <div class="row">
-	            	<div class="col-sm-4 btn-bob">대표사진 설정</div>          		
+	            	<div class="col-sm-4 btn-bob">대표사진 설정</div>    
+	            	<c:if test="${!empty bob.image}">
+	            		<div class="col-sm-8 text-center" style="padding-top: 16px; display: -webkit-inline-box; padding-left:50px;">
+		            		배경화면이 설정되어 있습니다. 변경하시겠습니까?<button class="form-control" style="width: 80px; margin-left: 30px;">변경</button>
+			            </div>
+	            	</c:if>      		
 		    	</div>
 	            <div class="row text-center">
-	            	<c:if test="${!empty bob.image}">
-	            		<div class="col-sm-10 text-center" style="padding-top: 7px;">
-		            		배경화면이 설정되어 있습니다. 변경하시겠습니까?
-		            		<button class="form-control" style="width: 50px;">얍</button>
-			            </div>
-	            	</c:if>
+	            	
 	            	<c:if test="${empty bob.image}">
 		            	<div class="col-sm-2 text-center" style="padding-top: 7px;">
 		            		<div class="checkbox">

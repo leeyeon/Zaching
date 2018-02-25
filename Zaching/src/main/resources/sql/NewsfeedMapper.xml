@@ -23,6 +23,8 @@
 		<result property="status" column="status" jdbcType="CHAR"/>
 		<result property="userName" column="name" jdbcType="VARCHAR"/>
 		<result property="profileImage" column="profile_image" jdbcType="VARCHAR"/>
+		<result property="likeUser" column="like_user" jdbcType="VARCHAR"/>
+		
 	</resultMap>
 	
 	<insert id="addNewsfeed" parameterType="newsfeed">
@@ -58,25 +60,23 @@
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
 	
-	<select id="getNewsfeedLists" parameterType="search" resultMap="NewsfeedSelectMap">
-		 SELECT * FROM newsfeed
-	</select>
-	
 	<select id="getTotalCount" parameterType="search" resultType="int">
 		SELECT COUNT(*)
 	  	FROM( <include refid="listNewsfeedSql" /> ) countTable		
 	</select>
 	
 	<sql id="listNewsfeedSql">
-		SELECT n.*, u.name, u.profile_image
-	  			FROM newsfeed n, users u 
+		SELECT n.*, u.name, u.profile_image, v.user_id AS like_user
+		FROM newsfeed n, users u, (SELECT newsfeed_id, user_id from like_blind where user_id=#{category:VARCHAR}) v
+	  			
 	  			<where>
-	  			n.user_id=u.user_id(+)
+	  			n.user_id=u.user_id(+) 
+	  			AND v.newsfeed_id(+)=n.newsfeed_id
 				<if test="searchCondition != 'N06'">
 			 			AND category_code LIKE '${searchCondition}%'
 				</if>
 				</where>
-				ORDER BY newsfeed_id desc
+				ORDER BY n.newsfeed_id desc
 	</sql>
 	
 	<select id="getCountLike" parameterType="int" resultType="int">

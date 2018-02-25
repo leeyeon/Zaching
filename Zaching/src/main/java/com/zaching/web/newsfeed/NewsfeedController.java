@@ -117,7 +117,7 @@ public class NewsfeedController {
 		
 	}
 	@RequestMapping(value="listNewsfeed")
-	public String listNewsfeed( @ModelAttribute("search") Search search,  Model model, HttpServletRequest request) throws Exception{
+	public String listNewsfeed( @ModelAttribute("search") Search search,  Model model, HttpServletRequest request, HttpSession session) throws Exception{
 		System.out.println("listNewsfeed");
 		
 		
@@ -127,7 +127,11 @@ public class NewsfeedController {
 		if(search.getSearchCondition() == null) {
 			search.setSearchCondition("N06");
 		}
-		search.setPageSize(pageSize);
+		if(search.getCategory() == null && session.getAttribute("user") != null) {
+			System.out.println("fdsaf");
+			search.setCategory(String.valueOf(((User)session.getAttribute("user")).getUserId()));
+		}
+		search.setPageSize(15);
 		Map<String, Object> map = newsfeedService.listNewsfeed(search);
 		//List<Newsfeed> list = newsfeedService.listNewsfeeds(search);
 		//User user = userService.getUser(userId);

@@ -1927,6 +1927,16 @@ SHARE BUTTONS
 	top: 0;
 	left: 0;
 }
+
+.likeit-wrap .like-text fa:after {
+	content: "\e802"; /* fa-heart-o */
+	color: #E26F6A;
+	text-indent: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
 .likeit-wrap .likeit:hover .like-text:after {
 	content: "\e802"; /* fa-heart */
 }
