@@ -36,6 +36,7 @@ public class MessageDaoImpl implements MessageDao{
 		
 	}
 
+
 	@Override
 	public void deleteMessage(int messageId) throws Exception {
 		sqlSession.delete("MessageMapper.deleteMessage",messageId);
@@ -71,6 +72,7 @@ public class MessageDaoImpl implements MessageDao{
 		int result = sqlSession.selectOne("MessageMapper.checkRoom", map);
 		
 		return result;
+	}
 	
 	}
-}
+

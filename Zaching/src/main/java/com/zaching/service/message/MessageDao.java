@@ -27,5 +27,6 @@ public interface MessageDao {
 	public int checkRoom(int userId, int friendId) throws Exception;
 	
 	public List<Message> listMessagebyRoomId(Search search) throws Exception;
+	
 
 }

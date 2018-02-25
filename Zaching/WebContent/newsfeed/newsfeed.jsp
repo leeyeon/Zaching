@@ -17,7 +17,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" type="image/x-icon" href="../resources/images/newsfeedImages/fav-icon.png" />
 		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-		<link rel="stylesheet" type="text/css" href="../resources/css/default.css" />
+		<link rel="stylesheet" type="text/css" href="../resources/css/default.css" /> 
 		<link rel="stylesheet" type="text/css" href="../resources/css/component.css" />
 		<script type="text/javascript" src="../resources/javascript/FileButton.js"></script> 
 		<!----webfonts---->
@@ -33,7 +33,7 @@
         <!----start-dropdown--->
         <jsp:include page="/resources/layout/toolbar.jsp"/>
         
-	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
+		<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
          <script type="text/javascript">
          
          $(function(){
@@ -433,7 +433,7 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   text-shadow: none;
-  content: '등록하기';
+  content: '         등록하기';
   position: absolute;
   opacity: 0;
   top: 2.5px;
@@ -526,7 +526,7 @@
 								<div class="post-basic-info">
 									<span><a href="#">
 
-									<label></label>
+									<label style="margin-bottom: 0"></label>
 										<c:if test="${newsfeed.categoryCode.equals('N01')}">재잘재잘</c:if>
 
 										<c:if test="${newsfeed.categoryCode.equals('N02')}">중고거래</c:if>
@@ -737,7 +737,7 @@
 										displayValue += '<img src="../resources/images/sample_bob_background.jpg" style="width: 100%"/>';
 									displayValue = displayValue + '<div class="post-info">'+
 										'<div class="post-basic-info">'+
-											'<span><a href="#"><label> </label>';
+											'<span><a href="#"><label style="margin-bottom: 0"> </label>';
 											if(JSONData[i].categoryCode == 'N01')
 												displayValue += '재잘재잘';
 											if(JSONData[i].categoryCode.includes('N10'))
