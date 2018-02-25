@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,7 @@ import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
 import com.zaching.service.broadcast.BroadcastService;
+import com.zaching.service.domain.Payment;
 import com.zaching.service.domain.User;
 import com.zaching.service.payment.PaymentService;
 import com.zaching.service.user.UserService;
@@ -121,5 +123,54 @@ public class BroadcastRestController {
       
       return json;
    }
+ 
    
+   @RequestMapping("json/payment")
+   @ResponseBody
+   public String payment(@RequestParam int userId,
+		   					@RequestParam int receiverId,
+		   					@RequestParam int point,
+		   					@RequestParam String callback) throws Exception {
+	   
+	  System.out.println(this.getClass()+"/json/payment");
+	
+	  JSONObject json = new JSONObject();
+	  json.put("point", point);
+	  
+	  System.out.println("parameter : "+userId +"//"+ receiverId +"//"+ point);
+
+	  User receiver = userService.getUser(receiverId);
+	  
+	  System.out.println(receiver);
+	  
+	  boolean result = true;
+	  
+	  int currentPoint = paymentService.getPoint(userId);
+	  
+	  System.out.println("Æ÷ÀÎÆ® ::" +currentPoint);
+	  
+	  if(currentPoint >= point) {
+		  Payment payment = new Payment(); 
+		  payment.setUserId(userId);
+		  payment.setReceiverId(receiverId);
+		  payment.setPoint(point);
+		  payment.setContent("P07:"+receiverId+":"+receiver.getName());
+	      paymentService.presentPoint(payment);
+	      System.out.println(payment);
+	      
+	  } else {
+		  result = false;
+	  }
+      
+     if(result) {
+    	 json.put("response", "success");
+     } else {
+    	 json.put("response", "fail");
+	 }
+  
+     System.out.println(json.toJSONString());
+     
+      return callback+"("+json+")";
+   }
+
 }

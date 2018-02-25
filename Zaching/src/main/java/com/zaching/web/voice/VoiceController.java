@@ -51,7 +51,7 @@ public class VoiceController {
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 	
-	private String fileDirectory = "C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
+	private String fileDirectory = "C:\\Users\\소현태\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
 	
 	public VoiceController() {
 		System.out.println(this.getClass());
@@ -89,7 +89,7 @@ public class VoiceController {
 	            Graphics2D g = outputImage.createGraphics();
 	            g.drawImage(inputImage, 0, 0, width, height, null);
 	            System.out.println(voice.getBackgroundImage());
-	            File out = new File("C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\images\\voiceImages\\"+voice.getBackgroundImage());
+	            File out = new File("C:\\Users\\소현태\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\"+voice.getBackgroundImage());
 	            FileOutputStream fos = new FileOutputStream(out);
 	            System.out.println("ssss"+voice.getBackgroundImage().substring(voice.getBackgroundImage().indexOf(".")+1));
 	            ImageIO.write(outputImage, voice.getBackgroundImage().substring(voice.getBackgroundImage().indexOf(".")+1), fos);
@@ -145,8 +145,7 @@ public class VoiceController {
 		FileOutputStream outputStream = null;
 		
 		inputStream = new FileInputStream(link);
-		outputStream = new FileOutputStream("C:\\Users\\jiwon\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\audio");
-		
+		outputStream = new FileOutputStream("C:\\Users\\소현태\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\audio");
 		FileChannel fcin = inputStream.getChannel();
 		FileChannel fcout = outputStream.getChannel();
 		

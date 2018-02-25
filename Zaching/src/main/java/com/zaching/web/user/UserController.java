@@ -67,8 +67,8 @@ public class UserController {
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 	
-	private String fileDirectory = "C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
-
+	//private String fileDirectory = "C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
+	private String fileDirectory = "C:\\Users\\소현태\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
 
 
 
@@ -268,7 +268,7 @@ public class UserController {
 	            Graphics2D g = outputImage.createGraphics();
 	            g.drawImage(inputImage, 0, 0, width, height, null);
 
-	            File out = new File("C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\"+user.getProfileImage());
+	            File out = new File("C:\\Users\\소현태\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\"+user.getProfileImage());
 	            FileOutputStream fos = new FileOutputStream(out);	            
 	            ImageIO.write(outputImage, user.getProfileImage().substring(user.getProfileImage().indexOf(".")+1), fos);
 		}

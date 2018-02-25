@@ -41,7 +41,7 @@
 			<if test="paymentCode == 'P01' || paymentCode == 'P05' || paymentCode == 'P06'">
 				total_point = total_point + #{point}
 			</if>
-			<if test="paymentCode == 'P02' || paymentCode == 'P03'">
+			<if test="paymentCode == 'P02' || paymentCode == 'P03' || paymentCode == 'P07'">
 				total_point = total_point - #{point}
 			</if>
 			<if test="paymentCode == 'M01' || paymentCode == 'M03'">
@@ -77,15 +77,18 @@
 		</where>
 	</update>
 	
-	<insert id="presentPoint">
+	<insert id="presentPoint"
+			parameterType="payment">
 		INSERT
 		INTO PAYMENT (payment_id, time, payment_code, money, user_id, receiver_id, content)
 		VALUES (seq_payment_id.nextval,
 				SYSDATE,
-				"P07",
+				'P07',
 				#{point},
 				#{userId},
-				"포인트 선물")
+				#{receiverId},
+				#{content}
+		)
 	</insert>
 	
 	<select id="listPoint" 
@@ -113,7 +116,7 @@
 			content
 		FROM PAYMENT
 		<where>
-			( user_id = #{userId} OR receiver_id = #{userId} )			
+			user_id = #{userId}
 			AND substr(payment_code,0,1) = 'P'
 			<if test="search.searchCondition != null and search.searchCondition != ''">
 				<if test="search.searchCondition eq 0">

@@ -78,6 +78,7 @@ public class paymentServiceImpl implements PaymentService {
 	// P07
 	@Override
 	public void presentPoint(Payment payment) throws Exception {
+		payment.setPaymentCode("P07");
 		// point column insert
 		paymentDao.presentPoint(payment);
 		// 보내는 사람 포인트 차감

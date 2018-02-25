@@ -91,64 +91,144 @@
          color: #FFFFFF;
          box-shadow: 0 5px 15px -5px #666;
           }
-      .modal {
-        overflow: inherit;
-        overflow-y: inherit;
-        text-align: center;
-        padding: 0;
-      }
-      
-      .modal:before {
-        content: '';
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: -4px;
-      }
-      
-      .modal-dialog {
-        max-width: 500px;
-        padding: 0;
-        display: inline-block;
-        text-align: left;
-        vertical-align: middle;
-      }
-      
-      .modal-content {
-      
-        border: 0;
-        border-radius: 0;
-      
-      }
-      
-      .modal-header {
-        border: 0;
-        padding 0;
-        position: relative;
-      }
-      
-      .modal-header .close {
-        margin: 0;
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        width: 23px;
-        height: 23px;
-        border-radius: 23px;
-        background-color: #00aeef;
-        color: #ffe300;
-        font-size: 9px;
-        opacity: 1;
-        z-index: 10;
-      }
-      
-      .modal-content p {
-        padding: 0 20px;
-      }
-      
-      .modal-body {
-        padding: 0 0 10px 0;
-          overflow: auto;
-      }
+          
+	.filebox label {
+	    display: inline-block;
+	    padding: .5em .75em;
+	    color: #999;
+	    font-size: inherit;
+	    line-height: normal;
+	    vertical-align: middle;
+	}
+	.filebox label {
+	    display: inline-block;
+	    padding: .5em .75em;
+	    color: #999;
+	    font-size: inherit;
+	    line-height: normal;
+	    vertical-align: middle;
+	}
+	 
+	.filebox input[type="file"] {  
+	    position: absolute;
+	    width: 1px;
+	    height: 1px;
+	    padding: 0;
+	    margin: -1px;
+	    overflow: hidden;
+	    clip:rect(0,0,0,0);
+	    border: 0;
+	}
+	a:link, a:visited { 
+	    color: #00000;
+	 }
+	  a:link:active, a:visited:active { 
+	    color: #00000;
+	 }
+	 
+	.profile-img {
+		border-radius: 50%;
+	}
+	
+	.link-style {
+	    float: right;
+	    /* top: 10px; */
+	    position: relative;
+	    right: 0;
+	    top: 6px;
+	}
+	
+	.button-container {
+  display: inline-block;
+  margin: 10px 10px;
+  cursor: pointer;
+  font-weight: 400;
+  letter-spacing: 2px;
+  height: 45px;
+  width: 200px;
+  -webkit-perspective: 1000;
+  -ms-perspective: 1000;
+  perspective: 1000;
+}
+.button-container .flipper {
+  transition: all .5s ease-in-out;
+  -webkit-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  position: relative;
+}
+.button-container .button {
+  height: 45px;
+  width: 160px;
+  border-radius: 3px;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  -webkit-box-shadow: 1px 2px 4px -1px rgba(60, 60, 60, 0.64);
+  box-shadow: 1px 2px 4px -1px rgba(60, 60, 60, 0.64);
+}
+.button-container .button i.fa {
+  color: white;
+  font-size: 20px;
+  margin: auto;
+  text-shadow: .5px 1px 2px #3c3c3c;
+}
+.button-container .button.front {
+  z-index: 10;
+}
+.button-container .button.back {
+  color: white;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+/* -------------------------------- 
+			Slide
+-------------------------------- */
+.slider i {
+  transition: all .3s ease-in-out;
+}
+.slider i:before {
+  transition: all .3s ease-in-out;
+}
+.slider i:after {
+  font-family: "Lato", sans-serif;
+  color: white;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: none;
+  content: '등록하기';
+  position: absolute;
+  opacity: 0;
+  top: 2.5px;
+  transition: all .3s ease-in-out;
+}
+
+/*** Horizontal Slide ***/
+.button-slide-horizontal .button {
+  background-image: linear-gradient(90deg, #ea4c89, #ee9b83);
+}
+.button-slide-horizontal i {
+  position: relative;
+  display: inline-block;
+  transition: all .3s ease-in-out;
+}
+.button-slide-horizontal i:before {
+  transition: all .3s ease-in-out;
+}
+.button-slide-horizontal:hover i {
+  padding-right: 100px;
+}
+.button-slide-horizontal:hover i:before {
+  opacity: 0;
+}
+.button-slide-horizontal:hover i:after {
+  opacity: 1;
+}		
       @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
       #myModal { font-family: 'Jeju Gothic'; }
    }
@@ -164,12 +244,10 @@
          $(document).on("click",'body > section.listings > div > ul > li > img', function(){
             var index = $("body > section.listings > div > ul > li > img").index(this);
             var broadcastId = $($("input[name=broadcastId]")[index]).val();
-            alert("sad");
-               //$(self.location).attr("href","http://localhost:3000/broadcast?broadcaster="+broadcastId+"&connectUserId="+${sessionScope.user.userId}); 
                winOpen();
                
                function winOpen() {
-                  window.open("http://192.168.0.34:3000/broadcast?broadcaster="+broadcastId+"&connectUserId="+${sessionScope.user.userId} ,"addBroadcast","width=1450,height=900,toolbar=no")
+                  window.open("http://192.168.0.31:3000/broadcast?broadcaster="+broadcastId+"&connectUserId="+${sessionScope.user.userId} ,"addBroadcast","width=1450,height=900,toolbar=no")
                  
                   }
          });
@@ -202,7 +280,7 @@
          else
             var searchKeyword = '${searchKeyword}';
             
-         $("body > section.listings > div > div > p10").on("click", function(){
+         $(document).on('click',"body > section.listings > div > div > p10", function(){
             fnc_listing();
          });
          
@@ -233,6 +311,7 @@
             for(var i=0; i<serverData.length; i++){                           
                   display = display + '<li>'+ 
                      '<img src = "../resources/upload_files/images/'+serverData[i].image+'" onerror="this.src=\'../resources/images/broadcast_default.jpg\'" />'+
+                     '<input type="hidden" name="broadcastId" value="'+serverData[i].broadcastId+'">'+
                      '<div class="property_details" style="width: 100%" >'+
                         '<div class ="user_thumnail">'+
                         '<h1>'+
@@ -250,16 +329,7 @@
                }
             });
          }
-      });
-         
-      
-      $(function(){
-         $(document).on('click','#addBroadcast', function(){
-            alert("ㅎㅇ");
-            addBroadcast();
-         });
-      });
-      
+      });    
 
       //dialog ajax
       function addBroadcast(){
@@ -391,11 +461,65 @@
    </div>
    <!--  방만들기 버튼 끝 -->
 
+	 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document" style=" width: 500px;" >
+		    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><b>방 만들기</b></h4>
+        <form id="addBroadcastForm" enctype="multipart/form-data" method="post">
+		<input type="hidden" value="${user.userId}" name="userId" id="userId"/>	
+		
+		<div class="container">
+			<div class="row">
+				<table border="1">
+				  <tr>
+					<td width="250">
+						<div class="form-group" align="left">
+						   <input type="text" name="title" placeholder="제목" style="font-size: 20px; height: 50px; padding-left: 20px; border: none; border-bottom: 1px solid #eee;" />
+						</div>
+						<div class="form-group" align="left">
+						   <textarea name="detail" placeholder="상세정보" style="font-size: 20px; width: 450px; height: 150px; padding-left: 20px; border: none; border-bottom: 1px solid #eee; rows="7"></textarea>
+						</div>
+					</td>						  
+				  </tr> 
+				</table>
+				
+				<table border="1">
+				  <tr>
+					<td style="table-layout:fixed" width="220px">
+						<div class="filebox">
+					        <label for="cma_file">사진 인증샷 업로드</label>
+							<input type="file" name="file" id="cma_file" imageswap="true" accept="image/*" capture="camera" onchange="getThumbnailPrivew(this,$('#cma_image'))"/>
+					        <div id="cma_image" style="width:200px;max-width:200px;display:none;"></div>
+					    </div>
+					</td>	
+					
+					<td width="170" style="text-align: right; vertical-align: middle;">
 
-   <!--modal addBroadcast-->
-   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
+						<div class="button-container button-slide-horizontal" onclick="addBroadcast();">
+					        <div class="slider slider-horizontal">
+					            <div class="button">
+					              	<i class="fa fa-dribbble"></i>
+					            </div>
+					        </div>
+				    	</div>
+
+					</td>					
+				  </tr>
+				</table>
+				</div>
+		   </div>
+		</form>
+	</div>
+	</div>
+  </div>
+</div>
+
+   <!--modal addBroadcast
+	 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
     
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -413,13 +537,7 @@
       <input type="file" name="file" id="cma_file" imageswap="true" accept="image/*" capture="camera" onchange="getThumbnailPrivew(this,$('#cma_image'))"/>
         <div id="cma_image" style="width:200px;max-width:200px;display:none;"></div>
     </div>
-      <div >
-            <b>금지어</b>
-            <table id="addForbidden" >
-                <tr></tr>
-            </table>
-                 <input name="addButton" type="button" class='btn-broad' style="cursor:hand" onClick="insRow()" value="추가"/>
-      </div>  
+  
       <div class="modal-footer">
        <div class="topnav">
       <div class="search-container">
@@ -432,6 +550,7 @@
     </div>
   </div>
 </div>
+          -->
           
 </body>
 </html>

@@ -63,7 +63,7 @@ public class NewsfeedController {
 			String fileName = newsfeed.getFile().getOriginalFilename();
 			newsfeed.setFileName(fileName);
 			
-			File file = new File("C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\"+fileName);
+			File file = new File("C:\\Users\\¼ÒÇöÅÂ\\git\\Zaching\\Zaching\\WebContent\resources\\upload_files\\images\\"+fileName);
 			
 			newsfeed.getFile().transferTo(file);
 		}
