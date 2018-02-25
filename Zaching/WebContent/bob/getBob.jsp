@@ -801,17 +801,6 @@
 	      	
 	      	<hr>
 		     <!--  후기 댓글 -->
-		     <div class="row">
-		    	<c:if test="${bob.status eq 'Y'}">
-			      	<div class="col-xs-9">
-				      	<input type="text" name="inputReview" class="form-control" style="width: 100%; height: 150px; font-size:16px;"
-				      		placeholder="${!empty sessionScope.user? '후기를 입력해주세요.':'로그인을 해주세요.'}"/>
-			      	</div>
-			      	<div class="col-xs-3">
-			      		<button type="submit" class="form-control" style=" color: #FFF; height:45px; font-size: 16px;">후기 올리기</button>
-			      	</div>
-		      	</c:if>   	
-	      	</div>
 
 			<div id="testimonials" class="container">
 		        <div class="sectionhead wow bounceInUp" data-wow-duration="2s" style="font-color: black; padding-bottom: 0;">

@@ -11,41 +11,12 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!--   jQuery , Bootstrap CDN  -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- ToolBar Start /////////////////////////////////////-->
-<jsp:include page="/resources/layout/sub_toolbar.jsp" />
-<!-- ToolBar End /////////////////////////////////////-->
+
 <style>
-@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
 
-h2 {
-	font-family: 'Nanum Pen Script', cursive;
-}
-
-@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
-
-b {
-	font-family: 'Nanum Pen Script', cursive;
-}
-
-@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
-
-h3 {
-	font-family: 'Nanum Pen Script', cursive;
-}
 
 body {
 	padding-top: 50px;
-}
-
-.btn btn-primary {
-	
 }
 
 html, body {
@@ -236,13 +207,8 @@ body {
 
 
 <script type="text/javascript">
-	function fncGetUserList(currentPage) {
-		//document.getElementById("currentPage").value = currentPage;
-		$("#currentPage").val(currentPage)
-		//document.detailForm.submit();
-		$("form").attr("method", "POST").attr("action", "/message/listMessage")
-				.submit();
-	}
+
+var roomindex = 0;
 
 	$('#build').bind('click', function() {
 		var inputText = $('#buildInput').val();
@@ -289,20 +255,23 @@ body {
 	}
 	
 	$(function() {
-
 		
 		
 		$( "a.send-btn:contains('send')" ).on("click" , function() {
 			addMessage();
-
 		});
 		
+		$( "#msgInput" ).on( "keydown" , function(e) {
+			if(e.keyCode == 13) {
+				addMessage();
+				return false;
+			}
+		});
 
 	 	$(document).on('click',"div[name='messageContent']", function() {
 	 		var index= $($("input[name=roomId]")[$("div[name='messageContent']").index(this)]).val(); 		
 	 		roomindex =  $($("input[name=friendIdinfo]")[$("div[name='messageContent']").index(this)]).val();
 	 		
-
 	 		$.ajax({
 	 		               url : "/message/json/listMessage",
 	 		               method : "POST",
@@ -316,7 +285,6 @@ body {
 	 		            	   var messageContent="";
 	 		            	   
 	 		            	   if(serverData != null) {
-
 	 		            		   var friendId;
 	 		            		   var profile;
 	 		            		   var checkImage=0;
@@ -360,20 +328,20 @@ body {
 									+ '<input type="hidden" value = "'+friendId+'" name= "friendId"/>'
 									+ '<input type="hidden" value = "'+index+'" name= "roomId"/><div style="overflow-y: auto;  height: 450px;">';
 	 		            		   
-
 		 		            	   for(var i=0; i<serverData.length; i++){
-		 		            		  
+		 		            		  	//messageContent +='<div style="overflow:scroll;">'
 		 		            		  if(serverData[i].userId != ${user.userId}){
 		 		            			messageContent +=  '<div class="message left"><div class="message-text">'
-			 		            		   +serverData[i].content
-			 		            		   +'</div></div>';
+			 		            		   +serverData[i].content+'</div>'
+			 		            		  +'<div class="row col-xs-12" style="padding-left: 40px; font-size: 11px;">'+serverData[i].createdDate+'</div></div>';
 		 		            		    
 		 		            		  }else{
 		 		            			messageContent +=  '<div class="message right"><div class="message-text">'
-			 		            		   +serverData[i].content
-			 		            		   +'</div></div>';
-		 		            		  
+			 		            		   +serverData[i].content+'</div>'
+			 		            		  +'<div class="row col-xs-12 text-right" style="padding-left: 40px; font-size: 11px;">'+serverData[i].createdDate+'</div></div>';
 		 		            		  }
+		 		            		  	
+		 		            		  	//messageContent += '<div class="row col-xs-12" style="padding-left: 40px; font-size: 13px;">'+serverData[i].createdDate+'</div></div>';
 		 		            	   }
 		 		            	  messageContent += '</div>';
 	 		            	   } else {
@@ -382,26 +350,80 @@ body {
 	 		            	   $("#messegeBox").html("");
 	 		            	   $("#messegeBox").append(messageContent);
 	 		            	  $("#messageModal").modal('show');
-
 	 		            	 $("#messageModal").scrollTop($("#messageModal")[0].scrollHeight);
 	 		            	  
-
 	 		               },
 	 		               error:function(request,status,error){
 	 		                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	 		                   
-	 		                
 	 		               }
 	 		            });
-
 	 			
 	 		});
-
 	
 		});
 	
-		
+ 	function addMessage(){
+ 		
+ 		//alert(JSON.stringify($("#send").serializeObject()));
+		var content = $("input[name='content']").val();
+			
+		　if(content=="" || content.length<1){ 
+		　	alert('메세지를 입력해주세요.');
+				return;
+		　} 
+			
+			$.ajax({
+	               url : "/message/json/addMessage",
+	               method : "POST",
+	               contentType : "application/json; charset=UTF-8",
+	               data : JSON.stringify($("#send").serializeObject()),
+	               dataType : "json",
+	               async: false,
+	               success : function(serverData) {
+	            	   var messageContent =  '<div class="message right"><div class="message-text">'
+	 		            		   +serverData.content +'</div></div>';
+	 		            		   
+	            	   $("#messegeBox").append(messageContent);
+	            	  
+	               },
+	               error:function(request,status,error){
+	                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	               }
+	        });
+	
+		};
 
+	$.fn.serializeObject = function()
+
+	{
+
+	   var o = {};
+
+	   var a = this.serializeArray();
+
+	   $.each(a, function() {
+
+	       if (o[this.name]) {
+
+	           if (!o[this.name].push) {
+
+	               o[this.name] = [o[this.name]];
+
+	           }
+
+	           o[this.name].push(this.value || '');
+
+	       } else {
+
+	           o[this.name] = this.value || '';
+
+	       }
+
+	   });
+
+	   return o;
+
+	};
 
 </script>
 
@@ -411,40 +433,36 @@ body {
 <body>
 
 
-	<div class="container" style="padding-top: 80px;">
+	<div class="container" style=" width: 100%">
 
-		<div class="page-header text-info" style="color: #000000;">
-			<h2>메세지목록</h2>
+		<div class="page-header text-info" style="color: #000000; border-bottom-color: #927490; margin-bottom:0;">
+			<img src="../resources/images/Message_Icon.png" width="20px" height="20px" align="left"/><h2> &nbsp;메세지목록</h2>
 		</div>
-
-		<div class="row">
-
-
-			<table class="table table-hover">
-				<div class="col-xs-6 col-sm-4 ">
+		
+		<table class="table table-hover">
+			<!--  <div class="row">
+				<div class="col-xs-3 col-sm-3 ">
 					<h2>
 						<b>친구이름</b>
 					</h2>
 				</div>
-				<div class="col-xs-6 col-sm-4 ">
+				<div class="col-xs-6 col-sm-6 ">
 					<h2>
 						<b>내용</b>
 					</h2>
 				</div>
-				<div class="col-xs-6 col-sm-4 ">
+				<div class="hidden-xs">
+				<div class="col-xs-3 col-sm-3 ">
 					<h2>
 						<b>날짜</b>
 					</h2>
 				</div>
-
-
+				</div>
+			</div>-->
 
 				<c:forEach var="message" items="${list}">
-
 				<div class="row" style="border-bottom:1px solid gray; padding-bottom:30px; padding-top:10px;">
-
 					<input type="hidden" name="roomId" value="${message.roomId }">
-
 							<input type="hidden" value="${message.userId}" name="friendIdinfo"/>
 					<h3><a href="/user/getTimeLine?userId=${message.friendId}"  class="col-xs-2 col-sm-2 " style="color: #000000; padding-right:20pt;" name="messageName">
 						<img src="../resources/upload_files/images/${message.friendProfileImage}" id="profile" width="70px" height="70px"
@@ -459,11 +477,12 @@ body {
 					<c:if test="${message.userId ne sessionScope.user.userId }">
 						<div style="font-style: italic; float: left; cursor: pointer;" >${message.content }</div>
 					</c:if>
-
+						
 					</div>
-
+					</h3>
+					
+				</div>
 				</c:forEach>
-
 		</table>
 	</div>
 	
@@ -481,14 +500,13 @@ body {
 						<div class="send-container">
 							<input type="text" id="msgInput" class="send-input" placeholder="메세지내용" name="content">
 							<a href="#" class="send-btn" data-dismiss="modal"  value="Send" style="padding: 20px;">send</a>
-
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
-			
-			
-			</div>
+		</div>
+	</div>
+	
 </body>
 
 </html>

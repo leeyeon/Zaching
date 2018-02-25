@@ -6,10 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
-
-import java.util.Date;
 import java.util.List;
-
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -29,11 +26,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
-
-import com.zaching.service.domain.Friend;
 import com.zaching.service.domain.Newsfeed;
 import com.zaching.service.domain.User;
 import com.zaching.service.friend.FriendService;
+import com.zaching.service.message.MessageService;
 import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.user.UserService;
 
@@ -57,7 +53,13 @@ public class UserController {
 	@Autowired
 	@Qualifier("friendServiceImpl")
 	private FriendService friendService;
-	// setter Method ���� ����
+	// setter Method ���� �
+	
+	@Autowired
+	@Qualifier("messageServiceImpl")
+	private MessageService messageService;
+	
+
 
 	public UserController() {
 		System.out.println(this.getClass());
@@ -68,8 +70,8 @@ public class UserController {
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 	
-	//private String fileDirectory = "C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
-	private String fileDirectory = "C:\\Users\\소현태\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
+	private String fileDirectory = "C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\";
+
 
 
 
@@ -104,7 +106,7 @@ public class UserController {
 	@RequestMapping(value = "getTimeLine", method = RequestMethod.GET)
 	public String getTimeLine(@RequestParam("userId") int userId, @ModelAttribute("userId") int userId2, Model model, HttpServletRequest request,HttpSession session) throws Exception {
 
-
+		int myId = ((User)(session.getAttribute("user"))).getUserId();
 		System.out.println("/user/getTimeLine : GET");
 		// Business Logic
 		User user = userService.getUser(userId);
@@ -118,6 +120,12 @@ public class UserController {
 		int count = friendService.checkFriend(id, userId, 0);
 		int count2 = friendService.checkFriend(userId, id, 0);
 		int count3 = friendService.checkFollow(id, userId, 1);
+		
+		
+		
+		//int roomId = messageService.roomId(myId, userId);
+		
+		
 		
 		int code=0;
 		
@@ -143,6 +151,7 @@ public class UserController {
 		model.addAttribute("code", code);
 		model.addAttribute("user", user);
 		model.addAttribute("list", list);
+		
 		
 		System.out.println(list);
 		
@@ -270,7 +279,7 @@ public class UserController {
 	            Graphics2D g = outputImage.createGraphics();
 	            g.drawImage(inputImage, 0, 0, width, height, null);
 
-	            File out = new File("C:\\Users\\소현태\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\"+user.getProfileImage());
+	            File out = new File("C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\images\\"+user.getProfileImage());
 	            FileOutputStream fos = new FileOutputStream(out);	            
 	            ImageIO.write(outputImage, user.getProfileImage().substring(user.getProfileImage().indexOf(".")+1), fos);
 		}
