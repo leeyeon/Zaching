@@ -3,6 +3,8 @@ package com.zaching.web.newsfeed;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +20,7 @@ import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
 import com.zaching.service.domain.Comment;
 import com.zaching.service.domain.Newsfeed;
+import com.zaching.service.domain.User;
 import com.zaching.service.newsfeed.NewsfeedService;
 
 @RestController
@@ -79,7 +82,7 @@ public class NewsfeedRestController {
 	}
 	
 	@RequestMapping(value="json/listNewsfeed")
-	public List listNewsfeed(@RequestBody String pageInfo) throws Exception {
+	public List listNewsfeed(@RequestBody String pageInfo, HttpSession session) throws Exception {
 		System.out.println("newsfeed/json/listNewsfeed");
 		System.out.println(pageInfo);
 		String[] info = pageInfo.split("&");
@@ -92,7 +95,10 @@ public class NewsfeedRestController {
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		search.setCategory(category[1]);
+		if(search.getCategory() == null && session.getAttribute("user") != null) {
+			System.out.println("fdsaf");
+			search.setCategory(String.valueOf(((User)session.getAttribute("user")).getUserId()));
+		}
 		search.setPageSize(pageSize);
 		Map<String, Object> map = newsfeedService.listNewsfeed(search);
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);

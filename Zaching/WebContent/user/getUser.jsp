@@ -62,8 +62,12 @@
         }
         #updateUser{
         	color: #fff;
-   			background-color: #5f4b8b;
+   			background-color: cornflowerblue;
         }
+       
+ 		body > div.container > div.info{
+ 		 border: 2px solid #8d929a9c;
+ 		}
      </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -81,7 +85,7 @@
 	
 </head>
 
-<body>
+<body style="background: powderblue;">
 
 	<!-- ToolBar Start /////////////////////////////////////-->
 	
@@ -105,7 +109,7 @@
 	       
 	    </div>
 		<ul>
-		<li class="row" >
+		<li class="row" style="margin-left: -60px;">
 	  		<c:if test="${user.profileImage ne null }">
 	  		<img alt="" src="../resources/upload_files/images/${user.profileImage }" class="profileImage"
 	  			style="max-width: 100%; width: 180px; border-radius: 50%;"></c:if>
@@ -128,8 +132,8 @@
 		
 		<li class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>성 별</strong></div>
-	  		<c:if test="${user.gender.trim() eq '1' }">&nbsp;남</c:if>
-			<c:if test="${user.gender.trim() eq '2' }">&nbsp;여</c:if>
+	  		<c:if test="${user.gender.trim() eq '1' }"><div class="col-xs-8 col-md-4">남</div></c:if>
+			<c:if test="${user.gender.trim() eq '2' }"><div class="col-xs-8 col-md-4">여</div></c:if>
 			
 		</li><hr>
 

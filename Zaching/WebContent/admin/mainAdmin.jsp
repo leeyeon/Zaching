@@ -123,7 +123,7 @@ $("#point").on("click", function() {
   <div id="clickicon">
    <div class="row">
             <div class="col-md-4">
-     	       <img src="/resources/images/user.png"/>
+     	       <img src="/resources/images/userupdate.png"/>
   				<div id="text"><b>01. </b>회원관리</div>
   				<br/>
   				<div id="readmore">

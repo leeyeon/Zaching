@@ -917,7 +917,7 @@ svg {
 	     					    <a href="#" class="more" id="findPassword" >비밀번호를 잊으셨나요?</a>
 	       					</div>
 	        				<div class="row social-login text-center">
-								<ul class="sns-login">
+								<ul class="sns-login" style="list-style-type: none;">
 									<li><a href="#kakaoLogin" id="kakaoLogin"> <img
 											src="/resources/images/KakaoTalk_lcon.png" class="img-rounded"
 											width="50" height="50" type="button" id="kakaologin" /></a>
@@ -936,8 +936,7 @@ svg {
 								</ul>
 							</div>        					        
     				    </div>
-    				<div class="signup-cont cont">
-                	
+    				<div class="signup-cont cont">                	
 					    <input type="text" name="name" id="name" class="inpt" required="required" placeholder="이름">
                         <input type="text" name="email" id="checkEmail" class="inpt" required="required" placeholder="이메일">
                         <span id="checkbtn" class="icon-search"></span>

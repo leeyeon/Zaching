@@ -203,6 +203,35 @@ body {
 	font-size: 1em;
 	cursor: pointer;
 }
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+	border: 3px solid #fff;
+}
+
+::-webkit-scrollbar-button:start:decrement, ::-webkit-scrollbar-button:end:increment
+	{
+	display: block;
+	height: 10px;
+	background: url('./images/bg.png') #efefef
+}
+
+::-webkit-scrollbar-track {
+	background: #efefef;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, .2)
+}
+
+::-webkit-scrollbar-thumb {
+	height: 50px;
+	width: 50px;
+	background: rgba(0, 0, 0, .2);
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	-webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, .1)
+}
 </style>
 
 
@@ -258,18 +287,21 @@ body {
 					$('<div>').addClass('message-text').text(msg)));
 		}
 	}
-
+	
 	$(function() {
 
-		$("#messageSend").on('click', function() {
+		
+		
+		$( "a.send-btn:contains('send')" ).on("click" , function() {
+			addMessage();
 
-			alert("보내기완료");
 		});
 		
 
-	 	$(document).on('click',"a[name='messageContent']", function() {
-	 		var index= $($("input[name=roomId]")[$("a[name='messageContent']").index(this)]).val();
-	 		alert(index);	 		
+	 	$(document).on('click',"div[name='messageContent']", function() {
+	 		var index= $($("input[name=roomId]")[$("div[name='messageContent']").index(this)]).val(); 		
+	 		roomindex =  $($("input[name=friendIdinfo]")[$("div[name='messageContent']").index(this)]).val();
+	 		
 
 	 		$.ajax({
 	 		               url : "/message/json/listMessage",
@@ -284,6 +316,51 @@ body {
 	 		            	   var messageContent="";
 	 		            	   
 	 		            	   if(serverData != null) {
+
+	 		            		   var friendId;
+	 		            		   var profile;
+	 		            		   var checkImage=0;
+	 		            		  var friendName;
+	 		            		  if(serverData[0].userId != ${user.userId}){
+	 		            		  	friendId = serverData[0].userId;
+	 		            		  	for(checkImage;checkImage<serverData.length; checkImage++){
+	 		            		  		if(serverData[checkImage].userId == ${user.userId}){
+	 		            		  			profile = serverData[checkImage].friendProfileImage;
+	 		            		  			friendName = serverData[checkImage].friendName;
+	 		            		  			break;
+	 		            		  		}
+	 		            		  		
+	 		            		  	}
+	 		            		   /*	while(serverData[checkImage].userId != ${user.userId}){
+	 		            		   		checkImage++;
+	 		            		   		profile = serverData[checkImage].friendProfileImage;
+	 		            		   		friendName = serverData[checkImage].friendName;
+	 		            		   		alert(profile);
+	 		            		   	}*/
+	 		            		  }else{
+	 		            			  friendId = serverData[0].friendId;
+	 		            			 profile = serverData[0].friendProfileImage;
+	 		            			friendName = serverData[0].friendName;
+	 		            		  }
+	 		            		  if(profile == null && checkImage < serverData.length){
+	 		            			  
+	 		            			  messageContent += '<div><img src="../resources/images/profile_default.png" style="width:60px; height:60px; border-radius: 150px; margin: 10pt;" >&nbsp;'+friendName+'</div>';
+	 		            		  
+	 		            		  }
+	 		            		 if(profile == null && checkImage == serverData.length){
+	 		            			  
+	 		            			  messageContent += '<div><img src="../resources/images/profile_default.png" style="width:60px; height:60px; border-radius: 150px; margin: 10pt;" >&nbsp;친구가 아직 수락하지 않았습니다.</div>';
+	 		            		  
+	 		            		  }
+	 		            		  if(profile != null){
+	 		            			  
+	 		            			  messageContent += '<div><img src="../resources/images/'+profile+'" style="width:60px; height:60px; border-radius: 150px; margin: 10pt;">&nbsp;'+friendName+'</div>';
+	 		            		  }
+	 		            		 messageContent +=' <input type="hidden" value="${sessionScope.user.userId}" name="userId"/>	'			
+									+ '<input type="hidden" value = "'+friendId+'" name= "friendId"/>'
+									+ '<input type="hidden" value = "'+index+'" name= "roomId"/><div style="overflow-y: auto;  height: 450px;">';
+	 		            		   
+
 		 		            	   for(var i=0; i<serverData.length; i++){
 		 		            		  
 		 		            		  if(serverData[i].userId != ${user.userId}){
@@ -298,12 +375,17 @@ body {
 		 		            		  
 		 		            		  }
 		 		            	   }
+		 		            	  messageContent += '</div>';
 	 		            	   } else {
 	 		            		   messageContent += "메시지가 없습니다.";
 	 		            	   }
 	 		            	   $("#messegeBox").html("");
 	 		            	   $("#messegeBox").append(messageContent);
 	 		            	  $("#messageModal").modal('show');
+
+	 		            	 $("#messageModal").scrollTop($("#messageModal")[0].scrollHeight);
+	 		            	  
+
 	 		               },
 	 		               error:function(request,status,error){
 	 		                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -311,18 +393,10 @@ body {
 	 		                
 	 		               }
 	 		            });
-	 		
-	 	});
-		
-	 	/*
-		$("a[name='messageContent']").on("click", function() {
-			alert();
-		})
-		*/
-	
 
-	
-		
+	 			
+	 		});
+
 	
 		});
 	
@@ -366,42 +440,48 @@ body {
 
 
 				<c:forEach var="message" items="${list}">
+
+				<div class="row" style="border-bottom:1px solid gray; padding-bottom:30px; padding-top:10px;">
+
 					<input type="hidden" name="roomId" value="${message.roomId }">
-					<a href="/user/getTimeLine?userId=${message.friendId}"  class="col-xs-6 col-sm-4 " style="color: #000000;" name="messageName"><h3>${message.friendName }</h3></a>
-					<a href="#" class="col-xs-6 col-sm-4 "style="color: #000000;"  name="messageContent"><h3>${message.content }</h3></a>
-					<div class="col-xs-6 col-sm-4 ">
-						<h3>${message.createdDate }</h3>
+
+							<input type="hidden" value="${message.userId}" name="friendIdinfo"/>
+					<h3><a href="/user/getTimeLine?userId=${message.friendId}"  class="col-xs-2 col-sm-2 " style="color: #000000; padding-right:20pt;" name="messageName">
+						<img src="../resources/upload_files/images/${message.friendProfileImage}" id="profile" width="70px" height="70px"
+				       		style="border-radius: 50%" onerror="this.src='../resources/images/profile_default.png'" align="right" >
+						
+					</a></h3>
+					<h3><div class="col-xs-10 col-sm-10 "style="color: #000000; display: inline-block; height: 60px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; padding-left:15px;"  name="messageContent">
+						<div style="margin-bottom: 4pt; float: left;">${message.friendName}</div><p style="line-height: normal; padding-bottom:5px;"align=right>${message.createdDate}</p>
+					<c:if test="${message.userId eq sessionScope.user.userId }">
+						<div style="font-family: 'Nanum Gothic', serif; font-size: 20px; float: left; cursor: pointer;" name="messageContent" >${message.content }</div>
+					</c:if>
+					<c:if test="${message.userId ne sessionScope.user.userId }">
+						<div style="font-style: italic; float: left; cursor: pointer;" >${message.content }</div>
+					</c:if>
+
 					</div>
 
 				</c:forEach>
 
-			</table>
+		</table>
+	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="wrapper">
+				<form id="send">
+					<div class="phone-containter">
+						<div id="phone" class="phone">
+							<button type="button" class="close" data-dismiss="modal" varia-hidden="true" id="close" style="display:none;"></button>
+							<div id="messegeBox"></div>
+						</div>
+						<div class="send-container">
+							<input type="text" id="msgInput" class="send-input" placeholder="메세지내용" name="content">
+							<a href="#" class="send-btn" data-dismiss="modal"  value="Send" style="padding: 20px;">send</a>
 
-			<!-- Modal -->
-			<div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel">
-				<div class="modal-dialog" role="document">
-					<div class="wrapper">
-
-
-						<!-- 왼쪽 메세지 대화 박스 -->
-						
-						
-						
-						<div class="phone-containter">
-							<div id="phone" class="phone">
-								<button type="button" class="close" data-dismiss="modal" varia-hidden="true" id="close">×</button>
-								<div id="messegeBox"></div>
-							</div>
-
-							<!-- 메세지 작성 -->
-							<div class="send-container">
-								<form id="send">
-									<input type="text" id="msgInput" class="send-input"
-										placeholder="메세지내용"> <input type="submit"
-										class="send-btn" id="messageSend" value="Send">
-								</form>
-							</div>
 						</div>
 					</div>
 				</div>

@@ -104,6 +104,11 @@ body {
      		border-radius: 50%;
  		
  		}
+ 		
+ 		
+ 		 body > div.container > div.main{
+ 			    border: 2px solid #a290a59c;
+ 		}
  	
 </style>
 
@@ -439,7 +444,7 @@ $("#deleteUser").on("click", function() {
 				<div class="col-sm-4">
 					<label> 
 						<input type="radio" name="gender" id="male" value="1" >남
-						<input type="radio" name="gender" id="female" value="2">여
+						&nbsp;&nbsp;<input type="radio" name="gender" id="female" value="2">여
 					</label>
 				</div>
 			</div>

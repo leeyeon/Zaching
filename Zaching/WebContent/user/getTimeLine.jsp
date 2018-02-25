@@ -73,9 +73,16 @@ $( function () {
 		$("#timelineshow").hide();
 		$("#noticeshow").show();
 		
-		$("#memoryMap").css('backgroundColor', '#fff');
-		$("#listtimeline").css('backgroundColor', '#fff');
-		$("#listNotice").css('backgroundColor', '#adbfdea1');
+		$("#listtimeline > b").css('color', '#000');
+		$("#listNotice > b").css('color', '#6974ca');
+		$("#memoryMap > b").css('color', '#000');
+		$("#listMessage > b").css('color', '#000');
+		
+		$("#memoryMap").css('border-bottom-color', '#fff');
+		$("#listtimeline").css('border-bottom-color', '#fff');
+		$("#listNotice").css('border-bottom-color', '#6974ca');
+		$("#listMessage").css('border-bottom-color', '#fff');
+
 	});
 
 	
@@ -92,11 +99,18 @@ $( function () {
 			$("#timelineshow").show();
 			$("#memoryMapshow").hide();
 			$("#noticeshow").hide();
+			$( "#listMessageshow").hide();	
 			
-			$("#memoryMap").css('backgroundColor', '#fff');
-			$("#listtimeline").css('backgroundColor', '#adbfdea1');
-			$("#listNotice").css('backgroundColor', '#fff');
+			$("#listtimeline > b").css('color', '#6974ca');
+			$("#listNotice > b").css('color', '#000');
+			$("#memoryMap > b").css('color', '#000');
+			$("#listMessage > b").css('color', '#000');
 			
+			$("#memoryMap").css('border-bottom-color', '#fff');
+			$("#listtimeline").css('border-bottom-color', '#6974ca');
+			$("#listNotice").css('border-bottom-color', '#fff');
+			$("#listMessage").css('border-bottom-color', '#fff');
+
 		})
 		
 		$( "#memoryMap" ).on("click" , function() {
@@ -104,9 +118,38 @@ $( function () {
 			$("#timelineshow").hide();
 			$("#noticeshow").hide();
 			map.relayout();
-			$("#memoryMap").css('backgroundColor', '#adbfdea1');
-			$("#listtimeline").css('backgroundColor', '#fff');
-			$("#listNotice").css('backgroundColor', '#fff');
+
+			
+			$("#listtimeline > b").css('color', '#000');
+			$("#listNotice > b").css('color', '#000');
+			$("#memoryMap > b").css('color', '#6974ca');
+			$("#listMessage > b").css('color', '#000');
+			
+			$("#memoryMap").css('border-bottom-color', '#6974ca');
+			$("#listtimeline").css('border-bottom-color', '#fff');
+			$("#listNotice").css('border-bottom-color', '#fff');
+			$("#listMessage").css('border-bottom-color', '#fff');
+
+
+	 	});
+		
+		$( "#listMessage" ).on("click" , function() {
+			$("#memoryMapshow").hide();
+			$("#timelineshow").hide();
+			$("#noticeshow").hide();
+			$( "#listMessageshow").show();
+			
+			$("#listtimeline > b").css('color', '#000');
+			$("#listNotice > b").css('color', '#000');
+			$("#memoryMap > b").css('color', '#000');
+			$("#listMessage > b").css('color', '#6974ca');
+			
+			$("#memoryMap").css('border-bottom-color', '#fff');
+			$("#listtimeline").css('border-bottom-color', '#fff');
+			$("#listNotice").css('border-bottom-color', '#fff');
+			$("#listMessage").css('border-bottom-color', '#6974ca');
+			
+
 	 	});
 		
 		
@@ -691,6 +734,8 @@ font-family: 'Hanna', serif;
     font-size: 15px;
     font-weight: bold;
     border: none;
+     border-bottom: 3px solid;
+    border-bottom-color: #fff;
   
 }
 #memoryMap {
@@ -699,6 +744,8 @@ font-family: 'Hanna', serif;
     font-size: 15px;
     font-weight: bold;
     border: none;
+     border-bottom: 3px solid;
+    border-bottom-color: #fff;
 }
 #listtimeline {
     line-height: 50px;
@@ -706,7 +753,8 @@ font-family: 'Hanna', serif;
     font-size: 15px;
     font-weight: bold;
     border: none;
-    background-color:#adbfde;
+     border-bottom: 3px solid;
+     border-bottom-color: #6974ca;
 }
 #listMessage {
     line-height: 50px;
@@ -714,6 +762,8 @@ font-family: 'Hanna', serif;
     font-size: 15px;
     font-weight: bold;
     border: none;
+     border-bottom: 3px solid;
+    border-bottom-color: #fff;
 }
 b{
 font-size:14pt;
@@ -867,7 +917,17 @@ font-size:14pt;
 #main > div > div > div.col-md-9 > div.col-md-12.page-body{
 			margin-left: 20px;
 			margin-right: 20px;
+
 			}
+			
+	#listtimeline > b{
+			 color: #6974ca;
+			}
+			
+.forhr > hr{
+    border-bottom: 2px solid #eee;
+}
+
 </style>
 
 
