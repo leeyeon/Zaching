@@ -579,6 +579,7 @@ font-family: 'Hanna', serif;"
 						<h2>Recordings</h2>
 						<ul id="recordingslist"></ul>
 
+						<h2>Log</h2>
 						<pre id="log"></pre>
 						
 						
@@ -643,7 +644,6 @@ font-family: 'Hanna', serif;"
 			recorder.clear();
 			$("#pause").hide();
 			$("#start").show();
-			$("#stop").show();
 		}
 
 		function blobToFile(theBlob, fileName) {
@@ -706,9 +706,6 @@ font-family: 'Hanna', serif;"
 
 		window.onload = function init() {
 			try {
-				$("#pause").hide();
-				$("#stop").hide();
-				
 				// webkit shim
 				
 				window.AudioContext = window.AudioContext
@@ -718,13 +715,13 @@ font-family: 'Hanna', serif;"
 				window.URL = window.URL || window.webkitURL;
 
 				audio_context = new AudioContext;
-				
 				__log('Audio context set up.');
 				__log('navigator.getUserMedia '
 						+ (navigator.getUserMedia ? 'available.'
 								: 'not present!'));
 				
-				
+				$("#pause").hide();
+				$("#stop").hide();
 				
 			} catch (e) {
 				alert('보이스리플을 이용하시려면 크롬으로 이동해주세요.');

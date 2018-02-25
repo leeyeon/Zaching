@@ -58,6 +58,7 @@ $( function () {
 	
 	$("#memoryMapshow").hide();
 	$("#noticeshow").hide();
+	$("#listMessageshow").hide();
 	
 	//친구목록 Event
 	$( "#listFreind" ).on("click" , function() {
@@ -72,6 +73,8 @@ $( function () {
 		$("#memoryMapshow").hide();
 		$("#timelineshow").hide();
 		$("#noticeshow").show();
+		$( "#listMessageshow").hide();
+		
 		
 		$("#listtimeline > b").css('color', '#000');
 		$("#listNotice > b").css('color', '#6974ca');
@@ -82,16 +85,12 @@ $( function () {
 		$("#listtimeline").css('border-bottom-color', '#fff');
 		$("#listNotice").css('border-bottom-color', '#6974ca');
 		$("#listMessage").css('border-bottom-color', '#fff');
-
 	});
 
 	
 		
 		//메세지함
-		$("#listMessage").on("click", function() {
-			self.location ="/message/listMessage?userId=${user.userId}";	
-		})
-
+		
 
 			
 		$("#listtimeline").on("click", function() {
@@ -110,15 +109,14 @@ $( function () {
 			$("#listtimeline").css('border-bottom-color', '#6974ca');
 			$("#listNotice").css('border-bottom-color', '#fff');
 			$("#listMessage").css('border-bottom-color', '#fff');
-
 		})
 		
 		$( "#memoryMap" ).on("click" , function() {
 			$("#memoryMapshow").show();
 			$("#timelineshow").hide();
 			$("#noticeshow").hide();
+			$( "#listMessageshow").hide();
 			map.relayout();
-
 			
 			$("#listtimeline > b").css('color', '#000');
 			$("#listNotice > b").css('color', '#000');
@@ -149,7 +147,6 @@ $( function () {
 			$("#listNotice").css('border-bottom-color', '#fff');
 			$("#listMessage").css('border-bottom-color', '#6974ca');
 			
-
 	 	});
 		
 		
@@ -917,7 +914,6 @@ font-size:14pt;
 #main > div > div > div.col-md-9 > div.col-md-12.page-body{
 			margin-left: 20px;
 			margin-right: 20px;
-
 			}
 			
 	#listtimeline > b{
@@ -927,7 +923,6 @@ font-size:14pt;
 .forhr > hr{
     border-bottom: 2px solid #eee;
 }
-
 </style>
 
 
@@ -952,7 +947,7 @@ font-size:14pt;
 							
     <div id="main">
         <div class="container">
-            <div class="row"><!-- About Me (Left Sidebar) Start -->
+            <div class="row" style="padding-top: 80pt;"><!-- About Me (Left Sidebar) Start -->
            
                  <div class="col-md-3">
                    <div class="about-fixed" >
@@ -1117,6 +1112,10 @@ font-size:14pt;
 			
 			<div id="noticeshow">
 				<jsp:include page="/notice/listNotice?userId=${user.userId}"/>
+			</div>
+			
+			<div id="listMessageshow">
+				<jsp:include page="/message/listMessage?userId=${user.userId}"/>
 			</div>
 			
 			 </div>
