@@ -74,28 +74,20 @@ public class FriendController {
 
 		Map<String, Object> map = friendService.listFriend(search);
 		System.out.println(search);
-		Friend f;
-		String[] str;
-		List list = (List)map.get("list");
-		for(int i = 0; i<list.size(); i++) {
-			f = (Friend)list.get(i);
-			str = f.getCreatedDate().split("-");
-			f.setCreatedDate(str[0]+"년 "+str[1]+"월");
-			list.set(i, f);
-		}
+		
 		System.out.println("이");
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
 				pageSize);
 		System.out.println(resultPage);
-		List<Friend> list2 = friendService.recommendFriend(userId);
+		List<Friend> list = friendService.recommendFriend(userId);
 		System.out.println("아");
 
-		model.addAttribute("list", list);
+		model.addAttribute("list",map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		model.addAttribute("recommendList", list2);
+		model.addAttribute("recommendList", list);
 		
-		System.out.println(list2);
+		System.out.println(list);
 		
 		
 		System.out.println("listFriend 끝============");

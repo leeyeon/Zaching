@@ -58,7 +58,6 @@ $( function () {
 	
 	$("#memoryMapshow").hide();
 	$("#noticeshow").hide();
-	$("#listMessageshow").hide();
 	
 	//친구목록 Event
 	$( "#listFreind" ).on("click" , function() {
@@ -73,18 +72,19 @@ $( function () {
 		$("#memoryMapshow").hide();
 		$("#timelineshow").hide();
 		$("#noticeshow").show();
-		$( "#listMessageshow").hide();
 		
 		$("#memoryMap").css('backgroundColor', '#fff');
 		$("#listtimeline").css('backgroundColor', '#fff');
 		$("#listNotice").css('backgroundColor', '#adbfdea1');
-		$("#listMessage").css('backgroundColor', '#fff');
 	});
 
 	
 		
 		//메세지함
-		
+		$("#listMessage").on("click", function() {
+			self.location ="/message/listMessage?userId=${user.userId}";	
+		})
+
 
 			
 		$("#listtimeline").on("click", function() {
@@ -92,36 +92,21 @@ $( function () {
 			$("#timelineshow").show();
 			$("#memoryMapshow").hide();
 			$("#noticeshow").hide();
-			$( "#listMessageshow").hide();			
+			
 			$("#memoryMap").css('backgroundColor', '#fff');
 			$("#listtimeline").css('backgroundColor', '#adbfdea1');
 			$("#listNotice").css('backgroundColor', '#fff');
-			$("#listMessage").css('backgroundColor', '#fff');
+			
 		})
 		
 		$( "#memoryMap" ).on("click" , function() {
 			$("#memoryMapshow").show();
 			$("#timelineshow").hide();
 			$("#noticeshow").hide();
-			$( "#listMessageshow").hide();
 			map.relayout();
 			$("#memoryMap").css('backgroundColor', '#adbfdea1');
 			$("#listtimeline").css('backgroundColor', '#fff');
 			$("#listNotice").css('backgroundColor', '#fff');
-			$("#listMessage").css('backgroundColor', '#fff');
-	 	});
-		
-		$( "#listMessage" ).on("click" , function() {
-			$("#memoryMapshow").hide();
-			$("#timelineshow").hide();
-			$("#noticeshow").hide();
-			$( "#listMessageshow").show();
-			
-			$("#memoryMap").css('backgroundColor', '#fff');
-			$("#listtimeline").css('backgroundColor', '#fff');
-			$("#listNotice").css('backgroundColor', '#fff');
-			$("#listMessage").css('backgroundColor', '#adbfdea1');
-			
 	 	});
 		
 		
@@ -907,7 +892,7 @@ font-size:14pt;
 							
     <div id="main">
         <div class="container">
-            <div class="row" style="padding-top: 80pt;"><!-- About Me (Left Sidebar) Start -->
+            <div class="row"><!-- About Me (Left Sidebar) Start -->
            
                  <div class="col-md-3">
                    <div class="about-fixed" >
@@ -1072,10 +1057,6 @@ font-size:14pt;
 			
 			<div id="noticeshow">
 				<jsp:include page="/notice/listNotice?userId=${user.userId}"/>
-			</div>
-			
-			<div id="listMessageshow">
-				<jsp:include page="/message/listMessage?userId=${user.userId}"/>
 			</div>
 			
 			 </div>

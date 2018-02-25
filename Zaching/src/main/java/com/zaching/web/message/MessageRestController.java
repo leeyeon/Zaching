@@ -77,13 +77,26 @@ private MessageService messageService;
 		
 	}
 	
-	@RequestMapping(value = "json/addMessage", method=RequestMethod.POST)
-	@ResponseBody
-	public Message addMessage(@RequestBody Message message)throws Exception{
+	@RequestMapping(value = "rest/addMessage", method=RequestMethod.POST)
+	public Message addMessage(@ModelAttribute("message") Message message,@RequestBody Map<String,Object>map,@ModelAttribute("search") Search search,Model model)throws Exception{
+		int userId = ((int)map.get("userId"));
+		int friendId = ((int)map.get("friendId"));
+		String content =  ((String)map.get("content"));
+		
+		message.setFriendId(friendId);
+		message.setUserId(userId);
+		message.setContent(content);
 		
 		messageService.addMessage(message);
+		model.addAttribute("message",message);
 		
-		System.out.println(message);
+		
+		System.out.println("userId:"+message.getUserId());
+		System.out.println("friendId:"+message.getMessageId());
+		System.out.println("content:"+message.getContent());
+		
+		
+		
 		
 		return message;
 	}
