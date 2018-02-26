@@ -151,9 +151,9 @@
 	</select>
 	
 	<select id="friendNewsfeed" parameterType="int" resultMap="NewsfeedSelectMap">
-		SELECT * 
-		FROM newsfeed 
-		WHERE user_id IN (SELECT user_id FROM friend WHERE status=0 AND user_id IN (SELECT friend_id FROM friend WHERE user_id=#{value} AND status=0) AND friend_id=#{value} AND status=0)
+		SELECT n.*, u.name, u.profile_image 
+		FROM newsfeed n, users u 
+		WHERE n.user_id IN (SELECT user_id FROM friend WHERE status=0 AND user_id IN (SELECT friend_id FROM friend WHERE user_id=#{value} AND status=0) AND friend_id=#{value} AND status=0) AND n.user_id=u.user_id(+)
 	</select>
 
 </mapper>
