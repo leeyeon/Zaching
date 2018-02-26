@@ -132,10 +132,12 @@ public class FriendDaoImpl implements FriendDao{
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userId", userId);
 		map.put("bobId", bobId);
-		return sqlSession.selectList("friendMapper.addBobFriend", map);
+		return sqlSession.selectList("FriendMapper.addBobFriend", map);
 	}
 	
-	
+	public List countFriend(int userId) throws Exception{
+		return sqlSession.selectList("FriendMapper.countFriend", userId);
+	}
 
 
 	

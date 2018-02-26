@@ -1,6 +1,7 @@
 
 package com.zaching.web.friend;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -88,35 +89,69 @@ public class FriendRestController {
 	@RequestMapping(value = "rest/addFriend", method=RequestMethod.POST)
 	public String addtFriend(@ModelAttribute("notice") Notice notice, @RequestBody Map<String, Object> map, @ModelAttribute("friend") Friend friend, @ModelAttribute("search") Search search,HttpSession session, Model model) throws Exception {
 	
-		int userId = ((int)map.get("userId"));
+		int userId2 = ((int)map.get("userId"));
 		int friendId = ((int)map.get("friendId"));
 		String userName =  ((String)map.get("userName"));
-			
 		
 		friend.setFriendId(friendId);
-		friend.setUserId(userId);
+		friend.setUserId(userId2);
 		System.out.println(friend);
 		
 		friendService.addFriend(friend, "0");
 		
-		/*알림*/
-		if(userId == friendId) {
-			
+		if(map.get("check") == null) {
+			System.out.println("check :: "+map.get("check"));
+			notice.setSenderId(userId2);
+			notice.setCategory("F00");
+			notice.setName(userName);
+			commonService.addNotice(notice);
+	
+			notice.setUserId(friendId);
+	
+			commonService.addNoticeTarget(notice);
 		}
+		
 		else {
-		notice.setSenderId(userId);
-		notice.setCategory("F00");
-		notice.setName(userName);
-		commonService.addNotice(notice);
-
-		notice.setUserId(friendId);
-
-		commonService.addNoticeTarget(notice);
+			System.out.println("왜안드가ㅏㅏㅏㅏ");
 		}
-		/**/
+		
+		/*알림*/
+		
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		search.setPageSize(pageSize);
+		
+		search.setSearchKeyword(String.valueOf(notice.getSenderId()));
+		Map<String, Object> hashMap = friendService.listFriend(search);
+		List<String> list = null;
+		for(int i=0; i< ((List)map.get("list")).size();i++) {
+			list.add(String.valueOf(((Friend)((List)hashMap.get("list")).get(i)).getFriendId()));
+		}
+		List<String> tokenList = new ArrayList<String>();
+	        
+	        for (String userId : list) {
+	           String token = userService.getFCMToken(Integer.valueOf(userId));
+	           if(token != null) {
+	              tokenList.add(token);
+	           }
+	        }
+	        
+	        for (String string : tokenList) {
+	           System.out.println(string);
+	        }
+	        
+	        notice = new Notice();
+	        notice.setCategory("F00:");
+	        notice.setContent(userName+"님으로부터 친구 신청이 왔습니다.");
+	        
+	        // 안드로이드 알람 보내기
+	        if(tokenList.size() > 0) {
+	           commonService.sendAndroid(tokenList, notice);
+	        }
 		
 
-		
 		return null;
 	}
 	

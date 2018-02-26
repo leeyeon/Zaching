@@ -161,6 +161,10 @@ $( "#profile" ).on("click" , function() {
 	self.location = "/user/getTimeLine?userId=${sessionScope.user.userId}";			
 });
 
+$(".ufo").on("click", function() {
+		self.location = "/newsfeed/ufo";
+	});
+
 $(".plane-container").hide();  
  </script>
 <style>
@@ -178,7 +182,7 @@ $(".plane-container").hide();
       }
     #navigation2{
 
-    background: #cee2f5;
+    background: white;
     height: 70px;
     z-index: 1000;
     }
@@ -238,6 +242,7 @@ $(".plane-container").hide();
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="menu">
               <ul class="nav2 navbar-nav" style="font-family: 'Hanna', serif;">
+              	<li><img src="/resources/images/ufo.png" class="ufo" width="25"></li>
                 <li class="active" ><a href="#intro" style="font-family: 'Hanna', serif;">HOME</a></li>&nbsp;&nbsp;
                 <li><a href="#about" style="font-family: 'Hanna', serif;" >편의시설검색</a></li>&nbsp;&nbsp;
                 <li><a href="#gallery" style="font-family: 'Hanna', serif;">전월세정보</a></li>&nbsp;&nbsp;

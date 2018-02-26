@@ -1,6 +1,7 @@
 package com.zaching.service.newsfeed;
 
 import java.util.List;
+import java.util.Map;
 
 import com.zaching.common.domain.Search;
 import com.zaching.service.domain.Newsfeed;
@@ -39,4 +40,7 @@ public void addNewsfeed(Newsfeed newsfeed) throws Exception;
 	public List<Newsfeed> timeline(int userId) throws Exception;
 	
 	public List<Newsfeed> listMemoryMap(int userId) throws Exception;
+	
+	public List<Newsfeed> friendNewsfeed(int userId) throws Exception;
+	
 }

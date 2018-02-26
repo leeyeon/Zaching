@@ -337,6 +337,8 @@
 						<c:set var="i" value="${ i+1 }" />						
 							<tr>
 			   					<td valign="top" style="border-bottom-width:2px; border-color:#000;"><div class="thumb2" >
+			   				
+			   					
 			   					<c:if test="${!empty comment.userImage }">
 													<img alt="" src="../resources/upload_files/images/${comment.userImage}" width='35' height='35'>
 													</c:if>
@@ -348,7 +350,8 @@
 			   					</div></td>
 			   					<td></td>
 			   					<td></td>
-			   					<td width=1000><p class="arrow_box" style="font-size: 10pt; padding: 5px;"><strong style="font-size: 13pt; line-height: 100%;">${comment.userName}</strong>
+			   					<td width=1000><p class="arrow_box" style="font-size: 10pt; padding: 5px;"><strong style="font-size: 13pt; line-height: 100%;">
+			   					<a href="/user/getTimeLine?userId=${comment.userId}" style="color: #000; text-decoration: none;">${comment.userName}</a></strong>
 			   					
 			   					<br/><br/>&nbsp;${comment.content}</p></td>
 			   					

@@ -2,8 +2,8 @@ package com.zaching.web.friend;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,7 @@ public class FriendController {
 	}
 
 	@RequestMapping(value = "listFriend",method=RequestMethod.GET)
-	public String listFriend(@ModelAttribute("search") Search search,HttpSession session, Model model) throws Exception {
+	public String listFriend(@ModelAttribute("search") Search search,HttpSession session, Model model ,HttpServletRequest request) throws Exception {
 
 		
 		System.out.println("friend/listFriend : GET");
@@ -88,16 +88,14 @@ public class FriendController {
 				pageSize);
 		System.out.println(resultPage);
 		List<Friend> list2 = friendService.recommendFriend(userId);
-		System.out.println("¾Æ");
 
 		model.addAttribute("list", list);
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		model.addAttribute("recommendList", list2);
-		
+		request.setAttribute("countFriend",friendService.countFriend(userId));
 		System.out.println(list2);
-		
-		
+		System.out.println("ddddddddddd"+friendService.countFriend(userId));
 		System.out.println("listFriend ³¡============");
 		
 		return "forward:/friend/listFriend.jsp";

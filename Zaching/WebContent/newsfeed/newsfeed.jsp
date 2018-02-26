@@ -70,6 +70,7 @@
 	    	                	        });
 
 	    	                	        
+	    	                	        $("input:hidden[name='locationName']").val(data.address);
 	    	                	        $("input:hidden[name='locationX']").val(coords.getLat());
 	    	                	        $("input:hidden[name='locationY']").val(coords.getLng());
 	    	                	      
@@ -165,7 +166,6 @@
 							$("#like"+newsfeedId).text(serverData);
 							if(countLikey < serverData){
 								//alert($("#item"+newsfeedId+" .like-text:after").css('content'));
-								alert("fdasf");
 								$("#item"+newsfeedId+" .like-text").toggleClass('changed');
 								$("#like"+newsfeedId).css("color","#ff5b4e");
 								
@@ -509,8 +509,7 @@
 	                <li>	<c:if test="${search.searchCondition == 'N02'}"><a class="current-demo" href="/newsfeed/listNewsfeed?searchCondition=N02" style="font-family: 'Hanna', serif;">중고거래</a></c:if>
 							<c:if test="${search.searchCondition != 'N02'}"><a href="/newsfeed/listNewsfeed?searchCondition=N02" style="font-family: 'Hanna', serif;">중고거래</a></c:if>
 						</li>&nbsp;&nbsp;
-					<li><a href="index6.html" style="font-family: 'Hanna', serif;" >친구글만</a></li>&nbsp;&nbsp;
-							<li><a href="index7.html" style="font-family: 'Hanna', serif;">팔로워글만</a></li>
+					<c:if test="${user != null }"><li><a href="/newsfeed/listNewsfeed?searchKeyword=${user.userId}" style="font-family: 'Hanna', serif;" >친구글만</a></li>&nbsp;&nbsp;</c:if>
 	              </ul>
 	            </div>
 	          </div>
@@ -742,8 +741,8 @@
 						method : "POST" ,
 						dataType : "json" ,
 						data : {
-							resultPage : page,
-							category : searchCondition
+							"resultPage" : page,
+							"category" : searchCondition
 						},
 						headers : {
 							"Accept" : "application/json",
@@ -859,7 +858,7 @@
 		
 		<input type="hidden"  name="locationX" value=""/>
 		<input type="hidden" name="locationY" value="" />
-			
+		<input type="hidden" name="locationName" value="" />	
 		<div class="container">
 			<div class="row">
 				<table border="1">

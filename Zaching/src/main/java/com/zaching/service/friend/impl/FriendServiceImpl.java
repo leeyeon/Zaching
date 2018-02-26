@@ -113,7 +113,9 @@ public class FriendServiceImpl implements FriendService{
 		return friendDao.addBobFriend(userId, bobId);
 	}
 
-	
+	public List countFriend(int userId) throws Exception{
+		return friendDao.countFriend(userId);
+	}
 	
 	
 

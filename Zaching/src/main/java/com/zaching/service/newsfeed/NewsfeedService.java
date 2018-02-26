@@ -38,4 +38,7 @@ public interface NewsfeedService {
 	public List<Newsfeed> timeline(int userId) throws Exception;
 	
 	public List<Newsfeed> listMemoryMap(int userId) throws Exception;
+	
+	public List<Newsfeed> friendNewsfeed(int userId) throws Exception;
+
 }

@@ -273,11 +273,13 @@
 			/* addBob */
 			
 			$('.list-group-item').on("click", function() {
+				
 				<c:if test="${!empty user && (fn:trim(user.role) eq '2')}"> 
 					$(self.location).attr("href","/bob/addBob?category="+($(this).attr("id")).substring(4));
 				</c:if>
 				<c:if test="${!empty user && (fn:trim(user.role) eq '1')}"> 
 					alert("본인인증 이후에 밥친구 서비스를 모두 이용하실 수 있습니다.");
+					
 				</c:if>
 				<c:if test="${empty user}">
 					alert("로그인을 해주세요.");

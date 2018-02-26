@@ -131,4 +131,9 @@ public class NewsfeedDaoImpl implements NewsfeedDao{
 		return sqlSession.selectList("NewsfeedMapper.listMemoryMap", userId);
 	}
 
+	@Override
+	public List<Newsfeed> friendNewsfeed(int userId) throws Exception {
+		return sqlSession.selectList("NewsfeedMapper.friendNewsfeed", userId);
+	}
+
 }

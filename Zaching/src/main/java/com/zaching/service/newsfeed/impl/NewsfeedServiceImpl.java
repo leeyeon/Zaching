@@ -118,5 +118,12 @@ public class NewsfeedServiceImpl implements NewsfeedService{
 	public List<Newsfeed> listMemoryMap(int userId) throws Exception {
 		return newsfeedDao.listMemoryMap(userId);
 	}
+
+	@Override
+	public List<Newsfeed> friendNewsfeed(int userId) throws Exception {
+		return newsfeedDao.friendNewsfeed(userId);
+	}
+
+	
 	
 }

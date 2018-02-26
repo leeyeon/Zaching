@@ -32,6 +32,9 @@
 		INTO newsfeed(newsfeed_id, category_code, content, location_name, longitude, latitude, upload_file, created_date, status, privacy_bound, total_like, user_id, total_reply)
 		VALUES (seq_newsfeed_id.nextval, #{categoryCode}, #{content:VARCHAR}, #{locationName:VARCHAR}, #{locationX:INTEGER}, #{locationY:VARCHAR}, #{fileName:VARCHAR}, SYSDATE,
 				#{status:CHAR}, #{privacyBound}, 0, #{userId}, 0)
+				<selectKey keyProperty="newsfeedid" resultType="Integer" order="AFTER"> 
+			SELECT seq_newsfeed_id.currval FROM dual
+		</selectKey>
 	</insert>
 	
 	<delete id="deleteNewsfeed" parameterType="int">
@@ -145,6 +148,12 @@
 			AND length(latitude) > 3
 			AND length(longitude) > 3
 		</where>
+	</select>
+	
+	<select id="friendNewsfeed" parameterType="int" resultMap="NewsfeedSelectMap">
+		SELECT * 
+		FROM newsfeed 
+		WHERE user_id IN (SELECT user_id FROM friend WHERE status=0 AND user_id IN (SELECT friend_id FROM friend WHERE user_id=#{value} AND status=0) AND friend_id=#{value} AND status=0)
 	</select>
 
 </mapper>

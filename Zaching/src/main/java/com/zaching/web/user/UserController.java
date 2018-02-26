@@ -121,7 +121,7 @@ public class UserController {
 		int count2 = friendService.checkFriend(userId, id, 0);
 		int count3 = friendService.checkFollow(id, userId, 1);
 		
-		
+		System.out.println("timelineUser :: "+user);
 		
 		//int roomId = messageService.roomId(myId, userId);
 		
@@ -272,8 +272,8 @@ public class UserController {
 			File in = new File(fileDirectory+path);
 	        BufferedImage inputImage = ImageIO.read(in);
 	 
-	        int width = 200;
-	        int height = 200;
+	        int width = 300;
+	        int height = 300;
 	 
 	            BufferedImage outputImage = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB);
 	            Graphics2D g = outputImage.createGraphics();

@@ -22,7 +22,8 @@
 
 /* 글꼴 수정 */
 @import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);		
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);	
+	
 		
 		* {
 			font-family: 'Nanum Gothic', serif;
@@ -440,6 +441,18 @@ svg {
     background-position: -37px -61px;
 }
 
+@media only screen and (min-device-width : 320px) and (max-device-width : 600px) {
+	body > nav > div.container > div.navbar-header > a > div > img {
+		padding-left : 10pt;
+	}
+	body > nav > div.container > div.navbar-header > a{
+		margin-top:-5px;
+	}
+	body > nav{
+		height:90px;
+	}
+}
+
 
 </style>
 <script type="text/javascript">
@@ -836,7 +849,7 @@ svg {
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage eq null}">
 	          	<li>
 	          		<div class="col-xs-12" style="padding-top: 10px; color:#333;">
-			          	<img src="../resources/images/paper-plane.png" id="notice" width="30px" style="display:none;"/>
+			          	<img src="../resources/images/paper-plane.png" id="notice" width="30px"/>
 			          	<div class="badge   badge-primary"></div>&nbsp;&nbsp;
 			          	<img src="../resources/images/profile_default.png" id="profile" width="30px" height="30px"/>&nbsp;
 			          	<a href="#profile" style="color: #f0ad4e;" title="타임라인으로이동">${sessionScope.user.name}</a>&nbsp;님 환영합니다!
@@ -850,7 +863,7 @@ svg {
           	<c:if test="${user.userId ne null && sessionScope.user.profileImage ne null}">
 	          	<li>
 		          	<div class="col-xs-12" style="padding-top: 10px; color:#333;">
-						<img src="../resources/images/paper-plane.png" id="notice" width="30px" style="display:none;"/>
+						<img src="../resources/images/paper-plane.png" id="notice" width="30px"/>
 						<div class="badge   badge-primary"></div>&nbsp;&nbsp;
 				        <c:if test="${sessionScope.user.password ne null}">
 				       		<img src="../resources/upload_files/images/${sessionScope.user.profileImage}" id="profile" width="30px" height="30px"

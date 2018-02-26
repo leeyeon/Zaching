@@ -21,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.zaching.common.domain.Page;
 import com.zaching.common.domain.Search;
 import com.zaching.common.service.CommonService;
+import com.zaching.service.domain.Friend;
 import com.zaching.service.domain.Newsfeed;
+import com.zaching.service.domain.Notice;
 import com.zaching.service.domain.User;
+import com.zaching.service.friend.FriendService;
 import com.zaching.service.newsfeed.NewsfeedService;
 import com.zaching.service.user.UserService;
 
@@ -48,6 +51,11 @@ public class NewsfeedController {
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 	
+	@Autowired
+	@Qualifier("friendServiceImpl")
+
+	private FriendService friendService;
+	
 	public NewsfeedController() {
 		System.out.println(this.getClass());
 	}
@@ -55,9 +63,9 @@ public class NewsfeedController {
 	
 	
 	@RequestMapping(value="addNewsfeed", method=RequestMethod.POST)
-	public String addNewsfeed(@ModelAttribute("newsfeed") Newsfeed newsfeed, Model model, HttpServletRequest request) throws Exception{
+	public String addNewsfeed(@ModelAttribute("search") Search search, @ModelAttribute("newsfeed") Newsfeed newsfeed, @ModelAttribute("notice") Notice notice, Model model, HttpServletRequest request) throws Exception{
 		System.out.println("addNewsfeed()");
-		System.out.println(newsfeed);
+		System.out.println("뀨아아앙"+newsfeed);
 		
 		if(newsfeed.getFile().getOriginalFilename() != null) {
 			String fileName = newsfeed.getFile().getOriginalFilename();
@@ -70,6 +78,25 @@ public class NewsfeedController {
 		
 		newsfeedService.addNewsfeed(newsfeed);
 		
+		User user = userService.getUser(newsfeed.getUserId());
+		
+		notice.setSenderId(newsfeed.getUserId());
+		notice.setCategory("N00");
+		notice.setName(user.getName());
+		notice.setBobId(newsfeed.getNewsfeedId());
+		commonService.addNotice(notice);
+
+		search.setSearchKeyword(String.valueOf(notice.getSenderId()));
+		Map<String, Object> map = friendService.listFriend(search);
+		
+		for(int i=0; i< ((List)map.get("list")).size();i++) {
+			Friend friend = (Friend)((List)map.get("list")).get(i);
+			notice.setUserId(friend.getFriendId());
+
+			commonService.addNoticeTarget(notice);
+		}
+		
+
 		return "redirect:/index.jsp";
 	}
 	
@@ -119,7 +146,7 @@ public class NewsfeedController {
 	@RequestMapping(value="listNewsfeed")
 	public String listNewsfeed( @ModelAttribute("search") Search search,  Model model, HttpServletRequest request, HttpSession session) throws Exception{
 		System.out.println("listNewsfeed");
-		
+		System.out.println(search);
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -128,27 +155,36 @@ public class NewsfeedController {
 			search.setSearchCondition("N06");
 		}
 		if(search.getCategory() == null && session.getAttribute("user") != null) {
-			System.out.println("fdsaf");
+			System.out.println("getcategory == null");
 			search.setCategory(String.valueOf(((User)session.getAttribute("user")).getUserId()));
 		}
-		search.setPageSize(15);
-		Map<String, Object> map = newsfeedService.listNewsfeed(search);
-		//List<Newsfeed> list = newsfeedService.listNewsfeeds(search);
-		//User user = userService.getUser(userId);
-		// Business logic 수행
-		System.out.println("list :: "+(List)map.get("list"));
-		System.out.println("list :: "+((List)map.get("list")).size());
+		if(search.getSearchKeyword() == null) {
+			search.setPageSize(15);
+			Map<String, Object> map = newsfeedService.listNewsfeed(search);
+			//List<Newsfeed> list = newsfeedService.listNewsfeeds(search);
+			//User user = userService.getUser(userId);
+			// Business logic 수행
+			System.out.println("list :: "+(List)map.get("list"));
+			System.out.println("list :: "+((List)map.get("list")).size());
+			
+			Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+			//System.out.println(resultPage);
+			
+			// Model 과 View 연결
+			//model.addAttribute("list", map.get("list"));
+			//model.addAttribute("resultPage", resultPage);
+			//System.out.println(list);
+			model.addAttribute("search", search);
+			model.addAttribute("list", map.get("list"));
+			model.addAttribute("resultPage", resultPage);
+		}
+		else if(search.getSearchKeyword() != null) {
+			System.out.println("searchkeyword != null");
+			List<Newsfeed> list = newsfeedService.friendNewsfeed(Integer.parseInt(search.getSearchKeyword()));
+			model.addAttribute("list", list);
+			model.addAttribute("search", search);
+		}
 		
-		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		//System.out.println(resultPage);
-		
-		// Model 과 View 연결
-		//model.addAttribute("list", map.get("list"));
-		//model.addAttribute("resultPage", resultPage);
-		//System.out.println(list);
-		model.addAttribute("search", search);
-		model.addAttribute("list",map.get("list"));
-		model.addAttribute("resultPage", resultPage);
 		
 		return "forward:/newsfeed/newsfeed.jsp";
 	}

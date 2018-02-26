@@ -32,9 +32,9 @@
 	</insert>
 	
 	<select id="getVoice" parameterType="int" resultMap="voiceSelectMap">
-		SELECT voice_id, category_code, title, background_image, created_date, song, status, user_id, count_reply, count_user
-		FROM voice
-		WHERE voice_id=#{value}
+		SELECT v.*, u.name, u.profile_image
+		FROM voice v, users u
+		WHERE v.user_id=u.user_id(+) AND voice_id=#{value}
 	</select>
 	
 	<delete id="deleteVoice" parameterType="int">

@@ -219,7 +219,11 @@ body > section > section > h3:after {
 	                                </c:if></a>
 	                            </div>
 	                            <h3>${friend.name}</h3>
-	                            <p>We Create Modern And Clean Theme For Your Business Company.</p>
+								 <c:set var="i" value="0"/>
+									<c:forEach var="countFriend" items="${countFriend}">
+										<c:set var="i" value="${ i+1 }" />
+	                            			<c:if test="${friend.userId eq countFriend.friendId}"><p>함께 아는 친구 ${countFriend.count}명</p></c:if>
+	                            	</c:forEach>
 	                        </div>
 	                    </div>
                     

@@ -254,7 +254,7 @@
 
 		for (f in files) {
 			
-			var audioString = "<blockquote><div id=\"audio-players\">"+ "<div class=\"col-sm-3\"><a href=\"/user/getTimeLine?userId="+replyUserId[f]+"\" style=\"color: #fff; text-decoration: none;\"><img alt=\"\" src=\"../resources/images/"+replyImage[f]+"\"width=\"40\" height=\"40\">"+replyuserName[f]+"</div></a>&nbsp;"
+			var audioString = "<blockquote><div id=\"audio-players\">"+ "<div class=\"col-sm-3\"><a href=\"/user/getTimeLine?userId="+replyUserId[f]+"\" style=\"color: #fff; text-decoration: none;\"><img alt=\"\" src=\"../resources/upload_files/images/"+replyImage[f]+"\"width=\"40\" height=\"40\" style=\"border-radius: 50%;\">&nbsp;&nbsp;"+replyuserName[f]+"</div></a>&nbsp;"
 			+"<div class=\"col-sm-3\"><audio id=\"audio-" + f + "\" class=\"audio\" preload=\"true\"><source src=\"../resources/upload_files/record/" + files[f] + "\"></audio>"+
 			"<div id=\"audioplayer-" + f + "\" class=\"audioplayer\"><button id=\"playbutton-" + f + "\" class=\"play playbutton\"></button><div id=\"timeline-" + f + "\" class=\"timeline\"><div id=\"playhead-" + f + "\" class=\"playhead\"></div></div></div></div></blockquote><br/>";
 
@@ -449,6 +449,10 @@
 .nav a{
 font-family: 'Hanna', serif;"
 }
+
+.pre{
+background-color:#fff;
+}
 </style>
 </head>
 
@@ -469,10 +473,10 @@ font-family: 'Hanna', serif;"
 				style=" height: 700px; background: url('../resources/images/voiceImages/${voice.backgroundImage}'); background-size: 100% 100%; padding-right: 0px; padding-left: 0px;">
 				<div class="img-cover" style="  background-size: cover;  background-color: rgba(0, 0, 0, 0.3);">
 				<div class="blog-post">
-					<h3 class="blog-post-title">&nbsp;${voice.voiceName} </h3>
+					<h2 class="blog-post-title">&nbsp;${voice.voiceName} </h2>
 					<p class="blog-post-meta"
-						style="background-color: black; opacity: 0.5; width:100%">
-						 <a href="#">진슈</a>
+						style="background-color: black; opacity: 0.5; width:100%; padding:8pt;">
+						 <a href="/user/getTimeLine?userId=${voice.userId}" style="font-size: 14pt; text-decoration: none; color:#fff;"><img src="../resources/upload_files/images/${voice.profileImage}" style="border-radius: 10px; width:20pt; height:20pt; border-radius: 50%;">&nbsp;${voice.userName}</a>
 					</p>
 					<div style=" height: 600px; overflow-y: scroll; padding-right: 15px; padding-left: 15px;">
 						<c:if test="${voice.categoryCode == 'R02'}">
@@ -555,7 +559,7 @@ font-family: 'Hanna', serif;"
 	<footer> </footer>
 
 	<img src="../resources/images/microphone.png" id="fixedbtn"
-		data-toggle="modal" data-target="#myModal">
+		data-toggle="modal" data-target="#myModal" style="width:100px;">
 
 
 
@@ -568,7 +572,7 @@ font-family: 'Hanna', serif;"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">
+					<h4 class="modal-title" id="myModalLabel" style="font-family: 'Hanna', serif;">
 						<b>녹음하기</b>
 					</h4>
 					<div class="modal-body">
@@ -576,10 +580,9 @@ font-family: 'Hanna', serif;"
 						<button onclick="startRecording(this);" style="background: white; border: none; font-size: 26px;" ><i class="fas fa-play" id="start"></i></button>
 						<button onclick="stopRecording(this);"  style="background: white; border: none; font-size: 26px;" disabled><i class="fas fa-stop" id="stop"></i></button>
 
-						<h2>Recordings</h2>
+
 						<ul id="recordingslist"></ul>
 
-						<h2>Log</h2>
 						<pre id="log"></pre>
 						
 						
@@ -630,6 +633,7 @@ font-family: 'Hanna', serif;"
 			__log('녹음중입니다...');
 			$("#pause").show();
 			$("#start").hide();
+			$("#stop").show();
 		}
 
 		function stopRecording(button) {
@@ -703,7 +707,11 @@ font-family: 'Hanna', serif;"
 				
 			});
 		}
-
+			
+		$("#pause").hide();
+		$("#start").hide();
+		$("#stop").hide();
+		
 		window.onload = function init() {
 			try {
 				// webkit shim
@@ -715,13 +723,12 @@ font-family: 'Hanna', serif;"
 				window.URL = window.URL || window.webkitURL;
 
 				audio_context = new AudioContext;
-				__log('Audio context set up.');
-				__log('navigator.getUserMedia '
+				__log('녹음 준비중... '
 						+ (navigator.getUserMedia ? 'available.'
 								: 'not present!'));
 				
-				$("#pause").hide();
-				$("#stop").hide();
+				$("#start").show();
+
 				
 			} catch (e) {
 				alert('보이스리플을 이용하시려면 크롬으로 이동해주세요.');
@@ -731,7 +738,7 @@ font-family: 'Hanna', serif;"
 			navigator.getUserMedia({
 				audio : true
 			}, startUserMedia, function(e) {
-				__log('마이크 장치가 없습니다: ' + e);
+				__log('마이크 장치가 없습니다');
 				$("#pause").hide();
 				$("#start").hide();
 				$("#stop").hide();

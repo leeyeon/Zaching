@@ -46,7 +46,7 @@ public interface FriendDao {
 	
 	public List<Friend> addBobFriend(int userId, int bobId) throws Exception;
 
-	
+	public List countFriend(int userId) throws Exception;
 	
 	
 }

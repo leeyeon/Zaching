@@ -10,8 +10,19 @@ public class Friend {
 	private String profileImage;//프로필사진
 	private String name;//실명
 	private String createdDate;
+	private int count;
 
 	
+	public int getCount() {
+		return count;
+	}
+
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+
 	public String getCreatedDate() {
 		return createdDate;
 	}

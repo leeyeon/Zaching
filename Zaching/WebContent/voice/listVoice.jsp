@@ -166,7 +166,7 @@
 													'<span class="price"><i class="fas fa-play-circle"></i>&nbsp;'+serverData[i].countReply+'</span>'+
 													'<div class="property_details">'+
 														'<h1>'+
-															'<a href="/user/getTimeLine?userId='+serverData[i].userId+'" style="vertical-align: bottom;"><img src="../resources/images/'+serverData[i].profileImage+'" id="profile">&nbsp;'+serverData[i].userName+'</a>'+
+															'<a href="/user/getTimeLine?userId='+serverData[i].userId+'" style="vertical-align: bottom;"><img src="../resources/upload_files/images/'+serverData[i].profileImage+'" id="profile">&nbsp;'+serverData[i].userName+'</a>'+
 														'</h1>'+
 														'<h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'+
 															'<a href="/voice/getVoice?voiceId='+serverData[i].voiceId+'">'+serverData[i].voiceName+'</a>'+
@@ -196,7 +196,7 @@
 	<style type="text/css">	
 		
 body {
-	padding-top: 130px;
+	padding-top: 105px;
 }
 
 

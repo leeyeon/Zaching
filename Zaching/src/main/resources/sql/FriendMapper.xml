@@ -16,6 +16,7 @@
 		<!-- <result property="name" column="name" jdbcType="VARCHAR" /> <result 
 			property="profileImage" column="profile_image" jdbcType="VARCHAR"/> -->
 		<result property="status" column="status" jdbcType="CHAR" />
+		<result property="count" column="count" jdbcType="INTEGER" />
 
 		<!-- 한쪽만 follow 0 / 친구 신청 1 / 친구 차단 2 &&&& 친구상태 서로 0 -->
 
@@ -140,13 +141,19 @@
 		) p
 		where u.user_id = p.friend_id
 		order by DBMS_RANDOM.RANDOM)
-		WHERE rownum<![CDATA[<]]>6
+		WHERE rownum<![CDATA[<]]>7
 	</select>
 	
 	<select id="addBobFriend" parameterType="map" resultMap="friendSelectMap">
 		SELECT * 
 		FROM friend f, users u 
 		WHERE friend_id NOT IN(SELECT user_id FROM participant WHERE bob_id=#{bobId}) AND f.friend_id=u.user_id AND f.user_id=#{userId};
+	</select>
+	
+	<select id="countFriend" parameterType="int" resultMap="friendSelectMap">
+		SELECT f.friend_id, count(*) AS count
+		FROM (select friend_id from friend where user_id=#{value} and status=0) v, friend f 
+		WHERE v.friend_id=f.user_id(+) and status=0 AND  f.friend_id not in(#{value}) and f.friend_id not in(SELECT friend_id FROM friend WHERE user_id=#{value}) group by f.friend_id
 	</select>
 
 </mapper>

@@ -398,7 +398,8 @@ $( function () {
 								data : JSON.stringify({
 									"friendId" : friendId,
 									"userId" : userId2,
-									"userName" : username
+									"userName" : username,
+									"check" : 1
 								}),
 								async : false,
 								dataType : "json",
@@ -957,8 +958,9 @@ font-size:14pt;
                      <c:if test="${user.profileImage eq null }"><img  style="width: 100%; height: 250px;" src="../resources/images/profile_default.png" /></c:if>
                      <c:if test="${user.profileImage ne null }"><img  alt="프로필사진변경"  style="width: 100%; height: 250px;" src="../resources/upload_files/images/${user.profileImage}"/></c:if>
                         
-                        
+                         <c:if test="${user.userId eq sessionScope.user.userId}">
                         <a href="javascript:void(0)" class="collapsed" align="left" data-target="#menu" data-toggle="collapse"><i class="glyphicon glyphicon-camera"></i></a>
+                        </c:if>
                         
                          <div id="menu" class="collapse">
                            <ul class="menu-link">
@@ -1007,12 +1009,12 @@ font-size:14pt;
                         
                         
                           <c:if test="${user.userId ne sessionScope.user.userId}">
-                        	 <div class="social-icon-info" style=" font-family: 'Hanna', serif; font-color: #000; text-decoration : none; padding-top: 20px; padding-bottom: 20px;">                    
+                        	 <div class="social-icon-info" style=" font-family: 'Hanna', serif; font-color: #000; text-decoration : none; padding-top: 20px; padding-bottom: 20px; line-height:30px;">                    
                         	<c:if test="${code==0}"><a type="button" id="friendStatus" >친구신청</a></c:if>
     		<c:if test="${code==1}"><a type="button" id="friendStatus">친구 요청 중</a></c:if>
     		<c:if test="${code==2}"><a type="button" id="friendStatus">친구 (친구끊기)</a></c:if>
-    		<c:if test="${code==3}"><a type="button" id="friendStatus">친구수락</a></c:if><br/>
-                        	<c:if test="${followCode==0}"><a type="button" id="followStatus">팔로우하기</a></c:if>
+    		<c:if test="${code==3}"><a type="button" id="friendStatus" style="cursor:pointer">친구수락</a></c:if><br/>
+                        	<c:if test="${followCode==0}"><a type="button" id="followStatus" style="cursor:pointer">팔로우하기</a></c:if>
     		<c:if test="${followCode==1}"><a type="button" id="followStatus">팔로우끊기</a></c:if>
                        	 </div>                         
                           </c:if>                    
