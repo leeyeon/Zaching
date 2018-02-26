@@ -69,7 +69,7 @@ public class VoiceRestController {
 		
 
 		InputStream input = request.getInputStream();
-		OutputStream output = new FileOutputStream("C:\\Users\\jiwon\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\record\\"+fileName+".wav");
+		OutputStream output = new FileOutputStream("C:\\Users\\bitcamp\\git\\Zaching\\Zaching\\WebContent\\resources\\upload_files\\record\\"+fileName+".wav");
 
 		int bytesRead;
 		while((bytesRead = input.read(buffer)) != -1) {

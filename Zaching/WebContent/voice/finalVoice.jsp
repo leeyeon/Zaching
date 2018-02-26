@@ -701,8 +701,6 @@ background-color:#fff;
 				//alert(au.src);
 				//alert(hf);
 				link = hf.href;
-				alert(hf.href);
-				alert(hf.download);
 				
 				
 			});
